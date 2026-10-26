@@ -262,9 +262,26 @@ class Workshop(Build):
           'academy':['library','archive','shrine','library'],
           'artisan':['forge','smithy','storage','inn'],
           'garden':['shrine','home','home','storage']}
+        # Deterministic variation yields unique building footprints, levels
+        # and village monuments for each authored subregion pool.
         for i,(x1,z1,x2,z2) in enumerate(entries):
             role=roles.get(category,roles['market'])[i]
-            self.detailed_building(x1,z1,x2-x1+1,z2-z1+1,2 if category!='military' else 3,role,i)
+            shiftx=self.rand.randint(-3,3)
+            shiftz=self.rand.randint(-3,3)
+            sx=min(max(2,x1+shiftx),self.sx-32)
+            sz=min(max(2,z1+shiftz),self.sz-32)
+            sx2=max(13,x2-x1+1+self.rand.randrange(-3,4))
+            sz2=max(13,z2-z1+1+self.rand.randrange(-3,4))
+            floors=max(1,min(3,(2 if category!='military' else 3)+self.rand.choice([-1,0,0,1])))
+            self.detailed_building(sx,sz,sx2,sz2,floors,role,(i+self.rand.randrange(2))%4)
+        accent=self.theme[3]
+        for j in range(3+self.rand.randrange(5)):
+            mx=cx+self.rand.randint(-15,15)
+            mz=cz+self.rand.randint(-15,15)
+            if abs(mx-cx)<6 and abs(mz-cz)<6:continue
+            self.column(mx,mz,1,3+self.rand.randint(0,7),accent)
+            if j%2==0:self.light(mx,5,mz)
+        self.acc['local_monuments']+=j+1
         if category in ('garden','temple'):
             for xx in range(cx-8,cx+9):
                 for zz in range(cz-8,cz+9):
@@ -378,7 +395,7 @@ def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
       'type':'minecraft:jigsaw','biomes':biome_tag(region),
       'step':'surface_structures','spawn_overrides':{},'terrain_adaptation':'beard_thin',
       'size':1,'start_height':{'absolute':0},'project_start_to_heightmap':'WORLD_SURFACE_WG',
-      'max_distance_from_center':128,'start_pool':'pipican:'+pool_id,'use_expansion_hack':False})
+      'max_distance_from_center':96,'start_pool':'pipican:'+pool_id,'use_expansion_hack':False})
     if spawn:
       salt=int(hashlib.sha256(registry_id.encode()).hexdigest()[:8],16)%2000000000
       savejson(Path('worldgen/structure_set')/(registry_id+'.json'),{
