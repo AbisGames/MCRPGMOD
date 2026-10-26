@@ -21,6 +21,8 @@ public final class RegionalOreRegistries {
     public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems(Pipican.MOD_ID);
     public static final Map<String,DeferredBlock<Block>> NODES;
     public static final Map<String,DeferredItem<Item>> MATERIALS;
+    /** Boss catalysts are earned from cleared regional trial arenas. */
+    public static final Map<String,DeferredItem<Item>> BOSS_CORES;
     static {
         Map<String,DeferredBlock<Block>> blocks=new LinkedHashMap<>();
         Map<String,DeferredItem<Item>> items=new LinkedHashMap<>();
@@ -30,6 +32,10 @@ public final class RegionalOreRegistries {
             blocks.put(id,node);
             items.put(id,ITEMS.registerSimpleItem(id));
         }
+        Map<String,DeferredItem<Item>> cores=new LinkedHashMap<>();
+        for(String region:List.of("whitecrown_icecap","northern_ice_sea","pinewall_taiga","fjordmark","stormcoast","khagan_steppe","western_ocean","elderwood","heartlands","greyspine_mountains","jade_empire","marshfen","inner_sea","ashlands","lotus_delta","sunscorch_desert","riverlands","spice_coast","emerald_jungle","coral_isles","goldgrass_savanna","redrock_badlands","aetheris_expanse","verdant_depths","umbral_chasm","crimson_wilds","shimmering_reefs"))
+            cores.put(region,ITEMS.registerSimpleItem(region+"_boss_core"));
+        BOSS_CORES=Map.copyOf(cores);
         NODES=Map.copyOf(blocks);
         MATERIALS=Map.copyOf(items);
     }
