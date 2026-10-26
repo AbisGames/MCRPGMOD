@@ -1,0 +1,5 @@
+{
+  "name": "Might",
+  "exclusive": true,
+  "per_point": [ { "attribute": "minecraft:attack_damage", "amount": 0.5 } ]
+}

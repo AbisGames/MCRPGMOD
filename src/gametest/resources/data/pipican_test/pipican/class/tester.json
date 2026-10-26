@@ -1,0 +1,33 @@
+{
+  "name": "Tester",
+  "description": "Test-only class used by the GameTests. Hidden from the selection screen.",
+  "selectable": false,
+  "base_health": 30,
+  "base_stats": { "pipican_test:might": 4, "pipican_test:focus": 5 },
+  "special_stat": {
+    "stat": "pipican_test:focus",
+    "resource": { "name": "Test Mana", "base_max": 10, "max_per_point": 2, "regen_per_second": 0 }
+  },
+  "starting_kit": [ { "id": "minecraft:stone_sword" } ],
+  "skill_tree": { "tree": "pipican_test:main", "start": "start_a" },
+  "special_skill_tree": { "tree": "pipican_test:special", "start": "s_start" },
+  "progression": { "max_level": 10 },
+  "passives": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 3 } ],
+  "special_passives": [
+    { "type": "pipican:attribute", "attribute": "minecraft:armor_toughness", "amount": 0,
+      "scaling": [ { "source": "special_stat", "per": 0.5 } ] }
+  ],
+  "weakness": {
+    "description": "Takes double fire damage.",
+    "effects": [ { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 2.0 } ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      { "items": "minecraft:iron_sword", "tier": "forbidden" },
+      { "items": "#pipican:weapons/swords", "tier": "mastery" },
+      { "items": "#pipican:armor/heavy", "tier": "clumsy" }
+    ]
+  },
+  "trinket_slots": { "pipican:ring": 2, "pipican:amulet": 1 }
+}
