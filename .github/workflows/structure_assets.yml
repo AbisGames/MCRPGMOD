@@ -1,4 +1,7 @@
 name: Generate and validate complete structure assets
+concurrency:
+  group: pipican-worldgen-structures
+  cancel-in-progress: false
 on:
   push:
     branches: [worldgen-and-ores]
@@ -31,7 +34,7 @@ jobs:
       - name: Publish generated structure pack
         uses: actions/upload-artifact@v4
         with:
-          name: pipican-923-structure-models
+          name: pipican-full-regional-structure-models
           path: |
             tools/worldgen/output/data/
             tools/worldgen/output/STRUCTURE_CATALOG.json
@@ -45,6 +48,18 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/main/resources/data/pipican/
           if ! git diff --cached --quiet; then
-            git commit -m "assets(worldgen): generate 923 modelled structures and matching pools [skip ci]"
-            git push origin HEAD:worldgen-and-ores
+            git commit -m "assets(worldgen): regenerate authored structures and pools [skip ci]"
+            # Other commits may land while 900+ large structures are generated.
+            # Replay the generated assets commit over the newest branch head.
+            for attempt in 1 2 3 4; do
+              git fetch origin worldgen-and-ores
+              git rebase origin/worldgen-and-ores
+              if git push origin HEAD:worldgen-and-ores; then
+                exit 0
+              fi
+              echo "Retrying concurrent branch update ($attempt/4)..."
+              sleep 3
+            done
+            echo "Unable to publish generated assets after four safe retries" >&2
+            exit 1
           fi
