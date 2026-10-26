@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/lifebloom_crystal"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/lifebloom_crystal_ore"}}

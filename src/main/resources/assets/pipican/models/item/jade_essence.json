@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/jade_essence"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/jade_essence_ore"}}

@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/glacierite"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/glacierite_ore"}}

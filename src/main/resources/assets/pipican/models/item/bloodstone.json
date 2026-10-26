@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/bloodstone"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/bloodstone_ore"}}

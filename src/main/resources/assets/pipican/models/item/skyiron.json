@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/skyiron"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/skyiron_ore"}}

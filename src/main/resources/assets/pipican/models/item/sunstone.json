@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/sunstone"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/sunstone_ore"}}

@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/umbrite"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/umbrite_ore"}}

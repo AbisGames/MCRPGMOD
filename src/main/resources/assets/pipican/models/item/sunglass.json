@@ -1,1 +1,1 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:item/sunglass"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"pipican:block/sunglass_ore"}}
