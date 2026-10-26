@@ -64,8 +64,13 @@ class Build:
    for y in range(y1,y2+1):
     for z in range(z1,z2+1):self.blocks.pop((x,y,z),None)
  def door(self,x,y,z,direction='z',width=3,height=5):
+  # A materialized AIR block keeps entrances traversable after the structure
+  # is placed into uneven terrain; merely removing a block from the template
+  # leaves existing world blocks unchanged.
   for i in range(width):
-   for j in range(height):self.blocks.pop(((x+i,y+j,z) if direction=='z' else (x,y+j,z+i)),None)
+   for j in range(height):
+    target=((x+i,y+j,z) if direction=='z' else (x,y+j,z+i))
+    self.set(*target,'air')
  def stairs(self,x0,y0,z0,dx,dz,steps,block):
   for i in range(steps):
    self.set(x0+i*dx,y0+i,z0+i*dz,block)

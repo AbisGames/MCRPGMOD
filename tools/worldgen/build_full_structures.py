@@ -143,6 +143,10 @@ class Workshop(Build):
         for xx in (3,W-4):self.wall(xx,3,xx,D-4,1,17,wall)
         for zz in (3,D-4):self.wall(3,zz,W-4,zz,1,17,wall)
         self.door(W//2-3,1,3,width=7,height=10)
+        # Open the other cardinal gates so every city district can reach the keep.
+        self.door(W//2-3,1,D-4,width=7,height=10)
+        self.door(3,1,D//2-3,'x',width=7,height=10)
+        self.door(W-4,1,D//2-3,'x',width=7,height=10)
         for xx in (7,W-8):
             for zz in (7,D-8):
                 r=6
@@ -321,6 +325,10 @@ class Workshop(Build):
         self.box(1,14,1,W-2,14,D-2,roof)
         for xx in (1,W-2):self.wall(xx,1,xx,D-2,1,13,wall)
         for zz in (1,D-2):self.wall(1,zz,W-2,zz,1,13,wall)
+        # Accessible front entry, rather than a completely sealed cave box.
+        # Removing only the wall blocks is insufficient: explicit air is
+        # required to clear the original terrain when templates are placed.
+        self.air(W//2-4,1,1,W//2+4,8,3)
         cx,cz=W//2,D//2
         room_bounds=[(4,4,25,24),(W-27,4,W-5,24),(4,D-26,27,D-5),(W-28,D-27,W-5,D-5)]
         for i,(x1,z1,x2,z2) in enumerate(room_bounds):
@@ -343,11 +351,14 @@ class Workshop(Build):
                 self.light(cx-5,10,zz);self.light(cx+5,10,zz)
         if kind=='mine':
             ore=ORE[self.region]
-            for k in range(22):
-                x,z=self.rand.randrange(6,W-6),self.rand.randrange(6,D-6)
-                if x not in range(cx-7,cx+8) and z not in range(cz-7,cz+8):
-                    self.set(x,2,z,f'pipican:{ore}_ore')
-                    self.acc['regional_ore_nodes']+=1
+            # Ore veins are exposed in mine walls rather than floating blocks;
+            # they are reachable from the galleries and can be renewed safely.
+            for k in range(28):
+                x=(1 if k%2==0 else W-2)
+                z=self.rand.randrange(7,D-7)
+                y=self.rand.randrange(2,8)
+                self.set(x,y,z,f'pipican:{ore}_ore')
+                self.acc['regional_ore_nodes']+=1
             self.acc['rails']=2
         else:
             # Loot position and boss chamber fixed for server-side reward system.
