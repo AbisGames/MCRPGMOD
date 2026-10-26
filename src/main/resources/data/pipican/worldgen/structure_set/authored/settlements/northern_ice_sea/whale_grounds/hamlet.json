@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 665751683,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/whale_grounds/hamlet",
+      "weight": 1
+    }
+  ]
+}

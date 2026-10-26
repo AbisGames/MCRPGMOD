@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 183788785,
+    "separation": 16,
+    "spacing": 67
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/fjordmark/deep_fjords/village",
+      "weight": 1
+    }
+  ]
+}

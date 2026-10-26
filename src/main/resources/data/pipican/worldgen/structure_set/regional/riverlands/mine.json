@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1767106357,
+    "separation": 22,
+    "spacing": 90
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/riverlands/mine",
+      "weight": 1
+    }
+  ]
+}

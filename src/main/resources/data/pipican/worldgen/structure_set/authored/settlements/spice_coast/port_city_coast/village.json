@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1819278774,
+    "separation": 16,
+    "spacing": 67
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/spice_coast/port_city_coast/village",
+      "weight": 1
+    }
+  ]
+}

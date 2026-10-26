@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1697225686,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/inner_sea/dungeon",
+      "weight": 1
+    }
+  ]
+}

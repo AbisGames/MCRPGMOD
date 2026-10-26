@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 803901054,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/heartlands/rolling_green_hills/hamlet",
+      "weight": 1
+    }
+  ]
+}

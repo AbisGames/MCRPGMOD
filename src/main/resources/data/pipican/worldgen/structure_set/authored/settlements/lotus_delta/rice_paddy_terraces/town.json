@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 640620369,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/rice_paddy_terraces/town",
+      "weight": 1
+    }
+  ]
+}

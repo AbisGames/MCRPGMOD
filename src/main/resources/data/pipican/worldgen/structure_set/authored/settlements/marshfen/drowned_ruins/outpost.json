@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1715215798,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/marshfen/drowned_ruins/outpost",
+      "weight": 1
+    }
+  ]
+}

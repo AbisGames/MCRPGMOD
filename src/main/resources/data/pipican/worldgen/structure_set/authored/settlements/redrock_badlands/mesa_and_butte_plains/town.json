@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 81270334,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/mesa_and_butte_plains/town",
+      "weight": 1
+    }
+  ]
+}

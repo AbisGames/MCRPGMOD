@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 526065791,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/fjordmark/rune_stone_barrens/outpost",
+      "weight": 1
+    }
+  ]
+}

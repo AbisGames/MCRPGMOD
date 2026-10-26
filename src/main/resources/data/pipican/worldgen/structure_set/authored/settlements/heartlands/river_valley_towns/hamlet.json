@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 65214983,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/heartlands/river_valley_towns/hamlet",
+      "weight": 1
+    }
+  ]
+}

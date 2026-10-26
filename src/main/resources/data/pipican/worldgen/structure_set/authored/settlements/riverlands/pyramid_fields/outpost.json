@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1782488834,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/riverlands/pyramid_fields/outpost",
+      "weight": 1
+    }
+  ]
+}

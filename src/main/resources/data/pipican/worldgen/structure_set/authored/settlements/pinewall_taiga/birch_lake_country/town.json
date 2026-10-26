@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 521061061,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/birch_lake_country/town",
+      "weight": 1
+    }
+  ]
+}

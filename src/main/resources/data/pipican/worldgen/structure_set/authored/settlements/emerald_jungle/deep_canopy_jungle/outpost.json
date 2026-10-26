@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 888912681,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/deep_canopy_jungle/outpost",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1335843198,
+    "separation": 16,
+    "spacing": 67
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/jungle_river_basin/village",
+      "weight": 1
+    }
+  ]
+}

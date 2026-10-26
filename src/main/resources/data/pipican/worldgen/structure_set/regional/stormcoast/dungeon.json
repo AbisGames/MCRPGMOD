@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 276131369,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/stormcoast/dungeon",
+      "weight": 1
+    }
+  ]
+}

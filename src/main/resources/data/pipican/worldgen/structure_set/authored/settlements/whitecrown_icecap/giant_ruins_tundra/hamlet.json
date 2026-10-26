@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 872076750,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/giant_ruins_tundra/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 995883049,
+    "separation": 16,
+    "spacing": 67
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/coral_isles/volcanic_jungle_islands/village",
+      "weight": 1
+    }
+  ]
+}

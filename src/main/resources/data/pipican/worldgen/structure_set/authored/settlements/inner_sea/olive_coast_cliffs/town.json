@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 277375216,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/inner_sea/olive_coast_cliffs/town",
+      "weight": 1
+    }
+  ]
+}

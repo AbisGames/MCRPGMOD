@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 390447480,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/fjordmark/deep_fjords/hamlet",
+      "weight": 1
+    }
+  ]
+}

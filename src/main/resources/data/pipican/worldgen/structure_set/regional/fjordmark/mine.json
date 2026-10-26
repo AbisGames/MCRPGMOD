@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 444841038,
+    "separation": 22,
+    "spacing": 90
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/fjordmark/mine",
+      "weight": 1
+    }
+  ]
+}

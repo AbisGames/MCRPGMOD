@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 137354830,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/trapper_river_valley/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 572434645,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/jade_empire/karst_pillar_valleys/town",
+      "weight": 1
+    }
+  ]
+}

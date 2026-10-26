@@ -1,0 +1,288 @@
+{
+  "id": "hrimgard",
+  "region": "whitecrown_icecap",
+  "anchor": [
+    -7500000,
+    -12000000
+  ],
+  "author_coord_scale": 600,
+  "tile_pitch": 96,
+  "relative_positions": [
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/0_0_residences",
+      "x": -192,
+      "z": -192,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/1_0_temple",
+      "x": -96,
+      "z": -192,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/2_0_harbor",
+      "x": 0,
+      "z": -192,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/3_0_garden",
+      "x": 96,
+      "z": -192,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/4_0_academy",
+      "x": 192,
+      "z": -192,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/0_1_garden",
+      "x": -192,
+      "z": -96,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/1_1_academy",
+      "x": -96,
+      "z": -96,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/2_1_military",
+      "x": 0,
+      "z": -96,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/3_1_artisan",
+      "x": 96,
+      "z": -96,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/4_1_market",
+      "x": 192,
+      "z": -96,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/0_2_artisan",
+      "x": -192,
+      "z": 0,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/1_2_market",
+      "x": -96,
+      "z": 0,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:authored/landmarks/whitecrown_icecap/hrimgard",
+      "x": 0,
+      "z": 0,
+      "kind": "central_keep",
+      "size": [
+        112,
+        72,
+        112
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/3_2_temple",
+      "x": 96,
+      "z": 0,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/4_2_harbor",
+      "x": 192,
+      "z": 0,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/0_3_temple",
+      "x": -192,
+      "z": 96,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/1_3_harbor",
+      "x": -96,
+      "z": 96,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/2_3_garden",
+      "x": 0,
+      "z": 96,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/3_3_academy",
+      "x": 96,
+      "z": 96,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/4_3_military",
+      "x": 192,
+      "z": 96,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/0_4_academy",
+      "x": -192,
+      "z": 192,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/1_4_military",
+      "x": -96,
+      "z": 192,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/2_4_artisan",
+      "x": 0,
+      "z": 192,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/3_4_market",
+      "x": 96,
+      "z": 192,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/whitecrown_icecap/hrimgard/4_4_residences",
+      "x": 192,
+      "z": 192,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    }
+  ],
+  "implementation": "Requires structure assembly placement into generated chunks; command functions supplied."
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 866438296,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/aurora_plateau/hamlet",
+      "weight": 1
+    }
+  ]
+}

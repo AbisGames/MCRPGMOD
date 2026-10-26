@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:northern_ice_sea/pack_ice_ocean",
+    "pipican:northern_ice_sea/iceberg_field",
+    "pipican:northern_ice_sea/frozen_archipelago",
+    "pipican:northern_ice_sea/whale_grounds",
+    "pipican:northern_ice_sea/black_ice_trench"
+  ]
+}

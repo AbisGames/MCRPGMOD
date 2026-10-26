@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1241481876,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/permafrost_bog/hamlet",
+      "weight": 1
+    }
+  ]
+}

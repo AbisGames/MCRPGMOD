@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 655264339,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/jade_empire/karst_pillar_valleys/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1021407867,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/marshfen/fog_swamp/outpost",
+      "weight": 1
+    }
+  ]
+}

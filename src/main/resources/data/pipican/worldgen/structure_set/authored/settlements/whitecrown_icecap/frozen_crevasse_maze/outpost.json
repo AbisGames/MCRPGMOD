@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1298023301,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/frozen_crevasse_maze/outpost",
+      "weight": 1
+    }
+  ]
+}

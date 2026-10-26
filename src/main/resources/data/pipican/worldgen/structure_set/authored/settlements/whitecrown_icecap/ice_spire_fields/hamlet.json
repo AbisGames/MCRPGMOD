@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1493706092,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/ice_spire_fields/hamlet",
+      "weight": 1
+    }
+  ]
+}

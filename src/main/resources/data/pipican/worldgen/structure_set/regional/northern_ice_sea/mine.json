@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1846826300,
+    "separation": 22,
+    "spacing": 90
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/northern_ice_sea/mine",
+      "weight": 1
+    }
+  ]
+}

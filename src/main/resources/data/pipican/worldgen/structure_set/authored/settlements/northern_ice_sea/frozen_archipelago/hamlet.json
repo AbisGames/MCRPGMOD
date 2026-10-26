@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1546873998,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/frozen_archipelago/hamlet",
+      "weight": 1
+    }
+  ]
+}

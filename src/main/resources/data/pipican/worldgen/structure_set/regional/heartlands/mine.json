@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 387459666,
+    "separation": 22,
+    "spacing": 90
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/heartlands/mine",
+      "weight": 1
+    }
+  ]
+}

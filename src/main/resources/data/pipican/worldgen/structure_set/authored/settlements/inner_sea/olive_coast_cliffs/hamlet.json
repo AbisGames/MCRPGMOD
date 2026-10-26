@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 901859078,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/inner_sea/olive_coast_cliffs/hamlet",
+      "weight": 1
+    }
+  ]
+}

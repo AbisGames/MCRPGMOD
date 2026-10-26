@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 890864816,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/snowy_pine_hills/hamlet",
+      "weight": 1
+    }
+  ]
+}

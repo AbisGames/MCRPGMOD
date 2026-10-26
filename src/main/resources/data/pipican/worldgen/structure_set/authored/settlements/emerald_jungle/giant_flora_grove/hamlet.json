@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1124135358,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/giant_flora_grove/hamlet",
+      "weight": 1
+    }
+  ]
+}

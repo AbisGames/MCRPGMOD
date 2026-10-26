@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 152624835,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/dense_spruce_forest/hamlet",
+      "weight": 1
+    }
+  ]
+}

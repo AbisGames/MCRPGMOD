@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1715114116,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/jungle_temple_hills/hamlet",
+      "weight": 1
+    }
+  ]
+}

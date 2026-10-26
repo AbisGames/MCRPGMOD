@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:marshfen/mangrove_bayou",
+    "pipican:marshfen/peat_bog",
+    "pipican:marshfen/fog_swamp",
+    "pipican:marshfen/drowned_ruins",
+    "pipican:marshfen/witch_hollow_woods"
+  ]
+}

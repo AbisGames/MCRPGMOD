@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 421186578,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/jade_empire/terraced_tea_slopes/hamlet",
+      "weight": 1
+    }
+  ]
+}

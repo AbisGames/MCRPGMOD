@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1435863964,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/kurgan_burial_fields/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1098089351,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/hoodoo_spires/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1696001790,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/acacia_woodland/hamlet",
+      "weight": 1
+    }
+  ]
+}

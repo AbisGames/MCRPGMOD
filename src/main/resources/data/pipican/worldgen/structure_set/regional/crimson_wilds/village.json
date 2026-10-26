@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 851384047,
+    "separation": 25,
+    "spacing": 100
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/crimson_wilds/village",
+      "weight": 1
+    }
+  ]
+}

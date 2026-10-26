@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1691512293,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/termite_mound_scrub/outpost",
+      "weight": 1
+    }
+  ]
+}

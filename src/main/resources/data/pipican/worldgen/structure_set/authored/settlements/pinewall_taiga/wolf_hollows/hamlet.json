@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 788170803,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/wolf_hollows/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 238563513,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/greyspine_mountains/dwarven_hold_cliffs/hamlet",
+      "weight": 1
+    }
+  ]
+}

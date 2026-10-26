@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 81090029,
+    "separation": 25,
+    "spacing": 100
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/umbral_chasm/village",
+      "weight": 1
+    }
+  ]
+}

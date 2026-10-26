@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 660728767,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/greyspine_mountains/jagged_peaks/hamlet",
+      "weight": 1
+    }
+  ]
+}

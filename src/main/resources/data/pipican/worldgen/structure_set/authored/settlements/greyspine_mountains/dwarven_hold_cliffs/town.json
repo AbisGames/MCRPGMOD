@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1819094033,
+    "separation": 28,
+    "spacing": 115
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/greyspine_mountains/dwarven_hold_cliffs/town",
+      "weight": 1
+    }
+  ]
+}

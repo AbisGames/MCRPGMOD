@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 637616045,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/dry_salt_lake/hamlet",
+      "weight": 1
+    }
+  ]
+}

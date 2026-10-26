@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 304556384,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/lost_city_ruins/hamlet",
+      "weight": 1
+    }
+  ]
+}

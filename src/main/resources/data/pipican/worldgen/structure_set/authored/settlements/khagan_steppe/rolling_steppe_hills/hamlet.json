@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1195732630,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/rolling_steppe_hills/hamlet",
+      "weight": 1
+    }
+  ]
+}

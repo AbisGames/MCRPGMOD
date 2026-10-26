@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1880677228,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/kurgan_burial_fields/outpost",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 84911131,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/sandstone_mesas/hamlet",
+      "weight": 1
+    }
+  ]
+}

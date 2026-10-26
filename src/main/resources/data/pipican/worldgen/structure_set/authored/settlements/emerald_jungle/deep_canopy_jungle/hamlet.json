@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1152348767,
+    "separation": 15,
+    "spacing": 61
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/deep_canopy_jungle/hamlet",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1683595854,
+    "separation": 21,
+    "spacing": 85
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/frozen_archipelago/outpost",
+      "weight": 1
+    }
+  ]
+}

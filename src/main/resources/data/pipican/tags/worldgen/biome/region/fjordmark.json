@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:fjordmark/deep_fjords",
+    "pipican:fjordmark/cliff_coast",
+    "pipican:fjordmark/highland_moor",
+    "pipican:fjordmark/longhouse_valleys",
+    "pipican:fjordmark/rune_stone_barrens"
+  ]
+}
