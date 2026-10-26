@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 /**
@@ -26,7 +26,7 @@ public final class RegionalMineEvents {
     private RegionalMineEvents() {}
 
     @SubscribeEvent
-    public static void broken(BlockEvent.BreakEvent event) {
+    public static void broken(BreakBlockEvent event) {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
         if (!(level.getChunkSource().getGenerator().getBiomeSource()
                 instanceof RegionalBiomeSource)) return;
