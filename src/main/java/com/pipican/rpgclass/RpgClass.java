@@ -1,6 +1,7 @@
 package com.pipican.rpgclass;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pipican.core.PipicanRegistries;
 import com.pipican.effect.ClassEffect;
@@ -37,6 +38,7 @@ import net.minecraft.world.item.Items;
  *                         {@code {"id": "minecraft:bread", "count": 8, "components": {...}}})
  * @param skillTree        the general passive tree and this class's start node in it (trees can be shared)
  * @param specialSkillTree the special (signature, ascendancy-like) tree and its start node
+ * @param statTree         the stat tree (paid with stat points) and this class's start node in it
  * @param progression      max level and starting skill points
  * @param passives         always-on bonuses
  * @param specialPassives  always-on signature bonuses; typically scale with {@code special_stat}
@@ -55,6 +57,7 @@ public record RpgClass(
         List<ItemStackTemplate> startingKit,
         Optional<TreeRef> skillTree,
         Optional<TreeRef> specialSkillTree,
+        Optional<TreeRef> statTree,
         Progression progression,
         List<ClassEffect> passives,
         List<ClassEffect> specialPassives,
@@ -71,22 +74,43 @@ public record RpgClass(
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.STAT), Codec.INT).optionalFieldOf("base_stats", Map.of()).forGetter(RpgClass::baseStats),
             SpecialStat.CODEC.optionalFieldOf("special_stat").forGetter(RpgClass::specialStat),
             ItemStackTemplate.CODEC.listOf().optionalFieldOf("starting_kit", List.of()).forGetter(RpgClass::startingKit),
-            TreeRef.CODEC.optionalFieldOf("skill_tree").forGetter(RpgClass::skillTree),
-            TreeRef.CODEC.optionalFieldOf("special_skill_tree").forGetter(RpgClass::specialSkillTree),
+            Trees.MAP_CODEC.forGetter(c -> new Trees(c.skillTree, c.specialSkillTree, c.statTree)),
             Progression.CODEC.optionalFieldOf("progression", Progression.DEFAULT).forGetter(RpgClass::progression),
             ClassEffect.CODEC.listOf().optionalFieldOf("passives", List.of()).forGetter(RpgClass::passives),
             ClassEffect.CODEC.listOf().optionalFieldOf("special_passives", List.of()).forGetter(RpgClass::specialPassives),
             Weakness.CODEC.optionalFieldOf("weakness").forGetter(RpgClass::weakness),
             AffinityRules.CODEC.optionalFieldOf("affinities", AffinityRules.NEUTRAL).forGetter(RpgClass::affinities),
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), Codec.intRange(0, 64)).optionalFieldOf("trinket_slots", Map.of()).forGetter(RpgClass::trinketSlots)
-    ).apply(i, RpgClass::new));
+    ).apply(i, (name, description, icon, selectable, baseHealth, baseStats, specialStat, startingKit, trees,
+                progression, passives, specialPassives, weakness, affinities, trinketSlots) -> new RpgClass(
+                name, description, icon, selectable, baseHealth, baseStats, specialStat, startingKit,
+                trees.skill(), trees.special(), trees.stat(),
+                progression, passives, specialPassives, weakness, affinities, trinketSlots)));
 
-    public Optional<TreeRef> tree(TreeKind kind) {
-        return kind == TreeKind.GENERAL ? skillTree : specialSkillTree;
+    /** The three tree fields, grouped only because a codec takes at most 16 fields. Still flat in JSON. */
+    private record Trees(Optional<TreeRef> skill, Optional<TreeRef> special, Optional<TreeRef> stat) {
+        static final MapCodec<Trees> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+                TreeRef.CODEC.optionalFieldOf("skill_tree").forGetter(Trees::skill),
+                TreeRef.CODEC.optionalFieldOf("special_skill_tree").forGetter(Trees::special),
+                TreeRef.CODEC.optionalFieldOf("stat_tree").forGetter(Trees::stat)
+        ).apply(i, Trees::new));
     }
 
+    public Optional<TreeRef> tree(TreeKind kind) {
+        return switch (kind) {
+            case GENERAL -> skillTree;
+            case SPECIAL -> specialSkillTree;
+            case STAT -> statTree;
+        };
+    }
+
+    /** Starting skill points of a mastery-fed tree. The stat tree uses stat points instead (always 0 here). */
     public int startingPoints(TreeKind kind) {
-        return kind == TreeKind.GENERAL ? progression.startingSkillPoints() : progression.startingSpecialSkillPoints();
+        return switch (kind) {
+            case GENERAL -> progression.startingSkillPoints();
+            case SPECIAL -> progression.startingSpecialSkillPoints();
+            case STAT -> 0;
+        };
     }
 
     public int baseStat(ResourceKey<StatDefinition> stat) {

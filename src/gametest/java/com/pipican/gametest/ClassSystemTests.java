@@ -17,6 +17,7 @@ import com.pipican.skill.SkillTree;
 import com.pipican.skill.SkillTrees;
 import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
+import com.pipican.stat.StatPoints;
 import com.pipican.trinket.TrinketSlotType;
 import java.util.function.Consumer;
 import net.minecraft.core.Holder;
@@ -61,6 +62,7 @@ public final class ClassSystemTests {
     static {
         TESTS.put("choose_class", ClassSystemTests::chooseClass);
         TESTS.put("skill_tree", ClassSystemTests::skillTree);
+        TESTS.put("stat_tree", ClassSystemTests::statTree);
         TESTS.put("mastery", ClassSystemTests::mastery);
         TESTS.put("affinity_and_damage", ClassSystemTests::affinityAndDamage);
         TESTS.put("stats_and_levels", ClassSystemTests::statsAndLevels);
@@ -149,6 +151,27 @@ public final class ClassSystemTests {
         helper.succeed();
     }
 
+    /** The stat tree is paid with stat points (shared with raising stats), not with mastery. */
+    private static void statTree(GameTestHelper helper) {
+        ServerPlayer player = testerPlayer(helper);
+        MasteryService.setTier(player, BLADE, skill(helper, BLADE), 5);
+        helper.assertTrue(ClassService.availablePoints(player, TreeKind.STAT) == 0, "mastery gives no stat-tree points");
+        helper.assertTrue(!ClassService.allocateNode(player, TreeKind.STAT, "sturdy").success(), "no stat points yet");
+
+        ClassService.addXp(player, StatPoints.threshold(2));
+        helper.assertTrue(ClassService.availablePoints(player, TreeKind.STAT) == 2, "stat tree uses stat points");
+        helper.assertTrue(ClassService.allocateNode(player, TreeKind.STAT, "sturdy").success(), "sturdy costs 2");
+        assertNear(helper, 34, player.getMaxHealth(), "sturdy gives +4 health");
+        helper.assertTrue(ClassService.availableStatPoints(player) == 0, "the node spent the shared stat points");
+        helper.assertTrue(!ClassService.raiseStat(player, FOCUS).success(), "nothing left to raise stats with");
+        MasteryService.resetAll(player);
+        assertNear(helper, 34, player.getMaxHealth(), "mastery reset keeps the stat tree");
+
+        helper.assertTrue(ClassService.refundNode(player, TreeKind.STAT, "sturdy").success(), "refund");
+        helper.assertTrue(ClassService.availableStatPoints(player) == 2, "refund gives the stat points back");
+        helper.succeed();
+    }
+
     /** Triggers, cooldown, affinity-scaled gain, continuous movement, tier effects. */
     private static void mastery(GameTestHelper helper) {
         ServerPlayer player = testerPlayer(helper);
@@ -213,16 +236,28 @@ public final class ClassSystemTests {
         return mod == null ? 0 : mod.amount();
     }
 
-    /** Exclusive stats, buying the special stat, class XP and levelling. */
+    /** Exclusive stats, stat points from kill XP, raising the special stat, class XP and levelling. */
     private static void statsAndLevels(GameTestHelper helper) {
         ServerPlayer player = testerPlayer(helper);
-        helper.assertTrue(!ClassService.raiseStat(player, MIGHT).success(), "exclusive non-special stat can't be bought");
-        helper.assertTrue(ClassService.raiseStat(player, FOCUS).success(), "special stat can be bought");
-        assertNear(helper, 6, ClassEffectApplier.state(player).stat(FOCUS), "bought focus point");
+        helper.assertTrue(StatPoints.threshold(1) == 100 && StatPoints.threshold(2) == 250 && StatPoints.threshold(3) == 450, "default stat point curve");
+        helper.assertTrue(StatPoints.earnedForXp(249) == 1 && StatPoints.earnedForXp(250) == 2, "points earned at thresholds");
+        helper.assertTrue(StatPoints.threshold(Long.MAX_VALUE / 2) == Long.MAX_VALUE, "curve saturates instead of overflowing");
+
+        helper.assertTrue(!ClassService.raiseStat(player, FOCUS).success(), "no stat points without kill XP");
+        player.giveExperienceLevels(30);
+        helper.assertTrue(!ClassService.raiseStat(player, FOCUS).success(), "vanilla XP does not buy stats");
 
         ClassService.addXp(player, PipicanConfig.xpToNextLevel(1) + 1);
         helper.assertTrue(ClassService.data(player).activeProgress().orElseThrow().level() == 2, "level up from class XP");
-        helper.assertTrue(player.experienceLevel == 0, "class XP does not touch vanilla XP");
+        helper.assertTrue(player.experienceLevel == 30, "kill XP does not touch vanilla XP");
+        helper.assertTrue(ClassService.availableStatPoints(player) == 1, "the same kill XP earns a stat point");
+
+        helper.assertTrue(!ClassService.raiseStat(player, MIGHT).success(), "exclusive non-special stat can't be raised");
+        helper.assertTrue(ClassService.raiseStat(player, FOCUS).success(), "special stat can be raised");
+        assertNear(helper, 6, ClassEffectApplier.state(player).stat(FOCUS), "raised focus point");
+        helper.assertTrue(ClassService.availableStatPoints(player) == 0, "raising spends the point");
+        ClassService.resetStats(player);
+        helper.assertTrue(ClassService.availableStatPoints(player) == 1, "stat reset gives the point back");
 
         ClassService.setLevel(player, 999);
         helper.assertTrue(ClassService.data(player).activeProgress().orElseThrow().level() == 10, "clamped to max_level");

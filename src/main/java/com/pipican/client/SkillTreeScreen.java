@@ -34,7 +34,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 /**
- * Path-of-Exile-style passive tree screen, plus a mastery tab.
+ * Path-of-Exile-style passive tree screen (general, special and stat trees), plus a mastery tab.
  *
  * <ul>
  *   <li>Drag to pan, scroll to zoom (around the cursor).</li>
@@ -46,7 +46,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
  */
 public class SkillTreeScreen extends Screen {
 
-    private enum Tab { GENERAL, SPECIAL, MASTERY }
+    private enum Tab { GENERAL, SPECIAL, STAT, MASTERY }
 
     private static final int TOP_BAR = 28;
     private static final float MIN_ZOOM = 0.3f;
@@ -95,7 +95,11 @@ public class SkillTreeScreen extends Screen {
     }
 
     private TreeKind kind() {
-        return tab == Tab.SPECIAL ? TreeKind.SPECIAL : TreeKind.GENERAL;
+        return switch (tab) {
+            case SPECIAL -> TreeKind.SPECIAL;
+            case STAT -> TreeKind.STAT;
+            default -> TreeKind.GENERAL;
+        };
     }
 
     private Optional<TreeRef> treeRef() {

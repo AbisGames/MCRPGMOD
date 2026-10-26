@@ -75,7 +75,9 @@ public record Skill(
             Codec.intRange(0, 72_000).optionalFieldOf("cooldown_ticks", 10).forGetter(Skill::cooldownTicks),
             Codec.INT.listOf().optionalFieldOf("thresholds", DEFAULT_THRESHOLDS).forGetter(Skill::thresholds),
             Tier.CODEC.listOf().optionalFieldOf("tiers", List.of()).forGetter(Skill::tiers),
-            TreeKind.CODEC.optionalFieldOf("points_to", TreeKind.GENERAL).forGetter(Skill::pointsTo),
+            TreeKind.CODEC.validate(k -> k == TreeKind.STAT
+                    ? DataResult.error(() -> "points_to must be general or special: the stat tree is paid with stat points")
+                    : DataResult.success(k)).optionalFieldOf("points_to", TreeKind.GENERAL).forGetter(Skill::pointsTo),
             ResourceKey.codec(PipicanRegistries.CLASS).listOf().optionalFieldOf("classes", List.of()).forGetter(Skill::classes),
             Codec.BOOL.optionalFieldOf("affinity_scaled", true).forGetter(Skill::affinityScaled)
     ).apply(i, Skill::new)).validate(Skill::validate);

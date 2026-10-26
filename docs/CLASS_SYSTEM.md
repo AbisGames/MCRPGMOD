@@ -19,7 +19,7 @@ How classes work, how to add one, and where everything lives in the code.
   player choices (saved on the player)   +   class data   ──►  ClassEffectApplier.refresh()
   - chosen class, class level & XP                              │
   - allocated passive-tree nodes, skill mastery                 ▼
-  - stat points bought with vanilla XP           attribute modifiers, potion effects,
+  - stats raised, lifetime kill XP               attribute modifiers, potion effects,
   - items in trinket slots                       damage multipliers, resource bar
 ```
 
@@ -32,9 +32,9 @@ How classes work, how to add one, and where everything lives in the code.
 
 | | Earned by | Gives |
 |---|---|---|
-| **Skill mastery** | *using* skills: hitting with swords, sprinting, blocking... (see [2.5](#25-skills--mastery--skillnamejson)) | 5 tiers per skill. Each tier = a bonus **and one passive-tree point**. This is where tree points come from. |
-| **Class XP / level** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | class level: gates tree nodes (`required_level`) and can scale effects. No points. |
-| **Vanilla XP levels** | normal Minecraft | buying **stat points** (`/pipican stat raise`, later a UI); paying for tree refunds |
+| **Skill mastery** | *using* skills: hitting with swords, sprinting, blocking... (see [2.5](#25-skills--mastery--skillnamejson)) | 5 tiers per skill. Each tier = a bonus **and one skill point** for the general or special tree. |
+| **Kill XP** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | two things at once: **class level** (gates tree nodes with `required_level`, can scale effects) and **stat points** (raise a stat with `/pipican stat raise`, or buy nodes in the stat tree). |
+| **Vanilla XP levels** | normal Minecraft | only paying for tree refunds |
 
 ---
 
@@ -78,12 +78,22 @@ The number of stats is not fixed: each file is one stat.
 |---|---|---|
 | `name` | required | |
 | `description` | empty | |
-| `max` | 100 | Highest value players can **buy** up to (bonuses from skills/passives can exceed it). |
+| `max` | 100 | Highest value players can **raise** it to with stat points (bonuses from skills/passives can exceed it). |
 | `per_point` | none | Attribute modifiers applied once per point. `operation`: `add_value` (default), `add_multiplied_base`, `add_multiplied_total`. Any vanilla or modded attribute works. |
 | `exclusive` | false | If true, only classes whose **special stat** is this stat can buy points in it. Use it for signature stats like "Faith". |
 | `color` | white | ARGB int for UIs (`-1` = white). |
 
-A player's total in a stat = class `base_stats` + points bought with vanilla XP + `pipican:stat` effects (passives, skill nodes).
+A player's total in a stat = class `base_stats` + stat points put into it + `pipican:stat` effects (passives, tree nodes).
+
+**Stat points** come from lifetime kill XP (the same XP that levels the class). The Nth point needs
+`stats.first_point_xp + (N - 1) × stats.xp_step` more XP than the previous one; the defaults (100, 50) give points
+at 100, 250, 450, 700... XP. One pool of stat points pays for both raising stats and [stat-tree](#23-passive-trees--skill_treenamejson-path-of-exile-style) nodes.
+
+**Built-in stats.** The mod ships eight stats in the `pipican` namespace: `vitality` (+1 max health per point),
+`strength` (+0.1 attack damage), `dexterity` (+0.2% attack speed), `agility` (+0.5% movement speed),
+`intelligence`, `wisdom`, `endurance` and `luck`. The last four have no `per_point` bonuses yet: magic damage,
+healing power, health regen and crit chance have no vanilla attribute to hook into. Override any of them with a
+datapack file at the same path to change the numbers.
 
 ### 2.2 Trinket slot types — `trinket_slot/<name>.json`
 
@@ -117,12 +127,15 @@ A tree is a web of **nodes** joined by **links**. Rules, enforced on the server 
   (`skill_tree.refund_cost_levels`, default 1; free in creative) and gives the point back.
 * Other classes' start nodes can't be bought.
 
-Every class has two trees:
+Every class has up to three trees:
 
 * **General tree** (`skill_tree`) – normally **one big tree shared by all classes**, each starting in its own area.
 * **Special tree** (`special_skill_tree`) – a small class-only tree (like PoE's Ascendancy), built around the special stat.
+* **Stat tree** (`stat_tree`) – paid with **stat points** instead of skill points, so players choose between
+  raising a stat directly or buying a node. Can be shared like the general tree.
 
-Both use this format. Points come from skill mastery: each skill sends its tier-up points to one of the two trees.
+All three use this format. General and special points come from skill mastery: each skill sends its tier-up
+points to one of those two trees (`points_to` can't be `stat`). Stat-tree points are the player's stat points.
 
 ```json
 {
@@ -179,7 +192,7 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 | `base_stats` | none | `{ "<stat id>": points }` starting points, including the special stat. |
 | `special_stat` | none | See below. |
 | `starting_kit` | none | Items given once when the class is chosen: `"minecraft:bread"` or `{ "id": "minecraft:bread", "count": 8, "components": { ... } }`. |
-| `skill_tree`, `special_skill_tree` | none | `{ "tree": "<tree id>", "start": "<start node id>" }`. Several classes can share a tree with different starts. |
+| `skill_tree`, `special_skill_tree`, `stat_tree` | none | `{ "tree": "<tree id>", "start": "<start node id>" }`. Several classes can share a tree with different starts. |
 | `progression` | 50 / 0 / 0 | `{ "max_level", "starting_skill_points", "starting_special_skill_points" }`. |
 | `passives` | none | Always-on [effects](#3-effects). |
 | `special_passives` | none | Always-on signature effects; usually scale with `special_stat`. |
@@ -200,7 +213,7 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 }
 ```
 
-The special stat is a normal stat (it gives its `per_point` bonuses and can be bought with vanilla XP even if
+The special stat is a normal stat (it gives its `per_point` bonuses and can be raised with stat points even if
 `exclusive`), and it is the `special_stat` [scaling source](#scaling). `resource` is optional: when present the
 class gets a resource bar (mana, rage, energy...) next to the hotbar:
 max = `base_max + max_per_point × points`, regen/s = `regen_per_second + regen_per_point × points`.
@@ -360,9 +373,10 @@ New weapons/armor (ours or other mods') only need to be added to these tags to b
    "Decide later" closes it; reopen with **J** or `/pipican class choose`.
 2. **Choosing** – sets the class, gives the starting kit, heals to full, fills the resource. Players can only
    choose once; admins can change it (respec).
-3. **Playing** – mob kills give class XP (`max health × leveling.kill_xp_per_max_health`). XP to go from level L to L+1 is
-   `xp_base × L^xp_exponent` (config). Using skills builds mastery; every tier-up gives a tree point.
-   Spend points in the **Passives** screen (button above the inventory).
+3. **Playing** – mob kills give kill XP (`max health × leveling.kill_xp_per_max_health`). It levels the class (XP to go
+   from level L to L+1 is `xp_base × L^xp_exponent`) and earns stat points (see [2.1](#21-stats--statnamejson)).
+   Using skills builds mastery; every tier-up gives a skill point. Spend points in the **Passives** screen
+   (button above the inventory; tabs General, Special, Stats, Mastery).
 4. **Trinkets** – press **G**. The screen shows exactly the slots the class has. Trinkets drop on death unless `keepInventory`.
    If the class changes and loses a slot, the item goes back to the inventory.
 5. **Death** – class, levels, tree nodes, mastery and stats are kept.
@@ -380,17 +394,17 @@ multiclass system can add classes without migrating saves. How it should work is
 | `/pipican class reset <players>` | admin | Remove class + class progress, reopen selection. |
 | `/pipican level set <players> <level>` | admin | |
 | `/pipican xp add <players> <amount>` | admin | Class XP. |
-| `/pipican tree reset <players> [general\|special]` | admin | Clears allocated nodes (points come back). |
+| `/pipican tree reset <players> [general\|special\|stat]` | admin | Clears allocated nodes (points come back). |
 | `/pipican mastery add <players> <skill> <amount>` | admin | |
 | `/pipican mastery set <players> <skill> <tier>` | admin | Sets a skill to the start of tier 0–5. |
-| `/pipican mastery reset <players>` | admin | Clears all mastery and the trees. |
-| `/pipican stat reset <players>` | admin | Refunds the vanilla levels spent. |
+| `/pipican mastery reset <players>` | admin | Clears all mastery and the general and special trees (the stat tree is kept). |
+| `/pipican stat reset <players>` | admin | Clears raised stats; the stat points come back. |
 | `/pipican class info [player]` | everyone | Class sheet: level, points, stats, resource. |
 | `/pipican class choose` | everyone | Reopen selection if you have no class. |
 | `/pipican tree` | everyone | Opens the passive-tree screen. |
-| `/pipican tree allocate\|refund <general\|special> <node>` | everyone | Same as clicking in the screen. |
+| `/pipican tree allocate\|refund <general\|special\|stat> <node>` | everyone | Same as clicking in the screen. |
 | `/pipican mastery list [player]` | everyone | Skills with tier and progress. |
-| `/pipican stat raise <stat>` | everyone | Costs vanilla levels: `stats.cost_base_levels`, +1 every `stats.cost_increase_every` points bought. Free in creative. |
+| `/pipican stat raise <stat>` | everyone | Costs one stat point (earned with kill XP). |
 | `/pipican trinkets` | everyone | Same as **G**. |
 
 ---

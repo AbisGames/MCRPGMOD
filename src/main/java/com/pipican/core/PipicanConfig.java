@@ -7,7 +7,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
  * Server config ({@code world/serverconfig/pipican-server.toml}). Holds balance numbers that are
- * the same for every class: the XP curve, stat costs and what each affinity tier does.
+ * the same for every class: the XP curves and what each affinity tier does.
  * Class-specific numbers belong in the class JSON instead.
  */
 public final class PipicanConfig {
@@ -20,8 +20,8 @@ public final class PipicanConfig {
     private static final ModConfigSpec.DoubleValue XP_BASE;
     private static final ModConfigSpec.DoubleValue XP_EXPONENT;
     private static final ModConfigSpec.DoubleValue KILL_XP_PER_MAX_HEALTH;
-    private static final ModConfigSpec.IntValue STAT_COST_BASE;
-    private static final ModConfigSpec.IntValue STAT_COST_STEP;
+    private static final ModConfigSpec.LongValue STAT_FIRST_POINT_XP;
+    private static final ModConfigSpec.LongValue STAT_POINT_XP_STEP;
     private static final ModConfigSpec.BooleanValue OPEN_SELECTION_ON_JOIN;
     private static final ModConfigSpec.IntValue REFUND_COST;
     private static final Map<Affinity, TierSpec> TIERS = new EnumMap<>(Affinity.class);
@@ -37,15 +37,17 @@ public final class PipicanConfig {
         XP_BASE = b.comment("XP needed to go from level L to L+1 is base * L^exponent.")
                 .defineInRange("xp_base", 100.0, 1.0, 1_000_000.0);
         XP_EXPONENT = b.defineInRange("xp_exponent", 1.5, 0.0, 10.0);
-        KILL_XP_PER_MAX_HEALTH = b.comment("Class XP gained per point of max health of a killed mob.")
+        KILL_XP_PER_MAX_HEALTH = b.comment("Kill XP gained per point of max health of a killed mob. Kill XP counts towards",
+                        "both the class level and stat points.")
                 .defineInRange("kill_xp_per_max_health", 0.5, 0.0, 1000.0);
         b.pop();
 
-        b.comment("Stat points are bought with vanilla XP levels.").push("stats");
-        STAT_COST_BASE = b.comment("Vanilla levels the first purchased stat point costs.")
-                .defineInRange("cost_base_levels", 1, 0, 1000);
-        STAT_COST_STEP = b.comment("Cost rises by one level every N purchased points (0 = never rises).")
-                .defineInRange("cost_increase_every", 10, 0, 1000);
+        b.comment("Stat points are earned with lifetime kill XP (vanilla XP is not used).",
+                "The Nth point needs first_point_xp + (N - 1) * xp_step more XP than the one before it.").push("stats");
+        STAT_FIRST_POINT_XP = b.comment("Kill XP needed for the first stat point.")
+                .defineInRange("first_point_xp", 100L, 1L, 1_000_000_000L);
+        STAT_POINT_XP_STEP = b.comment("How much more XP each further stat point needs than the previous one (0 = flat).")
+                .defineInRange("xp_step", 50L, 0L, 1_000_000_000L);
         b.pop();
 
         b.push("skill_tree");
@@ -109,11 +111,12 @@ public final class PipicanConfig {
         return SPEC.isLoaded() ? KILL_XP_PER_MAX_HEALTH.get() : 0.5;
     }
 
-    /** Vanilla levels needed to buy one more stat point when {@code alreadyBought} were bought before. */
-    public static int statPointCost(int alreadyBought) {
-        int base = SPEC.isLoaded() ? STAT_COST_BASE.get() : 1;
-        int step = SPEC.isLoaded() ? STAT_COST_STEP.get() : 10;
-        return base + (step > 0 ? alreadyBought / step : 0);
+    public static long statFirstPointXp() {
+        return SPEC.isLoaded() ? STAT_FIRST_POINT_XP.get() : 100L;
+    }
+
+    public static long statPointXpStep() {
+        return SPEC.isLoaded() ? STAT_POINT_XP_STEP.get() : 50L;
     }
 
     public static int refundCostLevels() {

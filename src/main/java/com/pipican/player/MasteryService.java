@@ -4,6 +4,7 @@ import com.pipican.core.ClassLookup;
 import com.pipican.mastery.Skill;
 import com.pipican.mastery.SkillAction;
 import com.pipican.rpgclass.RpgClass;
+import com.pipican.skill.TreeKind;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -93,10 +94,17 @@ public final class MasteryService {
         addMastery(player, key, skill, target - ClassService.data(player).mastery(key));
     }
 
-    /** Admin: clears all mastery, and with it every allocated node (their points are gone). */
+    /**
+     * Admin: clears all mastery, and with it the general and special trees (their points are gone).
+     * The stat tree is kept: it is paid with stat points, not mastery.
+     */
     public static void resetAll(ServerPlayer player) {
         ClassService.data(player).allMastery().clear();
-        ClassService.resetSkills(player, Optional.empty());
+        ClassService.data(player).activeProgress().ifPresent(progress -> {
+            progress.nodes(TreeKind.GENERAL).clear();
+            progress.nodes(TreeKind.SPECIAL).clear();
+        });
+        ClassService.changed(player);
     }
 
     /** Sends batched mastery changes to the client (once a second at most). Called every tick. */

@@ -31,6 +31,7 @@
 
   "skill_tree": { "tree": "mypack:main", "start": "example_start" },
   "special_skill_tree": { "tree": "mypack:example_class_special", "start": "special_start" },
+  "stat_tree": { "tree": "mypack:stat", "start": "example_stat_start" },
 
   "progression": {
     "max_level": 50,

@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceKey;
 
 /**
  * A class's special stat. It is a normal {@link StatDefinition} (so it gives per-point attribute
- * bonuses and can be raised with vanilla XP like any stat) that additionally:
+ * bonuses and can be raised with stat points like any stat) that additionally:
  * <ul>
  *   <li>is the {@code special_stat} scaling source for the class's effects,</li>
  *   <li>can be raised even if the stat is marked {@code exclusive},</li>

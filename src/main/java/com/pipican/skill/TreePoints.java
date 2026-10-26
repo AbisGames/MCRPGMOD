@@ -5,6 +5,7 @@ import com.pipican.mastery.Skill;
 import com.pipican.player.ClassProgress;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.RpgClass;
+import com.pipican.stat.StatPoints;
 import net.minecraft.core.RegistryAccess;
 
 /**
@@ -16,8 +17,9 @@ public final class TreePoints {
     private TreePoints() {}
 
     /**
-     * Points earned for a tree: the class's starting points plus one per mastery tier reached in
-     * every skill that feeds this tree ({@code points_to}) and is allowed for the class.
+     * Skill points earned for a mastery-fed tree (general or special): the class's starting points
+     * plus one per mastery tier reached in every skill that feeds this tree ({@code points_to}) and
+     * is allowed for the class. Not used for the stat tree.
      */
     public static int earned(RegistryAccess access, PlayerClassData data, RpgClass rpgClass, TreeKind kind) {
         int points = rpgClass.startingPoints(kind);
@@ -39,7 +41,11 @@ public final class TreePoints {
         return spent;
     }
 
+    /** Unspent points for a tree. The stat tree shares its pool with stats (see {@link StatPoints}). */
     public static int available(RegistryAccess access, PlayerClassData data, RpgClass rpgClass, TreeKind kind) {
+        if (kind == TreeKind.STAT) {
+            return StatPoints.available(access, data);
+        }
         ClassProgress progress = data.activeProgress().orElse(null);
         if (progress == null) {
             return 0;

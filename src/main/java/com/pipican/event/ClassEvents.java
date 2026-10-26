@@ -129,7 +129,7 @@ public final class ClassEvents {
 
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
-        // Killing a mob gives class XP based on its max health.
+        // Killing a mob gives kill XP based on its max health: class XP and stat points.
         if (event.getSource().getEntity() instanceof ServerPlayer killer && !(event.getEntity() instanceof Player)) {
             long xp = Math.round(event.getEntity().getMaxHealth() * PipicanConfig.killXpPerMaxHealth());
             ClassService.addXp(killer, xp);

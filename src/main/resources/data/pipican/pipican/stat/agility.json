@@ -1,0 +1,12 @@
+{
+  "name": "Agility",
+  "description": "Quickness. Each point adds movement speed.",
+  "max": 100,
+  "per_point": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.005,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

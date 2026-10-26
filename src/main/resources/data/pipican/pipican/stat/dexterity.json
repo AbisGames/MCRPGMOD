@@ -1,0 +1,12 @@
+{
+  "name": "Dexterity",
+  "description": "Precision and handling. Each point adds attack speed.",
+  "max": 100,
+  "per_point": [
+    {
+      "attribute": "minecraft:attack_speed",
+      "amount": 0.002,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

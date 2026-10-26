@@ -11,6 +11,7 @@ import com.pipican.skill.TreeKind;
 import com.pipican.skill.TreePoints;
 import com.pipican.skill.TreeRef;
 import com.pipican.stat.StatDefinition;
+import com.pipican.stat.StatPoints;
 import com.pipican.trinket.TrinketSlotType;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,12 +109,22 @@ public final class ClassService {
 
     // ------------------------------------------------------------------ levels & xp
 
-    /** Adds class XP, levelling up as many times as it covers. */
+    /**
+     * Adds kill XP: class XP (levelling up as many times as it covers) and lifetime stat XP
+     * (which earns stat points, see {@link StatPoints}).
+     */
     public static void addXp(ServerPlayer player, long amount) {
         PlayerClassData data = data(player);
         Optional<RpgClass> rpgClass = activeClass(player);
         if (rpgClass.isEmpty() || amount <= 0) {
             return;
+        }
+        int pointsBefore = StatPoints.earned(data);
+        data.setStatXp(saturatedAdd(data.statXp(), amount));
+        int newPoints = StatPoints.earned(data) - pointsBefore;
+        if (newPoints > 0) {
+            player.sendSystemMessage(Component.translatable("pipican.stat.points_earned", newPoints,
+                    StatPoints.available(player.level().registryAccess(), data)).withStyle(ChatFormatting.AQUA));
         }
         ClassProgress progress = data.activeProgress().orElseThrow();
         int maxLevel = rpgClass.get().progression().maxLevel();
@@ -146,7 +157,7 @@ public final class ClassService {
 
     // ------------------------------------------------------------------ passive trees
 
-    /** Unspent skill points in a tree (see {@link TreePoints}). */
+    /** Unspent points in a tree: skill points for general/special, stat points for the stat tree (see {@link TreePoints}). */
     public static int availablePoints(ServerPlayer player, TreeKind kind) {
         return activeClass(player)
                 .map(c -> TreePoints.available(player.level().registryAccess(), data(player), c, kind))
@@ -230,14 +241,19 @@ public final class ClassService {
         changed(player);
     }
 
-    // ------------------------------------------------------------------ stats (bought with vanilla XP)
+    // ------------------------------------------------------------------ stats (paid with stat points from kill XP)
 
     /** True if the player may put bought points into this stat. */
     public static boolean canRaise(RpgClass rpgClass, ResourceKey<StatDefinition> key, StatDefinition stat) {
         return !stat.exclusive() || rpgClass.isSpecialStat(key);
     }
 
-    /** Buys one point in a stat, paying vanilla XP levels. */
+    /** Unspent stat points, shared by direct stat raises and the stat tree. */
+    public static int availableStatPoints(ServerPlayer player) {
+        return StatPoints.available(player.level().registryAccess(), data(player));
+    }
+
+    /** Puts one stat point into a stat. */
     public static Result raiseStat(ServerPlayer player, ResourceKey<StatDefinition> key) {
         Optional<RpgClass> rpgClass = activeClass(player);
         if (rpgClass.isEmpty()) {
@@ -255,25 +271,17 @@ public final class ClassService {
         if (current >= stat.max()) {
             return Result.fail(Component.translatable("pipican.stat.maxed", stat.name()));
         }
-        int cost = PipicanConfig.statPointCost(data.totalBoughtStats());
-        if (!player.getAbilities().instabuild && player.experienceLevel < cost) {
-            return Result.fail(Component.translatable("pipican.stat.no_xp", cost));
-        }
-        if (!player.getAbilities().instabuild) {
-            player.giveExperienceLevels(-cost);
-            data.setStatLevelsSpent(data.statLevelsSpent() + cost);
+        if (availableStatPoints(player) < 1) {
+            return Result.fail(Component.translatable("pipican.stat.no_points"));
         }
         data.boughtStats().merge(key, 1, Integer::sum);
         changed(player);
-        return Result.ok(Component.translatable("pipican.stat.raised", stat.name(), current + 1, cost));
+        return Result.ok(Component.translatable("pipican.stat.raised", stat.name(), current + 1, availableStatPoints(player)));
     }
 
-    /** Admin respec of bought stats, refunding the vanilla levels spent. */
+    /** Admin respec of stats put in directly; the points come back automatically (they are derived). */
     public static void resetStats(ServerPlayer player) {
-        PlayerClassData data = data(player);
-        player.giveExperienceLevels(data.statLevelsSpent());
-        data.setStatLevelsSpent(0);
-        data.boughtStats().clear();
+        data(player).boughtStats().clear();
         changed(player);
     }
 
@@ -314,6 +322,11 @@ public final class ClassService {
     }
 
     // ------------------------------------------------------------------ helpers
+
+    private static long saturatedAdd(long a, long b) {
+        long sum = a + b;
+        return ((a ^ sum) & (b ^ sum)) < 0 ? Long.MAX_VALUE : sum;
+    }
 
     public static Optional<RpgClass> activeClass(ServerPlayer player) {
         return data(player).activeClass().flatMap(key -> ClassLookup.rpgClass(player.level().registryAccess(), key));

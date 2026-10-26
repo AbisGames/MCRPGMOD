@@ -6,9 +6,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 /**
  * Class levelling and starting skill points.
  *
- * <p>Class XP is separate from vanilla XP (vanilla XP buys stat points). Class level gates skill
- * nodes ({@code required_level}) and can scale effects, but does <b>not</b> give skill points:
- * those come from skill mastery tiers (see {@link com.pipican.mastery.Skill}).
+ * <p>Class XP comes from kills and is separate from vanilla XP. The same kill XP also earns stat
+ * points (see {@link com.pipican.stat.StatPoints}). Class level gates skill nodes
+ * ({@code required_level}) and can scale effects, but does <b>not</b> give skill points: those come
+ * from skill mastery tiers (see {@link com.pipican.mastery.Skill}).
  *
  * <pre>{@code "progression": { "max_level": 50, "starting_skill_points": 0, "starting_special_skill_points": 0 } }</pre>
  */

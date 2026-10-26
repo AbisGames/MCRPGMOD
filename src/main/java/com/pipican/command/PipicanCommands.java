@@ -25,6 +25,7 @@ import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
+import com.pipican.stat.StatPoints;
 import com.pipican.trinket.TrinketMenu;
 import java.util.Collection;
 import java.util.Optional;
@@ -52,18 +53,18 @@ import net.neoforged.neoforge.network.PacketDistributor;
  *   /pipican class reset &lt;players&gt;               full respec, re-opens class selection
  *   /pipican level set &lt;players&gt; &lt;level&gt;
  *   /pipican xp add &lt;players&gt; &lt;amount&gt;
- *   /pipican tree reset &lt;players&gt; [general|special]
+ *   /pipican tree reset &lt;players&gt; [general|special|stat]
  *   /pipican mastery add &lt;players&gt; &lt;skill&gt; &lt;amount&gt;
  *   /pipican mastery set &lt;players&gt; &lt;skill&gt; &lt;tier 0-5&gt;
- *   /pipican mastery reset &lt;players&gt;           also resets the trees
- *   /pipican stat reset &lt;players&gt;                refunds vanilla levels
+ *   /pipican mastery reset &lt;players&gt;           also resets the general and special trees
+ *   /pipican stat reset &lt;players&gt;                gives the stat points back
  * Everyone:
  *   /pipican class info [player]
  *   /pipican class choose                         re-opens selection if you have no class
  *   /pipican tree                                 opens the passive-tree screen
- *   /pipican tree allocate|refund &lt;general|special&gt; &lt;node&gt;
+ *   /pipican tree allocate|refund &lt;general|special|stat&gt; &lt;node&gt;
  *   /pipican mastery list [player]
- *   /pipican stat raise &lt;stat&gt;                   costs vanilla XP levels
+ *   /pipican stat raise &lt;stat&gt;                   costs one stat point (earned with kill XP)
  *   /pipican trinkets
  * </pre>
  * Stat raising is a stand-in until the character screen exists.
@@ -122,14 +123,17 @@ public final class PipicanCommands {
                         })
                         .then(Commands.literal("allocate")
                                 .then(nodeCommand(TreeKind.GENERAL, false))
-                                .then(nodeCommand(TreeKind.SPECIAL, false)))
+                                .then(nodeCommand(TreeKind.SPECIAL, false))
+                                .then(nodeCommand(TreeKind.STAT, false)))
                         .then(Commands.literal("refund")
                                 .then(nodeCommand(TreeKind.GENERAL, true))
-                                .then(nodeCommand(TreeKind.SPECIAL, true)))
+                                .then(nodeCommand(TreeKind.SPECIAL, true))
+                                .then(nodeCommand(TreeKind.STAT, true)))
                         .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
                                 .executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.empty())))
                                 .then(Commands.literal("general").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.GENERAL)))))
-                                .then(Commands.literal("special").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.SPECIAL))))))))
+                                .then(Commands.literal("special").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.SPECIAL)))))
+                                .then(Commands.literal("stat").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.STAT))))))))
                 .then(Commands.literal("mastery")
                         .then(Commands.literal("list")
                                 .executes(c -> masteryList(c.getSource(), c.getSource().getPlayerOrException()))
@@ -259,6 +263,8 @@ public final class PipicanCommands {
                 progress.xp(), PipicanConfig.xpToNextLevel(progress.level())), false);
         source.sendSuccess(() -> Component.translatable("pipican.info.points",
                 ClassService.availablePoints(player, TreeKind.GENERAL), ClassService.availablePoints(player, TreeKind.SPECIAL)), false);
+        source.sendSuccess(() -> Component.translatable("pipican.info.stat_points",
+                ClassService.availableStatPoints(player), StatPoints.xpToNextPoint(data)), false);
         ClassLookup.stats(access).entrySet().stream()
                 .filter(e -> state.stat(e.getKey()) != 0 || ClassService.canRaise(cls, e.getKey(), e.getValue()))
                 .sorted(java.util.Comparator.comparing(e -> e.getKey().identifier().toString()))
@@ -272,7 +278,6 @@ public final class PipicanCommands {
             Component name = cls.specialStat().flatMap(s -> s.resource()).map(r -> r.name()).orElse(Component.empty());
             source.sendSuccess(() -> Component.translatable("pipican.info.resource", name, (int) data.resource(), (int) data.resourceMax()), false);
         }
-        source.sendSuccess(() -> Component.translatable("pipican.info.next_stat_cost", PipicanConfig.statPointCost(data.totalBoughtStats())), false);
         return 1;
     }
 

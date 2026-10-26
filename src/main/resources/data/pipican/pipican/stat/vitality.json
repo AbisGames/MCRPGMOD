@@ -1,0 +1,11 @@
+{
+  "name": "Vitality",
+  "description": "Toughness. Each point adds max health.",
+  "max": 100,
+  "per_point": [
+    {
+      "attribute": "minecraft:max_health",
+      "amount": 1
+    }
+  ]
+}
