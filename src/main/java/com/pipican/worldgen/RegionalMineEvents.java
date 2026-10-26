@@ -36,12 +36,13 @@ public final class RegionalMineEvents {
         if (!(level.getChunkSource().getGenerator().getBiomeSource()
                 instanceof RegionalBiomeSource)) return;
         Block block = event.getState().getBlock();
-        // Reject ores placed by players or found outside generated RPG mine
-        // pieces. Structure tags avoid hard-coding individual mine names.
-        if (!level.structureManager().getStructureWithPieceAt(event.getPos(), MINE_STRUCTURES).isValid()) return;
+
         for (Map.Entry<String, ?> entry : RegionalOreRegistries.NODES.entrySet()) {
             String ore = entry.getKey();
             if (block != RegionalOreRegistries.NODES.get(ore).get()) continue;
+            // Only evaluate expensive structure provenance after identifying
+            // one of our regional mining nodes, never for ordinary blocks.
+            if (!level.structureManager().getStructureWithPieceAt(event.getPos(), MINE_STRUCTURES).isValid()) return;
             int minutes = RegionalOreCatalog.get(ore).orElseThrow().regenerationMinutes();
             long now = level.getGameTime();
             long readyAt = Math.addExact(now, Math.multiplyExact(minutes, TICKS_PER_MINUTE));
