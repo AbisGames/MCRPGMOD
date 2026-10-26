@@ -1,0 +1,73 @@
+{
+  "name": "TODO Class Name",
+  "description": "TODO one or two sentences shown on the class-selection screen.",
+  "icon": "minecraft:iron_sword",
+  "selectable": true,
+
+  "base_health": 20,
+
+  "base_stats": {
+    "mypack:example_stat": 5,
+    "mypack:example_special_stat": 5
+  },
+
+  "special_stat": {
+    "stat": "mypack:example_special_stat",
+    "resource": {
+      "name": "TODO Resource Name",
+      "base_max": 50,
+      "max_per_point": 5,
+      "regen_per_second": 1,
+      "regen_per_point": 0.1,
+      "color": -12627969,
+      "starts_full": true
+    }
+  },
+
+  "starting_kit": [
+    "minecraft:wooden_sword",
+    { "id": "minecraft:bread", "count": 8 }
+  ],
+
+  "skill_tree": { "tree": "mypack:main", "start": "example_start" },
+  "special_skill_tree": { "tree": "mypack:example_class_special", "start": "special_start" },
+
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 0,
+    "starting_special_skill_points": 0
+  },
+
+  "passives": [
+    { "type": "pipican:attribute", "attribute": "minecraft:movement_speed", "amount": 0.05, "operation": "add_multiplied_base" }
+  ],
+
+  "special_passives": [
+    {
+      "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 0,
+      "scaling": [ { "source": "special_stat", "per": 0.25 } ]
+    }
+  ],
+
+  "weakness": {
+    "description": "TODO describe the weakness for players.",
+    "effects": [
+      { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
+    ]
+  },
+
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      { "items": "#pipican:weapons/swords", "tier": "proficient" },
+      { "items": "#pipican:weapons/ranged", "tier": "clumsy" },
+      { "items": "#pipican:armor/heavy",   "tier": "forbidden" },
+      { "items": "#pipican:armor/medium",  "tier": "clumsy" }
+    ]
+  },
+
+  "trinket_slots": {
+    "pipican:ring": 2,
+    "pipican:amulet": 1
+  }
+}

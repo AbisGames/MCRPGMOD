@@ -1,0 +1,10 @@
+{
+  "name": "TODO Sprinting",
+  "description": "Sprint to train it. A dodge roll would use { \"type\": \"pipican:ability\", \"ability\": \"mypack:dodge_roll\" } once abilities exist.",
+  "icon": "minecraft:feather",
+  "trigger": { "type": "pipican:move", "mode": "sprint", "per_blocks": 20 },
+  "points_to": "general",
+  "tiers": [
+    { "description": "+2% movement speed", "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:movement_speed", "amount": 0.02, "operation": "add_multiplied_base" } ] }
+  ]
+}

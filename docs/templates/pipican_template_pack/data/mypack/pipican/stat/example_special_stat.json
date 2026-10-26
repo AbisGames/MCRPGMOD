@@ -1,0 +1,7 @@
+{
+  "name": "TODO Special Stat",
+  "description": "Signature stat. 'exclusive' means only classes that have it as their special stat can buy points in it.",
+  "max": 100,
+  "exclusive": true,
+  "per_point": []
+}

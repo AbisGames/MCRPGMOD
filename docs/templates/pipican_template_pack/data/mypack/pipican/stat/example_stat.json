@@ -1,0 +1,10 @@
+{
+  "name": "TODO Stat Name",
+  "description": "TODO what this stat does.",
+  "max": 100,
+  "exclusive": false,
+  "color": -1,
+  "per_point": [
+    { "attribute": "minecraft:attack_damage", "amount": 0.25, "operation": "add_value" }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "TODO Slot Name",
+  "order": 100,
+  "accepts": "mypack:trinkets/example_slot"
+}

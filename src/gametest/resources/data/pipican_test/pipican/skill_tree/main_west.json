@@ -1,0 +1,11 @@
+{
+  "tree": "pipican_test:main",
+  "name": "Test Passive Tree",
+  "nodes": [
+    { "id": "start_a", "name": "Tester Start", "type": "start", "x": 0, "y": 0 },
+    { "id": "tough", "name": "Tough", "x": 40, "y": 0, "links": [ "start_a" ],
+      "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:max_health", "amount": 2 } ] },
+    { "id": "brave", "name": "Brave", "type": "notable", "x": 80, "y": 0, "links": [ "tough" ], "required_level": 3,
+      "effects": [ { "type": "pipican:damage_dealt", "multiplier": 1.5 } ] }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Test Blade",
+  "trigger": {
+    "type": "pipican:melee_hit",
+    "items": "#pipican:weapons/swords"
+  },
+  "thresholds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "cooldown_ticks": 10,
+  "tiers": [
+    {
+      "description": "+10% sword damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.1
+        }
+      ]
+    }
+  ],
+  "classes": [
+    "pipican_test:tester"
+  ]
+}

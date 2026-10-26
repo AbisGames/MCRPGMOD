@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "#pipican:weapons/swords", "required": false },
+    { "id": "#pipican:weapons/axes", "required": false },
+    { "id": "#pipican:weapons/spears", "required": false },
+    { "id": "#pipican:weapons/maces", "required": false },
+    { "id": "#pipican:weapons/tridents", "required": false }
+  ]
+}
