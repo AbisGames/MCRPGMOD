@@ -6,6 +6,7 @@ import com.pipican.core.PipicanRegistries;
 import com.pipican.network.PipicanNetwork;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.trinket.PipicanMenus;
+import com.pipican.worldgen.RegionalOreRegistries;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -34,6 +35,7 @@ public final class Pipican {
     public Pipican(IEventBus modBus, ModContainer container) {
         PipicanAttachments.REGISTER.register(modBus);
         PipicanMenus.REGISTER.register(modBus);
+        RegionalOreRegistries.register(modBus);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);
