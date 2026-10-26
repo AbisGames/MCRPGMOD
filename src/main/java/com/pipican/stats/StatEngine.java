@@ -19,20 +19,27 @@ public final class StatEngine {
         long target = rules.threshold(state.earnedPoints() + 1);
         return target == Long.MAX_VALUE ? Long.MAX_VALUE : Math.max(0, target - state.xp());
     }
-    /** Pass positive increments only; validates everything before mutating. */
     public void allocate(StatState state, Map<Stat,Integer> increments) {
-        Objects.requireNonNull(state);
         Objects.requireNonNull(increments);
-        EnumMap<Stat,Integer> safe = new EnumMap<>(Stat.class);
         long cost = 0;
         for (var e : increments.entrySet()) {
             if (e.getKey() == null || e.getValue() == null || e.getValue() <= 0) throw new IllegalArgumentException("increments");
             cost = Math.addExact(cost, e.getValue().longValue());
-            Math.addExact(state.invested(e.getKey()), e.getValue());
-            safe.put(e.getKey(), e.getValue());
         }
-        if (cost == 0 || cost > state.availablePoints()) throw new IllegalArgumentException("insufficient stat points");
-        state.spend(safe, cost);
+        if (cost == 0) throw new IllegalArgumentException("empty spend");
+        spendTreeNode(state, cost, increments);
+    }
+    /** Only the tree service should invoke this after validating node prerequisites. */
+    void spendTreeNode(StatState state, long cost, Map<Stat,Integer> increments) {
+        Objects.requireNonNull(state); Objects.requireNonNull(increments);
+        if (cost <= 0 || cost > state.availablePoints()) throw new IllegalArgumentException("insufficient stat points");
+        EnumMap<Stat,Integer> validated = new EnumMap<>(Stat.class);
+        for (var e : increments.entrySet()) {
+            if (e.getKey() == null || e.getValue() == null || e.getValue() < 0) throw new IllegalArgumentException("increments");
+            Math.addExact(state.invested(e.getKey()), e.getValue());
+            validated.put(e.getKey(), e.getValue());
+        }
+        state.spend(validated, cost);
     }
     public int baseStat(StatState state, StatProfile profile, Stat stat) {
         return Math.addExact(profile.starting(stat), state.invested(stat));
