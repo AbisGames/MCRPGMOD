@@ -131,7 +131,8 @@ public final class ClassEffectApplier {
     private static ClassState compute(ServerPlayer player) {
         PlayerClassData data = player.getData(PipicanAttachments.CLASS_DATA);
         RegistryAccess access = player.level().registryAccess();
-        Optional<RpgClass> maybeClass = data.activeClass().flatMap(key -> ClassLookup.rpgClass(access, key));
+        Optional<RpgClass> maybeClass = data.trainerMode() ? Optional.empty()
+                : data.activeClass().flatMap(key -> ClassLookup.rpgClass(access, key));
         if (maybeClass.isEmpty()) {
             if (data.hasClass()) {
                 Pipican.LOGGER.warn("Player {} has unknown class {} (was its JSON removed?)", player.getName().getString(), data.activeClass().get().identifier());

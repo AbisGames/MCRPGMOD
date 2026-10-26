@@ -40,7 +40,9 @@ public final class PlayerClassData {
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), ItemStack.OPTIONAL_CODEC.listOf()).optionalFieldOf("trinkets", Map.of()).forGetter(d -> d.trinkets),
             Codec.DOUBLE.optionalFieldOf("resource", 0.0).forGetter(d -> d.resource),
             Codec.DOUBLE.optionalFieldOf("resource_max", 0.0).forGetter(d -> d.resourceMax),
-            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.SKILL), Codec.DOUBLE).optionalFieldOf("mastery", Map.of()).forGetter(d -> d.mastery)
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.SKILL), Codec.DOUBLE).optionalFieldOf("mastery", Map.of()).forGetter(d -> d.mastery),
+            Codec.BOOL.optionalFieldOf("trainer_mode", false).forGetter(d -> d.trainerMode),
+            ResourceKey.codec(PipicanRegistries.CLASS).optionalFieldOf("class_before_training").forGetter(d -> d.classBeforeTraining)
     ).apply(i, PlayerClassData::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerClassData> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(MAP_CODEC.codec());
@@ -60,15 +62,19 @@ public final class PlayerClassData {
     private final Map<ResourceKey<Skill>, Double> mastery;
     /** Not saved: set when mastery changed but the client hasn't been told yet (synced in batches). */
     private boolean masteryDirty;
+    /** Persisted training lock; the class is disabled even after reconnect/respawn. */
+    private boolean trainerMode;
+    private Optional<ResourceKey<RpgClass>> classBeforeTraining;
 
     public PlayerClassData() {
-        this(Optional.empty(), Map.of(), Map.of(), 0, Map.of(), 0, 0, Map.of());
+        this(Optional.empty(), Map.of(), Map.of(), 0, Map.of(), 0, 0, Map.of(), false, Optional.empty());
     }
 
     private PlayerClassData(Optional<ResourceKey<RpgClass>> activeClass, Map<ResourceKey<RpgClass>, ClassProgress> progress,
                             Map<ResourceKey<StatDefinition>, Integer> boughtStats, int statLevelsSpent,
                             Map<ResourceKey<TrinketSlotType>, List<ItemStack>> trinkets, double resource, double resourceMax,
-                            Map<ResourceKey<Skill>, Double> mastery) {
+                            Map<ResourceKey<Skill>, Double> mastery, boolean trainerMode,
+                            Optional<ResourceKey<RpgClass>> classBeforeTraining) {
         this.activeClass = activeClass;
         this.progress = new HashMap<>(progress);
         this.boughtStats = new HashMap<>(boughtStats);
@@ -78,6 +84,23 @@ public final class PlayerClassData {
         this.resource = resource;
         this.resourceMax = resourceMax;
         this.mastery = new HashMap<>(mastery);
+        this.trainerMode = trainerMode;
+        this.classBeforeTraining = classBeforeTraining;
+    }
+
+    public boolean trainerMode() { return trainerMode; }
+    public Optional<ResourceKey<RpgClass>> classBeforeTraining() { return classBeforeTraining; }
+    void beginTraining() {
+        if (trainerMode) throw new IllegalStateException("training already active");
+        classBeforeTraining = activeClass;
+        activeClass = Optional.empty();
+        trainerMode = true;
+    }
+    void endTraining() {
+        if (!trainerMode) throw new IllegalStateException("not training");
+        activeClass = classBeforeTraining;
+        classBeforeTraining = Optional.empty();
+        trainerMode = false;
     }
 
     public Optional<ResourceKey<RpgClass>> activeClass() {

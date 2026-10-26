@@ -60,6 +60,7 @@ public final class ClassService {
      */
     public static Result chooseClass(ServerPlayer player, ResourceKey<RpgClass> key, boolean giveKit, boolean force) {
         PlayerClassData data = data(player);
+        if (data.trainerMode() && !force) return Result.fail(Component.literal("Class selection disabled during training"));
         if (data.hasClass() && !force) {
             return Result.fail(Component.translatable("pipican.class.already_chosen"));
         }
@@ -99,11 +100,23 @@ public final class ClassService {
 
     /** Opens the class-selection screen on the client if the player has no class. */
     public static void promptSelection(ServerPlayer player) {
-        if (!data(player).hasClass() && !ClassLookup.selectableClasses(player.level().registryAccess()).isEmpty()
+        if (!data(player).trainerMode() && !data(player).hasClass() && !ClassLookup.selectableClasses(player.level().registryAccess()).isEmpty()
                 // Only clients running the mod understand this packet (fake/test players don't).
                 && player.connection.hasChannel(OpenClassSelectionPayload.TYPE)) {
             PacketDistributor.sendToPlayer(player, OpenClassSelectionPayload.INSTANCE);
         }
+    }
+
+    /** Begin mandatory classless training while preserving previously earned class progression. */
+    public static void beginTraining(ServerPlayer player) {
+        data(player).beginTraining();
+        changed(player);
+    }
+
+    /** Restore the previously equipped class after training concludes or is cancelled. */
+    public static void endTraining(ServerPlayer player) {
+        data(player).endTraining();
+        changed(player);
     }
 
     // ------------------------------------------------------------------ levels & xp
@@ -316,7 +329,7 @@ public final class ClassService {
     // ------------------------------------------------------------------ helpers
 
     public static Optional<RpgClass> activeClass(ServerPlayer player) {
-        return data(player).activeClass().flatMap(key -> ClassLookup.rpgClass(player.level().registryAccess(), key));
+        return (data(player).trainerMode() ? Optional.<ResourceKey<RpgClass>>empty() : data(player).activeClass()).flatMap(key -> ClassLookup.rpgClass(player.level().registryAccess(), key));
     }
 
     /** Call after any change: fixes trinket slots, re-applies bonuses and syncs to the client. */

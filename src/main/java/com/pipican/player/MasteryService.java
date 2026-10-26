@@ -36,7 +36,7 @@ public final class MasteryService {
     public static void onAction(ServerPlayer player, SkillAction action) {
         PlayerClassData data = ClassService.data(player);
         Optional<RpgClass> rpgClass = ClassService.activeClass(player);
-        if (rpgClass.isEmpty()) {
+        if (data.trainerMode() || rpgClass.isEmpty()) {
             return;
         }
         long now = player.level().getGameTime();
