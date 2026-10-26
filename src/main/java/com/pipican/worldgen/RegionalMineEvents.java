@@ -4,6 +4,8 @@ import com.pipican.Pipican;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,14 +17,17 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * respawning the whole building, overwriting player-built blocks or force
  * loading unexplored chunks. This deliberately targets singleplayer first.
  *
- * <p>It does not currently prove a node came from a mine structure. That
- * provenance restriction is a separate worldgen-integration requirement.
+ * <p>Only nodes inside structure pieces tagged as RPG mines enter the
+ * renewal queue. Arbitrary player-placed ore blocks are not renewable.
  */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class RegionalMineEvents {
     private static final long TICKS_PER_MINUTE = 20L * 60L;
     private static final int CHECK_INTERVAL = 80;
     private static final int RESTORE_BATCH = 64;
+    /** Only ores inside naturally generated RPG mines are renewable. */
+    private static final TagKey<net.minecraft.world.level.levelgen.structure.Structure> MINE_STRUCTURES =
+        TagKey.create(Registries.STRUCTURE,Pipican.id("renewable_mines"));
     private RegionalMineEvents() {}
 
     @SubscribeEvent
@@ -31,6 +36,9 @@ public final class RegionalMineEvents {
         if (!(level.getChunkSource().getGenerator().getBiomeSource()
                 instanceof RegionalBiomeSource)) return;
         Block block = event.getState().getBlock();
+        // Reject ores placed by players or found outside generated RPG mine
+        // pieces. Structure tags avoid hard-coding individual mine names.
+        if (!level.structureManager().getStructureWithPieceAt(event.getPos(), MINE_STRUCTURES).isValid()) return;
         for (Map.Entry<String, ?> entry : RegionalOreRegistries.NODES.entrySet()) {
             String ore = entry.getKey();
             if (block != RegionalOreRegistries.NODES.get(ore).get()) continue;

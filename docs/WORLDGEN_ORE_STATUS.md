@@ -10,7 +10,7 @@ Important release blockers:
 1. Generated assets are modular furnished block architecture, not hand-sculpted recreations of every design reference.
 2. No visual singleplayer inspection of all castles, town rooms, dungeon routes, mine reset cycles or saved-world migration has been completed.
 3. Incremental city assembly can load nearby chunks and overwrite player edits; replace with safe worldgen/chunk staging before production.
-4. Mine ore reset currently does not prove the mined node originated inside a naturally generated mine.
+4. Mine node restoration is now restricted to tagged RPG mine structures, but still needs repeat-mine gameplay tests and protection against manual template placement exploits.
 5. Custom scripted RPG bosses, NPC population and player-specific dungeon loot are not ready.
 6. Region-aware mountains are experimental; rivers, ravines, waterfalls, floating-island geology and all capital foundations still need visual tuning.
 
