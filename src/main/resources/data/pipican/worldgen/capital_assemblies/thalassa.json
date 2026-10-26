@@ -6,12 +6,12 @@
     2500000
   ],
   "author_coord_scale": 600,
-  "tile_pitch": 96,
+  "tile_pitch": 112,
   "relative_positions": [
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/0_0_residences",
-      "x": -192,
-      "z": -192,
+      "x": -224,
+      "z": -224,
       "kind": "residences",
       "size": [
         92,
@@ -21,8 +21,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/1_0_temple",
-      "x": -96,
-      "z": -192,
+      "x": -112,
+      "z": -224,
       "kind": "temple",
       "size": [
         92,
@@ -33,7 +33,7 @@
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/2_0_harbor",
       "x": 0,
-      "z": -192,
+      "z": -224,
       "kind": "harbor",
       "size": [
         92,
@@ -43,8 +43,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/3_0_garden",
-      "x": 96,
-      "z": -192,
+      "x": 112,
+      "z": -224,
       "kind": "garden",
       "size": [
         92,
@@ -54,8 +54,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/4_0_academy",
-      "x": 192,
-      "z": -192,
+      "x": 224,
+      "z": -224,
       "kind": "academy",
       "size": [
         92,
@@ -65,8 +65,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/0_1_garden",
-      "x": -192,
-      "z": -96,
+      "x": -224,
+      "z": -112,
       "kind": "garden",
       "size": [
         92,
@@ -76,8 +76,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/1_1_academy",
-      "x": -96,
-      "z": -96,
+      "x": -112,
+      "z": -112,
       "kind": "academy",
       "size": [
         92,
@@ -88,7 +88,7 @@
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/2_1_military",
       "x": 0,
-      "z": -96,
+      "z": -112,
       "kind": "military",
       "size": [
         92,
@@ -98,8 +98,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/3_1_artisan",
-      "x": 96,
-      "z": -96,
+      "x": 112,
+      "z": -112,
       "kind": "artisan",
       "size": [
         92,
@@ -109,8 +109,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/4_1_market",
-      "x": 192,
-      "z": -96,
+      "x": 224,
+      "z": -112,
       "kind": "market",
       "size": [
         92,
@@ -120,7 +120,7 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/0_2_artisan",
-      "x": -192,
+      "x": -224,
       "z": 0,
       "kind": "artisan",
       "size": [
@@ -131,7 +131,7 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/1_2_market",
-      "x": -96,
+      "x": -112,
       "z": 0,
       "kind": "market",
       "size": [
@@ -153,7 +153,7 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/3_2_temple",
-      "x": 96,
+      "x": 112,
       "z": 0,
       "kind": "temple",
       "size": [
@@ -164,7 +164,7 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/4_2_harbor",
-      "x": 192,
+      "x": 224,
       "z": 0,
       "kind": "harbor",
       "size": [
@@ -175,8 +175,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/0_3_temple",
-      "x": -192,
-      "z": 96,
+      "x": -224,
+      "z": 112,
       "kind": "temple",
       "size": [
         92,
@@ -186,8 +186,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/1_3_harbor",
-      "x": -96,
-      "z": 96,
+      "x": -112,
+      "z": 112,
       "kind": "harbor",
       "size": [
         92,
@@ -198,7 +198,7 @@
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/2_3_garden",
       "x": 0,
-      "z": 96,
+      "z": 112,
       "kind": "garden",
       "size": [
         92,
@@ -208,8 +208,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/3_3_academy",
-      "x": 96,
-      "z": 96,
+      "x": 112,
+      "z": 112,
       "kind": "academy",
       "size": [
         92,
@@ -219,8 +219,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/4_3_military",
-      "x": 192,
-      "z": 96,
+      "x": 224,
+      "z": 112,
       "kind": "military",
       "size": [
         92,
@@ -230,8 +230,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/0_4_academy",
-      "x": -192,
-      "z": 192,
+      "x": -224,
+      "z": 224,
       "kind": "academy",
       "size": [
         92,
@@ -241,8 +241,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/1_4_military",
-      "x": -96,
-      "z": 192,
+      "x": -112,
+      "z": 224,
       "kind": "military",
       "size": [
         92,
@@ -253,7 +253,7 @@
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/2_4_artisan",
       "x": 0,
-      "z": 192,
+      "z": 224,
       "kind": "artisan",
       "size": [
         92,
@@ -263,8 +263,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/3_4_market",
-      "x": 96,
-      "z": 192,
+      "x": 112,
+      "z": 224,
       "kind": "market",
       "size": [
         92,
@@ -274,8 +274,8 @@
     },
     {
       "template": "pipican:capital_districts/inner_sea/thalassa/4_4_residences",
-      "x": 192,
-      "z": 192,
+      "x": 224,
+      "z": 224,
       "kind": "residences",
       "size": [
         92,
