@@ -21,3 +21,6 @@ jobs:
         run: python3 tools/validate_worldgen.py
       - name: Compile and package NeoForge mod
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
+      - name: NeoForge GameTest server smoke test
+        timeout-minutes: 15
+        run: ./gradlew runGameTestServer --no-daemon
