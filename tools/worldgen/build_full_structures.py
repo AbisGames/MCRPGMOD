@@ -519,8 +519,32 @@ class Workshop(Build):
                 self.block_entities[pos]={'LootTable':f'pipican:chests/{self.region}_dungeon'}
             self.acc['reward_chests']=3
         self.acc['main_chamber']=1
+
+    def access_bridge(self, axis):
+        """Traversable 20-block capital street bridge between district tiles.
+
+        The city tiles are spaced 112 blocks apart, but ordinary residential
+        tiles are 92 blocks wide. These connectors close each 20-block gap
+        while keeping a seven-block pedestrian lane and safe railings.
+        """
+        pavement=self.theme[1]
+        rail=self.theme[3]
+        horizontal=(axis=='eastwest')
+        for x in range(self.sx):
+            for z in range(self.sz):
+                self.set(x,0,z,pavement)
+                side=(z in (0,self.sz-1)) if horizontal else (x in (0,self.sx-1))
+                if side:
+                    self.set(x,1,z,rail)
+                    if (x%5==0 if horizontal else z%5==0):
+                        self.set(x,2,z,'lantern')
+                elif (x%4==0 if horizontal else z%4==0):
+                    self.set(x,0,z,self.theme[4])
+        self.acc['passable_bridge']=1
+
     def make(self,typ):
         if typ=='castle':self.core_castle()
+        elif typ in ('bridge_eastwest','bridge_northsouth'):self.access_bridge(typ.split('_',1)[1])
         elif typ in ('dungeon','mine'):self.cave(typ)
         elif typ in ('market','residences','temple','military','academy','harbor','artisan','garden'):self.district(typ)
         else:self.settlement(typ)
@@ -580,7 +604,7 @@ def generate():
     for region in REGIONS:
         savejson(Path('tags/worldgen/biome/region')/(region['id']+'.json'),{
           'replace':False,'values':['pipican:'+region['id']+'/'+sub['id'] for sub in region['subregions']]})
-    catalog=[];count=Counter();assets=[]
+    catalog=[];count=Counter();assets=[];bridge_regions=set()
     def write(name,region,kind,size,pool=None,structure=False,spawn=False,spacing=55):
         b=Workshop(name,region,size).make(kind)
         placed,raw=dump_nbt(b,BASE/'structure'/(name+'.nbt'))
@@ -613,19 +637,42 @@ def generate():
             ident=f'capital_districts/{reg}/{key}/{dx+2}_{dz+2}_{typ}'
             write(ident,reg,typ,(92,34,92))
             rows.append({'template':'pipican:'+ident,'x':dx*112,'z':dz*112,'kind':typ,'size':[92,34,92]})
+        # Generate distinct biome-specific horizontal and vertical street spans
+        # and connect otherwise separated 92-wide district modules.
+        xbridge=f'capital_connections/{reg}/eastwest'
+        zbridge=f'capital_connections/{reg}/northsouth'
+        if reg not in bridge_regions:
+            write(xbridge,reg,'bridge_eastwest',(20,4,7))
+            write(zbridge,reg,'bridge_northsouth',(7,4,20))
+            bridge_regions.add(reg)
+        connectors=[]
+        for zrow in range(-2,3):
+          for xcol in range(-2,2):
+            if xcol==0 and zrow==0:continue  # central keep occupies full 112 width
+            connectors.append({'template':'pipican:'+xbridge,
+                               'x':xcol*112+92,'z':zrow*112+42,
+                               'kind':'walkway_eastwest','size':[20,4,7]})
+        for xcol in range(-2,3):
+          for zrow in range(-2,2):
+            if xcol==0 and zrow==0:continue
+            connectors.append({'template':'pipican:'+zbridge,
+                               'x':xcol*112+42,'z':zrow*112+92,
+                               'kind':'walkway_northsouth','size':[7,4,20]})
         savejson(Path('worldgen/capital_assemblies')/(key+'.json'),{
            'id':key,'region':reg,'anchor':[s['x'],s['z']],
-           'author_coord_scale':600,'tile_pitch':112,'relative_positions':rows,
-           'implementation':'Requires structure assembly placement into generated chunks; command functions supplied.'})
+           'author_coord_scale':600,'tile_pitch':112,
+           'relative_positions':rows,'connectors':connectors,
+           'implementation':'25 roomed city tiles, plus accessible capital road connectors.'})
         # Manual-placement functions for singleplayer world debugging only.
         # Position at city centre x/y/z and run /function pipican:build_capital/<id>.
         lines=[]
-        for row in rows:
+        for row in rows+connectors:
             xx,zz=row['x'],row['z']
             lines.append(f'place template {row["template"]} ~{xx} ~ ~{zz}')
         f=BASE/'function/build_capital'/(key+'.mcfunction');f.parent.mkdir(parents=True,exist_ok=True)
         f.write_text('\n'.join(lines)+'\n')
         count['capital_district_modules']+=24
+        count['capital_road_links']+=len(connectors)
     # Extras receive similarly original 3x3 city kits, plus fully furnished
     # biome dungeon and mines containing their own regional ore blocks.
     for reg in sorted(REGIONIDS|set(EXTRAS)):

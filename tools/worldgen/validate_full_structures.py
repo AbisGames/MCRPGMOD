@@ -142,7 +142,7 @@ def main():
             loc=row['template'].split(':',1)[1]
             assert (BASE/'structure'/(loc+'.nbt')).is_file(),loc
         fn=(BASE/'function/build_capital'/(s['id']+'.mcfunction')).read_text().splitlines()
-        assert len(fn)==25
+        assert len(fn)==25+len(ass.get('connectors',[]))
     print(f'PASS {len(all_nbt)} NBT structure templates, {len(expected)} authored pool IDs, '
           f'{len(capitals)} complete 5x5 capital assemblies, {total:,} block records.')
     print('NOTE: static format verification only; Minecraft runtime and detailed collision/path QA remain outstanding.')
