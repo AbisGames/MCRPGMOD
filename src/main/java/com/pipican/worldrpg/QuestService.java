@@ -20,7 +20,7 @@ public final class QuestService {
     }
     public boolean progress(WorldRpgState state, String questId, Optional<String> currentClass, Event event) {
         QuestDefinition quest = catalog.quest(questId).orElseThrow();
-        if (!eligible(state, quest, currentClass)) return false;
+        if (!eligible(state, quest, currentClass) || event == null || event.amount() <= 0) return false;
         boolean changed=false;
         for (var objective : quest.objectives()) {
             if(objective.type()==event.type() && objective.targetId().equals(event.targetId())
@@ -37,10 +37,13 @@ public final class QuestService {
     public QuestDefinition.Reward complete(WorldRpgState state, String questId, Optional<String> currentClass) {
         QuestDefinition q=catalog.quest(questId).orElseThrow();
         if (!eligible(state,q,currentClass) || !ready(state,q)) throw new IllegalStateException("not complete");
-        state.complete(questId);
-        if (!state.rewardOnce(questId)) throw new IllegalStateException("reward already granted");
+        // Inventory item grants are handled transactionally by the NeoForge adapter.
+        // Check overflow before marking quest completion to prevent partial updates.
+        Math.addExact(state.coins(), q.reward().coins());
         state.addCoins(q.reward().coins());
         q.reward().recipes().forEach(state::unlockRecipe);
+        state.rewardOnce(questId);
+        state.complete(questId);
         return q.reward();
     }
 }
