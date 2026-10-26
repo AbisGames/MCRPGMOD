@@ -1,0 +1,30 @@
+{
+  "name": "TODO General Tree",
+  "nodes": [
+    {
+      "id": "first_node",
+      "name": "TODO First Node",
+      "description": "+1 armor per rank.",
+      "icon": "minecraft:iron_chestplate",
+      "x": 0, "y": 0,
+      "cost": 1,
+      "max_rank": 3,
+      "effects": [
+        { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 1 }
+      ]
+    },
+    {
+      "id": "second_node",
+      "name": "TODO Second Node",
+      "description": "Deal 10% more damage. Needs First Node and class level 5.",
+      "icon": "minecraft:iron_sword",
+      "x": 0, "y": 1,
+      "requires": [ "first_node" ],
+      "required_level": 5,
+      "effects": [
+        { "type": "pipican:damage_dealt", "multiplier": 1.1 }
+      ],
+      "grants": [ "mypack:example_ability" ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "#pipican:weapons/bows", "required": false },
+    { "id": "#pipican:weapons/crossbows", "required": false }
+  ]
+}
