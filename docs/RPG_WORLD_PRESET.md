@@ -1,18 +1,8 @@
-# Experimental RPG World preset
+# Pipican RPG World (experimental)
 
-Select `Pipican RPG World` in the world type list once enabled.
-
-Uses `pipican:regional` biome source for region/subregion placement within
-the 50k logical coordinate bounds. Outside the authored world, the fallback
-biome is plains; world border still requires a separate server-side setting.
-
-IMPORTANT: This is experimental: it uses vanilla Overworld height and noise
-terrain, NOT extended -64..511 or custom capital-adaptive terrain. The biome
-definitions presently have empty features and spawn settings, so these biomes
-will not contain their intended forests/ores/mobs until biome generation
-features are authored. Unique seeds are not yet derived from the world seed;
-the preset currently supplies seed=0.
-
-The structure pools JSON remains an authored manifest, not actual jigsaw
-registrations. No real castle, dungeon or mine templates are placed by this
-preset. Run GameTests before using it for actual survival saves.
+The pipican:rpg_world preset uses the pipican:regional BiomeSource and custom extended RPG Overworld dimension/noise.
+The selected world spans -25,000..25,000 X/Z and Y=-64..511.
+Custom biome colors and features, region-themed surface materials and an experimental regional terrain-density contribution are enabled.
+Vanilla cave and mineral features are preserved inside the custom biome definitions.
+Twenty-two capital cities are built in 63 incremental stages each when players approach; the other 48 named settlements are single-template placements.
+These approaches have not yet been visually inspected across the full 50k world. World generation is experimental and should be tested in a new disposable save.
