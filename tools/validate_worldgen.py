@@ -74,7 +74,7 @@ def main():
         ):
             require(p.is_file(), "missing ore asset: " + str(p))
         png = (ASSETS / "textures/block" / (block + ".png")).read_bytes()
-        require(png[:8] == b"\x5c\x5cx89PNG\x5c\x5cr\x5c\x5cn\x5c\x5cx1a\x5c\x5cn",
+        require(png[:8] == bytes([137, 80, 78, 71, 13, 10, 26, 10]),
                 "invalid PNG signature: " + ore)
 
     biome_dir = DATA / "biome"
