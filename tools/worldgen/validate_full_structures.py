@@ -9,9 +9,12 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 OUT=HERE/'output'
 BASE=OUT/'data/pipican'
-POOLS=json.loads((HERE/'asset_manifest.json').read_text())['pools']
-SITES=json.loads((HERE/'settlements.json').read_text())['settlements']
-REGIONS=json.loads((HERE/'region_map.json').read_text())['macro_regions']
+# In the repository consume the canonical author data; standalone builds can
+# keep the JSON files next to this validator.
+ASSETS=HERE if (HERE/'region_map.json').is_file() else HERE.parents[1]/'src/main/resources/data/pipican/worldgen'
+POOLS=json.loads((ASSETS/('asset_manifest.json' if (ASSETS/'asset_manifest.json').is_file() else 'structure_pools_manifest.json')).read_text())['pools']
+SITES=json.loads((ASSETS/'settlements.json').read_text())['settlements']
+REGIONS=json.loads((ASSETS/'region_map.json').read_text())['macro_regions']
 
 # Lightweight parser: only inspect the root structure tags, then sanity-check
 # lists and coordinate payload sizes without building an entire NBT tree.
