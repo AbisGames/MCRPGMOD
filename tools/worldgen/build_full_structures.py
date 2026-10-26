@@ -204,8 +204,159 @@ class Workshop(Build):
         elif self.style in ('eastern','aether'):self.pagoda_roof()
         elif self.style in ('volcanic','underground'):self.obsidian_throne()
         elif self.style=='desert':self.desert_court()
+        self.cultural_landmark()
         self.acc['floors']=4
         self.acc['gate_width']=7
+
+    def cultural_landmark(self):
+        """Compose a landmark silhouette unique to this region and accessible courtyards.
+
+        This adds biome-specific arches, waterworks, observatories, watchtowers
+        and ceremonial surfaces without replacing the palace's existing rooms.
+        All geometry remains within the 112 x 72 x 112 Minecraft structure
+        template; the outer 5x5 district layout is assembled separately.
+        """
+        W,D=self.sx,self.sz
+        cx,cz=W//2,D//2
+        a=self.theme[0]
+        b=self.theme[3]
+        c=self.theme[2]
+        rid=self.region
+        def arch(x,z,width=9,height=12,axis='x',stone=None):
+            block=stone or b
+            for i in range(width):
+                for y in range(2,height+2):
+                    edge=i in (0,1,width-2,width-1) or y>=height
+                    if edge:
+                        px=x+i if axis=='x' else x
+                        pz=z if axis=='x' else z+i
+                        self.set(px,y,pz,block)
+            for i in range(2,width-2):
+                for y in range(2,height):
+                    self.set(x+i if axis=='x' else x,y,z if axis=='x' else z+i,'air')
+        def beacon(x,z,h,stone,light='sea_lantern'):
+            for y in range(1,h):
+                self.set(x,y,z,stone)
+                if y in (h//2,h-2):
+                    for dx,dz in ((1,0),(-1,0),(0,1),(0,-1)):
+                        self.set(x+dx,y,z+dz,stone)
+            self.set(x,h,z,light)
+        if rid=='elderwood':
+            # Rivendell-inspired slender white arcades, high walkways and
+            # waterfall-fed reflection pools, all original block geometry.
+            for x in range(19,W-15,14):
+                arch(x,17,9,16,stone='quartz_pillar')
+                arch(x,D-18,9,16,stone='quartz_pillar')
+                self.set(x+4,19,17,'sea_lantern')
+            for z in range(21,D-20):
+                for x in (15,W-16):
+                    self.set(x,25,z,'smooth_quartz')
+                    if z%7==0:self.set(x,26,z,'sea_lantern')
+            for z in (19,D-20):
+                for x in range(31,W-30):
+                    self.set(x,1,z,'water')
+            for x,z in ((12,34),(W-13,34),(12,D-35),(W-13,D-35)):
+                beacon(x,z,24,'quartz_pillar','sea_lantern')
+        elif rid=='greyspine_mountains':
+            for z in (12,D-13):
+                arch(cx-13,z,27,22,stone='polished_deepslate')
+            for x in (13,W-14):
+                for z in (36,D-35,8):
+                    beacon(x,z,15,'polished_basalt','lava')
+            for x,z in ((16,16),(W-17,16),(16,D-17),(W-17,D-17)):
+                self.spire(x,z,4,22,16)
+        elif rid in ('jade_empire','lotus_delta'):
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                self.spire(x,z,4,22,20)
+            for x in range(26,W-25):
+                for z in (18,D-19):
+                    self.set(x,23,z,'dark_prismarine')
+            for z in range(26,D-25):
+                for x in (18,W-19):
+                    self.set(x,23,z,'cherry_planks')
+            for x in (24,W-25):
+                for z in (24,D-25):
+                    beacon(x,z,12,'cherry_log','lantern')
+        elif rid in ('ashlands','crimson_wilds','stormcoast'):
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                beacon(x,z,28,'polished_blackstone','soul_lantern')
+            for z in (14,D-15):
+                for x in range(24,W-23,10):
+                    self.set(x,2,z,'magma_block')
+                    self.set(x,3,z,'iron_bars')
+            for z in range(25,D-24,11):
+                self.set(14,2,z,'crying_obsidian')
+                self.set(W-15,2,z,'crying_obsidian')
+        elif rid in ('whitecrown_icecap','northern_ice_sea'):
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                beacon(x,z,30,'blue_ice')
+            for x in range(22,W-21,6):
+                for z in (15,D-16):
+                    self.set(x,15,z,'packed_ice')
+                    self.set(x,16,z,'blue_ice')
+        elif rid in ('sunscorch_desert','riverlands','spice_coast'):
+            for x in (20,W-21):
+                for z in (23,D-24,18):
+                    arch(x,z,11,12,'z','chiseled_sandstone')
+            for x,z in ((19,19),(W-20,19),(19,D-20),(W-20,D-20)):
+                beacon(x,z,19,'cut_sandstone','lantern')
+        elif rid=='marshfen':
+            for x in (13,W-14):
+                for z in range(25,D-24):
+                    self.set(x,3,z,'mangrove_planks')
+                    if z%6==0:beacon(x,z,9,'mangrove_log','soul_lantern')
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                beacon(x,z,21,'mangrove_log','shroomlight')
+        elif rid in ('coral_isles','western_ocean','inner_sea','shimmering_reefs'):
+            for x,z in ((16,16),(W-17,16),(16,D-17),(W-17,D-17)):
+                beacon(x,z,24,'prismarine_bricks')
+            for z in (18,D-19):
+                for x in range(24,W-23):
+                    self.set(x,2,z,'prismarine')
+                    if x%7==0:self.set(x,3,z,'sea_lantern')
+        elif rid in ('emerald_jungle','verdant_depths'):
+            for x,z in ((13,13),(W-14,13),(13,D-14),(W-14,D-14)):
+                for y in range(2,31):self.set(x,y,z,'jungle_log')
+                for dx in range(-5,6):
+                    for dz in range(-5,6):
+                        if dx*dx+dz*dz<27:
+                            self.set(x+dx,30,z+dz,'jungle_leaves')
+            for z in (18,D-19):
+                arch(cx-8,z,17,14,stone='mossy_stone_bricks')
+        elif rid=='aetheris_expanse':
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                beacon(x,z,32,'amethyst_block')
+            for x in range(27,W-26):
+                for z in (15,D-16):
+                    self.set(x,31,z,'quartz_bricks')
+                    if x%8==0:self.set(x,32,z,'sea_lantern')
+        elif rid=='umbral_chasm':
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                beacon(x,z,24,'crying_obsidian','soul_lantern')
+            for x in range(14,W-13,7):
+                for z in (12,D-13):
+                    self.set(x,21,z,'pointed_dripstone[vertical_direction=down,thickness=tip]')
+        elif rid in ('pinewall_taiga','fjordmark'):
+            for x in (17,W-18):
+                for z in (19,D-20):
+                    arch(x,z,13,11,axis='z',stone='stripped_spruce_log')
+            for x,z in ((17,17),(W-18,17),(17,D-18),(W-18,D-18)):
+                beacon(x,z,23,'spruce_log','lantern')
+        elif rid in ('khagan_steppe','goldgrass_savanna'):
+            for x,z in ((15,15),(W-16,15),(15,D-16),(W-16,D-16)):
+                beacon(x,z,22,'acacia_log','lantern')
+            for x in range(20,W-19,9):
+                self.set(x,21,17,'orange_terracotta')
+                self.set(x,21,D-18,'orange_terracotta')
+        elif rid=='redrock_badlands':
+            for x,z in ((17,17),(W-18,17),(17,D-18),(W-18,D-18)):
+                beacon(x,z,26,'red_sandstone','lantern')
+            for x in (15,W-16):
+                for z in range(20,D-19,4):
+                    self.set(x,20,z,'orange_terracotta')
+                    self.set(x,21,z,'red_sandstone')
+        self.acc['cultural_signature']=1
+
     def elven_terrace(self):
         # White arcades, elevated living bridges, tree-lined reflection basins.
         wall=self.theme[0];post=self.theme[3]
