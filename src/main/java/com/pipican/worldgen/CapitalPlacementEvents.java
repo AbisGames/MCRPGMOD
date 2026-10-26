@@ -13,7 +13,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 /**
- * Incremental near-player placement of each authored capital's 25-piece city.
+ * Incremental near-player placement of all 70 authored settlements, including
+ * each capital's 63-piece city (25 buildings and 38 connecting roads).
  *
  * <p>Triggered only in the RPG overworld, once per 40 server ticks, one tile
  * per pass. The foundation elevation is sampled once from real terrain, never
@@ -28,9 +29,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 public final class CapitalPlacementEvents {
     private static final int BUILD_TICK_INTERVAL=40;
     private static final long PLAYER_TRIGGER_RADIUS_SQUARED=150L*150L;
-    private static final List<LandmarkCatalog.Landmark> CAPITALS =
-        new LandmarkCatalog().all().stream()
-          .filter(p->p.tier().equals("capital")).toList();
+    private static final List<LandmarkCatalog.Landmark> LANDMARKS =
+        new LandmarkCatalog().all();
 
     private CapitalPlacementEvents(){}
 
@@ -44,12 +44,13 @@ public final class CapitalPlacementEvents {
             boolean placed=false;
             for(var player:level.players()) {
                 if(placed)break;
-                for(LandmarkCatalog.Landmark city:CAPITALS){
+                for(LandmarkCatalog.Landmark city:LANDMARKS){
                     long dx=(long)Math.floor(player.getX())-city.x();
                     long dz=(long)Math.floor(player.getZ())-city.z();
                     if(dx*dx+dz*dz>PLAYER_TRIGGER_RADIUS_SQUARED)continue;
                     CapitalPlacementSavedData.Progress done=progress.progress(city.id());
-                    if(done!=null&&done.nextTile()>=63)continue;
+                    int total=city.tier().equals("capital")?63:1;
+                    if(done!=null&&done.nextTile()>=total)continue;
                     if(buildOneTile(level,city,progress)) {
                         placed=true;
                         break;
@@ -67,7 +68,8 @@ public final class CapitalPlacementEvents {
                                        CapitalPlacementSavedData progress) {
         var state=progress.progress(city.id());
         int index=state==null?0:state.nextTile();
-        if(index>=63)return false;
+        boolean capital=city.tier().equals("capital");
+        if(index>=(capital?63:1))return false;
         // The initial height is based on terrain in this save, not a
         // globally fixed sea-level or arbitrary Y constant.
         var center=new BlockPos(city.x(),64,city.z());
@@ -75,12 +77,21 @@ public final class CapitalPlacementEvents {
         int foundationY=state==null?
             Math.min(level.getHeight(Heightmap.Types.WORLD_SURFACE,city.x(),city.z()),
                 level.getMaxY()-75) : state.foundationY();
-        JsonObject layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
-        JsonElement row=index<25
-            ? layout.getAsJsonArray("relative_positions").get(index)
-            : layout.getAsJsonArray("connectors").get(index-25);
-        var tile=row.getAsJsonObject();
-        String location=tile.get("template").getAsString();
+        JsonObject tile;
+        String location;
+        if(capital){
+            JsonObject layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
+            JsonElement row=index<25
+                ? layout.getAsJsonArray("relative_positions").get(index)
+                : layout.getAsJsonArray("connectors").get(index-25);
+            tile=row.getAsJsonObject();
+            location=tile.get("template").getAsString();
+        }else{
+            tile=new JsonObject();
+            tile.addProperty("x",0);
+            tile.addProperty("z",0);
+            location="pipican:authored/"+city.assetPool();
+        }
         var id=net.minecraft.resources.Identifier.parse(location);
         var manager=level.getServer().getStructureManager();
         var template=manager.get(id);
@@ -90,8 +101,8 @@ public final class CapitalPlacementEvents {
         }
         // City plots are centred around the authored landmark location;
         // the +/-224 tile array is offset by -46 to centre the whole 5x5 area.
-        int ox=city.x()-46+tile.get("x").getAsInt();
-        int oz=city.z()-46+tile.get("z").getAsInt();
+        int ox=city.x()-(capital?46:0)+tile.get("x").getAsInt();
+        int oz=city.z()-(capital?46:0)+tile.get("z").getAsInt();
         BlockPos origin=new BlockPos(ox,foundationY,oz);
         StructurePlaceSettings options=new StructurePlaceSettings().setIgnoreEntities(true);
         if(!template.get().placeInWorld(level,origin,origin,options,level.getRandom(),2)){
@@ -99,7 +110,8 @@ public final class CapitalPlacementEvents {
             return false;
         }
         progress.advance(city.id(),index+1,foundationY);
-        if(index==62)Pipican.LOGGER.info("Completed RPG capital {} (25 city tiles and 38 bridges)",city.id());
+        if((capital&&index==62)||(!capital&&index==0))
+            Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;
     }
 }
