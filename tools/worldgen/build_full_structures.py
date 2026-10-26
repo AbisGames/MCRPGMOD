@@ -3,7 +3,7 @@
 
 Produces reproducible binary Java-Edition .nbt templates, jigsaw pool JSON,
 biome tags, a command-installable capital kit, and a validation catalog.
-This is a content-generation tool, not a promise of completed in-game placement.
+This is a content-generation tool, not a promise of completed in-game placement.\nThe 26.1.2 GameTest suite separately verifies selected binary template loads.
 """
 import gzip
 import hashlib

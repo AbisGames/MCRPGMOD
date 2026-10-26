@@ -22,7 +22,8 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public final class WorldgenTests {
     private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
         "worldgen_catalog", WorldgenTests::worldgenCatalog,
-        "renewable_mine", WorldgenTests::renewableMine
+        "renewable_mine", WorldgenTests::renewableMine,
+        "structure_nbt_load", WorldgenTests::structureNbtLoad
     );
     private WorldgenTests(){}
 
@@ -58,6 +59,26 @@ public final class WorldgenTests {
         }
         helper.assertTrue(RegionalOreRegistries.NODES.size()==27,"missing registered ore nodes");
         helper.assertTrue(RegionalOreRegistries.MATERIALS.size()==27,"missing registered ore items");
+        helper.succeed();
+    }
+
+    /** Loads real binary NBT through Minecraft's server template manager. */
+    private static void structureNbtLoad(GameTestHelper helper) {
+        String[] ids={
+            "authored/landmarks/elderwood/sylvaran",
+            "authored/landmarks/greyspine_mountains/durnhold",
+            "regional/ashlands/dungeon",
+            "regional/ashlands/mine"
+        };
+        int[] widths={112,112,80,80};
+        for(int i=0;i<ids.length;i++){
+            var template=helper.getLevel().getStructureManager().get(Pipican.id(ids[i]));
+            helper.assertTrue(template.isPresent(),"missing NBT "+ids[i]);
+            if(template.isPresent()) {
+                helper.assertTrue(template.get().getSize().getX()==widths[i],
+                    "unexpected structure width for "+ids[i]);
+            }
+        }
         helper.succeed();
     }
 

@@ -7,7 +7,7 @@ on:
       - 'src/main/java/com/pipican/worldgen/**'
       - 'src/main/resources/data/pipican/worldgen/**'
       - 'src/main/resources/assets/pipican/**'
-      - 'tools/validate_worldgen.py'
+      - 'tools/validate_worldgen.py'\n      - 'src/gametest/java/com/pipican/gametest/WorldgenTests.java'
 jobs:
   validate-and-build:
     runs-on: ubuntu-latest
