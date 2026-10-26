@@ -9,10 +9,9 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 OUT=HERE/'output'
 BASE=OUT/'data/pipican'
-SOURCES=HERE if (HERE/'asset_manifest.json').is_file() else HERE.parents[1]/'src/main/resources/data/pipican/worldgen'
-POOLS=json.loads((SOURCES/('asset_manifest.json' if (SOURCES/'asset_manifest.json').is_file() else 'structure_pools_manifest.json')).read_text())['pools']
-SITES=json.loads((SOURCES/'settlements.json').read_text())['settlements']
-REGIONS=json.loads((SOURCES/'region_map.json').read_text())['macro_regions']
+POOLS=json.loads((HERE/'asset_manifest.json').read_text())['pools']
+SITES=json.loads((HERE/'settlements.json').read_text())['settlements']
+REGIONS=json.loads((HERE/'region_map.json').read_text())['macro_regions']
 
 # Lightweight parser: only inspect the root structure tags, then sanity-check
 # lists and coordinate payload sizes without building an entire NBT tree.
@@ -63,24 +62,44 @@ def inspect_nbt(file):
         elif key=='blocks' and t==9:
             assert take(1)==b'\x0a'
             n=read_int();blocks_count=n
-            # The generator emits a strict constant-size compound encoding:
-            # TAG_List pos + 3 int coords + TAG_Int state + TAG_End.
-            record_length=36
+            # Most blocks are fixed-length compounds. Dungeon chests add a
+            # block-entity NBT compound with a regional LootTable identifier.
             first=offset
-            expected=data[first:first+6]
-            assert expected==b'\x09\x00\x03pos', f'Invalid block payload in {file}'
-            assert data[first+23:first+31]==b'\x03\x00\x05state'
-            assert first+n*record_length<=len(data)
-            for ix in [0,n//2,n-1]:
-                pos=first+ix*record_length
-                if ix<0:continue
-                assert data[pos:pos+6]==expected
-                coords=struct.unpack_from('>iii',data,pos+11)
-                assert sizes and all(0<=v<b for v,b in zip(coords,sizes)),(file,coords,sizes)
-                state=struct.unpack_from('>i',data,pos+31)[0]
-                assert 0<=state<palette_count,(file,state,palette_count)
-                assert data[pos+35]==0
-            offset+=n*record_length
+            expected=b'\x09\x00\x03pos'
+            assert data[first:first+6]==expected, f'Invalid block payload in {file}'
+            if 'dungeon' not in file.name:
+                record_length=36
+                assert first+n*record_length<=len(data)
+                for ix in [0,n//2,n-1]:
+                    pos=first+ix*record_length
+                    assert data[pos:pos+6]==expected
+                    coords=struct.unpack_from('>iii',data,pos+11)
+                    assert sizes and all(0<=v<b for v,b in zip(coords,sizes)),(file,coords,sizes)
+                    state=struct.unpack_from('>i',data,pos+31)[0]
+                    assert 0<=state<palette_count,(file,state,palette_count)
+                    assert data[pos+35]==0
+                offset+=n*record_length
+            else:
+                chest_tags=0
+                for ix in range(n):
+                    pos=offset
+                    assert data[pos:pos+6]==expected,(file,ix)
+                    coords=struct.unpack_from('>iii',data,pos+11)
+                    assert all(0<=v<b for v,b in zip(coords,sizes)),(file,coords,sizes)
+                    state=struct.unpack_from('>i',data,pos+31)[0]
+                    assert 0<=state<palette_count,(file,state,palette_count)
+                    offset+=35
+                    if data[offset]==10:  # The optional block-entity compound.
+                        offset+=1
+                        assert read_string()=='nbt'
+                        assert take(1)==b'\x08'
+                        assert read_string()=='LootTable'
+                        loot_id=read_string()
+                        assert loot_id.startswith('pipican:chests/')
+                        assert take(1)==b'\x00'
+                        chest_tags+=1
+                    assert take(1)==b'\x00'
+                assert chest_tags==3,(file,chest_tags)
         elif key=='entities' and t==9:
             assert take(1)==b'\x0a';assert read_int()==0
             has_entities=True

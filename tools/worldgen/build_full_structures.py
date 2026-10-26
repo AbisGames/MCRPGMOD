@@ -58,6 +58,7 @@ class Workshop(Build):
         super().__init__(name,region,size)
         self.style=ARCHETYPE[region]
         self.acc=Counter()
+        self.block_entities={}
         self.rand=random.Random(int(hashlib.sha256(name.encode()).hexdigest()[:16],16))
     def air(self,x1,y1,z1,x2,y2,z2):
         # Explicit air clears natural terrain when a template is embedded in slopes.
@@ -262,8 +263,8 @@ class Workshop(Build):
           'academy':['library','archive','shrine','library'],
           'artisan':['forge','smithy','storage','inn'],
           'garden':['shrine','home','home','storage']}
-        # Deterministic variation yields unique building footprints, levels
-        # and village monuments for each authored subregion pool.
+        # Pool identifiers and city district names seed a deterministic,
+        # genuinely different footprint, doorway orientation and roof skyline.
         for i,(x1,z1,x2,z2) in enumerate(entries):
             role=roles.get(category,roles['market'])[i]
             shiftx=self.rand.randint(-3,3)
@@ -274,6 +275,8 @@ class Workshop(Build):
             sz2=max(13,z2-z1+1+self.rand.randrange(-3,4))
             floors=max(1,min(3,(2 if category!='military' else 3)+self.rand.choice([-1,0,0,1])))
             self.detailed_building(sx,sz,sx2,sz2,floors,role,(i+self.rand.randrange(2))%4)
+        # Subregion-specific monuments and gathering spots distinguish villages
+        # even if two settlements share the same macro culture and tier.
         accent=self.theme[3]
         for j in range(3+self.rand.randrange(5)):
             mx=cx+self.rand.randint(-15,15)
@@ -348,7 +351,10 @@ class Workshop(Build):
             self.acc['rails']=2
         else:
             # Loot position and boss chamber fixed for server-side reward system.
-            for dx in (-2,0,2):self.set(cx+dx,2,cz+8,'chest[facing=north]')
+            for dx in (-2,0,2):
+                pos=(cx+dx,2,cz+8)
+                self.set(*pos,'chest[facing=north]')
+                self.block_entities[pos]={'LootTable':f'pipican:chests/{self.region}_dungeon'}
             self.acc['reward_chests']=3
         self.acc['main_chamber']=1
     def make(self,typ):
@@ -372,8 +378,13 @@ def statecompound(st):
     return cmp([pstr('Name',base),tag('Properties',10)+cmp(props)])
 def dump_nbt(b,path):
     palette=sorted(set(b.blocks.values()));indices={v:i for i,v in enumerate(palette)}
-    blocks=[cmp([ints('pos',pos),pint('state',indices[st])]) for pos,st in sorted(b.blocks.items())]
-    data=tag('',10)+cmp([ints('size',[b.sx,b.sy,b.sz]),lst('palette',10,[statecompound(st) for st in palette]),lst('blocks',10,blocks),lst('entities',10,[]),pint('DataVersion',4650)])
+    blocks=[]
+    for pos,st in sorted(b.blocks.items()):
+        parts=[ints('pos',pos),pint('state',indices[st])]
+        if pos in b.block_entities:
+            parts.append(tag('nbt',10)+cmp([pstr(key,value) for key,value in b.block_entities[pos].items()]))
+        blocks.append(cmp(parts))
+    data=tag('',10)+cmp([ints('size',[b.sx,b.sy,b.sz]),lst('palette',10,[statecompound(st) for st in palette]),lst('blocks',10,blocks),lst('entities',10,[]),pint('DataVersion',4790)])
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_bytes(gzip.compress(data,compresslevel=3,mtime=0))
     return len(blocks),len(data)
@@ -439,10 +450,10 @@ def generate():
             typ=districts[i%len(districts)]
             ident=f'capital_districts/{reg}/{key}/{dx+2}_{dz+2}_{typ}'
             write(ident,reg,typ,(92,34,92))
-            rows.append({'template':'pipican:'+ident,'x':dx*96,'z':dz*96,'kind':typ,'size':[92,34,92]})
+            rows.append({'template':'pipican:'+ident,'x':dx*112,'z':dz*112,'kind':typ,'size':[92,34,92]})
         savejson(Path('worldgen/capital_assemblies')/(key+'.json'),{
            'id':key,'region':reg,'anchor':[s['x'],s['z']],
-           'author_coord_scale':600,'tile_pitch':96,'relative_positions':rows,
+           'author_coord_scale':600,'tile_pitch':112,'relative_positions':rows,
            'implementation':'Requires structure assembly placement into generated chunks; command functions supplied.'})
         # Manual-placement functions for singleplayer world debugging only.
         # Position at city centre x/y/z and run /function pipican:build_capital/<id>.
@@ -458,6 +469,15 @@ def generate():
     for reg in sorted(REGIONIDS|set(EXTRAS)):
         write('regional/'+reg+'/dungeon',reg,'dungeon',(80,28,80),pool='regional/'+reg+'/dungeon',structure=True,spawn=True,spacing=115)
         write('regional/'+reg+'/mine',reg,'mine',(80,28,80),pool='regional/'+reg+'/mine',structure=True,spawn=True,spacing=90)
+        # Regional boss-reward chests contain the same resource family needed
+        # for dungeon-equipment upgrades. Real boss gating comes separately.
+        loot={'type':'minecraft:chest','pools':[
+           {'rolls':1,'entries':[{'type':'minecraft:item','name':'pipican:'+ORE[reg],
+             'functions':[{'function':'minecraft:set_count','count':{'type':'minecraft:uniform','min':3,'max':8}}]}]},
+           {'rolls':1,'entries':[{'type':'minecraft:item','name':'minecraft:diamond','weight':1},
+                                 {'type':'minecraft:item','name':'minecraft:amethyst_shard','weight':3},
+                                 {'type':'minecraft:item','name':'minecraft:emerald','weight':2}]}]}
+        savejson(Path('loot_table/chests')/(reg+'_dungeon.json'),loot)
         if reg in EXTRAS:
             write('regional/'+reg+'/castle',reg,'castle',(112,72,112),pool='regional/'+reg+'/castle',structure=True,spawn=False)
             write('regional/'+reg+'/village',reg,'village',(80,30,80),pool='regional/'+reg+'/village',structure=True,spawn=True,spacing=100)
