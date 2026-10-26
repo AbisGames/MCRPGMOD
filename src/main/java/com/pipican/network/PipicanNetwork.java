@@ -22,6 +22,7 @@ public final class PipicanNetwork {
         PayloadRegistrar r = event.registrar(VERSION);
 
         r.playToClient(OpenClassSelectionPayload.TYPE, OpenClassSelectionPayload.STREAM_CODEC);
+        r.playToClient(OpenSkillTreePayload.TYPE, OpenSkillTreePayload.STREAM_CODEC);
 
         r.playToServer(ChooseClassPayload.TYPE, ChooseClassPayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
@@ -34,9 +35,15 @@ public final class PipicanNetwork {
             ServerPlayer player = (ServerPlayer) ctx.player();
             player.sendSystemMessage(ClassService.raiseStat(player, payload.stat()).message());
         });
-        r.playToServer(UnlockSkillPayload.TYPE, UnlockSkillPayload.STREAM_CODEC, (payload, ctx) -> {
+        r.playToServer(NodePayload.TYPE, NodePayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
-            player.sendSystemMessage(ClassService.unlockNode(player, payload.tree(), payload.nodeId()).message());
+            ClassService.Result result = payload.refund()
+                    ? ClassService.refundNode(player, payload.tree(), payload.nodeId())
+                    : ClassService.allocateNode(player, payload.tree(), payload.nodeId());
+            // Success is visible in the tree screen itself; only explain failures.
+            if (!result.success()) {
+                player.sendOverlayMessage(result.message());
+            }
         });
     }
 }

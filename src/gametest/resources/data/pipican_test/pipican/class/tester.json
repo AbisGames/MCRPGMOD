@@ -9,9 +9,9 @@
     "resource": { "name": "Test Mana", "base_max": 10, "max_per_point": 2, "regen_per_second": 0 }
   },
   "starting_kit": [ { "id": "minecraft:stone_sword" } ],
-  "skill_tree": "pipican_test:general",
-  "special_skill_tree": "pipican_test:special",
-  "progression": { "max_level": 10, "skill_points_per_level": 2, "special_skill_points_per_level": 1 },
+  "skill_tree": { "tree": "pipican_test:main", "start": "start_a" },
+  "special_skill_tree": { "tree": "pipican_test:special", "start": "s_start" },
+  "progression": { "max_level": 10 },
   "passives": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 3 } ],
   "special_passives": [
     { "type": "pipican:attribute", "attribute": "minecraft:armor_toughness", "amount": 0,

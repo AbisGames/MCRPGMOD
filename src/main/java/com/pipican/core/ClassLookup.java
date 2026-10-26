@@ -1,7 +1,9 @@
 package com.pipican.core;
 
+import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.skill.SkillTree;
+import com.pipican.skill.SkillTrees;
 import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
@@ -26,8 +28,8 @@ public final class ClassLookup {
         return access.lookupOrThrow(PipicanRegistries.STAT);
     }
 
-    public static Registry<SkillTree> trees(RegistryAccess access) {
-        return access.lookupOrThrow(PipicanRegistries.SKILL_TREE);
+    public static Registry<Skill> skills(RegistryAccess access) {
+        return access.lookupOrThrow(PipicanRegistries.SKILL);
     }
 
     public static Registry<TrinketSlotType> trinketSlots(RegistryAccess access) {
@@ -39,7 +41,7 @@ public final class ClassLookup {
     }
 
     public static Optional<SkillTree> tree(RegistryAccess access, RpgClass rpgClass, TreeKind kind) {
-        return rpgClass.tree(kind).flatMap(key -> trees(access).getOptional(key));
+        return rpgClass.tree(kind).flatMap(ref -> SkillTrees.get(access, ref.tree()));
     }
 
     /** Classes players may pick on the selection screen, sorted by id for a stable order. */

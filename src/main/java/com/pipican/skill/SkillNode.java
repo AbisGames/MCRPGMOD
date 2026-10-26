@@ -12,46 +12,44 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 /**
- * One node of a {@link SkillTree}.
+ * One node of a passive tree.
  *
  * <pre>{@code
  * {
  *   "id": "iron_skin",
  *   "name": "Iron Skin",
- *   "description": "+1 armor per rank.",
+ *   "description": "+2 armor.",
+ *   "type": "small",
  *   "icon": "minecraft:iron_chestplate",
- *   "x": 0, "y": 1,
- *   "cost": 1,
- *   "max_rank": 3,
- *   "required_level": 5,
- *   "requires": [ "toughness" ],
- *   "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 1 } ],
- *   "grants": [ "pipican:shield_bash" ]
+ *   "x": 120, "y": -40,
+ *   "links": [ "warrior_start", "iron_will" ],
+ *   "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 2 } ]
  * }
  * }</pre>
  *
- * @param id            unique within its tree
- * @param x             column in the (future) tree screen
- * @param y             row in the (future) tree screen
- * @param cost          skill points per rank
- * @param maxRank       how many times the node can be bought
- * @param requiredLevel minimum class level to buy the first rank
- * @param requires      node ids that must have at least one rank first (all of them)
- * @param effects       applied once per rank (see {@link ClassEffect})
- * @param grants        ids of active abilities unlocked by this node. Stored now; the ability
- *                      system that reads them is a later task.
+ * @param id            unique within the whole tree (across all of its files). Saved on players -
+ *                      don't rename after release.
+ * @param type          small / notable / keystone / start (see {@link NodeType})
+ * @param x             position in the tree screen; 0,0 is the centre, +y is down
+ * @param y             position in the tree screen
+ * @param links         ids of connected nodes. Links are two-way, so declaring them on one side is enough.
+ *                      May point at nodes in other files of the same tree.
+ * @param cost          skill points to allocate (normally 1)
+ * @param requiredLevel minimum class level to allocate
+ * @param effects       applied while the node is allocated (see {@link ClassEffect})
+ * @param grants        ids of active abilities unlocked by this node (read by the future ability system)
  */
 public record SkillNode(
         String id,
         Component name,
         Component description,
+        NodeType type,
         Item icon,
-        int x,
-        int y,
+        double x,
+        double y,
+        List<String> links,
         int cost,
-        int maxRank,
         int requiredLevel,
-        List<String> requires,
         List<ClassEffect> effects,
         List<Identifier> grants) {
 
@@ -59,13 +57,13 @@ public record SkillNode(
             Codec.STRING.fieldOf("id").forGetter(SkillNode::id),
             ComponentSerialization.CODEC.fieldOf("name").forGetter(SkillNode::name),
             ComponentSerialization.CODEC.optionalFieldOf("description", Component.empty()).forGetter(SkillNode::description),
+            NodeType.CODEC.optionalFieldOf("type", NodeType.SMALL).forGetter(SkillNode::type),
             BuiltInRegistries.ITEM.byNameCodec().optionalFieldOf("icon", Items.BOOK).forGetter(SkillNode::icon),
-            Codec.INT.optionalFieldOf("x", 0).forGetter(SkillNode::x),
-            Codec.INT.optionalFieldOf("y", 0).forGetter(SkillNode::y),
+            Codec.DOUBLE.optionalFieldOf("x", 0.0).forGetter(SkillNode::x),
+            Codec.DOUBLE.optionalFieldOf("y", 0.0).forGetter(SkillNode::y),
+            Codec.STRING.listOf().optionalFieldOf("links", List.of()).forGetter(SkillNode::links),
             Codec.intRange(0, 1000).optionalFieldOf("cost", 1).forGetter(SkillNode::cost),
-            Codec.intRange(1, 1000).optionalFieldOf("max_rank", 1).forGetter(SkillNode::maxRank),
             Codec.INT.optionalFieldOf("required_level", 1).forGetter(SkillNode::requiredLevel),
-            Codec.STRING.listOf().optionalFieldOf("requires", List.of()).forGetter(SkillNode::requires),
             ClassEffect.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(SkillNode::effects),
             Identifier.CODEC.listOf().optionalFieldOf("grants", List.of()).forGetter(SkillNode::grants)
     ).apply(i, SkillNode::new));

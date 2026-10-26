@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pipican.core.PipicanRegistries;
+import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
@@ -38,7 +39,8 @@ public final class PlayerClassData {
             Codec.INT.optionalFieldOf("stat_levels_spent", 0).forGetter(d -> d.statLevelsSpent),
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), ItemStack.OPTIONAL_CODEC.listOf()).optionalFieldOf("trinkets", Map.of()).forGetter(d -> d.trinkets),
             Codec.DOUBLE.optionalFieldOf("resource", 0.0).forGetter(d -> d.resource),
-            Codec.DOUBLE.optionalFieldOf("resource_max", 0.0).forGetter(d -> d.resourceMax)
+            Codec.DOUBLE.optionalFieldOf("resource_max", 0.0).forGetter(d -> d.resourceMax),
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.SKILL), Codec.DOUBLE).optionalFieldOf("mastery", Map.of()).forGetter(d -> d.mastery)
     ).apply(i, PlayerClassData::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerClassData> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(MAP_CODEC.codec());
@@ -54,14 +56,19 @@ public final class PlayerClassData {
     private double resource;
     /** Cached max of the resource, computed server-side and synced for the HUD. */
     private double resourceMax;
+    /** Mastery points per skill. Belongs to the player (survives class changes). Tiers are derived from it. */
+    private final Map<ResourceKey<Skill>, Double> mastery;
+    /** Not saved: set when mastery changed but the client hasn't been told yet (synced in batches). */
+    private boolean masteryDirty;
 
     public PlayerClassData() {
-        this(Optional.empty(), Map.of(), Map.of(), 0, Map.of(), 0, 0);
+        this(Optional.empty(), Map.of(), Map.of(), 0, Map.of(), 0, 0, Map.of());
     }
 
     private PlayerClassData(Optional<ResourceKey<RpgClass>> activeClass, Map<ResourceKey<RpgClass>, ClassProgress> progress,
                             Map<ResourceKey<StatDefinition>, Integer> boughtStats, int statLevelsSpent,
-                            Map<ResourceKey<TrinketSlotType>, List<ItemStack>> trinkets, double resource, double resourceMax) {
+                            Map<ResourceKey<TrinketSlotType>, List<ItemStack>> trinkets, double resource, double resourceMax,
+                            Map<ResourceKey<Skill>, Double> mastery) {
         this.activeClass = activeClass;
         this.progress = new HashMap<>(progress);
         this.boughtStats = new HashMap<>(boughtStats);
@@ -70,6 +77,7 @@ public final class PlayerClassData {
         trinkets.forEach((k, v) -> this.trinkets.put(k, new ArrayList<>(v)));
         this.resource = resource;
         this.resourceMax = resourceMax;
+        this.mastery = new HashMap<>(mastery);
     }
 
     public Optional<ResourceKey<RpgClass>> activeClass() {
@@ -136,5 +144,21 @@ public final class PlayerClassData {
 
     void setResourceMax(double resourceMax) {
         this.resourceMax = resourceMax;
+    }
+
+    public double mastery(ResourceKey<Skill> skill) {
+        return mastery.getOrDefault(skill, 0.0);
+    }
+
+    Map<ResourceKey<Skill>, Double> allMastery() {
+        return mastery;
+    }
+
+    boolean masteryDirty() {
+        return masteryDirty;
+    }
+
+    void setMasteryDirty(boolean masteryDirty) {
+        this.masteryDirty = masteryDirty;
     }
 }

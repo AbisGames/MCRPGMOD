@@ -4,19 +4,21 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 /**
- * How a class levels. Class XP is separate from vanilla XP (vanilla XP buys stat points instead).
- * The XP needed per level comes from the server config curve; these numbers are per class.
+ * Class levelling and starting skill points.
  *
- * <pre>{@code "progression": { "max_level": 50, "skill_points_per_level": 1, "special_skill_points_per_level": 1 } }</pre>
- * Points are earned on every level-up after level 1, so a level-10 character has had 9 level-ups.
+ * <p>Class XP is separate from vanilla XP (vanilla XP buys stat points). Class level gates skill
+ * nodes ({@code required_level}) and can scale effects, but does <b>not</b> give skill points:
+ * those come from skill mastery tiers (see {@link com.pipican.mastery.Skill}).
+ *
+ * <pre>{@code "progression": { "max_level": 50, "starting_skill_points": 0, "starting_special_skill_points": 0 } }</pre>
  */
-public record Progression(int maxLevel, int skillPointsPerLevel, int specialSkillPointsPerLevel) {
+public record Progression(int maxLevel, int startingSkillPoints, int startingSpecialSkillPoints) {
 
-    public static final Progression DEFAULT = new Progression(50, 1, 1);
+    public static final Progression DEFAULT = new Progression(50, 0, 0);
 
     public static final Codec<Progression> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.intRange(1, 10_000).optionalFieldOf("max_level", DEFAULT.maxLevel).forGetter(Progression::maxLevel),
-            Codec.intRange(0, 1000).optionalFieldOf("skill_points_per_level", DEFAULT.skillPointsPerLevel).forGetter(Progression::skillPointsPerLevel),
-            Codec.intRange(0, 1000).optionalFieldOf("special_skill_points_per_level", DEFAULT.specialSkillPointsPerLevel).forGetter(Progression::specialSkillPointsPerLevel)
+            Codec.intRange(0, 1000).optionalFieldOf("starting_skill_points", 0).forGetter(Progression::startingSkillPoints),
+            Codec.intRange(0, 1000).optionalFieldOf("starting_special_skill_points", 0).forGetter(Progression::startingSpecialSkillPoints)
     ).apply(i, Progression::new));
 }

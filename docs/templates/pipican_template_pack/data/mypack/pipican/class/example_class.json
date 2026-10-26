@@ -29,13 +29,13 @@
     { "id": "minecraft:bread", "count": 8 }
   ],
 
-  "skill_tree": "mypack:example_class_general",
-  "special_skill_tree": "mypack:example_class_special",
+  "skill_tree": { "tree": "mypack:main", "start": "example_start" },
+  "special_skill_tree": { "tree": "mypack:example_class_special", "start": "special_start" },
 
   "progression": {
     "max_level": 50,
-    "skill_points_per_level": 1,
-    "special_skill_points_per_level": 1
+    "starting_skill_points": 0,
+    "starting_special_skill_points": 0
   },
 
   "passives": [

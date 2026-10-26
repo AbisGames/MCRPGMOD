@@ -3,12 +3,15 @@ package com.pipican.client;
 import com.pipican.Pipican;
 import com.pipican.core.ClassLookup;
 import com.pipican.network.OpenClassSelectionPayload;
+import com.pipican.network.OpenSkillTreePayload;
 import com.pipican.network.OpenTrinketsPayload;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.trinket.PipicanMenus;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -17,6 +20,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
@@ -34,10 +38,12 @@ public final class PipicanClient {
         modBus.addListener(PipicanClient::registerHud);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onClientTick);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onTooltip);
+        NeoForge.EVENT_BUS.addListener(PipicanClient::addInventoryButton);
     }
 
     private static void registerPayloadHandlers(RegisterClientPayloadHandlersEvent event) {
         event.register(OpenClassSelectionPayload.TYPE, (payload, ctx) -> openClassSelection());
+        event.register(OpenSkillTreePayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new SkillTreeScreen()));
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {
@@ -73,6 +79,15 @@ public final class PipicanClient {
             if (!mc.player.getData(PipicanAttachments.CLASS_DATA).hasClass()) {
                 openClassSelection();
             }
+        }
+    }
+
+    /** A "Passive Tree" button above the survival inventory, the way into the tree screen (no keybind yet). */
+    private static void addInventoryButton(ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof InventoryScreen screen) {
+            event.addListener(Button.builder(Component.translatable("pipican.tree.button"), b -> Minecraft.getInstance().setScreen(new SkillTreeScreen()))
+                    .bounds(screen.getGuiLeft() + screen.getImageWidth() - 60, screen.getGuiTop() - 18, 60, 16)
+                    .build());
         }
     }
 

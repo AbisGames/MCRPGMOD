@@ -3,12 +3,18 @@ package com.pipican.gametest;
 import com.pipican.Pipican;
 import com.pipican.core.PipicanConfig;
 import com.pipican.core.PipicanRegistries;
+import com.pipican.mastery.MoveMode;
+import com.pipican.mastery.Skill;
+import com.pipican.mastery.SkillAction;
 import com.pipican.player.ClassEffectApplier;
 import com.pipican.player.ClassService;
 import com.pipican.player.ClassState;
+import com.pipican.player.MasteryService;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.rpgclass.RpgClass;
+import com.pipican.skill.SkillTree;
+import com.pipican.skill.SkillTrees;
 import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
@@ -45,6 +51,8 @@ public final class ClassSystemTests {
     private static final ResourceKey<RpgClass> TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "tester"));
     private static final ResourceKey<StatDefinition> MIGHT = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "might"));
     private static final ResourceKey<StatDefinition> FOCUS = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "focus"));
+    private static final ResourceKey<Skill> BLADE = ResourceKey.create(PipicanRegistries.SKILL, Identifier.fromNamespaceAndPath("pipican_test", "blade"));
+    private static final ResourceKey<Skill> RUNNER = ResourceKey.create(PipicanRegistries.SKILL, Identifier.fromNamespaceAndPath("pipican_test", "runner"));
     private static final ResourceKey<TrinketSlotType> RING = ResourceKey.create(PipicanRegistries.TRINKET_SLOT, Pipican.id("ring"));
     private static final ResourceKey<TrinketSlotType> AMULET = ResourceKey.create(PipicanRegistries.TRINKET_SLOT, Pipican.id("amulet"));
 
@@ -53,6 +61,7 @@ public final class ClassSystemTests {
     static {
         TESTS.put("choose_class", ClassSystemTests::chooseClass);
         TESTS.put("skill_tree", ClassSystemTests::skillTree);
+        TESTS.put("mastery", ClassSystemTests::mastery);
         TESTS.put("affinity_and_damage", ClassSystemTests::affinityAndDamage);
         TESTS.put("stats_and_levels", ClassSystemTests::statsAndLevels);
         TESTS.put("trinkets", ClassSystemTests::trinkets);
@@ -106,33 +115,69 @@ public final class ClassSystemTests {
         helper.succeed();
     }
 
-    /** Points per level, ranks, requirements, level gates, stat effects from the special tree. */
+    /** Path of Exile rules: adjacency, level gates, start nodes, refunds that would disconnect, merged files. */
     private static void skillTree(GameTestHelper helper) {
         ServerPlayer player = testerPlayer(helper);
-        helper.assertTrue(!ClassService.unlockNode(player, TreeKind.GENERAL, "tough").success(), "no points at level 1");
+        SkillTree tree = SkillTrees.get(helper.getLevel().registryAccess(), Identifier.fromNamespaceAndPath("pipican_test", "main")).orElseThrow();
+        helper.assertTrue(tree.node("far").isPresent() && tree.node("tough").isPresent(), "tree files are merged");
+        helper.assertTrue(tree.neighbours("tough").contains("brave"), "links are two-way");
 
+        helper.assertTrue(!ClassService.allocateNode(player, TreeKind.GENERAL, "tough").success(), "no points without mastery");
+        MasteryService.setTier(player, BLADE, skill(helper, BLADE), 3);
+        helper.assertTrue(ClassService.availablePoints(player, TreeKind.GENERAL) == 3, "one point per mastery tier");
+
+        helper.assertTrue(!ClassService.allocateNode(player, TreeKind.GENERAL, "brave").success(), "brave not connected yet");
+        helper.assertTrue(ClassService.allocateNode(player, TreeKind.GENERAL, "tough").success(), "tough touches the start");
+        assertNear(helper, 32, player.getMaxHealth(), "tough gives +2 health");
+        helper.assertTrue(!ClassService.allocateNode(player, TreeKind.GENERAL, "brave").success(), "brave needs level 3");
         ClassService.setLevel(player, 3);
-        helper.assertTrue(ClassService.availablePoints(player, TreeKind.GENERAL) == 4, "2 general points per level-up");
-        helper.assertTrue(ClassService.availablePoints(player, TreeKind.SPECIAL) == 2, "1 special point per level-up");
-        helper.assertTrue(!ClassService.unlockNode(player, TreeKind.GENERAL, "brave").success(), "requires tough first");
-
-        helper.assertTrue(ClassService.unlockNode(player, TreeKind.GENERAL, "tough").success(), "tough rank 1");
-        helper.assertTrue(ClassService.unlockNode(player, TreeKind.GENERAL, "tough").success(), "tough rank 2");
-        helper.assertTrue(!ClassService.unlockNode(player, TreeKind.GENERAL, "tough").success(), "tough is max rank 2");
-        assertNear(helper, 34, player.getMaxHealth(), "2 ranks of +2 health");
-
-        helper.assertTrue(ClassService.unlockNode(player, TreeKind.GENERAL, "brave").success(), "brave");
+        helper.assertTrue(ClassService.allocateNode(player, TreeKind.GENERAL, "brave").success(), "brave");
         assertNear(helper, 1.5, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), helper.getLevel().damageSources().generic()), "brave damage bonus");
+        helper.assertTrue(!ClassService.allocateNode(player, TreeKind.GENERAL, "start_b").success(), "other class's start can't be bought");
 
-        helper.assertTrue(ClassService.unlockNode(player, TreeKind.SPECIAL, "zeal").success(), "zeal");
+        helper.assertTrue(!ClassService.refundNode(player, TreeKind.GENERAL, "tough").success(), "refunding tough would strand brave");
+        helper.assertTrue(ClassService.refundNode(player, TreeKind.GENERAL, "brave").success(), "brave is a leaf");
+        helper.assertTrue(ClassService.refundNode(player, TreeKind.GENERAL, "tough").success(), "tough is now a leaf");
+        assertNear(helper, 30, player.getMaxHealth(), "refund removes bonus");
+        helper.assertTrue(ClassService.availablePoints(player, TreeKind.GENERAL) == 3, "refund gives points back");
+
+        MasteryService.setTier(player, RUNNER, skill(helper, RUNNER), 1);
+        helper.assertTrue(ClassService.allocateNode(player, TreeKind.SPECIAL, "zeal").success(), "special point from runner");
         assertNear(helper, 6, ClassEffectApplier.state(player).stat(FOCUS), "zeal adds a focus point");
         assertNear(helper, 3, player.getAttributeValue(Attributes.ARMOR_TOUGHNESS), "toughness follows focus");
         assertNear(helper, 22, ClassService.data(player).resourceMax(), "resource follows focus");
-
-        ClassService.resetSkills(player, java.util.Optional.empty());
-        assertNear(helper, 30, player.getMaxHealth(), "skill reset removes bonuses");
-        helper.assertTrue(ClassService.availablePoints(player, TreeKind.GENERAL) == 4, "skill reset refunds points");
         helper.succeed();
+    }
+
+    /** Triggers, cooldown, affinity-scaled gain, continuous movement, tier effects. */
+    private static void mastery(GameTestHelper helper) {
+        ServerPlayer player = testerPlayer(helper);
+        PlayerClassData data = ClassService.data(player);
+        double masteryMult = PipicanConfig.tier(Affinity.MASTERY).mastery();
+
+        MasteryService.onAction(player, new SkillAction.MeleeHit(new ItemStack(Items.STONE_SWORD)));
+        assertNear(helper, masteryMult, data.mastery(BLADE), "sword hit, scaled by mastery affinity");
+        MasteryService.onAction(player, new SkillAction.MeleeHit(new ItemStack(Items.STONE_SWORD)));
+        assertNear(helper, masteryMult, data.mastery(BLADE), "second hit in the same tick is on cooldown");
+        MasteryService.onAction(player, new SkillAction.MeleeHit(new ItemStack(Items.STICK)));
+        assertNear(helper, masteryMult, data.mastery(BLADE), "non-sword doesn't count");
+
+        MasteryService.onAction(player, new SkillAction.Moved(MoveMode.SPRINT, 2.5));
+        MasteryService.onAction(player, new SkillAction.Moved(MoveMode.SPRINT, 1.0));
+        MasteryService.onAction(player, new SkillAction.Moved(MoveMode.WALK, 50));
+        assertNear(helper, 3.5, data.mastery(RUNNER), "sprinting counts per block, no cooldown, walking ignored");
+        helper.assertTrue(ClassService.availablePoints(player, TreeKind.SPECIAL) == 3, "runner tier 3 = 3 special points");
+
+        player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+        var sources = helper.getLevel().damageSources();
+        assertNear(helper, 1.1, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), sources.playerAttack(player)), "blade tier 1 bonus with a sword");
+        player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        assertNear(helper, 1.0, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), sources.playerAttack(player)), "no bonus bare-handed");
+        helper.succeed();
+    }
+
+    private static Skill skill(GameTestHelper helper, ResourceKey<Skill> key) {
+        return helper.getLevel().registryAccess().lookupOrThrow(PipicanRegistries.SKILL).getValue(key);
     }
 
     /** Weakness multipliers and equipment affinity tiers. */

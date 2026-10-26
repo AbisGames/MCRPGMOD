@@ -1,12 +1,15 @@
 {
   "name": "TODO Special Tree",
   "nodes": [
+    { "id": "special_start", "name": "TODO Special Start", "type": "start", "icon": "minecraft:amethyst_shard" },
     {
       "id": "deepen",
       "name": "TODO Deepen",
-      "description": "+2 points in the special stat per rank.",
-      "icon": "minecraft:amethyst_shard",
-      "max_rank": 5,
+      "description": "+2 points in the special stat.",
+      "type": "notable",
+      "icon": "minecraft:amethyst_cluster",
+      "x": 0, "y": 60,
+      "links": [ "special_start" ],
       "effects": [
         { "type": "pipican:stat", "stat": "mypack:example_special_stat", "amount": 2 }
       ]

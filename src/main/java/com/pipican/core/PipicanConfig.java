@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class PipicanConfig {
 
     /** What an {@link Affinity} tier does. All values are multipliers (1.0 = no change). */
-    public record TierValues(double damage, double attackSpeed, double armor, double movePenaltyPerArmorPiece, double trinket) {}
+    public record TierValues(double damage, double attackSpeed, double armor, double movePenaltyPerArmorPiece, double trinket, double mastery) {}
 
     public static final ModConfigSpec SPEC;
 
@@ -23,10 +23,12 @@ public final class PipicanConfig {
     private static final ModConfigSpec.IntValue STAT_COST_BASE;
     private static final ModConfigSpec.IntValue STAT_COST_STEP;
     private static final ModConfigSpec.BooleanValue OPEN_SELECTION_ON_JOIN;
+    private static final ModConfigSpec.IntValue REFUND_COST;
     private static final Map<Affinity, TierSpec> TIERS = new EnumMap<>(Affinity.class);
 
     private record TierSpec(ModConfigSpec.DoubleValue damage, ModConfigSpec.DoubleValue attackSpeed, ModConfigSpec.DoubleValue armor,
-                            ModConfigSpec.DoubleValue movePenalty, ModConfigSpec.DoubleValue trinket, TierValues defaults) {}
+                            ModConfigSpec.DoubleValue movePenalty, ModConfigSpec.DoubleValue trinket, ModConfigSpec.DoubleValue mastery,
+                            TierValues defaults) {}
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -46,6 +48,11 @@ public final class PipicanConfig {
                 .defineInRange("cost_increase_every", 10, 0, 1000);
         b.pop();
 
+        b.push("skill_tree");
+        REFUND_COST = b.comment("Vanilla XP levels it costs to refund one passive-tree node (free in creative).")
+                .defineInRange("refund_cost_levels", 1, 0, 1000);
+        b.pop();
+
         b.push("selection");
         OPEN_SELECTION_ON_JOIN = b.comment("Open the class-selection screen for class-less players when they join.")
                 .define("open_on_join", true);
@@ -56,12 +63,13 @@ public final class PipicanConfig {
                 "attack_speed: attack speed while holding it.",
                 "armor: armor and toughness given by an armor piece of this tier.",
                 "move_penalty: movement speed multiplier per worn armor piece of this tier.",
-                "trinket: strength of the attribute bonuses of a trinket of this tier.").push("affinity");
-        defineTier(b, Affinity.MASTERY, new TierValues(1.25, 1.10, 1.15, 1.00, 1.25));
-        defineTier(b, Affinity.PROFICIENT, new TierValues(1.10, 1.05, 1.05, 1.00, 1.10));
-        defineTier(b, Affinity.NEUTRAL, new TierValues(1.00, 1.00, 1.00, 1.00, 1.00));
-        defineTier(b, Affinity.CLUMSY, new TierValues(0.75, 0.85, 0.75, 0.97, 0.75));
-        defineTier(b, Affinity.FORBIDDEN, new TierValues(0.35, 0.60, 0.40, 0.90, 0.25));
+                "trinket: strength of the attribute bonuses of a trinket of this tier.",
+                "mastery: skill mastery gained when using an item of this tier.").push("affinity");
+        defineTier(b, Affinity.MASTERY, new TierValues(1.25, 1.10, 1.15, 1.00, 1.25, 1.50));
+        defineTier(b, Affinity.PROFICIENT, new TierValues(1.10, 1.05, 1.05, 1.00, 1.10, 1.25));
+        defineTier(b, Affinity.NEUTRAL, new TierValues(1.00, 1.00, 1.00, 1.00, 1.00, 1.00));
+        defineTier(b, Affinity.CLUMSY, new TierValues(0.75, 0.85, 0.75, 0.97, 0.75, 0.75));
+        defineTier(b, Affinity.FORBIDDEN, new TierValues(0.35, 0.60, 0.40, 0.90, 0.25, 0.50));
         b.pop();
 
         SPEC = b.build();
@@ -75,6 +83,7 @@ public final class PipicanConfig {
                 b.defineInRange("armor", d.armor(), 0.0, 10.0),
                 b.defineInRange("move_penalty", d.movePenaltyPerArmorPiece(), 0.0, 10.0),
                 b.defineInRange("trinket", d.trinket(), 0.0, 10.0),
+                b.defineInRange("mastery", d.mastery(), 0.0, 10.0),
                 d));
         b.pop();
     }
@@ -86,7 +95,7 @@ public final class PipicanConfig {
         if (!SPEC.isLoaded()) {
             return s.defaults();
         }
-        return new TierValues(s.damage.get(), s.attackSpeed.get(), s.armor.get(), s.movePenalty.get(), s.trinket.get());
+        return new TierValues(s.damage.get(), s.attackSpeed.get(), s.armor.get(), s.movePenalty.get(), s.trinket.get(), s.mastery.get());
     }
 
     /** Class XP needed to advance from {@code level} to {@code level + 1}. */
@@ -105,6 +114,10 @@ public final class PipicanConfig {
         int base = SPEC.isLoaded() ? STAT_COST_BASE.get() : 1;
         int step = SPEC.isLoaded() ? STAT_COST_STEP.get() : 10;
         return base + (step > 0 ? alreadyBought / step : 0);
+    }
+
+    public static int refundCostLevels() {
+        return SPEC.isLoaded() ? REFUND_COST.get() : 1;
     }
 
     public static boolean openSelectionOnJoin() {

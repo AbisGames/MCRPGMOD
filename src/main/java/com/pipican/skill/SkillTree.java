@@ -1,65 +1,85 @@
 package com.pipican.skill;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.resources.Identifier;
 
 /**
- * A skill tree, loaded from {@code data/<ns>/pipican/skill_tree/<name>.json}.
+ * A fully assembled passive tree: all its {@link SkillTreeFile}s merged, with links made two-way.
+ * Built by {@link SkillTrees}; never loaded from JSON directly.
  *
- * <p>Classes reference trees by id ({@code skill_tree} and {@code special_skill_tree} in the class
- * JSON), so a tree can in principle be shared between classes. Each class normally has:
- * <ul>
- *   <li>a <b>general</b> tree - its own take on common upgrades, paid with general skill points</li>
- *   <li>a <b>special</b> tree - its signature tree around the special stat, paid with special points</li>
- * </ul>
- * Both kinds use this same format.
- *
- * <pre>{@code { "name": "Warrior Arts", "nodes": [ ...SkillNode... ] } }</pre>
+ * <p>Allocation rules (Path of Exile style) live here so server and client agree:
+ * a node can be allocated when it touches an owned node (or the class's start node), and refunded
+ * only if every other owned node is still connected to the start afterwards.
  */
-public record SkillTree(Component name, List<SkillNode> nodes) {
+public final class SkillTree {
 
-    public static final Codec<SkillTree> CODEC = RecordCodecBuilder.<SkillTree>create(i -> i.group(
-            ComponentSerialization.CODEC.fieldOf("name").forGetter(SkillTree::name),
-            SkillNode.CODEC.listOf().fieldOf("nodes").forGetter(SkillTree::nodes)
-    ).apply(i, SkillTree::new)).validate(SkillTree::validate);
+    private final Identifier id;
+    private final Component name;
+    private final Map<String, SkillNode> nodes;
+    private final Map<String, Set<String>> neighbours;
 
-    public Optional<SkillNode> node(String id) {
-        for (SkillNode node : nodes) {
-            if (node.id().equals(id)) {
-                return Optional.of(node);
-            }
-        }
-        return Optional.empty();
+    SkillTree(Identifier id, Component name, Map<String, SkillNode> nodes, Map<String, Set<String>> neighbours) {
+        this.id = id;
+        this.name = name;
+        this.nodes = Collections.unmodifiableMap(new LinkedHashMap<>(nodes));
+        this.neighbours = neighbours;
     }
 
-    /** Catches typos at load time: duplicate ids or "requires" pointing at missing nodes. */
-    private static DataResult<SkillTree> validate(SkillTree tree) {
-        Map<String, SkillNode> byId = new LinkedHashMap<>();
-        for (SkillNode node : tree.nodes) {
-            if (byId.put(node.id(), node) != null) {
-                return DataResult.error(() -> "Duplicate skill node id '" + node.id() + "'");
+    public Identifier id() {
+        return id;
+    }
+
+    public Component name() {
+        return name;
+    }
+
+    public Collection<SkillNode> nodes() {
+        return nodes.values();
+    }
+
+    public Optional<SkillNode> node(String id) {
+        return Optional.ofNullable(nodes.get(id));
+    }
+
+    public Set<String> neighbours(String id) {
+        return neighbours.getOrDefault(id, Set.of());
+    }
+
+    /** True if {@code node} touches the start node or any owned node. */
+    public boolean isReachable(String node, String start, Set<String> owned) {
+        for (String n : neighbours(node)) {
+            if (n.equals(start) || owned.contains(n)) {
+                return true;
             }
         }
-        Set<String> missing = new HashSet<>();
-        for (SkillNode node : tree.nodes) {
-            for (String req : node.requires()) {
-                if (!byId.containsKey(req)) {
-                    missing.add(node.id() + " -> " + req);
+        return false;
+    }
+
+    /** True if removing {@code node} leaves every other owned node connected to {@code start}. */
+    public boolean canRemove(String node, String start, Set<String> owned) {
+        Set<String> remaining = new HashSet<>(owned);
+        remaining.remove(node);
+        Set<String> seen = new HashSet<>();
+        Deque<String> queue = new ArrayDeque<>();
+        queue.add(start);
+        seen.add(start);
+        while (!queue.isEmpty()) {
+            for (String n : neighbours(queue.poll())) {
+                if (remaining.contains(n) && seen.add(n)) {
+                    queue.add(n);
                 }
             }
         }
-        if (!missing.isEmpty()) {
-            return DataResult.error(() -> "Skill nodes require unknown nodes: " + missing);
-        }
-        return DataResult.success(tree);
+        seen.remove(start);
+        return seen.containsAll(remaining);
     }
 }

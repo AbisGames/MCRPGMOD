@@ -88,7 +88,8 @@ public final class ClassEvents {
 
     /** Tells the player (action bar) when they equip something their class is bad with. */
     private static void warnAboutAffinity(ServerPlayer player, EquipmentSlot slot, ItemStack stack) {
-        if (stack.isEmpty() || slot == EquipmentSlot.OFFHAND) {
+        // Skip the first seconds after joining/respawning: equipment "changes" then are just syncing.
+        if (stack.isEmpty() || slot == EquipmentSlot.OFFHAND || player.tickCount < 40) {
             return;
         }
         Optional<RpgClass> rpgClass = ClassService.activeClass(player);

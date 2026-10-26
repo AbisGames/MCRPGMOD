@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pipican.core.PipicanRegistries;
 import com.pipican.effect.ClassEffect;
-import com.pipican.skill.SkillTree;
 import com.pipican.skill.TreeKind;
+import com.pipican.skill.TreeRef;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
 import java.util.List;
@@ -35,9 +35,9 @@ import net.minecraft.world.item.Items;
  * @param specialStat      the class's signature stat (+ optional resource bar)
  * @param startingKit      items given once when the class is chosen ({@code "minecraft:bread"} or
  *                         {@code {"id": "minecraft:bread", "count": 8, "components": {...}}})
- * @param skillTree        id of the class's general skill tree
- * @param specialSkillTree id of the class's special (signature) skill tree
- * @param progression      max level and skill points per level
+ * @param skillTree        the general passive tree and this class's start node in it (trees can be shared)
+ * @param specialSkillTree the special (signature, ascendancy-like) tree and its start node
+ * @param progression      max level and starting skill points
  * @param passives         always-on bonuses
  * @param specialPassives  always-on signature bonuses; typically scale with {@code special_stat}
  * @param weakness         the class's special weakness
@@ -53,8 +53,8 @@ public record RpgClass(
         Map<ResourceKey<StatDefinition>, Integer> baseStats,
         Optional<SpecialStat> specialStat,
         List<ItemStackTemplate> startingKit,
-        Optional<ResourceKey<SkillTree>> skillTree,
-        Optional<ResourceKey<SkillTree>> specialSkillTree,
+        Optional<TreeRef> skillTree,
+        Optional<TreeRef> specialSkillTree,
         Progression progression,
         List<ClassEffect> passives,
         List<ClassEffect> specialPassives,
@@ -71,8 +71,8 @@ public record RpgClass(
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.STAT), Codec.INT).optionalFieldOf("base_stats", Map.of()).forGetter(RpgClass::baseStats),
             SpecialStat.CODEC.optionalFieldOf("special_stat").forGetter(RpgClass::specialStat),
             ItemStackTemplate.CODEC.listOf().optionalFieldOf("starting_kit", List.of()).forGetter(RpgClass::startingKit),
-            ResourceKey.codec(PipicanRegistries.SKILL_TREE).optionalFieldOf("skill_tree").forGetter(RpgClass::skillTree),
-            ResourceKey.codec(PipicanRegistries.SKILL_TREE).optionalFieldOf("special_skill_tree").forGetter(RpgClass::specialSkillTree),
+            TreeRef.CODEC.optionalFieldOf("skill_tree").forGetter(RpgClass::skillTree),
+            TreeRef.CODEC.optionalFieldOf("special_skill_tree").forGetter(RpgClass::specialSkillTree),
             Progression.CODEC.optionalFieldOf("progression", Progression.DEFAULT).forGetter(RpgClass::progression),
             ClassEffect.CODEC.listOf().optionalFieldOf("passives", List.of()).forGetter(RpgClass::passives),
             ClassEffect.CODEC.listOf().optionalFieldOf("special_passives", List.of()).forGetter(RpgClass::specialPassives),
@@ -81,12 +81,12 @@ public record RpgClass(
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), Codec.intRange(0, 64)).optionalFieldOf("trinket_slots", Map.of()).forGetter(RpgClass::trinketSlots)
     ).apply(i, RpgClass::new));
 
-    public Optional<ResourceKey<SkillTree>> tree(TreeKind kind) {
+    public Optional<TreeRef> tree(TreeKind kind) {
         return kind == TreeKind.GENERAL ? skillTree : specialSkillTree;
     }
 
-    public int pointsPerLevel(TreeKind kind) {
-        return kind == TreeKind.GENERAL ? progression.skillPointsPerLevel() : progression.specialSkillPointsPerLevel();
+    public int startingPoints(TreeKind kind) {
+        return kind == TreeKind.GENERAL ? progression.startingSkillPoints() : progression.startingSpecialSkillPoints();
     }
 
     public int baseStat(ResourceKey<StatDefinition> stat) {

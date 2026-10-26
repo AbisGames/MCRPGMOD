@@ -4,10 +4,10 @@ import com.pipican.Pipican;
 import com.pipican.core.ClassLookup;
 import com.pipican.effect.ClassEffect;
 import com.pipican.effect.EffectContext;
+import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.rpgclass.SpecialStat;
-import com.pipican.skill.SkillNode;
 import com.pipican.skill.SkillTree;
 import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -35,6 +36,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
@@ -49,7 +51,7 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
  * <ol>
  *   <li>stats = class base_stats + bought points + {@code pipican:stat} effects</li>
  *   <li>base health, per-stat-point attribute bonuses</li>
- *   <li>passives, special passives, weakness, unlocked skill nodes (x rank)</li>
+ *   <li>passives, special passives, weakness, allocated tree nodes, reached skill-mastery tiers</li>
  *   <li>equipment affinity: held weapon attack speed, armor pieces, trinkets</li>
  * </ol>
  * All attribute contributions are summed into at most three transient modifiers per attribute
@@ -150,14 +152,24 @@ public final class ClassEffectApplier {
             if (tree.isEmpty()) {
                 continue;
             }
-            progress.nodes(kind).forEach((nodeId, rank) -> {
-                Optional<SkillNode> node = tree.get().node(nodeId);
-                if (node.isPresent() && rank > 0) {
-                    int clamped = Math.min(rank, node.get().maxRank());
-                    node.get().effects().forEach(e -> effects.add(Map.entry(e, clamped)));
-                }
-            });
+            // The start node's effects count too (it is owned for free).
+            Set<String> owned = new HashSet<>(progress.nodes(kind));
+            rpgClass.tree(kind).ifPresent(ref -> owned.add(ref.start()));
+            for (String nodeId : owned) {
+                tree.get().node(nodeId).ifPresent(node -> node.effects().forEach(e -> effects.add(Map.entry(e, 1))));
+            }
         }
+        // Skill mastery: every reached tier's effects (tiers stack).
+        ClassLookup.skills(access).entrySet().forEach(entry -> {
+            Skill skill = entry.getValue();
+            if (!skill.allowedFor(data.activeClass())) {
+                return;
+            }
+            int tier = skill.tierFor(data.mastery(entry.getKey()));
+            for (int t = 0; t < Math.min(tier, skill.tiers().size()); t++) {
+                skill.tiers().get(t).effects().forEach(e -> effects.add(Map.entry(e, 1)));
+            }
+        });
 
         // Pass 1: stats.
         rpgClass.baseStats().forEach((stat, points) -> c.addStat(stat, points));
@@ -312,13 +324,13 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, double multiplier) {
-            taken.add(new ClassState.DamageRule(types, multiplier));
+        public void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
+            taken.add(new ClassState.DamageRule(types, weapons, multiplier));
         }
 
         @Override
-        public void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, double multiplier) {
-            dealt.add(new ClassState.DamageRule(types, multiplier));
+        public void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
+            dealt.add(new ClassState.DamageRule(types, weapons, multiplier));
         }
     }
 }

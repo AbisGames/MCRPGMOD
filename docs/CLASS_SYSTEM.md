@@ -2,7 +2,7 @@
 
 How classes work, how to add one, and where everything lives in the code.
 
-> **Short version:** a class is one JSON file. Stats, skill trees and trinket slot types are JSON files too.
+> **Short version:** a class is one JSON file. Stats, passive trees, masterable skills and trinket slot types are JSON files too.
 > You never write Java to add a class. Copy `docs/templates/pipican_template_pack/`, fill in the TODOs, done.
 
 ---
@@ -11,14 +11,14 @@ How classes work, how to add one, and where everything lives in the code.
 
 ```
                  ┌──────────────── JSON (datapacks) ────────────────┐
-                 │  stat/*.json   trinket_slot/*.json               │
+                 │  stat/*.json   trinket_slot/*.json  skill/*.json │
                  │  skill_tree/*.json   class/*.json  (the template)│
                  └───────────────────────┬──────────────────────────┘
                                          │ loaded at world start, synced to clients
                                          ▼
   player choices (saved on the player)   +   class data   ──►  ClassEffectApplier.refresh()
   - chosen class, class level & XP                              │
-  - unlocked skill nodes (+ rank)                               ▼
+  - allocated passive-tree nodes, skill mastery                 ▼
   - stat points bought with vanilla XP           attribute modifiers, potion effects,
   - items in trinket slots                       damage multipliers, resource bar
 ```
@@ -28,12 +28,13 @@ How classes work, how to add one, and where everything lives in the code.
 * **Everything goes through one function**, `ClassEffectApplier.refresh(player)`: it removes what the
   class system applied before and re-applies it from scratch.
 
-### Two kinds of XP
+### Three kinds of progress
 
-| | Earned by | Spent on |
+| | Earned by | Gives |
 |---|---|---|
-| **Class XP** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | nothing, it raises your **class level**. Each level-up gives skill points. |
-| **Vanilla XP levels** | normal Minecraft | buying **stat points** (`/pipican stat raise`, later a UI) |
+| **Skill mastery** | *using* skills: hitting with swords, sprinting, blocking... (see [2.5](#25-skills--mastery--skillnamejson)) | 5 tiers per skill. Each tier = a bonus **and one passive-tree point**. This is where tree points come from. |
+| **Class XP / level** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | class level: gates tree nodes (`required_level`) and can scale effects. No points. |
+| **Vanilla XP levels** | normal Minecraft | buying **stat points** (`/pipican stat raise`, later a UI); paying for tree refunds |
 
 ---
 
@@ -46,7 +47,8 @@ The id of an entry is `<namespace>:<file name>`; e.g. `data/mypack/pipican/class
 |---|---|---|
 | Stat | `data/<ns>/pipican/stat/<name>.json` | `stat/StatDefinition` |
 | Trinket slot type | `data/<ns>/pipican/trinket_slot/<name>.json` | `trinket/TrinketSlotType` |
-| Skill tree | `data/<ns>/pipican/skill_tree/<name>.json` | `skill/SkillTree`, `skill/SkillNode` |
+| Passive tree (one or more files per tree) | `data/<ns>/pipican/skill_tree/<name>.json` | `skill/SkillTreeFile`, `skill/SkillNode` |
+| Masterable skill | `data/<ns>/pipican/skill/<name>.json` | `mastery/Skill` |
 | Class | `data/<ns>/pipican/class/<name>.json` | `rpgclass/RpgClass` |
 
 These are **datapack registries**: they load when the world loads (not on `/reload`). Item tags *do* reload with `/reload`.
@@ -105,48 +107,64 @@ scaled by the class's affinity for that item. In a trinket slot every modifier c
 declares — so give trinket modifiers the slot group `"body"` (players never wear body armor), otherwise vanilla
 would also apply them while the item is simply held in a hand.
 
-### 2.3 Skill trees — `skill_tree/<name>.json`
+### 2.3 Passive trees — `skill_tree/<name>.json` (Path of Exile style)
 
-Every class has two trees, both in this format:
+A tree is a web of **nodes** joined by **links**. Rules, enforced on the server and shown in the screen:
 
-* **General tree** (`skill_tree`) – the class's own version of common upgrades. Paid with *skill points*.
-* **Special tree** (`special_skill_tree`) – the signature tree, usually built around the special stat. Paid with *special skill points*.
+* Each class has a **start node** in the tree (set in the class JSON). It is owned for free.
+* You can only allocate a node that **touches** the start node or a node you own.
+* A refund is allowed only if every other owned node **stays connected** to the start. It costs vanilla XP levels
+  (`skill_tree.refund_cost_levels`, default 1; free in creative) and gives the point back.
+* Other classes' start nodes can't be bought.
+
+Every class has two trees:
+
+* **General tree** (`skill_tree`) – normally **one big tree shared by all classes**, each starting in its own area.
+* **Special tree** (`special_skill_tree`) – a small class-only tree (like PoE's Ascendancy), built around the special stat.
+
+Both use this format. Points come from skill mastery: each skill sends its tier-up points to one of the two trees.
 
 ```json
 {
-  "name": "Knight Arts",
+  "tree": "pipican:main",
+  "name": "Passive Tree",
   "nodes": [
+    { "id": "warrior_start", "name": "Warrior", "type": "start", "x": 0, "y": 0 },
     {
       "id": "iron_skin",
       "name": "Iron Skin",
-      "description": "+1 armor per rank.",
+      "description": "+2 armor.",
+      "type": "small",
       "icon": "minecraft:iron_chestplate",
-      "x": 0, "y": 0,
-      "cost": 1,
-      "max_rank": 3,
-      "required_level": 1,
-      "requires": [],
-      "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 1 } ],
-      "grants": []
+      "x": 60, "y": 0,
+      "links": [ "warrior_start" ],
+      "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 2 } ]
     }
   ]
 }
 ```
 
-| Field | Default | Meaning |
-|---|---|---|
-| `id` | required | Unique inside the tree. Saved on players — **don't rename after release** (a renamed node is simply lost/refunded). |
-| `name`, `description`, `icon` | – / empty / book | For the (upcoming) tree screen. |
-| `x`, `y` | 0 | Position in the (upcoming) tree screen. |
-| `cost` | 1 | Points per rank. |
-| `max_rank` | 1 | How many times it can be bought. |
-| `required_level` | 1 | Minimum class level. |
-| `requires` | none | Node ids that need at least 1 rank first (all of them). Typos are caught at load time. |
-| `effects` | none | [Effects](#3-effects) applied **once per rank** (3 ranks of +1 armor = +3). |
-| `grants` | none | Ids of active abilities this node unlocks. Stored now; the ability system is a later task. |
+**Splitting a big tree:** every file with the same `"tree"` id is merged into one tree, so the shared tree can be
+split into regions (`main_warrior.json`, `main_mage.json`, ...) that different people edit. Links can cross files.
+Without `"tree"`, a file is a tree of its own whose id is the file's id. Only one file per tree needs `"name"`.
 
-Points: each level-up gives `skill_points_per_level` / `special_skill_points_per_level` (see class `progression`).
-Spent points are derived from unlocked nodes, so a reset refunds everything automatically.
+| Node field | Default | Meaning |
+|---|---|---|
+| `id` | required | Unique in the whole tree. Saved on players — **don't rename after release** (a renamed node is lost and its point comes back). |
+| `name`, `description` | – / empty | Shown in the tooltip. Write the effect in `description`; it is what players read. |
+| `type` | `small` | `small` (minor bonus), `notable` (strong bonus), `keystone` (build-defining, with a downside), `start` (a class's starting point). Only changes the look and buyability. |
+| `icon` | book | Item drawn in the node. |
+| `x`, `y` | 0 | Position in the screen (0,0 = centre, +y = down, ~60 apart reads well). |
+| `links` | none | Connected node ids. Links are two-way, declare them on either side. |
+| `cost` | 1 | Points to allocate. |
+| `required_level` | 1 | Minimum class level. |
+| `effects` | none | [Effects](#3-effects) while the node is owned. A start node's effects apply too. |
+| `grants` | none | Ids of active abilities this node unlocks. Stored now; read by the ability system later. |
+
+Data mistakes (duplicate ids, links to missing nodes) are logged as errors and skipped, they don't crash the world.
+
+**Screen:** the **Passives** button above the inventory, or `/pipican tree`. Drag to pan, scroll to zoom,
+left-click to allocate, right-click to refund, search box highlights matching nodes. Tabs: General, Special, Mastery.
 
 ### 2.4 The class template — `class/<name>.json`
 
@@ -161,8 +179,8 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 | `base_stats` | none | `{ "<stat id>": points }` starting points, including the special stat. |
 | `special_stat` | none | See below. |
 | `starting_kit` | none | Items given once when the class is chosen: `"minecraft:bread"` or `{ "id": "minecraft:bread", "count": 8, "components": { ... } }`. |
-| `skill_tree`, `special_skill_tree` | none | Ids of skill trees. |
-| `progression` | 50 / 1 / 1 | `{ "max_level", "skill_points_per_level", "special_skill_points_per_level" }`. |
+| `skill_tree`, `special_skill_tree` | none | `{ "tree": "<tree id>", "start": "<start node id>" }`. Several classes can share a tree with different starts. |
+| `progression` | 50 / 0 / 0 | `{ "max_level", "starting_skill_points", "starting_special_skill_points" }`. |
 | `passives` | none | Always-on [effects](#3-effects). |
 | `special_passives` | none | Always-on signature effects; usually scale with `special_stat`. |
 | `weakness` | none | `{ "description": "...", "effects": [ ... ] }` – text for players plus the effects that implement it. |
@@ -188,11 +206,62 @@ class gets a resource bar (mana, rage, energy...) next to the hotbar:
 max = `base_max + max_per_point × points`, regen/s = `regen_per_second + regen_per_point × points`.
 Spending the resource is up to the upcoming active-skill system.
 
+### 2.5 Skills & mastery — `skill/<name>.json`
+
+A **skill** is something the player gets better at by doing it. Each use adds mastery; there are always
+**5 tiers**. Reaching a tier gives that tier's bonus (tiers stack) **and 1 point** in the tree named by `points_to`.
+
+```json
+{
+  "name": "Swordsmanship",
+  "description": "Hitting mobs with swords.",
+  "icon": "minecraft:iron_sword",
+  "trigger": { "type": "pipican:melee_hit", "items": "#pipican:weapons/swords" },
+  "gain_per_use": 1,
+  "cooldown_ticks": 10,
+  "thresholds": [ 100, 400, 1200, 3000, 7000 ],
+  "points_to": "general",
+  "tiers": [
+    { "description": "+3% sword damage",
+      "effects": [ { "type": "pipican:damage_dealt", "weapons": "#pipican:weapons/swords", "multiplier": 1.03 } ] }
+  ]
+}
+```
+
+| Field | Default | Meaning |
+|---|---|---|
+| `trigger` | required | What counts as a use (table below). |
+| `gain_per_use` | 1 | Mastery per use. |
+| `cooldown_ticks` | 10 | Minimum ticks between counted uses (20 = 1 s), so spam-clicking doesn't count. Movement ignores it. |
+| `thresholds` | 100 / 400 / 1200 / 3000 / 7000 | Total mastery for tiers I–V. Exactly 5, ascending. |
+| `tiers` | none | Up to 5 `{ "description", "effects" }`, one per tier. Tiers stack (tier III has I + II + III). |
+| `points_to` | `general` | `general` or `special`: which tree gets the tier-up points. |
+| `classes` | all | If set, only these classes can train it and get its bonuses/points. |
+| `affinity_scaled` | true | Gain × the class's affinity for the item used (config `affinity.<tier>.mastery`: mastery ×1.5 … forbidden ×0.5). |
+
+| Trigger type | Fields | One use = |
+|---|---|---|
+| `pipican:melee_hit` | `items` (optional) | a melee hit on a mob with one of the items |
+| `pipican:ranged_hit` | `items` (optional) | a projectile from one of the items (bow, crossbow...) hitting a mob |
+| `pipican:kill` | `items` (optional) | killing a mob with one of the items |
+| `pipican:block` | `items` (optional) | blocking an attack with a shield |
+| `pipican:hurt_wearing` | `items`, `min_pieces` (=1) | taking damage while wearing at least `min_pieces` of the items |
+| `pipican:move` | `mode`, `per_blocks` (=10) | every `per_blocks` blocks moved in `mode`: `walk`, `sprint`, `sneak`, `swim`, `climb`, `glide` |
+| `pipican:jump` | – | a jump |
+| `pipican:ability` | `ability` | using an active ability, e.g. a dodge roll. Nothing fires it yet: the ability system will. |
+
+**Total points:** players get 5 points per skill they can train (plus the class's starting points), so the number
+of skills decides how much of the trees a character can fill. Keep that in mind when sizing trees.
+
+**Adding a trigger type (Java):** write a record implementing `mastery/SkillTrigger`, register it in
+`mastery/SkillTriggerTypes`. If it reacts to a new kind of action, add a record to `mastery/SkillAction` and fire it from
+`event/MasteryEvents` (or from your own code via `MasteryService.onAction`).
+
 ---
 
 ## 3. Effects
 
-Passives, special passives, weaknesses and skill nodes are all lists of the same **effect** objects,
+Passives, special passives, weaknesses, tree nodes and mastery tiers are all lists of the same **effect** objects,
 picked by `"type"`:
 
 | Type | Fields | Does |
@@ -200,17 +269,14 @@ picked by `"type"`:
 | `pipican:attribute` | `attribute`, `amount`, `operation` (=`add_value`), `scaling` | Modifies any attribute. |
 | `pipican:stat` | `stat`, `amount` | Adds points to a stat (applied before everything else). |
 | `pipican:mob_effect` | `effect`, `amplifier` (=0) | Permanent potion effect (re-applied if milk removes it). |
-| `pipican:damage_taken` | `damage_types` (tag, optional), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. |
-| `pipican:damage_dealt` | `damage_types` (tag, optional), `multiplier`, `scaling` | Multiplies outgoing damage. |
+| `pipican:damage_taken` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. |
+| `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords). |
 
 ```json
 { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
 { "type": "pipican:mob_effect", "effect": "minecraft:night_vision" }
 { "type": "pipican:stat", "stat": "mypack:strength", "amount": 2 }
 ```
-
-**Ranks** (skill nodes): attribute/stat amounts are multiplied by the rank; damage bonuses stack their
-bonus part (1.1 at rank 3 = 1.3); potion amplifier goes up by rank − 1.
 
 ### Scaling
 
@@ -254,13 +320,13 @@ still works, just with heavy penalties.
 Rules are checked **top to bottom, first match wins** — put single items before broad tags.
 `items` can be an item id, a list of ids, or a `#tag`.
 
-| Tier | Damage | Attack speed | Armor value | Move speed per piece | Trinket strength |
-|---|---|---|---|---|---|
-| `mastery` | ×1.25 | ×1.10 | ×1.15 | ×1.00 | ×1.25 |
-| `proficient` | ×1.10 | ×1.05 | ×1.05 | ×1.00 | ×1.10 |
-| `neutral` | ×1 | ×1 | ×1 | ×1 | ×1 |
-| `clumsy` | ×0.75 | ×0.85 | ×0.75 | ×0.97 | ×0.75 |
-| `forbidden` | ×0.35 | ×0.60 | ×0.40 | ×0.90 | ×0.25 |
+| Tier | Damage | Attack speed | Armor value | Move speed per piece | Trinket strength | Mastery gain |
+|---|---|---|---|---|---|---|
+| `mastery` | ×1.25 | ×1.10 | ×1.15 | ×1.00 | ×1.25 | ×1.50 |
+| `proficient` | ×1.10 | ×1.05 | ×1.05 | ×1.00 | ×1.10 | ×1.25 |
+| `neutral` | ×1 | ×1 | ×1 | ×1 | ×1 | ×1 |
+| `clumsy` | ×0.75 | ×0.85 | ×0.75 | ×0.97 | ×0.75 | ×0.75 |
+| `forbidden` | ×0.35 | ×0.60 | ×0.40 | ×0.90 | ×0.25 | ×0.50 |
 
 The numbers are defaults from the **server config** (`<world>/serverconfig/pipican-server.toml`, section
 `[affinity]`) so they can be balanced without code. Where they apply:
@@ -269,6 +335,7 @@ The numbers are defaults from the **server config** (`<world>/serverconfig/pipic
 * **Attack speed** – while the item is in the main hand. Keep `default` neutral, otherwise holding a torch counts too.
 * **Armor / move speed** – per worn armor piece.
 * **Trinket strength** – scales the trinket's attribute modifiers.
+* **Mastery gain** – how fast skills level when used with the item (see [2.5](#25-skills--mastery--skillnamejson)).
 
 Players see "Class affinity: Clumsy" in item tooltips and get an action-bar warning when equipping bad gear.
 
@@ -294,10 +361,11 @@ New weapons/armor (ours or other mods') only need to be added to these tags to b
 2. **Choosing** – sets the class, gives the starting kit, heals to full, fills the resource. Players can only
    choose once; admins can change it (respec).
 3. **Playing** – mob kills give class XP (`max health × leveling.kill_xp_per_max_health`). XP to go from level L to L+1 is
-   `xp_base × L^xp_exponent` (config). Each level-up gives skill points.
+   `xp_base × L^xp_exponent` (config). Using skills builds mastery; every tier-up gives a tree point.
+   Spend points in the **Passives** screen (button above the inventory).
 4. **Trinkets** – press **G**. The screen shows exactly the slots the class has. Trinkets drop on death unless `keepInventory`.
    If the class changes and loses a slot, the item goes back to the inventory.
-5. **Death** – class, levels, skills and stats are kept.
+5. **Death** – class, levels, tree nodes, mastery and stats are kept.
 
 Multiclassing: the save format already keeps progress **per class** (`PlayerClassData.progress`), so a future
 multiclass system can add classes without migrating saves. How it should work is still to be decided.
@@ -312,11 +380,16 @@ multiclass system can add classes without migrating saves. How it should work is
 | `/pipican class reset <players>` | admin | Remove class + class progress, reopen selection. |
 | `/pipican level set <players> <level>` | admin | |
 | `/pipican xp add <players> <amount>` | admin | Class XP. |
-| `/pipican skill reset <players> [general\|special]` | admin | Refunds points. |
+| `/pipican tree reset <players> [general\|special]` | admin | Clears allocated nodes (points come back). |
+| `/pipican mastery add <players> <skill> <amount>` | admin | |
+| `/pipican mastery set <players> <skill> <tier>` | admin | Sets a skill to the start of tier 0–5. |
+| `/pipican mastery reset <players>` | admin | Clears all mastery and the trees. |
 | `/pipican stat reset <players>` | admin | Refunds the vanilla levels spent. |
 | `/pipican class info [player]` | everyone | Class sheet: level, points, stats, resource. |
 | `/pipican class choose` | everyone | Reopen selection if you have no class. |
-| `/pipican skill unlock <general\|special> <node>` | everyone | Stand-in until the tree screen exists. |
+| `/pipican tree` | everyone | Opens the passive-tree screen. |
+| `/pipican tree allocate\|refund <general\|special> <node>` | everyone | Same as clicking in the screen. |
+| `/pipican mastery list [player]` | everyone | Skills with tier and progress. |
 | `/pipican stat raise <stat>` | everyone | Costs vanilla levels: `stats.cost_base_levels`, +1 every `stats.cost_increase_every` points bought. Free in creative. |
 | `/pipican trinkets` | everyone | Same as **G**. |
 
@@ -328,26 +401,31 @@ multiclass system can add classes without migrating saves. How it should work is
 com.pipican
 ├── Pipican.java              mod entry: registers everything
 ├── core/
-│   ├── PipicanRegistries     the 4 datapack registries
+│   ├── PipicanRegistries     the datapack registries
 │   ├── PipicanConfig         server config (XP curve, stat cost, affinity tiers)
 │   └── ClassLookup           helpers to read the registries (server & client)
 ├── rpgclass/                 the class template: RpgClass, SpecialStat, Progression, Weakness,
 │                             Affinity (tiers), AffinityRules
 ├── stat/StatDefinition
-├── skill/                    SkillTree, SkillNode, TreeKind (general/special)
+├── skill/                    passive trees: SkillTreeFile (JSON) -> SkillTrees (merge) -> SkillTree
+│                             (adjacency rules), SkillNode, NodeType, TreeRef, TreePoints, TreeKind
+├── mastery/                  Skill (JSON), SkillTrigger + SkillTriggerTypes, SkillAction, MoveMode
+│   └── trigger/              the built-in trigger types
 ├── trinket/                  TrinketSlotType, TrinketLayout, TrinketMenu, PipicanMenus
 ├── effect/                   ClassEffect (interface), ClassEffectTypes (type registry),
 │   └── type/                 the built-in effect types
 ├── player/
 │   ├── PlayerClassData       what is saved on the player (+ PipicanAttachments)
-│   ├── ClassProgress         level, XP, unlocked nodes for one class
-│   ├── ClassService          ALL mutations (choose, xp, unlock, raise stat, reset...)
+│   ├── ClassProgress         level, XP, allocated nodes for one class
+│   ├── ClassService          ALL class mutations (choose, xp, allocate/refund, raise stat, reset...)
+│   ├── MasteryService        actions -> mastery -> tier-ups
 │   ├── ClassEffectApplier    recomputes and applies all bonuses  ← the heart of it
 │   └── ClassState            computed result, read by event handlers
 ├── event/ClassEvents         login/respawn/equipment/damage/kill/tick hooks
+├── event/MasteryEvents       game events -> SkillActions
 ├── command/PipicanCommands
 ├── network/                  packets (class data itself syncs via the attachment)
-└── client/                   selection screen, trinket screen, resource HUD, keys, tooltips
+└── client/                   selection, passive-tree, trinket screens, resource HUD, keys, tooltips
 ```
 
 **Rules of thumb for contributors**
@@ -361,8 +439,8 @@ com.pipican
 
 ## 8. Testing
 
-* `gradlew runGameTestServer` runs the GameTests in `src/gametest` (choosing a class, skill trees, affinities,
-  damage multipliers, stats/levels, trinkets). They use the hidden test class `pipican_test:tester` from
+* `gradlew runGameTestServer` runs the GameTests in `src/gametest` (choosing a class, passive-tree rules, mastery,
+  affinities, damage multipliers, stats/levels, trinkets). They use the hidden test class `pipican_test:tester` from
   `src/gametest/resources`, which never ships in the mod jar. In a dev world, `/test run pipican:*` runs them too.
 * `gradlew runClient` + a datapack in `run/saves/<world>/datapacks/` to try classes by hand. The template pack in
   `docs/templates/` is a working starting point.

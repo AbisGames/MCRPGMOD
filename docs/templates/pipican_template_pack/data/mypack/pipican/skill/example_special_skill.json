@@ -1,0 +1,8 @@
+{
+  "name": "TODO Signature Skill",
+  "description": "Only this class trains it; tier-ups give special-tree points.",
+  "icon": "minecraft:amethyst_shard",
+  "trigger": { "type": "pipican:kill" },
+  "points_to": "special",
+  "classes": [ "mypack:example_class" ]
+}

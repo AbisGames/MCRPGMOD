@@ -3,12 +3,14 @@ package com.pipican.effect;
 import com.pipican.stat.StatDefinition;
 import java.util.Optional;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 
 /**
  * Collects the results of {@link ClassEffect}s while a player's bonuses are being recalculated.
@@ -21,8 +23,8 @@ public interface EffectContext {
     double sourceValue(String source);
 
     /**
-     * Rank the effect is applied at. Passives and weaknesses are always rank 1; skill-tree nodes
-     * pass their unlocked rank so a 3/3 node gives three times the bonus.
+     * Multiplier the effect is applied at. Always 1 today; kept so effects stay ready for stacking
+     * sources (e.g. jewels or repeated bonuses) without changing every effect type.
      */
     int rank();
 
@@ -32,9 +34,9 @@ public interface EffectContext {
 
     void addMobEffect(Holder<MobEffect> effect, int amplifier);
 
-    /** Multiplies incoming damage (optionally only damage whose type is in {@code types}). */
-    void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, double multiplier);
+    /** Multiplies incoming damage, optionally only of {@code types} and/or dealt with one of {@code weapons}. */
+    void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier);
 
-    /** Multiplies outgoing damage (optionally only damage whose type is in {@code types}). */
-    void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, double multiplier);
+    /** Multiplies outgoing damage, optionally only of {@code types} and/or dealt with one of {@code weapons}. */
+    void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier);
 }

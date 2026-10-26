@@ -4,15 +4,19 @@ import com.pipican.core.ClassLookup;
 import com.pipican.core.PipicanConfig;
 import com.pipican.network.OpenClassSelectionPayload;
 import com.pipican.rpgclass.RpgClass;
+import com.pipican.skill.NodeType;
 import com.pipican.skill.SkillNode;
 import com.pipican.skill.SkillTree;
 import com.pipican.skill.TreeKind;
+import com.pipican.skill.TreePoints;
+import com.pipican.skill.TreeRef;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -140,70 +144,81 @@ public final class ClassService {
         changed(player);
     }
 
-    // ------------------------------------------------------------------ skill trees
+    // ------------------------------------------------------------------ passive trees
 
-    /** Skill points earned in a tree so far (from level-ups). */
-    public static int earnedPoints(RpgClass rpgClass, ClassProgress progress, TreeKind kind) {
-        return (progress.level() - 1) * rpgClass.pointsPerLevel(kind);
-    }
-
-    /** Skill points currently spent in a tree. Unknown nodes (removed from JSON) cost nothing. */
-    public static int spentPoints(SkillTree tree, ClassProgress progress, TreeKind kind) {
-        int spent = 0;
-        for (Map.Entry<String, Integer> e : progress.nodes(kind).entrySet()) {
-            Optional<SkillNode> node = tree.node(e.getKey());
-            if (node.isPresent()) {
-                spent += node.get().cost() * Math.min(e.getValue(), node.get().maxRank());
-            }
-        }
-        return spent;
-    }
-
+    /** Unspent skill points in a tree (see {@link TreePoints}). */
     public static int availablePoints(ServerPlayer player, TreeKind kind) {
-        Optional<RpgClass> rpgClass = activeClass(player);
-        if (rpgClass.isEmpty()) {
-            return 0;
-        }
-        ClassProgress progress = data(player).activeProgress().orElseThrow();
-        int spent = ClassLookup.tree(player.level().registryAccess(), rpgClass.get(), kind).map(t -> spentPoints(t, progress, kind)).orElse(0);
-        return earnedPoints(rpgClass.get(), progress, kind) - spent;
+        return activeClass(player)
+                .map(c -> TreePoints.available(player.level().registryAccess(), data(player), c, kind))
+                .orElse(0);
     }
 
-    /** Buys one more rank of a skill node. */
-    public static Result unlockNode(ServerPlayer player, TreeKind kind, String nodeId) {
+    /** Allocates a node: it must touch the class's start node or an owned node (Path of Exile rules). */
+    public static Result allocateNode(ServerPlayer player, TreeKind kind, String nodeId) {
         Optional<RpgClass> rpgClass = activeClass(player);
         if (rpgClass.isEmpty()) {
             return Result.fail(Component.translatable("pipican.class.none"));
         }
+        Optional<TreeRef> ref = rpgClass.get().tree(kind);
         Optional<SkillTree> tree = ClassLookup.tree(player.level().registryAccess(), rpgClass.get(), kind);
         Optional<SkillNode> node = tree.flatMap(t -> t.node(nodeId));
-        if (node.isEmpty()) {
+        if (ref.isEmpty() || node.isEmpty()) {
             return Result.fail(Component.translatable("pipican.skill.unknown", nodeId));
         }
         ClassProgress progress = data(player).activeProgress().orElseThrow();
         SkillNode n = node.get();
-        int rank = progress.rank(kind, nodeId);
-        if (rank >= n.maxRank()) {
-            return Result.fail(Component.translatable("pipican.skill.maxed", n.name()));
+        Set<String> owned = progress.nodes(kind);
+        if (owned.contains(nodeId) || nodeId.equals(ref.get().start())) {
+            return Result.fail(Component.translatable("pipican.skill.owned", n.name()));
+        }
+        if (n.type() == NodeType.START) {
+            return Result.fail(Component.translatable("pipican.skill.other_start", n.name()));
+        }
+        if (!tree.get().isReachable(nodeId, ref.get().start(), owned)) {
+            return Result.fail(Component.translatable("pipican.skill.not_connected", n.name()));
         }
         if (progress.level() < n.requiredLevel()) {
             return Result.fail(Component.translatable("pipican.skill.level_required", n.name(), n.requiredLevel()));
         }
-        for (String req : n.requires()) {
-            if (progress.rank(kind, req) <= 0) {
-                Component reqName = tree.get().node(req).map(SkillNode::name).orElse(Component.literal(req));
-                return Result.fail(Component.translatable("pipican.skill.requires", n.name(), reqName));
-            }
-        }
         if (availablePoints(player, kind) < n.cost()) {
             return Result.fail(Component.translatable("pipican.skill.no_points", n.cost()));
         }
-        progress.nodes(kind).put(nodeId, rank + 1);
+        owned.add(nodeId);
         changed(player);
-        return Result.ok(Component.translatable("pipican.skill.unlocked", n.name(), rank + 1, n.maxRank()));
+        return Result.ok(Component.translatable("pipican.skill.allocated", n.name()));
     }
 
-    /** Admin respec of one or both trees; points are refunded automatically (they are derived). */
+    /**
+     * Refunds a node, giving its point back. Costs vanilla XP levels (config) and is refused if it
+     * would disconnect other owned nodes from the start node.
+     */
+    public static Result refundNode(ServerPlayer player, TreeKind kind, String nodeId) {
+        Optional<RpgClass> rpgClass = activeClass(player);
+        if (rpgClass.isEmpty()) {
+            return Result.fail(Component.translatable("pipican.class.none"));
+        }
+        ClassProgress progress = data(player).activeProgress().orElseThrow();
+        Set<String> owned = progress.nodes(kind);
+        Optional<TreeRef> ref = rpgClass.get().tree(kind);
+        Optional<SkillTree> tree = ClassLookup.tree(player.level().registryAccess(), rpgClass.get(), kind);
+        if (!owned.contains(nodeId) || ref.isEmpty() || tree.isEmpty()) {
+            return Result.fail(Component.translatable("pipican.skill.not_owned", nodeId));
+        }
+        Component name = tree.get().node(nodeId).map(SkillNode::name).orElse(Component.literal(nodeId));
+        if (!tree.get().canRemove(nodeId, ref.get().start(), owned)) {
+            return Result.fail(Component.translatable("pipican.skill.would_disconnect", name));
+        }
+        int cost = player.getAbilities().instabuild ? 0 : PipicanConfig.refundCostLevels();
+        if (player.experienceLevel < cost) {
+            return Result.fail(Component.translatable("pipican.skill.refund_no_xp", cost));
+        }
+        player.giveExperienceLevels(-cost);
+        owned.remove(nodeId);
+        changed(player);
+        return Result.ok(Component.translatable("pipican.skill.refunded", name, cost));
+    }
+
+    /** Admin respec of one or both trees; points come back automatically (they are derived). */
     public static void resetSkills(ServerPlayer player, Optional<TreeKind> kind) {
         data(player).activeProgress().ifPresent(progress -> {
             for (TreeKind k : TreeKind.values()) {
@@ -319,11 +334,16 @@ public final class ClassService {
         }
     }
 
-    /** Names of every node in a tree, for command suggestions. */
+    /** Ids of every node in a tree, for command suggestions. */
     public static List<String> nodeIds(ServerPlayer player, TreeKind kind) {
         List<String> ids = new ArrayList<>();
         activeClass(player).flatMap(c -> ClassLookup.tree(player.level().registryAccess(), c, kind))
                 .ifPresent(t -> t.nodes().forEach(n -> ids.add(n.id())));
         return ids;
+    }
+
+    /** Ids of the nodes the player owns in a tree, for command suggestions. */
+    public static List<String> ownedNodeIds(ServerPlayer player, TreeKind kind) {
+        return data(player).activeProgress().map(p -> List.copyOf(p.nodes(kind))).orElse(List.of());
     }
 }

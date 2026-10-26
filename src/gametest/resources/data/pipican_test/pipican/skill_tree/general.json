@@ -1,9 +1,0 @@
-{
-  "name": "Test General Tree",
-  "nodes": [
-    { "id": "tough", "name": "Tough", "max_rank": 2,
-      "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:max_health", "amount": 2 } ] },
-    { "id": "brave", "name": "Brave", "requires": [ "tough" ], "required_level": 3,
-      "effects": [ { "type": "pipican:damage_dealt", "multiplier": 1.5 } ] }
-  ]
-}
