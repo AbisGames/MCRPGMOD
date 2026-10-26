@@ -59,6 +59,7 @@ public final class WorldgenTests {
         }
         helper.assertTrue(RegionalOreRegistries.NODES.size()==27,"missing registered ore nodes");
         helper.assertTrue(RegionalOreRegistries.MATERIALS.size()==27,"missing registered ore items");
+        helper.assertTrue(RegionalOreRegistries.BOSS_CORES.size()==27,"missing regional boss cores");
         helper.succeed();
     }
 

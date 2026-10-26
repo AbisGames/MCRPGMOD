@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:glacierite_ore",
+    "pipican:wintersteel_ore",
+    "pipican:stormsilver_ore",
+    "pipican:thunderbasalt_ore",
+    "pipican:skyiron_ore",
+    "pipican:tideglass_ore",
+    "pipican:mooncrystal_ore",
+    "pipican:royal_silver_ore",
+    "pipican:jade_essence_ore",
+    "pipican:mirestone_ore",
+    "pipican:pearlsilver_ore",
+    "pipican:lotus_opal_ore",
+    "pipican:sunglass_ore",
+    "pipican:sunstone_ore",
+    "pipican:saffron_gold_ore",
+    "pipican:verdantite_ore",
+    "pipican:tidalite_ore",
+    "pipican:dawnbronze_ore",
+    "pipican:redrock_iron_ore"
+  ]
+}
