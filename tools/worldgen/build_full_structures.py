@@ -694,12 +694,14 @@ def generate():
         write('regional/'+reg+'/mine',reg,'mine',(80,28,80),pool='regional/'+reg+'/mine',structure=True,spawn=True,spacing=90)
         # Regional boss-reward chests contain the same resource family needed
         # for dungeon-equipment upgrades. Real boss gating comes separately.
-        loot={'type':'minecraft:chest','pools':[
-           {'rolls':1,'entries':[{'type':'minecraft:item','name':'pipican:'+ORE[reg],
-             'functions':[{'function':'minecraft:set_count','count':{'type':'minecraft:uniform','min':3,'max':8}}]}]},
-           {'rolls':1,'entries':[{'type':'minecraft:item','name':'minecraft:diamond','weight':1},
-                                 {'type':'minecraft:item','name':'minecraft:amethyst_shard','weight':3},
-                                 {'type':'minecraft:item','name':'minecraft:emerald','weight':2}]}]}
+        # Side chests have common exploration loot. Unique ore/catalyst boss
+        # rewards are only ejected by the configured regional trial spawner.
+        loot={'type':'minecraft:chest','pools':[{
+          'rolls':2,'entries':[
+            {'type':'minecraft:item','name':'minecraft:emerald','weight':4},
+            {'type':'minecraft:item','name':'minecraft:iron_ingot','weight':6},
+            {'type':'minecraft:item','name':'minecraft:diamond','weight':1},
+            {'type':'minecraft:item','name':'minecraft:amethyst_shard','weight':2}]}]}
         savejson(Path('loot_table/chests')/(reg+'_dungeon.json'),loot)
         if reg in EXTRAS:
             write('regional/'+reg+'/castle',reg,'castle',(112,72,112),pool='regional/'+reg+'/castle',structure=True,spawn=False)
