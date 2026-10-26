@@ -284,5 +284,425 @@
       ]
     }
   ],
-  "implementation": "Requires structure assembly placement into generated chunks; command functions supplied."
+  "connectors": [
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -132,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -20,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 92,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 204,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -132,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -20,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 92,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 204,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -132,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -20,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 204,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -132,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -20,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 92,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 204,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -132,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": -20,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 92,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/eastwest",
+      "x": 204,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -182,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -182,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -182,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -182,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -70,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -70,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -70,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": -70,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 42,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 42,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 42,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 154,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 154,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 154,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 154,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 266,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 266,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 266,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/jade_empire/northsouth",
+      "x": 266,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    }
+  ],
+  "implementation": "25 roomed city tiles, plus accessible capital road connectors."
 }
