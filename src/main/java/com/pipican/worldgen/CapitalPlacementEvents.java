@@ -49,7 +49,7 @@ public final class CapitalPlacementEvents {
                     long dz=(long)Math.floor(player.getZ())-city.z();
                     if(dx*dx+dz*dz>PLAYER_TRIGGER_RADIUS_SQUARED)continue;
                     CapitalPlacementSavedData.Progress done=progress.progress(city.id());
-                    if(done!=null&&done.nextTile()>=25)continue;
+                    if(done!=null&&done.nextTile()>=63)continue;
                     if(buildOneTile(level,city,progress)) {
                         placed=true;
                         break;
@@ -67,7 +67,7 @@ public final class CapitalPlacementEvents {
                                        CapitalPlacementSavedData progress) {
         var state=progress.progress(city.id());
         int index=state==null?0:state.nextTile();
-        if(index>=25)return false;
+        if(index>=63)return false;
         // The initial height is based on terrain in this save, not a
         // globally fixed sea-level or arbitrary Y constant.
         var center=new BlockPos(city.x(),64,city.z());
@@ -76,7 +76,9 @@ public final class CapitalPlacementEvents {
             Math.min(level.getHeight(Heightmap.Types.WORLD_SURFACE,city.x(),city.z()),
                 level.getMaxY()-75) : state.foundationY();
         JsonObject layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
-        JsonElement row=layout.getAsJsonArray("relative_positions").get(index);
+        JsonElement row=index<25
+            ? layout.getAsJsonArray("relative_positions").get(index)
+            : layout.getAsJsonArray("connectors").get(index-25);
         var tile=row.getAsJsonObject();
         String location=tile.get("template").getAsString();
         var id=net.minecraft.resources.Identifier.parse(location);
@@ -97,7 +99,7 @@ public final class CapitalPlacementEvents {
             return false;
         }
         progress.advance(city.id(),index+1,foundationY);
-        if(index==24)Pipican.LOGGER.info("Completed RPG capital {} (25 city tiles)",city.id());
+        if(index==62)Pipican.LOGGER.info("Completed RPG capital {} (25 city tiles and 38 bridges)",city.id());
         return true;
     }
 }
