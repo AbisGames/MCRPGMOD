@@ -37,7 +37,7 @@ public final class Pipican {
         PipicanAttachments.REGISTER.register(modBus);
         PipicanMenus.REGISTER.register(modBus);
         RegionalOreRegistries.register(modBus);
-        WorldgenCodecs.register();
+        WorldgenCodecs.register(modBus);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);
