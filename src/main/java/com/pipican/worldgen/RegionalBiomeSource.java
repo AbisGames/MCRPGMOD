@@ -66,7 +66,7 @@ public final class RegionalBiomeSource extends BiomeSource {
             path="aetheris_expanse";
         else if(region.parent().equals("greyspine_mountains")&&y<0&&detail>.3)
             path="umbral_chasm";
-        else if(region.parent().equals("emerald_jungle")&&detail>.28)
+        else if(region.parent().equals("emerald_jungle")&&y<44&&detail>.28)
             path="verdant_depths";
         else if(region.parent().equals("ashlands")&&detail>.30)
             path="crimson_wilds";

@@ -51,6 +51,23 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         double t=Math.min(1.0,edge/500.0);
         double blend=t*t*(3-2*t);
 
+        // Suspended archipelago: island density is produced only above the
+        // Greyspine peaks where the matching Aetheris biome is selected.
+        // This branch is kept separate from the surface mountain lift so
+        // underground caves remain untouched and gaps stay beneath islands.
+        if(r.id().equals("greyspine_mountains") && y>=280 && y<=370) {
+            double skyRegion=WorldLayout.fractal(0x6A09E667F3BCC909L,x,z,2600);
+            if(skyRegion>0.38) {
+                double strengthFactor=Math.min(1.4,Math.max(0,(skyRegion-0.38)/0.25));
+                double rough=WorldLayout.fractal(0x51234B7C1L,x,z,260);
+                double centre=317+rough*9;
+                double halfHeight=16+11*strengthFactor;
+                double verticalIsland=Math.max(0,1-Math.abs(y-centre)/halfHeight);
+                if(verticalIsland>0)
+                    return strength*14.0*strengthFactor*verticalIsland*blend;
+            }
+        }
+
         // Eroded ridges and extensive valleys depend on two noise octaves.
         double roughness=WorldLayout.fractal(5821L,x,z,1250);
         double ridge=0.82+0.26*roughness;
@@ -60,7 +77,7 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         return strength*(target/130.0)*ridge*vertical*nearGround*blend;
     }
     @Override public double minValue(){return -4*strength;}
-    @Override public double maxValue(){return 4*strength;}
+    @Override public double maxValue(){return 20*strength;}
     @Override public DensityFunction mapAll(DensityFunction.Visitor visitor){
         return visitor.apply(this);
     }
