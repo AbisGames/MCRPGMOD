@@ -1,0 +1,52 @@
+{
+  "tree": "mypack:main",
+  "name": "TODO Passive Tree",
+  "nodes": [
+    {
+      "id": "example_start",
+      "name": "TODO Class Start",
+      "type": "start",
+      "icon": "minecraft:iron_sword",
+      "x": 0, "y": 0
+    },
+    {
+      "id": "example_small",
+      "name": "TODO Small Node",
+      "description": "+2 armor.",
+      "type": "small",
+      "icon": "minecraft:iron_chestplate",
+      "x": 60, "y": 0,
+      "links": [ "example_start" ],
+      "effects": [
+        { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 2 }
+      ]
+    },
+    {
+      "id": "example_notable",
+      "name": "TODO Notable",
+      "description": "Deal 10% more damage with swords. Needs class level 5.",
+      "type": "notable",
+      "icon": "minecraft:diamond_sword",
+      "x": 120, "y": -30,
+      "links": [ "example_small" ],
+      "required_level": 5,
+      "effects": [
+        { "type": "pipican:damage_dealt", "weapons": "#pipican:weapons/swords", "multiplier": 1.1 }
+      ]
+    },
+    {
+      "id": "example_keystone",
+      "name": "TODO Keystone",
+      "description": "Big upside, real downside: +50% damage dealt, +30% damage taken.",
+      "type": "keystone",
+      "icon": "minecraft:nether_star",
+      "x": 180, "y": 30,
+      "links": [ "example_small" ],
+      "effects": [
+        { "type": "pipican:damage_dealt", "multiplier": 1.5 },
+        { "type": "pipican:damage_taken", "multiplier": 1.3 }
+      ],
+      "grants": [ "mypack:example_ability" ]
+    }
+  ]
+}

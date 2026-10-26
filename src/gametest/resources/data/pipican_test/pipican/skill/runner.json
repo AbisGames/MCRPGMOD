@@ -1,0 +1,19 @@
+{
+  "name": "Test Runner",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "sprint",
+    "per_blocks": 1
+  },
+  "thresholds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican_test:tester"
+  ]
+}

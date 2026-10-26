@@ -1,0 +1,7 @@
+{
+  "tree": "pipican_test:main",
+  "nodes": [
+    { "id": "far", "name": "Far", "x": 120, "y": 0, "links": [ "brave", "start_b" ] },
+    { "id": "start_b", "name": "Other Start", "type": "start", "x": 160, "y": 0 }
+  ]
+}

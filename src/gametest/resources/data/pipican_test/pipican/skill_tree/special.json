@@ -1,0 +1,8 @@
+{
+  "name": "Test Special Tree",
+  "nodes": [
+    { "id": "s_start", "name": "Special Start", "type": "start" },
+    { "id": "zeal", "name": "Zeal", "x": 0, "y": 40, "links": [ "s_start" ],
+      "effects": [ { "type": "pipican:stat", "stat": "pipican_test:focus", "amount": 1 } ] }
+  ]
+}

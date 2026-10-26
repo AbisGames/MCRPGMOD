@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "Pipican class template - copy, rename 'mypack', fill in the TODOs",
+    "min_format": 101,
+    "max_format": 101
+  }
+}

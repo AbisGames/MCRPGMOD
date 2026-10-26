@@ -1,0 +1,18 @@
+{
+  "name": "TODO Swordsmanship",
+  "description": "Hitting mobs with swords.",
+  "icon": "minecraft:iron_sword",
+  "trigger": { "type": "pipican:melee_hit", "items": "#pipican:weapons/swords" },
+  "gain_per_use": 1,
+  "cooldown_ticks": 10,
+  "thresholds": [ 100, 400, 1200, 3000, 7000 ],
+  "points_to": "general",
+  "affinity_scaled": true,
+  "tiers": [
+    { "description": "+3% sword damage", "effects": [ { "type": "pipican:damage_dealt", "weapons": "#pipican:weapons/swords", "multiplier": 1.03 } ] },
+    { "description": "+6% sword damage", "effects": [ { "type": "pipican:damage_dealt", "weapons": "#pipican:weapons/swords", "multiplier": 1.03 } ] },
+    { "description": "+5% attack speed", "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:attack_speed", "amount": 0.05, "operation": "add_multiplied_base" } ] },
+    { "description": "+9% sword damage", "effects": [ { "type": "pipican:damage_dealt", "weapons": "#pipican:weapons/swords", "multiplier": 1.03 } ] },
+    { "description": "+15% sword damage", "effects": [ { "type": "pipican:damage_dealt", "weapons": "#pipican:weapons/swords", "multiplier": 1.06 } ] }
+  ]
+}
