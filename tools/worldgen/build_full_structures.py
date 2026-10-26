@@ -401,6 +401,37 @@ class Workshop(Build):
         for xx in (13,self.sx-14):
             for zz in (13,self.sz-14):self.set(xx,1,zz,'water')
         self.acc['domes']=1
+
+    def cultural_square(self):
+        """Distinct village-square monuments around each region's crossroads."""
+        cx,cz=self.sx//2,self.sz//2
+        r=self.region
+        if r in ('whitecrown_icecap','northern_ice_sea'):
+            core,light='blue_ice','sea_lantern'
+        elif r in ('elderwood','emerald_jungle','verdant_depths'):
+            core,light='quartz_pillar','shroomlight'
+        elif r in ('ashlands','stormcoast','crimson_wilds'):
+            core,light='polished_blackstone','soul_lantern'
+        elif r in ('marshfen','lotus_delta'):
+            core,light='mangrove_log','shroomlight'
+        elif r in ('jade_empire','aetheris_expanse'):
+            core,light='amethyst_block','end_rod'
+        elif r in ('greyspine_mountains','umbral_chasm'):
+            core,light='chiseled_deepslate','soul_lantern'
+        elif r in ('sunscorch_desert','spice_coast','redrock_badlands'):
+            core,light='chiseled_sandstone','lantern'
+        elif r in ('western_ocean','coral_isles','shimmering_reefs','inner_sea'):
+            core,light='prismarine_bricks','sea_lantern'
+        else:
+            core,light=self.theme[3],'lantern'
+        # Four freestanding landmarks; the crossing itself remains passable.
+        for x,z in ((cx-13,cz-13),(cx+13,cz-13),(cx-13,cz+13),(cx+13,cz+13)):
+            for y in range(1,7):
+                self.set(x,y,z,core)
+            self.set(x,7,z,light)
+            for dx,dz in ((1,0),(-1,0),(0,1),(0,-1)):
+                self.set(x+dx,4,z+dz,core)
+        self.acc['regional_square_markers']=4
     def district(self,category='market'):
         wall,floor,roof,post,wood=self.theme
         W=self.sx;D=self.sz
@@ -456,6 +487,7 @@ class Workshop(Build):
             for xx in range(cx-12,cx+13,5):
                 for zz in range(cz-12,cz+13,5):self.set(xx,1,zz,'barrel');self.set(xx,2,zz,'lantern')
         else:self.furniture(cx,1,cz,'table')
+        self.cultural_square()
         self.acc['paths']=2
     def settlement(self,tier):
         # Fully furnished interior village/town/city kit; scaled by settlement tier.
@@ -467,6 +499,82 @@ class Workshop(Build):
             self.door(self.sx//2-2,1,2,width=5,height=5)
             self.door(self.sx//2-2,1,self.sz-3,width=5,height=5)
             self.acc['defensive_wall']=1
+
+    def cultural_cave_identity(self,kind):
+        """Set-dress each dungeon and mine with region-specific architecture.
+
+        Decorations stay adjacent to the side walls and leave the main
+        9-block central approach to trial spawners, ore rooms and exits clear.
+        Nothing changes the functional loot and renewable mining markers.
+        """
+        W,D=self.sx,self.sz
+        region=self.region
+        def pillar(x,z,material,light):
+            for y in range(1,12):
+                self.set(x,y,z,material)
+            self.set(x,12,z,light)
+            for y in (3,8):
+                for dx,dz in ((1,0),(-1,0),(0,1),(0,-1)):
+                    self.set(x+dx,y,z+dz,material)
+        if region in ('whitecrown_icecap','northern_ice_sea'):
+            deco,glow='packed_ice','sea_lantern'
+        elif region in ('elderwood','emerald_jungle','verdant_depths'):
+            deco,glow='mossy_stone_bricks','shroomlight'
+        elif region in ('greyspine_mountains','umbral_chasm'):
+            deco,glow='chiseled_deepslate','soul_lantern'
+        elif region in ('ashlands','crimson_wilds','stormcoast'):
+            deco,glow='polished_blackstone_bricks','magma_block'
+        elif region in ('sunscorch_desert','spice_coast','redrock_badlands'):
+            deco,glow='chiseled_sandstone','lantern'
+        elif region in ('marshfen','lotus_delta'):
+            deco,glow='mangrove_planks','shroomlight'
+        elif region in ('jade_empire','aetheris_expanse'):
+            deco,glow='chiseled_quartz_block','sea_lantern'
+        elif region in ('western_ocean','coral_isles','shimmering_reefs','inner_sea'):
+            deco,glow='prismarine_bricks','sea_lantern'
+        elif region in ('khagan_steppe','goldgrass_savanna','riverlands'):
+            deco,glow='cut_copper','lantern'
+        else:
+            deco,glow=self.theme[3],'lantern'
+
+        for z in (31,D-32):
+            for x in (6,W-7):
+                pillar(x,z,deco,glow)
+        for z in range(9,D-8,7):
+            for x in (2,W-3):
+                for y in (4,5,6):
+                    self.set(x,y,z,deco)
+                self.set(x,7,z,glow)
+        # Frozen columns, fungal roots, crystalline veins and volcanic
+        # arcades add silhouettes visible from the centre of the maze.
+        if region in ('elderwood','emerald_jungle','verdant_depths','marshfen'):
+            for z in (21,D-22):
+                for x in (9,W-10):
+                    self.set(x,12,z,'moss_block')
+                    self.set(x,11,z,'glow_lichen')
+        elif region in ('whitecrown_icecap','northern_ice_sea','aetheris_expanse'):
+            for x in (14,W-15):
+                for z in (14,D-15):
+                    for y in range(2,12):
+                        if y<9 or (x+z)%2==0:self.set(x,y,z,'blue_ice' if region!='aetheris_expanse' else 'amethyst_block')
+                    self.set(x,12,z,'sea_lantern')
+        elif region in ('ashlands','stormcoast','crimson_wilds'):
+            for x in (14,W-15):
+                for z in (14,D-15):
+                    self.set(x,1,z,'polished_basalt')
+                    self.set(x,2,z,'magma_block')
+                    self.set(x,3,z,'iron_bars')
+        elif region in ('jade_empire','lotus_delta'):
+            for x in (17,W-18):
+                for z in (17,D-18):
+                    self.set(x,2,z,'chiseled_quartz_block')
+                    self.set(x,3,z,'lantern')
+        elif region in ('coral_isles','western_ocean','shimmering_reefs'):
+            for x in (16,W-17):
+                for z in (16,D-17):
+                    self.set(x,3,z,'prismarine')
+                    self.set(x,4,z,'sea_lantern')
+        self.acc['regional_cave_identity']=1
     def cave(self,kind):
         # Underground plan with traversable three-aisle corridors, rooms and floors.
         wall,floor,roof,post,wood=self.theme
@@ -530,6 +638,7 @@ class Workshop(Build):
                 'target_cooldown_length':36000,
                 'required_player_range':14}
             self.acc['renewable_encounters']=1
+        self.cultural_cave_identity(kind)
         self.acc['main_chamber']=1
 
     def access_bridge(self, axis):
