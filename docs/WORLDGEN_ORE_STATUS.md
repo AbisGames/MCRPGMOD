@@ -1,18 +1,25 @@
-# Worldgen + regional ores (class-independent)
+# Worldgen and ores: current state
 
-## Implemented in this commit
-- 50,000 x 50,000 logical map, scaling authored 30M coordinates by 1/600.
-- The original 22 macro-regions and matching region-specific ores.
-- Five original sub-biomes: Aetheris Expanse, Verdant Depths, Umbral Chasm, Crimson Wilds, Shimmering Reefs. One themed ore each.
-- Pure deterministic warped region lookup, repeatable cell-based structure candidates.
-- Server-side renewable site state machine scaffold and catalog of mine/dungeon upgrade catalysts.
+Implemented: 50k x 50k macro scale, 22 authored region bounds, 120 authored
+subregion definitions and sampling, 70 protected landmark center/radius
+records, 331 authored pool IDs, 125 custom biome datapack definitions, five
+original fantasy biome names, 27 registered ore blocks/items, 27 PNG ore
+textures, 27 block models, block loot tables, renewable site state model
+and deterministic structure candidate planning.
 
-## Not implemented (NOT playable yet)
-- NeoForge custom biome registry, climate parameter mapping, dimension noise settings or height expansion (-64..511 target); no vanilla biome replacement.
-- Region masks still include original macro rectangles with warped boundaries; exact 120 author-defined subregion weighted assignment not connected.
-- Actual capital/castle, village, dungeon, quarry structures (.nbt / jigsaw pools); marker-based NPC anchors and world placement.
-- Real registered ore blocks, drops, item textures, inventories, loot tables, worldgen restrictions.
-- Site persistence and respawns from the server's saved-data, player entry/exit tracking, multiplayer loot rights.
-- Build, dedicated server and game tests.
+Not complete: No in-world .nbt structure pieces/pools/placement, registered
+Overworld biome source, region-aware terrain and surface rules, enhanced
+dimension height, vanilla biome features inside custom biomes, protected
+mining interactions, persisted mine/dungeon timers, server inventories and
+loot transaction rights, client/mining GUIs. No successful Minecraft 26.1.2
+test has been demonstrated.
 
-Do not merge this as a completed feature. The armors/tools belong on a separate future branch.
+The 125 biome definitions currently have empty feature/spawner arrays and
+should not be selected by a production world preset. Worldgen source JSON
+files are loaded by Java helper classes but are not an automatically active
+world preset. The source layout is not a game map by itself.
+
+Run `python3 tools/validate_worldgen.py` for static checks; use
+`./gradlew build` under Java 25 for compile validation when CI is available.
+
+Do NOT merge as a fully working worldgen + ore implementation yet.
