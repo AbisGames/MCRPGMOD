@@ -518,6 +518,18 @@ class Workshop(Build):
                 self.set(*pos,'chest[facing=north]')
                 self.block_entities[pos]={'LootTable':f'pipican:chests/{self.region}_dungeon'}
             self.acc['reward_chests']=3
+            # Renewable vanilla trial arena, configured by a regional datapack.
+            # Its reward is emitted only after players defeat the spawned wave.
+            # This keeps the repeatable dungeon loop independent of player PvP
+            # and of the still-unfinished bespoke RPG boss implementations.
+            spawner=(cx,2,cz)
+            self.set(*spawner,'trial_spawner')
+            self.block_entities[spawner]={
+                'id':'minecraft:trial_spawner',
+                'normal_config':f'pipican:{self.region}_trial',
+                'target_cooldown_length':36000,
+                'required_player_range':14}
+            self.acc['renewable_encounters']=1
         self.acc['main_chamber']=1
 
     def access_bridge(self, axis):
@@ -568,7 +580,9 @@ def dump_nbt(b,path):
     for pos,st in sorted(b.blocks.items()):
         parts=[ints('pos',pos),pint('state',indices[st])]
         if pos in b.block_entities:
-            parts.append(tag('nbt',10)+cmp([pstr(key,value) for key,value in b.block_entities[pos].items()]))
+            parts.append(tag('nbt',10)+cmp([
+                pint(key,value) if isinstance(value,int) else pstr(key,value)
+                for key,value in b.block_entities[pos].items()]))
         blocks.append(cmp(parts))
     data=tag('',10)+cmp([ints('size',[b.sx,b.sy,b.sz]),lst('palette',10,[statecompound(st) for st in palette]),lst('blocks',10,blocks),lst('entities',10,[]),pint('DataVersion',4790)])
     path.parent.mkdir(parents=True,exist_ok=True)

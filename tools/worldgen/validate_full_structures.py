@@ -84,6 +84,7 @@ def inspect_nbt(file):
                 offset+=n*record_length
             else:
                 chest_tags=0
+                trial_tags=0
                 for ix in range(n):
                     pos=offset
                     assert data[pos:pos+6]==expected,(file,ix)
@@ -95,14 +96,24 @@ def inspect_nbt(file):
                     if data[offset]==10:  # The optional block-entity compound.
                         offset+=1
                         assert read_string()=='nbt'
-                        assert take(1)==b'\x08'
-                        assert read_string()=='LootTable'
-                        loot_id=read_string()
-                        assert loot_id.startswith('pipican:chests/')
-                        assert take(1)==b'\x00'
-                        chest_tags+=1
+                        fields={}
+                        while True:
+                            field_type=take(1)[0]
+                            if field_type==0:break
+                            field_name=read_string()
+                            if field_type==8:fields[field_name]=read_string()
+                            elif field_type==3:fields[field_name]=read_int()
+                            else:raise AssertionError(('unknown block entity NBT',field_type,field_name))
+                        if 'LootTable' in fields:
+                            assert fields['LootTable'].startswith('pipican:chests/')
+                            chest_tags+=1
+                        if 'normal_config' in fields:
+                            assert fields['normal_config'].startswith('pipican:')
+                            assert fields.get('target_cooldown_length',0)>0
+                            trial_tags+=1
                     assert take(1)==b'\x00'
                 assert chest_tags==3,(file,chest_tags)
+                assert trial_tags==1,(file,trial_tags)
         elif key=='entities' and t==9:
             assert take(1)==b'\x0a';assert read_int()==0
             has_entities=True
