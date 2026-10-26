@@ -23,7 +23,8 @@ public final class WorldgenTests {
     private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
         "worldgen_catalog", WorldgenTests::worldgenCatalog,
         "renewable_mine", WorldgenTests::renewableMine,
-        "structure_nbt_load", WorldgenTests::structureNbtLoad
+        "structure_nbt_load", WorldgenTests::structureNbtLoad,
+        "registries_loaded", WorldgenTests::registriesLoaded
     );
     private WorldgenTests(){}
 
@@ -80,6 +81,70 @@ public final class WorldgenTests {
                     "unexpected structure width for "+ids[i]);
             }
         }
+        helper.succeed();
+    }
+
+
+    /**
+     * Validates that the datapack entries needed to start an RPG save are
+     * fully decoded and registered in a real running NeoForge server.
+     * This is stronger than JSON syntax checks but not an FPS benchmark.
+     */
+    private static void registriesLoaded(GameTestHelper helper){
+        var access=helper.getLevel().registryAccess();
+        var biomeRegistry=access.lookupOrThrow(Registries.BIOME);
+        var presetRegistry=access.lookupOrThrow(Registries.WORLD_PRESET);
+        var noiseRegistry=access.lookupOrThrow(Registries.NOISE_SETTINGS);
+        var dimensionRegistry=access.lookupOrThrow(Registries.DIMENSION_TYPE);
+        var structureRegistry=access.lookupOrThrow(Registries.STRUCTURE);
+        var poolRegistry=access.lookupOrThrow(Registries.TEMPLATE_POOL);
+
+        helper.assertTrue(presetRegistry.get(ResourceKey.create(Registries.WORLD_PRESET,
+            Pipican.id("rpg_world"))).isPresent(),"missing RPG world preset");
+        helper.assertTrue(noiseRegistry.get(ResourceKey.create(Registries.NOISE_SETTINGS,
+            Pipican.id("rpg_overworld"))).isPresent(),"missing 576-high noise settings");
+        helper.assertTrue(dimensionRegistry.get(ResourceKey.create(Registries.DIMENSION_TYPE,
+            Pipican.id("rpg_overworld"))).isPresent(),"missing 576-high dimension");
+
+        int sampled=0;
+        var regionMap=WorldgenJson.read("region_map.json");
+        for(var region:regionMap.getAsJsonArray("macro_regions")){
+            var r=region.getAsJsonObject();
+            String parent=r.get("id").getAsString();
+            for(var part:r.getAsJsonArray("subregions")){
+                String id=parent+"/"+part.getAsJsonObject().get("id").getAsString();
+                helper.assertTrue(biomeRegistry.get(ResourceKey.create(Registries.BIOME,
+                    Pipican.id(id))).isPresent(),"missing biome "+id);
+                sampled++;
+            }
+        }
+        helper.assertTrue(sampled==120,"unexpected authored subregion count");
+        for(var extra:WorldLayout.EXTRA_BIOMES){
+            helper.assertTrue(biomeRegistry.get(ResourceKey.create(Registries.BIOME,
+                Pipican.id(extra.id()))).isPresent(),"missing fantasy biome "+extra.id());
+        }
+
+        int structures=0;
+        for(var ore:RegionalOreCatalog.ORES){
+            String id=ore.region();
+            for(String kind:List.of("dungeon","mine")){
+                String path="regional/"+id+"/"+kind;
+                helper.assertTrue(structureRegistry.get(ResourceKey.create(Registries.STRUCTURE,
+                    Pipican.id(path))).isPresent(),"missing RPG structure "+path);
+                structures++;
+            }
+        }
+        helper.assertTrue(structures==54,"expected 54 regional structures");
+
+        var manifest=WorldgenJson.read("structure_pools_manifest.json");
+        int pools=0;
+        for(var entry:manifest.getAsJsonArray("pools")){
+            String pool=entry.getAsJsonObject().get("pool").getAsString();
+            helper.assertTrue(poolRegistry.get(ResourceKey.create(Registries.TEMPLATE_POOL,
+                Pipican.id(pool))).isPresent(),"missing structure pool "+pool);
+            pools++;
+        }
+        helper.assertTrue(pools==331,"expected 331 original structure pools");
         helper.succeed();
     }
 
