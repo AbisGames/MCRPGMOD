@@ -18,9 +18,16 @@ public final class QuestService {
         }
         return quest.allowedClasses().isEmpty() || classId.filter(quest.allowedClasses()::contains).isPresent();
     }
+    /** Called after a verified NPC interaction (or classless trainer enrollment). */
+    public void accept(WorldRpgState state, String questId, Optional<String> currentClass) {
+        QuestDefinition q = catalog.quest(questId).orElseThrow();
+        if (!eligible(state, q, currentClass)) throw new IllegalStateException("quest unavailable");
+        state.acceptQuest(questId);
+    }
     public boolean progress(WorldRpgState state, String questId, Optional<String> currentClass, Event event) {
         QuestDefinition quest = catalog.quest(questId).orElseThrow();
-        if (!eligible(state, quest, currentClass) || event == null || event.amount() <= 0) return false;
+        if (!state.accepted().contains(questId) || !eligible(state, quest, currentClass)
+            || event == null || event.amount() <= 0) return false;
         boolean changed=false;
         for (var objective : quest.objectives()) {
             if(objective.type()==event.type() && objective.targetId().equals(event.targetId())
@@ -36,14 +43,15 @@ public final class QuestService {
     /** Rewards must be applied by a transactional server adapter; call after inventory capacity checks. */
     public QuestDefinition.Reward complete(WorldRpgState state, String questId, Optional<String> currentClass) {
         QuestDefinition q=catalog.quest(questId).orElseThrow();
-        if (!eligible(state,q,currentClass) || !ready(state,q)) throw new IllegalStateException("not complete");
+        if (!state.accepted().contains(questId) || !eligible(state,q,currentClass) || !ready(state,q))
+            throw new IllegalStateException("not complete");
         // Inventory item grants are handled transactionally by the NeoForge adapter.
         // Check overflow before marking quest completion to prevent partial updates.
         Math.addExact(state.coins(), q.reward().coins());
         state.addCoins(q.reward().coins());
         q.reward().recipes().forEach(state::unlockRecipe);
         state.rewardOnce(questId);
-        state.complete(questId);
+        state.finishQuest(questId);
         return q.reward();
     }
 }

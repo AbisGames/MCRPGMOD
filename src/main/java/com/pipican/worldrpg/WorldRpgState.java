@@ -9,6 +9,8 @@ import java.util.*;
 public final class WorldRpgState {
     public record Training(String trainerId, String previousClassId, int questIndex) {}
     private final Set<String> completed = new HashSet<>();
+    /** A quest cannot be progressed until the player explicitly accepts it. */
+    private final Set<String> accepted = new HashSet<>();
     private final Map<String,Map<String,Integer>> objectiveCounts = new HashMap<>();
     private final Set<String> rewarded = new HashSet<>();
     private final Set<String> unlockedClasses = new HashSet<>();
@@ -19,6 +21,9 @@ public final class WorldRpgState {
     private Training training;
     public long coins() { return coins; }
     public Set<String> completed() { return Set.copyOf(completed); }
+    public Set<String> accepted() { return Set.copyOf(accepted); }
+    void acceptQuest(String id) { accepted.add(id); }
+    void finishQuest(String id) { accepted.remove(id); complete(id); }
     public Set<String> rewarded() { return Set.copyOf(rewarded); }
     public Set<String> unlockedClasses() { return Set.copyOf(unlockedClasses); }
     public Set<String> unlockedRecipes() { return Set.copyOf(unlockedRecipes); }
@@ -62,6 +67,8 @@ public final class WorldRpgState {
         if(coins<0 || counts.values().stream().flatMap(m->m.values().stream()).anyMatch(n->n<0))
             throw new IllegalArgumentException("invalid save");
         this.coins=coins; this.completed.clear(); this.completed.addAll(completed);
+        // Legacy saves did not track acceptance. Re-accept incomplete quests explicitly.
+        this.accepted.clear();
         this.rewarded.clear(); this.rewarded.addAll(rewarded);
         this.objectiveCounts.clear(); counts.forEach((k,v)->this.objectiveCounts.put(k,new HashMap<>(v)));
         this.unlockedClasses.clear(); this.unlockedClasses.addAll(classes);
