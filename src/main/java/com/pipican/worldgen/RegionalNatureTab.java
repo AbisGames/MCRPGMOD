@@ -26,6 +26,7 @@ public final class RegionalNatureTab {
                 for(var region:WorldLayout.REGIONS){
                     var p=RegionalNatureBlocks.PALETTES.get(region.id());
                     output.accept(p.strata().get());
+                    output.accept(p.ground().get());
                     output.accept(p.trunk().get());
                     output.accept(p.canopy().get());
                     output.accept(p.bloom().get());
@@ -33,6 +34,7 @@ public final class RegionalNatureTab {
                 for(var region:WorldLayout.EXTRA_BIOMES){
                     var p=RegionalNatureBlocks.PALETTES.get(region.id());
                     output.accept(p.strata().get());
+                    output.accept(p.ground().get());
                     output.accept(p.trunk().get());
                     output.accept(p.canopy().get());
                     output.accept(p.bloom().get());

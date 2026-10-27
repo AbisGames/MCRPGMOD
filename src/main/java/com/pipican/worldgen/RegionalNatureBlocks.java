@@ -19,7 +19,8 @@ public final class RegionalNatureBlocks {
     public record Palette(DeferredBlock<? extends Block> strata,
                           DeferredBlock<? extends Block> trunk,
                           DeferredBlock<? extends Block> canopy,
-                          DeferredBlock<? extends Block> bloom){}
+                          DeferredBlock<? extends Block> bloom,
+                          DeferredBlock<? extends Block> ground){}
     public static final Map<String,Palette> PALETTES;
     static {
         LinkedHashMap<String,Palette> all=new LinkedHashMap<>();
@@ -35,11 +36,14 @@ public final class RegionalNatureBlocks {
                 p->p.strength(0.2F).randomTicks().noOcclusion().sound(SoundType.GRASS));
             var bloom=BLOCKS.registerBlock(id+"_bloom",TallGrassBlock::new,
                 p->p.noCollision().instabreak().noOcclusion().sound(SoundType.GRASS));
+            var ground=BLOCKS.registerSimpleBlock(id+"_ground",
+                p->p.strength(0.72F,2.0F).sound(SoundType.GRASS));
+            ITEMS.registerSimpleBlockItem(ground);
             ITEMS.registerSimpleBlockItem(strata);
             ITEMS.registerSimpleBlockItem(trunk);
             ITEMS.registerSimpleBlockItem(canopy);
             ITEMS.registerSimpleBlockItem(bloom);
-            all.put(id,new Palette(strata,trunk,canopy,bloom));
+            all.put(id,new Palette(strata,trunk,canopy,bloom,ground));
         }
         PALETTES=Map.copyOf(all);
     }
