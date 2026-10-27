@@ -8,8 +8,8 @@
   "start_height": {
     "absolute": 0
   },
-  "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "max_distance_from_center": 96,
   "start_pool": "pipican:settlements/coral_isles/volcanic_jungle_islands/hamlet",
-  "use_expansion_hack": false
+  "use_expansion_hack": false,
+  "project_start_to_heightmap": "WORLD_SURFACE_WG"
 }
