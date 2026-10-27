@@ -22,6 +22,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public final class WorldgenTests {
     private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
         "worldgen_catalog", WorldgenTests::worldgenCatalog,
+        "capital_protection", WorldgenTests::capitalProtection,
         "renewable_mine", WorldgenTests::renewableMine,
         "structure_nbt_load", WorldgenTests::structureNbtLoad,
         "registries_loaded", WorldgenTests::registriesLoaded,
@@ -44,6 +45,22 @@ public final class WorldgenTests {
             event.registerTest(Pipican.id(name),new FunctionGameTestInstance(
                 fn,new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true)));
         });
+    }
+
+    private static void capitalProtection(GameTestHelper helper) {
+        helper.assertTrue(CapitalStructureExclusion.all().size()==22,"capital zone count");
+        for(var zone:CapitalStructureExclusion.all()) {
+            helper.assertTrue(CapitalStructureExclusion.contains(zone.x(),zone.z(),0),
+                "capital centre not reserved: "+zone.id());
+            helper.assertTrue(!StructurePlanner.canPlaceFootprint(
+                zone.x()-10,zone.z()-10,zone.x()+10,zone.z()+10,0),
+                "candidate overlaps capital: "+zone.id());
+            helper.assertTrue(StructurePlanner.canPlaceFootprint(
+                zone.x()+zone.radius()+500,zone.z()+zone.radius()+500,
+                zone.x()+zone.radius()+510,zone.z()+zone.radius()+510,0),
+                "distant candidate rejected: "+zone.id());
+        }
+        helper.succeed();
     }
 
     private static void worldgenCatalog(GameTestHelper helper) {
