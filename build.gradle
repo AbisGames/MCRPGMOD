@@ -100,7 +100,9 @@ neoForge {
             // Recommended logging level for the console
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            logLevel = org.slf4j.event.Level.DEBUG
+            // INFO keeps integration diagnostics visible instead of flooding
+            // CI's bounded logs with every masked client asset on the server.
+            logLevel = org.slf4j.event.Level.INFO
         }
     }
 

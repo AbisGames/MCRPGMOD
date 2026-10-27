@@ -44,11 +44,33 @@ public final class WorldgenIntegrationTests {
     }
 
     private static void generatedChunks(GameTestHelper helper) {
+        var server=helper.getLevel().getServer();
+        var original=server.getWorldGenSettings();
+        // GameTestServer hardcodes WORLD_OPTIONS=(0,false,false). Configure
+        // its private final instance field only in this test harness, restoring
+        // it before any other test batch runs. Passing ServerLevel's zoom seed
+        // alone does not change noise or enable native structure generation.
+        java.lang.reflect.Field options;
+        try{
+            options=net.minecraft.server.MinecraftServer.class.getDeclaredField("worldGenSettings");
+            options.setAccessible(true);
+        }catch(ReflectiveOperationException e){throw new IllegalStateException("GameTest world options unavailable",e);}
         for(long seed:new long[]{0L,123L,987654321L}){
             generationSeed=seed;
-            var level=createLevel(helper,seed);
-            try{verifyGenerated(helper,level);}
-            finally{saveAndClose(helper,level.dimension());}
+            ServerLevel level=null;
+            try{
+                options.set(server,new net.minecraft.world.level.levelgen.WorldGenSettings(
+                    new net.minecraft.world.level.levelgen.WorldOptions(seed,true,false),original.dimensions()));
+                level=createLevel(helper,seed);
+                verifyGenerated(helper,level);
+            }catch(IllegalAccessException e){throw new IllegalStateException("Cannot set independent test seed",e);}
+            finally{
+                try{if(level!=null)saveAndClose(helper,level.dimension());}
+                finally{
+                    try{options.set(server,original);}
+                    catch(IllegalAccessException e){throw new IllegalStateException("Cannot restore GameTest world options",e);}
+                }
+            }
         }
         helper.succeed();
     }
@@ -73,7 +95,8 @@ public final class WorldgenIntegrationTests {
                 STORAGE.put(RPG,storage);
                 level=new ServerLevel(server,java.util.concurrent.ForkJoinPool.commonPool(),storage,
                     new net.minecraft.world.level.storage.DerivedLevelData(server.getWorldData(),
-                        server.getWorldData().overworldData()),RPG,stem,false,seed,List.of(),false);
+                        server.getWorldData().overworldData()),RPG,stem,false,
+                    net.minecraft.world.level.biome.BiomeManager.obfuscateSeed(seed),List.of(),false);
                 server.forgeGetWorldMap().put(RPG,level);
                 server.markWorldsDirty();
             }catch(Exception e){throw new IllegalStateException("Unable to open temporary RPG test world for seed "+seed,e);}
@@ -96,6 +119,8 @@ public final class WorldgenIntegrationTests {
     }
 
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
+        helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
+        helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
         helper.assertTrue(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource,
             "integration test must use the real RPG generator");
         for (var island : SkyIslandLayout.ISLANDS) {

@@ -30,6 +30,8 @@ jobs:
           cp tools/worldgen/output/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
       - name: Compile and package NeoForge mod
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
+      - name: Verify packaged structure templates
+        run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
       - name: NeoForge GameTest server smoke test
         timeout-minutes: 30
         run: ./gradlew runGameTestServer --no-daemon

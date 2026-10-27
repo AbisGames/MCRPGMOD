@@ -472,6 +472,15 @@ public final class WorldgenTests {
                     "vanilla structure "+vanilla.key().identifier()+
                     " enabled in RPG biome "+name);
         }
+        for(var pair:List.of(Map.entry("village_plains","plains"),
+                Map.entry("fortress","nether_wastes"),Map.entry("end_city","end_highlands"))){
+            var vanilla=structures.stream().filter(s->s.key().identifier().getPath().equals(pair.getKey()))
+                .findFirst().orElseThrow();
+            var biome=biomes.get(ResourceKey.create(Registries.BIOME,
+                net.minecraft.resources.Identifier.withDefaultNamespace(pair.getValue()))).orElseThrow();
+            helper.assertTrue(vanilla.value().biomes().contains(biome),
+                "normal Minecraft structure eligibility disabled: "+pair.getKey());
+        }
         helper.succeed();
     }
 

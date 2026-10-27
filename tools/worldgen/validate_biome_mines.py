@@ -32,7 +32,9 @@ EXPECTED={
 "shimmering_reefs":"abyssal_shard"}
 registered=set(json.loads(TAGS.read_text())["values"])
 ore_ids=set(EXPECTED.values())
+pickaxe=set(json.loads((ROOT/"src/main/resources/data/minecraft/tags/block/mineable/pickaxe.json").read_text())["values"])
 for region,ore in EXPECTED.items():
+    assert f"pipican:{ore}_ore" in pickaxe,f"Ore cannot be mined with a pickaxe: {ore}"
     mine=MINES/region/"mine.nbt"
     assert mine.exists(),f"Missing NBT mine: {region}"
     payload=gzip.decompress(mine.read_bytes())
