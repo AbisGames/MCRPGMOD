@@ -7,6 +7,10 @@ import java.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -105,7 +109,14 @@ public final class CapitalPlacementEvents {
         int oz=city.z()-(capital?46:0)+tile.get("z").getAsInt();
         BlockPos origin=new BlockPos(ox,foundationY,oz);
         StructurePlaceSettings options=new StructurePlaceSettings().setIgnoreEntities(true);
-        if(!template.get().placeInWorld(level,origin,origin,options,level.getRandom(),2)){
+        StructureTemplate piece=template.get();
+        BoundingBox bounds=piece.getBoundingBox(options,origin);
+        if(!safeFootprint(level,bounds,foundationY)) {
+            Pipican.LOGGER.warn("Unsafe terrain or obstruction at tile {} of {}; placement deferred",index,city.id());
+            return false;
+        }
+        clearNaturalOverburden(level,bounds,foundationY);
+        if(!piece.placeInWorld(level,origin,origin,options,level.getRandom(),2)){
             Pipican.LOGGER.warn("Failed to place tile {} of {}",index,city.id());
             return false;
         }
@@ -114,4 +125,46 @@ public final class CapitalPlacementEvents {
             Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;
     }
+    // Fail closed when the footprint is too steep or contains non-natural blocks.
+    private static boolean safeFootprint(ServerLevel level,BoundingBox box,int foundationY) {
+        if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return false;
+        for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
+            if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return false;
+            int top=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
+            if(top>foundationY+12 || top<foundationY-12)return false;
+        }
+        for(int x=box.minX();x<=box.maxX();x+=4)
+            for(int z=box.minZ();z<=box.maxZ();z+=4)
+                for(int y=Math.max(box.minY(),foundationY);y<=box.maxY();y+=4) {
+                    BlockState state=level.getBlockState(new BlockPos(x,y,z));
+                    if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state)))return false;
+                }
+        return true;
+    }
+
+    private static boolean isNatural(BlockState state) {
+        return state.is(net.minecraft.tags.BlockTags.DIRT)
+            || state.is(net.minecraft.tags.BlockTags.SAND)
+            || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)
+            || state.is(net.minecraft.tags.BlockTags.LEAVES)
+            || state.is(net.minecraft.tags.BlockTags.LOGS)
+            || state.is(net.minecraft.tags.BlockTags.FLOWERS)
+            || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.SHORT_GRASS)
+            || state.is(Blocks.TALL_GRASS) || state.is(Blocks.SNOW)
+            || state.is(Blocks.SNOW_BLOCK) || state.is(Blocks.GRAVEL)
+            || state.is(Blocks.CLAY) || state.is(Blocks.WATER)
+            || state.is(Blocks.LAVA);
+    }
+
+    private static void clearNaturalOverburden(ServerLevel level,BoundingBox box,int foundationY) {
+        for(int x=box.minX();x<=box.maxX();x++)
+            for(int z=box.minZ();z<=box.maxZ();z++)
+                for(int y=Math.max(box.minY(),foundationY);y<=box.maxY();y++){
+                    BlockPos pos=new BlockPos(x,y,z);
+                    BlockState state=level.getBlockState(pos);
+                    if(!state.isAir() && isNatural(state))
+                        level.setBlock(pos,Blocks.AIR.defaultBlockState(),2);
+                }
+    }
+
 }
