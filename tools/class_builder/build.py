@@ -536,6 +536,9 @@ def main(spec_dir, res_dir, report_path):
                 report['Abilities not in game yet'].append((cid, f'ability {name}', desc or 'unlocked by a tree node'))
                 continue
             ability_ids[name.lower()] = f'{NS}:{cid}/{slug(name)}'
+            if any(a.get('abilities') == 'FORMS' for a in d.get('actions', [])):
+                forms = [f'{NS}:{cid}/{slug(n)}' for (k_cid, n) in ab.A if k_cid == cid and n.endswith(' Form')]
+                d = dict(d, actions=[dict(a, abilities=forms) if a.get('abilities') == 'FORMS' else a for a in d['actions']])
             write(f'{NS}/{NS}/ability/{cid}/{slug(name)}.json', ability_json(name, desc or d.get('description'), d))
             counts['abilities'] += 1
             if d.get('approx'):

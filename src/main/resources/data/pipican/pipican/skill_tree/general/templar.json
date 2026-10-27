@@ -19,21 +19,26 @@
     {
       "id": "templar_hallowed",
       "name": "Hallowed",
-      "description": {
-        "text": "+5% temple damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% temple damage",
       "type": "small",
       "x": 1601,
       "y": 476,
       "links": [
         "templar_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:temple"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {
@@ -79,16 +84,7 @@
     {
       "id": "templar_holy_bulwark",
       "name": "Holy Bulwark",
-      "description": {
-        "text": "+1 more temple armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 more temple armor",
       "type": "notable",
       "x": 1651,
       "y": 549,
@@ -96,7 +92,22 @@
         "templar_guardian_s_oath"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:temple"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "templar_fortress_temple",

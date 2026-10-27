@@ -11,16 +11,7 @@
     {
       "id": "iron_hide",
       "name": "Iron Hide",
-      "description": {
-        "text": "+2 Fury; Iron Hide +1 armor",
-        "extra": [
-          {
-            "text": " (partly not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 Fury; Iron Hide +1 armor",
       "type": "small",
       "x": 35,
       "y": 70,
@@ -32,6 +23,32 @@
           "type": "pipican:stat",
           "stat": "pipican:berserker_fury",
           "amount": 2
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:wearing",
+                  "items": "#pipican:armor/medium"
+                },
+                {
+                  "type": "pipican:wearing",
+                  "items": "#pipican:armor/heavy"
+                }
+              ]
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
         }
       ]
     },

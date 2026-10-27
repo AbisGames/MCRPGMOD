@@ -1,0 +1,33 @@
+{
+  "name": "Cat Form",
+  "description": "Cat form (drains Change): +20% speed, no fall damage.",
+  "icon": "minecraft:string",
+  "cooldown_ticks": 60,
+  "toggle": true,
+  "drain_per_second": 1.5,
+  "actions": [
+    {
+      "type": "pipican:stop",
+      "abilities": [
+        "pipican:shapeshifter/wolf_form",
+        "pipican:shapeshifter/bear_form",
+        "pipican:shapeshifter/cat_form",
+        "pipican:shapeshifter/fish_form",
+        "pipican:shapeshifter/bird_form"
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.2,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_fall",
+      "multiplier": 0.0
+    }
+  ]
+}

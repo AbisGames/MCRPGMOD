@@ -1,5 +1,6 @@
 package com.pipican.ability;
 
+import com.pipican.ability.action.StopAction;
 import com.pipican.ability.action.DotAction;
 import com.pipican.ability.action.RandomAction;
 import com.pipican.ability.action.CheatDeathAction;
@@ -78,6 +79,7 @@ public final class AbilityActionTypes {
     public static final Type CHEAT_DEATH = register("cheat_death", CheatDeathAction.CODEC);
     public static final Type RANDOM = register("random", RandomAction.CODEC);
     public static final Type DOT = register("dot", DotAction.CODEC);
+    public static final Type STOP = register("stop", StopAction.CODEC);
     public static final Type SHRUG = register("shrug", ShrugAction.CODEC);
     public static final Type EMPOWER = register("empower", EmpowerAction.CODEC);
     public static final Type IMBUE = register("imbue", ImbueAction.CODEC);

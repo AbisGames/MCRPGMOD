@@ -41,6 +41,11 @@ def learn(cid, lines, ctx):
 def atoms(ctx):
     """Condition phrases for this class's named states: "while Berserk", "in Battle Stance", "while Stand Guard is active"."""
     out = []
+    forms = [w for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+    if forms:
+        any_form = forms[0] if len(forms) == 1 else {'type': 'pipican:any_of', 'conditions': forms}
+        out.append((r'(?:while )?(?:in any (?:animal )?form|transformed|in an animal form)', lambda m, w=any_form: w, 'other'))
+        out.append((r'(?:while )?in human form', lambda m, w=any_form: {'type': 'pipican:not', 'condition': w}, 'other'))
     for name, (when, _) in sorted(NAMED.get(ctx.get('class_id'), {}).items(), key=lambda kv: -len(kv[0])):
         pat = rf'(?:while |when |in |during )(?:in )?(?:your )?{re.escape(name)}(?: is active| is on)?'
         out.append((pat, lambda m, w=when: w, 'other'))
@@ -92,7 +97,7 @@ def segment(t, ctx):
             if out:
                 return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:on', 'event': 'start', 'actions': out}]}]
         # "per 10 Vigilance, Stand Guard +5% damage" -> "+5% damage while Stand Guard" with the scaling prefix
-        m = re.fullmatch(rf'(per {N} [a-z]+(?: points?)?,? )?{n} (\+{N}% .+)', t)
+        m = re.fullmatch(rf'(per {N} [a-z]+(?: points?)?,? )?{n} ([+-]{N}%? .+)', t)
         if m and 'bonus' not in m.group(3):
             eff, uns = fx.translate(f'{m.group(1) or ""}{m.group(3)}', ctx)
             if eff and not uns:
@@ -445,6 +450,12 @@ def triggers_more(t, ctx):
             out['once_per_rest'] = True
         return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:resource', 'max': float(m.group(3)) / 100}, 'effects': [out]}]
     # "Battle Stance also gives knockback immunity", "Ecstasy also gives Regeneration I", "Stigmata also gives Resistance I"
+    m = re.fullmatch(r'forms also give (.+)', t)
+    if m:
+        forms = [w for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+        eff = _rest(m.group(1), ctx) if forms else None
+        if eff:
+            return [{'type': 'pipican:conditional', 'when': forms[0] if len(forms) == 1 else {'type': 'pipican:any_of', 'conditions': forms}, 'effects': eff}]
     m = re.fullmatch(r'([a-z][a-z \']*?) also gives (.+)', t)
     if m:
         word = m.group(1).strip()
@@ -502,6 +513,26 @@ def whole_line(text, ctx):
             acts.append({'type': 'pipican:blink', 'distance': float(m.group(2))})
         acts.append({'type': 'pipican:shrug'})
         return [{'type': 'pipican:on', 'event': 'attacked', 'chance': round(float(m.group(1)) / 100, 6), 'name': 'decoy', 'actions': acts}]
+    # Seize Chaos: "10% of your hits trigger a random effect - double damage, ignite, Levitation on the target, a heal for you,
+    # or (rarely) a small explosion on yourself"
+    m = re.fullmatch(rf'{N}% of your hits trigger a random effect - double damage, ignite, levitation on the target, a heal for you, or \(rarely\) a small explosion on yourself', low)
+    if m:
+        good = [[{'type': 'pipican:damage', 'target': 'victim', 'amount': 5.0}],
+                [{'type': 'pipican:damage', 'target': 'victim', 'amount': 0, 'fire_seconds': 4.0}],
+                [{'type': 'pipican:effect', 'target': 'victim', 'effects': [{'effect': 'minecraft:levitation', 'seconds': 3.0}]}],
+                [{'type': 'pipican:heal', 'target': 'self', 'amount': 4.0}]]
+        bad = [[{'type': 'pipican:explode', 'power': 1.0}, {'type': 'pipican:damage', 'target': 'self', 'amount': 3.0}]]
+        return [{'type': 'pipican:on', 'event': 'hit', 'chance': round(float(m.group(1)) / 100, 6), 'name': 'seize chaos',
+                 'actions': [{'type': 'pipican:random', 'choices': good * 3 + bad}]}]
+    # Temple of Faith: "an area within 10 blocks of a lodestone, beacon or bed you've set becomes your temple - inside it, +15% damage and +1 armor"
+    m = re.fullmatch(r"an area within (\d+) blocks of a lodestone, beacon or bed you've set becomes your temple - inside it, (.+)", low)
+    if m:
+        eff = _rest(m.group(2), ctx)
+        if eff:
+            out = [{'type': 'pipican:conditional', 'when': {'type': 'pipican:temple'}, 'effects': eff}]
+            if float(m.group(1)) != 10:
+                out.append({'type': 'pipican:bonus', 'kind': 'temple_radius', 'amount': float(m.group(1)) - 10})
+            return out
     # Premonitions: "after sleeping, you get 3 'premonitions' - each automatically turns a hit against you into a miss"
     m = re.fullmatch(rf"after sleeping, you get {N} '?premonitions'? - each automatically turns a hit against you into a miss", low)
     if m:
@@ -513,6 +544,18 @@ def whole_line(text, ctx):
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
     # premonition / curse / decoy counts and add-ons
+    m = re.fullmatch(rf'temple radius \+{N} blocks? per ([a-z]+)(?: points?)?|\+{N} temple radius', t)
+    if m:
+        if m.group(3):
+            return [{'type': 'pipican:bonus', 'kind': 'temple_radius', 'amount': float(m.group(3))}]
+        if _stat_source(m.group(2), ctx):
+            return [{'type': 'pipican:bonus', 'kind': 'temple_radius', 'amount': 0.0, 'scaling': [{'source': 'special_stat', 'per': float(m.group(1))}]}]
+    m = re.fullmatch(rf'hostile mobs hit inside your temple get (.+)', t)
+    if m:
+        entries = _effects_list(m.group(1), 3.0)
+        if entries:
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:temple'}, 'effects': [{'type': 'pipican:on', 'event': 'hit',
+                     'actions': [{'type': 'pipican:effect', 'target': 'victim', 'effects': entries}]}]}]
     m = re.fullmatch(rf'\+{N} premonitions?', t)
     if m:
         return [{'type': 'pipican:reaction_chance', 'name': 'premonition', 'uses': float(m.group(1))}]

@@ -3,8 +3,8 @@
 Generated from `class_specs/*.md` by the class builder. Everything listed here is **not in the game yet**:
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
-- Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1473**, partly working: **20**, not yet: **756**
+- Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
+- Bonus phrases: **2250**. Fully working: **1495**, partly working: **19**, not yet: **736**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,12 +12,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 288 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 158 |
+| [Other mechanics](#other-mechanics) | 284 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 145 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 99 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 93 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 91 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 73 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 68 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 29 |
 | [Immunities](#immunities) | 21 |
@@ -72,7 +72,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **berserker**
   - general tree: Bloodlust: heal 1 HP on each kill
   - general tree: Reckless Strike: +20% melee damage at all times, but you take +15% damage
-  - special tree: Iron Hide: Iron Hide +1 armor
   - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
   - special tree: Reckless Strike: fatigue lasts twice as long
 - **blade**
@@ -315,9 +314,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Watchtower: Stand Guard +10% damage
   - special tree: Stand Guard: Stand Guard triggers after 1s
   - special tree: Sentry: players within 8 blocks also see what glows for you
-- **shapeshifter**
-  - general tree: Shapeshifter: +5% unarmed damage
-  - special tree: Dire Form: forms also give +1 armor toughness
 - **sharpshooter**
   - special passive: Deadly Aim bonus +1% per Precision
   - special passive: Per 10 Precision, aim time -0.2s
@@ -344,7 +340,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **thaumaturge**
   - special passive: Per 10 Entropy, bad chaos outcomes are 5% rarer
   - general tree: Probability Bend: bad outcomes 20% rarer
-  - general tree: Agent of Chaos: outcomes are fully random
   - special tree: Pandemonium: chaos outcomes can hit 2 mobs
 - **theurge**
   - special stat per point: +1% healing and +0.5% magic damage
@@ -526,14 +521,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **shapeshifter**
   - special stat per point: +1% bonus from your current form
   - passive: Swift Transformation: changing form is instant and cleanses Slowness
-  - passive: In any animal form, +1 armor
   - special passive: Form bonuses +1% per Mutability
-  - general tree: Wolf Heart: wolf form +10% damage
-  - general tree: Cat's Grace: cat form +10% speed
-  - general tree: Seal Skin: fish form +20% swim speed
   - general tree: Feral Soul: in human form you deal -20% damage
   - special tree: Quick Change: no cooldown between forms
-  - special tree: Bird Form: unlocks a bird form (slow-fall glide)
 - **sharpshooter**
   - general tree: Long Shot: +10% damage per 16 blocks of distance
 - **spellbinder**
@@ -548,17 +538,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
   - special tree: Pocket Gadget: +1 gadget charge
 - **templar**
-  - special stat per point: +0.5% damage inside your Temple of Faith
-  - passive: Temple of Faith: an area within 10 blocks of a lodestone, beacon or bed you've set becomes your temple - inside it, +15% damage and +1 armor
   - passive: When a hostile mob enters your temple, you get Speed II for 2s
-  - passive: Temple Guardian: hostile mobs hit inside your temple get Slowness II for 2s
-  - special passive: Temple radius +0.2 blocks per Sanctum
   - special passive: Per 10 Sanctum, temple armor bonus +1
-  - weakness: -15% damage and -10% max health when more than 100 blocks from your temple
-  - general tree: Hallowed: +5% temple damage
-  - general tree: Holy Bulwark: +1 more temple armor
   - general tree: Fortress Temple: temple bonuses doubled
-  - special tree: Wide Sanctum: +5 temple radius
   - special tree: Living Temple: your temple follows you
   - special tree: Living Temple: -15% temple bonuses
 - **tenebrist**
@@ -863,8 +845,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **sentinel**
   - special tree: Unsleeping: you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health
 - **shapeshifter**
-  - passive: Superior Transformation: you can shift into one form at a time from your unlocked forms list (starting forms: Wolf, Bear, Cat, Fish; Bird unlocks in the special tree) - drains Change while active. See section 12 for the form system
-  - general tree: Bear Hide: bear form +4 max health
   - special tree: Thousand Faces: you can disguise as a villager to be ignored by illagers; -10% max health
 - **sharpshooter**
   - special tree: Unerring: Deadly Aim shots always crit; -10% max health
@@ -1102,12 +1082,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.5% chance a crafted redstone item is doubled
 - **thaumaturge**
   - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
-  - passive: Seize Chaos: 10% of your hits trigger a random effect - double damage, ignite, Levitation on the target, a heal for you, or (rarely) a small explosion on yourself
   - passive: Fluid Magic: potions you drink have 20% chance to also give a random positive effect
-  - special passive: Seize Chaos chance +0.2% per Entropy
-  - general tree: Wild Magic: +5% Seize Chaos chance
   - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
-  - general tree: Agent of Chaos: Seize Chaos chance doubled
+  - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
   - special tree: Fluid Magic: random potion effect chance 35%
 - **thief**
   - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
@@ -1392,6 +1369,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **runesmith**: ability Rune Blast: a blast around you (sigils don't exist yet)
 - **runesmith**: icon "smithing_template" isn't an item id; used coast_armor_trim_smithing_template
 - **runesmith**: kit: "any trim" template -> coast armor trim
+- **shapeshifter**: ability Bird Form: slow fall instead of gliding
 - **sorcerer**: ability Sorcerous Blast: free to cast on a 1.5s cooldown; doesn't build Strain yet
 - **spellbinder**: ability Invest Power: +30% damage with anything (bound weapons don't exist yet)
 - **spellbinder**: ability Recall Weapon: calls back the nearest weapon you dropped or threw (weapons aren't bound yet)

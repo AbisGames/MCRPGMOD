@@ -178,6 +178,16 @@ public final class AbilityService {
         return ctx;
     }
 
+    /** Ends {@code key} if it is running (with its end actions). */
+    public static void stopIfActive(ServerPlayer player, ResourceKey<Ability> key) {
+        if (ClassService.data(player).abilityActive().containsKey(key)) {
+            Ability ability = ClassLookup.abilities(player.level().registryAccess()).getValue(key);
+            if (ability != null) {
+                stop(player, key, ability);
+            }
+        }
+    }
+
     private static void stop(ServerPlayer player, ResourceKey<Ability> key, Ability ability) {
         PlayerClassData data = ClassService.data(player);
         data.abilityActive().remove(key);

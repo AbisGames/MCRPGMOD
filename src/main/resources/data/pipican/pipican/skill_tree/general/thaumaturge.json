@@ -37,21 +37,19 @@
     {
       "id": "thaumaturge_wild_magic",
       "name": "Wild Magic",
-      "description": {
-        "text": "+5% Seize Chaos chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% Seize Chaos chance",
       "type": "small",
       "x": 91,
       "y": -1317,
       "links": [
         "thaumaturge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "seize chaos",
+          "amount": 0.05
+        }
       ]
     },
     {

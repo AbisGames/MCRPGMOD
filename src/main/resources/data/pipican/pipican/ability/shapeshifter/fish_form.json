@@ -1,0 +1,35 @@
+{
+  "name": "Fish Form",
+  "description": "Fish form (drains Change): fast swimming and water breathing.",
+  "icon": "minecraft:cod",
+  "cooldown_ticks": 60,
+  "toggle": true,
+  "drain_per_second": 1.5,
+  "actions": [
+    {
+      "type": "pipican:stop",
+      "abilities": [
+        "pipican:shapeshifter/wolf_form",
+        "pipican:shapeshifter/bear_form",
+        "pipican:shapeshifter/cat_form",
+        "pipican:shapeshifter/fish_form",
+        "pipican:shapeshifter/bird_form"
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:water_movement_efficiency",
+      "amount": 0.6
+    },
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:water_breathing"
+    },
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:dolphins_grace"
+    }
+  ]
+}

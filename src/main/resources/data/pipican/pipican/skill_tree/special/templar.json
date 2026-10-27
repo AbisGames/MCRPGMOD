@@ -29,23 +29,21 @@
     {
       "id": "wide_sanctum",
       "name": "Wide Sanctum",
-      "description": {
-        "text": "+5 temple radius",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5 temple radius",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "temple_radius",
+          "amount": 5.0
+        }
+      ]
     },
     {
       "id": "temple_guardian",

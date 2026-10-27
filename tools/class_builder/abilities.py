@@ -304,6 +304,23 @@ A = {
         effects=[dealt(1.15), {'type': 'pipican:mob_effect', 'effect': 'minecraft:regeneration'}],
         pulse_actions=[effect('hostiles', E('slowness', 2), E('weakness', 2), radius=8)],
         description='Toggle once Miracle is full (drains 4/s): mobs within 8 blocks get Slowness and Weakness; you get +15% damage and Regeneration I.'),
+    # Shapeshifter forms: one at a time (each stops the others), draining Change.
+    ('shapeshifter', 'Wolf Form'): dict(icon='bone', toggle=True, drain=1.5, cooldown=3, actions=[{'type': 'pipican:stop', 'abilities': 'FORMS'}],
+        effects=[dealt(1.2), attr('movement_speed', 0.1, 'add_multiplied_base'), {'type': 'pipican:mob_effect', 'effect': 'minecraft:night_vision'}],
+        description='Wolf form (drains Change): +20% damage, +10% speed, night vision.'),
+    ('shapeshifter', 'Bear Form'): dict(icon='honeycomb', toggle=True, drain=1.5, cooldown=3, actions=[{'type': 'pipican:stop', 'abilities': 'FORMS'}],
+        effects=[attr('max_health', 6), attr('armor', 2), attr('knockback_resistance', 0.2), attr('movement_speed', -0.1, 'add_multiplied_base')],
+        description='Bear form (drains Change): +6 max health, +2 armor, +20% knockback resistance, -10% speed.'),
+    ('shapeshifter', 'Cat Form'): dict(icon='string', toggle=True, drain=1.5, cooldown=3, actions=[{'type': 'pipican:stop', 'abilities': 'FORMS'}],
+        effects=[attr('movement_speed', 0.2, 'add_multiplied_base'), {'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_fall', 'multiplier': 0.0}],
+        description='Cat form (drains Change): +20% speed, no fall damage.'),
+    ('shapeshifter', 'Fish Form'): dict(icon='cod', toggle=True, drain=1.5, cooldown=3, actions=[{'type': 'pipican:stop', 'abilities': 'FORMS'}],
+        effects=[attr('water_movement_efficiency', 0.6), {'type': 'pipican:mob_effect', 'effect': 'minecraft:water_breathing'},
+                 {'type': 'pipican:mob_effect', 'effect': 'minecraft:dolphins_grace'}],
+        description='Fish form (drains Change): fast swimming and water breathing.'),
+    ('shapeshifter', 'Bird Form'): dict(icon='feather', toggle=True, drain=2, cooldown=3, actions=[{'type': 'pipican:stop', 'abilities': 'FORMS'}],
+        effects=[{'type': 'pipican:mob_effect', 'effect': 'minecraft:slow_falling'}, attr('max_health', -0.5, 'add_multiplied_base')],
+        description='Bird form (drains Change): slow fall, -50% max health.', approx='slow fall instead of gliding'),
     ('woodwose', 'Treeform'): dict(icon='oak_sapling', toggle=True, cooldown=10, effects=[
         {'type': 'pipican:mob_effect', 'effect': 'minecraft:invisibility'}, {'type': 'pipican:mob_effect', 'effect': 'minecraft:slowness', 'amplifier': 9},
         {'type': 'pipican:mob_effect', 'effect': 'minecraft:regeneration', 'amplifier': 1}],
@@ -324,6 +341,7 @@ EXTRA = {
     'engineer': ['Build Eidolon'],
     'oracle': ['Divine Ecstasy'],
     'miracle_worker': ['Stigmata'],
+    'shapeshifter': ['Wolf Form', 'Bear Form', 'Cat Form', 'Fish Form', 'Bird Form'],
 }
 
 # Spec abilities that are really passive rules, handled by NODE_EFFECTS or passives instead.
@@ -334,6 +352,7 @@ NODE_EFFECTS = {
     ('wizard', 'spell_mastery'): ([{'type': 'pipican:spell_points', 'amount': 6},
                                    {'type': 'pipican:resource', 'target': 'regen', 'amount': -0.1, 'operation': 'add_multiplied_base'}], []),
     ('witch', 'lasting_bond'): ([], ['Lasting Bond']),
+    ('shapeshifter', 'bird_form'): ([], ['Bird Form']),
 }
 
 # Hand-written effects for passive lines: (class, start of the line) -> effects.
@@ -344,6 +363,7 @@ PASSIVE_EFFECTS = {
     ('engineer', 'Spare Parts:'): [],   # built into the eidolon: iron ingots heal it 10
     ('oracle', 'Divine Ecstasy (toggle'): [],   # the Divine Ecstasy ability (EXTRA)
     ('miracle_worker', 'Stigmata:'): [],        # the Stigmata ability (EXTRA)
+    ('shapeshifter', 'Superior Transformation:'): [],   # the form abilities (EXTRA)
 }
 
 # Hand-written weakness effects: class -> effects (replace the translated ones).

@@ -149,6 +149,9 @@ def _atoms(ctx):
             'minecraft:copper_helmet', 'minecraft:copper_chestplate', 'minecraft:copper_leggings', 'minecraft:copper_boots']}, OTHER),
         (r'without an icon in hand', lambda m: not_({'type': 'pipican:holding', 'items': ICON, 'hand': 'off'}), OTHER),
         (r'(?:while )?holding your icon', lambda m: {'type': 'pipican:holding', 'items': ICON, 'hand': 'off'}, OTHER),
+        (r'(?:when |while )?(?:more than|over) (\d+) blocks (?:away )?from your temple', lambda m: not_({'type': 'pipican:temple', 'radius': float(m.group(1))}), PLACE),
+        (r'(?:inside|in|within) your temple(?: of faith)?', lambda m: {'type': 'pipican:temple'}, PLACE),
+        (r'(?:while )?(?:unarmed|bare-handed|with (?:an )?empty hands?|with your fists)', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:air'], 'hand': 'main'}, OTHER),
         (r'not holding your staff', lambda m: not_({'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}), OTHER),
         (r'holding your staff|with your staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
         (r'not sneaking', lambda m: not_(state('sneaking')), OTHER),
@@ -223,6 +226,7 @@ TRAILING = re.compile(
     r'in light level\b|below half health\b|below \d+% health\b|above half health\b|at full health\b|'
     r'with (?:your |the |a |any )?(?:bound weapon|sigil(?:-marked)? weapons?|staff|weapon that isn\'t your bound weapon)\b|with \d sigil\b|'
     r'with no book\b|while (?:a )?book\b|holding a weapon in your off-hand\b|'
-    r'in combat\b|out of combat\b|'
+    r'while unarmed\b|with your fists\b|bare-handed\b|'
+    r'in combat\b|out of combat\b|inside your temple\b|in your temple\b|when more than \d+ blocks\b|'
     r'outside (?:of )?forests?\b|on solid ground\b|without an icon\b|while holding\b|while travelling\b|while wearing\b|while not\b|'
     r'on foot\b|on (?:stone|dirt|sand|gravel|netherrack|nether blocks)\b|(?:standing|you stand) on\b|in lava\b|without (?:a )?shield\b|with (?:a )?shield\b|on dry land\b|out of (?:the )?water\b)', re.I)

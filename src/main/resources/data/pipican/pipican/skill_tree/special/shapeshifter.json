@@ -50,16 +50,7 @@
     {
       "id": "bird_form",
       "name": "Bird Form",
-      "description": {
-        "text": "unlocks a bird form (slow-fall glide)",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks a bird form (slow-fall glide)",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,21 +58,15 @@
         "fluid_flesh"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:shapeshifter/bird_form"
+      ]
     },
     {
       "id": "dire_form",
       "name": "Dire Form",
-      "description": {
-        "text": "forms also give +1 armor toughness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "forms also give +1 armor toughness",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +74,44 @@
         "quick_change"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:ability_active",
+                "ability": "pipican:shapeshifter/wolf_form"
+              },
+              {
+                "type": "pipican:ability_active",
+                "ability": "pipican:shapeshifter/bear_form"
+              },
+              {
+                "type": "pipican:ability_active",
+                "ability": "pipican:shapeshifter/cat_form"
+              },
+              {
+                "type": "pipican:ability_active",
+                "ability": "pipican:shapeshifter/fish_form"
+              },
+              {
+                "type": "pipican:ability_active",
+                "ability": "pipican:shapeshifter/bird_form"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor_toughness",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "thousand_faces",

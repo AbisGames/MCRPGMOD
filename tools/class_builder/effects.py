@@ -489,6 +489,11 @@ def translate(text, ctx):
     text = re.sub(lab + r'\+(\d+(?:\.\d+)?)% stealth(?: \(smaller mob detection range\))?', r'\1-\2% detection range', text, flags=re.I)
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (?:from )?(\d+(?:\.\d+)?)% (farther|further)(?: away)?', r'+\1% detection range', text, flags=re.I)
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (\d+(?:\.\d+)?)% later', r'-\1% detection range', text, flags=re.I)
+    # "+5% unarmed damage" -> "+5% damage while unarmed"
+    text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) unarmed (damage|attack speed)\b', r'\1\2 \3 while unarmed', text, flags=re.I)
+    # Temple upgrades: "+5% temple damage", "+1 more temple armor", "Per 10 Sanctum, temple armor bonus +1"
+    text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%?) (?:more )?temple (damage|armor)\b', r'\1\2 \3 inside your temple', text, flags=re.I)
+    text = re.sub(lab + r'(per \d+ \w+,\s*)?temple (armor|damage) bonus ([+-]\d+(?:\.\d+)?%?)', r'\1\2\4 \3 inside your temple', text, flags=re.I)
     # Healing received: "healing from Regeneration/Instant Health is 25% weaker", "Regeneration and Instant Health are 50% weaker on you",
     # "healing you receive is +15%".
     text = re.sub(r'(?:healing from )?regeneration(?:/|, | and )instant health(?:,? and healing from other players)? (?:is|are) (\d+)% weaker(?: on you)?',

@@ -404,6 +404,14 @@ public final class ClassSystemTests {
         com.pipican.event.BonusEvents.durability(player);
         helper.assertTrue(worn.getDamageValue() == 0, "durability loss refunded: " + worn.getDamageValue());
 
+        // "Unarmed": an empty main hand counts as holding air.
+        var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
+                com.pipican.condition.type.HoldingCondition.Hand.MAIN);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+        helper.assertTrue(unarmed.test(player), "empty hand is unarmed");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.STICK));
+        helper.assertTrue(!unarmed.test(player), "holding a stick isn't");
+
         // Favored weapon: chosen on waking from the main hand.
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
         AbilityService.onWake(player);
@@ -709,7 +717,7 @@ public final class ClassSystemTests {
             dismiss(helper, player);
             count++;
         }
-        helper.assertTrue(count == 109, "expected 109 shipped abilities, ran " + count);
+        helper.assertTrue(count == 114, "expected 114 shipped abilities, ran " + count);
         helper.succeed();
     }
 

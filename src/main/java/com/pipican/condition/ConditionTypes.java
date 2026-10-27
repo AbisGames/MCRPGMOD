@@ -1,5 +1,6 @@
 package com.pipican.condition;
 
+import com.pipican.condition.type.TempleCondition;
 import com.pipican.condition.type.CarryingCondition;
 import com.pipican.condition.type.ItemRuleCondition;
 import com.pipican.condition.type.HoldingFavoredCondition;
@@ -57,6 +58,7 @@ public final class ConditionTypes {
     public static final Type HOLDING_FAVORED = register("holding_favored", HoldingFavoredCondition.CODEC);
     public static final Type ITEM_RULE = register("item_rule", ItemRuleCondition.CODEC);
     public static final Type CARRYING = register("carrying", CarryingCondition.CODEC);
+    public static final Type TEMPLE = register("temple", TempleCondition.CODEC);
     public static final Type HAS_EIDOLON = register("has_eidolon", HasEidolonCondition.CODEC);
     public static final Type NOT = register("not", NotCondition.CODEC);
     public static final Type ALL_OF = register("all_of", CompositeCondition.ALL_CODEC);

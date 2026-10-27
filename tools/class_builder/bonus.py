@@ -303,7 +303,7 @@ def mount_subject(t):
 SWORDS = '#pipican:weapons/swords'
 CHANCE_NAMES = {'ignite': 'ignite', 'fire': 'ignite', 'burn': 'ignite', 'poison': 'poison', 'wither': 'wither',
                 'blindness': 'blindness', 'blind': 'blindness', 'charm': 'pacify', 'lightning': 'lightning',
-                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal', 'curse': 'curse', 'decoy': 'decoy'}
+                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal', 'curse': 'curse', 'decoy': 'decoy', 'seize chaos': 'seize chaos'}
 
 
 def _bleed(**kw):

@@ -4,73 +4,86 @@
     {
       "id": "shapeshifter_start",
       "name": "Shapeshifter",
-      "description": {
-        "text": "+5% unarmed damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% unarmed damage",
       "type": "start",
       "x": 1311,
-      "y": 918
+      "y": 918,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:air"
+            ],
+            "hand": "main"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "shapeshifter_wolf_heart",
       "name": "Wolf Heart",
-      "description": {
-        "text": "wolf form +10% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "wolf form +10% damage",
       "type": "small",
       "x": 1384,
       "y": 935,
       "links": [
         "shapeshifter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/wolf_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
       ]
     },
     {
       "id": "shapeshifter_bear_hide",
       "name": "Bear Hide",
-      "description": {
-        "text": "bear form +4 max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bear form +4 max health",
       "type": "small",
       "x": 1352,
       "y": 980,
       "links": [
         "shapeshifter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/bear_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 4.0
+            }
+          ]
+        }
       ]
     },
     {
       "id": "shapeshifter_cat_s_grace",
       "name": "Cat's Grace",
-      "description": {
-        "text": "cat form +10% speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "cat form +10% speed",
       "type": "notable",
       "x": 1441,
       "y": 975,
@@ -78,21 +91,29 @@
         "shapeshifter_wolf_heart"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/cat_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "shapeshifter_seal_skin",
       "name": "Seal Skin",
-      "description": {
-        "text": "fish form +20% swim speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "fish form +20% swim speed",
       "type": "notable",
       "x": 1410,
       "y": 1021,
@@ -100,7 +121,23 @@
         "shapeshifter_bear_hide"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/fish_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:water_movement_efficiency",
+              "amount": 0.2
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "shapeshifter_feral_soul",

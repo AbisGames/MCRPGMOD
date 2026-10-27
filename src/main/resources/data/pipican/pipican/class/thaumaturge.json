@@ -81,9 +81,148 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.1,
+      "name": "seize chaos",
+      "actions": [
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 5.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 0,
+                "fire_seconds": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:levitation",
+                    "seconds": 3.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:heal",
+                "target": "self",
+                "amount": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 5.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 0,
+                "fire_seconds": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:levitation",
+                    "seconds": 3.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:heal",
+                "target": "self",
+                "amount": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 5.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 0,
+                "fire_seconds": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:levitation",
+                    "seconds": 3.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:heal",
+                "target": "self",
+                "amount": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:explode",
+                "power": 1.0
+              },
+              {
+                "type": "pipican:damage",
+                "target": "self",
+                "amount": 3.0
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 2
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:reaction_chance",
+      "name": "seize chaos",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
     }
   ],
   "weakness": {
