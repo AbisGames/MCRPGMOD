@@ -99,8 +99,7 @@ public final class CapitalPlacementEvents {
         if(index>=(capital?63:1))return false;
         // The initial height is based on terrain in this save, not a
         // globally fixed sea-level or arbitrary Y constant.
-        var center=new BlockPos(city.x(),64,city.z());
-        if(!level.hasChunkAt(center))return false;
+        level.getChunk(Math.floorDiv(city.x(),16),Math.floorDiv(city.z(),16));
         int foundationY=state==null?
             Math.min(terrainSurface(level,city.x(),city.z()),
                 level.getMaxY()-75) : state.foundationY();

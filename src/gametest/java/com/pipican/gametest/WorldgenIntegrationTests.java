@@ -199,6 +199,23 @@ public final class WorldgenIntegrationTests {
                     }
                 }
                 helper.assertTrue(frames==12,"Sky Citadel must contain twelve End portal frames");
+                // Use vanilla eye insertion, rather than setting portal blocks
+                // directly: wrong frame orientation must fail this test.
+                for(int x=54;x<=58;x++)for(int z=54;z<=58;z++){
+                    var pos=new BlockPos(minX+x,site.elevation()+45,minZ+z);
+                    if(!level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME))continue;
+                    var eye=new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENDER_EYE);
+                    var hit=new net.minecraft.world.phys.BlockHitResult(
+                        net.minecraft.world.phys.Vec3.atCenterOf(pos),net.minecraft.core.Direction.UP,pos,false);
+                    var context=new net.minecraft.world.item.context.UseOnContext(level,null,
+                        net.minecraft.world.InteractionHand.MAIN_HAND,eye,hit){};
+                    net.minecraft.world.item.Items.ENDER_EYE.useOn(context);
+                }
+                for(int x=55;x<=57;x++)for(int z=55;z<=57;z++){
+                    var pos=new BlockPos(minX+x,site.elevation()+45,minZ+z);
+                    check(helper,level,pos,level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.END_PORTAL),
+                        "vanilla-activated End portal");
+                }
             }
         }
         }
@@ -217,8 +234,9 @@ public final class WorldgenIntegrationTests {
             generationSeed);
         }
         if(suite.equals("capital")){
+        String target=generationSeed==123L?"morvath":generationSeed==987654321L?"sylvaran":"aldermere";
         var city=new LandmarkCatalog().all().stream()
-            .filter(c->c.tier().equals("capital")&&c.region().equals("heartlands")).findFirst().orElseThrow();
+            .filter(c->c.tier().equals("capital")&&c.id().equals(target)).findFirst().orElseThrow();
         var progress=CapitalPlacementSavedData.get(level);
         for(int i=0;i<63;i++){
             helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
@@ -234,6 +252,15 @@ public final class WorldgenIntegrationTests {
         }
         helper.assertTrue(progress.progress(city.id()).nextTile()==63,"capital not completed");
         helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,progress),"completed capital rebuilt");
+        if(city.id().equals("morvath")){
+            int ox=city.x()-46,oz=city.z()-46,base=progress.progress(city.id()).foundationY();
+            for(int x=28;x<=38;x++)for(int y=2;y<=13;y++){
+                var pos=new BlockPos(ox+x,base+y,oz+51);
+                boolean frame=x==28||x==38||y==2||y==13;
+                check(helper,level,pos,frame?level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.OBSIDIAN):
+                    level.getBlockState(pos).isAir(),"complete unlit Morvath Nether portal");
+            }
+        }
         var layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
         for(String collection:List.of("relative_positions","connectors"))
             for(var element:layout.getAsJsonArray(collection)){
