@@ -85,9 +85,15 @@ public final class RegionalBiomeSource extends BiomeSource {
         // is not eligible for native jigsaws on our seven authored islands.
         if(SkyIslandLayout.themedSkyAt(x,y,z))
             return byId.getOrDefault("pipican:aetheris_sanctuary",fallback);
+        // Dedicated safety biomes reserve the two unique land/underground
+        // landmarks from vanilla and native RPG structures alike.
+        long bx=(long)x-3500,bz=(long)z-21300;
+        if(bx*bx+bz*bz<260L*260L)
+            return byId.getOrDefault("pipican:redrock_sanctuary",fallback);
         long ux=(long)x-4900,uz=(long)z;
-        if(y<45 && ux*ux+uz*uz<240L*240L)
-            return byId.getOrDefault("pipican:umbral_chasm",fallback);
+        if(ux*ux+uz*uz<240L*240L)
+            return byId.getOrDefault(y<45?"pipican:umbral_sanctuary":
+                "pipican:protected/greyspine_mountains",fallback);
         // Reserve all 70 authored sites during *native* chunk generation:
         // structure sets never target these biome variants.
         for(ProtectedSite site:protectedSites) {
