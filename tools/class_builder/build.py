@@ -13,6 +13,7 @@ import shutil
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import abilities as ab  # noqa: E402
 import effects as fx  # noqa: E402
 import parse_specs  # noqa: E402
 
@@ -58,6 +59,10 @@ def _cat(item):
 
 # Icon ids in the specs that aren't real item ids.
 ICON_FIX = {'zombie_spawner_egg': 'zombie_spawn_egg', 'smithing_template': 'coast_armor_trim_smithing_template'}
+
+UNSTACKABLE = re.compile(r'(?:_sword|_axe|_pickaxe|_shovel|_hoe|_spear|_helmet|_chestplate|_leggings|_boots|^minecraft:(?:bow|crossbow|'
+                         r'trident|shield|mace|potion|splash_potion|lingering_potion|enchanted_book|writable_book|written_book|saddle|'
+                         r'totem_of_undying|elytra|flint_and_steel|shears|fishing_rod|spyglass|compass|clock|map|goat_horn|bundle)|_bucket)$')
 
 # Kit items the specs describe in words.
 POTIONS = {'resistance': 'turtle_master', 'poison': 'poison', 'weakness': 'weakness', 'healing': 'healing',
@@ -164,6 +169,49 @@ def with_marker(text, unsupported, any_effects):
     if not unsupported:
         return text
     return {'text': text, 'extra': [PARTLY if any_effects else NOT_YET]}
+
+
+# ------------------------------------------------------------------ abilities
+
+ABILITY_IN_NOTES = re.compile(r'\*\*([^*]+)\*\*\s*\(((?:[^()]|\([^)]*\))*)\)')
+UNLOCKS = re.compile(r'(?:^|[;,]\s*)unlocks (?:the )?([A-Z][\w\' -]+?) ability', re.I)
+
+
+def spec_abilities(c):
+    """[(name, description)] from section 12's ability notes, plus abilities that nodes unlock."""
+    out = {}
+    for line in c['notes'].splitlines():
+        if re.search(r'abilit|talent', line, re.I):
+            for m in ABILITY_IN_NOTES.finditer(line):
+                if not m.group(1).lower().startswith(('power tier', 'co-design', 'decided')):
+                    out.setdefault(m.group(1).strip(), m.group(2).strip())
+    for tree in c['trees'].values():
+        for n in tree['nodes']:
+            for m in UNLOCKS.finditer(n['gives']):
+                out.setdefault(m.group(1).strip(), '')
+    return out
+
+
+def ability_json(name, description, d):
+    j = {'name': name}
+    if description:
+        j['description'] = description
+    j['icon'] = 'minecraft:' + d.get('icon', 'book')
+    if d.get('cost'):
+        j['cost'] = d['cost']
+    j['cooldown_ticks'] = int(round(d.get('cooldown', 10) * 20))
+    if d.get('duration'):
+        j['duration_ticks'] = int(round(d['duration'] * 20))
+    if d.get('toggle'):
+        j['toggle'] = True
+        j['drain_per_second'] = d.get('drain', 0)
+    for k in ('requires', 'auto', 'end_when'):
+        if d.get(k):
+            j[k] = d[k]
+    for k in ('actions', 'end_actions', 'effects'):
+        if d.get(k):
+            j[k] = d[k]
+    return j
 
 
 # ------------------------------------------------------------------ tree layout
@@ -294,7 +342,7 @@ def place_region(nodes, start_id, angle, radius, step=70, spread=55):
 def main(spec_dir, res_dir, report_path):
     classes = parse_specs.parse_dir(spec_dir)
     data = os.path.join(res_dir, 'data', NS, NS)
-    for sub in ('class', 'skill', 'skill_tree'):
+    for sub in ('class', 'skill', 'skill_tree', 'ability'):
         shutil.rmtree(os.path.join(data, sub), ignore_errors=True)
     for f in os.listdir(os.path.join(data, 'stat')) if os.path.isdir(os.path.join(data, 'stat')) else []:
         if f not in {s + '.json' for s in fx.CORE_STATS}:
@@ -411,7 +459,17 @@ def main(spec_dir, res_dir, report_path):
                 report['Resource bar that fills from use (only the drain works)'].append(
                     (cid, 'resource', f'{res["name"]} drains {abs(res["regen_per_second"])}/s; filling it from fighting needs the active-skill system'))
 
-        kit = [k for k in (kit_entry(cid, n, i, x, notes[cid]) for n, i, x in c['kit']) if k]
+        kit = []
+        for n, i, x in c['kit']:
+            entry = kit_entry(cid, n, i, x, notes[cid])
+            if not entry:
+                continue
+            # Items that don't stack can't be given as "count": 2; give separate stacks instead.
+            count = entry.get('count', 1)
+            if count > 1 and UNSTACKABLE.search(entry['id']):
+                kit.extend([{k: v for k, v in entry.items() if k != 'count'} for _ in range(count)])
+            else:
+                kit.append(entry)
 
         aff = c['affinity']
         rules = EXCEPTIONS.get(cid, lambda a: [])(aff) if c['affinity_exceptions'].lower() != 'none' else []
@@ -422,6 +480,21 @@ def main(spec_dir, res_dir, report_path):
             if tier != 'neutral' and gear in GEAR_TAGS:
                 rules.append({'items': GEAR_TAGS[gear], 'tier': tier})
 
+        # --- abilities
+        listed = spec_abilities(c)
+        ability_ids = {}
+        for name, desc in listed.items():
+            d = ab.A.get((cid, name))
+            if d is None:
+                report['Abilities not in game yet'].append((cid, f'ability {name}', desc or 'unlocked by a tree node'))
+                continue
+            ability_ids[name.lower()] = f'{NS}:{cid}/{slug(name)}'
+            write(f'{NS}/{NS}/ability/{cid}/{slug(name)}.json', ability_json(name, desc, d))
+            counts['abilities'] += 1
+            if d.get('approx'):
+                notes[cid].append(f'ability {name}: {d["approx"]}')
+        node_granted = set()
+
         # --- trees
         trees = c['trees']
         def build_nodes(kind, tree_nodes, positions):
@@ -429,9 +502,18 @@ def main(spec_dir, res_dir, report_path):
             for n in tree_nodes:
                 node = {'id': n['id'], 'name': n['name']}
                 eff, uns = ([], [])
+                grants = [ability_ids[m.group(1).strip().lower()] for m in UNLOCKS.finditer(n['gives'])
+                          if m.group(1).strip().lower() in ability_ids]
+                node_granted.update(grants)
+                # "unlocks X ability" is handled by grants; translate whatever else the node gives.
+                rest = UNLOCKS.sub('', n['gives']).strip(' ;,') if grants else n['gives']
+                if rest:
+                    eff, uns = tr(cid, f'{kind} tree: {n["name"]}', rest, dict(ctx, keystone=n['size'] == 'keystone'))
+                elif grants:
+                    counts['phrases'] += 1
+                    counts['full'] += 1
                 if n['gives']:
-                    eff, uns = tr(cid, f'{kind} tree: {n["name"]}', n['gives'], dict(ctx, keystone=n['size'] == 'keystone'))
-                    node['description'] = with_marker(n['gives'], uns, bool(eff))
+                    node['description'] = with_marker(n['gives'], uns, bool(eff) or bool(grants))
                 node['type'] = n['size'] if n['size'] in ('small', 'notable', 'keystone', 'start') else 'small'
                 node['x'], node['y'] = positions[n['id']]
                 if n['links']:
@@ -443,6 +525,8 @@ def main(spec_dir, res_dir, report_path):
                         node['required_level'] = n['level']
                 if eff:
                     node['effects'] = eff
+                if grants:
+                    node['grants'] = grants
                 out.append(node)
             return out
 
@@ -504,6 +588,9 @@ def main(spec_dir, res_dir, report_path):
         slots = {f'{NS}:{k}': v for k, v in c['trinkets'].items() if v}
         if slots:
             rpg['trinket_slots'] = slots
+        own = [a for a in ability_ids.values() if a not in node_granted]
+        if own:
+            rpg['abilities'] = own
         write(f'{NS}/{NS}/class/{cid}.json', rpg)
 
     # --- skills
@@ -536,7 +623,7 @@ def main(spec_dir, res_dir, report_path):
         write(f'{NS}/tags/block/{tag}.json', {'values': values})
 
     write_report(report_path, classes, report, notes, counts, skill_defs)
-    print(f'{len(classes)} classes, {len(skill_defs)} skills; phrases {counts["phrases"]}: '
+    print(f'{len(classes)} classes, {len(skill_defs)} skills, {counts["abilities"]} abilities; phrases {counts["phrases"]}: '
           f'{counts["full"]} full, {counts["partial"]} partial')
 
 
@@ -565,7 +652,8 @@ def write_report(path, classes, report, notes, counts, skill_defs):
     L = ['# Class build report', '',
          'Generated from `class_specs/*.md` by the class builder. Everything listed here is **not in the game yet**:',
          'tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".', '',
-         f'- Classes built: **{len(classes)}**, skills: **{len(skill_defs)}**',
+         f'- Classes built: **{len(classes)}**, skills: **{len(skill_defs)}**, active abilities: **{counts["abilities"]}** '
+         f'(of {counts["abilities"] + len(report.get("Abilities not in game yet", []))} named in the specs)',
          f'- Bonus phrases: **{counts["phrases"]}**. Fully working: **{counts["full"]}**, partly working: **{counts["partial"]}**, '
          f'not yet: **{counts["phrases"] - counts["full"] - counts["partial"]}**', '',
          'Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.', '',

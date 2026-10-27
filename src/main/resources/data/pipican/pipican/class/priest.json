@@ -105,5 +105,8 @@
   "trinket_slots": {
     "pipican:amulet": 2,
     "pipican:ring": 1
-  }
+  },
+  "abilities": [
+    "pipican:priest/shared_recovery"
+  ]
 }

@@ -32,9 +32,10 @@ public record ClassState(
         Set<Holder<Attribute>> touchedAttributes,
         double resourceMax,
         double resourceRegenPerTick,
-        List<ConditionCheck> conditions) {
+        List<ConditionCheck> conditions,
+        boolean flight) {
 
-    public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of());
+    public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}

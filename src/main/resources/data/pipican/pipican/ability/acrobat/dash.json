@@ -1,0 +1,14 @@
+{
+  "name": "Dash",
+  "description": "short burst forward, 10 Flow",
+  "icon": "minecraft:feather",
+  "cost": 10,
+  "cooldown_ticks": 60,
+  "actions": [
+    {
+      "type": "pipican:dash",
+      "strength": 1.4,
+      "up": 0.15
+    }
+  ]
+}

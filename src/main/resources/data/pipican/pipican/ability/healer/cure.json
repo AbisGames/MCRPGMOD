@@ -1,0 +1,14 @@
+{
+  "name": "Cure",
+  "description": "remove harmful effects, 20 Lifeblood",
+  "icon": "minecraft:milk_bucket",
+  "cost": 20,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:cleanse",
+      "target": "look_ally",
+      "range": 12
+    }
+  ]
+}

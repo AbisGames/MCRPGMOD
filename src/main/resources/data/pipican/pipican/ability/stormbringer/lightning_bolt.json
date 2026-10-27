@@ -1,0 +1,13 @@
+{
+  "name": "Lightning Bolt",
+  "description": "call lightning on a target, 30 Charge",
+  "icon": "minecraft:lightning_rod",
+  "cost": 30,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:lightning",
+      "range": 32
+    }
+  ]
+}

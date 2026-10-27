@@ -38,11 +38,11 @@ public final class ClassService {
 
     /** Outcome of a player action, with a message to show them. */
     public record Result(boolean success, Component message) {
-        static Result ok(Component message) {
+        public static Result ok(Component message) {
             return new Result(true, message);
         }
 
-        static Result fail(Component message) {
+        public static Result fail(Component message) {
             return new Result(false, message);
         }
     }
@@ -74,6 +74,7 @@ public final class ClassService {
 
         data.setActiveClass(Optional.of(key));
         data.activeProgress();
+        data.abilityActive().clear();
         if (giveKit) {
             for (var template : rpgClass.get().startingKit()) {
                 giveOrDrop(player, template.create());
@@ -93,6 +94,8 @@ public final class ClassService {
         PlayerClassData data = data(player);
         data.setActiveClass(Optional.empty());
         data.allProgress().clear();
+        data.abilityActive().clear();
+        data.abilityCooldowns().clear();
         data.setResource(0);
         changed(player);
         promptSelection(player);

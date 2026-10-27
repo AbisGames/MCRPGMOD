@@ -1,0 +1,15 @@
+{
+  "name": "Shared Recovery",
+  "description": "heal yourself and one nearby player, 15 Devotion, once per rest",
+  "icon": "minecraft:golden_apple",
+  "cost": 15,
+  "cooldown_ticks": 6000,
+  "actions": [
+    {
+      "type": "pipican:heal",
+      "target": "allies",
+      "amount": 6,
+      "radius": 6
+    }
+  ]
+}

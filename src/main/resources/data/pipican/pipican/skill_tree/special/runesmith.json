@@ -72,16 +72,7 @@
     {
       "id": "thunder_rune",
       "name": "Thunder Rune",
-      "description": {
-        "text": "unlocks Rune Blast ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Rune Blast ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "fire_rune"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:runesmith/rune_blast"
+      ]
     },
     {
       "id": "dwarfen_mastery",

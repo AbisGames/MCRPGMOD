@@ -1,0 +1,13 @@
+{
+  "name": "Blink",
+  "description": "teleport 8 blocks where you look, 20 Waypoint",
+  "icon": "minecraft:ender_pearl",
+  "cost": 20,
+  "cooldown_ticks": 60,
+  "actions": [
+    {
+      "type": "pipican:blink",
+      "distance": 8
+    }
+  ]
+}

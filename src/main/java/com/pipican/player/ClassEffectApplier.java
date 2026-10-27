@@ -1,6 +1,7 @@
 package com.pipican.player;
 
 import com.pipican.Pipican;
+import com.pipican.ability.Ability;
 import com.pipican.condition.ClassCondition;
 import com.pipican.core.ClassLookup;
 import com.pipican.effect.ClassEffect;
@@ -96,6 +97,7 @@ public final class ClassEffectApplier {
         STATES.put(player.getUUID(), next);
 
         applyMobEffects(player, old.mobEffects(), next.mobEffects());
+        applyFlight(player, old.flight(), next.flight());
 
         if (player.getHealth() > player.getMaxHealth()) {
             player.setHealth(player.getMaxHealth());
@@ -105,6 +107,18 @@ public final class ClassEffectApplier {
         data.setResourceMax(next.resourceMax());
         data.setResource(Math.min(data.resource(), next.resourceMax()));
         player.syncData(PipicanAttachments.CLASS_DATA);
+    }
+
+    /** Grants or removes class flight. Creative and spectator players keep their own flight rules. */
+    private static void applyFlight(ServerPlayer player, boolean had, boolean has) {
+        if (had == has || player.isCreative() || player.isSpectator()) {
+            return;
+        }
+        player.getAbilities().mayfly = has;
+        if (!has) {
+            player.getAbilities().flying = false;
+        }
+        player.onUpdateAbilities();
     }
 
     /** Re-adds class potion effects that were removed (milk, /effect clear...). Called periodically. */
@@ -163,6 +177,14 @@ public final class ClassEffectApplier {
                 tree.get().node(nodeId).ifPresent(node -> node.effects().forEach(e -> effects.add(Map.entry(e, 1))));
             }
         }
+        // Running ability states (timed states and toggles).
+        var abilities = ClassLookup.abilities(access);
+        data.abilityActive().keySet().forEach(key -> {
+            Ability ability = abilities.getValue(key);
+            if (ability != null) {
+                ability.effects().forEach(e -> effects.add(Map.entry(e, 1)));
+            }
+        });
         // Skill mastery: every reached tier's effects (tiers stack).
         ClassLookup.skills(access).entrySet().forEach(entry -> {
             Skill skill = entry.getValue();
@@ -226,7 +248,7 @@ public final class ClassEffectApplier {
         List<ClassState.ConditionCheck> checks = new ArrayList<>();
         c.conditions.forEach((condition, result) -> checks.add(new ClassState.ConditionCheck(condition, result)));
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
-                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks));
+                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight);
     }
 
     /**
@@ -301,6 +323,7 @@ public final class ClassEffectApplier {
         private final int level;
         private final ServerPlayer player;
         int rank = 1;
+        boolean flight;
         /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
         final Map<ClassCondition, Boolean> conditions = new IdentityHashMap<>();
         final Map<ResourceEffect.Target, Double> resourceFlat = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
@@ -365,6 +388,11 @@ public final class ClassEffectApplier {
         public void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation) {
             // add_multiplied_total is treated like add_multiplied_base: there is only one resource "base".
             (operation == AttributeModifier.Operation.ADD_VALUE ? resourceFlat : resourcePercent).merge(target, amount, Double::sum);
+        }
+
+        @Override
+        public void grantFlight() {
+            flight = true;
         }
 
         @Override

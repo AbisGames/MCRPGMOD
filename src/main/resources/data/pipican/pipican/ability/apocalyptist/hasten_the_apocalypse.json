@@ -1,0 +1,31 @@
+{
+  "name": "Hasten the Apocalypse",
+  "description": "wave of green light: mobs take damage, fall prone, ground becomes slow, 40 Doom",
+  "icon": "minecraft:wither_rose",
+  "cost": 40,
+  "cooldown_ticks": 500,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "hostiles",
+      "amount": 6,
+      "radius": 8
+    },
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 6,
+          "amplifier": 2
+        },
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 6
+        }
+      ],
+      "radius": 8
+    }
+  ]
+}

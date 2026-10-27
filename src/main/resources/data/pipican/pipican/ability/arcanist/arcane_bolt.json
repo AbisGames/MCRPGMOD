@@ -1,0 +1,15 @@
+{
+  "name": "Arcane Bolt",
+  "description": "basic magic missile every caster can be balanced against, 10 Flux",
+  "icon": "minecraft:amethyst_shard",
+  "cost": 10,
+  "cooldown_ticks": 30,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 5,
+      "range": 24
+    }
+  ]
+}

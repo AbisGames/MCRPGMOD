@@ -127,5 +127,8 @@
   "trinket_slots": {
     "pipican:amulet": 1,
     "pipican:ring": 2
-  }
+  },
+  "abilities": [
+    "pipican:rogue/nimble_recovery"
+  ]
 }

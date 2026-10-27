@@ -39,7 +39,14 @@
     },
     {
       "id": "minecraft:splash_potion",
-      "count": 2,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:poison"
+        }
+      }
+    },
+    {
+      "id": "minecraft:splash_potion",
       "components": {
         "minecraft:potion_contents": {
           "potion": "minecraft:poison"

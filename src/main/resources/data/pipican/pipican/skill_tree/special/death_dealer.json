@@ -50,16 +50,7 @@
     {
       "id": "mountains_of_the_dead",
       "name": "Mountains of the Dead",
-      "description": {
-        "text": "unlocks Whirlwind ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Whirlwind ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,10 @@
         "heft"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:death_dealer/whirlwind"
+      ]
     },
     {
       "id": "bloodsoaked",

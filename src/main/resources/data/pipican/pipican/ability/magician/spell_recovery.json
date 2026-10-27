@@ -1,0 +1,17 @@
+{
+  "name": "Spell Recovery",
+  "description": "refill Mana + heal",
+  "icon": "minecraft:lapis_lazuli",
+  "cooldown_ticks": 6000,
+  "actions": [
+    {
+      "type": "pipican:resource",
+      "percent": 0.5
+    },
+    {
+      "type": "pipican:heal",
+      "target": "self",
+      "amount": 4
+    }
+  ]
+}

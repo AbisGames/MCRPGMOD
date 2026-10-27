@@ -161,5 +161,8 @@
     "pipican:cloak": 1,
     "pipican:shoulderpad": 1,
     "pipican:belt": 1
-  }
+  },
+  "abilities": [
+    "pipican:brute/ground_slam"
+  ]
 }

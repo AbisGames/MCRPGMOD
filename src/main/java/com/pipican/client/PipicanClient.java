@@ -5,6 +5,7 @@ import com.pipican.core.ClassLookup;
 import com.pipican.network.OpenClassSelectionPayload;
 import com.pipican.network.OpenSkillTreePayload;
 import com.pipican.network.OpenTrinketsPayload;
+import com.pipican.network.UseAbilityPayload;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
@@ -54,10 +55,14 @@ public final class PipicanClient {
         event.registerCategory(PipicanKeys.CATEGORY);
         event.register(PipicanKeys.TRINKETS);
         event.register(PipicanKeys.CLASS);
+        for (var key : PipicanKeys.ABILITIES) {
+            event.register(key);
+        }
     }
 
     private static void registerHud(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, Pipican.id("resource_bar"), new ResourceHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, Pipican.id("abilities"), new AbilityHud());
     }
 
     private static void openClassSelection() {
@@ -74,6 +79,11 @@ public final class PipicanClient {
         }
         while (PipicanKeys.TRINKETS.consumeClick()) {
             ClientPacketDistributor.sendToServer(OpenTrinketsPayload.INSTANCE);
+        }
+        for (int i = 0; i < PipicanKeys.ABILITIES.length; i++) {
+            while (PipicanKeys.ABILITIES[i].consumeClick()) {
+                ClientPacketDistributor.sendToServer(new UseAbilityPayload(i));
+            }
         }
         while (PipicanKeys.CLASS.consumeClick()) {
             if (!mc.player.getData(PipicanAttachments.CLASS_DATA).hasClass()) {

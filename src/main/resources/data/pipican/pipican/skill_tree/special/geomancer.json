@@ -72,16 +72,7 @@
     {
       "id": "quake",
       "name": "Quake",
-      "description": {
-        "text": "unlocks Quake ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Quake ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "stone_fist"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:geomancer/quake"
+      ]
     },
     {
       "id": "avatar_of_earth",

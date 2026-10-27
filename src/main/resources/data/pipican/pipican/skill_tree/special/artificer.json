@@ -93,16 +93,7 @@
     {
       "id": "mechanical_servants",
       "name": "Mechanical Servants",
-      "description": {
-        "text": "unlocks the Mechanical Servants ability; -15% max Spare Parts",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks the Mechanical Servants ability; -15% max Spare Parts",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -111,7 +102,18 @@
         "copper_heart"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:artificer/mechanical_servants"
+      ]
     }
   ]
 }

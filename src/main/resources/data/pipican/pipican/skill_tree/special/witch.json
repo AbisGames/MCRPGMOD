@@ -50,16 +50,7 @@
     {
       "id": "flying_broom",
       "name": "Flying Broom",
-      "description": {
-        "text": "unlocks the Flying Broom ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks the Flying Broom ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,10 @@
         "witch_fire"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:witch/flying_broom"
+      ]
     },
     {
       "id": "brewmistress",

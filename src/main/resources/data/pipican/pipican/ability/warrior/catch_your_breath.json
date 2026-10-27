@@ -1,0 +1,14 @@
+{
+  "name": "Catch Your Breath",
+  "description": "heal ~25% max health, once per sleep/rest, 15 Stamina",
+  "icon": "minecraft:bread",
+  "cost": 15,
+  "cooldown_ticks": 6000,
+  "actions": [
+    {
+      "type": "pipican:heal",
+      "target": "self",
+      "percent": 0.25
+    }
+  ]
+}

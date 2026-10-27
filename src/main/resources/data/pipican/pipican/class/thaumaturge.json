@@ -32,7 +32,22 @@
     },
     {
       "id": "minecraft:potion",
-      "count": 3,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:awkward"
+        }
+      }
+    },
+    {
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:awkward"
+        }
+      }
+    },
+    {
+      "id": "minecraft:potion",
       "components": {
         "minecraft:potion_contents": {
           "potion": "minecraft:awkward"

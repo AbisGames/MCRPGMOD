@@ -1,0 +1,15 @@
+{
+  "name": "Lay on Hands",
+  "description": "heal a player 6 HP, 15 Smite",
+  "icon": "minecraft:golden_carrot",
+  "cost": 15,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:heal",
+      "target": "look_ally",
+      "amount": 6,
+      "range": 6
+    }
+  ]
+}

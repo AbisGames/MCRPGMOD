@@ -1,0 +1,24 @@
+{
+  "name": "Dirge",
+  "description": "mobs within 10 blocks get Weakness + Slowness, 30 Melody",
+  "icon": "minecraft:note_block",
+  "cost": 30,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 8
+        },
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 8
+        }
+      ],
+      "radius": 10
+    }
+  ]
+}

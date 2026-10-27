@@ -1,0 +1,22 @@
+{
+  "name": "Staff Bolt",
+  "description": "ranged magic bolt from the staff, 15 Staff Charge",
+  "icon": "minecraft:blaze_rod",
+  "cost": 15,
+  "cooldown_ticks": 30,
+  "requires": {
+    "type": "pipican:holding",
+    "items": [
+      "minecraft:blaze_rod",
+      "minecraft:stick"
+    ]
+  },
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 5,
+      "range": 24
+    }
+  ]
+}

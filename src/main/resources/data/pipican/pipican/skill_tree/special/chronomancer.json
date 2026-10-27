@@ -98,7 +98,7 @@
         "text": "unlocks Time Stop ability; hunger drains 50% faster",
         "extra": [
           {
-            "text": " (not in game yet)",
+            "text": " (partly not in game yet)",
             "color": "dark_gray",
             "italic": true
           }
@@ -112,7 +112,10 @@
         "slow"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "grants": [
+        "pipican:chronomancer/time_stop"
+      ]
     }
   ]
 }

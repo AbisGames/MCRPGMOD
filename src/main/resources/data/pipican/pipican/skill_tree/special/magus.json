@@ -72,16 +72,7 @@
     {
       "id": "staff_strike",
       "name": "Staff Strike",
-      "description": {
-        "text": "unlocks Staff Bolt ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Staff Bolt ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "long_reach"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:magus/staff_bolt"
+      ]
     },
     {
       "id": "living_staff",

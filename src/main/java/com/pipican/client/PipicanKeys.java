@@ -14,5 +14,13 @@ public final class PipicanKeys {
     /** Opens class selection while you have no class (later: the character sheet). */
     public static final KeyMapping CLASS = new KeyMapping("key.pipican.class", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_J, CATEGORY);
 
+    /** Use the abilities in slots 1-4 (see {@link com.pipican.ability.AbilitySlots}). */
+    public static final KeyMapping[] ABILITIES = {
+            new KeyMapping("key.pipican.ability_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY),
+            new KeyMapping("key.pipican.ability_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY),
+            new KeyMapping("key.pipican.ability_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, CATEGORY),
+            new KeyMapping("key.pipican.ability_4", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, CATEGORY),
+    };
+
     private PipicanKeys() {}
 }

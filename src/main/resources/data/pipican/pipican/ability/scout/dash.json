@@ -1,0 +1,20 @@
+{
+  "name": "Dash",
+  "description": "burst of speed, 10 Stride",
+  "icon": "minecraft:sugar",
+  "cost": 10,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "self",
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 5,
+          "amplifier": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Corona Burst",
+  "description": "blind all mobs within 3 blocks, 30 Starlight",
+  "icon": "minecraft:glowstone_dust",
+  "cost": 30,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:blindness",
+          "seconds": 4
+        }
+      ],
+      "radius": 3
+    }
+  ]
+}

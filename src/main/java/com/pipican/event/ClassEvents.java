@@ -1,6 +1,8 @@
 package com.pipican.event;
 
 import com.pipican.Pipican;
+import com.pipican.ability.AbilityService;
+import com.pipican.ability.Summons;
 import com.pipican.core.PipicanConfig;
 import com.pipican.player.ClassEffectApplier;
 import com.pipican.player.ClassService;
@@ -18,11 +20,13 @@ import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 /**
  * Game-event glue for the class system. Everything here is thin: it decides <i>when</i> to act and
@@ -134,6 +138,10 @@ public final class ClassEvents {
             long xp = Math.round(event.getEntity().getMaxHealth() * PipicanConfig.killXpPerMaxHealth());
             ClassService.addXp(killer, xp);
         }
+        // Running ability states end on death.
+        if (event.getEntity() instanceof ServerPlayer player) {
+            AbilityService.clearActive(player);
+        }
         // Trinkets drop on death like the rest of the inventory, unless keepInventory is on.
         if (event.getEntity() instanceof ServerPlayer player && !player.level().getGameRules().get(GameRules.KEEP_INVENTORY)) {
             ClassService.dropTrinkets(player);
@@ -161,12 +169,28 @@ public final class ClassEvents {
                 player.syncData(PipicanAttachments.CLASS_DATA);
             }
         }
+        AbilityService.tick(player);
         // Conditional effects ("while wet", "at night"...): rebuild bonuses when a condition flips.
         if (player.tickCount % 10 == 0 && ClassEffectApplier.recheckConditions(player)) {
             state = ClassEffectApplier.state(player);
         }
         if (player.tickCount % 40 == 0) {
             ClassEffectApplier.maintainMobEffects(player);
+        }
+    }
+
+    // ------------------------------------------------------------------ ability summons
+
+    @SubscribeEvent
+    public static void onServerTick(ServerTickEvent.Post event) {
+        Summons.tick(event.getServer());
+    }
+
+    /** Summons left over from before a restart are not loaded back in. */
+    @SubscribeEvent
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide() && Summons.isLeftover(event.getEntity())) {
+            event.setCanceled(true);
         }
     }
 }

@@ -112,5 +112,8 @@
     "pipican:ring": 2,
     "pipican:cloak": 1,
     "pipican:belt": 1
-  }
+  },
+  "abilities": [
+    "pipican:beastmaster/beast_within"
+  ]
 }

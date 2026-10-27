@@ -1,0 +1,28 @@
+{
+  "name": "Quake",
+  "description": "stun nearby mobs, 30 Earthen Defense",
+  "icon": "minecraft:cobblestone",
+  "cost": 30,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "hostiles",
+      "amount": 3,
+      "radius": 5,
+      "kind": "melee"
+    },
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 2,
+          "amplifier": 9
+        }
+      ],
+      "radius": 5
+    }
+  ]
+}

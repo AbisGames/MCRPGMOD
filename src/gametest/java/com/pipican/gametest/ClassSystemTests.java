@@ -1,6 +1,9 @@
 package com.pipican.gametest;
 
 import com.pipican.Pipican;
+import com.pipican.ability.Ability;
+import com.pipican.ability.AbilityService;
+import com.pipican.ability.AbilitySlots;
 import com.pipican.core.ClassLookup;
 import com.pipican.core.PipicanConfig;
 import com.pipican.core.PipicanRegistries;
@@ -53,6 +56,7 @@ public final class ClassSystemTests {
 
     private static final ResourceKey<RpgClass> TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "tester"));
     private static final ResourceKey<RpgClass> CONDITION_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "condition_tester"));
+    private static final ResourceKey<RpgClass> ABILITY_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "ability_tester"));
     private static final ResourceKey<StatDefinition> MIGHT = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "might"));
     private static final ResourceKey<StatDefinition> FOCUS = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "focus"));
     private static final ResourceKey<Skill> BLADE = ResourceKey.create(PipicanRegistries.SKILL, Identifier.fromNamespaceAndPath("pipican_test", "blade"));
@@ -72,6 +76,8 @@ public final class ClassSystemTests {
         TESTS.put("trinkets", ClassSystemTests::trinkets);
         TESTS.put("shipped_classes", ClassSystemTests::shippedClasses);
         TESTS.put("conditions_and_resource", ClassSystemTests::conditionsAndResource);
+        TESTS.put("abilities", ClassSystemTests::abilities);
+        TESTS.put("shipped_abilities", ClassSystemTests::shippedAbilities);
     }
 
     private ClassSystemTests() {}
@@ -296,6 +302,93 @@ public final class ClassSystemTests {
         helper.assertTrue(ClassEffectApplier.recheckConditions(player), "both flipped back");
         assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR), "armor gone at full health");
         assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR_TOUGHNESS), "toughness gone");
+        helper.succeed();
+    }
+
+    private static ResourceKey<Ability> ability(String name) {
+        return ResourceKey.create(PipicanRegistries.ABILITY, Identifier.fromNamespaceAndPath("pipican_test", name));
+    }
+
+    /** Costs, cooldowns, timed states, toggles that drain, node grants, auto abilities, slots. */
+    private static void abilities(GameTestHelper helper) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, ABILITY_TESTER, false, true).success(), "choose ability tester");
+        PlayerClassData data = ClassService.data(player);
+        var access = helper.getLevel().registryAccess();
+        assertNear(helper, 20, data.resource(), "resource starts full");
+        helper.assertTrue(AbilitySlots.slots(access, data).equals(List.of(ability("mend"), ability("bulwark"), ability("soar"))),
+                "auto abilities stay off the keys: " + AbilitySlots.slots(access, data));
+
+        // Instant: cost and cooldown.
+        player.setHealth(10);
+        helper.assertTrue(AbilityService.use(player, ability("mend")).success(), "mend");
+        assertNear(helper, 14, player.getHealth(), "mend heals 4");
+        assertNear(helper, 15, data.resource(), "mend costs 5");
+        helper.assertTrue(!AbilityService.use(player, ability("mend")).success(), "mend on cooldown");
+        helper.assertTrue(!AbilityService.use(player, ability("granted")).success(), "node ability not granted yet");
+
+        // Timed state: effects and ability_active while it runs.
+        helper.assertTrue(AbilityService.use(player, ability("bulwark")).success(), "bulwark");
+        assertNear(helper, 4, player.getAttributeValue(Attributes.ARMOR), "bulwark armor while active");
+        assertNear(helper, 1, player.getAttributeValue(Attributes.LUCK), "ability_active condition");
+        helper.assertTrue(!AbilityService.use(player, ability("bulwark")).success(), "already active");
+
+        // Toggle: flight while on, drains the bar, stops itself when empty.
+        helper.assertTrue(AbilityService.use(player, ability("soar")).success(), "soar on");
+        // (Mock players are in creative, where flight is left alone, so check the computed state.)
+        helper.assertTrue(ClassEffectApplier.state(player).flight(), "flight while soaring");
+        helper.assertTrue(AbilityService.use(player, ability("soar")).success(), "soar off");
+        helper.assertTrue(!ClassEffectApplier.state(player).flight(), "no flight after soaring");
+
+        // Node grant.
+        helper.assertTrue(ClassService.allocateNode(player, TreeKind.GENERAL, "a_grant").success(), "allocate granting node");
+        helper.assertTrue(AbilitySlots.granted(access, data).contains(ability("granted")), "node grants its ability");
+
+        // Auto: starts by itself below half health.
+        player.setHealth(5);
+        player.tickCount = 9;
+        AbilityService.tick(player);
+        player.tickCount = 10;
+        AbilityService.tick(player);
+        assertNear(helper, 4, player.getAbsorptionAmount(), "last stand fired by itself");
+
+        helper.runAfterDelay(41, () -> {
+            player.tickCount = 41;
+            AbilityService.tick(player);
+            assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR), "bulwark ended");
+            helper.assertTrue(!data.abilityActive().containsKey(ability("bulwark")), "bulwark no longer active");
+            helper.succeed();
+        });
+    }
+
+    /** Every ability the mod ships runs without errors, with a zombie in front of the player to aim at. */
+    private static void shippedAbilities(GameTestHelper helper) {
+        var registry = ClassLookup.abilities(helper.getLevel().registryAccess());
+        int count = 0;
+        for (var entry : registry.entrySet()) {
+            if (!entry.getKey().identifier().getNamespace().equals(Pipican.MOD_ID)) {
+                continue;
+            }
+            @SuppressWarnings("removal")
+            ServerPlayer player = helper.makeMockServerPlayerInLevel();
+            String owner = entry.getKey().identifier().getPath().split("/")[0];
+            ClassService.chooseClass(player, ResourceKey.create(PipicanRegistries.CLASS, Pipican.id(owner)), false, true);
+            var zombie = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 1, 1, 3);
+            player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 2, 0, 0);
+            try {
+                AbilityService.force(player, entry.getKey());
+            } catch (RuntimeException e) {
+                throw new IllegalStateException("ability " + entry.getKey().identifier() + " failed: " + e, e);
+            }
+            boolean deals = entry.getValue().actions().stream().anyMatch(a -> a instanceof com.pipican.ability.action.DamageAction d && d.amount() > 0);
+            helper.assertTrue(!deals || zombie.getHealth() < zombie.getMaxHealth(),
+                    entry.getKey().identifier() + " should damage the zombie in front of the player");
+            AbilityService.reset(player);
+            zombie.discard();
+            count++;
+        }
+        helper.assertTrue(count == 63, "expected 63 shipped abilities, ran " + count);
         helper.succeed();
     }
 

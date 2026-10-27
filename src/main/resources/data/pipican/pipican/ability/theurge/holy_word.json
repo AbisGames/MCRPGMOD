@@ -1,0 +1,25 @@
+{
+  "name": "Holy Word",
+  "description": "pulse on demand: frighten/stun mobs, 35 Divinity",
+  "icon": "minecraft:bell",
+  "cost": 35,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 2,
+          "amplifier": 9
+        },
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 5
+        }
+      ],
+      "radius": 6
+    }
+  ]
+}

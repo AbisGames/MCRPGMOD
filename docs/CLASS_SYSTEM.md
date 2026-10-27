@@ -49,6 +49,7 @@ The id of an entry is `<namespace>:<file name>`; e.g. `data/mypack/pipican/class
 | Trinket slot type | `data/<ns>/pipican/trinket_slot/<name>.json` | `trinket/TrinketSlotType` |
 | Passive tree (one or more files per tree) | `data/<ns>/pipican/skill_tree/<name>.json` | `skill/SkillTreeFile`, `skill/SkillNode` |
 | Masterable skill | `data/<ns>/pipican/skill/<name>.json` | `mastery/Skill` |
+| Active ability | `data/<ns>/pipican/ability/<name>.json` | `ability/Ability` |
 | Class | `data/<ns>/pipican/class/<name>.json` | `rpgclass/RpgClass` |
 
 These are **datapack registries**: they load when the world loads (not on `/reload`). Item tags *do* reload with `/reload`.
@@ -172,7 +173,7 @@ Without `"tree"`, a file is a tree of its own whose id is the file's id. Only on
 | `cost` | 1 | Points to allocate. |
 | `required_level` | 1 | Minimum class level. |
 | `effects` | none | [Effects](#3-effects) while the node is owned. A start node's effects apply too. |
-| `grants` | none | Ids of active abilities this node unlocks. Stored now; read by the ability system later. |
+| `grants` | none | Ids of [active abilities](#26-active-abilities--abilitynamejson) this node unlocks while owned. |
 
 Data mistakes (duplicate ids, links to missing nodes) are logged as errors and skipped, they don't crash the world.
 
@@ -199,6 +200,7 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 | `weakness` | none | `{ "description": "...", "effects": [ ... ] }` – text for players plus the effects that implement it. |
 | `affinities` | all neutral | Equipment rules, see [section 4](#4-equipment-rules-affinities). |
 | `trinket_slots` | none | `{ "<slot type id>": count }`, e.g. a mage `{ "pipican:ring": 2, "pipican:amulet": 1 }`, a fighter `{ "pipican:shoulderpad": 1 }`. |
+| `abilities` | none | [Active abilities](#26-active-abilities--abilitynamejson) the class always has, e.g. `[ "mypack:haste" ]`. Tree nodes can `grant` more. |
 
 **Special stat**
 
@@ -272,6 +274,62 @@ of skills decides how much of the trees a character can fill. Keep that in mind 
 
 ---
 
+### 2.6 Active abilities — `ability/<name>.json`
+
+Something the player presses a key to do. A player's abilities are the class's `abilities` plus those
+`grant`ed by tree nodes they own. The first four (except `auto` ones) sit on the ability keys
+**Z X C V** (rebindable under Controls → Pipican), shown next to the hotbar with their cooldowns.
+
+```json
+{
+  "name": "Haste", "description": "Speed III + Haste II for 8s.", "icon": "minecraft:sugar",
+  "cost": 25, "cooldown_ticks": 600,
+  "actions": [ { "type": "pipican:effect", "target": "self",
+                 "effects": [ { "effect": "minecraft:speed", "seconds": 8, "amplifier": 2 },
+                              { "effect": "minecraft:haste", "seconds": 8, "amplifier": 1 } ] } ]
+}
+```
+
+| Field | Default | Meaning |
+|---|---|---|
+| `cost` | 0 | Resource spent on use. |
+| `cooldown_ticks` | 200 | Ticks until it can be used again (20 = 1 s). For a toggle it starts when the toggle ends. |
+| `duration_ticks` | 0 | > 0 makes it a **timed state**: `effects` count for that long. |
+| `toggle`, `drain_per_second` | false, 0 | A **toggle**: press to start/stop; drains the resource while on and stops when it runs out. |
+| `actions` | none | Run when used (table below). |
+| `end_actions` | none | Run when a state or toggle ends. |
+| `effects` | none | [Effects](#3-effects) that count while a state/toggle runs. Other bonuses can also check it with the `pipican:ability_active` [condition](#conditions). |
+| `requires` | none | A [condition](#conditions) that must hold to use it (e.g. holding a staff). |
+| `auto` | none | Starts by itself whenever this condition holds (and it's off cooldown and affordable). Auto abilities don't take a key. |
+| `end_when` | none | A running state/toggle stops early when this holds. |
+
+Cooldowns and running states are saved on the player, so relogging doesn't reset them; running
+states end on death and when the class changes.
+
+**Actions.** Most take the target fields `target`, `radius` (=6), `range` (=16) and `cone` (degrees, =360):
+`self`, `allies` (you + players in radius), `players` (others in radius), `hostiles`, `mobs` (non-players in
+radius), `look` (the mob in your crosshair within range), `look_ally` (the player in your crosshair, else you).
+
+| Action | Fields | Does |
+|---|---|---|
+| `pipican:effect` | targets, `effects`: `[ { "effect", "seconds", "amplifier" } ]` | Potion effects. A "stun" is Slowness with amplifier 9 for a few seconds. |
+| `pipican:heal` | targets (=self), `amount`, `percent` (of max health) | Heals. |
+| `pipican:cleanse` | targets (=self), `effects` (optional) | Removes harmful effects (or only the listed ones). |
+| `pipican:damage` | targets (=hostiles), `amount`, `kind` (`magic`/`melee`/`fire`), `execute_below`, `fire_seconds` | Damages; class damage bonuses apply. `execute_below`: targets at or under that health die. |
+| `pipican:push` | targets (=hostiles), `strength` | Knocks targets away from you. |
+| `pipican:dash` | `strength`, `up` | Launches you (or your mount) where you look. |
+| `pipican:blink` | `distance` | Teleports you where you look, stopping short of walls. |
+| `pipican:lightning` | `range` | Lightning on the mob or block you look at. |
+| `pipican:summon` | `entity`, `count`, `seconds` | Temporary helpers; tameable mobs are tamed to you, iron golems are player-made. They vanish (no drops) when time runs out or you leave. |
+| `pipican:absorb` | targets (=self), `amount`, `seconds` | A damage shield (Absorption, in steps of 4). |
+| `pipican:explode` | `power`, `fire` | An explosion on you that never hurts you or breaks blocks. |
+| `pipican:weather` | `seconds`, `thunder` | Starts rain or a storm. |
+| `pipican:resource` | `amount`, `percent` | Refills (or drains) your resource bar. |
+
+The `pipican:flight` effect gives creative-style flight while it counts — put it in a toggle's `effects`.
+
+Adding an action type (Java): implement `ability/AbilityAction` and register it in `ability/AbilityActionTypes`.
+
 ## 3. Effects
 
 Passives, special passives, weaknesses, tree nodes and mastery tiers are all lists of the same **effect** objects,
@@ -286,6 +344,7 @@ picked by `"type"`:
 | `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords). |
 | `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
 | `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
+| `pipican:flight` | – | Creative-style flight while it counts (usually in an ability toggle). Never touches creative/spectator players. |
 
 ```json
 { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
@@ -321,6 +380,7 @@ second, and a player's bonuses are rebuilt only when an answer changes.
 | `pipican:wearing` | `items`, `min` (=1), `max` | That many worn armor pieces are among the items. `"max": 0` = none. |
 | `pipican:nearby` | `entities` (`players` / `hostile_mobs`), `radius` (=8), `min` (=1), `max` | That many others are within the radius. `"max": 0` = alone. |
 | `pipican:effect` | `effects` (id / list / `#tag`) | The player has one of the potion effects. |
+| `pipican:ability_active` | `ability` | One of the player's ability states/toggles is running. |
 | `pipican:not` | `condition` | The condition is false. |
 | `pipican:all_of`, `pipican:any_of` | `conditions` (list) | All / at least one are true. |
 
@@ -442,6 +502,9 @@ multiclass system can add classes without migrating saves. How it should work is
 | `/pipican mastery list [player]` | everyone | Skills with tier and progress. |
 | `/pipican stat raise <stat>` | everyone | Costs one stat point (earned with kill XP). |
 | `/pipican trinkets` | everyone | Same as **G**. |
+| `/pipican ability use <ability>` | everyone | Same as pressing the ability's key. |
+| `/pipican ability force <players> <ability>` | admin | Uses any ability for free, ignoring cooldowns (for testing). |
+| `/pipican ability reset <players>` | admin | Clears ability cooldowns and running abilities. |
 
 ---
 
@@ -464,6 +527,8 @@ com.pipican
 ├── trinket/                  TrinketSlotType, TrinketLayout, TrinketMenu, PipicanMenus
 ├── effect/                   ClassEffect (interface), ClassEffectTypes (type registry),
 │   └── type/                 the built-in effect types
+├── ability/                  Ability (JSON), AbilityService (use/tick), AbilitySlots (keys), Targets, Summons,
+│   └── action/               AbilityAction + AbilityActionTypes: the built-in action types
 ├── condition/                ClassCondition (interface), ConditionTypes (type registry), Bounds
 │   └── type/                 the built-in condition types (used by pipican:conditional)
 ├── player/

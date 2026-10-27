@@ -136,5 +136,9 @@
     "pipican:cloak": 1,
     "pipican:shoulderpad": 1,
     "pipican:belt": 1
-  }
+  },
+  "abilities": [
+    "pipican:acrobat/dash",
+    "pipican:acrobat/vault"
+  ]
 }

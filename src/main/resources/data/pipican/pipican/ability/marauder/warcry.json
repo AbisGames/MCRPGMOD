@@ -1,0 +1,31 @@
+{
+  "name": "Warcry",
+  "description": "mobs within 8 blocks get Weakness, allies get Speed, 30 Warcry",
+  "icon": "minecraft:goat_horn",
+  "cost": 30,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 8
+        }
+      ],
+      "radius": 8
+    },
+    {
+      "type": "pipican:effect",
+      "target": "allies",
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 8
+        }
+      ],
+      "radius": 8
+    }
+  ]
+}

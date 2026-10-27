@@ -3,8 +3,8 @@
 Generated from `class_specs/*.md` by the class builder. Everything listed here is **not in the game yet**:
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
-- Classes built: **84**, skills: **109**
-- Bonus phrases: **2248**. Fully working: **991**, partly working: **15**, not yet: **1242**
+- Classes built: **84**, skills: **109**, active abilities: **63** (of 107 named in the specs)
+- Bonus phrases: **2248**. Fully working: **1028**, partly working: **15**, not yet: **1205**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,13 +13,14 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Other mechanics](#other-mechanics) | 347 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 325 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 290 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 190 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 149 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 146 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 117 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 113 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 98 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 69 |
+| [Abilities not in game yet](#abilities-not-in-game-yet) | 44 |
 | [Immunities](#immunities) | 27 |
 | [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 24 |
 | [Critical hits](#critical-hits) | 16 |
@@ -458,10 +459,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **abjurer**
   - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
-- **aeromancer**
-  - special tree: Flight: unlocks Flight ability
-- **apocalyptist**
-  - special tree: Hasten the Apocalypse: unlocks Hasten the Apocalypse ability
 - **arcanist**
   - special passive: Grindstone disenchanting gives +1% more XP per 2 Arcana
   - special tree: Swift Arcana: abilities have 15% shorter cooldowns
@@ -475,8 +472,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Smithing: +5% durability on crafted tools
 - **assassin**
   - special tree: Killer's Eye: unlocks Mark Target ability
-- **astromancer**
-  - special tree: Blinding Corona: unlocks Corona Burst ability
 - **avenger**
   - general tree: Pursuit: +8% movement speed toward the marked target
 - **bard**
@@ -487,14 +482,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Ballad of Heroes: Song also gives +1 armor
   - general tree: Virtuoso: Song bonuses doubled
   - special tree: Swift Song: Inspiring Song refreshes twice as fast
-  - special tree: Dirge: unlocks Dirge ability
   - skill Performance: +1 block Song range
   - skill Performance: +5% Song strength
   - skill Performance: +1 block Song range
   - skill Performance: +5% Song strength
   - skill Performance: +10% Song strength
-- **beastmaster**
-  - special tree: Call of the Wild: unlocks Call of the Wild ability
 - **berserker**
   - passive: Berserk: while Rage is above 75%: +6 max health, +25% melee damage, immune to Slowness and Weakness
   - passive: Frightful Wrath: when you go Berserk, mobs within 6 blocks get Slowness I for 3s
@@ -505,8 +497,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Ferocious Wrath: +15% movement speed while Berserk
   - special tree: Fury Unleashed: once per rest, when you would die, go Berserk instead with 4 HP
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
-- **cavalier**
-  - special tree: Devastating Charge: unlocks Charge ability
 - **champion**
   - special stat per point: +0.3% damage and -0.2% damage taken while in Battle Stance
   - passive: Battle Stance: while sneaking and not moving, +20% damage and mobs deal 20% less damage to you
@@ -532,7 +522,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Succor: Succor also removes Poison and Wither
 - **chronomancer**
   - special tree: Precognition: unlocks Insight: after you dodge, your next hit is a guaranteed crit
-  - special tree: Pause: unlocks Time Stop ability
 - **cleric**
   - special tree: Turn Undead: unlocks Turn Undead (undead flee for 5s)
 - **conjurer**
@@ -556,11 +545,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Hold Formation: allies near you +10% knockback resistance
 - **death_dealer**
   - passive: Brutal Swing: when you kill a mob with an axe or mace, your attack cooldown resets instantly
-  - special tree: Mountains of the Dead: unlocks Whirlwind ability
 - **defender**
   - special tree: Bodyguard: unlocks Intercept ability
 - **diplomat**
-  - special tree: Soothing Words: unlocks Soothe ability
   - special tree: Unexpected Alliances: unlocks Turncoat ability
 - **diviner**
   - passive: Premonitions: after sleeping, you get 3 'premonitions' - each automatically turns a hit against you into a miss
@@ -581,7 +568,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Persistent Enchantment: enchanting at a table gives a 15% chance of an extra enchantment on the item
   - special passive: Per 10 Glamour, +3% extra-enchantment chance
   - general tree: Spellwright: +10% extra-enchantment chance
-  - special tree: Countercharm: unlocks Countercharm ability
   - special tree: Compel: unlocks Compel ability
 - **engineer**
   - passive: Eidolon: you own a personal custom construct mob, the Eidolon (50 HP, follows you, fights your targets - see section 12 for its mob spec). Rebuild after death with 4 iron blocks + 8 hours
@@ -603,19 +589,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Merciless: Execute threshold 20%
   - general tree: Headsman's Axe: Execute threshold 25%
   - special tree: Death Sentence: unlocks Sentence ability
-- **exorcist**
-  - special tree: Cleanse: unlocks Exorcise ability
 - **fighter**
   - weakness: -25% potion effect duration on you, and enchanting costs +1 level
 - **geomancer**
   - special tree: Earth Walker: unlocks Earth Glide ability
-  - special tree: Quake: unlocks Quake ability
-- **gladiator**
-  - special tree: Finishing Blow: unlocks Coup de Grace ability
-- **gunslinger**
-  - special tree: Deadeye Shot: unlocks Deadeye ability
-- **healer**
-  - special tree: Empowered Healing: unlocks Mass Heal ability
 - **hexer**
   - special stat per point: +0.5% chance your hits curse a mob
   - passive: Evil Eye: 12% chance on hit to curse a mob for 8s with one of: Desire (stops attacking), Lethargy (Slowness II) or Pain (2 damage per second)
@@ -632,8 +609,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **hydromancer**
   - passive: Watery Form: in water
   - special passive: Watery Form reduction +0.2% per Tide
-  - special tree: Watery Form: unlocks Watery Form ability
-  - special tree: Tsunami: unlocks Wave ability
 - **illusionist**
   - passive: 12% chance an attack against you hits a decoy instead
   - passive: you blink 4 blocks away
@@ -649,7 +624,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Phantasmal Killer: unlocks Nightmare ability
 - **infiltrator**
   - special passive: Faceless distance -0.05 blocks per Subtlety
-  - special tree: Vanish: unlocks Vanish ability
 - **jack_of_all_trades**
   - special tree: Magical Epiphany: brewing and enchanting cost slightly less (-1 level, 10% faster brew)
 - **magician**
@@ -672,14 +646,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Staff of the Archmagus: +25% staff damage
   - special tree: Long Reach: +0.5 reach with staff
   - special tree: Staff of Power: +1 more armor with staff
-  - special tree: Staff Strike: unlocks Staff Bolt ability
-- **marauder**
-  - special tree: Warcry: unlocks Warcry ability
 - **miracle_worker**
   - passive: Worker of Miracles: sneaking + right-clicking a player with an empty hand heals them 6 HP (spends 20 Miracle)
   - special tree: Divine Visage: Stigmata also gives Resistance I
-- **myrmidon**
-  - special tree: Shield Bash: unlocks Shield Charge ability
 - **necromancer**
   - passive: Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)
   - special passive: Per 20 Deathgrip, +1 servant
@@ -702,9 +671,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **paladin**
   - special passive: Smite bonus damage +1% per 2 Sanctity
   - weakness: killing a villager, iron golem or tamed animal empties Smite and gives Weakness I for 5 minutes
-  - special tree: Faith Healing: unlocks Lay on Hands ability
-- **poisoner**
-  - special tree: Poisonous Touch: unlocks Poison Needle ability
 - **priest**
   - passive: Prayer: other players within 8 blocks deal +5% damage
   - special passive: Prayer aura range +1 block per 10 Faith points
@@ -712,8 +678,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Divine Strike: allies in your Prayer aura deal +5% more damage
   - special tree: Inspiring Prayer: you also gain your own Prayer bonus
   - special tree: Improved Shared Recovery: Prayer aura range -2 blocks
-- **pyromancer**
-  - special tree: Firebolt: unlocks Firebolt ability
 - **ranger**
   - general tree: Stalker: +10% movement speed toward your prey
 - **rogue**
@@ -734,7 +698,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Runelord: sigil bonuses doubled
   - special tree: Fire Rune: sigil weapon hits ignite for 2s
   - special tree: Mighty Sigils: Mighty Sigils triggers at 75% Rune Power
-  - special tree: Thunder Rune: unlocks Rune Blast ability
 - **savant**
   - passive: Enchanting, brewing and anvil use all cost slightly less (-1 level / 10% faster)
 - **scout**
@@ -767,11 +730,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Soulblade: bound weapon damage +20%
   - special tree: Recall: unlocks Recall Weapon ability
   - special tree: Mend: bound weapon slowly repairs 1 durability every 10s
-  - special tree: Invest Power: unlocks Invest Power ability
   - special tree: Sacrifice: unlocks Sacrifice ability
-- **stormbringer**
-  - special tree: Ride the Lightning: unlocks Lightning Dash ability
-  - special tree: Call the Storm: unlocks Summon Storm ability
 - **technomancer**
   - special passive: Gadget bonus +0.5% per Circuitry
   - special passive: Per 20 Circuitry, +1 gadget charge stored
@@ -796,15 +755,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Living Temple: -15% temple bonuses
 - **tenebrist**
   - passive: Shadow Form: in light level 7 or lower, you're invisible while sneaking and +15% damage
-  - special tree: Shadow Form: unlocks Shadow Form ability
-  - special tree: Shadow Step: unlocks Shadow Step ability
-- **thaumaturge**
-  - special tree: Reroll: unlocks Reroll ability
 - **theurge**
   - special passive: Invocation radius +0.1 per Piety
   - general tree: Pulse: Invocation every 20s
   - special tree: Invocation: Invocation radius +2
-  - special tree: Holy Word: unlocks Holy Word ability
 - **transmuter**
   - passive: Optimization: each time you sleep, choose one stat to lower by 3 and another to raise by 3 until you sleep again
   - special passive: Optimization amount +1 per 20 Flux
@@ -818,7 +772,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Ender pearls deal no damage to you and have 30% shorter cooldown
   - special passive: Blink distance +0.1 per Displacement
   - general tree: Light Traveller: pearl cooldown -10%
-  - special tree: Blink: unlocks Blink ability
   - special tree: Recall: unlocks Recall ability
   - special tree: Gatekeeper: +50% pearl cooldown
 - **warlock**
@@ -841,15 +794,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Swift Change: you can change favored weapon once per day without sleeping
   - special tree: Weapon Specialization: +10% favored crit damage
   - special tree: Masterstroke: unlocks Masterstroke ability
-- **witch**
-  - special tree: Flying Broom: unlocks the Flying Broom ability
 - **wizard**
   - special passive: +1 bookshelf counted around your enchanting table per 20 Lore
   - general tree: Library: -1 enchanting cost
   - special tree: Second Tome: Grimoire bonus also works with a book in any hotbar slot
 - **woodwose**
   - general tree: Deep Roots: +20% knockback resistance on grass
-  - special tree: Oak Hide: unlocks Oak Hide ability
   - special tree: Nature Bond: unlocks Treeform ability
 
 ## Conditional bonus (while / when / where)
@@ -1132,7 +1082,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Anvil repairs and renames cost 1 fewer level
   - passive: Spare Parts refill completely when you sleep
   - weakness: takes 25% more lightning damage, and a lightning strike drains all Spare Parts
-  - special tree: Mechanical Servants: unlocks the Mechanical Servants ability; -15% max Spare Parts
 - **assassin**
   - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
 - **astromancer**
@@ -1173,13 +1122,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Conjure Horror: unlocks Conjure Horror ability; -15% max health
 - **death_dealer**
   - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
-- **dervish**
-  - special tree: Whirling Death: unlocks Whirl ability; -10% max health
 - **destroyer**
   - passive: Destruction Released: whenever you spend Devastation, a shockwave hits all mobs within 3 blocks for 2 damage
   - weakness: every time you spend Devastation
   - special tree: Controlled Burn: no self-damage when spending Devastation
-  - special tree: Cataclysm: unlocks Cataclysm ability; -10% max health
 - **diplomat**
   - passive: Master of Diplomacy: villager trades cost 25% less and villagers restock twice as often for you
 - **diviner**
@@ -1933,6 +1879,87 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **woodwose**
   - general tree: Overgrowth: crops grow 25% faster near you
 
+## Abilities not in game yet
+
+- **artificer**
+  - ability Assemble: spend Spare Parts to make a temporary weapon/armor piece that vanishes when you sleep
+  - ability Store Spell: load a potion effect into gear
+- **assassin**
+  - ability Mark Target: Killer's Eye: mark a mob you're hidden from; +30% damage to it for 60s, 15 Shadow
+- **avenger**
+  - ability Declare Vengeance: mark any mob you can see, 20 Retribution
+- **bard**
+  - ability Charm: one mob stops attacking you for 10s, 20 Melody
+- **cleric**
+  - ability Turn Undead: undead within 8 blocks flee, 20 Grace
+  - ability Holy Strike: empower next hit, +1d6-style bonus vs undead
+- **conjurer**
+  - ability Conjure Horror: summon a large monster - ravager-sized - for 20s, 60 Ether
+- **conqueror**
+  - ability Attack Command: target ally gets a free empowered hit
+  - ability Direct the Troops: allies dash toward a point
+- **defender**
+  - ability Intercept: dash to an ally and take the next hit for them, 20 Guard
+- **diplomat**
+  - ability Turncoat: one mob fights for you for 15s, 50 Persuasion
+- **diviner**
+  - ability Twist Fate: force one attack against an ally to miss, 30 Omens
+  - ability Scry: see through a player's eyes for 5s
+- **druid**
+  - ability Tree Walk: step into a log and come out of another log within 24 blocks, 10 Verdance
+- **enchanter**
+  - ability Compel: mob obeys you for 10s, 40 Allure
+- **engineer**
+  - ability Cockpit: climb into your eidolon and pilot it, book level 10
+  - ability Overdrive: eidolon +50% speed/damage for 10s, 40 Fuel
+- **executioner**
+  - ability Sentence: mark a mob; your next hit on it deals triple damage, 30 Dread
+- **geomancer**
+  - ability Earth Glide: walk through stone for 3s, 40 Earthen Defense
+- **illusionist**
+  - ability Decoy: spawn a fake you that mobs target for 6s, 25 Mirage
+  - ability Nightmare: target mob is frightened and flees, 30 Mirage
+- **inquisitor**
+  - ability Dreadful Threat: frighten a scrutinised mob so it flees, 25 Judgment
+- **necromancer**
+  - ability Raise Dead: a mob you kill rises as a servant zombie/skeleton, 40 Necrosis
+- **oracle**
+  - ability Commune: ask the server a hint: e.g. points you toward the nearest structure, 30 Ecstasy
+- **ranger**
+  - ability Find the Way: points toward your bed/spawn, 10 Quarry
+- **rogue**
+  - ability Subterfuge: charm a mob into ignoring you, 10 Guile
+- **scout**
+  - ability Reveal Weakness: mark a mob: all players deal +15% damage to it for 6s, 15 Stride
+- **sharpshooter**
+  - ability Called Shot: mark a target; next arrow deals triple damage, 25 Focus
+- **spellbinder**
+  - ability Recall Weapon: teleport your bound weapon back to your hand, 10 Charge
+  - ability Sacrifice: spend all Charge: next hit deals +1 damage per 3 Charge
+- **technomancer**
+  - ability Animate Object: turn a placed block - e.g. an anvil or cauldron - into a temporary friendly construct for 60s, 50 Voltage
+- **templar**
+  - ability Consecrate Ground: create a temporary temple where you stand for 60s, 50 Consecration
+- **thief**
+  - ability Pickpocket: steal one item from a mob's hand/armor, 20 Nerve
+- **transmuter**
+  - ability Alter Self: re-Optimize instantly, 50 Alteration
+  - ability Transmute: turn a stack of one material into a similar one - e.g. cobblestone to stone, 30 Alteration
+- **traveler**
+  - ability Recall: return to a marked spot, 60 Waypoint
+- **warlock**
+  - ability Return to Sender: spend Stolen Power to throw the last stolen effect at a mob as a splash, 10 Stolen Power
+- **weapon_master**
+  - ability Masterstroke: a guaranteed max-damage critical with the favored weapon, 30 Focus
+- **witch**
+  - ability Witch Fire: become invisible, steer a green fireball that burns mobs, 15 Witchery/s
+  - ability Lasting Bond: see keystone
+- **wizard**
+  - ability Grimoire Casting: cast spells written into a grimoire
+  - ability Spell Mastery: spell points
+- **woodwose**
+  - ability Treeform: become a tree - fully hidden, heal all damage while resting, book level 10
+
 ## Immunities
 
 - **apocalyptist**
@@ -2064,19 +2091,46 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Other notes per class
 
+- **abjurer**: ability Sanctuary: pushes mobs out of 4 blocks once and slows them, instead of a 5s barrier
 - **abjurer**: kit: "splash potion of resistance" doesn't exist in vanilla; gave Turtle Master instead
 - **abjurer**: special passive: cap not enforced (scaling has no maximum): "-0.2% damage taken per Warding point (max -20%)"
+- **apocalyptist**: ability Hasten the Apocalypse: "fall prone" and slowing ground become Slowness III
+- **artificer**: ability Mechanical Servants: one iron golem for 30s instead of small copper golems
+- **assassin**: ability Disguise: Invisibility for 10s
+- **beastmaster**: ability Beast Within: +2 attack damage with anything, not only unarmed
+- **cavalier**: ability Charge: hits mobs in front when the charge starts, not on impact
+- **chronomancer**: ability Time Stop: mobs are stunned and harmless for 3s rather than frozen in time
 - **conjurer**: icon "zombie_spawner_egg" isn't an item id; used zombie_spawn_egg
+- **dervish**: ability Whirl: one hit on every mob around you (not one per weapon)
+- **enchanter**: ability Countercharm: removes harmful potion effects (charm and fear don't exist yet)
 - **enchanter**: kit: "random level-1 enchanted book" isn't possible; gave a plain book
+- **exorcist**: ability Exorcise: cleanses the player you look at, or stuns the mob you look at (any mob, not only unclean ones)
 - **fighter**: special passive: cap not enforced (scaling has no maximum): "Fighter's Resolve: -0.25% damage taken per Discipline point (max -15%)"
+- **gladiator**: ability Coup de Grace: a heavy hit on the mob you look at (any mob, not only affected ones)
+- **gunslinger**: ability Deadeye: +50% ranged damage for 3s instead of slowed time and guaranteed crits
 - **gunslinger**: gear: Firearms don't exist yet; crossbows stand in (already proficient in the table).
 - **gunslinger**: kit: bullets (planned) -> arrows
 - **gunslinger**: kit: pistol (planned) -> crossbow
+- **hexer**: ability Hex: a fixed curse (Weakness, Slowness, Glowing) instead of choosing one
+- **hydromancer**: ability Watery Form: half damage, fast swimming and invisibility underwater; no squeezing through gaps
+- **magician**: ability Spell Recovery: refills half the Mana, once per 5 minutes
 - **magician**: gear: Stick/blaze rod are proficient (they don't become spears: there is no "counts as" rule).
+- **paladin**: ability Holy Radiance: slows and weakens all hostile mobs, not only undead
+- **priest**: ability Shared Recovery: heals you and every player within 6 blocks, once per 5 minutes
 - **priest**: gear: Shovels are neutral (they don't become maces: there is no "counts as" rule).
+- **rogue**: ability Nimble Recovery: once per 5 minutes
+- **runesmith**: ability Rune Blast: a blast around you (sigils don't exist yet)
 - **runesmith**: icon "smithing_template" isn't an item id; used coast_armor_trim_smithing_template
 - **runesmith**: kit: "any trim" template -> coast armor trim
+- **sorcerer**: ability Sorcerous Blast: free to cast on a 1.5s cooldown; doesn't build Strain yet
+- **spellbinder**: ability Invest Power: +30% damage with anything (bound weapons don't exist yet)
+- **tenebrist**: ability Shadow Form: Invisibility and -20% damage taken; no passing through mobs
+- **tenebrist**: ability Shadow Step: blink 12 blocks, usable in light level 7 or lower
+- **thaumaturge**: ability Reroll: removes your harmful effects (no new random effect)
 - **thaumaturge**: kit: "random potion" isn't possible; gave awkward potions
+- **thief**: ability Escape: removes Slowness and hops free
+- **warrior**: ability Catch Your Breath: once per 5 minutes
+- **witch**: ability Flying Broom: flies while holding a stick (or blaze rod)
 - **witch**: gear: Stick/blaze rod are proficient (there is no "staff" category).
 - **wizard**: gear: Book/enchanted book counts as proficient in any hand (no off-hand-only rule exists).
 - **wizard**: kit: "random level-1 enchanted book" isn't possible; gave a plain book

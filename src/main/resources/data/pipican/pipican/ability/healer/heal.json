@@ -1,0 +1,15 @@
+{
+  "name": "Heal",
+  "description": "target player heals 8, 15 Lifeblood",
+  "icon": "minecraft:glistering_melon_slice",
+  "cost": 15,
+  "cooldown_ticks": 80,
+  "actions": [
+    {
+      "type": "pipican:heal",
+      "target": "look_ally",
+      "amount": 8,
+      "range": 12
+    }
+  ]
+}

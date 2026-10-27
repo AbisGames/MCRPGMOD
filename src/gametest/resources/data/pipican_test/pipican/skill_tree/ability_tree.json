@@ -1,0 +1,22 @@
+{
+  "name": "Ability Test Tree",
+  "nodes": [
+    {
+      "id": "a_start",
+      "name": "Start",
+      "type": "start"
+    },
+    {
+      "id": "a_grant",
+      "name": "Grant",
+      "x": 0,
+      "y": 40,
+      "links": [
+        "a_start"
+      ],
+      "grants": [
+        "pipican_test:granted"
+      ]
+    }
+  ]
+}

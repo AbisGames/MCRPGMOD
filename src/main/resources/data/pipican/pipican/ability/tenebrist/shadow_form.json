@@ -1,0 +1,18 @@
+{
+  "name": "Shadow Form",
+  "description": "become shadowy: attackers have reduced accuracy, pass through mobs, invisible in darkness, 40 Shade",
+  "icon": "minecraft:black_dye",
+  "cost": 40,
+  "cooldown_ticks": 800,
+  "duration_ticks": 200,
+  "effects": [
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:invisibility"
+    },
+    {
+      "type": "pipican:damage_taken",
+      "multiplier": 0.8
+    }
+  ]
+}

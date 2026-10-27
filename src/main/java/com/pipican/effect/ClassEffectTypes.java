@@ -7,6 +7,7 @@ import com.pipican.Pipican;
 import com.pipican.effect.type.AttributeEffect;
 import com.pipican.effect.type.ConditionalEffect;
 import com.pipican.effect.type.DamageMultiplierEffect;
+import com.pipican.effect.type.FlightEffect;
 import com.pipican.effect.type.MobEffectEffect;
 import com.pipican.effect.type.ResourceEffect;
 import com.pipican.effect.type.StatEffect;
@@ -41,6 +42,7 @@ public final class ClassEffectTypes {
     public static final Type DAMAGE_DEALT = register("damage_dealt", DamageMultiplierEffect.DEALT_CODEC);
     public static final Type RESOURCE = register("resource", ResourceEffect.CODEC);
     public static final Type CONDITIONAL = register("conditional", ConditionalEffect.CODEC);
+    public static final Type FLIGHT = register("flight", FlightEffect.CODEC);
 
     private ClassEffectTypes() {}
 

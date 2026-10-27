@@ -1,0 +1,44 @@
+{
+  "name": "Ability Tester",
+  "description": "Test-only class for abilities.",
+  "selectable": false,
+  "special_stat": {
+    "stat": "pipican_test:focus",
+    "resource": {
+      "name": "Test Mana",
+      "base_max": 20,
+      "max_per_point": 0,
+      "regen_per_second": 0,
+      "starts_full": true
+    }
+  },
+  "skill_tree": {
+    "tree": "pipican_test:ability_tree",
+    "start": "a_start"
+  },
+  "progression": {
+    "starting_skill_points": 1
+  },
+  "abilities": [
+    "pipican_test:mend",
+    "pipican_test:bulwark",
+    "pipican_test:soar",
+    "pipican_test:last_stand"
+  ],
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:ability_active",
+        "ability": "pipican_test:bulwark"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:luck",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

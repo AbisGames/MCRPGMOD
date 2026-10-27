@@ -1,5 +1,6 @@
 package com.pipican.command;
 
+import com.pipican.ability.AbilityService;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -58,6 +59,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
  *   /pipican mastery set &lt;players&gt; &lt;skill&gt; &lt;tier 0-5&gt;
  *   /pipican mastery reset &lt;players&gt;           also resets the general and special trees
  *   /pipican stat reset &lt;players&gt;                gives the stat points back
+ *   /pipican ability force &lt;players&gt; &lt;ability&gt;   use any ability, free and ignoring cooldowns (testing)
+ *   /pipican ability reset &lt;players&gt;             clear cooldowns and running abilities
  * Everyone:
  *   /pipican class info [player]
  *   /pipican class choose                         re-opens selection if you have no class
@@ -65,6 +68,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
  *   /pipican tree allocate|refund &lt;general|special|stat&gt; &lt;node&gt;
  *   /pipican mastery list [player]
  *   /pipican stat raise &lt;stat&gt;                   costs one stat point (earned with kill XP)
+ *   /pipican ability use &lt;ability&gt;               same as pressing its key (keys Z X C V use slots 1-4)
  *   /pipican trinkets
  * </pre>
  * Stat raising is a stand-in until the character screen exists.
@@ -74,6 +78,7 @@ public final class PipicanCommands {
 
     private static final DynamicCommandExceptionType UNKNOWN_CLASS = new DynamicCommandExceptionType(id -> Component.translatable("pipican.class.unknown", String.valueOf(id)));
     private static final DynamicCommandExceptionType UNKNOWN_SKILL = new DynamicCommandExceptionType(id -> Component.translatable("pipican.mastery.unknown", String.valueOf(id)));
+    private static final DynamicCommandExceptionType UNKNOWN_ABILITY = new DynamicCommandExceptionType(id -> Component.translatable("pipican.ability.unknown", String.valueOf(id)));
     private static final DynamicCommandExceptionType UNKNOWN_STAT = new DynamicCommandExceptionType(id -> Component.translatable("pipican.stat.unknown", String.valueOf(id)));
 
     private PipicanCommands() {}
@@ -160,6 +165,18 @@ public final class PipicanCommands {
                                 })))
                         .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
                                 .executes(c -> forEach(c, ClassService::resetStats)))))
+                .then(Commands.literal("ability")
+                        .then(Commands.literal("use").then(Commands.argument("ability", ResourceKeyArgument.key(PipicanRegistries.ABILITY))
+                                .executes(c -> report(c.getSource(), AbilityService.use(c.getSource().getPlayerOrException(),
+                                        ResourceKeyArgument.getRegistryKey(c, "ability", PipicanRegistries.ABILITY, UNKNOWN_ABILITY))))))
+                        .then(admin("force").then(Commands.argument("targets", EntityArgument.players())
+                                .then(Commands.argument("ability", ResourceKeyArgument.key(PipicanRegistries.ABILITY))
+                                        .executes(c -> {
+                                            var key = ResourceKeyArgument.getRegistryKey(c, "ability", PipicanRegistries.ABILITY, UNKNOWN_ABILITY);
+                                            return forEach(c, p -> AbilityService.force(p, key));
+                                        }))))
+                        .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
+                                .executes(c -> forEach(c, AbilityService::reset)))))
                 .then(Commands.literal("trinkets").executes(c -> {
                     TrinketMenu.open(c.getSource().getPlayerOrException());
                     return 1;

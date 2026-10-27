@@ -1,0 +1,13 @@
+{
+  "name": "Cataclysm",
+  "description": "big explosion centred on you that doesn't hurt you, 60 Devastation",
+  "icon": "minecraft:tnt",
+  "cost": 60,
+  "cooldown_ticks": 900,
+  "actions": [
+    {
+      "type": "pipican:explode",
+      "power": 5
+    }
+  ]
+}

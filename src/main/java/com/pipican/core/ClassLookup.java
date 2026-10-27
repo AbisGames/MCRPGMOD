@@ -1,5 +1,6 @@
 package com.pipican.core;
 
+import com.pipican.ability.Ability;
 import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.skill.SkillTree;
@@ -30,6 +31,10 @@ public final class ClassLookup {
 
     public static Registry<Skill> skills(RegistryAccess access) {
         return access.lookupOrThrow(PipicanRegistries.SKILL);
+    }
+
+    public static Registry<Ability> abilities(RegistryAccess access) {
+        return access.lookupOrThrow(PipicanRegistries.ABILITY);
     }
 
     public static Registry<TrinketSlotType> trinketSlots(RegistryAccess access) {

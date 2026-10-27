@@ -85,5 +85,17 @@
   "pipican.node_type.small": "Passive",
   "pipican.node_type.notable": "Notable",
   "pipican.node_type.keystone": "Keystone",
-  "pipican.node_type.start": "Starting point"
+  "pipican.node_type.start": "Starting point",
+  "key.pipican.ability_1": "Ability 1",
+  "key.pipican.ability_2": "Ability 2",
+  "key.pipican.ability_3": "Ability 3",
+  "key.pipican.ability_4": "Ability 4",
+  "pipican.ability.not_granted": "You don't have that ability.",
+  "pipican.ability.already_active": "%s is already active.",
+  "pipican.ability.cooldown": "%s is ready in %ss.",
+  "pipican.ability.cannot_use": "You can't use %s right now.",
+  "pipican.ability.no_resource": "Not enough resource for %s (needs %s).",
+  "pipican.ability.used": "%s!",
+  "pipican.ability.stopped": "%s stopped.",
+  "pipican.ability.unknown": "Unknown ability: %s"
 }

@@ -1,0 +1,16 @@
+{
+  "name": "Coup de Grace",
+  "description": "heavy finisher vs affected mobs, 30 Bloodlust",
+  "icon": "minecraft:netherite_sword",
+  "cost": 30,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 10,
+      "range": 4,
+      "kind": "melee"
+    }
+  ]
+}

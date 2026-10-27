@@ -1,0 +1,15 @@
+{
+  "name": "Wave",
+  "description": "push mobs away, 25 Current",
+  "icon": "minecraft:heart_of_the_sea",
+  "cost": 25,
+  "cooldown_ticks": 120,
+  "actions": [
+    {
+      "type": "pipican:push",
+      "target": "hostiles",
+      "radius": 6,
+      "strength": 2.0
+    }
+  ]
+}

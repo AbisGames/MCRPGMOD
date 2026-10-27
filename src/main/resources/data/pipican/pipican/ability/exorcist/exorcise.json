@@ -1,0 +1,26 @@
+{
+  "name": "Exorcise",
+  "description": "cleanse charm/fear/curse from a player, or stun an unclean mob for 2s, 25 Sanctification",
+  "icon": "minecraft:totem_of_undying",
+  "cost": 25,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:cleanse",
+      "target": "look_ally",
+      "range": 8
+    },
+    {
+      "type": "pipican:effect",
+      "target": "look",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 2,
+          "amplifier": 9
+        }
+      ],
+      "range": 8
+    }
+  ]
+}

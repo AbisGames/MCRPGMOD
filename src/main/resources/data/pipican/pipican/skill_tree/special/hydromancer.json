@@ -50,16 +50,7 @@
     {
       "id": "watery_form",
       "name": "Watery Form",
-      "description": {
-        "text": "unlocks Watery Form ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Watery Form ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,21 +58,15 @@
         "wave"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:hydromancer/watery_form"
+      ]
     },
     {
       "id": "tsunami",
       "name": "Tsunami",
-      "description": {
-        "text": "unlocks Wave ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Wave ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +74,10 @@
         "slippery"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:hydromancer/wave"
+      ]
     },
     {
       "id": "ocean_s_heart",

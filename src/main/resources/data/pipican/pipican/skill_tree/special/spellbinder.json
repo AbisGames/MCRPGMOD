@@ -59,16 +59,7 @@
     {
       "id": "invest_power",
       "name": "Invest Power",
-      "description": {
-        "text": "unlocks Invest Power ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Invest Power ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -76,7 +67,10 @@
         "recall"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:spellbinder/invest_power"
+      ]
     },
     {
       "id": "sacrifice",

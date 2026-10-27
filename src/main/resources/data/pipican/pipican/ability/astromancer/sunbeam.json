@@ -1,0 +1,16 @@
+{
+  "name": "Sunbeam",
+  "description": "ray attack, 20 Starlight",
+  "icon": "minecraft:blaze_rod",
+  "cost": 20,
+  "cooldown_ticks": 80,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 7,
+      "range": 32,
+      "fire_seconds": 2
+    }
+  ]
+}

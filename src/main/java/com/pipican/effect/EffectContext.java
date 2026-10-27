@@ -45,6 +45,9 @@ public interface EffectContext {
     /** Changes the resource bar's max or regen; {@code operation} is add_value or add_multiplied_base. */
     void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation);
 
+    /** Lets the player fly (creative-style) while this effect counts. */
+    void grantFlight();
+
     /** Tests a condition now, and remembers it so the bonuses are rebuilt when its answer changes. */
     boolean test(ClassCondition condition);
 }

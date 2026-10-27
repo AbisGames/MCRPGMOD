@@ -1,0 +1,11 @@
+{
+  "name": "Soar",
+  "toggle": true,
+  "drain_per_second": 20,
+  "cooldown_ticks": 20,
+  "effects": [
+    {
+      "type": "pipican:flight"
+    }
+  ]
+}

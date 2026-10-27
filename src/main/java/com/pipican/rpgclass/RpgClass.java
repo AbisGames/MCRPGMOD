@@ -3,6 +3,7 @@ package com.pipican.rpgclass;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.pipican.ability.Ability;
 import com.pipican.core.PipicanRegistries;
 import com.pipican.effect.ClassEffect;
 import com.pipican.skill.TreeKind;
@@ -45,6 +46,7 @@ import net.minecraft.world.item.Items;
  * @param weakness         the class's special weakness
  * @param affinities       equipment rules: affinity tier per weapon / armor / trinket
  * @param trinketSlots     how many of each trinket slot this class has, e.g. {@code {"pipican:ring": 2}}
+ * @param abilities        active abilities the class always has (tree nodes can {@code grant} more)
  */
 public record RpgClass(
         Component name,
@@ -63,7 +65,8 @@ public record RpgClass(
         List<ClassEffect> specialPassives,
         Optional<Weakness> weakness,
         AffinityRules affinities,
-        Map<ResourceKey<TrinketSlotType>, Integer> trinketSlots) {
+        Map<ResourceKey<TrinketSlotType>, Integer> trinketSlots,
+        List<ResourceKey<Ability>> abilities) {
 
     public static final Codec<RpgClass> CODEC = RecordCodecBuilder.create(i -> i.group(
             ComponentSerialization.CODEC.fieldOf("name").forGetter(RpgClass::name),
@@ -80,12 +83,13 @@ public record RpgClass(
             ClassEffect.CODEC.listOf().optionalFieldOf("special_passives", List.of()).forGetter(RpgClass::specialPassives),
             Weakness.CODEC.optionalFieldOf("weakness").forGetter(RpgClass::weakness),
             AffinityRules.CODEC.optionalFieldOf("affinities", AffinityRules.NEUTRAL).forGetter(RpgClass::affinities),
-            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), Codec.intRange(0, 64)).optionalFieldOf("trinket_slots", Map.of()).forGetter(RpgClass::trinketSlots)
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), Codec.intRange(0, 64)).optionalFieldOf("trinket_slots", Map.of()).forGetter(RpgClass::trinketSlots),
+            ResourceKey.codec(PipicanRegistries.ABILITY).listOf().optionalFieldOf("abilities", List.of()).forGetter(RpgClass::abilities)
     ).apply(i, (name, description, icon, selectable, baseHealth, baseStats, specialStat, startingKit, trees,
-                progression, passives, specialPassives, weakness, affinities, trinketSlots) -> new RpgClass(
+                progression, passives, specialPassives, weakness, affinities, trinketSlots, abilities) -> new RpgClass(
                 name, description, icon, selectable, baseHealth, baseStats, specialStat, startingKit,
                 trees.skill(), trees.special(), trees.stat(),
-                progression, passives, specialPassives, weakness, affinities, trinketSlots)));
+                progression, passives, specialPassives, weakness, affinities, trinketSlots, abilities)));
 
     /** The three tree fields, grouped only because a codec takes at most 16 fields. Still flat in JSON. */
     private record Trees(Optional<TreeRef> skill, Optional<TreeRef> special, Optional<TreeRef> stat) {

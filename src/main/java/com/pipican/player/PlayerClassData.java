@@ -3,6 +3,7 @@ package com.pipican.player;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.pipican.ability.Ability;
 import com.pipican.core.PipicanRegistries;
 import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.RpgClass;
@@ -42,7 +43,9 @@ public final class PlayerClassData {
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), ItemStack.OPTIONAL_CODEC.listOf()).optionalFieldOf("trinkets", Map.of()).forGetter(d -> d.trinkets),
             Codec.DOUBLE.optionalFieldOf("resource", 0.0).forGetter(d -> d.resource),
             Codec.DOUBLE.optionalFieldOf("resource_max", 0.0).forGetter(d -> d.resourceMax),
-            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.SKILL), Codec.DOUBLE).optionalFieldOf("mastery", Map.of()).forGetter(d -> d.mastery)
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.SKILL), Codec.DOUBLE).optionalFieldOf("mastery", Map.of()).forGetter(d -> d.mastery),
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.LONG).optionalFieldOf("ability_cooldowns", Map.of()).forGetter(d -> d.abilityCooldowns),
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.LONG).optionalFieldOf("ability_active", Map.of()).forGetter(d -> d.abilityActive)
     ).apply(i, PlayerClassData::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerClassData> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(MAP_CODEC.codec());
@@ -60,17 +63,22 @@ public final class PlayerClassData {
     private double resourceMax;
     /** Mastery points per skill. Belongs to the player (survives class changes). Tiers are derived from it. */
     private final Map<ResourceKey<Skill>, Double> mastery;
+    /** Game time at which each ability is off cooldown again. */
+    private final Map<ResourceKey<Ability>, Long> abilityCooldowns;
+    /** Running ability states and the game time they end ({@link Long#MAX_VALUE} for toggles). */
+    private final Map<ResourceKey<Ability>, Long> abilityActive;
     /** Not saved: set when mastery changed but the client hasn't been told yet (synced in batches). */
     private boolean masteryDirty;
 
     public PlayerClassData() {
-        this(Optional.empty(), Map.of(), Map.of(), 0L, Map.of(), 0, 0, Map.of());
+        this(Optional.empty(), Map.of(), Map.of(), 0L, Map.of(), 0, 0, Map.of(), Map.of(), Map.of());
     }
 
     private PlayerClassData(Optional<ResourceKey<RpgClass>> activeClass, Map<ResourceKey<RpgClass>, ClassProgress> progress,
                             Map<ResourceKey<StatDefinition>, Integer> boughtStats, long statXp,
                             Map<ResourceKey<TrinketSlotType>, List<ItemStack>> trinkets, double resource, double resourceMax,
-                            Map<ResourceKey<Skill>, Double> mastery) {
+                            Map<ResourceKey<Skill>, Double> mastery, Map<ResourceKey<Ability>, Long> abilityCooldowns,
+                            Map<ResourceKey<Ability>, Long> abilityActive) {
         this.activeClass = activeClass;
         this.progress = new HashMap<>(progress);
         this.boughtStats = new HashMap<>(boughtStats);
@@ -80,6 +88,8 @@ public final class PlayerClassData {
         this.resource = resource;
         this.resourceMax = resourceMax;
         this.mastery = new HashMap<>(mastery);
+        this.abilityCooldowns = new HashMap<>(abilityCooldowns);
+        this.abilityActive = new HashMap<>(abilityActive);
     }
 
     public Optional<ResourceKey<RpgClass>> activeClass() {
@@ -159,6 +169,26 @@ public final class PlayerClassData {
 
     Map<ResourceKey<Skill>, Double> allMastery() {
         return mastery;
+    }
+
+    /** Game time the ability is ready again (0 if never used). */
+    public long abilityReadyAt(ResourceKey<Ability> ability) {
+        return abilityCooldowns.getOrDefault(ability, 0L);
+    }
+
+    /** Game time a running ability state ends, if it is running. */
+    public Optional<Long> abilityActiveUntil(ResourceKey<Ability> ability) {
+        return Optional.ofNullable(abilityActive.get(ability));
+    }
+
+    /** Mutable: ability -> ready-at game time. Mutate through AbilityService. */
+    public Map<ResourceKey<Ability>, Long> abilityCooldowns() {
+        return abilityCooldowns;
+    }
+
+    /** Mutable: running ability -> end game time. Mutate through AbilityService. */
+    public Map<ResourceKey<Ability>, Long> abilityActive() {
+        return abilityActive;
     }
 
     boolean masteryDirty() {

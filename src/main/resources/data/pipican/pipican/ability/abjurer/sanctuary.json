@@ -1,0 +1,27 @@
+{
+  "name": "Sanctuary",
+  "description": "mobs can't enter a 3-block bubble for 5s, 40 Ward",
+  "icon": "minecraft:end_crystal",
+  "cost": 40,
+  "cooldown_ticks": 800,
+  "actions": [
+    {
+      "type": "pipican:push",
+      "target": "hostiles",
+      "radius": 4,
+      "strength": 1.8
+    },
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 5,
+          "amplifier": 3
+        }
+      ],
+      "radius": 4
+    }
+  ]
+}

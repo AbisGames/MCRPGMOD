@@ -1,0 +1,35 @@
+{
+  "name": "Holy Radiance",
+  "description": "light aura: allies resist, undead slowed and weakened, 25 Smite",
+  "icon": "minecraft:beacon",
+  "cost": 25,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "allies",
+      "effects": [
+        {
+          "effect": "minecraft:resistance",
+          "seconds": 10
+        }
+      ],
+      "radius": 8
+    },
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 10
+        },
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 10
+        }
+      ],
+      "radius": 8
+    }
+  ]
+}

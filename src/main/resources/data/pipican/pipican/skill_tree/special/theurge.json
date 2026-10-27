@@ -72,16 +72,7 @@
     {
       "id": "holy_word",
       "name": "Holy Word",
-      "description": {
-        "text": "unlocks Holy Word ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Holy Word ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "pious_restoration"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:theurge/holy_word"
+      ]
     },
     {
       "id": "saint_of_the_new_god",

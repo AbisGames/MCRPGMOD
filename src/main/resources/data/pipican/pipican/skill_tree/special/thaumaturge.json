@@ -29,23 +29,17 @@
     {
       "id": "reroll",
       "name": "Reroll",
-      "description": {
-        "text": "unlocks Reroll ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Reroll ability",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "grants": [
+        "pipican:thaumaturge/reroll"
+      ]
     },
     {
       "id": "fluid_magic",

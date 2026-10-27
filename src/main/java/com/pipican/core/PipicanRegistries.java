@@ -1,6 +1,7 @@
 package com.pipican.core;
 
 import com.pipican.Pipican;
+import com.pipican.ability.Ability;
 import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.skill.SkillTreeFile;
@@ -20,6 +21,7 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
  *   data/&lt;namespace&gt;/pipican/skill_tree/&lt;name&gt;.json    -> {@link SkillTreeFile} (several files can form one tree)
  *   data/&lt;namespace&gt;/pipican/class/&lt;name&gt;.json         -> {@link RpgClass}
  *   data/&lt;namespace&gt;/pipican/skill/&lt;name&gt;.json         -> {@link Skill} (masterable skills)
+ *   data/&lt;namespace&gt;/pipican/ability/&lt;name&gt;.json       -> {@link Ability} (active abilities)
  * </pre>
  * Adding a new class therefore never needs Java code - only new JSON files. See docs/CLASS_SYSTEM.md.
  *
@@ -31,6 +33,7 @@ public final class PipicanRegistries {
     public static final ResourceKey<Registry<SkillTreeFile>> SKILL_TREE = key("skill_tree");
     public static final ResourceKey<Registry<Skill>> SKILL = key("skill");
     public static final ResourceKey<Registry<RpgClass>> CLASS = key("class");
+    public static final ResourceKey<Registry<Ability>> ABILITY = key("ability");
 
     private PipicanRegistries() {}
 
@@ -44,6 +47,7 @@ public final class PipicanRegistries {
         event.dataPackRegistry(TRINKET_SLOT, TrinketSlotType.CODEC, TrinketSlotType.CODEC);
         event.dataPackRegistry(SKILL_TREE, SkillTreeFile.CODEC, SkillTreeFile.CODEC);
         event.dataPackRegistry(SKILL, Skill.CODEC, Skill.CODEC);
+        event.dataPackRegistry(ABILITY, Ability.CODEC, Ability.CODEC);
         event.dataPackRegistry(CLASS, RpgClass.CODEC, RpgClass.CODEC);
     }
 }

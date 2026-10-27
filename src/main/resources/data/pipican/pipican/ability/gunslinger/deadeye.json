@@ -1,0 +1,20 @@
+{
+  "name": "Deadeye",
+  "description": "slow time for you for 2s, every shot crits, 30 Grit",
+  "icon": "minecraft:spyglass",
+  "cost": 30,
+  "cooldown_ticks": 400,
+  "duration_ticks": 60,
+  "effects": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.5,
+      "weapons": "#pipican:weapons/crossbows"
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.5,
+      "weapons": "#pipican:weapons/bows"
+    }
+  ]
+}

@@ -72,16 +72,7 @@
     {
       "id": "call_of_the_wild",
       "name": "Call of the Wild",
-      "description": {
-        "text": "unlocks Call of the Wild ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Call of the Wild ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "primal_beast"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:beastmaster/call_of_the_wild"
+      ]
     },
     {
       "id": "primal_power",

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.pipican.Pipican;
+import com.pipican.condition.type.AbilityActiveCondition;
 import com.pipican.condition.type.BiomeCondition;
 import com.pipican.condition.type.CompositeCondition;
 import com.pipican.condition.type.DimensionCondition;
@@ -46,6 +47,7 @@ public final class ConditionTypes {
     public static final Type NEARBY = register("nearby", NearbyCondition.CODEC);
     public static final Type EFFECT = register("effect", EffectCondition.CODEC);
     public static final Type STANDING_ON = register("standing_on", StandingOnCondition.CODEC);
+    public static final Type ABILITY_ACTIVE = register("ability_active", AbilityActiveCondition.CODEC);
     public static final Type NOT = register("not", NotCondition.CODEC);
     public static final Type ALL_OF = register("all_of", CompositeCondition.ALL_CODEC);
     public static final Type ANY_OF = register("any_of", CompositeCondition.ANY_CODEC);

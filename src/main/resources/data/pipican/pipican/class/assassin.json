@@ -121,5 +121,8 @@
     "pipican:amulet": 1,
     "pipican:ring": 2,
     "pipican:cloak": 1
-  }
+  },
+  "abilities": [
+    "pipican:assassin/disguise"
+  ]
 }

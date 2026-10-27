@@ -1,0 +1,9 @@
+{
+  "name": "Granted",
+  "actions": [
+    {
+      "type": "pipican:resource",
+      "amount": 1
+    }
+  ]
+}

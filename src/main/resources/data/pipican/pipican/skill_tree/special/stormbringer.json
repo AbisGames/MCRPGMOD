@@ -29,23 +29,17 @@
     {
       "id": "ride_the_lightning",
       "name": "Ride the Lightning",
-      "description": {
-        "text": "unlocks Lightning Dash ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Lightning Dash ability",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "grants": [
+        "pipican:stormbringer/lightning_dash"
+      ]
     },
     {
       "id": "chain_lightning",
@@ -72,16 +66,7 @@
     {
       "id": "call_the_storm",
       "name": "Call the Storm",
-      "description": {
-        "text": "unlocks Summon Storm ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Summon Storm ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +74,10 @@
         "ride_the_lightning"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:stormbringer/summon_storm"
+      ]
     },
     {
       "id": "stormlord",

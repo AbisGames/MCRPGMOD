@@ -156,5 +156,8 @@
     "pipican:amulet": 1,
     "pipican:ring": 1,
     "pipican:shoulderpad": 1
-  }
+  },
+  "abilities": [
+    "pipican:warrior/catch_your_breath"
+  ]
 }

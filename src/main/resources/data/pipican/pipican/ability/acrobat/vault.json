@@ -1,0 +1,14 @@
+{
+  "name": "Vault",
+  "description": "leap over a mob, 15 Flow",
+  "icon": "minecraft:rabbit_foot",
+  "cost": 15,
+  "cooldown_ticks": 80,
+  "actions": [
+    {
+      "type": "pipican:dash",
+      "strength": 0.8,
+      "up": 0.9
+    }
+  ]
+}

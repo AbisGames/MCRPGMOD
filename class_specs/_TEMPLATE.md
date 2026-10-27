@@ -172,4 +172,7 @@ they already own, starting from the class's start node.
 
 ## 12. Anything else
 
-<Ideas, active abilities you want later, balance notes, questions. Things that aren't possible yet go here too.>
+- Active abilities: **TODO Name** (what it does, cost in your resource), **TODO Name 2** (...)
+
+<Ideas, balance notes, questions. Things that aren't possible yet go here too. A tree node can unlock an
+ability: write "unlocks TODO Name ability" in its "What it gives".>

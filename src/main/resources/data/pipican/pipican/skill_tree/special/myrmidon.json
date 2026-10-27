@@ -50,16 +50,7 @@
     {
       "id": "shield_bash",
       "name": "Shield Bash",
-      "description": {
-        "text": "unlocks Shield Charge ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Shield Charge ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,10 @@
         "heavy_shield"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:myrmidon/shield_charge"
+      ]
     },
     {
       "id": "shield_mastery",

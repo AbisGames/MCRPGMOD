@@ -112,16 +112,7 @@
     {
       "id": "whirling_death",
       "name": "Whirling Death",
-      "description": {
-        "text": "unlocks Whirl ability; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Whirl ability; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -130,7 +121,18 @@
         "two_weapon_mastery"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:dervish/whirl"
+      ]
     }
   ]
 }

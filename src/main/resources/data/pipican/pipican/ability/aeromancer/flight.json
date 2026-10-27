@@ -1,0 +1,13 @@
+{
+  "name": "Flight",
+  "description": "creative-style flight that drains Breath; book level 10 talent",
+  "icon": "minecraft:elytra",
+  "cooldown_ticks": 100,
+  "toggle": true,
+  "drain_per_second": 4,
+  "effects": [
+    {
+      "type": "pipican:flight"
+    }
+  ]
+}

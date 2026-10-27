@@ -27,8 +27,10 @@
   },
   "starting_kit": [
     {
-      "id": "minecraft:iron_sword",
-      "count": 2
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:iron_sword"
     },
     {
       "id": "minecraft:leather_chestplate"

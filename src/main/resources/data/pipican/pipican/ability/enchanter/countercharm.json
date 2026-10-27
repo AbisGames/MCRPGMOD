@@ -1,0 +1,14 @@
+{
+  "name": "Countercharm",
+  "description": "cleanse charm/fear from players nearby, 20 Allure",
+  "icon": "minecraft:enchanted_book",
+  "cost": 20,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:cleanse",
+      "target": "allies",
+      "radius": 8
+    }
+  ]
+}
