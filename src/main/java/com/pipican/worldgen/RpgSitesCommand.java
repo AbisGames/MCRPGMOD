@@ -32,6 +32,9 @@ public final class RpgSitesCommand {
                             for(var landmark:CATALOG.all())
                                 if(landmark.id().startsWith(builder.getRemainingLowerCase()))
                                     builder.suggest(landmark.id());
+                            for(var site:SpecialLandmarkPlacementEvents.sites())
+                                if(site.id().startsWith(builder.getRemainingLowerCase()))
+                                    builder.suggest(site.id());
                             return builder.buildFuture();
                         })
                         .executes(context->locate(context.getSource(),
@@ -54,8 +57,17 @@ public final class RpgSitesCommand {
     private static int locate(net.minecraft.commands.CommandSourceStack source,String id) {
         var match=CATALOG.all().stream().filter(x->x.id().equals(id)).findFirst();
         if(match.isEmpty()) {
-            source.sendFailure(Component.literal("Unknown RPG settlement: "+id));
-            return 0;
+            var special=SpecialLandmarkPlacementEvents.sites().stream()
+                .filter(s->s.id().equals(id)).findFirst();
+            if(special.isEmpty()){
+                source.sendFailure(Component.literal("Unknown RPG site: "+id));
+                return 0;
+            }
+            var p=special.get();
+            String altitude=p.elevation()==-1?"surface":Integer.toString(p.elevation());
+            source.sendSuccess(()->Component.literal(
+                p.id()+" [special] X="+p.x()+" Y="+altitude+" Z="+p.z()),false);
+            return 1;
         }
         var p=match.get();
         source.sendSuccess(()->Component.literal(
@@ -77,8 +89,12 @@ public final class RpgSitesCommand {
             int total=p.tier().equals("capital")?63:1;
             return progress!=null&&progress.nextTile()>=total;
         }).count();
+        long unique=SpecialLandmarkPlacementEvents.sites().stream()
+            .filter(s->state.progress("special_"+s.id())!=null).count();
         source.sendSuccess(()->Component.literal(
-            "Built "+completed+" / 70 named RPG sites in this save."),false);
+            "Built "+completed+" / 70 named RPG settlements, and "+
+            unique+" / "+SpecialLandmarkPlacementEvents.sites().size()+
+            " unique sites and sky villages."),false);
         return (int)completed;
     }
 }
