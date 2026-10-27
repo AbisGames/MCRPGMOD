@@ -70,6 +70,11 @@
   "passives": [
     {
       "type": "pipican:bonus",
+      "kind": "durability",
+      "amount": -0.15
+    },
+    {
+      "type": "pipican:bonus",
       "kind": "reload_speed",
       "amount": 0.1
     },
@@ -82,6 +87,13 @@
           "percent": 1.0
         }
       ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "durability",
+      "amount": -0.005
     }
   ],
   "weakness": {

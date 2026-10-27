@@ -95,6 +95,27 @@
       ]
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "weapon_durability",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.005
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Devotion to one weapon means neglect of the rest.",

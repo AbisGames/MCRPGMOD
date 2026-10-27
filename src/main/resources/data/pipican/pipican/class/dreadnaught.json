@@ -77,6 +77,17 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "armor_durability",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.005
+        }
+      ]
     }
   ],
   "weakness": {

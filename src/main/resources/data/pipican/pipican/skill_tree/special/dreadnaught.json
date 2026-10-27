@@ -72,16 +72,7 @@
     {
       "id": "unbreakable",
       "name": "Unbreakable",
-      "description": {
-        "text": "armor never drops below 10% durability while worn",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "armor never drops below 10% durability while worn",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,14 @@
         "immovable"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "armor_floor",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "colossus",

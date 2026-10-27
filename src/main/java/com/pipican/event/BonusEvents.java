@@ -1,5 +1,6 @@
 package com.pipican.event;
 
+import net.minecraft.world.entity.EquipmentSlot;
 import java.util.List;
 import java.util.ArrayList;
 import net.minecraft.world.level.block.CropBlock;
@@ -45,6 +46,11 @@ public final class BonusEvents {
     private static final Map<UUID, Double> XP_REMAINDER = new ConcurrentHashMap<>();
     private static final Map<UUID, Double> USE_REMAINDER = new ConcurrentHashMap<>();
     private static final Map<UUID, Double> REGEN_REMAINDER = new ConcurrentHashMap<>();
+    /** Each player's worn and held stacks and their damage last tick, to see durability being used. */
+    private record Worn(ItemStack stack, int damage) {}
+    private static final EquipmentSlot[] GEAR = {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND, EquipmentSlot.HEAD, EquipmentSlot.CHEST,
+            EquipmentSlot.LEGS, EquipmentSlot.FEET};
+    private static final Map<UUID, Worn[]> WORN = new ConcurrentHashMap<>();
     private static final Map<UUID, Float> LAST_EXHAUSTION = new ConcurrentHashMap<>();
     /** Price changes made to traders that don't reset their own prices (wandering traders), undone on close. */
     private static final Map<UUID, Map<MerchantOffer, Integer>> TRADE_CHANGES = new ConcurrentHashMap<>();
@@ -95,6 +101,7 @@ public final class BonusEvents {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
+        durability(player);
         FoodData food = player.getFoodData();
         naturalRegen(player, food);
         float now = food.exhaustionLevel;
@@ -111,6 +118,60 @@ public final class BonusEvents {
         float adjusted = Math.max(0, now + (float) (gained * (mult - 1)));
         food.exhaustionLevel = adjusted;
         LAST_EXHAUSTION.put(player.getUUID(), adjusted);
+    }
+
+    /**
+     * Durability bonuses: when a worn or held item lost durability since last tick, each point lost is refunded with
+     * the chance the bonus saves (or, for faster wear, extra points are taken), like Unbreaking.
+     */
+    public static void durability(ServerPlayer player) {
+        ClassState state = ClassEffectApplier.state(player);
+        Worn[] last = WORN.computeIfAbsent(player.getUUID(), k -> new Worn[GEAR.length]);
+        boolean any = state.bonuses().containsKey(Kind.DURABILITY) || state.bonuses().containsKey(Kind.ARMOR_DURABILITY)
+                || state.bonuses().containsKey(Kind.WEAPON_DURABILITY);
+        for (int i = 0; i < GEAR.length; i++) {
+            ItemStack stack = player.getItemBySlot(GEAR[i]);
+            Worn before = last[i];
+            if (any && !player.getAbilities().instabuild && before != null && before.stack == stack && stack.isDamageableItem()
+                    && stack.getDamageValue() > before.damage) {
+                double mult = state.bonus(Kind.DURABILITY);
+                if (GEAR[i].getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                    mult *= state.bonus(Kind.ARMOR_DURABILITY);
+                } else if (GEAR[i] == EquipmentSlot.MAINHAND) {
+                    mult *= state.bonus(Kind.WEAPON_DURABILITY);
+                }
+                int lost = stack.getDamageValue() - before.damage;
+                int change = 0;
+                for (int p = 0; p < lost; p++) {
+                    if (mult < 1 && player.getRandom().nextDouble() >= mult) {
+                        change--;
+                    }
+                }
+                if (mult > 1) {
+                    double extra = lost * (mult - 1);
+                    change += (int) extra + (player.getRandom().nextDouble() < extra - (int) extra ? 1 : 0);
+                }
+                if (change != 0) {
+                    stack.setDamageValue(Math.clamp(stack.getDamageValue() + change, 0, stack.getMaxDamage() - 1));
+                }
+            }
+            // Unbreakable: worn armor keeps at least armor_floor of its durability.
+            double floor = state.chance(Kind.ARMOR_FLOOR);
+            if (floor > 0 && GEAR[i].getType() == EquipmentSlot.Type.HUMANOID_ARMOR && stack.isDamageableItem()) {
+                int most = (int) Math.floor(stack.getMaxDamage() * (1 - Math.min(floor, 1)));
+                if (stack.getDamageValue() > most) {
+                    stack.setDamageValue(most);
+                }
+            }
+            last[i] = new Worn(stack, stack.getDamageValue());
+        }
+        // Mend: the main-hand item repairs itself.
+        double repair = state.chance(Kind.WEAPON_REPAIR);
+        ItemStack hand = player.getMainHandItem();
+        if (repair > 0 && player.tickCount % 200 == 0 && hand.isDamageableItem() && hand.getDamageValue() > 0) {
+            hand.setDamageValue(Math.max(0, hand.getDamageValue() - (int) Math.max(1, Math.round(repair))));
+            last[0] = new Worn(hand, hand.getDamageValue());
+        }
     }
 
     /** Natural regen heals when the food tick timer reaches its threshold: move the timer faster or slower. */

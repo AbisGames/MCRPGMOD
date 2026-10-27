@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1393**, partly working: **19**, not yet: **837**
+- Bonus phrases: **2249**. Fully working: **1406**, partly working: **18**, not yet: **825**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,16 +13,16 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Other mechanics](#other-mechanics) | 299 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 185 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 174 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 131 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 114 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 112 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 71 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 29 |
 | [Immunities](#immunities) | 21 |
 | [Critical hits](#critical-hits) | 7 |
-| [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 5 |
+| [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 2 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 
 ## Other mechanics
@@ -410,10 +410,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Grindstone disenchanting gives +1% more XP per 2 Arcana
   - special tree: Archmage's Insight: every 3rd ability is free
 - **artificer**
-  - special stat per point: +0.5% chance that a durability point is not used
-  - passive: Gear you wear and hold loses durability 15% slower
-  - general tree: Artificer: +10% durability on everything you wear
-  - general tree: Overclock: your gear loses durability 25% faster
   - skill Smithing: +5% durability on crafted tools
   - skill Smithing: +5% durability on crafted tools
 - **avenger**
@@ -461,10 +457,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Omens: premonitions also work on arrows
 - **dreadnaught**
   - special passive: Weapon Resistance +0.2% per Plate
-  - special passive: Per 10 Plate, armor durability loss -5%
   - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
   - special tree: Weapon Resistance: +10% more weapon resistance
-  - special tree: Unbreakable: armor never drops below 10% durability while worn
 - **enchanter**
   - passive: Persistent Enchantment: enchanting at a table gives a 15% chance of an extra enchantment on the item
   - special passive: Per 10 Glamour, +3% extra-enchantment chance
@@ -552,7 +546,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: sigil armor: +1 armor per piece
   - special passive: Sigil weapon damage +0.5% per Runecraft
   - special passive: Per 20 Runecraft, +1 armor toughness from sigil armor
-  - general tree: Runes of Return: sigil weapons lose durability 30% slower
   - general tree: Runelord: sigil bonuses doubled
   - special tree: Mighty Sigils: Mighty Sigils triggers at 75% Rune Power
 - **savant**
@@ -572,13 +565,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **sharpshooter**
   - general tree: Long Shot: +10% damage per 16 blocks of distance
 - **spellbinder**
-  - passive: it loses durability 50% slower
   - passive: Your bound weapon counts as a magic focus: its hits deal 15% of their damage as magic damage (ignores armor)
   - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
-  - special passive: Bound weapon durability loss -1% per 2 Binding
   - special passive: +2% bound weapon critical damage
   - general tree: Soulblade: bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage
-  - special tree: Mend: bound weapon slowly repairs 1 durability every 10s
 - **technomancer**
   - special passive: Gadget bonus +0.5% per Circuitry
   - special passive: Per 20 Circuitry, +1 gadget charge stored
@@ -622,7 +612,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **weapon_master**
   - special stat per point: +0.6% damage with your favored weapon
   - special passive: Favored damage +0.6% per Mastery
-  - special passive: Per 10 Mastery, favored weapon loses durability 5% slower
   - weakness: -20% damage with every weapon type that isn't your favored one
   - general tree: Drilled: +5% favored damage
   - general tree: Guard: +1 armor with favored weapon
@@ -916,7 +905,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
 - **hydromancer**
   - special passive: Per 10 Tide, +1 Current regen in rain
-  - weakness: -20% damage and Current regen in the Nether and deserts
 - **illusionist**
   - general tree: Hall of Mirrors: decoy chance doubled, but -25% max health
 - **infiltrator**
@@ -1002,8 +990,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Spell Thief Mastery: Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health
 - **warrior**
   - special tree: Grit: Catch Your Breath can be used twice per rest; -10% max Stamina
-- **weapon_master**
-  - special tree: Living Legend: favored weapon can't break; -10% max health
 - **witch**
   - general tree: Coven: +10% max Witchery, Guidance range +2
   - general tree: Crone's Bargain: all potions you drink last 50% longer, but -15% max health
@@ -1347,7 +1333,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **diviner**
   - general tree: Read the Signs: loot chests show their contents' rarity colour
 - **fighter**
-  - general tree: Living Weapon: -30% magic damage and potion strength
+  - general tree: Living Weapon: +15% weapon damage and attack speed, but -30% magic damage and potion strength
 - **illusionist**
   - passive: Invisibility potions last twice as long on you
 - **inquisitor**
@@ -1436,16 +1422,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Per-weapon attack speed, reload, draw speed
 
-- **artificer**
-  - general tree: Overclock: +20% attack speed and reload speed
 - **conqueror**
   - general tree: Drillmaster: allies near you +2% attack speed
-- **fighter**
-  - general tree: Living Weapon: +15% weapon damage and attack speed
 - **gunslinger**
   - special stat per point: +0.5% firearm damage and +0.5% reload speed
-- **technomancer**
-  - passive: +10% crossbow damage and reload speed
 
 ## Resource bar that fills from use (only the drain works)
 

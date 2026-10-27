@@ -204,6 +204,21 @@ def _scaling(rest, ctx):
 
 def _one(clause, ctx):
     """Translate one clause. Returns list of effects or None if unsupported."""
+    out = _one_inner(clause, ctx)
+    if out is not None:
+        return out
+    # "+20% attack speed and reload speed": one number for two bonuses.
+    m = re.fullmatch(r'\s*([+-]\d+(?:\.\d+)?%?) ([a-z][a-z \'-]*?) and ([a-z][a-z \'-]*?)(\s+(?:per|for every)\b.*)?\s*', _clean(clause).lower())
+    if m and not re.search(r'\d', m.group(3)):
+        tail = m.group(4) or ''
+        a = _one_inner(f'{m.group(1)} {m.group(2)}{tail}', ctx)
+        b = _one_inner(f'{m.group(1)} {m.group(3)}{tail}', ctx)
+        if a and b:
+            return a + b
+    return None
+
+
+def _one_inner(clause, ctx):
     c = _clean(clause)
     low = c.lower()
 
@@ -454,6 +469,7 @@ def translate(text, ctx):
     if re.search(r'the weapon in hotbar slot 1 is your bound weapon', text, re.I):
         text = re.sub(lab + r'the weapon in hotbar slot 1 is your bound weapon:\s*', r'\1', text, flags=re.I)
         text = re.sub(r',\s*(?:and\s+)?it\b', '; it', text)
+        text = re.sub(r'; it loses durability', '; bound weapon loses durability', text)
     text = re.sub(r'\bwith it\b', 'with your bound weapon', text) if re.search(r'bound weapon', original, re.I) else text
     item = r'(bound weapon|sigil(?:-marked)? weapons?|staff)'
     text = re.sub(rf'^{item}:\s*([+-]\d+(?:\.\d+)?% (?:more )?(?:damage|critical damage))(.*)$', r'\2 with your \1\3', text, flags=re.I)

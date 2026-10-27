@@ -91,6 +91,11 @@
       "type": "pipican:bonus",
       "kind": "ability_cooldown",
       "amount": -0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "durability",
+      "amount": -1
     }
   ]
 }

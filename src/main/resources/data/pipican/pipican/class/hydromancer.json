@@ -92,17 +92,40 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Hydromancers dry out.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Hydromancers dry out.",
     "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:dimension",
+              "dimensions": [
+                "minecraft:the_nether"
+              ]
+            },
+            {
+              "type": "pipican:biome",
+              "biomes": [
+                "minecraft:desert"
+              ]
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.2,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      },
       {
         "type": "pipican:damage_taken",
         "damage_types": "#minecraft:is_fire",

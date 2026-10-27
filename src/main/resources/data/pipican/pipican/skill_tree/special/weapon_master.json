@@ -88,16 +88,7 @@
     {
       "id": "living_legend",
       "name": "Living Legend",
-      "description": {
-        "text": "favored weapon can't break; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "favored weapon can't break; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -106,7 +97,28 @@
         "masterstroke"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "weapon_durability",
+              "amount": -1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

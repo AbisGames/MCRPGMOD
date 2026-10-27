@@ -381,6 +381,14 @@ public final class ClassSystemTests {
         helper.assertTrue(books.test(player), "a book in the backpack counts");
         player.getInventory().setSelectedSlot(0);
 
+        // Durability -100%: wear is refunded.
+        ItemStack worn = new ItemStack(Items.IRON_SWORD);
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, worn);
+        com.pipican.event.BonusEvents.durability(player);
+        worn.setDamageValue(5);
+        com.pipican.event.BonusEvents.durability(player);
+        helper.assertTrue(worn.getDamageValue() == 0, "durability loss refunded: " + worn.getDamageValue());
+
         // Favored weapon: chosen on waking from the main hand.
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
         AbilityService.onWake(player);

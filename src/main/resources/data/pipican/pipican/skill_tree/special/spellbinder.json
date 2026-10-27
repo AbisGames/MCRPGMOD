@@ -32,23 +32,30 @@
     {
       "id": "mend",
       "name": "Mend",
-      "description": {
-        "text": "bound weapon slowly repairs 1 durability every 10s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bound weapon slowly repairs 1 durability every 10s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "weapon_repair",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "invest_power",

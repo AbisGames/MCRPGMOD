@@ -72,6 +72,20 @@
           "multiplier": 1.1
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "weapon_durability",
+          "amount": -0.5
+        }
+      ]
     }
   ],
   "special_passives": [
@@ -89,6 +103,26 @@
             {
               "source": "special_stat",
               "per": 0.006
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "weapon_durability",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.005
             }
           ]
         }

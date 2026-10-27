@@ -69,16 +69,7 @@
     {
       "id": "runesmith_runes_of_return",
       "name": "Runes of Return",
-      "description": {
-        "text": "sigil weapons lose durability 30% slower",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "sigil weapons lose durability 30% slower",
       "type": "notable",
       "x": -703,
       "y": -1199,
@@ -86,7 +77,23 @@
         "runesmith_deep_cuts"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "sigil_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "weapon_durability",
+              "amount": -0.3
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "runesmith_ward_rune",

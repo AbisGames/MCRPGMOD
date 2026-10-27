@@ -281,8 +281,77 @@ ITEM_CONDS = {'bound weapon': {'type': 'pipican:item_rule', 'rule': 'bound_weapo
               'staff': {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}}
 
 
+def _bonus(kind, value, per_stat=None):
+    e = {'type': 'pipican:bonus', 'kind': kind}
+    if per_stat:
+        e['amount'] = 0.0
+        e['scaling'] = [{'source': 'special_stat', 'per': round(value / per_stat, 6)}]
+    else:
+        e['amount'] = round(value, 6)
+    return e
+
+
+def durability(t, ctx):
+    """Durability lines -> pipican:bonus durability / armor_durability / weapon_durability."""
+    per = rf'(?: per (?:{N} )?([a-z]+)(?: points?)?)?'
+
+    def scaled(value, n, stat):
+        if not stat:
+            return value, None
+        if not _stat_source(stat, ctx):
+            return None, None
+        return value, float(n or 1)
+
+    m = re.fullmatch(rf'(?:your )?gear(?: you wear and hold)? loses durability {N}% (slower|faster)', t)
+    if m:
+        return [_bonus('durability', float(m.group(1)) / 100 * (-1 if m.group(2) == 'slower' else 1))]
+    m = re.fullmatch(rf'\+{N}% durability on everything you wear', t)
+    if m:
+        v = float(m.group(1))
+        return [_bonus('armor_durability', -v / (100 + v))]
+    m = re.fullmatch(rf'\+{N}% chance that a durability point is not used' + per, t)
+    if m:
+        v, d = scaled(-float(m.group(1)) / 100, m.group(2), m.group(3))
+        return None if v is None else [_bonus('durability', v, d)]
+    m = re.fullmatch(rf'armor durability loss -{N}%' + per, t)
+    if m:
+        v, d = scaled(-float(m.group(1)) / 100, m.group(2), m.group(3))
+        return None if v is None else [_bonus('armor_durability', v, d)]
+    items = dict(ITEM_CONDS, **{'favored weapon': {'type': 'pipican:holding_favored'}})
+    names = '|'.join(re.escape(k) for k in items)
+    m = re.fullmatch(rf'(?:your )?({names})s? (?:loses?|lose) durability {N}% (slower|faster) per (?:{N} )?([a-z]+)(?: points?)?', t)
+    if m:
+        v, d = scaled(float(m.group(2)) / 100 * (-1 if m.group(3) == 'slower' else 1), m.group(4), m.group(5))
+        if v is not None:
+            return [{'type': 'pipican:conditional', 'when': items[m.group(1)], 'effects': [_bonus('weapon_durability', v, d)]}]
+        return None
+    m = re.fullmatch(rf'(?:your )?({names}) slowly repairs {N} durability every 10s', t)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': items[m.group(1)], 'effects': [_bonus('weapon_repair', float(m.group(2)))]}]
+    m = re.fullmatch(rf'armor never drops below {N}% durability(?: while worn)?', t)
+    if m:
+        return [_bonus('armor_floor', float(m.group(1)) / 100)]
+    m = re.fullmatch(rf'(?:your )?({names})s? (?:loses?|lose) durability {N}% (slower|faster)', t) or \
+        re.fullmatch(rf'(?:your )?({names})s? durability loss ()()-{N}%' + per, t)
+    if m:
+        if m.group(3) is not None and m.group(3) != '':
+            v, d = -float(m.group(2)) / 100 * (1 if m.group(3) == 'slower' else -1), None
+        else:
+            v, d = scaled(-float(m.group(4)) / 100, m.group(5), m.group(6))
+            if v is None:
+                return None
+        return [{'type': 'pipican:conditional', 'when': items[m.group(1)], 'effects': [_bonus('weapon_durability', v, d)]}]
+    m = re.fullmatch(rf'(?:your )?({names}) (?:can\'t break|never breaks|can\'t be destroyed)', t)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': items[m.group(1)], 'effects': [_bonus('weapon_durability', -1.0)]}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    du = durability(t, ctx)
+    if du:
+        return du
     # "sigil weapon hits ignite for 2s", "bound weapon hits set mobs on fire for 2s while Charge is above half"
     m = re.fullmatch(rf'(bound weapon|sigil weapon|staff) hits (?:ignite|set mobs on fire)(?: mobs)? for {N}s(?: (while .+))?', t)
     if m:

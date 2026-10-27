@@ -4,19 +4,17 @@
     {
       "id": "artificer_start",
       "name": "Artificer",
-      "description": {
-        "text": "+10% durability on everything you wear",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% durability on everything you wear",
       "type": "start",
       "x": -375,
-      "y": -650
+      "y": -650,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "armor_durability",
+          "amount": -0.090909
+        }
+      ]
     },
     {
       "id": "artificer_rivets",
@@ -102,16 +100,7 @@
     {
       "id": "artificer_overclock",
       "name": "Overclock",
-      "description": {
-        "text": "+20% attack speed and reload speed, but your gear loses durability 25% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% attack speed and reload speed, but your gear loses durability 25% faster",
       "type": "keystone",
       "x": -480,
       "y": -831,
@@ -120,7 +109,25 @@
         "artificer_repeater"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "durability",
+          "amount": 0.25
+        }
+      ]
     }
   ]
 }
