@@ -56,11 +56,13 @@ for p in palettes:
             resource=DATA/f"worldgen/{folder}/{feature_name}.json"
             assert resource.is_file(),resource
             json.loads(resource.read_text())
-    for modifier in ("blooms","outcrops"):
-        res=DATA/f"neoforge/biome_modifier/{id}_{modifier}.json"
-        assert json.loads(res.read_text())["type"]=="neoforge:add_features"
+    res=DATA/f"neoforge/biome_modifier/{id}_outcrops.json"
+    assert json.loads(res.read_text())["type"]=="neoforge:add_features"
+    is_extra=id not in {m["id"] for m in realms["macro_regions"]}
     tree_modifier=DATA/f"neoforge/biome_modifier/{id}_trees.json"
-    assert tree_modifier.is_file()==(p["trees_per_chunk"]>0)
+    bloom_modifier=DATA/f"neoforge/biome_modifier/{id}_blooms.json"
+    assert tree_modifier.is_file()==(is_extra and p["trees_per_chunk"]>0)
+    assert bloom_modifier.is_file()==is_extra
 
 count=0
 for macro in realms["macro_regions"]:
@@ -68,6 +70,13 @@ for macro in realms["macro_regions"]:
         path=DATA/f"worldgen/biome/{macro['id']}/{child['id']}.json"
         assert path.is_file(),path
         json.loads(path.read_text())
+        detail=f"{macro['id']}/{child['id']}"
+        for kind in ("bloom",):
+            v=DATA/f"worldgen/placed_feature/subregion/{detail}_{kind}.json"
+            m=DATA/f"neoforge/biome_modifier/subregion/{detail}_{kind}.json"
+            assert v.is_file() and m.is_file(),detail
+            json.loads(v.read_text())
+            json.loads(m.read_text())
         count+=1
 assert count==120
 for p in palettes[22:]:
@@ -84,5 +93,6 @@ for castle in capitals:
     assert castle["subregion"] in {x["id"] for x in region_lookup[castle["region"]]["subregions"]}
     assert castle["placement"]=="fixed"
 
-print("PASS: 27 palettes; 108 custom block textures; 81 configured and 81 placed features;")
-print("      125 biome definitions; 22 protected capital subregions; geology rules.")
+print("PASS: 27 palettes; 108 custom block textures; 81 configured features;")
+print("      125 biome definitions; 120 separate undergrowth placement sets;")
+print("      22 protected capital subregions; geology rules.")
