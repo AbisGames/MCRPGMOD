@@ -999,11 +999,20 @@ def add_pool(pool_id,structure_id):
           'processors':{'processors':[]},'projection':'rigid'}}]})
 
 def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
-    savejson(Path('worldgen/structure')/(registry_id+'.json'),{
-      'type':'minecraft:jigsaw','biomes':biome_tag(region),
-      'step':'surface_structures','spawn_overrides':{},'terrain_adaptation':'beard_thin',
-      'size':1,'start_height':{'absolute':0},'project_start_to_heightmap':'WORLD_SURFACE_WG',
-      'max_distance_from_center':96,'start_pool':'pipican:'+pool_id,'use_expansion_hack':False})
+    # Region-specific vertical staging. Underwater/underground and aerial
+    # templates must NOT project to the overworld's ground heightmap.
+    special_y={'aetheris_expanse':319,'umbral_chasm':-20,
+               'verdant_depths':-12,'shimmering_reefs':43}
+    subterranean=region in ('umbral_chasm','verdant_depths','shimmering_reefs')
+    config={'type':'minecraft:jigsaw','biomes':biome_tag(region),
+      'step':'underground_structures' if subterranean else 'surface_structures',
+      'spawn_overrides':{},
+      'terrain_adaptation':'none' if region in special_y else 'beard_thin',
+      'size':1,'start_height':{'absolute':special_y.get(region,0)},
+      'max_distance_from_center':96,'start_pool':'pipican:'+pool_id,
+      'use_expansion_hack':False}
+    if region not in special_y:config['project_start_to_heightmap']='WORLD_SURFACE_WG'
+    savejson(Path('worldgen/structure')/(registry_id+'.json'),config)
     if spawn:
       SPAWN_BY_REGION.setdefault(region,[]).append(registry_id)
 
