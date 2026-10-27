@@ -170,14 +170,36 @@ def morvath_integrated():
     return b
 
 
+def verify_model(name,build):
+    # Validate actual generated block placements, not only a palette entry.
+    from collections import Counter
+    blocks=Counter(value.split('[',1)[0] for value in build.blocks.values())
+    if name=='aetheris_sky_citadel':
+        assert blocks['minecraft:end_portal_frame']==12, (
+            'Sky citadel needs exactly 12 End portal frames',blocks['minecraft:end_portal_frame'])
+        assert blocks['minecraft:end_portal']==0, 'End portal must start inactive'
+        assert all('eye=false' in state for state in build.blocks.values()
+                   if state.startswith('minecraft:end_portal_frame['))
+    if name in ('morvath_keep','morvath_portal_chamber'):
+        assert blocks['minecraft:obsidian']>=40, 'Missing Nether portal frame: '+name
+        assert blocks['minecraft:nether_portal']==0, 'Portal must start unlit: '+name
+    if name=='pillager_blackspire':
+        assert blocks['minecraft:target']>=4, 'Missing Blackspire target range'
+    if name=='umbral_ancient_city':
+        assert blocks['minecraft:sculk']>0, 'Missing Umbral sculk signature'
+
+
 def main():
     # The portal is part of the authored capital keep, not a second world
     # structure which could overwrite the city's incremental placement.
     keep=BASE/'structure/authored/landmarks/ashlands/morvath.nbt'
-    count,raw=dump_nbt(morvath_integrated(),keep)
+    keep_model=morvath_integrated()
+    verify_model('morvath_keep',keep_model)
+    count,raw=dump_nbt(keep_model,keep)
     print(f'{keep}: {count} blocks; {raw} uncompressed bytes')
     for name,build in [('pillager_blackspire',outpost()),('umbral_ancient_city',ancient()),
                        ('morvath_portal_chamber',portal()),('aetheris_sky_citadel',aether())]:
+        verify_model(name,build)
         path=BASE/'structure/special'/(name+'.nbt')
         count,raw=dump_nbt(build,path)
         print(f'{path}: {count} blocks; {raw} uncompressed bytes')
