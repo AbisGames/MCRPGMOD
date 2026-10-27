@@ -13,6 +13,8 @@ TRIGGERED = {'zeal': 'zeal', 'decoy': 'decoy'}
 LABELS = {}
 # class id -> aura names
 AURAS = {}
+# class id -> {label: plain damage bonuses its line defines} ("Treacherous Strike: +40% damage to mobs that weren't targeting you")
+STATIC = {}
 # class id -> every pipican:on reaction name its lines produced
 REACTION_NAMES = {}
 # class id -> {label: the pipican:on reaction its line defines} ("Guarded Casting: whenever you spend Ward, ...")
@@ -39,6 +41,8 @@ def learn(cid, lines, ctx):
         single = eff[0] if len(eff) == 1 else None
         if single and single.get('type') == 'pipican:conditional' and len(single.get('effects', [])) == 1:
             single = single['effects'][0]  # "when you take a hit below half health, 25% chance to blink"
+        if eff and not uns and all(e.get('type') in ('pipican:damage_dealt', 'pipican:damage_taken') and 'scaling' not in e for e in eff):
+            STATIC.setdefault(cid, {}).setdefault(m.group(1).strip().lower(), eff)
         if single and single.get('type') == 'pipican:on' and not uns:
             REACTIONS.setdefault(cid, {}).setdefault(m.group(1).strip().lower(), single)
         whens = [e.get('when') for e in eff if e.get('type') == 'pipican:conditional']
@@ -146,6 +150,36 @@ def glows(t, ctx):
     return [{'type': 'pipican:on', 'event': 'second', 'actions': actions}]
 
 
+def static_mods(t, ctx):
+    """"+15% more Treacherous Strike damage", "Per 10 Subtlety, +3% Treacherous Strike": another copy of a named damage bonus."""
+    statics = STATIC.get(ctx.get('class_id'), {})
+    if not statics:
+        return None
+    names = '|'.join(sorted((re.escape(n) for n in statics), key=len, reverse=True))
+    m = re.fullmatch(rf'\+{N}% (?:more )?({names})(?: damage| bonus)?(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t) or \
+        re.fullmatch(rf'({names})(?: damage| bonus)? \+{N}%(?: per (?:{N} )?([a-z]+)(?: points?)?)?()', t)
+    if not m:
+        return None
+    if m.re.pattern.startswith(r'\+'):
+        value, name, n, stat = float(m.group(1)), m.group(2), m.group(3), m.group(4)
+    else:
+        name, value, n, stat = m.group(1), float(m.group(2)), m.group(3), m.group(4)
+    src = _stat_source(stat, ctx) if stat else None
+    if stat and not src:
+        return None
+    out = []
+    for e in statics[name]:
+        c = {k: v for k, v in e.items() if k != 'multiplier'}
+        sign = 1 if e['multiplier'] >= 1 else -1
+        if src:
+            c['multiplier'] = 1.0
+            c['scaling'] = [{'source': src, 'per': round(sign * value / 100 / float(n or 1), 6)}]
+        else:
+            c['multiplier'] = round(1 + sign * value / 100, 6)
+        out.append(c)
+    return out
+
+
 def reaction_mods(t, ctx):
     """Upgrades to a named reaction -> pipican:reaction_mod ("Guarded Casting lasts 5s longer")."""
     import combat
@@ -168,10 +202,37 @@ def reaction_mods(t, ctx):
             return None
         return mod(name, **{field: 0.0, 'scaling': [{'source': src, 'per': round(value / float(n or 1), 6)}]})
 
+    # strength upgrades: "Guarded Casting armor +1 per 20 Warding", "+5% Trickery damage", "Escalating Violence +0.5% per Battle Arcana"
+    def base_value(r):
+        for a in r.get('actions', []):
+            if a.get('type') == 'pipican:empower' and a.get('multiplier', 1) != 1:
+                return (a['multiplier'] - 1) * 100
+            if a.get('type') == 'pipican:boost' and a.get('effects'):
+                e = a['effects'][0]
+                if e.get('type') == 'pipican:attribute':
+                    return e['amount'] * (100 if e.get('operation') else 1)
+                if e.get('type') == 'pipican:damage_dealt':
+                    return (e['multiplier'] - 1) * 100
+        return None
+    m = re.fullmatch(rf'({names})(?: damage| bonus| armor| speed)? \+{N}%?' + per, t) or \
+        re.fullmatch(rf'\+{N}%? (?:more )?({names})(?: damage| bonus)?' + per + '()', t)
+    if m:
+        if m.re.pattern.startswith('('):
+            name, value, n, stat = m.group(1), float(m.group(2)), m.group(3), m.group(4)
+        else:
+            name, value, n, stat = m.group(2), float(m.group(1)), m.group(3), m.group(4)
+        base = base_value(reactions[name])
+        if base and not (reactions[name].get('chance', 1.0) < 1 and 'damage' not in t):
+            return scaled(name, 'strength', round(value / base, 6), n, stat)
     # chance upgrades: "Stay the Hand +0.3% per Rapport", "+5% Stay the Hand", "Hasty Escape chance +5%",
     # "Stay the Hand 30%" (a new total), "Hasty Escape always triggers"
     m = re.fullmatch(rf'({names})(?: chance)? \+{N}%' + per, t)
     m2 = re.fullmatch(rf'\+{N}% ({names})(?: chance)?', t)
+    chancy = lambda nm: 'chance' in t or reactions[nm].get('chance', 1.0) < 1
+    if m and not chancy(m.group(1)):
+        m = None
+    if m2 and not chancy(m2.group(2)):
+        m2 = None
     if m or m2:
         name, value, n, stat = (m.group(1), m.group(2), m.group(3), m.group(4)) if m else (m2.group(2), m2.group(1), None, None)
         e = {'type': 'pipican:reaction_chance', 'name': name}
@@ -194,7 +255,7 @@ def reaction_mods(t, ctx):
     m = re.fullmatch(rf'(?:hostile )?mobs you cancel with ({names}) fight other mobs for {N}s', t)
     if m:
         return mod(m.group(1), actions=[{'type': 'pipican:control', 'target': 'victim', 'mode': 'ally', 'seconds': float(m.group(2))}])
-    m = re.fullmatch(rf'({names})(?: [a-z]+)? lasts \+?{N}s longer', t) or re.fullmatch(rf'({names}) lasts \+{N}s()', t)
+    m = re.fullmatch(rf'({names})(?: [a-z]+){{0,2}} lasts \+?{N}s longer', t) or re.fullmatch(rf'({names}) lasts \+{N}s()', t)
     if m:
         return mod(m.group(1), seconds=float(m.group(2)))
     m = re.fullmatch(rf'({names}) (?:radius|range) ([+-]{N})(?: blocks?)?' + per, t)
@@ -291,7 +352,7 @@ def segment(t, ctx):
     import bonus
     import combat
     import effects as fx
-    am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx)
+    am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx) or static_mods(t, ctx)
     if am:
         return am
     named = NAMED.get(ctx.get('class_id'), {})
@@ -407,6 +468,10 @@ def auras(t, ctx):
     m = re.fullmatch(rf'{words} reduction (doubled|tripled)', t)
     if m and _aura_word(m.group(1), cid) is not None:
         return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(1), cid), 'strength': 1.0 if m.group(2) == 'doubled' else 2.0}]
+    m = re.fullmatch(rf'{words} reduction \+{N}% per (?:{N} )?([a-z]+)(?: points?)?', t)
+    if m and _aura_word(m.group(1), cid) is not None and _stat_source(m.group(4), ctx):
+        return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(1), cid), 'effects': [{'type': 'pipican:damage_taken', 'multiplier': 1.0,
+                 'scaling': [{'source': 'special_stat', 'per': round(-float(m.group(2)) / 100 / float(m.group(3) or 1), 6)}]}]}]
     m = re.fullmatch(rf'\+{N}% {words} reduction', t)
     if m and _aura_word(m.group(2), cid) is not None:
         return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(2), cid),

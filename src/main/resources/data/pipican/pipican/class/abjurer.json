@@ -109,6 +109,17 @@
           "per": -0.002
         }
       ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "guarded casting",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.016667
+        }
+      ]
     }
   ],
   "weakness": {

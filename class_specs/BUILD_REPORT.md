@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1739**, partly working: **25**, not yet: **486**
+- Bonus phrases: **2250**. Fully working: **1746**, partly working: **25**, not yet: **479**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,7 +12,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 163 |
+| [Other mechanics](#other-mechanics) | 156 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 127 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 74 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 70 |
@@ -28,7 +28,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 ## Other mechanics
 
 - **abjurer**
-  - special passive: Guarded Casting armor +1 per 20 Warding
   - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
 - **acrobat**
   - special passive: Jump height +0.05 blocks per 10 Poise
@@ -41,8 +40,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Plague Bearer: your Wither is Wither II
 - **arcanist**
   - special tree: Reclaim Arcana: Reclaim refunds go to 150%
-- **assassin**
-  - special tree: Quick Reflexes: Quick Reflexes speed boost lasts 2s longer
 - **avenger**
   - special tree: Hound: Speed boost lasts 2s longer
 - **bard**
@@ -69,7 +66,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Slaughterhouse: Brutal Swing also heals 2 HP, but -3 armor
   - special tree: Bloodsoaked: full Bloodshed gives +15% damage
 - **defender**
-  - special passive: Defend reduction +0.2% per Bulwark
   - general tree: Taunt: mobs within 6 blocks prefer to target you
   - special tree: Hook: Containing Strike lasts 2s
   - special tree: Retributive Strike: retribution bonus +20%
@@ -140,11 +136,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
 - **infiltrator**
   - passive: Vanish: breaking line of sight with a mob makes it forget you after 2s
-  - special passive: Per 10 Subtlety, +3% Treacherous Strike
   - general tree: Ambush: first round of combat: +20% damage and speed
   - general tree: Forgettable: mobs forget you 1s faster
   - special tree: Quiet: no footstep sounds
-  - special tree: Treacherous Strike: +15% more Treacherous Strike damage
 - **inquisitor**
   - passive: Dreadful Threat: scrutinised mobs within 6 blocks get Weakness I
   - special passive: Scrutiny bonus +0.5% per point
@@ -191,9 +185,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Hotter: burning mobs take +1 damage per second
 - **ranger**
   - passive: you deal +15% damage to it and it glows for you
-- **rogue**
-  - special passive: +1% Trickery damage per Cunning point
-  - skill Roguery: +5% Trickery damage
 - **savant**
   - special passive: Focus bonus +0.5% per Breadth
   - special tree: Second Focus: focus bonus +10%

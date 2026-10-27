@@ -50,16 +50,7 @@
     {
       "id": "treacherous_strike",
       "name": "Treacherous Strike",
-      "description": {
-        "text": "+15% more Treacherous Strike damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% more Treacherous Strike damage",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,16 @@
         "disguise"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.15
+        }
+      ]
     },
     {
       "id": "vanish",

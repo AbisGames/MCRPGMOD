@@ -39,17 +39,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% Trickery damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% Trickery damage",
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "trickery",
+          "strength": 0.333333
+        }
+      ]
     },
     {
       "description": "+1 Cunning",

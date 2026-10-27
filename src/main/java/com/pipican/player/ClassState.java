@@ -127,13 +127,13 @@ public record ClassState(
     }
 
     /** {@code pipican:reaction_mod} totals for one reaction name. */
-    public record ReactionMod(double seconds, double radius, double heal, double damage, List<com.pipican.ability.AbilityAction> actions) {
-        public static final ReactionMod NONE = new ReactionMod(0, 0, 0, 0, List.of());
+    public record ReactionMod(double seconds, double radius, double heal, double damage, List<com.pipican.ability.AbilityAction> actions, double strength) {
+        public static final ReactionMod NONE = new ReactionMod(0, 0, 0, 0, List.of(), 0);
 
         public ReactionMod plus(ReactionMod o) {
             List<com.pipican.ability.AbilityAction> all = new java.util.ArrayList<>(actions);
             all.addAll(o.actions);
-            return new ReactionMod(seconds + o.seconds, radius + o.radius, heal + o.heal, damage + o.damage, List.copyOf(all));
+            return new ReactionMod(seconds + o.seconds, radius + o.radius, heal + o.heal, damage + o.damage, List.copyOf(all), strength + o.strength);
         }
     }
 

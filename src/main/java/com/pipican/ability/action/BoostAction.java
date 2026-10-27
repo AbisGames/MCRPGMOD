@@ -35,6 +35,8 @@ public record BoostAction(double seconds, List<ClassEffect> effects, int maxStac
 
     @Override
     public void run(AbilityContext ctx) {
-        Boosts.add(ctx.player(), this, effects, (int) Math.round(Math.max(0.05, seconds + ctx.mod().seconds()) * 20), maxStacks);
+        double k = 1 + ctx.mod().strength();
+        List<ClassEffect> given = k == 1 ? effects : effects.stream().<ClassEffect>map(e -> new com.pipican.effect.ScaledEffect(e, k, null)).toList();
+        Boosts.add(ctx.player(), this, given, (int) Math.round(Math.max(0.05, seconds + ctx.mod().seconds()) * 20), maxStacks);
     }
 }

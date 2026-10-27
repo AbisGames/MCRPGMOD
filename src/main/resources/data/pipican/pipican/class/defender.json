@@ -94,6 +94,22 @@
     {
       "type": "pipican:aura_mod",
       "name": "defend",
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:aura_mod",
+      "name": "defend",
       "scaling": [
         {
           "source": "special_stat",

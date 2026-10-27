@@ -556,6 +556,12 @@ public final class ClassSystemTests {
         helper.assertTrue(Reactions.fire(player, swinger, ItemStack.EMPTY, ReactionEffect.Event.ATTACKED_MELEE), "melee hit cancelled");
         swinger.discard();
 
+        // Reaction strength: a +2 armor boost upgraded by 50% gives +3.
+        double armorBefore = player.getAttributeValue(Attributes.ARMOR);
+        Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.LIGHTNING);
+        assertNear(helper, armorBefore + 3, player.getAttributeValue(Attributes.ARMOR), "boost +50% stronger");
+        Boosts.clear(player);
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

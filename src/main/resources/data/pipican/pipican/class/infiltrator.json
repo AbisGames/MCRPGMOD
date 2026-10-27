@@ -88,6 +88,19 @@
           "per": -0.004
         }
       ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
     }
   ],
   "weakness": {

@@ -67,9 +67,9 @@
       "required_level": 12,
       "effects": [
         {
-          "type": "pipican:reaction_chance",
+          "type": "pipican:reaction_mod",
           "name": "escalating violence",
-          "amount": 0.1
+          "strength": 0.5
         }
       ]
     },
