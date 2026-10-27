@@ -1,0 +1,1 @@
+{"type":"minecraft:block_blob","config":{"state":{"Name":"pipican:spice_coast_strata"},"can_place_on":{"type":"minecraft:matching_block_tag","tag":"minecraft:forest_rock_can_place_on"}}}
