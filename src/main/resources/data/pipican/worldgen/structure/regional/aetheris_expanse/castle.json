@@ -3,12 +3,11 @@
   "biomes": "pipican:aetheris_expanse",
   "step": "surface_structures",
   "spawn_overrides": {},
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "none",
   "size": 1,
   "start_height": {
-    "absolute": 0
+    "absolute": 319
   },
-  "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "max_distance_from_center": 96,
   "start_pool": "pipican:regional/aetheris_expanse/castle",
   "use_expansion_hack": false
