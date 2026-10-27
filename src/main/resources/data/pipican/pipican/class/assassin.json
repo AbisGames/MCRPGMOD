@@ -73,6 +73,13 @@
   },
   "passives": [
     {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.6
+    },
+    {
       "type": "pipican:on",
       "event": "hurt",
       "actions": [

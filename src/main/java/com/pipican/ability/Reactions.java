@@ -63,6 +63,9 @@ public final class Reactions {
                 if (subject != null && r.victims().isPresent() && !r.victims().get().contains(subject.getType().builtInRegistryHolder())) {
                     continue;
                 }
+                if (r.victim().isPresent() && !(subject instanceof net.minecraft.world.entity.LivingEntity living && r.victim().get().test(player, living))) {
+                    continue;
+                }
                 int uses = r.oncePerRest() ? 1 : r.usesPerRest();
                 if (uses > 0) {
                     uses += state.reactionUses(r);

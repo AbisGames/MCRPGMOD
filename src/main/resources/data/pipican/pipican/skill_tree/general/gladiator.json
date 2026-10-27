@@ -18,21 +18,19 @@
     {
       "id": "gladiator_sand_in_the_eyes",
       "name": "Sand in the Eyes",
-      "description": {
-        "text": "+5% Dirty Fighting chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% Dirty Fighting chance",
       "type": "small",
       "x": -1158,
       "y": 634,
       "links": [
         "gladiator_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "dirty fighting",
+          "amount": 0.05
+        }
       ]
     },
     {

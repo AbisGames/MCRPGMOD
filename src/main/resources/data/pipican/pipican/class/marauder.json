@@ -56,6 +56,25 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sprinting"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "knockback",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
       "type": "pipican:on",
       "event": "kill",
       "actions": [
@@ -97,6 +116,26 @@
       "effects": [
         {
           "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sprinting"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
           "multiplier": 1.0,
           "scaling": [
             {

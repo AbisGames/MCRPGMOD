@@ -97,6 +97,12 @@ public interface EffectContext {
     /** Changes to an effect the player gives others. */
     void addAppliedRule(Holder<MobEffect> effect, com.pipican.player.ClassState.AppliedRule rule);
 
+    /** {@code effect} lasts {@code multiplier} times as long on the player. */
+    void addEffectDuration(Holder<MobEffect> effect, double multiplier);
+
+    /** Some mobs never target the player. */
+    void addIgnoredBy(com.pipican.effect.type.IgnoredByEffect ignore);
+
     /**
      * Applies effects at {@code strength} (aura upgrades: % bonuses and attribute amounts are scaled), with
      * {@link Scaling} sources read from {@code source} (the aura owner) when it isn't null.

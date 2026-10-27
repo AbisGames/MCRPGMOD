@@ -23,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
 public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored,
-                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit) {
+                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit, boolean fromBehind) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -37,7 +37,8 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             RegistryCodecs.homogeneousList(Registries.MOB_EFFECT).optionalFieldOf("effects").forGetter(VictimState::effects),
             Codec.DOUBLE.optionalFieldOf("within").forGetter(VictimState::within),
             Codec.BOOL.optionalFieldOf("targeting_other", false).forGetter(VictimState::targetingOther),
-            Codec.BOOL.optionalFieldOf("upper_hit", false).forGetter(VictimState::upperHit)
+            Codec.BOOL.optionalFieldOf("upper_hit", false).forGetter(VictimState::upperHit),
+            Codec.BOOL.optionalFieldOf("from_behind", false).forGetter(VictimState::fromBehind)
     ).apply(i, VictimState::new));
 
     /**
@@ -53,6 +54,13 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             }
         }
         return test(attacker, victim);
+    }
+
+    /** {@code from_behind}: the attacker is more than 90 degrees away from where the victim faces. */
+    public static boolean behind(LivingEntity attacker, LivingEntity victim) {
+        net.minecraft.world.phys.Vec3 facing = net.minecraft.world.phys.Vec3.directionFromRotation(0, victim.getYHeadRot());
+        net.minecraft.world.phys.Vec3 to = attacker.position().subtract(victim.position()).multiply(1, 0, 1);
+        return to.lengthSqr() > 1.0e-4 && facing.dot(to.normalize()) < 0;
     }
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
@@ -78,6 +86,9 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (targetingOther && !(victim instanceof Mob mob && mob.getTarget() != null && mob.getTarget() != attacker)) {
+            return false;
+        }
+        if (fromBehind && !behind(attacker, victim)) {
             return false;
         }
         if (unarmored && victim.getArmorValue() > 0) {

@@ -323,7 +323,7 @@ public final class ClassEffectApplier {
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
                 new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
-                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules));
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy));
     }
 
     /**
@@ -441,6 +441,8 @@ public final class ClassEffectApplier {
         int summonCount;
         ClassState.PetMods petMods = ClassState.PetMods.NONE;
         final Map<Holder<MobEffect>, ClassState.AppliedRule> appliedRules = new java.util.HashMap<>();
+        final Map<Holder<MobEffect>, Double> effectDurations = new java.util.HashMap<>();
+        final List<com.pipican.effect.type.IgnoredByEffect> ignoredBy = new ArrayList<>();
 
         /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
         List<ClassState.Aura> finishAuras() {
@@ -521,6 +523,16 @@ public final class ClassEffectApplier {
         @Override
         public void addAppliedRule(Holder<MobEffect> effect, ClassState.AppliedRule rule) {
             appliedRules.merge(effect, rule, ClassState.AppliedRule::plus);
+        }
+
+        @Override
+        public void addEffectDuration(Holder<MobEffect> effect, double multiplier) {
+            effectDurations.merge(effect, multiplier, (a, b) -> a * b);
+        }
+
+        @Override
+        public void addIgnoredBy(com.pipican.effect.type.IgnoredByEffect ignore) {
+            ignoredBy.add(ignore);
         }
         double scrutinyLook = Double.MAX_VALUE;
         double scrutinySeconds;

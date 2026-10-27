@@ -375,6 +375,17 @@ public final class ClassEvents {
     public static void onChangeTarget(LivingChangeTargetEvent event) {
         if (!MobControl.mayTarget(event.getEntity(), event.getNewAboutToBeSetTarget())) {
             event.setCanceled(true);
+            return;
+        }
+        // pipican:ignored_by - "undead mobs ignore you unless you attack them".
+        if (event.getNewAboutToBeSetTarget() instanceof ServerPlayer player) {
+            for (var ignore : ClassEffectApplier.state(player).ignoredBy()) {
+                if (ignore.mobs().contains(event.getEntity().getType().builtInRegistryHolder())
+                        && !(ignore.unlessAttacked() && (event.getEntity().getLastHurtByMob() == player || player.getLastHurtMob() == event.getEntity()))) {
+                    event.setCanceled(true);
+                    return;
+                }
+            }
         }
     }
 

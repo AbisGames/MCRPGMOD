@@ -79,16 +79,7 @@
     {
       "id": "diplomat_envoy",
       "name": "Envoy",
-      "description": {
-        "text": "Hero of the Village lasts twice as long",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Hero of the Village lasts twice as long",
       "type": "notable",
       "x": -209,
       "y": 1375,
@@ -96,7 +87,14 @@
         "diplomat_calm_words"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:effect_duration",
+          "effects": "minecraft:hero_of_the_village",
+          "multiplier": 2
+        }
+      ]
     },
     {
       "id": "diplomat_peacemaker",

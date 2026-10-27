@@ -288,6 +288,13 @@ def outcome(text, target):
     m = re.fullmatch(r'(?:set|sets) (?:it|them|the mob|the target|the attacker|mobs) on fire(?: for (\d+)s)?|(?:catch|catches) fire|(?:ignite|ignites)(?: (?:it|them|the target|the attacker))?|be set on fire|be ignited', t)
     if m:
         return [{'type': 'pipican:damage', 'target': target, 'amount': 0, 'fire_seconds': float(m.group(1) or 4) if m.lastindex else 4.0}]
+    # "give Blindness or Slowness for 2s": one of them at random
+    m = re.fullmatch(r'(?:give|gives|inflict|inflicts|apply|applies)(?: (?:it|them|the mob|the target))? ' + eff + r' or ' + eff + r'(?: for (\d+(?:\.\d+)?)s)?', t)
+    if m:
+        secs = float(m.group(5) or 3)
+        return [{'type': 'pipican:random', 'choices': [
+            [{'type': 'pipican:effect', 'target': target, 'effects': [_effect_entry(m.group(1), secs, m.group(2))]}],
+            [{'type': 'pipican:effect', 'target': target, 'effects': [_effect_entry(m.group(3), secs, m.group(4))]}]]}]
     m = re.fullmatch(r'(?:are|is|get|gets) set on fire(?: for (\d+(?:\.\d+)?)s)?', t)
     if m:
         return [{'type': 'pipican:damage', 'target': target, 'amount': 0, 'fire_seconds': float(m.group(1) or 4)}]
@@ -416,6 +423,14 @@ def reaction(low):
         out = outcome(m.group(2), 'victim')
         if out:
             return [_reaction('hurt', float(m.group(1)) / 100 if m.group(1) else 1.0, out)]
+    m = re.fullmatch(r'(?:hitting|striking|attacking) (?:a mob|mobs|an enemy) from behind (.+)', t)
+    if m:
+        rest = re.sub(r'^(?:gives|inflicts|applies) (?:it|them) ', 'give ', m.group(1))
+        out = outcome(rest, 'victim')
+        if out:
+            r = _reaction('hit', 1.0, out)
+            r['victim'] = {'from_behind': True}
+            return [r]
     m = re.fullmatch(r'(?:hostile )?mobs you kill have (?:a )?(\d+(?:\.\d+)?)% chance to (.+)', t)
     if m:
         out = outcome(m.group(2), 'victim')

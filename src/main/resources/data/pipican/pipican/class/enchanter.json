@@ -74,6 +74,18 @@
         }
       ],
       "name": "pacify"
+    },
+    {
+      "type": "pipican:immune",
+      "effects": "minecraft:nausea"
+    },
+    {
+      "type": "pipican:effect_duration",
+      "effects": [
+        "minecraft:blindness",
+        "minecraft:darkness"
+      ],
+      "multiplier": 0.5
     }
   ],
   "weakness": {

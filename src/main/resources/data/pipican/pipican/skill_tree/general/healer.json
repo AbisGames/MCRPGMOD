@@ -77,16 +77,7 @@
     {
       "id": "healer_purify",
       "name": "Purify",
-      "description": {
-        "text": "players near you lose Poison twice as fast",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players near you lose Poison twice as fast",
       "type": "notable",
       "x": 1390,
       "y": -29,
@@ -94,7 +85,21 @@
         "healer_physician"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:effect_duration",
+              "effects": "minecraft:poison",
+              "multiplier": 0.5
+            }
+          ],
+          "include_self": false
+        }
+      ]
     },
     {
       "id": "healer_saint",

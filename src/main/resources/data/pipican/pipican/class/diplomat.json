@@ -60,6 +60,24 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#minecraft:piglin_loved"
+      },
+      "effects": [
+        {
+          "type": "pipican:ignored_by",
+          "mobs": [
+            "minecraft:piglin",
+            "minecraft:piglin_brute"
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "Diplomats win with words, not blades.",
     "effects": [

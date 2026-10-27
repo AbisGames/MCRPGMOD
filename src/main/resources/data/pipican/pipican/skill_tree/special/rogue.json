@@ -85,16 +85,7 @@
     {
       "id": "threats",
       "name": "Threats",
-      "description": {
-        "text": "hitting a mob from behind gives it Weakness I for 3s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "hitting a mob from behind gives it Weakness I for 3s",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -102,7 +93,28 @@
         "backstab"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:weakness",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ],
+          "victim": {
+            "from_behind": true
+          }
+        }
+      ]
     },
     {
       "id": "rogue_cunning",

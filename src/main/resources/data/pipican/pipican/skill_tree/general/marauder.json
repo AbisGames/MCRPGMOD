@@ -108,16 +108,7 @@
     {
       "id": "marauder_valhalla_bound",
       "name": "Valhalla Bound",
-      "description": {
-        "text": "+30% damage below half health, but you can't eat while in combat",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% damage below half health, but you can't eat while in combat",
       "type": "keystone",
       "x": -1672,
       "y": 693,
@@ -126,7 +117,27 @@
         "marauder_scarred"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:health",
+            "max": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_eating_in_combat",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

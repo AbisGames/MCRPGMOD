@@ -315,7 +315,8 @@ def mount_subject(t):
 SWORDS = '#pipican:weapons/swords'
 CHANCE_NAMES = {'ignite': 'ignite', 'fire': 'ignite', 'burn': 'ignite', 'poison': 'poison', 'wither': 'wither',
                 'blindness': 'blindness', 'blind': 'blindness', 'charm': 'pacify', 'lightning': 'lightning',
-                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal', 'curse': 'curse', 'decoy': 'decoy', 'seize chaos': 'seize chaos'}
+                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal', 'curse': 'curse', 'decoy': 'decoy', 'seize chaos': 'seize chaos',
+                'dirty fighting': 'dirty fighting'}
 
 
 def _bleed(**kw):
@@ -333,9 +334,69 @@ def _applied(effect, **kw):
     return [e]
 
 
+def _effect_ids(text):
+    """"poison, hunger and slowness" / "blindness/darkness" / "invisibility potions" -> effect ids, or None."""
+    import combat
+    out = []
+    for part in re.split(r',\s*(?:and\s+)?|\s+and\s+|/', re.sub(r'\s+(?:potions?|effects?)$', '', text.strip())):
+        part = re.sub(r'\s+(?:potions?|effects?)$', '', part.strip())
+        if part == 'hero of the village':
+            out.append('minecraft:hero_of_the_village')
+        elif part in combat.EFFECT_NAMES:
+            out.append('minecraft:' + combat.EFFECT_NAMES[part])
+        else:
+            return None
+    return out or None
+
+
+def _duration(ids, k):
+    return [{'type': 'pipican:effect_duration', 'effects': ids if len(ids) > 1 else ids[0], 'multiplier': round(k, 6)}]
+
+
 def misc(t, scal):
     """Projectile, armor-piercing, food and applied-effect lines."""
     eff = '|'.join(EFFECT_WORDS)
+    # effect durations on you
+    m = re.fullmatch(r'(.+?) lasts? (twice|three times|half) as long(?: on you)?', t)
+    if m and (ids := _effect_ids(m.group(1))):
+        return _duration(ids, {'twice': 2, 'three times': 3, 'half': 0.5}[m.group(2)])
+    m = re.fullmatch(rf'(.+?) wears? off {N}% (faster|slower)(?: on you)?', t)
+    if m and (ids := _effect_ids(m.group(1))):
+        k = 1 + float(m.group(2)) / 100
+        return _duration(ids, 1 / k if m.group(3) == 'faster' else k)
+    m = re.fullmatch(r'(?:you )?lose (.+?) (twice|three times) as fast', t)
+    if m and (ids := _effect_ids(m.group(1))):
+        return _duration(ids, 0.5 if m.group(2) == 'twice' else 1 / 3)
+    # mobs that leave you alone
+    import combat
+    m = re.fullmatch(r'(.+?) (?:mobs )?(?:ignore you|never attack you|never target you)( unless you attack them)?', t)
+    if m and m.group(1) not in ('mobs', 'hostile mobs') and (group := combat.mobs(m.group(1))) is not None:
+        e = {'type': 'pipican:ignored_by', 'mobs': group}
+        if m.group(2):
+            e['unless_attacked'] = True
+        return [e]
+    m = re.fullmatch(r'(.+?) never attack you while you hold gold', t)
+    if m and (group := combat.mobs(m.group(1))) is not None:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:holding', 'items': '#minecraft:piglin_loved'},
+                 'effects': [{'type': 'pipican:ignored_by', 'mobs': group}]}]
+    if re.fullmatch(r"(?:you )?can'?t eat while in combat", t):
+        return [_effect('no_eating_in_combat', 100, None)]
+    if re.fullmatch(r'anvils never break when you use them', t):
+        return [_effect('anvil_safe', 100, None)]
+    # sprint hits
+    m = re.fullmatch(rf'sprint-hits deal \+{N}% damage( and knock mobs back)?|sprint-hit bonus \+{N}%()', t)
+    if m:
+        v, s = scal(float(m.group(1) or m.group(3)))
+        d = {'type': 'pipican:damage_dealt', 'damage_types': '#pipican:is_melee', 'multiplier': round(1 + v / 100, 6)}
+        if s:
+            d['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        inner = [d]
+        if m.group(2):
+            inner.append(_effect('knockback', 100, None))
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sprinting'}, 'effects': inner}]
+    m = re.fullmatch(rf"your first hit on a mob that isn'?t targeting you deals \+{N}% damage", t)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'victim': {'not_targeting_you': True}, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
     if re.fullmatch(r'(?:you )?never trample farmland', t):
         return [_effect('no_trample', 100, None)]
     if re.fullmatch(r'rotten flesh, spider eyes and poisonous potatoes give no bad effects|food never gives you (?:bad|harmful) effects', t):

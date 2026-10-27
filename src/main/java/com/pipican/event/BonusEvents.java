@@ -90,6 +90,7 @@ public final class BonusEvents {
             ClassState state = ClassEffectApplier.state(player);
             mult *= state.bonus(Kind.POTION_DURATION)
                     * state.bonus(effect.getEffect().value().isBeneficial() ? Kind.BENEFICIAL_DURATION : Kind.HARMFUL_DURATION);
+            mult *= state.effectDurations().getOrDefault(effect.getEffect(), 1.0);
         }
         if (mult != 1) {
             effect.duration = Math.max(1, (int) Math.round(effect.duration * mult));
@@ -290,6 +291,36 @@ public final class BonusEvents {
             extra.add(new ItemEntity(drop.level(), drop.getX(), drop.getY(), drop.getZ(), drop.getItem().copy()));
         }
         event.getDrops().addAll(extra);
+    }
+
+    @SubscribeEvent
+    static void onUseStart(LivingEntityUseItemEvent.Start event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getItem().has(net.minecraft.core.component.DataComponents.FOOD)
+                && ClassEffectApplier.state(player).chance(Kind.NO_EATING_IN_COMBAT) > 0 && com.pipican.ability.Combat.inCombat(player)) {
+            event.setCanceled(true);
+        }
+    }
+
+    /** The anvil a player with {@code anvil_safe} is using, so its damage can be undone. */
+    private static final Map<UUID, net.minecraft.world.level.block.state.BlockState> ANVILS = new java.util.concurrent.ConcurrentHashMap<>();
+
+    @SubscribeEvent
+    static void onAnvilPre(net.neoforged.neoforge.event.entity.player.AnvilCraftEvent.Pre event) {
+        if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.ANVIL_SAFE) > 0) {
+            event.getMenu().access.execute((level, pos) -> ANVILS.put(player.getUUID(), level.getBlockState(pos)));
+        }
+    }
+
+    @SubscribeEvent
+    static void onAnvilPost(net.neoforged.neoforge.event.entity.player.AnvilCraftEvent.Post event) {
+        var before = ANVILS.remove(event.getEntity().getUUID());
+        if (before != null) {
+            event.getMenu().access.execute((level, pos) -> {
+                if (level.getBlockState(pos) != before) {
+                    level.setBlock(pos, before, 2);
+                }
+            });
+        }
     }
 
     @SubscribeEvent

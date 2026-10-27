@@ -494,6 +494,19 @@ def whole_line(text, ctx):
     t = text.strip().rstrip('.')
     t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)
     low = t.lower()
+    # "immune to Nausea, and Blindness/Darkness last half as long": the ", and" ends the immunity list.
+    m = re.fullmatch(r'(immune to [a-z ]+), and (.+)', low)
+    if m and not re.search(r'\bbut\b', low):
+        a, b = _rest(m.group(1), ctx), _rest(m.group(2), ctx)
+        if a and b:
+            return a + b
+    # Dirty Fighting: "15% chance on hit to give Blindness or Slowness for 2s" (named so "+5% Dirty Fighting chance" finds it)
+    m = re.fullmatch(r"dirty fighting: (.+)", text.strip().rstrip('.').lower())
+    if m:
+        r = combat.reaction(m.group(1))
+        if r and len(r) == 1 and r[0].get('type') == 'pipican:on':
+            r[0]['name'] = 'dirty fighting'
+            return r
     # "+1% damage and +1% max health for your tamed animals": the "and" belongs to the animals, not you.
     if ' and ' in low and not re.search(r'\bbut\b|\bper\b|;', low):
         pet = pets(low, (lambda v: (0.0, [('special_stat', v)])) if ctx.get('implicit_per_point') else (lambda v: (v, None)))
@@ -830,10 +843,10 @@ re.fullmatch(rf'if a hit takes a mob below {N}% health, it dies', t)
         return [{'type': 'pipican:damage_dealt', 'victim': {'charged_hit': True}, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
     # --- auras: "players within 10 blocks (including you) get +10% damage", "players within 4 blocks of you take 15% less damage"
     # "players within 6 blocks also immune to Poison", "players near you are also immune to Nausea"
-    m = re.fullmatch(rf'(?:other )?players (?:within {N} blocks(?: of you)?|near you) (?:are )?also (immune to .+)', t)
+    m = re.fullmatch(rf'(?:other )?players (?:within {N} blocks(?: of you)?|near you) (?:are )?(?:also )?(immune to .+|lose .+ (?:twice|three times) as fast)', t)
     if m:
-        import combat
-        eff = combat.immune(m.group(2))
+        import combat, bonus
+        eff = combat.immune(m.group(2)) or bonus.misc(m.group(2), lambda v: (v, None))
         if eff:
             a = {'type': 'pipican:aura', 'radius': float(m.group(1) or 8), 'effects': eff, 'include_self': False}
             label = LABELS.get(ctx.get('class_id'), {}).get(t)

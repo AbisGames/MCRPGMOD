@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1607**, partly working: **23**, not yet: **620**
+- Bonus phrases: **2250**. Fully working: **1621**, partly working: **25**, not yet: **604**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -14,12 +14,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 |---|---|
 | [Other mechanics](#other-mechanics) | 209 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 143 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 98 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 88 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 87 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 57 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 56 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 48 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 26 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 44 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 25 |
 | [Immunities](#immunities) | 15 |
 | [Critical hits](#critical-hits) | 7 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
@@ -517,9 +517,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Cyclone: wind charges pull light mobs in before pushing them out
 - **artificer**
   - special passive: +0.25% chance per Ingenuity point to get an extra output item when crafting arrows, rails or redstone components
-  - skill Smithing: anvils never break when you use them
 - **assassin**
-  - passive: your first hit on a mob that isn't targeting you deals +60% damage
   - passive: if that brings it below 20% health, it dies
 - **astromancer**
   - passive: Inner Radiance: you emit light (dynamic light level 12) while Starlight is above half
@@ -541,9 +539,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: while holding a weapon in both hands
   - general tree: Blade Dance: each hit gives +1% speed for 3s (stacks 10)
 - **diplomat**
-  - passive: Piglins never attack you while you hold gold
   - general tree: Unexpected Alliances: hostile mobs you cancel with Stay the Hand fight other mobs for 5s
-  - general tree: Envoy: Hero of the Village lasts twice as long
 - **diviner**
   - passive: Structures within 64 blocks are hinted in chat when you look at a compass
   - weakness: takes 15% more damage from the first hit of every fight
@@ -555,8 +551,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Challenge: the first mob you hit becomes your challenged foe for 30s; it deals 20% less damage to anyone but you
   - passive: Riposte: when your challenged foe attacks you and misses or is blocked, you counterattack instantly
   - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
-- **enchanter**
-  - passive: Enchantment Defense: immune to Nausea, and Blindness/Darkness last half as long
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
 - **executioner**
@@ -567,8 +561,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: -25% movement speed while swimming and takes 25% more freezing damage
   - general tree: Ore Sense: ores within 6 blocks glow while you sneak
   - special tree: Avatar of Earth: -20% movement speed in water and air
-- **gladiator**
-  - passive: Dirty Fighting: 15% chance on hit to give Blindness or Slowness for 2s
 - **gunslinger**
   - general tree: Showdown: +30% firearm damage, but you can't wear heavy armor without -50% accuracy
 - **healer**
@@ -586,9 +578,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **mage_knight**
   - general tree: Combat Casting: taking damage doesn't drain Warfire
 - **marauder**
-  - passive: Powerful Charge: sprint-hits deal +25% damage and knock mobs back
-  - special passive: Sprint-hit bonus +0.5% per Savagery
-  - general tree: Valhalla Bound: +30% damage below half health, but you can't eat while in combat
   - special tree: Trample: sprint-hits stun for 0.5s
   - special tree: Glorious Death: when you'd die, you keep fighting for 5s at 1 HP, then die
 - **miracle_worker**
@@ -608,7 +597,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: +0.2% chance per Cunning point to get one extra item when a mob drops loot
   - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
   - special tree: Subterfuge: mobs you hit while sneaking forget you 25% faster
-  - special tree: Threats: hitting a mob from behind gives it Weakness I for 3s
 - **savant**
   - passive: Tradition Focus: pick two elemental focus schools when you choose the class - Fire, Water, Air, Earth, Storm, Shadow, Light (sun/celestial) or Life. Damage and effects of those elements are +20% (Fire = burning/fire charges, Water = drowned/underwater/trident, Air = wind charges/fall, Earth = explosions/blocks, Storm = lightning, Shadow = darkness/wither, Light = undead/smite, Life = healing)
 - **scout**
@@ -860,7 +848,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.3% chance attacks against you hit an illusion instead
 - **necromancer**
   - special stat per point: +1% damage and health for undead you command
-  - passive: Undead mobs ignore you unless you attack them
   - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
 - **poisoner**
   - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
@@ -1016,16 +1003,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **enchanter**
   - special stat per point: +0.5% chance your hits charm a mob
 - **explorer**
-  - passive: Perseverance: Poison, Hunger and Slowness wear off 50% faster
   - passive: Driven: 10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead
   - special tree: Driven: Driven chance 20%
 - **fighter**
   - special passive: +1% Weapon Mastery chance per 4 Discipline
-- **gladiator**
-  - special passive: Dirty Fighting chance +0.3% per Showmanship
-  - general tree: Sand in the Eyes: +5% Dirty Fighting chance
-- **healer**
-  - general tree: Purify: players near you lose Poison twice as fast
 - **inquisitor**
   - general tree: Witch-Finder: +25% damage to scrutinised, but -15% to everything else
 - **mage_knight**
@@ -1086,8 +1067,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Read the Signs: loot chests show their contents' rarity colour
 - **fighter**
   - general tree: Living Weapon: +15% weapon damage and attack speed, but -30% magic damage and potion strength
-- **illusionist**
-  - passive: Invisibility potions last twice as long on you
 - **inquisitor**
   - general tree: Master Torturer: scrutinised mobs drop +1 loot
 - **magician**

@@ -81,6 +81,8 @@ public final class ClassEffectTypes {
     public static final Type SUMMON_MOD = register("summon_mod", SummonModEffect.CODEC);
     public static final Type PET_MOD = register("pet_mod", PetModEffect.CODEC);
     public static final Type APPLIED_EFFECT = register("applied_effect", AppliedEffectEffect.CODEC);
+    public static final Type EFFECT_DURATION = register("effect_duration", com.pipican.effect.type.EffectDurationEffect.CODEC);
+    public static final Type IGNORED_BY = register("ignored_by", com.pipican.effect.type.IgnoredByEffect.CODEC);
     public static final Type CLEAVE = register("cleave", CleaveEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 

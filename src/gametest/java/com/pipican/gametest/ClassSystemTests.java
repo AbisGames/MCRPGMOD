@@ -468,6 +468,28 @@ public final class ClassSystemTests {
         hitOne.discard();
         nearOne.discard();
 
+        // Effect durations: Luck lasts twice as long on you.
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.LUCK, 100));
+        helper.assertTrue(player.getEffect(MobEffects.LUCK).getDuration() == 200, "luck doubled: " + player.getEffect(MobEffects.LUCK).getDuration());
+
+        // Ignored by skeletons until you hurt one. (Mock players are never valid targets, so ask the event directly.)
+        var skeleton = helper.spawn(EntityType.SKELETON, new BlockPos(5, 2, 5));
+        var mobTarget = net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent.LivingTargetType.MOB_TARGET;
+        helper.assertTrue(net.neoforged.neoforge.common.CommonHooks.onLivingChangeTarget(skeleton, player, mobTarget).isCanceled(), "skeleton ignores you");
+        player.setLastHurtMob(skeleton);
+        helper.assertTrue(!net.neoforged.neoforge.common.CommonHooks.onLivingChangeTarget(skeleton, player, mobTarget).isCanceled(), "it fights back once attacked");
+        skeleton.discard();
+
+        // From-behind reactions: only when the victim faces away.
+        Zombie facing = helper.spawn(EntityType.ZOMBIE, player.blockPosition().offset(0, 0, 2));
+        facing.setYHeadRot(180); // facing north, toward the player
+        Reactions.fire(player, facing, ItemStack.EMPTY, ReactionEffect.Event.HIT);
+        helper.assertTrue(!facing.hasEffect(MobEffects.UNLUCK), "not from behind");
+        facing.setYHeadRot(0); // facing south, away from the player
+        Reactions.fire(player, facing, ItemStack.EMPTY, ReactionEffect.Event.HIT);
+        helper.assertTrue(facing.hasEffect(MobEffects.UNLUCK), "hit from behind");
+        facing.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);
@@ -530,7 +552,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false, false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers

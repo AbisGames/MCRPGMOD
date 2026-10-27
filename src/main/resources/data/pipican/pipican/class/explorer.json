@@ -94,6 +94,15 @@
       ]
     },
     {
+      "type": "pipican:effect_duration",
+      "effects": [
+        "minecraft:poison",
+        "minecraft:hunger",
+        "minecraft:slowness"
+      ],
+      "multiplier": 0.666667
+    },
+    {
       "type": "pipican:on",
       "event": "wake",
       "actions": [

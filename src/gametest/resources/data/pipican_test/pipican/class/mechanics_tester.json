@@ -4,6 +4,14 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    { "type": "pipican:effect_duration", "effects": "minecraft:luck", "multiplier": 2 },
+    { "type": "pipican:ignored_by", "mobs": "#minecraft:skeletons", "unless_attacked": true },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "victim": { "from_behind": true },
+      "actions": [ { "type": "pipican:effect", "target": "victim", "effects": [ { "effect": "minecraft:unluck", "seconds": 5 } ] } ]
+    },
     {
       "type": "pipican:on",
       "event": "kill",

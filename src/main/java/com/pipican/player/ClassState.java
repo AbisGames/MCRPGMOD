@@ -62,10 +62,12 @@ public record ClassState(
         SummonMods summonMods,
         Cleave cleave,
         PetMods petMods,
-        Map<Holder<MobEffect>, AppliedRule> appliedRules) {
+        Map<Holder<MobEffect>, AppliedRule> appliedRules,
+        Map<Holder<MobEffect>, Double> effectDurations,
+        List<com.pipican.effect.type.IgnoredByEffect> ignoredBy) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}

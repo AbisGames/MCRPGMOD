@@ -76,6 +76,11 @@
       "type": "pipican:bonus",
       "kind": "food_safe",
       "amount": 1.0
+    },
+    {
+      "type": "pipican:ignored_by",
+      "mobs": "#minecraft:undead",
+      "unless_attacked": true
     }
   ],
   "weakness": {

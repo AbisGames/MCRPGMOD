@@ -74,17 +74,14 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "anvils never break when you use them",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "anvils never break when you use them",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "anvil_safe",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

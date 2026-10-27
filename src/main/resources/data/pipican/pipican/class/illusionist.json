@@ -84,6 +84,11 @@
           "type": "pipican:shrug"
         }
       ]
+    },
+    {
+      "type": "pipican:effect_duration",
+      "effects": "minecraft:invisibility",
+      "multiplier": 2
     }
   ],
   "special_passives": [

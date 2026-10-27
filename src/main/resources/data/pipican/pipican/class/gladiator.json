@@ -69,6 +69,43 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.15,
+      "actions": [
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:blindness",
+                    "seconds": 2.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:slowness",
+                    "seconds": 2.0
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "name": "dirty fighting"
+    },
+    {
       "type": "pipican:damage_dealt",
       "victim": {
         "harmful_effect": true
@@ -87,6 +124,17 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "dirty fighting",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
         }
       ]
     },
