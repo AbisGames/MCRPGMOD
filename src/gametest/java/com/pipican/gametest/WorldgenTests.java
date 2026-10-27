@@ -99,6 +99,15 @@ public final class WorldgenTests {
                     "unexpected structure width for "+ids[i]);
             }
         }
+        for(String id:List.of("pillager_blackspire","umbral_ancient_city",
+                "morvath_portal_chamber","aetheris_sky_citadel")) {
+            var special=helper.getLevel().getStructureManager().get(
+                Pipican.id("special/"+id));
+            helper.assertTrue(special.isPresent(),"missing special landmark NBT: "+id);
+            if(special.isPresent())
+                helper.assertTrue(special.get().getSize().getX()>=64,
+                    "special landmark unexpectedly small: "+id);
+        }
         helper.succeed();
     }
 
