@@ -520,6 +520,51 @@ def misc(t, scal):
         return [_effect('no_trade', 100, None)]
     if re.fullmatch(r'(?:you are |you\'re )?immune to your own explosions', t):
         return [_effect('self_blast_immune', 100, None)]
+    import triggers as trg
+    m = re.fullmatch(rf'\+?{N}% chance (?:that )?a crafted redstone item is doubled', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        e = {'type': 'pipican:craft_bonus', 'items': trg.REDSTONE, 'chance': round(v / 100, 6)}
+        if sc:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in sc]
+        return [e]
+    m = re.fullmatch(rf'\+?{N}% chance(?: per ([a-z]+) point)? to get an extra output item when crafting arrows, rails or redstone components', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        e = {'type': 'pipican:craft_bonus', 'items': ['minecraft:arrow'] + trg.RAILS + trg.REDSTONE, 'chance': round(v / 100, 6)}
+        if m.group(2):
+            e['chance'] = 0.0
+            e['scaling'] = [{'source': 'special_stat', 'per': round(float(m.group(1)) / 100, 6)}]
+        elif sc:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in sc]
+        return [e]
+    if re.fullmatch(r'crafting tipped arrows gives double', t):
+        return [{'type': 'pipican:craft_bonus', 'items': 'minecraft:tipped_arrow', 'chance': 1.0}]
+    m = re.fullmatch(rf'potions you brew last {N}% longer', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        return [_effect('brewed_duration', v, sc)]
+    m = re.fullmatch(rf'\+{N}% duration of potions you brew and drink', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        return [_effect('brewed_duration', v, sc), _effect('drunk_potion_duration', v, sc)]
+    m = re.fullmatch(rf'eating berries(?:/| and | or )crops restores \+{N} hunger', t)
+    if m:
+        foods = ['minecraft:sweet_berries', 'minecraft:glow_berries', 'minecraft:carrot', 'minecraft:potato', 'minecraft:baked_potato',
+                 'minecraft:beetroot', 'minecraft:melon_slice']
+        return [{'type': 'pipican:on', 'event': 'eat', 'weapons': foods, 'actions': [{'type': 'pipican:feed', 'hunger': int(float(m.group(1)))}]}]
+    m = re.fullmatch(rf'crops grow {N}% faster near you', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        return [_effect('crop_growth', v, sc)]
+    m = re.fullmatch(rf'(?:scrutinised|scrutinized|marked|challenged) (?:mobs|targets|foes) drop \+{N} loot', t)
+    if m:
+        return [_effect('marked_loot', float(m.group(1)) * 100, None)]
+    if re.fullmatch(r"(?:your )?shields can'?t be disabled", t):
+        return [_effect('shield_disable', -100, None)]
+    m = re.fullmatch(rf'shields recover from axe-disable {N}% faster(?: and block 100% of melee damage from the front)?', t)
+    if m:
+        return [_effect('shield_disable', -float(m.group(1)), None)]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

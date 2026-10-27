@@ -37,21 +37,19 @@
     {
       "id": "poisoner_tipped_arrows",
       "name": "Tipped Arrows",
-      "description": {
-        "text": "crafting tipped arrows gives double",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "crafting tipped arrows gives double",
       "type": "small",
       "x": -780,
       "y": 1066,
       "links": [
         "poisoner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:craft_bonus",
+          "items": "minecraft:tipped_arrow",
+          "chance": 1.0
+        }
       ]
     },
     {

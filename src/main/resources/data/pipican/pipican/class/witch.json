@@ -84,9 +84,36 @@
       "type": "pipican:bonus",
       "kind": "witch_ward",
       "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "brewed_duration",
+      "amount": 0.2
     }
   ],
   "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "brewed_duration",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "drunk_potion_duration",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
     {
       "type": "pipican:aura_mod",
       "name": "guidance",

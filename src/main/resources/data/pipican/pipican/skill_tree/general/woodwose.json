@@ -92,16 +92,7 @@
     {
       "id": "woodwose_overgrowth",
       "name": "Overgrowth",
-      "description": {
-        "text": "crops grow 25% faster near you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "crops grow 25% faster near you",
       "type": "notable",
       "x": 1047,
       "y": 915,
@@ -109,7 +100,14 @@
         "woodwose_thorns"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "crop_growth",
+          "amount": 0.25
+        }
+      ]
     },
     {
       "id": "woodwose_ent",

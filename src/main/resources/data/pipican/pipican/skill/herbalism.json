@@ -52,17 +52,28 @@
       ]
     },
     {
-      "description": {
-        "text": "eating berries/crops restores +1 hunger",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "eating berries/crops restores +1 hunger",
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "eat",
+          "weapons": [
+            "minecraft:sweet_berries",
+            "minecraft:glow_berries",
+            "minecraft:carrot",
+            "minecraft:potato",
+            "minecraft:baked_potato",
+            "minecraft:beetroot",
+            "minecraft:melon_slice"
+          ],
+          "actions": [
+            {
+              "type": "pipican:feed",
+              "hunger": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "description": "+10% chance of double crop drops",

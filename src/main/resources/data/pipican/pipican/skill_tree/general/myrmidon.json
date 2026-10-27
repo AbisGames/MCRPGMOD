@@ -107,16 +107,7 @@
     {
       "id": "myrmidon_living_wall",
       "name": "Living Wall",
-      "description": {
-        "text": "shields can't be disabled, but -10% movement speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "shields can't be disabled, but -10% movement speed",
       "type": "keystone",
       "x": -1701,
       "y": -619,
@@ -125,7 +116,20 @@
         "myrmidon_counterbash"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "shield_disable",
+          "amount": -1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

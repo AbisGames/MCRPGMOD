@@ -80,6 +80,35 @@
       "amount": 0.1
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:craft_bonus",
+      "items": [
+        "minecraft:repeater",
+        "minecraft:comparator",
+        "minecraft:piston",
+        "minecraft:sticky_piston",
+        "minecraft:observer",
+        "minecraft:dropper",
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:redstone_torch",
+        "minecraft:lever",
+        "minecraft:daylight_detector",
+        "minecraft:target",
+        "minecraft:redstone_lamp",
+        "minecraft:note_block",
+        "minecraft:tnt"
+      ],
+      "chance": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Gadgets break in harsh environments.",

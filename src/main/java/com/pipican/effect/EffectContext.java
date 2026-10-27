@@ -100,6 +100,9 @@ public interface EffectContext {
     /** {@code effect} lasts {@code multiplier} times as long on the player. */
     void addEffectDuration(Holder<MobEffect> effect, double multiplier);
 
+    /** Crafting {@code items} may give a second batch. */
+    void addCraftBonus(HolderSet<Item> items, double chance);
+
     /** The resource bar absorbs damage ({@code absorb} > 0 switches it on). */
     void addResourceShield(double absorb, double efficiency);
 

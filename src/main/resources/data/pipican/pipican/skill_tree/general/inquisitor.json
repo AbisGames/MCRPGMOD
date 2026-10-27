@@ -78,16 +78,7 @@
     {
       "id": "inquisitor_master_torturer",
       "name": "Master Torturer",
-      "description": {
-        "text": "scrutinised mobs drop +1 loot",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "scrutinised mobs drop +1 loot",
       "type": "notable",
       "x": 1246,
       "y": -617,
@@ -95,7 +86,14 @@
         "inquisitor_skull_mask"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "marked_loot",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "inquisitor_witch_finder",

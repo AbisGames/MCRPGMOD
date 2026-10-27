@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1787**, partly working: **24**, not yet: **439**
+- Bonus phrases: **2250**. Fully working: **1799**, partly working: **24**, not yet: **427**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,15 +12,15 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 139 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 120 |
+| [Other mechanics](#other-mechanics) | 137 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 119 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 67 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 64 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 63 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 28 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 17 |
-| [Immunities](#immunities) | 12 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 27 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 11 |
+| [Immunities](#immunities) | 11 |
 | [Critical hits](#critical-hits) | 3 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 
@@ -152,10 +152,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Booming Voice: Tongues messages carry server-wide
 - **myrmidon**
   - special stat per point: +0.5% shield bash damage
-  - passive: Shield Block: shields recover from axe-disable 50% faster and block 100% of melee damage from the front
   - general tree: Boss Strike: shield bash +2 damage
   - general tree: Turtle: blocking also stops arrows from the sides
-  - special tree: Shield Mastery: +1 more armor with shield
   - special tree: Aspis: players within 3 blocks behind you are protected from projectiles; -10% damage
 - **paladin**
   - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
@@ -317,7 +315,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
   - general tree: Sweeping Staff: staff hits sweep 1 extra mob
   - general tree: Staff of the Archmagus: +25% staff damage, but you can't use any other weapon at better than clumsy
-  - special tree: Staff of Power: +1 more armor with staff
 - **necromancer**
   - passive: Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)
   - special passive: Per 20 Deathgrip, +1 servant
@@ -525,8 +522,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **aeromancer**
   - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
   - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **artificer**
-  - special passive: +0.25% chance per Ingenuity point to get an extra output item when crafting arrows, rails or redstone components
 - **assassin**
   - passive: if that brings it below 20% health, it dies
 - **astromancer**
@@ -771,8 +766,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **poisoner**
   - special stat per point: +1% poison damage and duration you apply
   - passive: brewing poison potions is 50% faster
-- **technomancer**
-  - special stat per point: +0.5% chance a crafted redstone item is doubled
 - **thaumaturge**
   - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
   - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
@@ -800,23 +793,14 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Read the Signs: loot chests show their contents' rarity colour
 - **fighter**
   - general tree: Living Weapon: +15% weapon damage and attack speed, but -30% magic damage and potion strength
-- **inquisitor**
-  - general tree: Master Torturer: scrutinised mobs drop +1 loot
 - **magician**
   - skill Alchemy: brewing is 10% faster
-- **poisoner**
-  - general tree: Tipped Arrows: crafting tipped arrows gives double
 - **sorcerer**
   - general tree: Far Reach: +15% projectile speed for thrown potions and fire charges
 - **witch**
-  - special stat per point: +1% duration of potions you brew and drink
-  - passive: Potions you brew last 20% longer
   - passive: Your Instant Health/Damage splash potions are 15% stronger
   - general tree: Familiar: tamed cats near you give +1 armor
   - special tree: Brewmistress: brewing takes 25% less time
-  - skill Herbalism: eating berries/crops restores +1 hunger
-- **woodwose**
-  - general tree: Overgrowth: crops grow 25% faster near you
 
 ## Immunities
 
@@ -828,8 +812,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Slippery: immune to being held (guardians' beam slow too)
 - **jack_of_all_trades**
   - weakness: you can never reach Tier V in any skill (max Tier IV)
-- **myrmidon**
-  - general tree: Living Wall: shields can't be disabled, but -10% movement speed
 - **ranger**
   - passive: Alertness: you can't be backstabbed (no bonus damage from mobs hitting you from behind) and hostile mobs within 8 blocks make a sound cue
 - **scout**

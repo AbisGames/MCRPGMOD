@@ -494,6 +494,7 @@ def _bulk(text):
         (lab + r'you deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage(?: yourself)?$', r'\1\2% damage'),
         (lab + r'you take ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\2 damage taken'),
         (lab + r'your own damage ([+-]\d+(?:\.\d+)?%)$', r'\1\2 damage'),
+        (lab + r'([+-]\d+(?:\.\d+)?) more (armou?r|armor toughness)\b', r'\1\2 \3'),
         (lab + r'(without [a-z ]+?),? you deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage$', r'\1\3 damage \2'),
         (lab + r'(?:you )?takes? (\d+(?:\.\d+)?)% (more|less) damage from weapons and projectiles$', r'\1takes \2% \3 melee and projectile damage'),
         (lab + r'\+(\d+(?:\.\d+)?)% projectile damage reduction$', r'\1takes \2% less projectile damage'),

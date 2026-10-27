@@ -326,7 +326,7 @@ public final class ClassEffectApplier {
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
                         c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods),
                 new ClassState.Shield(c.shieldAbsorb * Math.max(0, 1 + c.shieldEfficiency)),
-                new ClassState.DeadlyAim(c.aimOn, c.aimHold, c.aimDamage, c.aimCrit));
+                new ClassState.DeadlyAim(c.aimOn, c.aimHold, c.aimDamage, c.aimCrit), List.copyOf(c.craftBonuses));
     }
 
     /**
@@ -450,6 +450,7 @@ public final class ClassEffectApplier {
         final Map<ResourceKey<Ability>, ClassState.AbilityMod> abilityMods = new java.util.HashMap<>();
         final Map<String, ClassState.ReactionMod> reactionMods = new java.util.HashMap<>();
         double shieldAbsorb;
+        final List<ClassState.CraftBonus> craftBonuses = new ArrayList<>();
         double shieldEfficiency;
         boolean aimOn;
         double aimHold;
@@ -541,6 +542,11 @@ public final class ClassEffectApplier {
         @Override
         public void addEffectDuration(Holder<MobEffect> effect, double multiplier) {
             effectDurations.merge(effect, multiplier, (a, b) -> a * b);
+        }
+
+        @Override
+        public void addCraftBonus(HolderSet<Item> items, double chance) {
+            craftBonuses.add(new ClassState.CraftBonus(items, chance));
         }
 
         @Override

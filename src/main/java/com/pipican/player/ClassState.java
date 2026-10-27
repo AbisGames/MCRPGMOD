@@ -68,10 +68,11 @@ public record ClassState(
         Map<ResourceKey<com.pipican.ability.Ability>, AbilityMod> abilityMods,
         Map<String, ReactionMod> reactionMods,
         Shield shield,
-        DeadlyAim deadlyAim) {
+        DeadlyAim deadlyAim,
+        List<CraftBonus> craftBonuses) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of(), Shield.NONE, DeadlyAim.NONE);
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of(), Shield.NONE, DeadlyAim.NONE, List.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -127,6 +128,9 @@ public record ClassState(
     public record SummonMods(double damage, double health, double seconds, int count, double hearts) {
         public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0);
     }
+
+    /** A {@code pipican:craft_bonus}. */
+    public record CraftBonus(HolderSet<Item> items, double chance) {}
 
     /** {@code pipican:resource_shield} totals: damage absorbed per resource point (0 = off). */
     public record Shield(double perPoint) {

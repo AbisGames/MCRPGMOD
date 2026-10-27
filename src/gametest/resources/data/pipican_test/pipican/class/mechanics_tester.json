@@ -4,6 +4,7 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    { "type": "pipican:craft_bonus", "items": "minecraft:ladder", "chance": 1 },
     { "type": "pipican:on", "event": "interact", "victims": "minecraft:sheep", "weapons": "minecraft:shears",
       "actions": [ { "type": "pipican:effect", "target": "victim", "effects": [ { "effect": "minecraft:glowing", "seconds": 5 } ] } ] },
     { "type": "pipican:on", "event": "lightning", "name": "test bolt",

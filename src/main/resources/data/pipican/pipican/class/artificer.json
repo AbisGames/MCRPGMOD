@@ -101,6 +101,38 @@
       "amount": -0.005
     },
     {
+      "type": "pipican:craft_bonus",
+      "items": [
+        "minecraft:arrow",
+        "minecraft:rail",
+        "minecraft:powered_rail",
+        "minecraft:detector_rail",
+        "minecraft:activator_rail",
+        "minecraft:repeater",
+        "minecraft:comparator",
+        "minecraft:piston",
+        "minecraft:sticky_piston",
+        "minecraft:observer",
+        "minecraft:dropper",
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:redstone_torch",
+        "minecraft:lever",
+        "minecraft:daylight_detector",
+        "minecraft:target",
+        "minecraft:redstone_lamp",
+        "minecraft:note_block",
+        "minecraft:tnt"
+      ],
+      "chance": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.0025
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:wearing",

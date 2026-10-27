@@ -576,6 +576,12 @@ public final class ClassSystemTests {
         helper.assertTrue(sheep.hasEffect(MobEffects.GLOWING), "right-clicked with shears");
         sheep.discard();
 
+        // Craft bonus 100%: crafting ladders gives a second batch.
+        int ladders = player.getInventory().countItem(Items.LADDER);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.entity.player.PlayerEvent.ItemCraftedEvent(
+                player, new ItemStack(Items.LADDER, 3), new net.minecraft.world.SimpleContainer(1)));
+        helper.assertTrue(player.getInventory().countItem(Items.LADDER) == ladders + 3, "extra batch of ladders: " + player.getInventory().countItem(Items.LADDER));
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

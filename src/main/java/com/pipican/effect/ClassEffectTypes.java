@@ -87,6 +87,7 @@ public final class ClassEffectTypes {
     public static final Type REACTION_MOD = register("reaction_mod", com.pipican.effect.type.ReactionModEffect.CODEC);
     public static final Type RESOURCE_SHIELD = register("resource_shield", com.pipican.effect.type.ResourceShieldEffect.CODEC);
     public static final Type DEADLY_AIM = register("deadly_aim", com.pipican.effect.type.DeadlyAimEffect.CODEC);
+    public static final Type CRAFT_BONUS = register("craft_bonus", com.pipican.effect.type.CraftBonusEffect.CODEC);
     public static final Type CLEAVE = register("cleave", CleaveEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 

@@ -66,16 +66,7 @@
     {
       "id": "shield_mastery",
       "name": "Shield Mastery",
-      "description": {
-        "text": "+1 more armor with shield",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 more armor with shield",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -83,7 +74,23 @@
         "forceful_shield"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/shields"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "aspis",
