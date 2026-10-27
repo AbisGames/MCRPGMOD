@@ -3,7 +3,23 @@
   "description": "Trained by fighting in rain and thunderstorms.",
   "icon": "minecraft:lightning_rod",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "when": {
+      "type": "pipican:any_of",
+      "conditions": [
+        {
+          "type": "pipican:state",
+          "state": "raining"
+        },
+        {
+          "type": "pipican:state",
+          "state": "thundering"
+        }
+      ]
+    }
   },
   "points_to": "special",
   "classes": [

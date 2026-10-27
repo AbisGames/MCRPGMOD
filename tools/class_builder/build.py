@@ -640,7 +640,7 @@ def main(spec_dir, res_dir, report_path):
     # --- skills
     for key, (owner, s) in sorted(skill_defs.items()):
         ctx = {'special_name': owner['special']['name'], 'special_id': f'{NS}:{owner["id"]}_{slug(owner["special"]["name"])}',
-               'resource_name': owner['resource']['name'] if owner['resource'] else None}
+               'resource_name': owner['resource']['name'] if owner['resource'] else None, 'class_id': owner['id']}
         mapped = triggers.map_text(s['trigger'], ctx)
         trig, exact = mapped if mapped else map_trigger(s['trigger'])
         if mapped and not exact:

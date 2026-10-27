@@ -1,11 +1,26 @@
 {
   "name": "Swimming",
   "description": "Trained by swimming distance and fighting underwater.",
-  "icon": "minecraft:feather",
+  "icon": "minecraft:heart_of_the_sea",
   "trigger": {
-    "type": "pipican:move",
-    "mode": "swim",
-    "per_blocks": 10
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:move",
+        "mode": "swim",
+        "per_blocks": 10
+      },
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:melee_hit"
+        },
+        "when": {
+          "type": "pipican:state",
+          "state": "underwater"
+        }
+      }
+    ]
   },
   "thresholds": [
     50,

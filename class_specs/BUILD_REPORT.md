@@ -18,7 +18,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 124 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 75 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 75 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 61 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 56 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 30 |
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 7 |
@@ -1389,7 +1389,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Drill: "killing mobs with 3 or more different weapon types in the same day" -> pipican:kill
 - **geomancer**
   - Stoneheart: "absorbing damage with Earthen Defense" -> pipican:hurt_wearing #pipican:armor/any
-  - Mining: "mining ores and stone" -> pipican:kill
 - **gunslinger**
   - Gunplay: "hitting mobs with firearms" -> pipican:ranged_hit #pipican:weapons/crossbows
   - Gunsmithing: "modifying and repairing firearms" -> pipican:kill
@@ -1397,8 +1396,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Lifebinding: "healing other players" -> pipican:kill
 - **hexer**
   - Maledictions: "cursing mobs with Evil Eye" -> pipican:melee_hit
-- **hydromancer**
-  - Swimming: "swimming distance and fighting underwater" -> pipican:move
 - **infiltrator**
   - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
 - **inquisitor**
@@ -1438,12 +1435,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:kill
 - **spellbinder**
   - Weaponbond: "killing mobs with your bound weapon" -> pipican:kill
-- **stormbringer**
-  - Stormcalling: "fighting in rain and thunderstorms" -> pipican:melee_hit
 - **templar**
   - Warding the Shrine: "killing mobs inside your temple" -> pipican:kill
-- **tenebrist**
-  - Darkweaving: "killing mobs in light level 7 or lower" -> pipican:kill
 - **thaumaturge**
   - Wild Surges: "triggering Seize Chaos" -> pipican:kill
 - **theurge**
@@ -1458,8 +1451,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Devotion: "killing mobs with your favored weapon" -> pipican:kill
 - **witch**
   - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
-- **woodwose**
-  - Wildwood: "planting trees and fighting in forests" -> pipican:did
 - **zealot**
   - Self-Denial: "surviving hits with Zeal" -> pipican:hurt_wearing #pipican:armor/any
 

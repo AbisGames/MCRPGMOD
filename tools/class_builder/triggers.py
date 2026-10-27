@@ -28,6 +28,8 @@ SIMPLE = [
     (r'trading(?: with villagers(?:, wandering traders and piglins)?)?', lambda m: did('trade')),
     (r'taming(?: animals)?', lambda m: did('tame')),
     (r'breeding(?: animals)?', lambda m: did('breed')),
+    (r'mining ores and stone', lambda m: {'type': 'pipican:any', 'triggers': [did('mine', blocks='#c:ores'),
+                                                                              did('mine', blocks='#minecraft:base_stone_overworld')]}),
     (r'mining ores', lambda m: did('mine', blocks='#c:ores')),
     (r'mining stone', lambda m: did('mine', blocks='#minecraft:base_stone_overworld')),
     (r'harvesting fully grown crops(?:, berries, flowers and mushrooms)?|harvesting crops', lambda m: did('harvest')),
@@ -65,9 +67,10 @@ def _qualified(base, rest, ctx):
     """"killing <mobs...> <while ...>" -> filtered trigger, or None."""
     rest = rest.strip()
     when = None
-    m = re.search(r'\s*\b(while|when|in|at|outdoors|underground|during)\b.*$', rest)
-    if m and not re.match(r'(?:mobs )?(?:in|at)\b', rest):
-        when = cond.parse(m.group(0), ctx)
+    m = re.search(r'(?:^|\s+)\b(while|when|in|at|outdoors|underground|underwater|during)\b.*$', rest)
+    if m:
+        tail = m.group(0).strip()
+        when = _ability_active(tail, ctx) or cond.parse(tail, ctx)
         if when is None:
             return None
         rest = rest[:m.start()].strip()
@@ -84,8 +87,30 @@ def _qualified(base, rest, ctx):
     return filtered(base, when, victims, victim)
 
 
+def _ability_id(name, ctx):
+    import abilities as ab
+    cid = ctx.get('class_id')
+    for (owner, aname) in ab.A:
+        if owner == cid and aname.lower() == name.strip().lower():
+            return f'pipican:{cid}/' + re.sub(r'[^a-z0-9]+', '_', aname.lower().replace("'", '')).strip('_')
+    return None
+
+
+def _ability_active(text, ctx):
+    """"while Stand Guard is active", "in Battle Stance", "while Berserk" -> ability_active, if the class has it."""
+    m = re.fullmatch(r'(?:while|when|in) (?:your )?(.+?)(?: is active| is on)?', text.strip())
+    if not m:
+        return None
+    aid = _ability_id(m.group(1), ctx)
+    return {'type': 'pipican:ability_active', 'ability': aid} if aid else None
+
+
 def _part(t, ctx):
     t = t.strip()
+    # "landing Divine Smite hits", "triggering Seize Chaos", "killing mobs with Execute", "using Optimization"
+    m = re.fullmatch(r'(?:using|landing|triggering|casting|cursing mobs with|stealing effects with|killing mobs with|healing (?:others )?with) (.+?)(?: hits| shots)?', t)
+    if m and _ability_id(m.group(1), ctx):
+        return {'type': 'pipican:ability', 'ability': _ability_id(m.group(1), ctx)}
     for pat, build in SIMPLE:
         m = re.fullmatch(pat, t)
         if m:

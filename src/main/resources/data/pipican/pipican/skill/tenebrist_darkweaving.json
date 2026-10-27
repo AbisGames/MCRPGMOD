@@ -3,7 +3,14 @@
   "description": "Trained by killing mobs in light level 7 or lower.",
   "icon": "minecraft:black_dye",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:light",
+      "max": 8
+    }
   },
   "points_to": "special",
   "classes": [

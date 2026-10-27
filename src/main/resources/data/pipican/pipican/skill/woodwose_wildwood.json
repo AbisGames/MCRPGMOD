@@ -3,9 +3,24 @@
   "description": "Trained by planting trees and fighting in forests.",
   "icon": "minecraft:oak_leaves",
   "trigger": {
-    "type": "pipican:did",
-    "action": "plant",
-    "blocks": "#minecraft:saplings"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "plant",
+        "blocks": "#minecraft:saplings"
+      },
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:melee_hit"
+        },
+        "when": {
+          "type": "pipican:biome",
+          "biomes": "#minecraft:is_forest"
+        }
+      }
+    ]
   },
   "points_to": "special",
   "classes": [
