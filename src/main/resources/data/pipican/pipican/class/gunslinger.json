@@ -94,6 +94,17 @@
           "per": 0.005
         }
       ]
+    },
+    {
+      "type": "pipican:critical",
+      "weapons": "#pipican:weapons/crossbows",
+      "chance": 0.0,
+      "chance_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
     }
   ],
   "weakness": {

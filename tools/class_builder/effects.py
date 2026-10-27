@@ -493,6 +493,7 @@ def _bulk(text):
         (lab + r'arrows shot at you are (\d+(?:\.\d+)?)% likely to be blown aside$', r'\1+\2% arrow-deflect chance'),
         (lab + r'you deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage(?: yourself)?$', r'\1\2% damage'),
         (lab + r'you take ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\2 damage taken'),
+        (lab + r'your own damage ([+-]\d+(?:\.\d+)?%)$', r'\1\2 damage'),
         (lab + r'(without [a-z ]+?),? you deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage$', r'\1\3 damage \2'),
         (lab + r'(?:you )?takes? (\d+(?:\.\d+)?)% (more|less) damage from weapons and projectiles$', r'\1takes \2% \3 melee and projectile damage'),
         (lab + r'\+(\d+(?:\.\d+)?)% projectile damage reduction$', r'\1takes \2% less projectile damage'),
@@ -657,7 +658,7 @@ def _translate_line(text, ctx):
                 return [], [original.strip()]
             return [{'type': 'pipican:conditional', 'when': when, 'effects': inner}], []
     # "+1 armor while standing on stone per 10 Bedrock" / "... piece, per 20 Ingenuity": scaling goes before the condition.
-    m = re.match(r'^(.+?)\s+((?:while|when|in|on|at)\s.+?),?\s+(per \d+ [A-Za-z][\w\' -]*?(?: points?)?)$', text.strip())
+    m = re.match(r'^(.+?)\s+((?:while|when|in|on|at|with)\s.+?),?\s+(per \d+ [A-Za-z][\w\' -]*?(?: points?)?)$', text.strip())
     if m and ';' not in text and not re.search(r'\bbut\b', text):
         text = f'{m.group(1)} {m.group(3)} {m.group(2)}'
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.

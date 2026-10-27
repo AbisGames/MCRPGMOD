@@ -77,16 +77,7 @@
     {
       "id": "hold_formation",
       "name": "Hold Formation",
-      "description": {
-        "text": "allies near you +10% knockback resistance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "allies near you +10% knockback resistance",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -94,7 +85,21 @@
         "forward"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 0.1
+            }
+          ],
+          "include_self": false
+        }
+      ]
     },
     {
       "id": "warlord",

@@ -86,6 +86,28 @@
       ]
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:weapons/shields"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "The shield is a myrmidon's whole style.",
     "effects": [

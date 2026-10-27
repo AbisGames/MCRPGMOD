@@ -75,6 +75,11 @@
       "name": "destruction released"
     },
     {
+      "type": "pipican:bonus",
+      "kind": "self_blast_immune",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#minecraft:is_explosion",
       "multiplier": 0.5

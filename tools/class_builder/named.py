@@ -429,6 +429,36 @@ def segment(t, ctx):
             extra.append(c)
         if extra:
             return [{'type': 'pipican:conditional', 'when': when, 'effects': extra}]
+    # "+1% Weapon Mastery chance per 4 Discipline", "Weapon Mastery chance +15%": Weapon Mastery is a crit chance.
+    m = re.fullmatch(rf'\+{N}% weapon mastery chance(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t) or \
+        re.fullmatch(rf'weapon mastery chance \+{N}%(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t)
+    if m:
+        e = {'type': 'pipican:critical', 'chance': round(float(m.group(1)) / 100, 6)}
+        if m.group(3):
+            src = _stat_source(m.group(3), ctx)
+            if not src:
+                return None
+            e['chance'] = 0.0
+            e['chance_scaling'] = [{'source': src, 'per': round(float(m.group(1)) / 100 / float(m.group(2) or 1), 6)}]
+        return [e]
+    # "Firearm critical chance +0.3% per Trigger Finger" (firearms are crossbows here)
+    m = re.fullmatch(rf'firearm critical chance \+{N}%(?: per (?:{N} )?([a-z]+(?: [a-z]+)?)(?: points?)?)?', t)
+    if m:
+        e = {'type': 'pipican:critical', 'weapons': '#pipican:weapons/crossbows', 'chance': round(float(m.group(1)) / 100, 6)}
+        if m.group(3):
+            src = _stat_source(m.group(3), ctx)
+            if not src:
+                return None
+            e['chance'] = 0.0
+            e['chance_scaling'] = [{'source': src, 'per': round(float(m.group(1)) / 100 / float(m.group(2) or 1), 6)}]
+        return [e]
+    # "allies near you +2% attack speed", "allies near you lose hunger 15% slower"
+    m = re.fullmatch(r'(?:allies|other players|players) near you (?:get |gain |have )?(.+)', t)
+    if m:
+        rest = m.group(1)
+        inner = _rest(rest, ctx) or (_rest('you ' + rest, ctx) if rest.startswith('lose ') else None)
+        if inner:
+            return [{'type': 'pipican:aura', 'radius': 8.0, 'effects': inner, 'include_self': False}]
     am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx) or static_mods(t, ctx)
     if am:
         return am
@@ -1013,6 +1043,10 @@ def whole_line(text, ctx):
         if first:
             return first + [{'type': 'pipican:conditional', 'when': {'type': 'pipican:ability_active', 'ability': first[0]['ability']},
                              'effects': [{'type': 'pipican:bonus', 'kind': 'no_sleep', 'amount': 1.0}]}]
+    # Weapon Mastery: "15% chance to reroll a 'glancing' (non-critical) hit into a critical hit" - a crit chance.
+    m = re.fullmatch(rf"{N}% chance to reroll a '?glancing'? \(non-critical\) hit into a critical hit", low)
+    if m:
+        return [{'type': 'pipican:critical', 'chance': round(float(m.group(1)) / 100, 6)}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

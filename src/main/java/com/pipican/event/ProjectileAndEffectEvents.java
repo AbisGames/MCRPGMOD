@@ -48,6 +48,11 @@ public final class ProjectileAndEffectEvents {
                 event.setAmount((float) floor);
             }
         }
+        if (event.getEntity() instanceof ServerPlayer self && event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_EXPLOSION)
+                && event.getSource().getEntity() == self && ClassEffectApplier.state(self).chance(Kind.SELF_BLAST_IMMUNE) > 0) {
+            event.setCanceled(true);
+            return;
+        }
         // Clouds from pipican:cloud reactions never hurt the player who left them.
         if (event.getSource().getDirectEntity() instanceof net.minecraft.world.entity.AreaEffectCloud && event.getSource().getEntity() == event.getEntity()
                 && event.getEntity() instanceof ServerPlayer) {

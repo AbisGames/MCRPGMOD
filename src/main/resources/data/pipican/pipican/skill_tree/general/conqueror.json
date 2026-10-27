@@ -18,21 +18,27 @@
     {
       "id": "conqueror_drillmaster",
       "name": "Drillmaster",
-      "description": {
-        "text": "allies near you +2% attack speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "allies near you +2% attack speed",
       "type": "small",
       "x": -1670,
       "y": 28,
       "links": [
         "conqueror_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:attack_speed",
+              "amount": 0.02,
+              "operation": "add_multiplied_base"
+            }
+          ],
+          "include_self": false
+        }
       ]
     },
     {
@@ -95,16 +101,7 @@
     {
       "id": "conqueror_logistics",
       "name": "Logistics",
-      "description": {
-        "text": "allies near you lose hunger 15% slower",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "allies near you lose hunger 15% slower",
       "type": "notable",
       "x": -1740,
       "y": -27,
@@ -112,21 +109,26 @@
         "conqueror_war_banner"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -0.15
+            }
+          ],
+          "include_self": false
+        }
+      ]
     },
     {
       "id": "conqueror_grand_strategy",
       "name": "Grand Strategy",
-      "description": {
-        "text": "aura bonuses doubled, but your own damage -20%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "aura bonuses doubled, but your own damage -20%",
       "type": "keystone",
       "x": -1810,
       "y": 0,
@@ -135,7 +137,18 @@
         "conqueror_logistics"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "",
+          "strength": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.8
+        }
+      ]
     }
   ]
 }

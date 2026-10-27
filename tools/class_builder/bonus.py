@@ -518,6 +518,8 @@ def misc(t, scal):
         return [_effect('first_trade_discount', float(m.group(1)), None)]
     if re.fullmatch(r"villagers (?:won'?t|refuse to|will not) trade with you", t):
         return [_effect('no_trade', 100, None)]
+    if re.fullmatch(r'(?:you are |you\'re )?immune to your own explosions', t):
+        return [_effect('self_blast_immune', 100, None)]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

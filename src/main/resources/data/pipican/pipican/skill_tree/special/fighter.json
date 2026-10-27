@@ -175,16 +175,7 @@
     {
       "id": "weapon_mastery",
       "name": "Weapon Mastery",
-      "description": {
-        "text": "Weapon Mastery chance +15%; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Weapon Mastery chance +15%; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 140,
@@ -193,7 +184,19 @@
         "powerful_attack"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "chance": 0.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

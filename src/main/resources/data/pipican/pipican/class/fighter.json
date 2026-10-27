@@ -85,6 +85,10 @@
       "type": "pipican:bonus",
       "kind": "natural_regen",
       "amount": 0.4
+    },
+    {
+      "type": "pipican:critical",
+      "chance": 0.15
     }
   ],
   "special_passives": [
@@ -95,6 +99,16 @@
         {
           "source": "special_stat",
           "per": 0.004
+        }
+      ]
+    },
+    {
+      "type": "pipican:critical",
+      "chance": 0.0,
+      "chance_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.0025
         }
       ]
     },
