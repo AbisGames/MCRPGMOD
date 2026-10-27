@@ -20,11 +20,19 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 public final class SpecialLandmarkPlacementEvents {
     public record Site(String id,int x,int z,int elevation,String template) {}
     // Y=-1 means surface anchoring; Aetheris is fixed at sky island altitude.
-    private static final List<Site> SITES=List.of(
-        new Site("blackspire",3500,21300,-1,"pillager_blackspire"),
-        new Site("umbral_city",4600,-500, -14,"umbral_ancient_city"),
-        new Site("aetheris_citadel",5700,1600,319,"aetheris_sky_citadel")
-    );
+    private static final List<Site> SITES=allSites();
+    private static List<Site> allSites(){
+        var sites=new java.util.ArrayList<Site>();
+        sites.add(new Site("blackspire",3500,21300,-1,"special/pillager_blackspire"));
+        // The Umbral city's position is clear of Durnhold's protection radius.
+        sites.add(new Site("umbral_city",4900,0,-14,"special/umbral_ancient_city"));
+        for(var island:SkyIslandLayout.ISLANDS)
+            sites.add(new Site(island.id(),island.x(),island.z(),
+                SkyIslandLayout.FOUNDATION_Y,
+                island.citadel()?"special/aetheris_sky_citadel":
+                    "regional/aetheris_expanse/village"));
+        return List.copyOf(sites);
+    }
     private SpecialLandmarkPlacementEvents() {}
 
     @SubscribeEvent
@@ -52,7 +60,7 @@ public final class SpecialLandmarkPlacementEvents {
 
     private static boolean tryPlace(ServerLevel level,Site site){
         var template=level.getServer().getStructureManager().get(
-            Identifier.parse("pipican:special/"+site.template()));
+            Identifier.parse("pipican:"+site.template()));
         if(template.isEmpty())return false;
         int y=site.elevation()<0
             ?level.getHeight(Heightmap.Types.WORLD_SURFACE,site.x(),site.z())

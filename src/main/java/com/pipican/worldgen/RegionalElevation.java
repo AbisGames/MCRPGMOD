@@ -84,6 +84,10 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
 
     @Override public double compute(DensityFunction.FunctionContext context){
         int x=context.blockX(),y=context.blockY(),z=context.blockZ();
+        // Positive density here creates island bedrock before any structure is
+        // built: the sky biome is genuinely floating terrain, not an NBT trick.
+        double island=SkyIslandLayout.density(x,y,z);
+        if(island>0.0)return island*strength;
         if(y<=32 || y>430)return 0.0;
         var reg=WorldLayout.regionAt(0L,x,z);
         if(reg.isEmpty())return 0.0;
