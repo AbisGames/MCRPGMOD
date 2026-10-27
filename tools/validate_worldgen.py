@@ -80,20 +80,21 @@ def main():
     biome_dir = DATA / "biome"
     biome_files = list(biome_dir.rglob("*.json"))
     # 120 subregions + 5 exotic + 22 protected regional variants +
-    # 1 protected Aetheris sky-island biome.
-    require(len(biome_files) == 148, "expected 148 RPG biome JSONs")
+    # 1 protected Aetheris sky-island biome + 2 unique special-site biomes.
+    require(len(biome_files) == 150, "expected 150 RPG biome JSONs")
     for region in regions:
         require((biome_dir/"protected"/(region["id"]+".json")).is_file(),
                 "missing protected site biome: "+region["id"])
-    require((biome_dir/"aetheris_sanctuary.json").is_file(),
-            "missing protected sky-island biome")
+    for sanctuary in ("aetheris_sanctuary","umbral_sanctuary","redrock_sanctuary"):
+        require((biome_dir/(sanctuary+".json")).is_file(),
+                "missing protected site biome: "+sanctuary)
     for file in biome_files:
         entry = json.loads(file.read_text(encoding="utf-8"))
         require("temperature" in entry and "effects" in entry,
                 "invalid biome: " + str(file))
 
     print("PASS: 22 regions, 120 authored subregions, 70 non-overlapping landmarks,")
-    print("      331 structure pool IDs, 148 biome definitions, 27 ore entries and PNGs.")
+    print("      331 structure pool IDs, 150 biome definitions, 27 ore entries and PNGs.")
     print("NOT VERIFIED: NeoForge compilation, world placement, terrain, dungeon logic.")
 
 
