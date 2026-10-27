@@ -113,17 +113,14 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Stolen magic fights back against healing.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Stolen magic fights back against healing.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "healing_received",
+        "amount": -0.25
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

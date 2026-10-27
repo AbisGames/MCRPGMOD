@@ -88,16 +88,7 @@
     {
       "id": "champion_of_the_pits",
       "name": "Champion of the Pits",
-      "description": {
-        "text": "every kill refills 10% health; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "every kill refills 10% health; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -106,7 +97,26 @@
         "finishing_blow"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "percent": 0.1
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -122,17 +122,25 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Metal and magic attract the storm.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Metal and magic attract the storm.",
+    "effects": [
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_lightning",
+        "multiplier": 1.25
+      },
+      {
+        "type": "pipican:on",
+        "event": "lightning",
+        "cooldown_ticks": 40,
+        "actions": [
+          {
+            "type": "pipican:resource",
+            "percent": -1.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

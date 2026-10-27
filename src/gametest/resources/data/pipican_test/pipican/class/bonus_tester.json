@@ -87,6 +87,11 @@
       "type": "pipican:bleed",
       "seconds": 1,
       "max_stacks": 2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_received",
+      "amount": -0.5
     }
   ],
   "special_stat": {

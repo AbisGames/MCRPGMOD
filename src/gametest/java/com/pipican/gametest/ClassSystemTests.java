@@ -464,6 +464,12 @@ public final class ClassSystemTests {
         undead.discard();
         cow.discard();
 
+        // Healing received -50% (natural regen is left alone).
+        player.setHealth(10);
+        player.heal(4);
+        assertNear(helper, 12, player.getHealth(), "half healing received");
+        player.setHealth(player.getMaxHealth());
+
         // Timed boosts from reactions
         double armor = player.getAttributeValue(Attributes.ARMOR);
         new BoostAction(5, List.of(new AttributeEffect(Attributes.ARMOR, 3, AttributeModifier.Operation.ADD_VALUE, List.of())))

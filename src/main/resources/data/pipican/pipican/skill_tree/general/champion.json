@@ -76,16 +76,7 @@
     {
       "id": "champion_hold_the_line",
       "name": "Hold the Line",
-      "description": {
-        "text": "Battle Stance also gives knockback immunity",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Battle Stance also gives knockback immunity",
       "type": "notable",
       "x": 1722,
       "y": 254,
@@ -93,7 +84,31 @@
         "champion_sure_strike"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "sneaking"
+              },
+              {
+                "type": "pipican:still"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "champion_last_stand",

@@ -74,6 +74,11 @@
         "minecraft:hunger",
         "minecraft:wither"
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_received",
+      "amount": 0.3
     }
   ],
   "weakness": {

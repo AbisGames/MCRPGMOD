@@ -72,16 +72,7 @@
     {
       "id": "divine_visage",
       "name": "Divine Visage",
-      "description": {
-        "text": "Stigmata also gives Resistance I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Stigmata also gives Resistance I",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,22 @@
         "booming_voice"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:miracle_worker/stigmata"
+          },
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:resistance"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "living_god",

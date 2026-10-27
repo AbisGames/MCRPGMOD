@@ -144,13 +144,19 @@
       "text": "Corruption marks you. The living recoil.",
       "extra": [
         {
-          "text": " (not in game yet)",
+          "text": " (partly not in game yet)",
           "color": "dark_gray",
           "italic": true
         }
       ]
     },
-    "effects": []
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "healing_received",
+        "amount": -0.25
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

@@ -52,7 +52,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** Every second (usually inside a {@code pipican:conditional}: "while you sneak, nearby mobs glow"). */
         SECOND("second"),
         /** You teleported (ender pearl, chorus fruit, blink). */
-        TELEPORT("teleport");
+        TELEPORT("teleport"),
+        /** You played a goat horn or a note block. */
+        INSTRUMENT("instrument"),
+        /** You were struck by lightning. */
+        LIGHTNING("lightning");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

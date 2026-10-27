@@ -105,16 +105,7 @@
     {
       "id": "rogue_gambler",
       "name": "Gambler",
-      "description": {
-        "text": "+2 Luck and critical hits deal +20% damage, but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 Luck and critical hits deal +20% damage, but -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 510,
@@ -122,7 +113,24 @@
         "rogue_slippery"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:critical",
+          "damage": 0.2
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -191,6 +191,48 @@ public final class BonusEvents {
         }
     }
 
+    /** Healing bonuses: everything but natural regeneration from a full food bar. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOW)
+    static void onHeal(net.neoforged.neoforge.event.entity.living.LivingHealEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        double mult = ClassEffectApplier.state(player).bonus(Kind.HEALING_RECEIVED);
+        if (mult == 1 || naturalRegenNow(player)) {
+            return;
+        }
+        event.setAmount((float) (event.getAmount() * mult));
+    }
+
+    /** The food tick heals once its timer is full: at 80 ticks (fed) or 10 (saturated, full food bar). */
+    private static boolean naturalRegenNow(ServerPlayer player) {
+        FoodData food = player.getFoodData();
+        return food.getFoodLevel() >= 18 && (food.tickTimer >= 80 || food.getSaturationLevel() > 0 && food.getFoodLevel() >= 20 && food.tickTimer >= 10);
+    }
+
+    /** Goat horns and note blocks: {@code instrument} reactions. */
+    @SubscribeEvent
+    static void onUseItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getItemStack().is(net.minecraft.world.item.Items.GOAT_HORN)
+                && !player.getCooldowns().isOnCooldown(event.getItemStack())) {
+            com.pipican.ability.Reactions.fire(player, null, event.getItemStack(), com.pipican.effect.type.ReactionEffect.Event.INSTRUMENT);
+        }
+    }
+
+    @SubscribeEvent
+    static void onUseBlock(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getLevel().getBlockState(event.getPos()).is(net.minecraft.world.level.block.Blocks.NOTE_BLOCK)) {
+            com.pipican.ability.Reactions.fire(player, null, ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.INSTRUMENT);
+        }
+    }
+
+    @SubscribeEvent
+    static void onLightning(net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            com.pipican.ability.Reactions.fire(player, null, ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.LIGHTNING);
+        }
+    }
+
     @SubscribeEvent
     static void onVisibility(LivingEvent.LivingVisibilityEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {

@@ -84,16 +84,7 @@
     {
       "id": "chaplain_litany",
       "name": "Litany",
-      "description": {
-        "text": "players in your chant regenerate +10% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players in your chant regenerate +10% faster",
       "type": "notable",
       "x": 1120,
       "y": -824,
@@ -101,7 +92,20 @@
         "chaplain_steady_voice"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": 0.1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "chaplain_holy_war",

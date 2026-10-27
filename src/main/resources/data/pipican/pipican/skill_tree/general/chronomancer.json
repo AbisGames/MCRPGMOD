@@ -99,16 +99,7 @@
     {
       "id": "chronomancer_time_thief",
       "name": "Time Thief",
-      "description": {
-        "text": "+20% attack and movement speed, but -20% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% attack and movement speed, but -20% max health",
       "type": "keystone",
       "x": 272,
       "y": -1434,
@@ -117,7 +108,27 @@
         "chronomancer_stretch"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

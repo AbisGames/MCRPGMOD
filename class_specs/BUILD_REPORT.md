@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1433**, partly working: **20**, not yet: **796**
+- Bonus phrases: **2249**. Fully working: **1458**, partly working: **20**, not yet: **771**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,11 +12,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 295 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 176 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 111 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 101 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 71 |
+| [Other mechanics](#other-mechanics) | 288 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 172 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 99 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 95 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 73 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 29 |
@@ -64,7 +64,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: per 10 Resonance
   - general tree: Lullaby: mobs within 6 blocks of you move 10% slower
   - special tree: Disarming Charm: charmed mobs also get Weakness I
-  - special tree: Legend: your max health -10%
 - **beastmaster**
   - passive: Primal Beast: +10% unarmed and +10% axe damage
   - passive: Taming always succeeds on the first try
@@ -279,18 +278,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: The Sight: invisible mobs and players within 16 blocks glow for you
   - special passive: per 20 Communion
   - general tree: Whispers: glow range of The Sight +8 blocks
-  - special tree: Fully Possessed: after-effects add Blindness 3s
 - **paladin**
   - passive: Divine Smite: your first melee hit every 5s deals +20% damage (+20% more against undead, Nether mobs, vexes and phantoms)
-  - special passive: Faith Healing: +1% healing received per 2 Sanctity
   - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
 - **priest**
   - special stat per point: +1% healing received from every source
-  - general tree: Blessed: +5% healing received
   - skill Mace Training: +10% fall-smash damage
-  - skill Mending: +3% healing received
-  - skill Mending: +3% healing received
-  - skill Mending: +6% healing received
 - **pyromancer**
   - passive: fire charges you throw deal +50% damage
   - passive: Fire you start burns 50% longer
@@ -418,7 +411,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
 - **champion**
   - special passive: Champion's Resolve cooldown -1% per Resolve point
-  - general tree: Hold the Line: Battle Stance also gives knockback immunity
   - general tree: Last Stand: Battle Stance bonuses doubled
   - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
 - **chaplain**
@@ -441,7 +433,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Fearsome: minions also apply Slowness
   - special tree: Steady Gate: minion spawn every 20s
 - **conqueror**
-  - passive: Attack Command: blowing a goat horn gives players within 16 blocks Strength I for 6s (60s cooldown)
   - general tree: Grand Strategy: aura bonuses doubled, but your own damage -20%
   - special tree: Attack Command: goat horn cooldown -20s
   - special tree: Hold Formation: allies near you +10% knockback resistance
@@ -514,7 +505,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Staff of Power: +1 more armor with staff
 - **miracle_worker**
   - passive: Worker of Miracles: sneaking + right-clicking a player with an empty hand heals them 6 HP (spends 20 Miracle)
-  - special tree: Divine Visage: Stigmata also gives Resistance I
 - **necromancer**
   - passive: Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)
   - special passive: Per 20 Deathgrip, +1 servant
@@ -552,7 +542,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Swift Transformation: changing form is instant and cleanses Slowness
   - passive: In any animal form, +1 armor
   - special passive: Form bonuses +1% per Mutability
-  - special passive: Per 10 Mutability, -5% Change drain
   - general tree: Wolf Heart: wolf form +10% damage
   - general tree: Cat's Grace: cat form +10% speed
   - general tree: Seal Skin: fish form +20% swim speed
@@ -625,185 +614,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Nature's Resilience: bone-mealing a plant gives you +2 absorption hearts for 30s (60s cooldown)
   - general tree: Deep Roots: +20% knockback resistance on grass
 
-## Resource bar: filling, refills, spending
-
-- **aeromancer**
-  - special tree: Lord of the Air: Flight costs 30% less Breath; -15% max health
-  - skill Windcalling: +10% Breath regen
-- **apocalyptist**
-  - weakness: villagers refuse to trade with you, animals flee from you, and healing from Regeneration/Instant Health is 25% weaker
-- **arcanist**
-  - passive: whenever you spend Mystic Flux
-  - passive: Arcana Mastery: enchanting at a table costs 1 fewer level and 1 fewer lapis
-  - special tree: Archmage's Insight: -10% Flux regen
-  - skill Arcane Research: +10% Flux regen
-- **artificer**
-  - passive: Anvil repairs and renames cost 1 fewer level
-  - weakness: takes 25% more lightning damage, and a lightning strike drains all Spare Parts
-- **assassin**
-  - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
-- **astromancer**
-  - passive: Starlight regenerates twice as fast under the open night sky and in daylight
-- **avenger**
-  - passive: Retribution fills by 3 every time you or a nearby ally takes damage
-  - special tree: Unending Vendetta: killing a marked target heals you 25%; -10% max health
-- **bard**
-  - passive: Playing a goat horn or note block refills 10 Melody (30s cooldown)
-  - weakness: -50% Melody regen and Inspiring Song is disabled when no other player is within 16 blocks
-  - special tree: Legend: everyone in your Song gets Regeneration I
-- **beastmaster**
-  - special passive: +1 tamed-animal regen per 20 Primal Bond
-  - general tree: Beastmaster: tamed animals +2 max health
-- **blade**
-  - special tree: Red Mist: killing a bleeding mob refills 20 Bloodletting; -10% max health
-- **brute**
-  - passive: You can carry on fighting: hunger drains 20% slower
-- **cavalier**
-  - special tree: Master Rider: mount gets Regeneration I while you ride
-  - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
-  - skill Riding: +2 mount max health
-  - skill Riding: +2 mount max health
-- **chaplain**
-  - general tree: Litany: players in your chant regenerate +10% faster
-- **chronomancer**
-  - passive: Quickening: whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback
-  - general tree: Time Thief: +20% attack and movement speed, but -20% max health
-  - special tree: Pause: hunger drains 50% faster
-- **conjurer**
-  - general tree: Bigger Beasts: minions +4 max health
-- **death_dealer**
-  - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
-- **destroyer**
-  - weakness: every time you spend Devastation
-  - special tree: Controlled Burn: no self-damage when spending Devastation
-- **diplomat**
-  - passive: Master of Diplomacy: villager trades cost 25% less and villagers restock twice as often for you
-- **diviner**
-  - general tree: Doomsayer: +2 premonitions, but -20% max health
-  - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
-- **druid**
-  - special passive: +1% regeneration per 2 Wildness while standing on grass, dirt, sand or leaves
-  - weakness: -25% Verdance regen inside villages
-  - special tree: Grand Druid: Verdance regen doubles in forests; it stops completely in the Nether and the End
-  - skill Beast Bond: tamed animals +2 max health
-  - skill Beast Bond: tamed animals +2 max health
-- **duelist**
-  - special tree: Flawless: while the foe hasn't hit you, +25% damage; -10% max health
-- **enchanter**
-  - special tree: Puppet Master: you can keep one charmed mob as a pet until you sleep; -15% max health
-- **executioner**
-  - special tree: Inevitable: executed mobs drop +1 Looting; -10% max health
-- **explorer**
-  - weakness: -25% Endurance regen within 64 blocks of your bed/spawn point
-  - special tree: Respite: Respite also gives Regeneration I for 30s
-- **fighter**
-  - special tree: Weapon Mastery: Weapon Mastery chance +15%; -10% max health
-- **gladiator**
-  - weakness: Bloodlust only fills while another player is within 32 blocks
-  - special tree: Champion of the Pits: every kill refills 10% health; -10% max health
-- **gunslinger**
-  - special tree: Last Gunslinger: 6th shot in a cylinder always crits; -10% max health
-- **healer**
-  - passive: Far Healing: other players within 10 blocks regenerate 1 HP every 4s while you have over 25% Lifeblood (drains 1 per heal)
-  - passive: Empowered Healing: Instant Health and Regeneration potions you throw or drink are 30% stronger
-  - special tree: Resurrection: once per day, a player who dies near you is saved at 4 HP; -20% max Lifeblood
-- **hexer**
-  - general tree: Doom Hex: cursed mobs that die explode in a small Instant Damage cloud, but -15% max health
-  - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
-- **illusionist**
-  - general tree: Hall of Mirrors: decoy chance doubled, but -25% max health
-- **infiltrator**
-  - general tree: No One: Faceless works within 2 blocks, but -20% max health
-  - special tree: Ghost Agent: after a stealth kill, you are invisible for 3s; -10% max health
-- **inquisitor**
-  - weakness: villager trades cost 15% more and Hero of the Village doesn't apply to you
-  - special tree: Grand Inquisitor: scrutinise 2 mobs at once; -10% max health
-- **jack_of_all_trades**
-  - special tree: Uncommon Ability: Aptitude crit triggers every 30s; -10% max Knack
-- **mage_knight**
-  - special tree: War Wizard: Escalating Violence also gives Speed I; -10% max Warfire
-- **magician**
-  - special passive: Enchanting costs 1 fewer level for every 25 Power points
-  - special tree: Improved Spell Recovery: once per rest, refill 50% Mana instantly when you drop below 10%; -10% max health
-- **magus**
-  - special tree: Living Staff: your staff returns to you if dropped and can't be destroyed; -10% max health
-- **miracle_worker**
-  - special stat per point: +1% healing given and +0.1 max health
-- **necromancer**
-  - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
-  - special tree: Lord of Bones: servants never expire until killed; -15% max health
-- **oracle**
-  - general tree: Living Avatar: you can't leave it early and it drains 50% faster
-  - special tree: Fully Possessed: Ecstasy also gives Regeneration I
-- **paladin**
-  - special tree: Holy Radiance: unlocks Holy Radiance; -15% max Smite
-- **poisoner**
-  - general tree: Plague Doctor: poison spreads to mobs within 2 blocks on death, but -15% max health
-- **priest**
-  - weakness: in the Nether and the End: Devotion does not regenerate and Prayer is disabled
-  - skill Devout: +1 Devotion regen per 10s
-- **ranger**
-  - skill Survival: eating cooked meat gives Regeneration I for 3s
-- **rogue**
-  - general tree: Gambler: +2 Luck and critical hits deal +20% damage, but -15% max health
-  - special tree: Rogue Cunning: Trickery recharges twice as fast; -10% max Guile
-- **savant**
-  - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
-  - general tree: Omniscient: +1 more focus school, but -15% max health
-  - special tree: Grand Savant: focus bonus doubled; -10% Insight regen
-- **scout**
-  - special tree: Low Blow: when a revealed mob takes damage from an ally, you get a free 50% damage hit on it; -10% max Stride
-- **sentinel**
-  - special tree: Unsleeping: you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health
-- **shapeshifter**
-  - passive: Superior Transformation: you can shift into one form at a time from your unlocked forms list (starting forms: Wolf, Bear, Cat, Fish; Bird unlocks in the special tree) - drains Change while active. See section 12 for the form system
-  - general tree: Bear Hide: bear form +4 max health
-  - special tree: Thousand Faces: you can disguise as a villager to be ignored by illagers; -10% max health
-- **sharpshooter**
-  - special tree: Unerring: Deadly Aim shots always crit; -10% max health
-- **sorcerer**
-  - weakness: when Strain reaches max it detonates: an explosion around you (power 2 + 1 per 25 Potency) that damages everything nearby except you, breaks no blocks, and resets Strain to 0. Allies are not safe.
-  - special tree: Sorcerous Blast: unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2
-- **spellbinder**
-  - special tree: Magic Weapon: the magic damage portion of your hits rises to 35%; -10% max health
-- **stormbringer**
-  - passive: being struck refills Charge and gives +6 max health and Strength I for 60s
-- **technomancer**
-  - passive: Invention: each time you spend Voltage, you get a 'gadget' charge - your next attack or check (dodge, crit) is improved (+20%)
-  - weakness: Voltage regen stops while wet and gadgets fizzle in the Nether
-  - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
-- **templar**
-  - general tree: Sacred Ground: players in your temple regenerate 20% faster
-- **tenebrist**
-  - special tree: Void-Touched: Shadow Form works in any light; -15% max health
-- **thaumaturge**
-  - special tree: Lord of Misrule: you're immune to your own chaos backfires; -15% max health
-- **theurge**
-  - weakness: killing villagers, golems or tamed animals locks Divinity regen for 10 minutes
-  - general tree: Chosen: Invocation stuns frightened (weakened) mobs for 1s, but -20% max health
-  - special tree: Saint of the New God: Invocation also heals players within its radius by 2; -15% Divinity regen
-- **thief**
-  - weakness: villager trades cost 20% more, and iron golems turn hostile if they see you open a chest inside a village
-  - general tree: Master Thief: +1 more Looting level, but -15% max health
-  - special tree: Opportunist: when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve
-- **transmuter**
-  - special tree: Philosopher: Optimization amount doubled; -10% max health
-- **traveler**
-  - general tree: Planeswalker: Hasty Escape always triggers, but -20% max health
-- **warlock**
-  - weakness: Regeneration, Instant Health and healing from other players are 25% weaker on you
-  - special tree: Spell Thief Mastery: Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health
-- **warrior**
-  - special tree: Grit: Catch Your Breath can be used twice per rest; -10% max Stamina
-- **witch**
-  - general tree: Coven: +10% max Witchery, Guidance range +2
-  - general tree: Crone's Bargain: all potions you drink last 50% longer, but -15% max health
-- **wizard**
-  - passive: Enchanting costs 1 fewer level
-- **zealot**
-  - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
-  - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
-
 ## Conditional bonus (while / when / where)
 
 - **acrobat**
@@ -834,7 +644,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **champion**
   - general tree: Last Stand: you take +10% damage while moving
 - **cleric**
-  - special tree: Empowered Symbol: healing you receive is +15% while holding your icon
   - special tree: Divine Power: without an icon in hand you deal -10% damage
 - **conqueror**
   - passive: Battlefield Leadership: when you hit a mob, players within 10 blocks deal +10% damage to it for 4s
@@ -908,8 +717,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Divine Ecstasy lasts longer: drain -1% per 2 Communion
 - **poisoner**
   - passive: Poison Mastery: your melee hits and arrows apply Poison I for 4s (Poison II if you hold a pufferfish or poison potion in the off-hand)
-- **pyromancer**
-  - special passive: Per 10 Inferno, -10% Embers drain in lava
 - **rogue**
   - special passive: +0.2% chance per Cunning point to get one extra item when a mob drops loot
   - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
@@ -959,10 +766,171 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
+## Resource bar: filling, refills, spending
+
+- **aeromancer**
+  - special tree: Lord of the Air: Flight costs 30% less Breath; -15% max health
+  - skill Windcalling: +10% Breath regen
+- **arcanist**
+  - passive: whenever you spend Mystic Flux
+  - passive: Arcana Mastery: enchanting at a table costs 1 fewer level and 1 fewer lapis
+  - special tree: Archmage's Insight: -10% Flux regen
+  - skill Arcane Research: +10% Flux regen
+- **artificer**
+  - passive: Anvil repairs and renames cost 1 fewer level
+- **assassin**
+  - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
+- **astromancer**
+  - passive: Starlight regenerates twice as fast under the open night sky and in daylight
+- **avenger**
+  - passive: Retribution fills by 3 every time you or a nearby ally takes damage
+  - special tree: Unending Vendetta: killing a marked target heals you 25%; -10% max health
+- **bard**
+  - weakness: -50% Melody regen and Inspiring Song is disabled when no other player is within 16 blocks
+  - special tree: Legend: everyone in your Song gets Regeneration I; your max health -10%
+- **beastmaster**
+  - special passive: +1 tamed-animal regen per 20 Primal Bond
+  - general tree: Beastmaster: tamed animals +2 max health
+- **blade**
+  - special tree: Red Mist: killing a bleeding mob refills 20 Bloodletting; -10% max health
+- **cavalier**
+  - special tree: Master Rider: mount gets Regeneration I while you ride
+  - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
+  - skill Riding: +2 mount max health
+  - skill Riding: +2 mount max health
+- **chronomancer**
+  - passive: Quickening: whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback
+- **conjurer**
+  - general tree: Bigger Beasts: minions +4 max health
+- **death_dealer**
+  - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
+- **destroyer**
+  - weakness: every time you spend Devastation
+  - special tree: Controlled Burn: no self-damage when spending Devastation
+- **diplomat**
+  - passive: Master of Diplomacy: villager trades cost 25% less and villagers restock twice as often for you
+- **diviner**
+  - general tree: Doomsayer: +2 premonitions, but -20% max health
+  - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
+- **druid**
+  - special passive: +1% regeneration per 2 Wildness while standing on grass, dirt, sand or leaves
+  - weakness: -25% Verdance regen inside villages
+  - skill Beast Bond: tamed animals +2 max health
+  - skill Beast Bond: tamed animals +2 max health
+- **duelist**
+  - special tree: Flawless: while the foe hasn't hit you, +25% damage; -10% max health
+- **enchanter**
+  - special tree: Puppet Master: you can keep one charmed mob as a pet until you sleep; -15% max health
+- **executioner**
+  - special tree: Inevitable: executed mobs drop +1 Looting; -10% max health
+- **explorer**
+  - weakness: -25% Endurance regen within 64 blocks of your bed/spawn point
+  - special tree: Respite: Respite also gives Regeneration I for 30s
+- **fighter**
+  - special tree: Weapon Mastery: Weapon Mastery chance +15%; -10% max health
+- **gladiator**
+  - weakness: Bloodlust only fills while another player is within 32 blocks
+- **gunslinger**
+  - special tree: Last Gunslinger: 6th shot in a cylinder always crits; -10% max health
+- **healer**
+  - passive: Far Healing: other players within 10 blocks regenerate 1 HP every 4s while you have over 25% Lifeblood (drains 1 per heal)
+  - special tree: Resurrection: once per day, a player who dies near you is saved at 4 HP; -20% max Lifeblood
+- **hexer**
+  - general tree: Doom Hex: cursed mobs that die explode in a small Instant Damage cloud, but -15% max health
+  - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
+- **illusionist**
+  - general tree: Hall of Mirrors: decoy chance doubled, but -25% max health
+- **infiltrator**
+  - general tree: No One: Faceless works within 2 blocks, but -20% max health
+  - special tree: Ghost Agent: after a stealth kill, you are invisible for 3s; -10% max health
+- **inquisitor**
+  - weakness: villager trades cost 15% more and Hero of the Village doesn't apply to you
+  - special tree: Grand Inquisitor: scrutinise 2 mobs at once; -10% max health
+- **jack_of_all_trades**
+  - special tree: Uncommon Ability: Aptitude crit triggers every 30s; -10% max Knack
+- **mage_knight**
+  - special tree: War Wizard: Escalating Violence also gives Speed I; -10% max Warfire
+- **magician**
+  - special passive: Enchanting costs 1 fewer level for every 25 Power points
+- **magus**
+  - special tree: Living Staff: your staff returns to you if dropped and can't be destroyed; -10% max health
+- **miracle_worker**
+  - special stat per point: +1% healing given and +0.1 max health
+- **necromancer**
+  - special tree: Lord of Bones: servants never expire until killed; -15% max health
+- **oracle**
+  - general tree: Living Avatar: you can't leave it early and it drains 50% faster
+  - special tree: Fully Possessed: Ecstasy also gives Regeneration I; after-effects add Blindness 3s
+- **paladin**
+  - special tree: Holy Radiance: unlocks Holy Radiance; -15% max Smite
+- **poisoner**
+  - general tree: Plague Doctor: poison spreads to mobs within 2 blocks on death, but -15% max health
+- **priest**
+  - weakness: in the Nether and the End: Devotion does not regenerate and Prayer is disabled
+- **ranger**
+  - skill Survival: eating cooked meat gives Regeneration I for 3s
+- **rogue**
+  - special tree: Rogue Cunning: Trickery recharges twice as fast; -10% max Guile
+- **savant**
+  - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
+  - general tree: Omniscient: +1 more focus school, but -15% max health
+  - special tree: Grand Savant: focus bonus doubled; -10% Insight regen
+- **scout**
+  - special tree: Low Blow: when a revealed mob takes damage from an ally, you get a free 50% damage hit on it; -10% max Stride
+- **sentinel**
+  - special tree: Unsleeping: you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health
+- **shapeshifter**
+  - passive: Superior Transformation: you can shift into one form at a time from your unlocked forms list (starting forms: Wolf, Bear, Cat, Fish; Bird unlocks in the special tree) - drains Change while active. See section 12 for the form system
+  - general tree: Bear Hide: bear form +4 max health
+  - special tree: Thousand Faces: you can disguise as a villager to be ignored by illagers; -10% max health
+- **sharpshooter**
+  - special tree: Unerring: Deadly Aim shots always crit; -10% max health
+- **sorcerer**
+  - weakness: when Strain reaches max it detonates: an explosion around you (power 2 + 1 per 25 Potency) that damages everything nearby except you, breaks no blocks, and resets Strain to 0. Allies are not safe.
+  - special tree: Sorcerous Blast: unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2
+- **spellbinder**
+  - special tree: Magic Weapon: the magic damage portion of your hits rises to 35%; -10% max health
+- **technomancer**
+  - passive: Invention: each time you spend Voltage, you get a 'gadget' charge - your next attack or check (dodge, crit) is improved (+20%)
+  - weakness: Voltage regen stops while wet and gadgets fizzle in the Nether
+  - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
+- **templar**
+  - general tree: Sacred Ground: players in your temple regenerate 20% faster
+- **tenebrist**
+  - special tree: Void-Touched: Shadow Form works in any light; -15% max health
+- **thaumaturge**
+  - special tree: Lord of Misrule: you're immune to your own chaos backfires; -15% max health
+- **theurge**
+  - weakness: killing villagers, golems or tamed animals locks Divinity regen for 10 minutes
+  - general tree: Chosen: Invocation stuns frightened (weakened) mobs for 1s, but -20% max health
+  - special tree: Saint of the New God: Invocation also heals players within its radius by 2; -15% Divinity regen
+- **thief**
+  - weakness: villager trades cost 20% more, and iron golems turn hostile if they see you open a chest inside a village
+  - general tree: Master Thief: +1 more Looting level, but -15% max health
+  - special tree: Opportunist: when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve
+- **transmuter**
+  - special tree: Philosopher: Optimization amount doubled; -10% max health
+- **traveler**
+  - general tree: Planeswalker: Hasty Escape always triggers, but -20% max health
+- **warlock**
+  - special tree: Spell Thief Mastery: Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health
+- **warrior**
+  - special tree: Grit: Catch Your Breath can be used twice per rest; -10% max Stamina
+- **witch**
+  - general tree: Coven: +10% max Witchery, Guidance range +2
+  - general tree: Crone's Bargain: all potions you drink last 50% longer, but -15% max health
+- **wizard**
+  - passive: Enchanting costs 1 fewer level
+- **zealot**
+  - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
+  - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
+
 ## Bonus against a kind of mob / marked target
 
 - **acrobat**
   - special passive: Mobility: per 10 Poise, +5% chance a melee hit against you misses
+- **apocalyptist**
+  - weakness: villagers refuse to trade with you, animals flee from you
 - **artificer**
   - special tree: Copper Heart: copper golems near you move and work 25% faster
 - **assassin**
@@ -1031,6 +999,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **necromancer**
   - special stat per point: +1% damage and health for undead you command
   - passive: Undead mobs ignore you unless you attack them
+  - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
 - **oracle**
   - general tree: Prophet: +10% damage to mobs that glow for you
 - **paladin**

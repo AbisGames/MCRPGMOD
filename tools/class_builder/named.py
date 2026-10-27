@@ -225,9 +225,14 @@ def auras(t, ctx):
     if m and extra is None and m.re.pattern.startswith(words):
         word, extra = m.group(1), m.group(2)
     if extra is None:
-        m = re.fullmatch(rf'(?:players|allies) in your {words}(?: aura)? (?:get|deal|have) (.+)', t)
+        m = re.fullmatch(rf'(?:players|allies|everyone) in your {words}(?: aura)? (?:get|gets|deal|have) (.+)', t)
         if m:
             word, extra = m.group(1), m.group(2)
+            extra = re.sub(r'^(\w+(?: \w+)?) (i|ii|iii|iv)$', r'permanent \1 \2', extra)
+    if extra is None:
+        m = re.fullmatch(rf'(?:players|allies|everyone) in your {words}(?: aura)? regenerate \+?{N}% faster', t)
+        if m:
+            word, extra = m.group(1), f'+{m.group(2)}% natural regeneration'
     if extra is not None:
         name = _aura_word(word, cid)
         extra = re.sub(r'^\+?(\d+(?:\.\d+)?)% damage reduction$', r'-\1% damage taken', extra)
@@ -389,8 +394,75 @@ def reactions_more(t, ctx):
     return None
 
 
+def triggers_more(t, ctx):
+    """Instrument, lightning, kill-heal and resource-threshold reactions; "X also gives Y" for named states."""
+    import bonus
+    import conditions as cond
+    rn = (ctx.get('resource_name') or '').lower()
+    r = None
+    if rn:
+        r = '(?:' + re.escape(rn) + ('|' + re.escape(rn.split()[-1]) if ' ' in rn else '') + ')'
+    # "playing a goat horn or note block refills 10 Melody with a 30s cooldown"
+    m = re.fullmatch(rf'(?:playing|blowing) a goat horn(?: or (?:a )?note block)? (.+?)(?: with an? {N}s cooldown)?', t)
+    if m:
+        what, cd = m.group(1), m.group(2)
+        acts = None
+        mm = re.fullmatch(rf'refills {N} (.+)', what)
+        if mm and r and re.fullmatch(r, mm.group(2)):
+            acts = [{'type': 'pipican:resource', 'amount': float(mm.group(1))}]
+        mm = re.fullmatch(rf'gives players within {N} blocks (.+)', what)
+        if mm:
+            entries = _effects_list(mm.group(2))
+            if entries:
+                acts = [{'type': 'pipican:effect', 'target': 'players', 'radius': float(mm.group(1)), 'effects': entries},
+                        {'type': 'pipican:effect', 'effects': entries}]
+        if acts:
+            out = {'type': 'pipican:on', 'event': 'instrument', 'actions': acts}
+            if cd:
+                out['cooldown_ticks'] = int(float(cd) * 20)
+            return [out]
+    # "being struck refills Charge and gives +6 max health and Strength I for 60s", "a lightning strike drains all Spare Parts"
+    m = re.fullmatch(rf'being struck(?: by lightning)? refills {r} and gives (.+?) and (.+?) for {N}s', t) if r else None
+    if m:
+        eff = _rest(m.group(1), ctx)
+        entries = _effects_list(f'{m.group(2)} for {m.group(3)}s')
+        if eff and entries:
+            return [{'type': 'pipican:on', 'event': 'lightning', 'cooldown_ticks': 40, 'actions': [
+                {'type': 'pipican:resource', 'percent': 1.0}, {'type': 'pipican:boost', 'seconds': float(m.group(3)), 'effects': eff},
+                {'type': 'pipican:effect', 'effects': entries}]}]
+    m = re.fullmatch(rf'a lightning strike drains all {r}', t) if r else None
+    if m:
+        return [{'type': 'pipican:on', 'event': 'lightning', 'cooldown_ticks': 40, 'actions': [{'type': 'pipican:resource', 'percent': -1.0}]}]
+    # "every kill refills 10% health"
+    m = re.fullmatch(rf'every kill (?:refills|restores|heals you) {N}% (?:of your )?(?:health|hp)', t)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'actions': [{'type': 'pipican:heal', 'target': 'self', 'percent': float(m.group(1)) / 100}]}]
+    # "once per rest, refill 50% Mana instantly when you drop below 10%"
+    m = re.fullmatch(rf'(once per rest, )?refill {N}% {r} instantly when you drop below {N}%', t) if r else None
+    if m:
+        out = {'type': 'pipican:on', 'event': 'start', 'actions': [{'type': 'pipican:resource', 'percent': float(m.group(2)) / 100}]}
+        if m.group(1):
+            out['once_per_rest'] = True
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:resource', 'max': float(m.group(3)) / 100}, 'effects': [out]}]
+    # "Battle Stance also gives knockback immunity", "Ecstasy also gives Regeneration I", "Stigmata also gives Resistance I"
+    m = re.fullmatch(r'([a-z][a-z \']*?) also gives (.+)', t)
+    if m:
+        word = m.group(1).strip()
+        for name, (when, _) in NAMED.get(ctx.get('class_id'), {}).items():
+            if word == name or word in name.split():
+                extra = m.group(2)
+                extra = re.sub(r'^(\w+(?: \w+)?) (i|ii|iii|iv)$', r'permanent \1 \2', extra)
+                eff = _rest(extra, ctx)
+                if eff:
+                    return [{'type': 'pipican:conditional', 'when': when, 'effects': eff}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    tm = triggers_more(t, ctx)
+    if tm:
+        return tm
     rm = reactions_more(t, ctx)
     if rm:
         return rm

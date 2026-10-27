@@ -66,6 +66,37 @@
       "multiplier": 0.0
     },
     {
+      "type": "pipican:on",
+      "event": "lightning",
+      "cooldown_ticks": 40,
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "percent": 1.0
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 60.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 6.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:effect",
+          "effects": [
+            {
+              "effect": "minecraft:strength",
+              "seconds": 60.0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:any_of",

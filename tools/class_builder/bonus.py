@@ -12,6 +12,7 @@ LEADING = [
     (r'(?:bow )?draw speed', 'draw_speed'),
     (r'(?:natural )?(?:health )?regeneration|natural regen', 'natural_regen'),
     (r'hunger(?: drain)?|hunger loss|food drain', 'hunger'),
+    (r'healing received|healing taken|incoming healing', 'healing_received'),
     (r'(?:mob )?detection range|detection range of mobs', 'detection_range'),
     (r'skill training speed|skill training|mastery gain|skill xp', 'skill_training'),
 ]

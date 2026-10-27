@@ -90,6 +90,17 @@
       "type": "pipican:bonus",
       "kind": "trade_price",
       "amount": -0.15
+    },
+    {
+      "type": "pipican:on",
+      "event": "instrument",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 10.0
+        }
+      ],
+      "cooldown_ticks": 600
     }
   ],
   "special_passives": [

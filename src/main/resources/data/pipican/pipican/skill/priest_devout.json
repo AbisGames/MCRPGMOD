@@ -38,17 +38,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+1 Devotion regen per 10s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1 Devotion regen per 10s",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "description": "+1 Faith",

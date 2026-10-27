@@ -72,6 +72,19 @@
       ]
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_received",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "A paladin's power flows from an oath, and oaths can break.",

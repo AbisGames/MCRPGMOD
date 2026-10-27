@@ -69,6 +69,11 @@
       "type": "pipican:bonus",
       "kind": "knockback",
       "amount": 0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "hunger",
+      "amount": -0.2
     }
   ],
   "special_passives": [

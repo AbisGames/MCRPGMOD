@@ -100,16 +100,7 @@
     {
       "id": "improved_recovery",
       "name": "Improved Spell Recovery",
-      "description": {
-        "text": "once per rest, refill 50% Mana instantly when you drop below 10%; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "once per rest, refill 50% Mana instantly when you drop below 10%; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -118,7 +109,35 @@
         "deep_well"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "max": 0.1
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "start",
+              "actions": [
+                {
+                  "type": "pipican:resource",
+                  "percent": 0.5
+                }
+              ],
+              "once_per_rest": true
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

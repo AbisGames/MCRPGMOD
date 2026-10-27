@@ -105,16 +105,7 @@
     {
       "id": "grand_druid",
       "name": "Grand Druid",
-      "description": {
-        "text": "Verdance regen doubles in forests; it stops completely in the Nether and the End",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Verdance regen doubles in forests; it stops completely in the Nether and the End",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -123,7 +114,52 @@
         "resist_elements"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          },
+          "effects": [
+            {
+              "type": "pipican:resource",
+              "target": "regen",
+              "amount": 1.0,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:dimension",
+                "dimensions": [
+                  "minecraft:the_nether"
+                ]
+              },
+              {
+                "type": "pipican:dimension",
+                "dimensions": [
+                  "minecraft:the_end"
+                ]
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:resource",
+              "target": "regen",
+              "amount": -1.0,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

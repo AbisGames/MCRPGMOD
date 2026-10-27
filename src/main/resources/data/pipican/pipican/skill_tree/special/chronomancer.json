@@ -103,16 +103,7 @@
     {
       "id": "pause",
       "name": "Pause",
-      "description": {
-        "text": "unlocks Time Stop ability; hunger drains 50% faster",
-        "extra": [
-          {
-            "text": " (partly not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Time Stop ability; hunger drains 50% faster",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -122,6 +113,13 @@
       ],
       "cost": 3,
       "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": 0.5
+        }
+      ],
       "grants": [
         "pipican:chronomancer/time_stop"
       ]

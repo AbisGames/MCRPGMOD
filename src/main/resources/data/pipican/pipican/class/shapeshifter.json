@@ -57,6 +57,20 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:resource",
+      "target": "regen",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Animals can't use tools.",

@@ -85,6 +85,33 @@
       ],
       "name": "Direct the Troops",
       "include_self": false
+    },
+    {
+      "type": "pipican:on",
+      "event": "instrument",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "players",
+          "radius": 16.0,
+          "effects": [
+            {
+              "effect": "minecraft:strength",
+              "seconds": 6.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:effect",
+          "effects": [
+            {
+              "effect": "minecraft:strength",
+              "seconds": 6.0
+            }
+          ]
+        }
+      ],
+      "cooldown_ticks": 1200
     }
   ],
   "special_passives": [

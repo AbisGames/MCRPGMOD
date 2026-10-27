@@ -486,6 +486,27 @@ def translate(text, ctx):
     text = re.sub(lab + r'\+(\d+(?:\.\d+)?)% stealth(?: \(smaller mob detection range\))?', r'\1-\2% detection range', text, flags=re.I)
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (?:from )?(\d+(?:\.\d+)?)% (farther|further)(?: away)?', r'+\1% detection range', text, flags=re.I)
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (\d+(?:\.\d+)?)% later', r'-\1% detection range', text, flags=re.I)
+    # Healing received: "healing from Regeneration/Instant Health is 25% weaker", "Regeneration and Instant Health are 50% weaker on you",
+    # "healing you receive is +15%".
+    text = re.sub(r'(?:healing from )?regeneration(?:/|, | and )instant health(?:,? and healing from other players)? (?:is|are) (\d+)% weaker(?: on you)?',
+                  r'-\1% healing received', text, flags=re.I)
+    text = re.sub(r'healing you receive is ([+-]\d+)%', r'\1% healing received', text, flags=re.I)
+    text = re.sub(r'(?:instant health and regeneration|regeneration and instant health) potions you throw or drink are (\d+)% stronger',
+                  r'+\1% healing received', text, flags=re.I)
+    # Resource regen: "Verdance regen doubles in forests; it stops completely in the Nether and the End", "Voltage regen stops while wet",
+    # "-10% Embers drain in lava", "+1 Devotion regen per 10s".
+    m = re.search(r'([A-Z][\w]+(?: [A-Z][\w]+)?) regen doubles', text)
+    if m:
+        res = m.group(1)
+        text = re.sub(rf'{res} regen doubles (in .+?)(;|$)', rf'+100% {res} regen \1\2', text)
+        text = re.sub(r'it stops completely (in .+)$', rf'no {res} regen \1', text)
+    text = re.sub(r'([A-Z][\w]+(?: [A-Z][\w]+)?) regen stops (while .+?|in .+?)(?= and |;|$)', r'no \1 regen \2', text)
+    text = re.sub(r'([+-]\d+(?:\.\d+)?)% ([A-Z][\w]+(?: [A-Z][\w]+)?) drain\b', lambda m: f'{-float(m.group(1)):+g}% {m.group(2)} regen', text)
+    text = re.sub(r'\+(\d+(?:\.\d+)?) ([A-Z][\w]+(?: [A-Z][\w]+)?) regen per (\d+)s$', lambda m: f'+{float(m.group(1)) / float(m.group(3)):g} {m.group(2)} regen', text)
+    # "hunger drains 20% slower", "critical hits deal +20% damage", "+20% attack and movement speed"
+    text = re.sub(r'hunger drains (\d+(?:\.\d+)?)% (slower|faster)', lambda m: f'{"-" if m.group(2) == "slower" else "+"}{m.group(1)}% hunger', text, flags=re.I)
+    text = re.sub(r'critical hits deal \+(\d+(?:\.\d+)?)% damage', r'+\1% critical damage', text, flags=re.I)
+    text = re.sub(r'([+-]\d+(?:\.\d+)?%) (attack|movement|swim|mining) and (attack|movement|swim|mining) speed', r'\1 \2 speed and \1 \3 speed', text, flags=re.I)
     # "(including you)" decides who an aura reaches; it isn't a note.
     text = re.sub(r'\s*\(including you\)', ' including you', text, flags=re.I)
     # "+10% damage and immunity to Darkness, Nausea and Blindness": keep the immunity list together.
@@ -517,7 +538,7 @@ def translate(text, ctx):
         text = f'{m.group(1)} {m.group(3)} {m.group(2)}'
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.
     effects, unsupported = [], []
-    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b)', text):
+    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b|when\b|whenever\b|after\b|every\b|a lightning\b)', text):
         if seg.strip():
             e, u = _segment(seg.strip(), ctx)
             effects += e

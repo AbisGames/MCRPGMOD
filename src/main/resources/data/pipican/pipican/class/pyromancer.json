@@ -117,6 +117,27 @@
           "per": 0.003
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "in_lava"
+      },
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        }
+      ]
     }
   ],
   "weakness": {

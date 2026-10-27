@@ -18,17 +18,14 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+3% healing received",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+3% healing received",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.03
+        }
+      ]
     },
     {
       "description": "+0.5 max health",
@@ -41,17 +38,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+3% healing received",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+3% healing received",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.03
+        }
+      ]
     },
     {
       "description": "+1 max health",
@@ -64,17 +58,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+6% healing received",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+6% healing received",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.06
+        }
+      ]
     }
   ]
 }

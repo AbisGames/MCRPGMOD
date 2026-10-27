@@ -19,21 +19,19 @@
     {
       "id": "priest_blessed",
       "name": "Blessed",
-      "description": {
-        "text": "+5% healing received",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% healing received",
       "type": "small",
       "x": 370,
       "y": -28,
       "links": [
         "priest_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.05
+        }
       ]
     },
     {
