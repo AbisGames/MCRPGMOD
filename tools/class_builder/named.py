@@ -187,7 +187,7 @@ def reaction_mods(t, ctx):
     if not reactions:
         return None
     names = '|'.join(sorted((re.escape(n) for n in reactions), key=len, reverse=True))
-    per = rf'(?: per (?:{N} )?([a-z]+)(?: points?)?)?'
+    per = rf'(?: per (?:{N} )?([a-z]+(?: (?!points?\b)[a-z]+)?)(?: points?)?)?'
 
     def mod(name, **kw):
         e = {'type': 'pipican:reaction_mod', 'name': name}

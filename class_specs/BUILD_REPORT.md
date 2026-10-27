@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1746**, partly working: **25**, not yet: **479**
+- Bonus phrases: **2250**. Fully working: **1747**, partly working: **25**, not yet: **478**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,7 +12,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 156 |
+| [Other mechanics](#other-mechanics) | 155 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 127 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 74 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 70 |
@@ -152,7 +152,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Aptitude, Prodigy bonus +1
   - special tree: Prodigy: Prodigy picks the stat you most recently used
 - **mage_knight**
-  - special passive: Escalating Violence +0.5% per Battle Arcana
   - special passive: Per 10 Battle Arcana, +1 escalating hit
   - general tree: Arcane Steel: +5% magic portion
 - **magician**
