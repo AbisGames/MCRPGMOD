@@ -362,6 +362,33 @@ public final class WorldgenTests {
         }
         helper.assertTrue(SpecialLandmarkPlacementEvents.sites().size()==9,
             "three special regions plus six sky villages expected");
+        // Every unique landmark is inside its authored macro-region and all
+        // unique site footprints remain disjoint from one another. These tests
+        // catch accidental map edits before chunks can be overwritten.
+        var specialSites=SpecialLandmarkPlacementEvents.sites();
+        for(int i=0;i<specialSites.size();i++){
+            var site=specialSites.get(i);
+            String region=WorldLayout.authoredRegionAt(site.x(),site.z())
+                .map(WorldLayout.Region::id).orElse("outside");
+            String wanted=site.id().equals("blackspire")?"redrock_badlands":
+                "greyspine_mountains";
+            helper.assertTrue(region.equals(wanted),
+                "special structure outside target territory: "+site.id());
+            int radius=site.id().equals("aetheris_citadel")?100:
+                site.id().startsWith("aetheris_village")?78:60;
+            for(int j=i+1;j<specialSites.size();j++){
+                var other=specialSites.get(j);
+                int otherRadius=other.id().equals("aetheris_citadel")?100:
+                    other.id().startsWith("aetheris_village")?78:60;
+                helper.assertTrue(!StructurePlanner.collides(site.x(),site.z(),
+                    radius+24,other.x(),other.z(),otherRadius+24),
+                    "unique landmarks collide: "+site.id()+" and "+other.id());
+            }
+            for(var capital:CapitalStructureExclusion.all())
+                helper.assertTrue(!capital.intersects(site.x()-radius,
+                    site.z()-radius,site.x()+radius,site.z()+radius,120),
+                    "special site overlaps protected capital: "+site.id());
+        }
         for(var island:islands){
             helper.assertTrue(SkyIslandLayout.density(island.x(),318,island.z())>2,
                 "floating island foundation missing: "+island.id());
