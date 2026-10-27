@@ -363,6 +363,24 @@ public final class ClassSystemTests {
         Ability mend = ClassLookup.abilities(level.registryAccess()).getValue(ability("mend"));
         helper.assertTrue(AbilityService.cooldown(player, mend) == Math.round(mend.cooldownTicks() * 0.5), "half cooldown");
 
+        // Class item rules: bound weapon (hotbar slot 1), sigil weapon (renamed), carrying a book.
+        player.getInventory().setSelectedSlot(0);
+        player.getInventory().setItem(0, new ItemStack(Items.IRON_SWORD));
+        var bound = new com.pipican.condition.type.ItemRuleCondition(com.pipican.condition.type.ItemRuleCondition.Rule.BOUND_WEAPON, 1);
+        var sigil = new com.pipican.condition.type.ItemRuleCondition(com.pipican.condition.type.ItemRuleCondition.Rule.SIGIL_WEAPON, 1);
+        helper.assertTrue(bound.test(player), "weapon in slot 1 is bound");
+        helper.assertTrue(!sigil.test(player), "not renamed yet");
+        player.getMainHandItem().set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Rune"));
+        helper.assertTrue(sigil.test(player), "a renamed weapon is sigil-marked");
+        player.getInventory().setSelectedSlot(1);
+        player.getInventory().setItem(1, new ItemStack(Items.IRON_SWORD));
+        helper.assertTrue(!bound.test(player), "slot 2 isn't the bound weapon");
+        var books = new com.pipican.condition.type.CarryingCondition(net.minecraft.core.HolderSet.direct(Items.BOOK.builtInRegistryHolder()));
+        helper.assertTrue(!books.test(player), "no book yet");
+        player.getInventory().setItem(20, new ItemStack(Items.BOOK));
+        helper.assertTrue(books.test(player), "a book in the backpack counts");
+        player.getInventory().setSelectedSlot(0);
+
         // Favored weapon: chosen on waking from the main hand.
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
         AbilityService.onWake(player);

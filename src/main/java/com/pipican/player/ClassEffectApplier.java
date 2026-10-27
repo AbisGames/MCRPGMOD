@@ -514,6 +514,7 @@ public final class ClassEffectApplier {
             return switch (source) {
                 case "class_level" -> level;
                 case "special_stat" -> rpgClass.specialStat().map(s -> stats.getOrDefault(s.stat(), 0.0)).orElse(0.0);
+                case "sigil_armor" -> com.pipican.ability.SpecialItems.sigilArmor(player);
                 default -> {
                     Identifier id = Identifier.tryParse(source);
                     yield id == null ? 0 : stats.getOrDefault(ResourceKey.create(com.pipican.core.PipicanRegistries.STAT, id), 0.0);

@@ -59,18 +59,80 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "A spellbinder's magic only lives in one blade.",
-      "extra": [
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
         }
       ]
-    },
-    "effects": []
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.006
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "A spellbinder's magic only lives in one blade.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/melee"
+                },
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/ranged"
+                }
+              ]
+            },
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:item_rule",
+                "rule": "bound_weapon"
+              }
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

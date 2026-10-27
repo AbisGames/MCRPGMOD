@@ -67,7 +67,7 @@ def _qualified(base, rest, ctx):
     """"killing <mobs...> <while ...>" -> filtered trigger, or None."""
     rest = rest.strip()
     when = None
-    m = re.search(r'(?:^|\s+)\b(while|when|in|at|outdoors|underground|underwater|during)\b.*$', rest)
+    m = re.search(r'(?:^|\s+)\b(while|when|in|at|outdoors|underground|underwater|during|with your)\b.*$', rest)
     if m:
         tail = m.group(0).strip()
         when = _ability_active(tail, ctx) or cond.parse(tail, ctx)

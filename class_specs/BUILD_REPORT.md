@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1374**, partly working: **16**, not yet: **859**
+- Bonus phrases: **2249**. Fully working: **1393**, partly working: **19**, not yet: **837**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,15 +12,15 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 301 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 201 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 133 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 116 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 72 |
+| [Other mechanics](#other-mechanics) | 299 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 185 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 131 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 114 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 71 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 53 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 29 |
-| [Immunities](#immunities) | 20 |
+| [Immunities](#immunities) | 21 |
 | [Critical hits](#critical-hits) | 7 |
 | [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 5 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
@@ -258,9 +258,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Mage Knight Tactics: +2 more Warfire per hit
 - **magician**
   - skill Enchanting: +1 bookshelf counted around your table
-- **magus**
-  - passive: +20% of it as magic damage
-  - general tree: Staff of the Archmagus: you can't use any other weapon at better than clumsy
 - **marauder**
   - general tree: Bloodthirst: Bloodthirst lasts 2s longer
   - general tree: Rampage: consecutive kills within 5s add +5% damage (stacks 5)
@@ -518,17 +515,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Enchanting: +5% chance of a better enchantment roll
   - skill Enchanting: +10% chance of a better enchantment roll
 - **magus**
-  - special stat per point: +1% damage with your Staff of Magic
-  - passive: a blaze rod or stick held in the main hand counts as your staff - +6 attack damage
+  - passive: +20% of it as magic damage with your staff
   - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
-  - special passive: Staff damage +1% per Staffcraft
   - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
-  - general tree: Magus: +3% staff damage
-  - general tree: Ironwood: +5% staff damage
   - general tree: Sweeping Staff: staff hits sweep 1 extra mob
-  - general tree: Spellguard Staff: +1 armor with staff
-  - general tree: Staff of the Archmagus: +25% staff damage
-  - special tree: Long Reach: +0.5 reach with staff
+  - general tree: Staff of the Archmagus: +25% staff damage, but you can't use any other weapon at better than clumsy
   - special tree: Staff of Power: +1 more armor with staff
 - **miracle_worker**
   - passive: Worker of Miracles: sneaking + right-clicking a player with an empty hand heals them 6 HP (spends 20 Miracle)
@@ -558,17 +549,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.5% damage with sigil-marked weapons
   - special stat per point: +0.05 armor with sigil-marked armor
   - passive: Sigils of Power: armor with a trim and weapons you've renamed at an anvil count as sigil-marked
-  - passive: Sigil weapons: +10% damage
   - passive: sigil armor: +1 armor per piece
-  - passive: Mighty Sigils: while Rune Power is full, sigil weapons glow and deal +10% more
   - special passive: Sigil weapon damage +0.5% per Runecraft
   - special passive: Per 20 Runecraft, +1 armor toughness from sigil armor
-  - general tree: Deep Cuts: +5% sigil weapon damage
-  - general tree: Etched Plate: +1 armor per sigil piece
   - general tree: Runes of Return: sigil weapons lose durability 30% slower
-  - general tree: Ward Rune: -10% magic damage with 4 sigil pieces
   - general tree: Runelord: sigil bonuses doubled
-  - special tree: Fire Rune: sigil weapon hits ignite for 2s
   - special tree: Mighty Sigils: Mighty Sigils triggers at 75% Rune Power
 - **savant**
   - passive: Enchanting, brewing and anvil use all cost slightly less (-1 level / 10% faster)
@@ -587,16 +572,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **sharpshooter**
   - general tree: Long Shot: +10% damage per 16 blocks of distance
 - **spellbinder**
-  - special stat per point: +0.6% damage with your bound weapon
-  - passive: Spellbound Weapon: the weapon in hotbar slot 1 is your bound weapon: +10% damage with it, it never drops on death, and it loses durability 50% slower
+  - passive: it loses durability 50% slower
   - passive: Your bound weapon counts as a magic focus: its hits deal 15% of their damage as magic damage (ignores armor)
   - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
   - special passive: Bound weapon durability loss -1% per 2 Binding
   - special passive: +2% bound weapon critical damage
-  - weakness: -20% damage with any weapon that isn't your bound weapon
-  - general tree: Spellbinder: +3% bound weapon damage
-  - general tree: Eldritch Flames: bound weapon hits set mobs on fire for 2s while Charge is above half
-  - general tree: Soulblade: bound weapon damage +20%
+  - general tree: Soulblade: bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage
   - special tree: Mend: bound weapon slowly repairs 1 durability every 10s
 - **technomancer**
   - special passive: Gadget bonus +0.5% per Circuitry
@@ -736,8 +717,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: for 2s after a fully charged hit, you take 20% more damage
 - **explorer**
   - passive: Preternatural Senses: hostile mobs within 12 blocks glow while you sneak
-- **fighter**
-  - special tree: Fight with Two Weapons: holding a weapon in your off-hand: +10% attack speed
 - **geomancer**
   - passive: Earthen Defense: your resource bar absorbs damage first while you stand on stone, dirt, sand or gravel (1 point per damage)
   - passive: no fall damage when landing on stone or dirt
@@ -812,8 +791,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Eagle Eye: +30% ranged damage, but you can't hold a melee weapon in your off-hand or main hand without -50%
 - **sorcerer**
   - passive: Every magic hit you land adds 1 Strain
-- **spellbinder**
-  - general tree: Soulblade: you can't hold any other weapon in your main hand without -50% damage
 - **stormbringer**
   - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
   - general tree: Conductor: lightning chance doubled while holding a trident
@@ -1031,9 +1008,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Coven: +10% max Witchery, Guidance range +2
   - general tree: Crone's Bargain: all potions you drink last 50% longer, but -15% max health
 - **wizard**
-  - passive: Grimoire: while a book, writable book or enchanted book is in your off-hand, +15% magic damage and +20% Aether regen
   - passive: Enchanting costs 1 fewer level
-  - weakness: with no book anywhere in your inventory: -30% Aether regen and -10% magic damage
 - **zealot**
   - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
   - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
@@ -1073,7 +1048,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **brute**
   - general tree: Crusher: +10% damage against shields and armored mobs
 - **cleric**
-  - passive: Icon of Faith: while holding a totem_of_undying or golden item in the off-hand, +10% damage and -10% damage taken from undead
   - general tree: Holy Wrath: undead you hit are set on fire for 2s
   - general tree: Crusader: +30% damage to undead, but -10% damage to everything else
 - **conqueror**
@@ -1334,8 +1308,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Marksmanship: "landing Deadly Aim shots" -> pipican:melee_hit
 - **sorcerer**
   - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:kill
-- **spellbinder**
-  - Weaponbond: "killing mobs with your bound weapon" -> pipican:kill
 - **templar**
   - Warding the Shrine: "killing mobs inside your temple" -> pipican:kill
 - **thaumaturge**
@@ -1348,8 +1320,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Alterations: "drinking potions and using Optimization" -> pipican:did
 - **warlock**
   - Spell Theft: "stealing effects with Steal Spell" -> pipican:kill
-- **weapon_master**
-  - Devotion: "killing mobs with your favored weapon" -> pipican:kill
 - **witch**
   - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
 - **zealot**
@@ -1442,6 +1412,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Perfect Shot: armor ignore 35%
 - **sorcerer**
   - passive: Sorcery: magic damage you deal ignores 20% of the target's armor
+- **spellbinder**
+  - passive: it never drops on death
 - **thief**
   - passive: you never trigger tripwires or pressure plates
 

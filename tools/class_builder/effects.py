@@ -27,6 +27,7 @@ WEAPON_TAGS = {
     'bows and crossbows': ['#pipican:weapons/bows', '#pipican:weapons/crossbows'],
     'axe and mace': ['#pipican:weapons/axes', '#pipican:weapons/maces'],
     'sword and axe': ['#pipican:weapons/swords', '#pipican:weapons/axes'],
+    'staff': ['#pipican:weapons/staff'], 'staffs': ['#pipican:weapons/staff'], 'staff of magic': ['#pipican:weapons/staff'],
     'ranged': ['#pipican:weapons/ranged'], 'ranged weapons': ['#pipican:weapons/ranged'], 'melee weapons': ['#pipican:weapons/melee'],
 }
 # Damage-type tags. pipican:* ones are shipped by this build (see DAMAGE_TYPE_TAGS).
@@ -194,6 +195,8 @@ def _scaling(rest, ctx):
         source = 'pipican:' + src
     elif src in ('special-stat point', 'special stat'):
         source = 'special_stat'
+    elif src in ('sigil piece', 'sigil armor piece', 'sigil-marked armor piece', 'piece of sigil armor'):
+        source = 'sigil_armor'
     else:
         return None, rest
     return (source, every), rest[:m.start()].strip()
@@ -443,6 +446,21 @@ def translate(text, ctx):
     original = text
     # Zeal's "(+10 Madness)" is part of what happens, not a note.
     text = re.sub(r'shrug it off entirely \(\+(\d+) ([A-Za-z ]+)\)', r'shrug it off entirely and gain \1 \2', text)
+    # Class items: "Sigil weapons: +10% damage", "+3% bound weapon damage", "staff damage +1% per Staffcraft",
+    # "sigil armor: +1 armor per piece", the bound weapon's definition.
+    lab = r"^((?:[A-Z][\w' -]{1,30}:\s+)?)"
+    text = re.sub(r'a book, writable book or enchanted book is in your off-hand', 'a book is in your off-hand', text, flags=re.I)
+    text = re.sub(lab + r'a blaze rod or stick held in the main hand counts as your staff - (.+)$', r'\1\2 with your staff', text)
+    if re.search(r'the weapon in hotbar slot 1 is your bound weapon', text, re.I):
+        text = re.sub(lab + r'the weapon in hotbar slot 1 is your bound weapon:\s*', r'\1', text, flags=re.I)
+        text = re.sub(r',\s*(?:and\s+)?it\b', '; it', text)
+    text = re.sub(r'\bwith it\b', 'with your bound weapon', text) if re.search(r'bound weapon', original, re.I) else text
+    item = r'(bound weapon|sigil(?:-marked)? weapons?|staff)'
+    text = re.sub(rf'^{item}:\s*([+-]\d+(?:\.\d+)?% (?:more )?(?:damage|critical damage))(.*)$', r'\2 with your \1\3', text, flags=re.I)
+    text = re.sub(lab + r'while (.+?), sigil weapons (?:glow and )?deal \+(\d+)% more$', r'\1while \2: +\3% damage with your sigil weapon', text, flags=re.I)
+    text = re.sub(lab + rf'([+-]\d+(?:\.\d+)?%) {item} (damage|critical damage)\b(.*)$', r'\1\2 \4 with your \3\5', text, flags=re.I)
+    text = re.sub(lab + rf'{item} (damage|critical damage) ([+-]\d+(?:\.\d+)?%)(.*)$', r'\1\4 \3 with your \2\5', text, flags=re.I)
+    text = re.sub(r'^sigil armor:\s*(.+?) per piece$', r'\1 per sigil piece', text, flags=re.I)
     # "(including you)" decides who an aura reaches; it isn't a note.
     text = re.sub(r'\s*\(including you\)', ' including you', text, flags=re.I)
     # "+10% damage and immunity to Darkness, Nausea and Blindness": keep the immunity list together.

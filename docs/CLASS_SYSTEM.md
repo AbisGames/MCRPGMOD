@@ -451,6 +451,8 @@ second, and a player's bonuses are rebuilt only when an answer changes.
 | `pipican:ability_active` | `ability` | One of the player's ability states/toggles is running. |
 | `pipican:has_eidolon` | – | The player's eidolon exists. |
 | `pipican:holding_favored` | – | Your main hand holds your favored weapon kind. |
+| `pipican:item_rule` | `rule`, `min` (=1) | `bound_weapon` (holding the weapon from hotbar slot 1), `sigil_weapon` (holding a weapon renamed at an anvil), `sigil_armor` (wearing at least `min` trimmed armor pieces). |
+| `pipican:carrying` | `items` | One of the items is anywhere in your inventory. |
 | `pipican:still` | `seconds` (=1) | Hasn't moved for that long. `not` it (with `seconds: 0.5`) for "while moving". |
 | `pipican:not` | `condition` | The condition is false. |
 | `pipican:all_of`, `pipican:any_of` | `conditions` (list) | All / at least one are true. |
@@ -467,7 +469,7 @@ Adding a condition type (Java): implement `condition/ClassCondition` and registe
   "scaling": [ { "source": "special_stat", "per": 0.25 }, { "source": "class_level", "per": 0.1 } ] }
 ```
 
-final amount = `amount + Σ(per × source)`. Sources: `class_level`, `special_stat`, or any stat id (`"mypack:strength"`).
+final amount = `amount + Σ(per × source)`. Sources: `class_level`, `special_stat`, `sigil_armor` (worn armor pieces with a trim), or any stat id (`"mypack:strength"`).
 
 ### Adding a new effect type (Java, rare)
 

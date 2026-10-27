@@ -53,7 +53,9 @@ def _frac(word):
 
 
 def _atoms(ctx):
-    rn = re.escape((ctx.get('resource_name') or '\0').lower())
+    full = (ctx.get('resource_name') or '\0').lower()
+    # "Eldritch Charge" can be written as just "Charge".
+    rn = '(?:' + re.escape(full) + ('|' + re.escape(full.split()[-1]) if ' ' in full else '') + ')'
     num = r'(\d+(?:\.\d+)?%|half|a quarter)'
     import named
     return named.atoms(ctx) + [
@@ -116,6 +118,25 @@ def _atoms(ctx):
         (r'(slowed|poisoned|withered|weakened|blinded)', lambda m: {'type': 'pipican:effect', 'effects': 'minecraft:' + {
             'slowed': 'slowness', 'poisoned': 'poison', 'withered': 'wither', 'weakened': 'weakness', 'blinded': 'blindness'}[m.group(1)]}, OTHER),
         (r'(?:with|holding|using) your favored weapon(?: type)?', lambda m: {'type': 'pipican:holding_favored'}, OTHER),
+        (r'(?:with|holding|using) (?:any|a) weapon that isn\'t your bound weapon|(?:with|holding) a weapon other than your bound weapon',
+         lambda m: {'type': 'pipican:all_of', 'conditions': [
+             {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:holding', 'items': '#pipican:weapons/melee'}, {'type': 'pipican:holding', 'items': '#pipican:weapons/ranged'}]},
+             not_({'type': 'pipican:item_rule', 'rule': 'bound_weapon'})]}, OTHER),
+        (r'(?:with|holding|using) (?:your |the )?bound weapon', lambda m: {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}, OTHER),
+        (r'(?:with|holding|using) (?:your |a )?sigil(?:-marked)? weapons?', lambda m: {'type': 'pipican:item_rule', 'rule': 'sigil_weapon'}, OTHER),
+        (r'(?:with|wearing) (\d|one|two|three|four) sigil(?:-marked)? (?:armor )?pieces', lambda m: {'type': 'pipican:item_rule', 'rule': 'sigil_armor',
+         'min': int(WORDS.get(m.group(1), m.group(1)))}, OTHER),
+        (r'(?:while )?(?:a |holding a )?book(?:, writable book or enchanted book)? is in your off-hand|(?:with|holding) a book in your off-hand',
+         lambda m: {'type': 'pipican:holding', 'items': ['minecraft:book', 'minecraft:writable_book', 'minecraft:enchanted_book'], 'hand': 'off'}, OTHER),
+        (r'with no book anywhere in your inventory|without a book in your inventory', lambda m: not_({'type': 'pipican:carrying',
+         'items': ['minecraft:book', 'minecraft:writable_book', 'minecraft:written_book', 'minecraft:enchanted_book']}), OTHER),
+        (r'(?:while )?holding a totem_of_undying or golden item in the off-hand', lambda m: {'type': 'pipican:holding', 'items': [
+            'minecraft:totem_of_undying', 'minecraft:golden_sword', 'minecraft:golden_axe', 'minecraft:golden_pickaxe', 'minecraft:golden_shovel',
+            'minecraft:golden_hoe', 'minecraft:golden_apple', 'minecraft:enchanted_golden_apple', 'minecraft:gold_ingot', 'minecraft:gold_nugget',
+            'minecraft:golden_carrot', 'minecraft:clock'], 'hand': 'off'}, OTHER),
+        (r'(?:with |holding )?a banner in your off-hand|banner in off-hand', lambda m: {'type': 'pipican:holding', 'items': '#minecraft:banners', 'hand': 'off'}, OTHER),
+        (r'holding a weapon in your off-hand', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'off'}, OTHER),
+        (r'with (?:your )?staff(?: of magic)?|holding a staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
         (r'not holding your staff', lambda m: not_({'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}), OTHER),
         (r'holding your staff|with your staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
         (r'not sneaking', lambda m: not_(state('sneaking')), OTHER),
@@ -188,4 +209,6 @@ TRAILING = re.compile(
     r'in (?:the )?rain\b|in (?:rain|thunderstorms?|storms?)\b|in water\b|in rain or water\b|in (?:a )?(?:forests?|deserts?|jungles?|oceans?)\b|'
     r'in natural biomes?\b|in (?:snowy|cold|frozen) biomes?\b|in (?:darkness|the dark|low light|dim light|shadows?|bright light)\b|'
     r'in light level\b|below half health\b|below \d+% health\b|above half health\b|at full health\b|'
+    r'with (?:your |the |a |any )?(?:bound weapon|sigil(?:-marked)? weapons?|staff|weapon that isn\'t your bound weapon)\b|with \d sigil\b|'
+    r'with no book\b|while (?:a )?book\b|holding a weapon in your off-hand\b|'
     r'on foot\b|on (?:stone|dirt|sand|gravel|netherrack|nether blocks)\b|(?:standing|you stand) on\b|in lava\b|without (?:a )?shield\b|with (?:a )?shield\b|on dry land\b|out of (?:the )?water\b)', re.I)

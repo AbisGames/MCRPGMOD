@@ -29,23 +29,33 @@
     {
       "id": "long_reach",
       "name": "Long Reach",
-      "description": {
-        "text": "+0.5 reach with staff",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+0.5 reach with staff",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:entity_interaction_range",
+              "amount": 0.5
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "staff_of_power",

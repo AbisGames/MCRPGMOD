@@ -3,7 +3,13 @@
   "description": "Trained by killing mobs with your favored weapon.",
   "icon": "minecraft:diamond_sword",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:holding_favored"
+    }
   },
   "points_to": "special",
   "classes": [

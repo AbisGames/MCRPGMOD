@@ -11,21 +11,30 @@
     {
       "id": "two_weapons",
       "name": "Fight with Two Weapons",
-      "description": {
-        "text": "holding a weapon in your off-hand: +10% attack speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "holding a weapon in your off-hand: +10% attack speed",
       "type": "small",
       "x": 210,
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:attack_speed",
+              "amount": 0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
       ]
     },
     {

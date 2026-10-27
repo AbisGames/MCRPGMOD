@@ -65,6 +65,31 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:book",
+          "minecraft:writable_book",
+          "minecraft:enchanted_book"
+        ],
+        "hand": "off"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.15
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
       "type": "pipican:bonus",
       "kind": "experience",
       "amount": 0.15
@@ -108,17 +133,37 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Without the grimoire, a wizard is just a nervous scholar.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Without the grimoire, a wizard is just a nervous scholar.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:carrying",
+            "items": [
+              "minecraft:book",
+              "minecraft:writable_book",
+              "minecraft:written_book",
+              "minecraft:enchanted_book"
+            ]
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.3,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:damage_dealt",
+            "damage_types": "#pipican:is_magic",
+            "multiplier": 0.9
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

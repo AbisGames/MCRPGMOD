@@ -58,6 +58,11 @@
   },
   "passives": [
     {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:attack_damage",
+      "amount": 6.0
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:holding",
@@ -76,6 +81,41 @@
           "type": "pipican:damage_taken",
           "damage_types": "#pipican:is_magic",
           "multiplier": 0.85
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/staff",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
         }
       ]
     }

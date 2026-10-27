@@ -29,23 +29,37 @@
     {
       "id": "fire_rune",
       "name": "Fire Rune",
-      "description": {
-        "text": "sigil weapon hits ignite for 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "sigil weapon hits ignite for 2s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "sigil_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "melee_hit",
+              "actions": [
+                {
+                  "type": "pipican:damage",
+                  "target": "victim",
+                  "amount": 0,
+                  "fire_seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "mighty_sigils",

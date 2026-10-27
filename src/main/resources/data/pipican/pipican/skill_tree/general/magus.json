@@ -4,38 +4,56 @@
     {
       "id": "magus_start",
       "name": "Magus",
-      "description": {
-        "text": "+3% staff damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3% staff damage",
       "type": "start",
       "x": 346,
-      "y": -1562
+      "y": -1562,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.03
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "magus_ironwood",
       "name": "Ironwood",
-      "description": {
-        "text": "+5% staff damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% staff damage",
       "type": "small",
       "x": 335,
       "y": -1636,
       "links": [
         "magus_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {
@@ -81,16 +99,7 @@
     {
       "id": "magus_spellguard_staff",
       "name": "Spellguard Staff",
-      "description": {
-        "text": "+1 armor with staff",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 armor with staff",
       "type": "notable",
       "x": 403,
       "y": -1693,
@@ -98,7 +107,26 @@
         "magus_focus_crystal"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "magus_staff_of_the_archmagus",

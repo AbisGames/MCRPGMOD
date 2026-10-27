@@ -4,19 +4,25 @@
     {
       "id": "spellbinder_start",
       "name": "Spellbinder",
-      "description": {
-        "text": "+3% bound weapon damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3% bound weapon damage",
       "type": "start",
       "x": -650,
-      "y": -375
+      "y": -375,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.03
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "spellbinder_rune_edge",
@@ -59,16 +65,7 @@
     {
       "id": "spellbinder_eldritch",
       "name": "Eldritch Flames",
-      "description": {
-        "text": "bound weapon hits set mobs on fire for 2s while Charge is above half",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bound weapon hits set mobs on fire for 2s while Charge is above half",
       "type": "notable",
       "x": -785,
       "y": -421,
@@ -76,7 +73,39 @@
         "spellbinder_rune_edge"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:item_rule",
+                "rule": "bound_weapon"
+              },
+              {
+                "type": "pipican:resource",
+                "min": 0.5
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "melee_hit",
+              "actions": [
+                {
+                  "type": "pipican:damage",
+                  "target": "victim",
+                  "amount": 0,
+                  "fire_seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "spellbinder_battle_mage",

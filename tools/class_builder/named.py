@@ -276,8 +276,26 @@ def summons(t, scal):
     return None
 
 
+ITEM_CONDS = {'bound weapon': {'type': 'pipican:item_rule', 'rule': 'bound_weapon'},
+              'sigil weapon': {'type': 'pipican:item_rule', 'rule': 'sigil_weapon'},
+              'staff': {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}}
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    # "sigil weapon hits ignite for 2s", "bound weapon hits set mobs on fire for 2s while Charge is above half"
+    m = re.fullmatch(rf'(bound weapon|sigil weapon|staff) hits (?:ignite|set mobs on fire)(?: mobs)? for {N}s(?: (while .+))?', t)
+    if m:
+        import conditions as cond
+        whens = [ITEM_CONDS[m.group(1)]]
+        if m.group(3):
+            extra = cond.parse(m.group(3), ctx)
+            if extra is None:
+                return None
+            whens.append(extra)
+        when = whens[0] if len(whens) == 1 else {'type': 'pipican:all_of', 'conditions': whens}
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:on', 'event': 'melee_hit',
+                 'actions': [{'type': 'pipican:damage', 'target': 'victim', 'amount': 0, 'fire_seconds': float(m.group(2))}]}]}]
     au = auras(t, ctx)
     if au:
         return au

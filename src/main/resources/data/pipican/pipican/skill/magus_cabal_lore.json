@@ -3,11 +3,17 @@
   "description": "Trained by fighting with your staff.",
   "icon": "minecraft:blaze_rod",
   "trigger": {
-    "type": "pipican:melee_hit",
-    "items": [
-      "minecraft:blaze_rod",
-      "minecraft:stick"
-    ]
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "when": {
+      "type": "pipican:holding",
+      "items": [
+        "minecraft:blaze_rod",
+        "minecraft:stick"
+      ]
+    }
   },
   "points_to": "special",
   "classes": [

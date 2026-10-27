@@ -60,6 +60,43 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "sigil_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 1.0
+      },
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "sigil_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Runes need marked gear. Plain gear is dead weight.",

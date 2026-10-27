@@ -3,7 +3,14 @@
   "description": "Trained by killing mobs with your bound weapon.",
   "icon": "minecraft:amethyst_shard",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:item_rule",
+      "rule": "bound_weapon"
+    }
   },
   "points_to": "special",
   "classes": [
