@@ -19,21 +19,19 @@
     {
       "id": "thief_sticky",
       "name": "Sticky Fingers",
-      "description": {
-        "text": "+5% extra mob loot chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% extra mob loot chance",
       "type": "small",
       "x": -115,
       "y": 812,
       "links": [
         "thief_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_loot",
+          "amount": 0.05
+        }
       ]
     },
     {

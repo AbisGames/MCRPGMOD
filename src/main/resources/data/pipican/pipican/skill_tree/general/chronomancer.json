@@ -58,16 +58,7 @@
     {
       "id": "chronomancer_foresight",
       "name": "Foresight",
-      "description": {
-        "text": "+5% Precognition",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% Precognition",
       "type": "notable",
       "x": 232,
       "y": -1371,
@@ -75,7 +66,13 @@
         "chronomancer_fast_hands"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.05
+        }
+      ]
     },
     {
       "id": "chronomancer_stretch",

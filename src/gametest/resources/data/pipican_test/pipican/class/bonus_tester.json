@@ -60,6 +60,33 @@
       "type": "pipican:mount",
       "attribute": "minecraft:armor",
       "amount": 4
+    },
+    {
+      "type": "pipican:on",
+      "event": "kill",
+      "chance": 0.0,
+      "name": "tester",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 4
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "tester",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bleed",
+      "damage": 1,
+      "seconds": 4
+    },
+    {
+      "type": "pipican:bleed",
+      "seconds": 1,
+      "max_stacks": 2
     }
   ],
   "special_stat": {

@@ -79,6 +79,20 @@
           "multiplier": 0.0
         }
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.2,
+      "actions": [
+        {
+          "type": "pipican:damage",
+          "target": "victim",
+          "amount": 0,
+          "fire_seconds": 4.0
+        }
+      ],
+      "name": "ignite"
     }
   ],
   "special_passives": [
@@ -90,6 +104,17 @@
         {
           "source": "special_stat",
           "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "ignite",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
         }
       ]
     }

@@ -29,23 +29,21 @@
     {
       "id": "shove",
       "name": "Shove",
-      "description": {
-        "text": "melee knockback +25%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "melee knockback +25%",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "knockback",
+          "amount": 0.25
+        }
+      ]
     },
     {
       "id": "mighty_thews",

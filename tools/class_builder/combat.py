@@ -80,6 +80,7 @@ VICTIM_STATES = [
      lambda m: {'not_targeting_you': True}),
     (r'(?:your |the )?marked (?:target|targets|mob|mobs|prey)|(?:your )?prey', lambda m: {'marked': True}),
     (r'burning mobs|mobs (?:that are )?on fire', lambda m: {'on_fire': True}),
+    (r'bleeding (?:mobs|targets|enemies)|(?:mobs|targets) that are bleeding', lambda m: {'bleeding': True}),
 ]
 
 
@@ -178,12 +179,19 @@ def dodge(low, ctx, scal_fn):
     """"+8% dodge chance", "8% chance to completely avoid a melee hit", "+5% chance a melee hit against you misses"."""
     m = re.fullmatch(r'\+?(\d+(?:\.\d+)?)% dodge(?: chance)?()', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance to (?:completely )?(?:avoid|dodge) (?:a |an )?(melee )?(?:hit|attack)s?', low) or \
-        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance (?:a|an) (melee )?(?:hit|attack) against you misses', low)
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance (?:a|an|any) (melee )?(?:hit|attack) against you misses', low) or \
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance to parry (melee )?(?:hits|attacks)', low) or \
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (?:miss chance|precognition)()', low) or \
+        re.fullmatch(r'(?:miss chance|precognition) \+?(\d+(?:\.\d+)?)%()', low) or \
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (parry) chance', low) or re.fullmatch(r'(?:parry chance) \+?(\d+(?:\.\d+)?)%( )', low) or \
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (arrow)-?\s?deflect(?:ion)? chance', low) or re.fullmatch(r'arrow-?\s?deflect(?:ion)? chance \+?(\d+(?:\.\d+)?)%( arrow)', low)
     if not m:
         return None
     amount, scaling = scal_fn(float(m.group(1)))
     e = {'type': 'pipican:dodge', 'chance': round(amount / 100, 6)}
-    if m.group(2):
+    if m.group(2) and 'arrow' in m.group(2):
+        e['ranged_only'] = True
+    elif m.group(2):
         e['melee_only'] = True
     if scaling:
         e['scaling'] = [{'source': s, 'per': round(p / 100, 6)} for s, p in scaling]
@@ -253,7 +261,7 @@ def outcome(text, target):
     m = re.fullmatch(r'(?:gain|get|you gain|you get|grant you|give you) ' + eff + r'(?: for (\d+(?:\.\d+)?)s| \((\d+(?:\.\d+)?)s\))?', t)
     if m:
         return [{'type': 'pipican:effect', 'target': 'self', 'effects': [_effect_entry(m.group(1), float(m.group(3) or m.group(4) or 3), m.group(2))]}]
-    m = re.fullmatch(r'(?:set|sets) (?:it|them|the mob|the target|the attacker|mobs) on fire(?: for (\d+)s)?|(?:catch|catches) fire|(?:ignite|ignites)(?: (?:it|them|the target|the attacker))?', t)
+    m = re.fullmatch(r'(?:set|sets) (?:it|them|the mob|the target|the attacker|mobs) on fire(?: for (\d+)s)?|(?:catch|catches) fire|(?:ignite|ignites)(?: (?:it|them|the target|the attacker))?|be set on fire|be ignited', t)
     if m:
         return [{'type': 'pipican:damage', 'target': target, 'amount': 0, 'fire_seconds': float(m.group(1) or 4) if m.lastindex else 4.0}]
     m = re.fullmatch(r'(?:are|is|get|gets|become|becomes) (poisoned|slowed|weakened|blinded|withered)(?: for (\d+)s)?', t)
@@ -299,13 +307,54 @@ def _reaction(event, chance, actions, weapons=None, victims=None):
     if victims:
         r['victims'] = victims
     r['actions'] = actions
+    name = reaction_name(actions)
+    if name and chance < 1 and event in ('hit', 'melee_hit', 'ranged_hit'):
+        r['name'] = name
     return r
+
+
+def reaction_name(actions):
+    """A name chance upgrades can refer to ("+5% ignite chance"): what the first action does."""
+    a = actions[0] if actions else {}
+    if a.get('type') == 'pipican:effect' and a.get('effects'):
+        return a['effects'][0]['effect'].split(':')[1]
+    if a.get('type') == 'pipican:damage' and a.get('fire_seconds') and not a.get('amount'):
+        return 'ignite'
+    if a.get('type') == 'pipican:lightning':
+        return 'lightning'
+    if a.get('type') == 'pipican:control':
+        return a.get('mode', 'control')
+    return None
 
 
 def reaction(low):
     """On-hit / on-kill / when-hit / on-block phrases -> [pipican:on]."""
     t = low.strip().rstrip('.')
     hit = r'(?:your )?(|melee |arrow |ranged |sword |axe |mace |spear |bow |crossbow )(?:hits|attacks|strikes|arrows)'
+    m = re.fullmatch(r'(\d+(?:\.\d+)?)% chance (?:a |an )?(?:hostile )?mob you hit is charmed(?: - it stops attacking you for (\d+(?:\.\d+)?)s(?: and wanders off)?)?', t)
+    if m:
+        return [_reaction('hit', float(m.group(1)) / 100,
+                          [{'type': 'pipican:control', 'target': 'victim', 'mode': 'pacify', 'seconds': float(m.group(2) or 5)}])]
+    m = re.fullmatch(r'your hits have a (\d+(?:\.\d+)?)% chance (in thunderstorms|in (?:the )?rain|at night) to call down lightning on the (?:target|mob)', t) or \
+        re.fullmatch(r'your hits have a (\d+(?:\.\d+)?)% chance()() to call down lightning on the (?:target|mob)', t)
+    if m:
+        r = _reaction('hit', float(m.group(1)) / 100, [{'type': 'pipican:lightning'}])
+        when = {'in thunderstorms': 'thundering', 'in the rain': 'raining', 'in rain': 'raining', 'at night': 'night'}.get(m.group(2))
+        if when:
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': when}, 'effects': [r]}]
+        return [r]
+    m = re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance (?:that )?your (|melee |ranged |arrow |sword |axe |bow |crossbow )hits (give|inflict|apply|cause) (.+)', t)
+    if m:
+        out = outcome(m.group(3) + ' ' + m.group(4), 'victim')
+        if out:
+            event, weapons = HIT_WORDS[m.group(2)]
+            return [_reaction(event, float(m.group(1)) / 100, out, weapons)]
+    m = re.fullmatch(r'(\d+(?:\.\d+)?)% chance on (|melee |ranged |arrow |sword |axe |bow |crossbow )hit to (.+)', t)
+    if m:
+        out = outcome(m.group(3), 'victim')
+        if out:
+            event, weapons = HIT_WORDS[m.group(2)]
+            return [_reaction(event, float(m.group(1)) / 100, out, weapons)]
     m = re.fullmatch(hit + r' have (?:a )?(\d+(?:\.\d+)?)% chance to (.+)', t) or \
         re.fullmatch(r'(\d+(?:\.\d+)?)% chance (?:that |for )?(?:your )?(|melee |arrow |ranged |sword |axe |bow |crossbow )(?:hits?|attacks?) (?:also )?(.+)', t)
     if m:

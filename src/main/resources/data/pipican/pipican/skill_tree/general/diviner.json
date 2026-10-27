@@ -19,21 +19,18 @@
     {
       "id": "diviner_third_eye",
       "name": "Third Eye",
-      "description": {
-        "text": "+5% miss chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% miss chance",
       "type": "small",
       "x": 1624,
       "y": -388,
       "links": [
         "diviner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.05
+        }
       ]
     },
     {

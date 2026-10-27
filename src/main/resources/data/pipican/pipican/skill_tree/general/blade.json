@@ -47,36 +47,24 @@
     {
       "id": "blade_serrated",
       "name": "Serrated",
-      "description": {
-        "text": "+1 bleed damage per tick on criticals",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 bleed damage per tick on criticals",
       "type": "small",
       "x": -583,
       "y": 1185,
       "links": [
         "blade_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "damage": 1.0
+        }
       ]
     },
     {
       "id": "blade_arterial_strike",
       "name": "Arterial Strike",
-      "description": {
-        "text": "bleeding mobs are Slowed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bleeding mobs are Slowed",
       "type": "notable",
       "x": -563,
       "y": 1271,
@@ -84,7 +72,13 @@
         "blade_quick_cuts"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "slows": true
+        }
+      ]
     },
     {
       "id": "blade_close_quarters",
@@ -111,16 +105,7 @@
     {
       "id": "blade_thousand_cuts",
       "name": "Thousand Cuts",
-      "description": {
-        "text": "every hit (not just crits) causes bleeding, but -20% sword damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "every hit (not just crits) causes bleeding, but -20% sword damage",
       "type": "keystone",
       "x": -617,
       "y": 1323,
@@ -129,7 +114,18 @@
         "blade_close_quarters"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "any_hit": true
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 0.8
+        }
+      ]
     }
   ]
 }

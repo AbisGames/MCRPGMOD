@@ -80,6 +80,34 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.0,
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:blindness",
+              "seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "name": "blindness"
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "blindness",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

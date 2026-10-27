@@ -89,6 +89,24 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "melee_hit",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:poison",
+              "seconds": 4.0
+            }
+          ]
+        }
+      ],
+      "name": "poison"
     }
   ],
   "special_passives": [
@@ -102,6 +120,17 @@
         {
           "source": "special_stat",
           "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "poison",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
         }
       ]
     }

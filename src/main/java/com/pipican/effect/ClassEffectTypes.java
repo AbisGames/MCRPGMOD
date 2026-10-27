@@ -1,5 +1,7 @@
 package com.pipican.effect;
 
+import com.pipican.effect.type.ReactionChanceEffect;
+import com.pipican.effect.type.BleedEffect;
 import com.pipican.effect.type.MountEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -60,6 +62,8 @@ public final class ClassEffectTypes {
     public static final Type DODGE = register("dodge", DodgeEffect.CODEC);
     public static final Type IMMUNE = register("immune", ImmuneEffect.CODEC);
     public static final Type MOUNT = register("mount", MountEffect.CODEC);
+    public static final Type BLEED = register("bleed", BleedEffect.CODEC);
+    public static final Type REACTION_CHANCE = register("reaction_chance", ReactionChanceEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}

@@ -103,16 +103,7 @@
     {
       "id": "astromancer_solar_flare",
       "name": "Solar Flare",
-      "description": {
-        "text": "mobs that hit you have 10% chance to be set on fire",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs that hit you have 10% chance to be set on fire",
       "type": "notable",
       "x": 1328,
       "y": -411,
@@ -120,7 +111,22 @@
         "astromancer_moonlit"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "chance": 0.1,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 0,
+              "fire_seconds": 4.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "astromancer_power_of_the_sun",

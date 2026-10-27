@@ -259,6 +259,9 @@ def _one(clause, ctx):
         bn = bonus.leading(value, what, scal)
         if bn is not None:
             return bn
+    ch = bonus.chances(whole, scal)
+    if ch:
+        return ch
     vs = combat.against(what, ctx, value, pct, scal)
     if vs is not None:
         return vs
@@ -464,7 +467,7 @@ def _segment(seg, ctx):
         return [], [seg.strip()]
     if mounted is not None:
         return mounted, []
-    reacted = combat.reaction(_clean(seg).lower()) or bonus.resource(_clean(seg).lower(), ctx) or bonus.boost(_clean(seg).lower(), ctx)
+    reacted = combat.reaction(_clean(seg).lower()) or bonus.resource(_clean(seg).lower(), ctx) or bonus.boost(_clean(seg).lower(), ctx) or bonus.scaled_reaction(_clean(seg).lower(), ctx)
     if reacted is not None:
         return reacted, []
     wrapped = _conditional(seg, ctx)

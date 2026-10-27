@@ -50,16 +50,7 @@
     {
       "id": "immolating_flames",
       "name": "Immolating Flames",
-      "description": {
-        "text": "ignite chance +10%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "ignite chance +10%",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,14 @@
         "fan_the_flames"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "ignite",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "firebolt",

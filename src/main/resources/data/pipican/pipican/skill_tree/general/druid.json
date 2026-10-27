@@ -38,21 +38,19 @@
     {
       "id": "druid_green",
       "name": "Green Thumb",
-      "description": {
-        "text": "+10% chance of double crop drops",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% chance of double crop drops",
       "type": "small",
       "x": 696,
       "y": 434,
       "links": [
         "druid_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_crop",
+          "amount": 0.1
+        }
       ]
     },
     {

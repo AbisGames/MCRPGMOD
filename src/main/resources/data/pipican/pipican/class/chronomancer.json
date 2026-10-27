@@ -58,6 +58,24 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:dodge",
+      "chance": 0.1
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "Time takes its toll on those who bend it.",
     "effects": [

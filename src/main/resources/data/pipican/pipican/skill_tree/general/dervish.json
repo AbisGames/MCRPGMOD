@@ -98,16 +98,7 @@
     {
       "id": "dervish_deflect",
       "name": "Deflect",
-      "description": {
-        "text": "+5% parry chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% parry chance",
       "type": "notable",
       "x": -1376,
       "y": -197,
@@ -115,7 +106,14 @@
         "dervish_light_feet"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.05,
+          "melee_only": true
+        }
+      ]
     },
     {
       "id": "dervish_storm_of_steel",

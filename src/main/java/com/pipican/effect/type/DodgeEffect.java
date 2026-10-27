@@ -13,13 +13,15 @@ import java.util.List;
  * {@code pipican:dodge} - a chance to completely avoid a hit from a mob or player (not falls, fire...).
  *
  * <pre>{@code { "type": "pipican:dodge", "chance": 0.08, "melee_only": true } }</pre>
+ * {@code ranged_only}: only arrows and other projectiles ("arrow-deflect chance").
  * Chances add up, capped at 90%.
  */
-public record DodgeEffect(double chance, boolean meleeOnly, List<Scaling> scaling) implements ClassEffect {
+public record DodgeEffect(double chance, boolean meleeOnly, boolean rangedOnly, List<Scaling> scaling) implements ClassEffect {
 
     public static final MapCodec<DodgeEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.doubleRange(0, 1).fieldOf("chance").forGetter(DodgeEffect::chance),
             Codec.BOOL.optionalFieldOf("melee_only", false).forGetter(DodgeEffect::meleeOnly),
+            Codec.BOOL.optionalFieldOf("ranged_only", false).forGetter(DodgeEffect::rangedOnly),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(DodgeEffect::scaling)
     ).apply(i, DodgeEffect::new));
 
@@ -30,6 +32,11 @@ public record DodgeEffect(double chance, boolean meleeOnly, List<Scaling> scalin
 
     @Override
     public void apply(EffectContext ctx) {
-        ctx.addDodge(Scaling.evaluate(chance, scaling, ctx) * ctx.rank(), meleeOnly);
+        double value = Scaling.evaluate(chance, scaling, ctx) * ctx.rank();
+        if (rangedOnly) {
+            ctx.addRangedDodge(value);
+        } else {
+            ctx.addDodge(value, meleeOnly);
+        }
     }
 }

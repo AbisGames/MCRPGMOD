@@ -1,5 +1,6 @@
 package com.pipican.effect;
 
+import com.pipican.ability.Bleeds;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pipican.ability.Marks;
@@ -12,18 +13,19 @@ import net.minecraft.world.entity.player.Player;
 
 /**
  * What a damage bonus requires of the mob being hit ({@code "victim"} on {@code pipican:damage_dealt}):
- * <pre>{@code "victim": { "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true, "marked": true, "on_fire": true } }</pre>
+ * <pre>{@code "victim": { "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true, "marked": true, "on_fire": true, "bleeding": true } }</pre>
  * Every field is optional; all given ones must hold. {@code health} is health / max health (0-1);
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
-public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire) {
+public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
             Codec.BOOL.optionalFieldOf("harmful_effect", false).forGetter(VictimState::harmfulEffect),
             Codec.BOOL.optionalFieldOf("not_targeting_you", false).forGetter(VictimState::notTargetingYou),
             Codec.BOOL.optionalFieldOf("marked", false).forGetter(VictimState::marked),
-            Codec.BOOL.optionalFieldOf("on_fire", false).forGetter(VictimState::onFire)
+            Codec.BOOL.optionalFieldOf("on_fire", false).forGetter(VictimState::onFire),
+            Codec.BOOL.optionalFieldOf("bleeding", false).forGetter(VictimState::bleeding)
     ).apply(i, VictimState::new));
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
@@ -37,6 +39,9 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (marked && !(attacker instanceof Player p && Marks.isMarkedBy(victim, p))) {
+            return false;
+        }
+        if (bleeding && !Bleeds.isBleeding(victim)) {
             return false;
         }
         return !onFire || victim.isOnFire();

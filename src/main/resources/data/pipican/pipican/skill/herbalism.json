@@ -21,17 +21,14 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+5% chance of double crop drops",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% chance of double crop drops",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_crop",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": {
@@ -47,17 +44,14 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "+5% chance of double crop drops",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% chance of double crop drops",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_crop",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": {
@@ -73,17 +67,14 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "+10% chance of double crop drops",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% chance of double crop drops",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_crop",
+          "amount": 0.1
+        }
+      ]
     }
   ]
 }

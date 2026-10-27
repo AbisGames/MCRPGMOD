@@ -1,5 +1,6 @@
 package com.pipican.player;
 
+import java.util.LinkedHashSet;
 import com.pipican.ability.Boosts;
 import com.pipican.effect.type.BonusEffect;
 import com.pipican.Pipican;
@@ -281,7 +282,10 @@ public final class ClassEffectApplier {
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
                 Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
                 List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount,
-                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses), Map.copyOf(c.mount));
+                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses), Map.copyOf(c.mount),
+                new ClassState.Bleed(c.bleedDamage, c.bleedSeconds, Math.max(1, c.bleedStacks), c.bleedAnyHit, c.bleedSlows,
+                        c.bleedWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.bleedWeapons)))),
+                Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge));
     }
 
     /**
@@ -359,6 +363,14 @@ public final class ClassEffectApplier {
         boolean flight;
         int spellPoints;
         double dodge;
+        double rangedDodge;
+        double bleedDamage;
+        double bleedSeconds;
+        int bleedStacks;
+        boolean bleedAnyHit;
+        boolean bleedSlows;
+        final Set<Holder<Item>> bleedWeapons = new LinkedHashSet<>();
+        final Map<String, ClassState.ReactionChance> reactionChances = new HashMap<>();
         double meleeDodge;
         final List<ClassState.Critical> criticals = new ArrayList<>();
         final Set<Holder<MobEffect>> immunities = new HashSet<>();
@@ -459,6 +471,27 @@ public final class ClassEffectApplier {
         @Override
         public void addReaction(ReactionEffect reaction) {
             reactions.add(reaction);
+        }
+
+        @Override
+        public void addBleed(double damage, double seconds, int maxStacks, boolean anyHit, boolean slows, Optional<HolderSet<Item>> weapons) {
+            bleedDamage += damage;
+            bleedSeconds += seconds;
+            bleedStacks = Math.max(bleedStacks, maxStacks);
+            bleedAnyHit |= anyHit;
+            bleedSlows |= slows;
+            weapons.ifPresent(set -> set.forEach(bleedWeapons::add));
+        }
+
+        @Override
+        public void addReactionChance(String name, double amount, double multiplier) {
+            reactionChances.merge(name, new ClassState.ReactionChance(amount, multiplier),
+                    (a, b) -> new ClassState.ReactionChance(a.add() + b.add(), a.multiplier() * b.multiplier()));
+        }
+
+        @Override
+        public void addRangedDodge(double chance) {
+            rangedDodge += chance;
         }
 
         @Override

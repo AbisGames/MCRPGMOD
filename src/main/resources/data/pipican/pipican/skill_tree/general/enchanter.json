@@ -4,38 +4,34 @@
     {
       "id": "enchanter_start",
       "name": "Enchanter",
-      "description": {
-        "text": "+3% charm chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3% charm chance",
       "type": "start",
       "x": 800,
-      "y": -1386
+      "y": -1386,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "pacify",
+          "amount": 0.03
+        }
+      ]
     },
     {
       "id": "enchanter_captivate",
       "name": "Captivate",
-      "description": {
-        "text": "+5% charm chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% charm chance",
       "type": "small",
       "x": 811,
       "y": -1460,
       "links": [
         "enchanter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "pacify",
+          "amount": 0.05
+        }
       ]
     },
     {

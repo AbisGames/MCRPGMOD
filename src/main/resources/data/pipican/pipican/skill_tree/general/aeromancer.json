@@ -59,16 +59,7 @@
     {
       "id": "aeromancer_deflecting_winds",
       "name": "Deflecting Winds",
-      "description": {
-        "text": "+10% arrow-deflect chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% arrow-deflect chance",
       "type": "notable",
       "x": -529,
       "y": -1286,
@@ -76,7 +67,14 @@
         "aeromancer_updraft"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.1,
+          "ranged_only": true
+        }
+      ]
     },
     {
       "id": "aeromancer_skyborn",

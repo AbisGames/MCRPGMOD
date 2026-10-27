@@ -1,5 +1,9 @@
 package com.pipican.event;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.UUID;
+import java.util.Map;
+import com.pipican.ability.Bleeds;
 import com.pipican.ability.Mounts;
 import com.pipican.ability.Movement;
 import com.pipican.ability.Boosts;
@@ -56,6 +60,11 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class ClassEvents {
+
+    /** The mob each player just crit (set by CriticalHitEvent, read when the damage lands). */
+    private static final Map<UUID, Crit> CRITS = new ConcurrentHashMap<>();
+
+    private record Crit(net.minecraft.world.entity.Entity target, long tick) {}
 
     private ClassEvents() {}
 
@@ -156,7 +165,7 @@ public final class ClassEvents {
             // Dodge: only hits from someone (mobs, players, their arrows), never falls or fire.
             if (source != null) {
                 boolean melee = event.getSource().getDirectEntity() == source;
-                double chance = state.dodgeChance() + (melee ? state.meleeDodgeChance() : 0);
+                double chance = state.dodgeChance() + (melee ? state.meleeDodgeChance() : state.rangedDodgeChance());
                 if (chance > 0 && victim.getRandom().nextDouble() < chance) {
                     victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
                     event.setCanceled(true);
@@ -254,6 +263,7 @@ public final class ClassEvents {
         Summons.tick(event.getServer());
         MobControl.tick(event.getServer());
         Scry.tick(event.getServer());
+        Bleeds.tick(event.getServer());
     }
 
     /** Summons left over from before a restart are not loaded back in. */
@@ -272,9 +282,20 @@ public final class ClassEvents {
         if (event.getInflictedDamage() <= 0) {
             return;
         }
+        if (Bleeds.ticking()) {
+            return;
+        }
         if (event.getSource().getEntity() instanceof ServerPlayer attacker && event.getEntity() != attacker) {
             Combat.mark(attacker);
             Reactions.onHit(attacker, event.getEntity(), event.getSource());
+            Crit last = CRITS.remove(attacker.getUUID());
+            boolean crit = last != null && last.target() == event.getEntity() && last.tick() == attacker.level().getGameTime();
+            if (crit) {
+                Reactions.fire(attacker, event.getEntity(), event.getSource().getWeaponItem(), ReactionEffect.Event.CRIT);
+            }
+            if (event.getSource().getDirectEntity() == attacker) {
+                Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);
+            }
         }
         if (event.getEntity() instanceof ServerPlayer victim) {
             LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
@@ -321,6 +342,8 @@ public final class ClassEvents {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
+        // Remember who was crit, for crit reactions and bleeding once the hit lands (LivingDamageEvent.Post).
+        CRITS.remove(player.getUUID());
         var criticals = ClassEffectApplier.state(player).criticals();
         if (criticals.isEmpty()) {
             return;
@@ -340,6 +363,14 @@ public final class ClassEvents {
         }
         if (event.isCriticalHit() && damage != 0) {
             event.setDamageMultiplier((float) Math.max(1, event.getDamageMultiplier() * (1 + damage)));
+        }
+    }
+
+    /** Runs after {@link #onCriticalHit} so crits made by any mod count. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
+    public static void rememberCritical(CriticalHitEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.isCriticalHit()) {
+            CRITS.put(player.getUUID(), new Crit(event.getTarget(), player.level().getGameTime()));
         }
     }
 

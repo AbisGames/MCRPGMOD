@@ -31,17 +31,13 @@
       ]
     },
     {
-      "description": {
-        "text": "+1s bleed duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1s bleed duration",
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "seconds": 1.0
+        }
+      ]
     },
     {
       "description": "+1 Edge",

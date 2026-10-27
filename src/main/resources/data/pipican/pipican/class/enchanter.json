@@ -60,6 +60,22 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:control",
+          "target": "victim",
+          "mode": "pacify",
+          "seconds": 5.0
+        }
+      ],
+      "name": "pacify"
+    }
+  ],
   "weakness": {
     "description": "Charms need a mind to work on.",
     "effects": [

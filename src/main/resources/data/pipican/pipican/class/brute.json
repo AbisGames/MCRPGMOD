@@ -64,6 +64,11 @@
       "type": "pipican:attribute",
       "attribute": "minecraft:knockback_resistance",
       "amount": 0.2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "knockback",
+      "amount": 0.5
     }
   ],
   "special_passives": [

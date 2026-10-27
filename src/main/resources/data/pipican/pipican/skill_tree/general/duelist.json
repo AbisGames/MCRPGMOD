@@ -80,16 +80,7 @@
     {
       "id": "duelist_parry",
       "name": "Parry",
-      "description": {
-        "text": "10% chance to parry melee hits",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "10% chance to parry melee hits",
       "type": "notable",
       "x": -1336,
       "y": -386,
@@ -97,7 +88,14 @@
         "duelist_footwork"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.1,
+          "melee_only": true
+        }
+      ]
     },
     {
       "id": "duelist_lone_wolf",

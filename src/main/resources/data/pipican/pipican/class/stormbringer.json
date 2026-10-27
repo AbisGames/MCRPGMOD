@@ -92,6 +92,26 @@
           "multiplier": 1.15
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "thundering"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.05,
+          "actions": [
+            {
+              "type": "pipican:lightning"
+            }
+          ],
+          "name": "lightning"
+        }
+      ]
     }
   ],
   "special_passives": [
@@ -124,6 +144,17 @@
               "per": 0.003
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "lightning",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
         }
       ]
     }

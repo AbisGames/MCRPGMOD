@@ -19,21 +19,19 @@
     {
       "id": "pyromancer_kindling",
       "name": "Kindling",
-      "description": {
-        "text": "+5% ignite chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% ignite chance",
       "type": "small",
       "x": -329,
       "y": -1279,
       "links": [
         "pyromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "ignite",
+          "amount": 0.05
+        }
       ]
     },
     {

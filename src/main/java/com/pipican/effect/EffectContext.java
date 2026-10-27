@@ -66,6 +66,15 @@ public interface EffectContext {
     /** Changes an attribute of the player's eidolon. */
     void addEidolonUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);
 
+    /** Bleeding on crits (or every hit); values add up over effects, {@code maxStacks} takes the highest. */
+    void addBleed(double damage, double seconds, int maxStacks, boolean anyHit, boolean slows, Optional<HolderSet<Item>> weapons);
+
+    /** Changes the chance of reactions named {@code name}. */
+    void addReactionChance(String name, double amount, double multiplier);
+
+    /** A chance to avoid hits from arrows and other projectiles. */
+    void addRangedDodge(double chance);
+
     /** Changes an attribute of whatever the player rides. */
     void addMountUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);
 

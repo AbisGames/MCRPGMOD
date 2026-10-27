@@ -40,17 +40,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% chance of extra ore drop",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% chance of extra ore drop",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_ore",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "+3% mining speed",
@@ -64,17 +61,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% chance of extra ore drop",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% chance of extra ore drop",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_ore",
+          "amount": 0.1
+        }
+      ]
     }
   ]
 }

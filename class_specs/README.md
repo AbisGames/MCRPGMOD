@@ -48,9 +48,10 @@ Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fir
 | **Health regen** | "natural regeneration is 40% faster", "+10% natural regeneration" |
 | **Only in some situations** | "+10% damage at night", "+2 armor while below half health", "-20% damage underground", "while Ward is above half: +20% speed", "+1 armor in forests", "-10% damage while no other player is within 16 blocks" |
 | **Against some mobs / mob states** | "+20% damage against undead", "+15% damage to mobs below 30% health", "+10% damage to burning / poisoned / marked mobs", "+10% damage to mobs not targeting you", "-20% damage taken from spiders" |
-| **Crits & dodging** | "+15% critical damage", "+5% crit chance with swords", "8% chance to dodge melee attacks" |
+| **Crits, dodging, bleeding** | "+15% critical damage", "+5% crit chance with swords", "8% chance to dodge melee attacks", "10% chance to parry melee hits", "+5% miss chance", "+10% arrow-deflect chance", "critical sword hits cause bleeding - the mob takes 1 damage per second for 4s", "+1s bleed duration", "bleed stacks up to 3 times", "bleeding mobs are Slowed", "bleeding mobs take +5% more damage from you" |
+| **Knockback & drops** | "melee knockback +25%", "+5% extra mob loot chance", "+10% chance of extra ore drop", "+5% chance of double crop drops" |
 | **Immunities** | "immune to poison", "immune to wither and hunger" |
-| **Chance on hit / kill** | "10% chance on hit to set mobs on fire", "kills give Speed I for 5s", "when hit, 20% chance to slow the attacker" |
+| **Chance on hit / kill** | "20% chance on hit to set mobs on fire", "+5% ignite chance" / "poison chance +0.5% per X" / "charm chance doubled" (raises that chance), "10% chance a hostile mob you hit is charmed", "your hits have a 5% chance in thunderstorms to call down lightning on the target", "kills give Speed I for 5s", "when hit, 20% chance to slow the attacker" |
 | **XP, potions, hunger, trading, bows** | "+10% experience", "+10% potion duration", "harmful potions last 30% shorter", "potion effects you apply last 30% longer", "you get hungry 30% faster", "-5% trade prices", "+15% crossbow reload speed", "+20% bow draw speed", "+10% sword attack speed" |
 | **Grows with something** | "+0.25 armor per special-stat point", "+0.1 attack damage per class level", "+1% damage per 5 strength" |
 

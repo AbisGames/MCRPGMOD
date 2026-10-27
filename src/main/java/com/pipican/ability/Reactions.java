@@ -33,7 +33,8 @@ public final class Reactions {
         if (running) {
             return;
         }
-        var reactions = ClassEffectApplier.state(player).reactions();
+        var state = ClassEffectApplier.state(player);
+        var reactions = state.reactions();
         if (reactions.isEmpty()) {
             return;
         }
@@ -41,7 +42,7 @@ public final class Reactions {
         running = true;
         try {
             for (ReactionEffect r : reactions) {
-                if (r.event() != event || player.getRandom().nextDouble() >= r.chance()) {
+                if (r.event() != event || player.getRandom().nextDouble() >= state.reactionChance(r)) {
                     continue;
                 }
                 if (r.weapons().isPresent() && (weapon == null || weapon.isEmpty() || !weapon.is(r.weapons().get()))) {

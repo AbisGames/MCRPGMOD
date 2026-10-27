@@ -1,5 +1,8 @@
 package com.pipican.gametest;
 
+import net.minecraft.world.entity.monster.zombie.Zombie;
+import com.pipican.effect.VictimState;
+import com.pipican.ability.Bleeds;
 import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -326,6 +329,24 @@ public final class ClassSystemTests {
         helper.assertTrue(Combat.inCombat(player), "in combat after a hit");
         Ability mend = ClassLookup.abilities(player.level().registryAccess()).getValue(ability("mend"));
         assertNear(helper, 2.5, AbilityService.cost(player, mend), "abilities cost half");
+
+        // Named reaction chances: 0% base + 100% from reaction_chance
+        double before2 = data.resource();
+        Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.KILL);
+        assertNear(helper, before2 + 6, data.resource(), "chance-0 reaction fires once its chance is raised (4 +50%)");
+
+        // Bleeding: effects add up
+        ClassState.Bleed bleed = ClassEffectApplier.state(player).bleed();
+        assertNear(helper, 5, bleed.seconds(), "bleed seconds add up");
+        helper.assertTrue(bleed.maxStacks() == 2, "highest max_stacks counts");
+        Zombie zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        helper.assertTrue(!Bleeds.isBleeding(zombie), "not bleeding yet");
+        Bleeds.onHit(player, zombie, bleed, false);
+        helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
+        Bleeds.onHit(player, zombie, bleed, true);
+        helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true).test(player, zombie), "bleeding victim state");
+        zombie.discard();
 
         // Timed boosts from reactions
         double armor = player.getAttributeValue(Attributes.ARMOR);

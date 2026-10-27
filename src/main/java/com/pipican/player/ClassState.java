@@ -50,10 +50,13 @@ public record ClassState(
         double meleeDodgeChance,
         Set<Holder<MobEffect>> immunities,
         Map<BonusEffect.Kind, Double> bonuses,
-        Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> mountUpgrades) {
+        Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> mountUpgrades,
+        Bleed bleed,
+        Map<String, ReactionChance> reactionChances,
+        double rangedDodgeChance) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -88,6 +91,28 @@ public record ClassState(
             }
             return victim.isEmpty() || other != null && self != null && victim.get().test(self, other);
         }
+    }
+
+    /** Bleeding the player causes ({@code pipican:bleed} effects added up). */
+    public record Bleed(double damage, double seconds, int maxStacks, boolean anyHit, boolean slows, Optional<HolderSet<Item>> weapons) {
+        public static final Bleed NONE = new Bleed(0, 0, 1, false, false, Optional.empty());
+    }
+
+    /** Changes to named reactions' chances: (chance + add) x multiplier. */
+    public record ReactionChance(double add, double multiplier) {}
+
+    /** A reaction's chance after {@code pipican:reaction_chance} effects. */
+    public double reactionChance(ReactionEffect reaction) {
+        if (reaction.name().isEmpty()) {
+            return reaction.chance();
+        }
+        ReactionChance change = reactionChances.get(reaction.name().get());
+        return change == null ? reaction.chance() : Math.min(1, Math.max(0, (reaction.chance() + change.add()) * change.multiplier()));
+    }
+
+    /** The summed chance of a chance-type {@code pipican:bonus} kind (extra loot...), not a multiplier. */
+    public double chance(BonusEffect.Kind kind) {
+        return bonuses.getOrDefault(kind, 0.0);
     }
 
     /** Critical-hit bonuses: crit damage (0.1 = +10%) and a chance to crit, for all weapons or only some. */

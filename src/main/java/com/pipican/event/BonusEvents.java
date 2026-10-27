@@ -1,5 +1,15 @@
 package com.pipican.event;
 
+import java.util.List;
+import java.util.ArrayList;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.tags.BlockTags;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import com.pipican.Pipican;
 import com.pipican.effect.type.BonusEffect.Kind;
@@ -27,7 +37,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerContainerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-/** Applies {@code pipican:bonus} kinds: XP, potion durations, hunger, natural regen, trade prices, draw/reload speed. */
+/** Applies {@code pipican:bonus} kinds: XP, potion durations, hunger, natural regen, trade prices, draw/reload speed, knockback, extra drops. */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class BonusEvents {
 
@@ -125,6 +135,52 @@ public final class BonusEvents {
                 event.modifyVisibility(mult);
             }
         }
+    }
+
+    /** Knockback from a player's hit (the mob was hurt by them this tick). */
+    @SubscribeEvent
+    static void onKnockback(LivingKnockBackEvent event) {
+        LivingEntity target = event.getEntity();
+        if (target.getLastHurtByMob() instanceof ServerPlayer player && target.getLastHurtByMobTimestamp() == target.tickCount) {
+            double mult = ClassEffectApplier.state(player).bonus(Kind.KNOCKBACK);
+            if (mult != 1) {
+                event.setStrength((float) (event.getStrength() * mult));
+            }
+        }
+    }
+
+    /** Extra mob loot: a chance to drop one more of a random item. */
+    @SubscribeEvent
+    static void onMobDrops(LivingDropsEvent event) {
+        if (!(event.getSource().getEntity() instanceof ServerPlayer player) || event.getDrops().isEmpty()) {
+            return;
+        }
+        if (player.getRandom().nextDouble() < ClassEffectApplier.state(player).chance(Kind.EXTRA_LOOT)) {
+            ItemEntity pick = event.getDrops().stream().toList().get(player.getRandom().nextInt(event.getDrops().size()));
+            ItemStack one = pick.getItem().copyWithCount(1);
+            event.getDrops().add(new ItemEntity(pick.level(), pick.getX(), pick.getY(), pick.getZ(), one));
+        }
+    }
+
+    /** Extra ore / crop drops: a chance that everything the block dropped drops twice. */
+    @SubscribeEvent
+    static void onBlockDrops(BlockDropsEvent event) {
+        if (!(event.getBreaker() instanceof ServerPlayer player) || event.getDrops().isEmpty()) {
+            return;
+        }
+        Kind kind = event.getState().is(Tags.Blocks.ORES) ? Kind.EXTRA_ORE : event.getState().is(BlockTags.CROPS) ? Kind.EXTRA_CROP : null;
+        if (kind == null || player.getRandom().nextDouble() >= ClassEffectApplier.state(player).chance(kind)) {
+            return;
+        }
+        // Mature crops only: a planted seed shouldn't come back doubled.
+        if (kind == Kind.EXTRA_CROP && event.getState().getBlock() instanceof CropBlock crop && !crop.isMaxAge(event.getState())) {
+            return;
+        }
+        List<ItemEntity> extra = new ArrayList<>();
+        for (ItemEntity drop : event.getDrops()) {
+            extra.add(new ItemEntity(drop.level(), drop.getX(), drop.getY(), drop.getZ(), drop.getItem().copy()));
+        }
+        event.getDrops().addAll(extra);
     }
 
     @SubscribeEvent

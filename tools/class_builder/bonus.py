@@ -89,6 +89,9 @@ def leading(value, what, scal):
 
 def special(low, scal):
     """Clauses that don't start with the number."""
+    ch = chances(low, scal)
+    if ch:
+        return ch
     mf = mount_flat(low, scal)
     if mf:
         return mf
@@ -270,3 +273,100 @@ def mount_subject(t):
         out.append(_mount_or_attr(MOUNT_ATTRS[pm.group(3)], float(pm.group(1)) / (100 if pct else 1),
                                   'add_multiplied_base' if pct else 'add_value', None))
     return out
+
+
+# ---------------------------------------------------------------- bleeding, reaction chances, knockback, extra drops
+
+SWORDS = '#pipican:weapons/swords'
+CHANCE_NAMES = {'ignite': 'ignite', 'fire': 'ignite', 'burn': 'ignite', 'poison': 'poison', 'wither': 'wither',
+                'blindness': 'blindness', 'blind': 'blindness', 'charm': 'pacify', 'lightning': 'lightning',
+                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea'}
+
+
+def _bleed(**kw):
+    return dict({'type': 'pipican:bleed'}, **kw)
+
+
+def chances(low, scal):
+    """Bleed lines, "+5% ignite chance", parry/knockback/extra-drop chances. `low` is one clause."""
+    t = low.strip().rstrip('.')
+    m = re.fullmatch(rf'critical (sword |axe )?hits cause bleeding - the mob takes {N} damage per second for {N}s', t)
+    if m:
+        e = _bleed(damage=float(m.group(2)), seconds=float(m.group(3)))
+        if m.group(1):
+            e['weapons'] = SWORDS if 'sword' in m.group(1) else '#pipican:weapons/axes'
+        return [e]
+    m = re.fullmatch(rf'\+?{N}s bleed duration', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        e = _bleed(seconds=round(v, 6))
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per, 6)} for src, per in s]
+        return [e]
+    m = re.fullmatch(rf'\+?{N} bleed damage(?: per (?:tick|second))?(?: on criticals)?', t)
+    if m:
+        return [_bleed(damage=float(m.group(1)))]
+    m = re.fullmatch(rf'bleed stacks up to {N} times', t)
+    if m:
+        return [_bleed(max_stacks=int(float(m.group(1))))]
+    if re.fullmatch(r'bleeding mobs are slowed', t):
+        return [_bleed(slows=True)]
+    if re.fullmatch(r'every hit \(not just crits\) causes bleeding|every hit causes bleeding', t):
+        return [_bleed(any_hit=True)]
+    m = re.fullmatch(rf'bleeding mobs take \+?{N}% more damage from you', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        e = {'type': 'pipican:damage_dealt', 'victim': {'bleeding': True}, 'multiplier': round(1 + v / 100, 6)}
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return [e]
+    # "+5% ignite chance", "ignite chance +10%", "+0.5% poison chance", "charm chance doubled"
+    words = '|'.join(sorted(CHANCE_NAMES, key=len, reverse=True))
+    m = re.fullmatch(rf'\+?{N}% ({words}) chance', t) or re.fullmatch(rf'({words}) chance \+?{N}%', t)
+    if m:
+        num, word = (m.group(1), m.group(2)) if m.re.pattern.startswith('\\+') else (m.group(2), m.group(1))
+        v, s = scal(float(num))
+        e = {'type': 'pipican:reaction_chance', 'name': CHANCE_NAMES[word], 'amount': round(v / 100, 6)}
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return [e]
+    m = re.fullmatch(rf'({words}) chance (doubled|tripled)', t)
+    if m:
+        return [{'type': 'pipican:reaction_chance', 'name': CHANCE_NAMES[m.group(1)], 'multiplier': 2.0 if m.group(2) == 'doubled' else 3.0}]
+    # knockback
+    m = re.fullmatch(rf'(?:your )?(?:melee )?hits knock (?:mobs|enemies) back {N}% (farther|further|less)', t) or \
+        re.fullmatch(rf'(?:melee )?knockback \+{N}%()', t) or re.fullmatch(rf'\+{N}% (?:melee )?knockback()(?! resistance)', t)
+    if m:
+        v, s = scal(float(m.group(1)) * (-1 if m.group(2) == 'less' else 1))
+        return [_effect('knockback', v, s)]
+    # extra drops
+    m = re.fullmatch(rf'\+?{N}% (?:chance (?:for|of|to get) one extra item (?:from mob loot|when a mob drops loot)|extra mob loot chance|chance of one extra roll of loot)', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        return [_effect('extra_loot', v, s)]
+    m = re.fullmatch(rf'\+?{N}% chance (?:of|for) (?:an )?extra ore drops?', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        return [_effect('extra_ore', v, s)]
+    m = re.fullmatch(rf'\+?{N}% chance (?:of|for) double crop drops', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        return [_effect('extra_crop', v, s)]
+    return None
+
+
+def scaled_reaction(t, ctx):
+    """"per 10 Radiance, +5% chance your hits give Blindness for 2s": a reaction whose chance grows with the special stat."""
+    import combat
+    sp = (ctx.get('special_name') or '').lower()
+    if not sp:
+        return None
+    m = re.fullmatch(rf'per {N} {re.escape(sp)}(?: points?)?,? \+?{N}% (chance .+)', t)
+    if not m:
+        return None
+    reacted = combat.reaction(f'{m.group(2)}% {m.group(3)}')
+    if not reacted or len(reacted) != 1 or reacted[0].get('type') != 'pipican:on' or 'name' not in reacted[0]:
+        return None
+    r = dict(reacted[0], chance=0.0)
+    per = float(m.group(2)) / 100 / float(m.group(1))
+    return [r, {'type': 'pipican:reaction_chance', 'name': r['name'], 'scaling': [{'source': 'special_stat', 'per': round(per, 6)}]}]

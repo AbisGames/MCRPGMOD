@@ -31,10 +31,10 @@ import net.minecraft.world.item.Item;
  * attacker), and area targets are centred on it. Reactions never trigger other reactions.
  */
 public record ReactionEffect(Event event, double chance, int cooldownTicks, Optional<HolderSet<Item>> weapons,
-                             Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions) implements ClassEffect {
+                             Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions, Optional<String> name) implements ClassEffect {
 
     public enum Event implements StringRepresentable {
-        HIT("hit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block"),
+        HIT("hit"), CRIT("crit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block"),
         /** An ability spent some of the resource bar. */
         SPEND("spend"),
         /** Woke up after sleeping. */
@@ -59,7 +59,8 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
             Codec.intRange(0, 72_000).optionalFieldOf("cooldown_ticks", 0).forGetter(ReactionEffect::cooldownTicks),
             RegistryCodecs.homogeneousList(Registries.ITEM).optionalFieldOf("weapons").forGetter(ReactionEffect::weapons),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("victims").forGetter(ReactionEffect::victims),
-            Codec.lazyInitialized(() -> AbilityAction.CODEC).listOf().fieldOf("actions").forGetter(ReactionEffect::actions)
+            Codec.lazyInitialized(() -> AbilityAction.CODEC).listOf().fieldOf("actions").forGetter(ReactionEffect::actions),
+            Codec.STRING.optionalFieldOf("name").forGetter(ReactionEffect::name)
     ).apply(i, ReactionEffect::new));
 
     @Override

@@ -34,7 +34,8 @@ public record LightningAction(double range) implements AbilityAction {
     @Override
     public void run(AbilityContext ctx) {
         var player = ctx.player();
-        var target = Targets.lookTarget(player, range);
+        // In a reaction ("your hits may call down lightning") strike the mob that was hit.
+        var target = ctx.subject().filter(e -> !(e instanceof Player)).orElseGet(() -> Targets.lookTarget(player, range));
         Vec3 at;
         if (target != null && !(target instanceof Player)) {
             at = target.position();
