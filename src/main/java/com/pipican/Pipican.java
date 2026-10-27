@@ -7,6 +7,7 @@ import com.pipican.network.PipicanNetwork;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.trinket.PipicanMenus;
 import com.pipican.worldgen.RegionalOreRegistries;
+import com.pipican.worldgen.RegionalNatureBlocks;
 import com.pipican.worldgen.WorldgenCodecs;
 import com.pipican.worldgen.RegionalDensityCodecs;
 import net.minecraft.resources.Identifier;
@@ -38,6 +39,7 @@ public final class Pipican {
         PipicanAttachments.REGISTER.register(modBus);
         PipicanMenus.REGISTER.register(modBus);
         RegionalOreRegistries.register(modBus);
+        RegionalNatureBlocks.register(modBus);
         WorldgenCodecs.register(modBus);
         RegionalDensityCodecs.register(modBus);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
