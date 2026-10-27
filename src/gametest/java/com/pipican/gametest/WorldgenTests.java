@@ -49,6 +49,15 @@ public final class WorldgenTests {
 
     private static void capitalProtection(GameTestHelper helper) {
         helper.assertTrue(CapitalStructureExclusion.all().size()==22,"capital zone count");
+        var preset=WorldgenJson.read("world_preset/rpg_world.json");
+        var registeredBiomes=preset.getAsJsonObject("dimensions")
+            .getAsJsonObject("minecraft:overworld")
+            .getAsJsonObject("generator")
+            .getAsJsonObject("biome_source")
+            .getAsJsonArray("biomes");
+        for(var biome:registeredBiomes)
+            helper.assertTrue(biome.getAsString().startsWith("pipican:"),
+                "vanilla biome leaked into custom world preset: "+biome);
         for(var zone:CapitalStructureExclusion.all()) {
             helper.assertTrue(CapitalStructureExclusion.contains(zone.x(),zone.z(),0),
                 "capital centre not reserved: "+zone.id());
