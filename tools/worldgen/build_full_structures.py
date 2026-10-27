@@ -205,8 +205,141 @@ class Workshop(Build):
         elif self.style in ('volcanic','underground'):self.obsidian_throne()
         elif self.style=='desert':self.desert_court()
         self.cultural_landmark()
+        self.furnish_royal_interiors()
         self.acc['floors']=4
         self.acc['gate_width']=7
+
+    def furnish_royal_interiors(self):
+        """Art-direct the palace's four walkable floors into named RPG rooms.
+
+        Coordinates deliberately avoid the central processional aisle, outer
+        cardinal gates and the two permanent ladder shafts. Decorative block
+        placements never replace the major partition doors.
+        """
+        W,D=self.sx,self.sz
+        cx,cz=W//2,D//2
+        signature=self.region
+        wall,floor,roof,post,wood=self.theme
+        # Ground floor: an accessible ceremonial throne dais and receiving hall.
+        for z in range(cz+8,D-30):
+            for x in (cx-2,cx-1,cx,cx+1,cx+2):
+                self.set(x,1,z,'red_carpet' if signature not in
+                         ('elderwood','jade_empire','whitecrown_icecap') else
+                         'light_blue_carpet')
+        for x in range(cx-5,cx+6):
+            for z in range(D-34,D-29):
+                self.set(x,1,z,post if z==D-34 else floor)
+        self.box(cx-2,2,D-33,cx+2,3,D-33,post)
+        self.set(cx,4,D-33,'sea_lantern' if signature in
+                 ('elderwood','jade_empire','whitecrown_icecap','aetheris_expanse')
+                 else 'soul_lantern' if signature in
+                 ('ashlands','crimson_wilds','umbral_chasm') else 'lantern')
+        self.acc['throne_halls']+=1
+
+        # Ground floor lateral hospitality quarters: kitchens and royal stores.
+        for x in (28,W-29):
+            for z in (41,65):
+                self.box(x,1,z,x+2,1,z+2,'polished_andesite')
+                self.set(x+1,2,z+1,'barrel')
+                self.set(x,2,z+2,'smoker')
+                self.set(x+2,2,z,'crafting_table')
+                self.set(x,3,z,'lantern')
+                self.acc['service_rooms']+=1
+
+        # First gallery: council chamber and illuminated map room.
+        for z in range(cz-7,cz+8):
+            for x in range(cx-5,cx+6):
+                if abs(x-cx)<=4 and abs(z-cz)<=6:
+                    self.set(x,12,z,'brown_carpet')
+        for z in range(cz-4,cz+5,2):
+            self.set(cx-2,13,z,'spruce_slab[type=top]')
+            self.set(cx+2,13,z,'spruce_slab[type=top]')
+        self.set(cx,13,cz,'cartography_table')
+        self.set(cx,14,cz,'lantern')
+        self.acc['council_rooms']+=1
+        for x in (28,W-29):
+            for z in (39,63,78):
+                self.set(x,12,z,'lectern')
+                self.set(x+2,12,z,'bookshelf')
+                self.set(x+2,13,z,'bookshelf')
+                self.set(x,14,z,'lantern')
+        self.acc['archives']+=2
+
+        # Second gallery: reliquary and a defended equipment store.
+        for x in range(cx-6,cx+7,3):
+            for z in (cz-7,cz+7):
+                self.set(x,23,z,'chiseled_stone_bricks')
+                self.set(x,24,z,'lantern')
+        self.set(cx,23,cz,'enchanting_table')
+        self.set(cx,24,cz+2,'end_rod')
+        for x in (28,W-29):
+            for z in (42,60,78):
+                self.set(x,23,z,'armor_stand')
+                self.set(x+2,23,z,'smithing_table')
+                self.set(x+2,24,z,'lantern')
+        self.acc['reliquary_rooms']+=1
+        self.acc['armories']+=2
+
+        # Fourth floor: observatory and accessible upper study.
+        for x in range(cx-7,cx+8):
+            for z in range(cz-7,cz+8):
+                if abs(x-cx)==7 or abs(z-cz)==7:
+                    self.set(x,34,z,'polished_diorite')
+        self.set(cx,34,cz,'lodestone')
+        for x,z in ((cx-6,cz-6),(cx+6,cz-6),(cx-6,cz+6),(cx+6,cz+6)):
+            self.set(x,35,z,'sea_lantern')
+        self.acc['observatories']+=1
+
+        # A final regional signature makes rooms meaningfully different, not
+        # merely the same interior coloured using different wall blocks.
+        if signature in ('elderwood','verdant_depths'):
+            for x,z in ((cx-11,cz-9),(cx+11,cz-9),(cx-11,cz+9),(cx+11,cz+9)):
+                self.set(x,12,z,'moss_block')
+                self.set(x,13,z,'flowering_azalea')
+                self.set(x,14,z,'shroomlight')
+            self.acc['living_galleries']+=1
+        elif signature in ('greyspine_mountains','umbral_chasm'):
+            for x,z in ((cx-10,cz-10),(cx+10,cz-10),(cx-10,cz+10),(cx+10,cz+10)):
+                self.set(x,23,z,'anvil')
+                self.set(x,24,z,'chain')
+                self.set(x,25,z,'lantern')
+            self.acc['runic_forgeries']+=1
+        elif signature in ('jade_empire','lotus_delta'):
+            for x,z in ((cx-10,cz),(cx+10,cz)):
+                self.set(x,12,z,'cherry_planks')
+                self.set(x,13,z,'bamboo')
+                self.set(x,14,z,'lantern')
+            self.acc['imperial_studies']+=1
+        elif signature in ('ashlands','crimson_wilds','stormcoast'):
+            for x,z in ((cx-9,cz-9),(cx+9,cz-9),(cx-9,cz+9),(cx+9,cz+9)):
+                self.set(x,23,z,'crying_obsidian')
+                self.set(x,24,z,'soul_lantern')
+            self.acc['infernal_rituals']+=1
+        elif signature in ('whitecrown_icecap','northern_ice_sea'):
+            for x,z in ((cx-10,cz-9),(cx+10,cz-9),(cx-10,cz+9),(cx+10,cz+9)):
+                self.set(x,23,z,'blue_ice')
+                self.set(x,24,z,'sea_lantern')
+            self.acc['frozen_reliquaries']+=1
+        elif signature in ('sunscorch_desert','riverlands','spice_coast'):
+            for x,z in ((cx-9,cz-9),(cx+9,cz-9),(cx-9,cz+9),(cx+9,cz+9)):
+                self.set(x,12,z,'chiseled_sandstone')
+                self.set(x,13,z,'lantern')
+            self.acc['solar_chambers']+=1
+        elif signature in ('coral_isles','inner_sea','western_ocean','shimmering_reefs'):
+            for x,z in ((cx-9,cz-9),(cx+9,cz-9),(cx-9,cz+9),(cx+9,cz+9)):
+                self.set(x,12,z,'prismarine_bricks')
+                self.set(x,13,z,'sea_lantern')
+            self.acc['tidal_sanctuaries']+=1
+        elif signature in ('marshfen','emerald_jungle'):
+            for x,z in ((cx-9,cz-9),(cx+9,cz-9),(cx-9,cz+9),(cx+9,cz+9)):
+                self.set(x,12,z,'moss_block')
+                self.set(x,13,z,'mangrove_roots')
+            self.acc['nature_labs']+=1
+        else:
+            for x,z in ((cx-10,cz-9),(cx+10,cz-9),(cx-10,cz+9),(cx+10,cz+9)):
+                self.set(x,12,z,'decorated_pot')
+                self.set(x,13,z,'lantern')
+            self.acc['heritage_galleries']+=1
 
     def cultural_landmark(self):
         """Compose a landmark silhouette unique to this region and accessible courtyards.
