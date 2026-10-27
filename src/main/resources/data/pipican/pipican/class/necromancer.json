@@ -84,17 +84,19 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "The living sense the grave on you.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "The living sense the grave on you.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "healing_received",
+        "amount": -0.5
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "no_trade",
+        "amount": 1.0
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

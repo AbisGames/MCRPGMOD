@@ -248,6 +248,15 @@ public final class ProjectileAndEffectEvents {
     }
 
     @SubscribeEvent
+    static void onInteract(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.EntityInteract event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getTarget() instanceof net.minecraft.world.entity.npc.villager.AbstractVillager
+                && ClassEffectApplier.state(player).chance(Kind.NO_TRADE) > 0) {
+            player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("pipican.no_trade"));
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
     static void onTrample(BlockEvent.FarmlandTrampleEvent event) {
         if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.NO_TRAMPLE) > 0) {
             event.setCanceled(true);

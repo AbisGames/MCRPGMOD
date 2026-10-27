@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1725**, partly working: **25**, not yet: **500**
+- Bonus phrases: **2250**. Fully working: **1729**, partly working: **25**, not yet: **496**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -16,7 +16,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 128 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 76 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 71 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 45 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 41 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 32 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 31 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
@@ -718,10 +718,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **brute**
   - general tree: Crusher: +10% damage against shields and armored mobs
 - **diplomat**
-  - special stat per point: -0.3% villager trade prices
   - passive: Stay the Hand: 15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s
   - passive: illagers are 30% slower to notice you
-  - special tree: Silver Tongue: first trade with a new villager is 50% off
   - skill Bartering: +1 villager restock
 - **druid**
   - special passive: Passive animals within 16 blocks never flee from you
@@ -735,13 +733,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Holy Water: splash potions you throw deal +2 damage to undead
   - general tree: Banishing: unclean mobs you hit are knocked back 50% farther
   - special tree: Purge the Unclean: unclean mobs you hit can't teleport for 5s (endermen, shulkers)
-- **gladiator**
-  - passive: Finishing Blow: +15% critical chance against slowed, blinded or poisoned mobs
 - **illusionist**
   - special stat per point: +0.3% chance attacks against you hit an illusion instead
 - **necromancer**
   - special stat per point: +1% damage and health for undead you command
-  - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
 - **poisoner**
   - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
 - **ranger**

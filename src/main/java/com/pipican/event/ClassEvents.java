@@ -422,7 +422,8 @@ public final class ClassEvents {
         double damage = 0;
         double chance = 0;
         for (ClassState.Critical c : criticals) {
-            if (c.weapons().isEmpty() || weapon.is(c.weapons().get())) {
+            if ((c.weapons().isEmpty() || weapon.is(c.weapons().get()))
+                    && (c.victim().isEmpty() || event.getTarget() instanceof LivingEntity target && c.victim().get().test(player, target))) {
                 damage += c.damage();
                 chance += c.chance();
             }

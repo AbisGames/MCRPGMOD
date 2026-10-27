@@ -198,7 +198,7 @@ public record ClassState(
     }
 
     /** Critical-hit bonuses: crit damage (0.1 = +10%) and a chance to crit, for all weapons or only some. */
-    public record Critical(double damage, double chance, Optional<HolderSet<Item>> weapons) {}
+    public record Critical(double damage, double chance, Optional<HolderSet<Item>> weapons, Optional<VictimState> victim) {}
 
     /** The multiplier for a bonus kind: 1 + the summed amounts, never below 0. */
     public double bonus(BonusEffect.Kind kind) {

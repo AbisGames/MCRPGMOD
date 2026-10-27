@@ -50,7 +50,7 @@ public interface EffectContext {
     void addDamageDealt(ClassState.DamageRule rule);
 
     /** Critical hits: extra crit damage (0.1 = +10%) and a chance to make any hit a crit, optionally only with {@code weapons}. */
-    void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons);
+    void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons, Optional<com.pipican.effect.VictimState> victim);
 
     /** A chance to completely avoid incoming hits (only melee hits if {@code meleeOnly}). */
     void addDodge(double chance, boolean meleeOnly);

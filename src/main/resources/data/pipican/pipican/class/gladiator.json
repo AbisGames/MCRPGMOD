@@ -111,6 +111,17 @@
         "harmful_effect": true
       },
       "multiplier": 1.2
+    },
+    {
+      "type": "pipican:critical",
+      "chance": 0.15,
+      "victim": {
+        "effects": [
+          "minecraft:slowness",
+          "minecraft:blindness",
+          "minecraft:poison"
+        ]
+      }
     }
   ],
   "special_passives": [

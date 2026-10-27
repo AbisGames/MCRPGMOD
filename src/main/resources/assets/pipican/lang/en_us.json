@@ -148,5 +148,6 @@
   "pipican.weapon_kind.tridents": "tridents",
   "pipican.weapon_kind.bows": "bows",
   "pipican.weapon_kind.crossbows": "crossbows",
-  "pipican.cheated_death": "Not today!"
+  "pipican.cheated_death": "Not today!",
+  "pipican.no_trade": "They won't trade with you."
 }

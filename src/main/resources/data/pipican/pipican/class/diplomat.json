@@ -78,6 +78,19 @@
       ]
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "trade_price",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.003
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "Diplomats win with words, not blades.",
     "effects": [

@@ -421,6 +421,19 @@ public final class BonusEvents {
             return;
         }
         double change = ClassEffectApplier.state(player).bonus(Kind.TRADE_PRICE) - 1;
+        // Silver Tongue: a villager you've never traded with gives the first trade at a discount.
+        double first = ClassEffectApplier.state(player).chance(Kind.FIRST_TRADE_DISCOUNT);
+        if (first > 0 && menu.trader instanceof Villager villager && !tradedWith(player, villager)) {
+            Map<MerchantOffer, Integer> discount = new HashMap<>();
+            for (MerchantOffer offer : menu.getOffers()) {
+                int diff = -(int) Math.round(offer.getBaseCostA().getCount() * Math.min(1, first));
+                if (diff != 0) {
+                    offer.addToSpecialPriceDiff(diff);
+                    discount.put(offer, diff);
+                }
+            }
+            FIRST_TRADE.put(player.getUUID(), discount);
+        }
         if (change == 0) {
             return;
         }
@@ -438,8 +451,44 @@ public final class BonusEvents {
         }
     }
 
+    /** Discounts given for a first trade, taken back once that trade is made. */
+    private static final Map<UUID, Map<MerchantOffer, Integer>> FIRST_TRADE = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final String TRADED = "pipican_traded_with";
+
+    private static boolean tradedWith(ServerPlayer player, Villager villager) {
+        var list = player.getPersistentData().getListOrEmpty(TRADED);
+        String id = villager.getUUID().toString();
+        for (int n = 0; n < list.size(); n++) {
+            if (id.equals(list.getStringOr(n, ""))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @SubscribeEvent
+    static void onTrade(net.neoforged.neoforge.event.entity.player.TradeWithVillagerEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getAbstractVillager() instanceof Villager villager)) {
+            return;
+        }
+        Map<MerchantOffer, Integer> discount = FIRST_TRADE.remove(player.getUUID());
+        if (discount != null) {
+            discount.forEach((offer, diff) -> offer.addToSpecialPriceDiff(-diff));
+            if (player.containerMenu instanceof MerchantMenu menu) {
+                player.sendMerchantOffers(menu.containerId, menu.getOffers(), villager.getVillagerData().level(), villager.getVillagerXp(),
+                        villager.showProgressBar(), villager.canRestock());
+            }
+        }
+        if (!tradedWith(player, villager)) {
+            var list = player.getPersistentData().getListOrEmpty(TRADED);
+            list.add(net.minecraft.nbt.StringTag.valueOf(villager.getUUID().toString()));
+            player.getPersistentData().put(TRADED, list);
+        }
+    }
+
     @SubscribeEvent
     static void onContainerClose(PlayerContainerEvent.Close event) {
+        FIRST_TRADE.remove(event.getEntity().getUUID());
         Map<MerchantOffer, Integer> changes = TRADE_CHANGES.remove(event.getEntity().getUUID());
         if (changes != null) {
             changes.forEach((offer, diff) -> offer.addToSpecialPriceDiff(-diff));

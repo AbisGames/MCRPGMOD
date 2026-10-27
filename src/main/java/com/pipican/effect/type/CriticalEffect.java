@@ -22,7 +22,8 @@ import net.minecraft.world.item.Item;
  * a hit that isn't a crit becomes one. Both add up over effects and can scale ({@code scaling} applies to
  * {@code damage}; {@code chance_scaling} to {@code chance}).
  */
-public record CriticalEffect(double damage, double chance, Optional<HolderSet<Item>> weapons, List<Scaling> scaling, List<Scaling> chanceScaling)
+public record CriticalEffect(double damage, double chance, Optional<HolderSet<Item>> weapons, List<Scaling> scaling, List<Scaling> chanceScaling,
+                             Optional<com.pipican.effect.VictimState> victim)
         implements ClassEffect {
 
     public static final MapCodec<CriticalEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
@@ -30,7 +31,8 @@ public record CriticalEffect(double damage, double chance, Optional<HolderSet<It
             Codec.doubleRange(0, 1).optionalFieldOf("chance", 0.0).forGetter(CriticalEffect::chance),
             RegistryCodecs.homogeneousList(Registries.ITEM).optionalFieldOf("weapons").forGetter(CriticalEffect::weapons),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(CriticalEffect::scaling),
-            Scaling.LIST_CODEC.optionalFieldOf("chance_scaling", List.of()).forGetter(CriticalEffect::chanceScaling)
+            Scaling.LIST_CODEC.optionalFieldOf("chance_scaling", List.of()).forGetter(CriticalEffect::chanceScaling),
+            com.pipican.effect.VictimState.CODEC.optionalFieldOf("victim").forGetter(CriticalEffect::victim)
     ).apply(i, CriticalEffect::new));
 
     @Override
@@ -40,6 +42,6 @@ public record CriticalEffect(double damage, double chance, Optional<HolderSet<It
 
     @Override
     public void apply(EffectContext ctx) {
-        ctx.addCritical(Scaling.evaluate(damage, scaling, ctx) * ctx.rank(), Scaling.evaluate(chance, chanceScaling, ctx) * ctx.rank(), weapons);
+        ctx.addCritical(Scaling.evaluate(damage, scaling, ctx) * ctx.rank(), Scaling.evaluate(chance, chanceScaling, ctx) * ctx.rank(), weapons, victim);
     }
 }

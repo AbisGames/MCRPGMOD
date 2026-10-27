@@ -189,6 +189,22 @@ def critical(low, ctx, scal_fn):
         if scaling:
             e['scaling'] = [{'source': s, 'per': round(p / 100, 6)} for s, p in scaling]
         return [e]
+    m = re.fullmatch(NUM + r'% (?:critical|crit) (?:hit )?chance against (.+)', low)
+    if m:
+        state = victim_state(m.group(2))
+        if state is None:
+            mm = re.fullmatch(r'((?:slowed|blinded|poisoned|weakened|withered)(?:(?:, | or | and |, or )(?:slowed|blinded|poisoned|weakened|withered))*) mobs', m.group(2))
+            if mm:
+                names = {'slowed': 'slowness', 'blinded': 'blindness', 'poisoned': 'poison', 'weakened': 'weakness', 'withered': 'wither'}
+                ids = ['minecraft:' + names[w] for w in re.split(r', or |, | or | and ', mm.group(1))]
+                state = {'effects': ids if len(ids) > 1 else ids[0]}
+        if state is None:
+            return None
+        amount, scaling = scal_fn(float(m.group(1)))
+        e = {'type': 'pipican:critical', 'chance': round(amount / 100, 6), 'victim': state}
+        if scaling:
+            e['chance_scaling'] = [{'source': s, 'per': round(p / 100, 6)} for s, p in scaling]
+        return [e]
     m = re.fullmatch(NUM + r'% (?:critical|crit) (?:hit )?chance', low) or re.fullmatch(r'(?:critical|crit) (?:hit )?chance ' + NUM + '%', low)
     if m:
         amount, scaling = scal_fn(float(m.group(1)))

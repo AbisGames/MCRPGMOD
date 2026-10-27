@@ -7,7 +7,7 @@ N = r'(\d+(?:\.\d+)?)'
 LEADING = [
     (r'(?:experience|xp)(?: gained| gain| from all sources)?', 'experience'),
     (r'(?:potion|potion effect) duration|duration of potions(?: you drink)?|potion effect length', 'potion_duration'),
-    (r'trade prices?|villager prices', 'trade_price'),
+    (r'(?:villager )?trade prices?|villager prices', 'trade_price'),
     (r'(?:crossbow )?reload(?:ing)? speed', 'reload_speed'),
     (r'(?:bow )?draw speed', 'draw_speed'),
     (r'(?:natural )?(?:health )?regeneration|natural regen', 'natural_regen'),
@@ -513,6 +513,11 @@ def misc(t, scal):
         if m.group(1):
             victim['within'] = 4.5 if m.group(1) == 'your reach' else float(m.group(2))
         return [{'type': 'pipican:damage_taken', 'victim': victim, 'multiplier': round(1 - float(m.group(3)) / 100, 6)}]
+    m = re.fullmatch(rf'(?:your )?first trade with (?:a new|each) villager is {N}% off', t)
+    if m:
+        return [_effect('first_trade_discount', float(m.group(1)), None)]
+    if re.fullmatch(r"villagers (?:won'?t|refuse to|will not) trade with you", t):
+        return [_effect('no_trade', 100, None)]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

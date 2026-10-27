@@ -655,7 +655,7 @@ def _translate_line(text, ctx):
         text = f'{m.group(1)} {m.group(3)} {m.group(2)}'
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.
     effects, unsupported = [], []
-    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b|when\b|whenever\b|after\b|every\b|a lightning\b|(?:swords|axes|maces|spears|tridents|bows|crossbows) deal\b)', text):
+    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b|when\b|whenever\b|after\b|every\b|a lightning\b|(?:swords|axes|maces|spears|tridents|bows|crossbows) deal\b|villagers\b)', text):
         if seg.strip():
             e, u = _segment(seg.strip(), ctx)
             effects += e

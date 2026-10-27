@@ -639,8 +639,8 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons) {
-            criticals.add(new ClassState.Critical(damage, chance, weapons));
+        public void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons, Optional<com.pipican.effect.VictimState> victim) {
+            criticals.add(new ClassState.Critical(damage, chance, weapons, victim));
         }
 
         @Override
