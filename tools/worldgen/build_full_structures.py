@@ -93,6 +93,75 @@ class Workshop(Build):
                 self.set(x+a,yy,z-rad,roof);self.set(x+a,yy,z+rad,roof)
                 self.set(x-rad,yy,z+a,roof);self.set(x+rad,yy,z+a,roof)
         self.light(x,y+h,z)
+    def furnish_district_interiors(self,x,z,x2,z2,y,role,level):
+        """Add functional-looking interiors without sealing exterior doorways.
+
+        Furniture stays close to lateral walls: the central aisle, entry
+        threshold, ladder shafts and floor-to-floor vertical openings remain
+        clear. The town building type determines furnishing, not only color.
+        """
+        midx=(x+x2)//2
+        midz=(z+z2)//2
+        if x2-x<13 or z2-z<13:return
+        accent='light_blue_carpet' if self.style in ('elven','ice','aether') else (
+            'red_carpet' if self.style in ('volcanic','underground') else
+            'yellow_carpet' if self.style in ('desert','savanna','steppe') else
+            'green_carpet')
+        for xx in range(midx-1,midx+2):
+            for zz in range(midz-2,midz+3):
+                if (xx,zz)!=(midx,midz):
+                    self.set(xx,y,zz,accent)
+        self.set(x+5,y+4,z+3,'lantern')
+        self.set(x2-5,y+4,z2-3,'lantern')
+        if role in ('smithy','forge','artisan'):
+            for xx,zz,st in ((x+5,z+5,'blast_furnace'),(x+6,z+5,'anvil'),
+                             (x+7,z+5,'smithing_table'),(x2-6,z2-5,'grindstone'),
+                             (x2-7,z2-5,'barrel')):
+                self.set(xx,y,zz,st)
+            for xx in (x+5,x2-5):
+                self.set(xx,y+3,midz,'chain')
+                self.set(xx,y+4,midz,'lantern')
+            self.acc['functional_workshops']+=1
+        elif role in ('library','archive'):
+            for zz in range(z+5,z2-4,3):
+                for h in range(3):
+                    self.set(x+2,y+h,zz,'bookshelf')
+                    self.set(x2-2,y+h,zz,'bookshelf')
+            for xx in (x+6,x2-6):
+                self.set(xx,y,midz,'lectern')
+            self.acc['library_stacks']+=1
+        elif role in ('inn','barracks'):
+            for xx in (x+5,x2-6):
+                for zz in (z+6,z2-6):
+                    self.set(xx,y,zz,'white_wool' if role=='inn' else 'gray_wool')
+                    self.set(xx,y,zz+1,'spruce_planks')
+                    self.set(xx+1,y,zz,'barrel')
+            self.set(x2-5,y,midz,'brewing_stand' if role=='inn' else 'grindstone')
+            self.acc['bunkrooms']+=1
+        elif role in ('shrine','temple'):
+            for zz in range(z+5,z2-4,5):
+                self.set(x+4,y,zz,'polished_diorite')
+                self.set(x+4,y+1,zz,'amethyst_cluster')
+                self.set(x2-4,y,zz,'polished_diorite')
+                self.set(x2-4,y+1,zz,'soul_lantern')
+            self.set(midx,y,midz+5,'enchanting_table')
+            self.acc['chapels']+=1
+        elif role=='storage':
+            for xx in (x+4,x2-4):
+                for zz in range(z+5,z2-4,4):
+                    self.set(xx,y,zz,'barrel')
+                    self.set(xx,y+1,zz,'barrel')
+            self.set(x2-5,y,midz,'crafting_table')
+            self.acc['storerooms']+=1
+        else:
+            for xx,zz in ((x+5,z+5),(x2-5,z+5),(x+5,z2-5),(x2-5,z2-5)):
+                self.set(xx,y,zz,'barrel')
+                self.set(xx,y+1,zz,'flower_pot')
+            self.set(x+6,y,midz,'crafting_table')
+            self.set(x2-6,y,midz,'bookshelf')
+            self.acc['domestic_quarters']+=1
+        self.acc['furnished_room_clusters']+=1
+
     def detailed_building(self,x,z,w,d,floors=2,role='home',rotation=0):
         wall,floor,roof,post,wood=self.theme
         x2=min(self.sx-2,x+w-1);z2=min(self.sz-2,z+d-1)
@@ -119,6 +188,7 @@ class Workshop(Build):
             elif role in ('inn','barracks'):interior='bed'
             self.furniture(x+3,y,z+3,interior)
             self.furniture(x2-4,y,z2-4,'storage' if level>0 else 'table')
+            self.furnish_district_interiors(x,z,x2,z2,y,role,level)
         # Interior ladder with a clear 1x1 vertical shaft for all upper floors.
         if floors>1:
             self.box(x+2,1,z+1,x+2,1+floors*sy,z+1,wood)
