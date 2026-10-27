@@ -33,11 +33,31 @@ public final class RegionalBiomeSource extends BiomeSource {
     private final Map<String,Holder<Biome>> byId;
     private final Holder<Biome> fallback;
     private final SubregionSampler sampler;
+    private final List<CapitalBiome> capitals;
+
+    /**
+     * Castle capitals retain their authored subregion even if the surrounding
+     * procedural Voronoi cell selects another subtype.
+     */
+    private record CapitalBiome(int x,int z,int radius,String biomeId) {}
+    private static List<CapitalBiome> readCapitalBiomes() {
+        var root=WorldgenJson.read("fixed_capital_locations.json");
+        List<CapitalBiome> list=new ArrayList<>();
+        for(var element:root.getAsJsonArray("capitals")) {
+            var o=element.getAsJsonObject();
+            int radius=Math.max(290,Math.min(650,o.get("preserve_radius").getAsInt()/2));
+            list.add(new CapitalBiome(o.get("x").getAsInt(),o.get("z").getAsInt(),
+                radius,"pipican:"+o.get("region").getAsString()+"/"+o.get("subregion").getAsString()));
+        }
+        return List.copyOf(list);
+    }
+
 
     private RegionalBiomeSource(HolderSet<Biome> biomes,long seed){
         this.biomes=biomes;
         this.seed=seed;
         this.sampler=new SubregionSampler();
+        this.capitals=readCapitalBiomes();
         Map<String,Holder<Biome>> keyed=new HashMap<>();
         for(Holder<Biome> holder:biomes)
             holder.unwrapKey().ifPresent(key -> keyed.put(key.identifier().toString(),holder));
@@ -55,6 +75,14 @@ public final class RegionalBiomeSource extends BiomeSource {
     @Override
     public Holder<Biome> getNoiseBiome(int quartX,int quartY,int quartZ,Climate.Sampler climate){
         int x=quartX*4,z=quartZ*4,y=quartY*4;
+        // Castle coordinates are fixed and never sampled from random cells.
+        for(CapitalBiome castle:capitals){
+            long dx=(long)x-castle.x(),dz=(long)z-castle.z();
+            double warpedRadius=castle.radius()
+                +WorldLayout.fractal(0x25E1B777L,x,z,220)*110.0;
+            if(dx*dx+dz*dz < warpedRadius*warpedRadius)
+                return byId.getOrDefault(castle.biomeId(),fallback);
+        }
         Optional<SubregionSampler.Subregion> sub=sampler.at(seed,x,z);
         if(sub.isEmpty())return fallback;
         SubregionSampler.Subregion region=sub.get();
