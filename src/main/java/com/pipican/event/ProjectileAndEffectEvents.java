@@ -156,6 +156,16 @@ public final class ProjectileAndEffectEvents {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
+        Long aimed = AIMED.remove(player.getUUID());
+        if (aimed != null && aimed == player.level().getGameTime()) {
+            var aim = state.deadlyAim();
+            arrow.setBaseDamage(arrow.baseDamage * (1 + aim.damage()));
+            arrow.setDeltaMovement(player.getLookAngle().scale(arrow.getDeltaMovement().length()));  // no spread
+            if (aim.crit()) {
+                arrow.setCritArrow(true);
+            }
+            arrow.getPersistentData().putBoolean(DEADLY, true);
+        }
         int pierce = (int) Math.floor(state.chance(Kind.ARROW_PIERCE) + 1e-9);
         if (pierce > 0) {
             arrow.setPierceLevel((byte) Math.min(127, arrow.getPierceLevel() + pierce));
@@ -257,6 +267,46 @@ public final class ProjectileAndEffectEvents {
         if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer player && event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
                 && event.getTarget() instanceof net.minecraft.world.entity.LivingEntity target) {
             com.pipican.ability.Reactions.fire(player, target, event.getItemStack(), com.pipican.effect.type.ReactionEffect.Event.INTERACT);
+        }
+    }
+
+    /** Resource shields (Earthen Defense): the bar pays for damage before health does. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOW)
+    static void onShield(net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Pre event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.getNewDamage() <= 0) {
+            return;
+        }
+        double perPoint = ClassEffectApplier.state(player).shield().perPoint();
+        var data = com.pipican.player.ClassService.data(player);
+        if (perPoint <= 0 || data.resource() <= 0) {
+            return;
+        }
+        double absorbed = Math.min(event.getNewDamage(), data.resource() * perPoint);
+        event.setNewDamage((float) (event.getNewDamage() - absorbed));
+        data.setResource(data.resource() - absorbed / perPoint);
+        MasteryEvents.did(player, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.ABSORB, ItemStack.EMPTY,
+                java.util.Optional.empty(), java.util.Optional.empty(), absorbed));
+    }
+
+    /** Deadly Aim: the game time of each player's held-long-enough release, read when the arrow appears. */
+    private static final java.util.Map<java.util.UUID, Long> AIMED = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final String DEADLY = "pipican_deadly_aim";
+
+    @SubscribeEvent
+    static void onLoose(net.neoforged.neoforge.event.entity.player.ArrowLooseEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            var aim = ClassEffectApplier.state(player).deadlyAim();
+            if (aim.on() && event.getCharge() >= 20 + Math.max(0, aim.holdSeconds()) * 20) {
+                AIMED.put(player.getUUID(), player.level().getGameTime());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    static void onDeadlyHit(net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Post event) {
+        if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow && arrow.getPersistentData().getBooleanOr(DEADLY, false)
+                && arrow.getOwner() instanceof ServerPlayer player) {
+            com.pipican.player.MasteryService.onAction(player, new com.pipican.mastery.SkillAction.Reacted("deadly aim"));
         }
     }
 

@@ -95,7 +95,7 @@ public sealed interface SkillAction {
         public enum Kind implements StringRepresentable {
             CRIT, BLEED, DODGE, SPEND, HEAL, TELEPORT, ENCHANT, BREW, CRAFT, SMELT, TRADE, TAME, BREED, MINE, HARVEST, PLANT,
             BONE_MEAL, ANVIL, LEVEL_UP, DRINK, PET_KILL, FISH, TAKE_FALL, HURT,
-            HEAL_OTHER, EXECUTE, CHARM, EXPLOSION_HIT, ACTIVE_SECOND, POISON, USE_ITEM;
+            HEAL_OTHER, EXECUTE, CHARM, EXPLOSION_HIT, ACTIVE_SECOND, POISON, USE_ITEM, ABSORB;
 
             public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

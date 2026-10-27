@@ -100,6 +100,12 @@ public interface EffectContext {
     /** {@code effect} lasts {@code multiplier} times as long on the player. */
     void addEffectDuration(Holder<MobEffect> effect, double multiplier);
 
+    /** The resource bar absorbs damage ({@code absorb} > 0 switches it on). */
+    void addResourceShield(double absorb, double efficiency);
+
+    /** Deadly Aim numbers ({@code base} switches it on). */
+    void addDeadlyAim(boolean base, double holdSeconds, double damage, boolean crit);
+
     /** Upgrades the reactions called {@code name}. */
     void addReactionMod(String name, com.pipican.player.ClassState.ReactionMod mod);
 

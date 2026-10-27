@@ -379,6 +379,31 @@ def segment(t, ctx):
     import bonus
     import combat
     import effects as fx
+    per = rf'(?: per (?:{N} )?([a-z]+(?: (?!points?\b)[a-z]+)?)(?: points?)?)?'
+    def scaled_field(effect, field, value, n, stat):
+        if not stat:
+            effect[field] = value
+            return [effect]
+        src = _stat_source(stat, ctx)
+        if not src:
+            return None
+        effect[field] = 0.0
+        effect['scaling'] = [{'source': src, 'per': round(value / float(n or 1), 6)}]
+        return [effect]
+    m = re.fullmatch(rf'absorption efficiency \+{N}%' + per, t)
+    if m:
+        return scaled_field({'type': 'pipican:resource_shield'}, 'efficiency', float(m.group(1)) / 100, m.group(2), m.group(3))
+    rn = (ctx.get('resource_name') or '').lower()
+    if rn and re.fullmatch(rf'{re.escape(rn)} works anywhere', t):
+        return [{'type': 'pipican:resource_shield', 'absorb': 1.0}]
+    m = re.fullmatch(rf'deadly aim bonus \+{N}%' + per, t)
+    if m:
+        return scaled_field({'type': 'pipican:deadly_aim'}, 'damage', float(m.group(1)) / 100, m.group(2), m.group(3))
+    m = re.fullmatch(rf'(?:deadly )?aim time -{N}s' + per, t)
+    if m:
+        return scaled_field({'type': 'pipican:deadly_aim'}, 'hold_seconds', -float(m.group(1)), m.group(2), m.group(3))
+    if re.fullmatch(r'deadly aim shots always crit', t):
+        return [{'type': 'pipican:deadly_aim', 'crit': True}]
     am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx) or static_mods(t, ctx)
     if am:
         return am
@@ -940,6 +965,22 @@ def whole_line(text, ctx):
     if m:
         return [{'type': 'pipican:on', 'event': 'interact', 'victims': 'pipican:eidolon', 'weapons': 'minecraft:' + m.group(1).replace(' ', '_'),
                  'actions': [{'type': 'pipican:heal', 'target': 'victim', 'amount': float(m.group(2))}]}]
+    # Earthen Defense: "your resource bar absorbs damage first while you stand on stone, dirt, sand or gravel (1 point per damage)"
+    m = re.fullmatch(rf'your resource bar absorbs damage first(?: while (you stand on [a-z ,]+?))?(?: \({N} points? per damage\))?', low)
+    if m:
+        per_point = 1 / float(m.group(2)) if m.group(2) else 1.0
+        shield = {'type': 'pipican:resource_shield', 'absorb': round(per_point, 6)}
+        if not m.group(1):
+            return [shield]
+        import conditions as cnd
+        when = cnd.parse(m.group(1), ctx)
+        if when:
+            return [{'type': 'pipican:conditional', 'when': when, 'effects': [shield]}]
+    # Deadly Aim: "holding a fully drawn bow for 2 extra seconds makes the shot deal +50% damage and never miss (no spread)"
+    m = re.fullmatch(rf'holding a fully drawn bow for {N} extra seconds makes the shot deal \+{N}% damage and never miss(?: \(no spread\))?', low)
+    if m:
+        REACTION_NAMES.setdefault(ctx.get('class_id'), set()).add('deadly aim')
+        return [{'type': 'pipican:deadly_aim', 'base': True, 'hold_seconds': float(m.group(1)), 'damage': round(float(m.group(2)) / 100, 6)}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

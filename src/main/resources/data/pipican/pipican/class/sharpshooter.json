@@ -65,6 +65,12 @@
   },
   "passives": [
     {
+      "type": "pipican:deadly_aim",
+      "base": true,
+      "hold_seconds": 2.0,
+      "damage": 0.5
+    },
+    {
       "type": "pipican:bonus",
       "kind": "ranged_armor_pierce",
       "amount": 0.2
@@ -107,6 +113,26 @@
         }
       ],
       "weapons": "#pipican:weapons/crossbows"
+    },
+    {
+      "type": "pipican:deadly_aim",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:deadly_aim",
+      "hold_seconds": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.02
+        }
+      ]
     }
   ],
   "weakness": {

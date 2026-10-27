@@ -19,21 +19,18 @@
     {
       "id": "sharpshooter_steady_breath",
       "name": "Steady Breath",
-      "description": {
-        "text": "Deadly Aim time -0.5s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Deadly Aim time -0.5s",
       "type": "small",
       "x": -1319,
       "y": 51,
       "links": [
         "sharpshooter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:deadly_aim",
+          "hold_seconds": -0.5
+        }
       ]
     },
     {

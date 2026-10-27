@@ -22,7 +22,8 @@ import net.minecraft.world.level.block.Block;
  * {@code heal_other} (your heal reached another player), {@code execute} (an execute killed a mob), {@code charm}
  * (you charmed or turned a mob), {@code explosion_hit} (your explosion hurt a mob), {@code active_second} (every
  * second while one of your abilities is running; pair with an {@code ability_active} filter), {@code poison} (you
- * poisoned a mob), {@code use_item} (you right-clicked an item; {@code items} narrows it).
+ * poisoned a mob), {@code use_item} (you right-clicked an item; {@code items} narrows it), {@code absorb} (your
+ * resource bar took damage for you).
  *
  * <pre>{@code { "type": "pipican:did", "action": "mine", "blocks": "#c:ores" } }</pre>
  * {@code items} / {@code blocks} narrow it to some items (crafted, enchanted, drunk...) or blocks (mined, planted...).

@@ -3,7 +3,8 @@
   "description": "Trained by landing Deadly Aim shots.",
   "icon": "minecraft:bow",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:reaction",
+    "name": "deadly aim"
   },
   "points_to": "special",
   "classes": [

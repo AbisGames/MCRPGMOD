@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1763**, partly working: **25**, not yet: **462**
+- Bonus phrases: **2250**. Fully working: **1770**, partly working: **25**, not yet: **455**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 146 |
+| [Other mechanics](#other-mechanics) | 141 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 124 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 72 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 69 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 70 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 68 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 31 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 29 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 29 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
 | [Immunities](#immunities) | 13 |
 | [Critical hits](#critical-hits) | 5 |
@@ -102,9 +102,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **fighter**
   - special tree: Haft Attack: spears/tridents: every 3rd hit strikes twice
   - special tree: Powerful Attack: axes/maces: fully charged hits +15% damage
-- **geomancer**
-  - special passive: Absorption efficiency +0.5% per Bedrock
-  - special tree: Avatar of Earth: Earthen Defense works anywhere
 - **gladiator**
   - general tree: Hamstring: Dirty Fighting slow is Slowness II
   - special tree: Low Blow: Dirty Fighting can also apply Weakness
@@ -187,10 +184,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Sentinel: +4 blocks detection range
   - special tree: Stand Guard: Stand Guard triggers after 1s
   - special tree: Sentry: players within 8 blocks also see what glows for you
-- **sharpshooter**
-  - special passive: Deadly Aim bonus +1% per Precision
-  - special passive: Per 10 Precision, aim time -0.2s
-  - general tree: Steady Breath: Deadly Aim time -0.5s
 - **sorcerer**
   - special passive: Sorcerous Outburst explosion damage +0.5 per Potency point
   - general tree: Living Bomb: Outbursts deal double damage
@@ -454,11 +447,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
 - **geomancer**
-  - passive: Earthen Defense: your resource bar absorbs damage first while you stand on stone, dirt, sand or gravel (1 point per damage)
   - passive: no fall damage when landing on stone or dirt
   - weakness: -25% movement speed while swimming and takes 25% more freezing damage
   - general tree: Ore Sense: ores within 6 blocks glow while you sneak
-  - special tree: Avatar of Earth: -20% movement speed in water and air
+  - special tree: Avatar of Earth: Earthen Defense works anywhere; -20% movement speed in water and air
 - **gunslinger**
   - general tree: Showdown: +30% firearm damage, but you can't wear heavy armor without -50% accuracy
 - **healer**
@@ -501,8 +493,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **shapeshifter**
   - weakness: while transformed you can't use weapons, bows, shields or items (only bare-handed attacks)
   - general tree: Feral Soul: forms drain 50% slower
-- **sharpshooter**
-  - passive: Deadly Aim: holding a fully drawn bow for 2 extra seconds makes the shot deal +50% damage and never miss (no spread)
 - **sorcerer**
   - passive: Every magic hit you land adds 1 Strain
 - **stormbringer**
@@ -615,8 +605,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Unsleeping: you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health
 - **shapeshifter**
   - special tree: Thousand Faces: you can disguise as a villager to be ignored by illagers; -10% max health
-- **sharpshooter**
-  - special tree: Unerring: Deadly Aim shots always crit; -10% max health
 - **sorcerer**
   - weakness: when Strain reaches max it detonates: an explosion around you (power 2 + 1 per 25 Potency) that damages everything nearby except you, breaks no blocks, and resets Strain to 0. Allies are not safe.
   - special tree: Sorcerous Blast: unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2
@@ -710,69 +698,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **woodwose**
   - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
 
-## Skill trigger approximated
-
-- **abjurer**
-  - Abjuration: "taking damage while Ward is above half" -> pipican:hurt_wearing #pipican:armor/any
-- **aeromancer**
-  - Windcalling: "throwing wind charges and falling long distances safely" -> pipican:jump
-- **astromancer**
-  - Stargazing: "spending time outdoors at night and killing mobs while glowing" -> pipican:kill
-- **bard**
-  - Repertoire: "allies killing mobs inside your Song" -> pipican:kill
-  - Performance: "using goat horns, note blocks and jukeboxes near other players" -> pipican:kill
-- **chaplain**
-  - Liturgy: "allies killing mobs inside your Battle Chant" -> pipican:kill
-- **conqueror**
-  - Generalship: "allies killing mobs you've hit in the last 4s" -> pipican:kill
-- **death_dealer**
-  - Reaping: "killing 3+ mobs within 10s" -> pipican:kill
-- **defender**
-  - Protector: "blocking hits aimed at mobs targeting other players / taking damage near allies" -> pipican:hurt_wearing #pipican:armor/any
-- **dervish**
-  - Whirling: "landing both-hand combos" -> pipican:melee_hit
-- **engineer**
-  - Mechanics: "your eidolon dealing damage and repairing it" -> pipican:kill
-- **explorer**
-  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **fighter**
-  - Drill: "killing mobs with 3 or more different weapon types in the same day" -> pipican:kill
-- **geomancer**
-  - Stoneheart: "absorbing damage with Earthen Defense" -> pipican:hurt_wearing #pipican:armor/any
-- **gunslinger**
-  - Gunplay: "hitting mobs with firearms" -> pipican:ranged_hit #pipican:weapons/crossbows
-  - Gunsmithing: "modifying and repairing firearms" -> pipican:kill
-- **infiltrator**
-  - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
-- **jack_of_all_trades**
-  - Dabbling: "using 4+ different item types in combat in one day" -> pipican:kill
-- **mage_knight**
-  - War Magic: "hitting mobs while Escalating Violence is active" -> pipican:melee_hit
-- **priest**
-  - Devout: "other players within 8 blocks killing mobs while your Prayer aura is active" -> pipican:kill
-- **pyromancer**
-  - Firestarting: "setting mobs on fire and killing burning mobs" -> pipican:filtered
-- **rogue**
-  - Stealth: "sneaking within 8 blocks of a hostile mob without being targeted" -> pipican:kill
-- **runesmith**
-  - Runecarving: "applying armor trims and renaming weapons at anvils" -> pipican:kill
-- **savant**
-  - Broad Study: "using magic of both focus schools in one fight" -> pipican:kill
-- **scout**
-  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **sharpshooter**
-  - Marksmanship: "landing Deadly Aim shots" -> pipican:melee_hit
-- **sorcerer**
-  - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:kill
-- **thief**
-  - Thievery: "opening naturally generated loot chests for the first time and killing mobs with Looting" -> pipican:kill
-- **transmuter**
-  - Alterations: "drinking potions and using Optimization" -> pipican:did
-- **warlock**
-  - Spell Theft: "stealing effects with Steal Spell" -> pipican:kill
-- **witch**
-  - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
-
 ## Chance on hit / proc effects
 
 - **acrobat**
@@ -822,6 +747,65 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.5% chance to steal an incoming harmful effect
 - **witch**
   - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
+
+## Skill trigger approximated
+
+- **abjurer**
+  - Abjuration: "taking damage while Ward is above half" -> pipican:hurt_wearing #pipican:armor/any
+- **aeromancer**
+  - Windcalling: "throwing wind charges and falling long distances safely" -> pipican:jump
+- **astromancer**
+  - Stargazing: "spending time outdoors at night and killing mobs while glowing" -> pipican:kill
+- **bard**
+  - Repertoire: "allies killing mobs inside your Song" -> pipican:kill
+  - Performance: "using goat horns, note blocks and jukeboxes near other players" -> pipican:kill
+- **chaplain**
+  - Liturgy: "allies killing mobs inside your Battle Chant" -> pipican:kill
+- **conqueror**
+  - Generalship: "allies killing mobs you've hit in the last 4s" -> pipican:kill
+- **death_dealer**
+  - Reaping: "killing 3+ mobs within 10s" -> pipican:kill
+- **defender**
+  - Protector: "blocking hits aimed at mobs targeting other players / taking damage near allies" -> pipican:hurt_wearing #pipican:armor/any
+- **dervish**
+  - Whirling: "landing both-hand combos" -> pipican:melee_hit
+- **engineer**
+  - Mechanics: "your eidolon dealing damage and repairing it" -> pipican:kill
+- **explorer**
+  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
+- **fighter**
+  - Drill: "killing mobs with 3 or more different weapon types in the same day" -> pipican:kill
+- **gunslinger**
+  - Gunplay: "hitting mobs with firearms" -> pipican:ranged_hit #pipican:weapons/crossbows
+  - Gunsmithing: "modifying and repairing firearms" -> pipican:kill
+- **infiltrator**
+  - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
+- **jack_of_all_trades**
+  - Dabbling: "using 4+ different item types in combat in one day" -> pipican:kill
+- **mage_knight**
+  - War Magic: "hitting mobs while Escalating Violence is active" -> pipican:melee_hit
+- **priest**
+  - Devout: "other players within 8 blocks killing mobs while your Prayer aura is active" -> pipican:kill
+- **pyromancer**
+  - Firestarting: "setting mobs on fire and killing burning mobs" -> pipican:filtered
+- **rogue**
+  - Stealth: "sneaking within 8 blocks of a hostile mob without being targeted" -> pipican:kill
+- **runesmith**
+  - Runecarving: "applying armor trims and renaming weapons at anvils" -> pipican:kill
+- **savant**
+  - Broad Study: "using magic of both focus schools in one fight" -> pipican:kill
+- **scout**
+  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
+- **sorcerer**
+  - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:kill
+- **thief**
+  - Thievery: "opening naturally generated loot chests for the first time and killing mobs with Looting" -> pipican:kill
+- **transmuter**
+  - Alterations: "drinking potions and using Optimization" -> pipican:did
+- **warlock**
+  - Spell Theft: "stealing effects with Steal Spell" -> pipican:kill
+- **witch**
+  - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
 
 ## Potions, XP, loot, trading, crafting, food
 

@@ -49,6 +49,7 @@ SIMPLE = [
     (r'damaging mobs with explosions|blowing up mobs', lambda m: did('explosion_hit')),
     (r'killing mobs with execute|executing mobs', lambda m: did('execute')),
     (r'poisoning mobs', lambda m: did('poison')),
+    (r'absorbing damage with [a-z ]+', lambda m: did('absorb')),
     (r'throwing wind charges', lambda m: did('use_item', items=['minecraft:wind_charge'])),
     (r'taking big hits \((\d+)\+ damage\) and surviving', lambda m: filtered(did('hurt'), min_amount=float(m.group(1)))),
 ]

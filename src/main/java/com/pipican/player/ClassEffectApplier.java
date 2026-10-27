@@ -324,7 +324,9 @@ public final class ClassEffectApplier {
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
                 new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount, c.summonHearts),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
-                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods));
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods),
+                new ClassState.Shield(c.shieldAbsorb * Math.max(0, 1 + c.shieldEfficiency)),
+                new ClassState.DeadlyAim(c.aimOn, c.aimHold, c.aimDamage, c.aimCrit));
     }
 
     /**
@@ -447,6 +449,12 @@ public final class ClassEffectApplier {
         final List<com.pipican.effect.type.IgnoredByEffect> ignoredBy = new ArrayList<>();
         final Map<ResourceKey<Ability>, ClassState.AbilityMod> abilityMods = new java.util.HashMap<>();
         final Map<String, ClassState.ReactionMod> reactionMods = new java.util.HashMap<>();
+        double shieldAbsorb;
+        double shieldEfficiency;
+        boolean aimOn;
+        double aimHold;
+        double aimDamage;
+        boolean aimCrit;
 
         /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
         List<ClassState.Aura> finishAuras() {
@@ -533,6 +541,20 @@ public final class ClassEffectApplier {
         @Override
         public void addEffectDuration(Holder<MobEffect> effect, double multiplier) {
             effectDurations.merge(effect, multiplier, (a, b) -> a * b);
+        }
+
+        @Override
+        public void addResourceShield(double absorb, double efficiency) {
+            shieldAbsorb = Math.max(shieldAbsorb, absorb);
+            shieldEfficiency += efficiency;
+        }
+
+        @Override
+        public void addDeadlyAim(boolean base, double holdSeconds, double damage, boolean crit) {
+            aimOn |= base;
+            aimHold += holdSeconds;
+            aimDamage += damage;
+            aimCrit |= crit;
         }
 
         @Override

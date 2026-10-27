@@ -66,10 +66,12 @@ public record ClassState(
         Map<Holder<MobEffect>, Double> effectDurations,
         List<com.pipican.effect.type.IgnoredByEffect> ignoredBy,
         Map<ResourceKey<com.pipican.ability.Ability>, AbilityMod> abilityMods,
-        Map<String, ReactionMod> reactionMods) {
+        Map<String, ReactionMod> reactionMods,
+        Shield shield,
+        DeadlyAim deadlyAim) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of(), Shield.NONE, DeadlyAim.NONE);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -124,6 +126,16 @@ public record ClassState(
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count, double hearts) {
         public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0);
+    }
+
+    /** {@code pipican:resource_shield} totals: damage absorbed per resource point (0 = off). */
+    public record Shield(double perPoint) {
+        public static final Shield NONE = new Shield(0);
+    }
+
+    /** {@code pipican:deadly_aim} totals (off unless a base effect counts). */
+    public record DeadlyAim(boolean on, double holdSeconds, double damage, boolean crit) {
+        public static final DeadlyAim NONE = new DeadlyAim(false, 0, 0, false);
     }
 
     /** {@code pipican:reaction_mod} totals for one reaction name. */

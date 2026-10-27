@@ -3,9 +3,8 @@
   "description": "Trained by absorbing damage with Earthen Defense.",
   "icon": "minecraft:cobblestone",
   "trigger": {
-    "type": "pipican:hurt_wearing",
-    "items": "#pipican:armor/any",
-    "min_pieces": 1
+    "type": "pipican:did",
+    "action": "absorb"
   },
   "points_to": "special",
   "classes": [
