@@ -27,12 +27,13 @@ jobs:
           python3 tools/worldgen/build_special_landmarks.py
           mkdir -p src/main/resources/data/pipican/structure/special
           cp tools/worldgen/output/data/pipican/structure/special/*.nbt src/main/resources/data/pipican/structure/special/
+          cp tools/worldgen/output/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
       - name: Commit generated landmark templates to branch
         if: github.event_name == 'push' && github.ref == 'refs/heads/worldgen-and-ores'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/main/resources/data/pipican/structure/special/*.nbt
+          git add src/main/resources/data/pipican/structure/special/*.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
           if ! git diff --cached --quiet; then
             git commit -m "assets(worldgen): check in generated special landmark NBT models"
             git push origin HEAD:worldgen-and-ores
