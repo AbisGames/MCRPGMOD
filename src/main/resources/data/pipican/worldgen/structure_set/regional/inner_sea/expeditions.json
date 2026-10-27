@@ -1,0 +1,46 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 462911607,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/inner_sea/city_state_islands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/inner_sea/city_state_islands/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/inner_sea/city_state_islands/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/inner_sea/olive_coast_cliffs/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/inner_sea/olive_coast_cliffs/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/inner_sea/shipwreck_straits/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/inner_sea/shipwreck_straits/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/inner_sea/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/inner_sea/mine",
+      "weight": 4
+    }
+  ]
+}

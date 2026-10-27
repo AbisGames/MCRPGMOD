@@ -1,0 +1,74 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 898872953,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/floating_villages/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/floating_villages/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/jungle_temple_hills/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/jungle_temple_hills/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/jungle_temple_hills/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/lotus_lakes/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/lotus_lakes/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/lotus_lakes/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/rice_paddy_terraces/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/rice_paddy_terraces/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/rice_paddy_terraces/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/river_delta_channels/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/river_delta_channels/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/lotus_delta/river_delta_channels/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/lotus_delta/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/lotus_delta/mine",
+      "weight": 4
+    }
+  ]
+}

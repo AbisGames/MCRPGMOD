@@ -12,6 +12,7 @@ import math
 import random
 import struct
 import sys
+import shutil
 from collections import Counter
 from pathlib import Path
 from legacy import Build, THEMES
@@ -26,6 +27,7 @@ REGIONS=json.loads((ASSETS/'region_map.json').read_text())['macro_regions']
 REGIONIDS={r['id'] for r in REGIONS}
 POOLS=json.loads((ASSETS/('asset_manifest.json' if (ASSETS/'asset_manifest.json').exists() else 'structure_pools_manifest.json')).read_text())['pools']
 SITES=json.loads((ASSETS/'settlements.json').read_text())['settlements']
+SPAWN_BY_REGION={}
 EXTRAS=['aetheris_expanse','verdant_depths','umbral_chasm','crimson_wilds','shimmering_reefs']
 ORE={
 'whitecrown_icecap':'frostcrystal','northern_ice_sea':'glacierite',
@@ -1003,13 +1005,15 @@ def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
       'size':1,'start_height':{'absolute':0},'project_start_to_heightmap':'WORLD_SURFACE_WG',
       'max_distance_from_center':96,'start_pool':'pipican:'+pool_id,'use_expansion_hack':False})
     if spawn:
-      salt=int(hashlib.sha256(registry_id.encode()).hexdigest()[:8],16)%2000000000
-      savejson(Path('worldgen/structure_set')/(registry_id+'.json'),{
-        'placement':{'type':'minecraft:random_spread','salt':salt,'separation':max(8,spacing//4),'spacing':spacing},
-        'structures':[{'structure':'pipican:'+registry_id,'weight':1}]})
+      SPAWN_BY_REGION.setdefault(region,[]).append(registry_id)
 
 def generate():
     OUT.mkdir(parents=True,exist_ok=True)
+    SPAWN_BY_REGION.clear()
+    # Purge former per-template spread sets: all procedural structures in
+    # a region must share one native random-spread grid to prevent collisions.
+    set_dir=BASE/'worldgen/structure_set'
+    if set_dir.exists():shutil.rmtree(set_dir)
     for region in REGIONS:
         savejson(Path('tags/worldgen/biome/region')/(region['id']+'.json'),{
           'replace':False,'values':['pipican:'+region['id']+'/'+sub['id'] for sub in region['subregions']]})
@@ -1103,6 +1107,26 @@ def generate():
         if reg in EXTRAS:
             write('regional/'+reg+'/castle',reg,'castle',(112,72,112),pool='regional/'+reg+'/castle',structure=True,spawn=False)
             write('regional/'+reg+'/village',reg,'village',(80,30,80),pool='regional/'+reg+'/village',structure=True,spawn=True,spacing=100)
+    # One weighted spread per region. Native structures formerly had 320
+    # competing grids, so unrelated villages/mines/dungeons could collide.
+    for region,ids in sorted(SPAWN_BY_REGION.items()):
+        is_extra=region in EXTRAS
+        def weight(ident):
+            if ident.endswith('/mine'):return 4
+            if ident.endswith('/dungeon'):return 3
+            if ident.endswith('/village'):return 4
+            if ident.endswith('/hamlet'):return 3
+            if ident.endswith('/town'):return 2
+            return 1
+        salt=7919
+        for ch in region:salt=(salt*31+ord(ch))%1000000000
+        salt+=900000
+        savejson(Path('worldgen/structure_set')/('regional/'+region+'/expeditions.json'),{
+          'placement':{'type':'minecraft:random_spread','salt':salt,
+                       'separation':12 if is_extra else 22,
+                       'spacing':35 if is_extra else 60},
+          'structures':[{'structure':'pipican:'+ident,'weight':weight(ident)}
+                        for ident in sorted(ids)]})
     # Machine-readable summary. All pools from authoritative manifest appear.
     (OUT/'STRUCTURE_CATALOG.json').write_text(json.dumps(catalog,indent=2))
     report={'original_pools':len(POOLS),'authored_landmarks':len(SITES),

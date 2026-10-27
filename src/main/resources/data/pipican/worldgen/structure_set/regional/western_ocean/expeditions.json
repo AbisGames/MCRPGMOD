@@ -1,0 +1,34 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 724442338,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/western_ocean/lone_island_chain/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/western_ocean/lone_island_chain/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/western_ocean/sunken_city_reef/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/western_ocean/sunken_city_reef/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/western_ocean/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/western_ocean/mine",
+      "weight": 4
+    }
+  ]
+}

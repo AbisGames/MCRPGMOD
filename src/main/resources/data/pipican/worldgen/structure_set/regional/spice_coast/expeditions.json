@@ -1,0 +1,74 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 75745654,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/spice_coast/monsoon_forest/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/monsoon_forest/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/monsoon_forest/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/palace_plateau/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/palace_plateau/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/palace_plateau/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/port_city_coast/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/port_city_coast/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/port_city_coast/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/red_rock_wadis/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/red_rock_wadis/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/spice_plantation_hills/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/spice_plantation_hills/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/spice_coast/spice_plantation_hills/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/spice_coast/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/spice_coast/mine",
+      "weight": 4
+    }
+  ]
+}

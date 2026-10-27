@@ -1,0 +1,34 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 277449767,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/frozen_archipelago/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/frozen_archipelago/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/whale_grounds/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/northern_ice_sea/whale_grounds/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/northern_ice_sea/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/northern_ice_sea/mine",
+      "weight": 4
+    }
+  ]
+}

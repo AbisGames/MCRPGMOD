@@ -93,6 +93,23 @@ def main():
         require("temperature" in entry and "effects" in entry,
                 "invalid biome: " + str(file))
 
+    # One regional spread per biome family prevents the 320 formerly
+    # independent native jigsaw starts from overwriting one another.
+    sets = DATA / "structure_set"
+    found_sets = list(sets.rglob("*.json"))
+    require(len(found_sets)==27,"expected one procedural structure set per region")
+    for region in [r["id"] for r in regions]+[
+            "aetheris_expanse","verdant_depths","umbral_chasm",
+            "crimson_wilds","shimmering_reefs"]:
+        place = sets / "regional" / region / "expeditions.json"
+        require(place.is_file(),"missing expedition set for "+region)
+        config = json.loads(place.read_text())
+        registered = {s["structure"] for s in config["structures"]}
+        require("pipican:regional/"+region+"/mine" in registered,
+                "missing regional mine in structure set "+region)
+        require("pipican:regional/"+region+"/dungeon" in registered,
+                "missing regional dungeon in structure set "+region)
+    print("PASS: 27 region-specific weighted structure grids;")
     print("PASS: 22 regions, 120 authored subregions, 70 non-overlapping landmarks,")
     print("      331 structure pool IDs, 150 biome definitions, 27 ore entries and PNGs.")
     print("NOT VERIFIED: NeoForge compilation, world placement, terrain, dungeon logic.")

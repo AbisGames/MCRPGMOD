@@ -1,0 +1,70 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 347426369,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/endless_grass_sea/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/endless_grass_sea/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/endless_grass_sea/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/kurgan_burial_fields/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/kurgan_burial_fields/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/nomad_river_plains/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/nomad_river_plains/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/nomad_river_plains/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/rolling_steppe_hills/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/rolling_steppe_hills/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/rolling_steppe_hills/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/salt_flats/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/khagan_steppe/salt_flats/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/khagan_steppe/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/khagan_steppe/mine",
+      "weight": 4
+    }
+  ]
+}

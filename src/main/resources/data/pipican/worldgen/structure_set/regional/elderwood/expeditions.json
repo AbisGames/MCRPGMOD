@@ -1,0 +1,70 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 999208264,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/elderwood/dark_tangled_woods/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/dark_tangled_woods/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/elven_canopy_realm/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/elven_canopy_realm/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/elven_canopy_realm/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/giant_tree_forest/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/giant_tree_forest/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/giant_tree_forest/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/glowing_glades/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/glowing_glades/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/glowing_glades/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/mushroom_hollows/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/elderwood/mushroom_hollows/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/elderwood/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/elderwood/mine",
+      "weight": 4
+    }
+  ]
+}

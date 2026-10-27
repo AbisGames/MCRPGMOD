@@ -1,0 +1,50 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 74197107,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/coral_isles/atoll_lagoons/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/atoll_lagoons/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/atoll_lagoons/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/pirate_cove_islands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/pirate_cove_islands/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/volcanic_jungle_islands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/volcanic_jungle_islands/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/coral_isles/volcanic_jungle_islands/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/coral_isles/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/coral_isles/mine",
+      "weight": 4
+    }
+  ]
+}

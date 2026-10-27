@@ -1,0 +1,22 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 783333723,
+    "separation": 12,
+    "spacing": 35
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/aetheris_expanse/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/aetheris_expanse/mine",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/aetheris_expanse/village",
+      "weight": 4
+    }
+  ]
+}

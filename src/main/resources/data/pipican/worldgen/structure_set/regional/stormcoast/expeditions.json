@@ -1,0 +1,66 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 801679132,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/stormcoast/black_sand_shores/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/black_sand_shores/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/black_sand_shores/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/geyser_basin/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/geyser_basin/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/geyser_basin/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/lava_field_islands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/lava_field_islands/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/moss_covered_lava/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/moss_covered_lava/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/storm_cliffs/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/stormcoast/storm_cliffs/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/stormcoast/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/stormcoast/mine",
+      "weight": 4
+    }
+  ]
+}
