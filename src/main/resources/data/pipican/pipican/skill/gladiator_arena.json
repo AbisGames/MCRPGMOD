@@ -3,7 +3,13 @@
   "description": "Trained by killing mobs that have a harmful effect.",
   "icon": "minecraft:trident",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "harmful_effect": true
+    }
   },
   "points_to": "special",
   "classes": [

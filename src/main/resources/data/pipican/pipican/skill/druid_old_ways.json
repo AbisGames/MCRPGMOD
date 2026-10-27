@@ -3,7 +3,18 @@
   "description": "Trained by planting saplings and growing trees with bone meal.",
   "icon": "minecraft:oak_sapling",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "plant",
+        "blocks": "#minecraft:saplings"
+      },
+      {
+        "type": "pipican:did",
+        "action": "bone_meal"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

@@ -3,7 +3,8 @@
   "description": "Trained by your tamed animals killing mobs.",
   "icon": "minecraft:lead",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "pet_kill"
   },
   "points_to": "special",
   "classes": [

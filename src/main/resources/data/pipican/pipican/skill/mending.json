@@ -3,7 +3,8 @@
   "description": "Trained by healing damage (any source).",
   "icon": "minecraft:golden_apple",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "heal"
   },
   "points_to": "general",
   "classes": [

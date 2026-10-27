@@ -3,7 +3,17 @@
   "description": "Trained by enchanting items and combining enchanted books.",
   "icon": "minecraft:lapis_lazuli",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "enchant"
+      },
+      {
+        "type": "pipican:did",
+        "action": "anvil"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

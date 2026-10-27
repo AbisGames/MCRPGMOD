@@ -3,7 +3,23 @@
   "description": "Trained by killing mobs outdoors at night.",
   "icon": "minecraft:bow",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:all_of",
+      "conditions": [
+        {
+          "type": "pipican:state",
+          "state": "sees_sky"
+        },
+        {
+          "type": "pipican:state",
+          "state": "night"
+        }
+      ]
+    }
   },
   "points_to": "general",
   "classes": [

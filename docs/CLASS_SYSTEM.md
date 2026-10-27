@@ -265,9 +265,12 @@ A tier can also unlock abilities while it is reached: `"grants": [ "pipican:knig
 | `pipican:kill` | `items` (optional) | killing a mob with one of the items |
 | `pipican:block` | `items` (optional) | blocking an attack with a shield |
 | `pipican:hurt_wearing` | `items`, `min_pieces` (=1) | taking damage while wearing at least `min_pieces` of the items |
-| `pipican:move` | `mode`, `per_blocks` (=10) | every `per_blocks` blocks moved in `mode`: `walk`, `sprint`, `sneak`, `swim`, `climb`, `glide` |
+| `pipican:move` | `mode`, `per_blocks` (=10) | every `per_blocks` blocks moved in `mode`: `walk`, `sprint`, `sneak`, `swim`, `climb`, `glide`, `ride` (carried by a mount) |
 | `pipican:jump` | – | a jump |
-| `pipican:ability` | `ability` | using an active ability, e.g. a dodge roll. Nothing fires it yet: the ability system will. |
+| `pipican:ability` | `ability` | using that active ability |
+| `pipican:did` | `action`, `items`, `blocks` | `crit`, `bleed`, `dodge`, `spend` (an ability spent resource), `heal` (you were healed), `hurt` (any damage taken), `take_fall`, `teleport` (pearls, chorus fruit, blinks), `enchant`, `brew`, `craft`, `smelt`, `trade`, `tame`, `breed`, `mine`, `harvest` (fully grown crops, berries, flowers, mushrooms), `plant`, `bone_meal`, `anvil`, `level_up`, `drink` (a potion), `fish`, `pet_kill` (your pet or summon killed a mob). `items` / `blocks` narrow it (`"action": "mine", "blocks": "#c:ores"`). |
+| `pipican:filtered` | `trigger`, `when`, `victims`, `victim`, `min_amount` | another trigger, only in a [condition](#conditions) (`when`), against some mobs (`victims`), mobs in a [state](#3-effects) (`victim`: marked, bleeding, low health...), or with at least `min_amount` damage / spending / healing. |
+| `pipican:any` | `triggers` | the first of several triggers that matches ("brewing potions and drinking them"). |
 
 **Total points:** players get 5 points per skill they can train (plus the class's starting points), so the number
 of skills decides how much of the trees a character can fill. Keep that in mind when sizing trees.

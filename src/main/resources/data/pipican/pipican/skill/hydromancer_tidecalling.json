@@ -3,7 +3,14 @@
   "description": "Trained by killing mobs while wet.",
   "icon": "minecraft:heart_of_the_sea",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:state",
+      "state": "wet"
+    }
   },
   "points_to": "special",
   "classes": [

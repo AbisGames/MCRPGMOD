@@ -1,5 +1,7 @@
 package com.pipican.gametest;
 
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.monster.zombie.Zombie;
 import com.pipican.effect.VictimState;
 import com.pipican.ability.Bleeds;
@@ -347,6 +349,24 @@ public final class ClassSystemTests {
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
         helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true).test(player, zombie), "bleeding victim state");
         zombie.discard();
+
+        // Skill triggers: pipican:any of filtered / did triggers
+        ResourceKey<Skill> survivor = ResourceKey.create(PipicanRegistries.SKILL, Identifier.fromNamespaceAndPath("pipican_test", "survivor"));
+        MasteryService.onAction(player, new SkillAction.Did(SkillAction.Did.Kind.HURT, ItemStack.EMPTY, Optional.empty(), Optional.empty(), 3));
+        assertNear(helper, 0, data.mastery(survivor), "small hits don't count (min_amount 5)");
+        MasteryService.onAction(player, new SkillAction.Did(SkillAction.Did.Kind.HURT, ItemStack.EMPTY, Optional.empty(), Optional.empty(), 6));
+        assertNear(helper, 1, data.mastery(survivor), "a big hit counts");
+        Zombie undead = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 1));
+        Cow cow = helper.spawn(EntityType.COW, new BlockPos(1, 2, 2));
+        MasteryService.onAction(player, new SkillAction.Kill(ItemStack.EMPTY, Optional.of(cow)));
+        assertNear(helper, 1, data.mastery(survivor), "killing a cow isn't killing undead");
+        MasteryService.onAction(player, new SkillAction.Kill(ItemStack.EMPTY, Optional.of(undead)));
+        assertNear(helper, 2, data.mastery(survivor), "killing undead counts");
+        MasteryService.onAction(player, new SkillAction.Did(SkillAction.Did.Kind.MINE, ItemStack.EMPTY, Optional.of(Blocks.STONE.defaultBlockState()), Optional.empty(), 0));
+        MasteryService.onAction(player, new SkillAction.Did(SkillAction.Did.Kind.MINE, ItemStack.EMPTY, Optional.of(Blocks.OAK_LOG.defaultBlockState()), Optional.empty(), 0));
+        assertNear(helper, 3, data.mastery(survivor), "mining stone counts, logs don't");
+        undead.discard();
+        cow.discard();
 
         // Timed boosts from reactions
         double armor = player.getAttributeValue(Attributes.ARMOR);

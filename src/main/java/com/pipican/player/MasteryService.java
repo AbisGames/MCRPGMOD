@@ -48,7 +48,7 @@ public final class MasteryService {
             if (!skill.allowedFor(data.activeClass())) {
                 continue;
             }
-            double uses = skill.trigger().uses(action);
+            double uses = skill.trigger().uses(player, action);
             if (uses <= 0) {
                 continue;
             }

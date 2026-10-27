@@ -1,9 +1,19 @@
 {
   "name": "Tumbling",
   "description": "Trained by taking fall damage and dodging attacks.",
-  "icon": "minecraft:rabbit_foot",
+  "icon": "minecraft:feather",
   "trigger": {
-    "type": "pipican:jump"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "take_fall"
+      },
+      {
+        "type": "pipican:did",
+        "action": "dodge"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

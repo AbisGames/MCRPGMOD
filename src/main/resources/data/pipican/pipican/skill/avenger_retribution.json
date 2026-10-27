@@ -3,7 +3,13 @@
   "description": "Trained by killing marked targets.",
   "icon": "minecraft:crossbow",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "marked": true
+    }
   },
   "points_to": "special",
   "classes": [

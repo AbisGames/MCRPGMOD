@@ -3,9 +3,12 @@
   "description": "Trained by taking big hits (5+ damage) and surviving.",
   "icon": "minecraft:anvil",
   "trigger": {
-    "type": "pipican:hurt_wearing",
-    "items": "#pipican:armor/any",
-    "min_pieces": 1
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "hurt"
+    },
+    "min_amount": 5.0
   },
   "points_to": "special",
   "classes": [

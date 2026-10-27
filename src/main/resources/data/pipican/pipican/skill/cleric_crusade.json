@@ -3,7 +3,11 @@
   "description": "Trained by killing undead mobs.",
   "icon": "minecraft:totem_of_undying",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victims": "#minecraft:undead"
   },
   "points_to": "special",
   "classes": [

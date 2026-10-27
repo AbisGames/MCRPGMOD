@@ -1,5 +1,8 @@
 package com.pipican.ability;
 
+import java.util.Optional;
+import com.pipican.mastery.SkillAction;
+import com.pipican.event.MasteryEvents;
 import com.pipican.player.ClassState;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -50,6 +53,7 @@ public final class Bleeds {
         }
         long ticks = Math.round(bleed.seconds() * 20);
         wounds.add(new Wound(player.getUUID(), bleed.damage(), now + ticks));
+        MasteryEvents.did(player, new SkillAction.Did(SkillAction.Did.Kind.BLEED, player.getMainHandItem(), Optional.empty(), Optional.of(victim), bleed.damage()));
         if (bleed.slows()) {
             victim.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, (int) ticks, 0), player);
         }

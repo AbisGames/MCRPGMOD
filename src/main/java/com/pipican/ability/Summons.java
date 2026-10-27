@@ -1,5 +1,6 @@
 package com.pipican.ability;
 
+import java.util.Optional;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
@@ -42,6 +43,13 @@ public final class Summons {
     public static boolean isSummonOf(Entity entity, ServerPlayer player) {
         Entry e = ACTIVE.get(entity.getUUID());
         return e != null && e.owner().equals(player.getUUID());
+    }
+
+    /** The player who summoned {@code entity}, if it is a tracked summon and they're online. */
+    public static Optional<ServerPlayer> ownerOf(Entity entity) {
+        Entry e = ACTIVE.get(entity.getUUID());
+        return e == null || entity.level().getServer() == null ? Optional.empty()
+                : Optional.ofNullable(entity.level().getServer().getPlayerList().getPlayer(e.owner()));
     }
 
     /** A tagged summon that loads but isn't tracked (e.g. after a restart) is left over: remove it. */

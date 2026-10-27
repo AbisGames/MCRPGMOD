@@ -3,7 +3,17 @@
   "description": "Trained by dodging with Precognition and spending Sands.",
   "icon": "minecraft:clock",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "dodge"
+      },
+      {
+        "type": "pipican:did",
+        "action": "spend"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

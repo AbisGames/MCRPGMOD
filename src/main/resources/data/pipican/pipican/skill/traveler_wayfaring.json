@@ -3,7 +3,8 @@
   "description": "Trained by teleporting with pearls and blinks.",
   "icon": "minecraft:ender_pearl",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "teleport"
   },
   "points_to": "special",
   "classes": [

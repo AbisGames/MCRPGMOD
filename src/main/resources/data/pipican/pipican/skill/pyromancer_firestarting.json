@@ -3,7 +3,13 @@
   "description": "Trained by setting mobs on fire and killing burning mobs.",
   "icon": "minecraft:blaze_powder",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "on_fire": true
+    }
   },
   "points_to": "special",
   "classes": [

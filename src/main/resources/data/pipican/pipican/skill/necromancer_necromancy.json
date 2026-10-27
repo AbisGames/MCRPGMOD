@@ -3,7 +3,8 @@
   "description": "Trained by your undead servants killing mobs.",
   "icon": "minecraft:skeleton_skull",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "pet_kill"
   },
   "points_to": "special",
   "classes": [

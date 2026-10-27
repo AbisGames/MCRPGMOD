@@ -15,6 +15,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import abilities as ab  # noqa: E402
 import bonus  # noqa: E402
+import triggers  # noqa: E402
 import effects as fx  # noqa: E402
 import parse_specs  # noqa: E402
 
@@ -640,7 +641,11 @@ def main(spec_dir, res_dir, report_path):
     for key, (owner, s) in sorted(skill_defs.items()):
         ctx = {'special_name': owner['special']['name'], 'special_id': f'{NS}:{owner["id"]}_{slug(owner["special"]["name"])}',
                'resource_name': owner['resource']['name'] if owner['resource'] else None}
-        trig, exact = map_trigger(s['trigger'])
+        mapped = triggers.map_text(s['trigger'], ctx)
+        trig, exact = mapped if mapped else map_trigger(s['trigger'])
+        if mapped and not exact:
+            # Some of the text was read: keep what was, list the rest.
+            pass
         if not exact:
             report['Skill trigger approximated'].append((owner['id'], s['name'], f'"{s["trigger"]}" -> {trig["type"]}' +
                                                          (f' {trig.get("items")}' if trig.get('items') else '')))

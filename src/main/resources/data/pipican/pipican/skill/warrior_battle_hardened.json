@@ -3,7 +3,14 @@
   "description": "Trained by killing hostile mobs while below half health.",
   "icon": "minecraft:iron_sword",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:health",
+      "max": 0.5
+    }
   },
   "thresholds": [
     200,

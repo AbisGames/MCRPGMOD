@@ -4,8 +4,8 @@
   "icon": "minecraft:feather",
   "trigger": {
     "type": "pipican:move",
-    "mode": "walk",
-    "per_blocks": 50
+    "mode": "ride",
+    "per_blocks": 20
   },
   "points_to": "general",
   "classes": [

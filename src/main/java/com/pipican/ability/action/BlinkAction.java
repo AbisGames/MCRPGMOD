@@ -1,5 +1,7 @@
 package com.pipican.ability.action;
 
+import com.pipican.mastery.SkillAction;
+import com.pipican.event.MasteryEvents;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -81,6 +83,7 @@ public record BlinkAction(double distance, boolean throughWalls, Optional<Holder
             if (ctx.level().noCollision(player, player.getBoundingBox().move(feet.subtract(player.position())))) {
                 player.teleportTo(feet.x, feet.y, feet.z);
                 player.resetFallDistance();
+                MasteryEvents.did(player, SkillAction.Did.Kind.TELEPORT);
                 return true;
             }
             feet = feet.add(0, 1, 0);

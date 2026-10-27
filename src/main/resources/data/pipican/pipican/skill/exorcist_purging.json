@@ -3,7 +3,11 @@
   "description": "Trained by killing unclean mobs (undead, Nether, End, vexes, phantoms).",
   "icon": "minecraft:totem_of_undying",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victims": "#pipican:mobs/unclean"
   },
   "points_to": "special",
   "classes": [

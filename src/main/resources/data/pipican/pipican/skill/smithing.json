@@ -3,7 +3,8 @@
   "description": "Trained by using anvils, grindstones and smithing tables.",
   "icon": "minecraft:crafter",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "anvil"
   },
   "thresholds": [
     50,

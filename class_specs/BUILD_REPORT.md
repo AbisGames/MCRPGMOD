@@ -16,9 +16,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 246 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 142 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 124 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 98 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 75 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 75 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 61 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 30 |
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 7 |
@@ -1123,188 +1123,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Martyrdom: you never naturally regenerate above half health
   - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
 
-## Skill trigger approximated
-
-- **abjurer**
-  - Abjuration: "taking damage while Ward is above half" -> pipican:hurt_wearing #pipican:armor/any
-- **acrobat**
-  - Tumbling: "taking fall damage and dodging attacks" -> pipican:jump
-- **aeromancer**
-  - Windcalling: "throwing wind charges and falling long distances safely" -> pipican:jump
-- **apocalyptist**
-  - Forbidden Rites: "killing mobs while they have the Wither effect" -> pipican:kill
-- **arcanist**
-  - Arcane Research: "enchanting items and combining enchanted books" -> pipican:kill
-- **artificer**
-  - Tinkering: "crafting redstone components, rails and mechanisms" -> pipican:kill
-  - Smithing: "using anvils, grindstones and smithing tables" -> pipican:kill
-- **assassin**
-  - Poisoncraft: "poisoning mobs and brewing poison potions" -> pipican:melee_hit
-- **astromancer**
-  - Stargazing: "spending time outdoors at night and killing mobs while glowing" -> pipican:kill
-- **avenger**
-  - Retribution: "killing marked targets" -> pipican:kill
-- **bard**
-  - Repertoire: "allies killing mobs inside your Song" -> pipican:kill
-  - Performance: "using goat horns, note blocks and jukeboxes near other players" -> pipican:kill
-- **beastmaster**
-  - Pack Leader: "your tamed animals killing mobs" -> pipican:kill
-- **berserker**
-  - Bloodrage: "taking damage while Berserk" -> pipican:hurt_wearing #pipican:armor/any
-- **blade**
-  - Knifework: "making mobs bleed" -> pipican:melee_hit
-- **brute**
-  - Iron Body: "taking big hits (5+ damage) and surviving" -> pipican:hurt_wearing #pipican:armor/any
-- **cavalier**
-  - Lancer: "hitting mobs while mounted" -> pipican:melee_hit
-  - Riding: "travelling on horses, camels, donkeys, pigs and striders" -> pipican:move
-- **champion**
-  - Cause: "fighting in Battle Stance" -> pipican:melee_hit
-- **chaplain**
-  - Liturgy: "allies killing mobs inside your Battle Chant" -> pipican:kill
-- **chronomancer**
-  - Temporal Study: "dodging with Precognition and spending Sands" -> pipican:kill
-- **cleric**
-  - Crusade: "killing undead mobs" -> pipican:kill
-- **conjurer**
-  - Conjuration: "your minions killing mobs" -> pipican:kill
-- **conqueror**
-  - Generalship: "allies killing mobs you've hit in the last 4s" -> pipican:kill
-- **death_dealer**
-  - Reaping: "killing 3+ mobs within 10s" -> pipican:kill
-- **defender**
-  - Protector: "blocking hits aimed at mobs targeting other players / taking damage near allies" -> pipican:hurt_wearing #pipican:armor/any
-- **dervish**
-  - Whirling: "landing both-hand combos" -> pipican:melee_hit
-- **destroyer**
-  - Demolition: "damaging mobs with explosions" -> pipican:melee_hit
-- **diplomat**
-  - Bartering: "trading with villagers, wandering traders and piglins" -> pipican:kill
-  - Negotiation: "cancelling attacks with Stay the Hand and trading" -> pipican:kill
-- **diviner**
-  - Augury: "using up premonitions and spending Omens" -> pipican:kill
-- **druid**
-  - Beast Bond: "taming and breeding animals" -> pipican:kill
-  - Old Ways: "planting saplings and growing trees with bone meal" -> pipican:kill
-- **duelist**
-  - Single Combat: "killing challenged foes" -> pipican:kill
-- **enchanter**
-  - Beguiling: "charming mobs" -> pipican:kill
-- **engineer**
-  - Mechanics: "your eidolon dealing damage and repairing it" -> pipican:kill
-- **executioner**
-  - Headsman: "killing mobs with Execute" -> pipican:kill
-- **exorcist**
-  - Purging: "killing unclean mobs (undead, Nether, End, vexes, phantoms)" -> pipican:kill
-- **explorer**
-  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **fighter**
-  - Drill: "killing mobs with 3 or more different weapon types in the same day" -> pipican:kill
-- **geomancer**
-  - Stoneheart: "absorbing damage with Earthen Defense" -> pipican:hurt_wearing #pipican:armor/any
-  - Mining: "mining ores and stone" -> pipican:kill
-- **gladiator**
-  - Arena: "killing mobs that have a harmful effect" -> pipican:kill
-- **gunslinger**
-  - Gunplay: "hitting mobs with firearms" -> pipican:ranged_hit #pipican:weapons/crossbows
-  - Gunsmithing: "modifying and repairing firearms" -> pipican:kill
-- **healer**
-  - Lifebinding: "healing other players" -> pipican:kill
-- **hexer**
-  - Maledictions: "cursing mobs with Evil Eye" -> pipican:melee_hit
-- **hydromancer**
-  - Tidecalling: "killing mobs while wet" -> pipican:kill
-  - Swimming: "swimming distance and fighting underwater" -> pipican:move
-- **illusionist**
-  - Glamourcraft: "dodging hits with decoys" -> pipican:kill
-- **infiltrator**
-  - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
-- **inquisitor**
-  - Interrogation: "killing scrutinised mobs" -> pipican:kill
-- **jack_of_all_trades**
-  - Dabbling: "using 4+ different item types in combat in one day" -> pipican:kill
-- **mage_knight**
-  - War Magic: "hitting mobs while Escalating Violence is active" -> pipican:melee_hit
-- **magician**
-  - Alchemy: "brewing potions" -> pipican:kill
-  - Enchanting: "enchanting items at an enchanting table" -> pipican:kill
-  - Arcane Study: "gaining experience levels" -> pipican:kill
-- **marauder**
-  - Raiding: "killing mobs with sprint-hits" -> pipican:kill
-- **miracle_worker**
-  - Miracles: "healing others with Worker of Miracles" -> pipican:kill
-- **necromancer**
-  - Necromancy: "your undead servants killing mobs" -> pipican:kill
-- **oracle**
-  - Trance: "seconds spent in Divine Ecstasy" -> pipican:kill
-- **paladin**
-  - Holy Oath: "landing Divine Smite hits" -> pipican:melee_hit
-- **poisoner**
-  - Toxicology: "poisoning mobs and brewing poison" -> pipican:melee_hit
-- **priest**
-  - Mending: "healing damage (any source)" -> pipican:kill
-  - Devout: "other players within 8 blocks killing mobs while your Prayer aura is active" -> pipican:kill
-  - Undead Bane: "killing undead mobs (zombies, skeletons, phantoms, drowned, wither skeletons...)" -> pipican:kill
-- **pyromancer**
-  - Firestarting: "setting mobs on fire and killing burning mobs" -> pipican:melee_hit
-- **ranger**
-  - Tracking: "killing your marked prey" -> pipican:kill
-  - Survival: "killing mobs outdoors at night" -> pipican:kill
-- **rogue**
-  - Acrobatics: "taking fall damage and sprint-jumping" -> pipican:jump
-  - Backstab: "damaging mobs that are not targeting you" -> pipican:melee_hit
-  - Roguery: "landing Trickery hits" -> pipican:melee_hit
-  - Stealth: "sneaking within 8 blocks of a hostile mob without being targeted" -> pipican:kill
-- **runesmith**
-  - Runecarving: "applying armor trims and renaming weapons at anvils" -> pipican:kill
-- **savant**
-  - Broad Study: "using magic of both focus schools in one fight" -> pipican:kill
-- **scout**
-  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **sentinel**
-  - Watchkeeping: "killing mobs while Stand Guard is active" -> pipican:kill
-- **shapeshifter**
-  - Shifting: "time spent in animal forms" -> pipican:kill
-- **sharpshooter**
-  - Marksmanship: "landing Deadly Aim shots" -> pipican:melee_hit
-- **sorcerer**
-  - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:kill
-- **spellbinder**
-  - Weaponbond: "killing mobs with your bound weapon" -> pipican:kill
-- **stormbringer**
-  - Stormcalling: "fighting in rain and thunderstorms" -> pipican:melee_hit
-- **technomancer**
-  - Tinkerwork: "crafting and placing redstone components" -> pipican:kill
-- **templar**
-  - Warding the Shrine: "killing mobs inside your temple" -> pipican:kill
-- **tenebrist**
-  - Darkweaving: "killing mobs in light level 7 or lower" -> pipican:kill
-- **thaumaturge**
-  - Wild Surges: "triggering Seize Chaos" -> pipican:kill
-- **theurge**
-  - Theurgy: "healing with Pious Restoration and hitting mobs with Invocation" -> pipican:kill
-- **thief**
-  - Thievery: "opening naturally generated loot chests for the first time and killing mobs with Looting" -> pipican:kill
-- **transmuter**
-  - Alterations: "drinking potions and using Optimization" -> pipican:kill
-- **traveler**
-  - Wayfaring: "teleporting with pearls and blinks" -> pipican:kill
-- **warlock**
-  - Spell Theft: "stealing effects with Steal Spell" -> pipican:kill
-- **warrior**
-  - Battle-Hardened: "killing hostile mobs while below half health" -> pipican:kill
-- **weapon_master**
-  - Devotion: "killing mobs with your favored weapon" -> pipican:kill
-- **witch**
-  - Herbalism: "harvesting fully grown crops, berries, flowers and mushrooms" -> pipican:kill
-  - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:kill
-- **wizard**
-  - Scholarship: "enchanting items and using enchanted books on an anvil" -> pipican:kill
-- **woodwose**
-  - Wildwood: "planting trees and fighting in forests" -> pipican:kill
-- **zealot**
-  - Self-Denial: "surviving hits with Zeal" -> pipican:hurt_wearing #pipican:armor/any
-
 ## Bonus against a kind of mob / marked target
 
 - **acrobat**
@@ -1523,6 +1341,127 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Zeal chance +0.3% per Fervor
   - general tree: Unbroken: Zeal chance +10%
   - general tree: Martyrdom: Zeal chance doubled
+
+## Skill trigger approximated
+
+- **aeromancer**
+  - Windcalling: "throwing wind charges and falling long distances safely" -> pipican:jump
+- **apocalyptist**
+  - Forbidden Rites: "killing mobs while they have the Wither effect" -> pipican:kill
+- **assassin**
+  - Poisoncraft: "poisoning mobs and brewing poison potions" -> pipican:did
+- **astromancer**
+  - Stargazing: "spending time outdoors at night and killing mobs while glowing" -> pipican:kill
+- **bard**
+  - Repertoire: "allies killing mobs inside your Song" -> pipican:kill
+  - Performance: "using goat horns, note blocks and jukeboxes near other players" -> pipican:kill
+- **berserker**
+  - Bloodrage: "taking damage while Berserk" -> pipican:hurt_wearing #pipican:armor/any
+- **champion**
+  - Cause: "fighting in Battle Stance" -> pipican:melee_hit
+- **chaplain**
+  - Liturgy: "allies killing mobs inside your Battle Chant" -> pipican:kill
+- **conqueror**
+  - Generalship: "allies killing mobs you've hit in the last 4s" -> pipican:kill
+- **death_dealer**
+  - Reaping: "killing 3+ mobs within 10s" -> pipican:kill
+- **defender**
+  - Protector: "blocking hits aimed at mobs targeting other players / taking damage near allies" -> pipican:hurt_wearing #pipican:armor/any
+- **dervish**
+  - Whirling: "landing both-hand combos" -> pipican:melee_hit
+- **destroyer**
+  - Demolition: "damaging mobs with explosions" -> pipican:melee_hit
+- **diplomat**
+  - Negotiation: "cancelling attacks with Stay the Hand and trading" -> pipican:did
+- **diviner**
+  - Augury: "using up premonitions and spending Omens" -> pipican:did
+- **duelist**
+  - Single Combat: "killing challenged foes" -> pipican:kill
+- **enchanter**
+  - Beguiling: "charming mobs" -> pipican:kill
+- **engineer**
+  - Mechanics: "your eidolon dealing damage and repairing it" -> pipican:kill
+- **executioner**
+  - Headsman: "killing mobs with Execute" -> pipican:kill
+- **explorer**
+  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
+- **fighter**
+  - Drill: "killing mobs with 3 or more different weapon types in the same day" -> pipican:kill
+- **geomancer**
+  - Stoneheart: "absorbing damage with Earthen Defense" -> pipican:hurt_wearing #pipican:armor/any
+  - Mining: "mining ores and stone" -> pipican:kill
+- **gunslinger**
+  - Gunplay: "hitting mobs with firearms" -> pipican:ranged_hit #pipican:weapons/crossbows
+  - Gunsmithing: "modifying and repairing firearms" -> pipican:kill
+- **healer**
+  - Lifebinding: "healing other players" -> pipican:kill
+- **hexer**
+  - Maledictions: "cursing mobs with Evil Eye" -> pipican:melee_hit
+- **hydromancer**
+  - Swimming: "swimming distance and fighting underwater" -> pipican:move
+- **infiltrator**
+  - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
+- **inquisitor**
+  - Interrogation: "killing scrutinised mobs" -> pipican:kill
+- **jack_of_all_trades**
+  - Dabbling: "using 4+ different item types in combat in one day" -> pipican:kill
+- **mage_knight**
+  - War Magic: "hitting mobs while Escalating Violence is active" -> pipican:melee_hit
+- **miracle_worker**
+  - Miracles: "healing others with Worker of Miracles" -> pipican:kill
+- **oracle**
+  - Trance: "seconds spent in Divine Ecstasy" -> pipican:kill
+- **paladin**
+  - Holy Oath: "landing Divine Smite hits" -> pipican:melee_hit
+- **poisoner**
+  - Toxicology: "poisoning mobs and brewing poison" -> pipican:did
+- **priest**
+  - Devout: "other players within 8 blocks killing mobs while your Prayer aura is active" -> pipican:kill
+- **pyromancer**
+  - Firestarting: "setting mobs on fire and killing burning mobs" -> pipican:filtered
+- **rogue**
+  - Roguery: "landing Trickery hits" -> pipican:melee_hit
+  - Stealth: "sneaking within 8 blocks of a hostile mob without being targeted" -> pipican:kill
+- **runesmith**
+  - Runecarving: "applying armor trims and renaming weapons at anvils" -> pipican:kill
+- **savant**
+  - Broad Study: "using magic of both focus schools in one fight" -> pipican:kill
+- **scout**
+  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
+- **sentinel**
+  - Watchkeeping: "killing mobs while Stand Guard is active" -> pipican:kill
+- **shapeshifter**
+  - Shifting: "time spent in animal forms" -> pipican:kill
+- **sharpshooter**
+  - Marksmanship: "landing Deadly Aim shots" -> pipican:melee_hit
+- **sorcerer**
+  - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:kill
+- **spellbinder**
+  - Weaponbond: "killing mobs with your bound weapon" -> pipican:kill
+- **stormbringer**
+  - Stormcalling: "fighting in rain and thunderstorms" -> pipican:melee_hit
+- **templar**
+  - Warding the Shrine: "killing mobs inside your temple" -> pipican:kill
+- **tenebrist**
+  - Darkweaving: "killing mobs in light level 7 or lower" -> pipican:kill
+- **thaumaturge**
+  - Wild Surges: "triggering Seize Chaos" -> pipican:kill
+- **theurge**
+  - Theurgy: "healing with Pious Restoration and hitting mobs with Invocation" -> pipican:kill
+- **thief**
+  - Thievery: "opening naturally generated loot chests for the first time and killing mobs with Looting" -> pipican:kill
+- **transmuter**
+  - Alterations: "drinking potions and using Optimization" -> pipican:did
+- **warlock**
+  - Spell Theft: "stealing effects with Steal Spell" -> pipican:kill
+- **weapon_master**
+  - Devotion: "killing mobs with your favored weapon" -> pipican:kill
+- **witch**
+  - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
+- **woodwose**
+  - Wildwood: "planting trees and fighting in forests" -> pipican:did
+- **zealot**
+  - Self-Denial: "surviving hits with Zeal" -> pipican:hurt_wearing #pipican:armor/any
 
 ## Potions, XP, loot, trading, crafting, food
 

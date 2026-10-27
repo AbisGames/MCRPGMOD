@@ -3,7 +3,8 @@
   "description": "Trained by brewing potions.",
   "icon": "minecraft:enchanted_book",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "brew"
   },
   "points_to": "general",
   "classes": [

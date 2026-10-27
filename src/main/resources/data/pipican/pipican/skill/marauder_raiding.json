@@ -3,7 +3,14 @@
   "description": "Trained by killing mobs with sprint-hits.",
   "icon": "minecraft:iron_axe",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:state",
+      "state": "sprinting"
+    }
   },
   "points_to": "special",
   "classes": [

@@ -1,11 +1,18 @@
 {
   "name": "Ironclad",
   "description": "Trained by taking damage while wearing 4 heavy armor pieces.",
-  "icon": "minecraft:iron_chestplate",
+  "icon": "minecraft:netherite_chestplate",
   "trigger": {
-    "type": "pipican:hurt_wearing",
-    "items": "#pipican:armor/heavy",
-    "min_pieces": 4
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "hurt"
+    },
+    "when": {
+      "type": "pipican:wearing",
+      "items": "#pipican:armor/heavy",
+      "min": 4
+    }
   },
   "points_to": "special",
   "classes": [

@@ -3,7 +3,14 @@
   "description": "Trained by hitting mobs while mounted.",
   "icon": "minecraft:saddle",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "when": {
+      "type": "pipican:state",
+      "state": "mounted"
+    }
   },
   "points_to": "special",
   "classes": [

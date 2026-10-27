@@ -3,7 +3,17 @@
   "description": "Trained by enchanting items and using enchanted books on an anvil.",
   "icon": "minecraft:writable_book",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "enchant"
+      },
+      {
+        "type": "pipican:did",
+        "action": "anvil"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

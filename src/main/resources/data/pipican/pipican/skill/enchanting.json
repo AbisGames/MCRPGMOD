@@ -3,7 +3,8 @@
   "description": "Trained by enchanting items at an enchanting table.",
   "icon": "minecraft:enchanted_book",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "enchant"
   },
   "thresholds": [
     50,

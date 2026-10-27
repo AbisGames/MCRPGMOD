@@ -1,5 +1,6 @@
 package com.pipican.event;
 
+import com.pipican.mastery.SkillAction;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
 import java.util.Map;
@@ -168,6 +169,7 @@ public final class ClassEvents {
                 double chance = state.dodgeChance() + (melee ? state.meleeDodgeChance() : state.rangedDodgeChance());
                 if (chance > 0 && victim.getRandom().nextDouble() < chance) {
                     victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
+                    MasteryEvents.did(victim, SkillAction.Did.Kind.DODGE);
                     event.setCanceled(true);
                     return;
                 }
@@ -292,6 +294,8 @@ public final class ClassEvents {
             boolean crit = last != null && last.target() == event.getEntity() && last.tick() == attacker.level().getGameTime();
             if (crit) {
                 Reactions.fire(attacker, event.getEntity(), event.getSource().getWeaponItem(), ReactionEffect.Event.CRIT);
+                MasteryEvents.did(attacker, new SkillAction.Did(SkillAction.Did.Kind.CRIT, attacker.getMainHandItem(), Optional.empty(),
+                        Optional.of(event.getEntity()), event.getInflictedDamage()));
             }
             if (event.getSource().getDirectEntity() == attacker) {
                 Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);

@@ -3,7 +3,8 @@
   "description": "Trained by poisoning mobs and brewing poison potions.",
   "icon": "minecraft:wither_rose",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:did",
+    "action": "brew"
   },
   "points_to": "special",
   "classes": [

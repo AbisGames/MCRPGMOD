@@ -3,7 +3,8 @@
   "description": "Trained by your minions killing mobs.",
   "icon": "minecraft:zombie_spawn_egg",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "pet_kill"
   },
   "points_to": "special",
   "classes": [

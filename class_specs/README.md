@@ -68,7 +68,12 @@ wither, melee, or "all".
 
 **Skills can be trained by:** melee hits (any weapon, or only swords/axes/...), ranged hits (bows, crossbows,
 tridents), kills (with any or specific weapons), blocking with a shield, taking damage while wearing certain armor,
-moving (walking, sprinting, sneaking, swimming, climbing, gliding: "every N blocks"), jumping.
+moving (walking, sprinting, sneaking, swimming, climbing, gliding, riding: "every N blocks"), jumping, crits, making mobs
+bleed, dodging, spending your resource, being healed, taking (big) hits or fall damage, teleporting, enchanting, brewing,
+crafting (e.g. redstone components), trading, taming, breeding, mining (ores / stone), harvesting crops, planting saplings,
+bone meal, anvils, gaining levels, drinking potions, fishing, your pets or summons killing mobs. Any of them can be
+limited: "killing undead mobs", "killing mobs while wet", "killing marked targets", "hitting mobs while mounted",
+"damaging mobs that are not targeting you", "taking damage while Ward is above half". Several can be joined with "and".
 
 ## Active abilities
 

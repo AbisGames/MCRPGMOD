@@ -3,7 +3,8 @@
   "description": "Trained by trading with villagers, wandering traders and piglins.",
   "icon": "minecraft:emerald",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "trade"
   },
   "thresholds": [
     50,

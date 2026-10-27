@@ -1,5 +1,7 @@
 package com.pipican.ability;
 
+import net.minecraft.world.item.ItemStack;
+import com.pipican.event.MasteryEvents;
 import com.pipican.effect.type.ReactionEffect;
 import com.pipican.effect.type.BonusEffect;
 import com.pipican.condition.ClassCondition;
@@ -164,6 +166,7 @@ public final class AbilityService {
         MasteryService.onAction(player, new SkillAction.AbilityUsed(key.identifier(), player.getMainHandItem()));
         if (spent > 0) {
             Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.SPEND);
+            MasteryEvents.did(player, new SkillAction.Did(SkillAction.Did.Kind.SPEND, ItemStack.EMPTY, Optional.empty(), Optional.empty(), spent));
         }
         // Refresh so "while active" effects and ability_active conditions take effect; also syncs.
         ClassService.changed(player);

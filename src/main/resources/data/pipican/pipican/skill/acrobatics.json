@@ -1,9 +1,18 @@
 {
   "name": "Acrobatics",
   "description": "Trained by taking fall damage and sprint-jumping.",
-  "icon": "minecraft:rabbit_foot",
+  "icon": "minecraft:leather_boots",
   "trigger": {
-    "type": "pipican:jump"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "take_fall"
+      },
+      {
+        "type": "pipican:jump"
+      }
+    ]
   },
   "thresholds": [
     50,

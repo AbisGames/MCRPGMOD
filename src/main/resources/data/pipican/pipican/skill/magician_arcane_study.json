@@ -3,7 +3,8 @@
   "description": "Trained by gaining experience levels.",
   "icon": "minecraft:enchanted_book",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "level_up"
   },
   "thresholds": [
     200,

@@ -1,5 +1,8 @@
 package com.pipican.mastery;
 
+import com.pipican.mastery.trigger.AnyTrigger;
+import com.pipican.mastery.trigger.FilteredTrigger;
+import com.pipican.mastery.trigger.DidTrigger;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
@@ -35,6 +38,9 @@ public final class SkillTriggerTypes {
     public static final Type MOVE = register("move", MoveTrigger.CODEC);
     public static final Type JUMP = register("jump", JumpTrigger.CODEC);
     public static final Type ABILITY = register("ability", AbilityTrigger.CODEC);
+    public static final Type DID = register("did", DidTrigger.CODEC);
+    public static final Type FILTERED = register("filtered", FilteredTrigger.CODEC);
+    public static final Type ANY = register("any", AnyTrigger.CODEC);
 
     private SkillTriggerTypes() {}
 

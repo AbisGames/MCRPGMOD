@@ -3,7 +3,8 @@
   "description": "Trained by dodging hits with decoys.",
   "icon": "minecraft:glass",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "dodge"
   },
   "points_to": "special",
   "classes": [

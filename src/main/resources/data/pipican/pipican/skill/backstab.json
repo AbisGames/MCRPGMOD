@@ -3,7 +3,13 @@
   "description": "Trained by damaging mobs that are not targeting you.",
   "icon": "minecraft:leather_boots",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "victim": {
+      "not_targeting_you": true
+    }
   },
   "points_to": "general",
   "classes": [

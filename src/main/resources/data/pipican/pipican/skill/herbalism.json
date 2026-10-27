@@ -3,7 +3,8 @@
   "description": "Trained by harvesting fully grown crops, berries, flowers and mushrooms.",
   "icon": "minecraft:cauldron",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "harvest"
   },
   "thresholds": [
     50,

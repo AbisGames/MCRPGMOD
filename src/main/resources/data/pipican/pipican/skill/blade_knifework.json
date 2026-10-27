@@ -3,7 +3,8 @@
   "description": "Trained by making mobs bleed.",
   "icon": "minecraft:iron_sword",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:did",
+    "action": "bleed"
   },
   "points_to": "special",
   "classes": [
