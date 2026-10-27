@@ -323,7 +323,7 @@ public final class ClassEffectApplier {
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
                 new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
-                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))));
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods);
     }
 
     /**
@@ -439,6 +439,7 @@ public final class ClassEffectApplier {
         double summonHealth;
         double summonSeconds;
         int summonCount;
+        ClassState.PetMods petMods = ClassState.PetMods.NONE;
 
         /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
         List<ClassState.Aura> finishAuras() {
@@ -509,6 +510,11 @@ public final class ClassEffectApplier {
             summonHealth += health;
             summonSeconds += seconds;
             summonCount += count;
+        }
+
+        @Override
+        public void addPetMod(ClassState.PetMods mods) {
+            petMods = petMods.plus(mods);
         }
         double scrutinyLook = Double.MAX_VALUE;
         double scrutinySeconds;

@@ -7,6 +7,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pipican.ability.Marks;
 import com.pipican.condition.Bounds;
 import java.util.Optional;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -18,7 +22,8 @@ import net.minecraft.world.entity.player.Player;
  * Every field is optional; all given ones must hold. {@code health} is health / max health (0-1);
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
-public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored) {
+public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored,
+                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -28,7 +33,10 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             Codec.BOOL.optionalFieldOf("on_fire", false).forGetter(VictimState::onFire),
             Codec.BOOL.optionalFieldOf("bleeding", false).forGetter(VictimState::bleeding),
             Codec.BOOL.optionalFieldOf("charged_hit", false).forGetter(VictimState::chargedHit),
-            Codec.BOOL.optionalFieldOf("unarmored", false).forGetter(VictimState::unarmored)
+            Codec.BOOL.optionalFieldOf("unarmored", false).forGetter(VictimState::unarmored),
+            RegistryCodecs.homogeneousList(Registries.MOB_EFFECT).optionalFieldOf("effects").forGetter(VictimState::effects),
+            Codec.DOUBLE.optionalFieldOf("within").forGetter(VictimState::within),
+            Codec.BOOL.optionalFieldOf("targeting_other", false).forGetter(VictimState::targetingOther)
     ).apply(i, VictimState::new));
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
@@ -45,6 +53,15 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (chargedHit && !(attacker instanceof net.minecraft.server.level.ServerPlayer p && Charged.wasCharged(p))) {
+            return false;
+        }
+        if (effects.isPresent() && effects.get().stream().noneMatch(victim::hasEffect)) {
+            return false;
+        }
+        if (within.isPresent() && attacker.distanceTo(victim) > within.get()) {
+            return false;
+        }
+        if (targetingOther && !(victim instanceof Mob mob && mob.getTarget() != null && mob.getTarget() != attacker)) {
             return false;
         }
         if (unarmored && victim.getArmorValue() > 0) {

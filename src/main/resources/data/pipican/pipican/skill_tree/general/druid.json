@@ -85,16 +85,7 @@
     {
       "id": "druid_herd",
       "name": "Herd Warden",
-      "description": {
-        "text": "tamed animals near you take -15% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "tamed animals near you take -15% damage",
       "type": "notable",
       "x": 757,
       "y": 469,
@@ -102,7 +93,13 @@
         "druid_green"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage_taken": -0.15
+        }
+      ]
     },
     {
       "id": "druid_circle",

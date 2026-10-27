@@ -79,16 +79,7 @@
     {
       "id": "oracle_prophet",
       "name": "Prophet",
-      "description": {
-        "text": "+10% damage to mobs that glow for you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to mobs that glow for you",
       "type": "notable",
       "x": 881,
       "y": -127,
@@ -96,7 +87,16 @@
         "oracle_whispers"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "effects": "minecraft:glowing"
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "oracle_avatar",

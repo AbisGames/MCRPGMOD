@@ -413,6 +413,25 @@ public final class ClassSystemTests {
         com.pipican.event.BonusEvents.durability(player);
         helper.assertTrue(worn.getDamageValue() == 0, "durability loss refunded: " + worn.getDamageValue());
 
+        // Tamed animals: +2 armor near you, half damage taken.
+        net.minecraft.world.entity.animal.wolf.Wolf wolf = helper.spawn(EntityType.WOLF, new BlockPos(1, 2, 1));
+        double armor = wolf.getArmorValue();
+        wolf.tame(player);
+        player.setPos(wolf.position());
+        com.pipican.ability.Pets.tick(player);
+        helper.assertTrue(wolf.getArmorValue() == armor + 2, "pet armor +2: " + wolf.getArmorValue());
+        float before = wolf.getHealth();
+        wolf.hurtServer(level, level.damageSources().magic(), 4);
+        assertNear(helper, before - 2, wolf.getHealth(), "pet takes half damage");
+        wolf.discard();
+
+        // Victim effects and distance: only glowing mobs within 6 blocks take double damage.
+        Zombie glowing = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 1));
+        assertNear(helper, 1, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), level.damageSources().playerAttack(player), glowing, player), "not glowing");
+        glowing.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.GLOWING, 100));
+        assertNear(helper, 2, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), level.damageSources().playerAttack(player), glowing, player), "glowing and close");
+        glowing.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);
@@ -475,7 +494,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers

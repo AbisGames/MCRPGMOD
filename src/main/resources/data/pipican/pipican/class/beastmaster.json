@@ -67,6 +67,11 @@
   },
   "passives": [
     {
+      "type": "pipican:pet_mod",
+      "hearts": 2.0,
+      "damage": 0.1
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:holding",
@@ -86,6 +91,19 @@
       "type": "pipican:damage_dealt",
       "weapons": "#pipican:weapons/axes",
       "multiplier": 1.1
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:pet_mod",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ],
+      "damage": 0.0,
+      "health": 0.0
     }
   ],
   "weakness": {

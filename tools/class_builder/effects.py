@@ -292,7 +292,7 @@ def _one_inner(clause, ctx):
         bn = bonus.leading(value, what, scal)
         if bn is not None:
             return bn
-    ch = bonus.chances(whole, scal) or named.summons(whole, scal)
+    ch = bonus.chances(whole, scal) or named.summons(whole, scal) or named.pets(whole, scal)
     if ch:
         return ch
     vs = combat.against(what, ctx, value, pct, scal)
@@ -432,7 +432,7 @@ def _resource(low, ctx):
 
 
 def _special_forms(low, ctx, scal=lambda v: (v, None)):
-    for special in (combat.immune(low), combat.taken_from(low), combat.critical(low, ctx, scal)):
+    for special in (combat.immune(low), combat.taken_from(low), combat.critical(low, ctx, scal), named.pets(low, scal)):
         if special is not None:
             return special
     bn = bonus.special(low, scal)

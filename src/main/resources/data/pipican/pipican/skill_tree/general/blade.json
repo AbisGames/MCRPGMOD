@@ -83,16 +83,7 @@
     {
       "id": "blade_close_quarters",
       "name": "Close Quarters",
-      "description": {
-        "text": "+10% damage to mobs within 2 blocks",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to mobs within 2 blocks",
       "type": "notable",
       "x": -612,
       "y": 1248,
@@ -100,7 +91,16 @@
         "blade_serrated"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "within": 2.0
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "blade_thousand_cuts",

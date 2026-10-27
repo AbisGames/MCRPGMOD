@@ -284,6 +284,7 @@ public final class ClassEvents {
         Boosts.tick(player);
         if (player.tickCount % 20 == 0) {
             Mounts.tick(player);
+            com.pipican.ability.Pets.tick(player);
             Auras.tick(player);
             if (Combat.inCombat(player)) {
                 Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.IN_COMBAT);

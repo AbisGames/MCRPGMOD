@@ -73,16 +73,7 @@
     {
       "id": "conqueror_flanking_orders",
       "name": "Flanking Orders",
-      "description": {
-        "text": "+10% damage to mobs targeting someone else",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to mobs targeting someone else",
       "type": "notable",
       "x": -1740,
       "y": 28,
@@ -90,7 +81,16 @@
         "conqueror_drillmaster"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "targeting_other": true
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "conqueror_logistics",

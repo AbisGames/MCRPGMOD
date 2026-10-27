@@ -5,6 +5,16 @@
   "base_stats": {},
   "passives": [
     {
+      "type": "pipican:pet_mod",
+      "armor": 2,
+      "damage_taken": -0.5
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": { "effects": "minecraft:glowing", "within": 6 },
+      "multiplier": 2
+    },
+    {
       "type": "pipican:execute",
       "threshold": 0.5
     },

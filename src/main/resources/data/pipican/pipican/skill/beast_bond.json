@@ -32,17 +32,13 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "tamed animals +2 max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "tamed animals +2 max health",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "hearts": 1.0
+        }
+      ]
     },
     {
       "description": {
@@ -58,43 +54,31 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "tamed animals +5% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "tamed animals +5% damage",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "tamed animals +2 max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "tamed animals +2 max health",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "hearts": 1.0
+        }
+      ]
     },
     {
-      "description": {
-        "text": "tamed animals +10% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "tamed animals +10% damage",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage": 0.1
+        }
+      ]
     }
   ]
 }

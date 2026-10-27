@@ -20,6 +20,8 @@ MOB_GROUPS = {
     'piglins': ['minecraft:piglin', 'minecraft:piglin_brute'], 'guardians': ['minecraft:guardian', 'minecraft:elder_guardian'],
     'drowned': ['minecraft:drowned'], 'witches': ['minecraft:witch'], 'slimes': ['minecraft:slime', 'minecraft:magma_cube'],
     'blazes': ['minecraft:blaze'], 'creepers': ['minecraft:creeper'], 'ravagers': ['minecraft:ravager'], 'ghasts': ['minecraft:ghast'],
+    'mobs that burn in daylight': ['#pipican:mobs/daylight'], 'beast-like mobs': ['#pipican:mobs/beasts'],
+    'beast-like mobs (wolves, hoglins, ravagers)': ['#pipican:mobs/beasts'],
     'mindless mobs': ['#pipican:mobs/mindless'], 'armored mobs': ['#pipican:mobs/armored'],
     'mobs with natural armor': ['#pipican:mobs/armored'], 'bosses': ['minecraft:wither', 'minecraft:ender_dragon', 'minecraft:warden', 'minecraft:elder_guardian'],
 }
@@ -34,6 +36,9 @@ MOB_TAGS = {
                      'minecraft:wolf', 'minecraft:cat', 'minecraft:ocelot', 'minecraft:goat', 'minecraft:polar_bear', 'minecraft:panda',
                      'minecraft:bee', 'minecraft:turtle', 'minecraft:frog', 'minecraft:axolotl', 'minecraft:camel', 'minecraft:sniffer',
                      'minecraft:armadillo', 'minecraft:parrot', 'minecraft:hoglin'],
+    'mobs/daylight': ['minecraft:zombie', 'minecraft:zombie_villager', 'minecraft:skeleton', 'minecraft:stray', 'minecraft:drowned',
+                      'minecraft:phantom', 'minecraft:bogged'],
+    'mobs/beasts': ['minecraft:wolf', 'minecraft:hoglin', 'minecraft:zoglin', 'minecraft:ravager', 'minecraft:polar_bear', 'minecraft:fox'],
     'mobs/mindless': ['minecraft:iron_golem', 'minecraft:snow_golem', 'minecraft:slime', 'minecraft:magma_cube', 'minecraft:shulker',
                       'minecraft:wither'],
     'mobs/armored': ['minecraft:iron_golem', 'minecraft:ravager', 'minecraft:warden', 'minecraft:wither', 'minecraft:armadillo'],
@@ -84,6 +89,11 @@ VICTIM_STATES = [
     (r'scrutinised|scrutinized', lambda m: {'marked': True}),
     (r'unarmou?red (?:mobs?|targets?|enemies)', lambda m: {'unarmored': True}),
     (r'(?:your )?challenged foes?|(?:the |your )?(?:challenged|scrutinised|scrutinized) (?:mobs?|foes?|targets?)', lambda m: {'marked': True}),
+    (r'(?:mobs|targets|enemies) within (\d+(?:\.\d+)?) blocks?(?: of you)?', lambda m: {'within': float(m.group(1))}),
+    (r'(?:mobs|targets|enemies) (?:that are )?targeting (?:someone|somebody|anyone|something) else', lambda m: {'targeting_other': True}),
+    (r'(?:mobs|targets|enemies) that glow for you|glowing (?:mobs|targets|enemies)', lambda m: {'effects': 'minecraft:glowing'}),
+    (r'(poisoned|slowed|weakened|blinded|withered) (?:mobs|targets|enemies)', lambda m: {'effects': 'minecraft:' + {
+        'poisoned': 'poison', 'slowed': 'slowness', 'weakened': 'weakness', 'blinded': 'blindness', 'withered': 'wither'}[m.group(1)]}),
     (r'bleeding (?:mobs|targets|enemies)|(?:mobs|targets) that are bleeding', lambda m: {'bleeding': True}),
 ]
 
@@ -148,6 +158,11 @@ def taken_from(low):
         group = mobs(m.group(3))
         if group is not None:
             return [_damage(True, float(m.group(1)) * (1 if m.group(2) == 'more' else -1), against=group)]
+    m = re.fullmatch(r'(.+?) takes? ([+-]?\d+(?:\.\d+)?)% (?:more |extra )?damage from you', low)
+    if m:
+        group = mobs(m.group(1))
+        if group is not None:
+            return [_damage(False, float(m.group(2)), against=group)]
     m = re.fullmatch(r'(swords|axes|maces|spears|tridents|bows|crossbows) deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage to you', low)
     if m:
         return [_damage(True, float(m.group(2)), weapons='#pipican:weapons/' + m.group(1))]

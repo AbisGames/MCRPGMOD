@@ -60,10 +60,11 @@ public record ClassState(
         Scrutiny scrutiny,
         boolean favoredWeapon,
         SummonMods summonMods,
-        Cleave cleave) {
+        Cleave cleave,
+        PetMods petMods) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE);
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -119,6 +120,15 @@ public record ClassState(
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count) {
         public static final SummonMods NONE = new SummonMods(0, 0, 0, 0);
+    }
+
+    /** {@code pipican:pet_mod} totals. */
+    public record PetMods(double damage, double health, double hearts, double armor, double damageTaken) {
+        public static final PetMods NONE = new PetMods(0, 0, 0, 0, 0);
+
+        public PetMods plus(PetMods o) {
+            return new PetMods(damage + o.damage, health + o.health, hearts + o.hearts, armor + o.armor, damageTaken + o.damageTaken);
+        }
     }
 
     /** {@code pipican:scrutiny} settings (seconds 0 = none). */

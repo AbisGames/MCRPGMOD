@@ -91,6 +91,9 @@ public interface EffectContext {
     /** Upgrades for the player's summons. */
     void addSummonMod(double damage, double health, double seconds, int count);
 
+    /** Upgrades for the player's tamed animals. */
+    void addPetMod(com.pipican.player.ClassState.PetMods mods);
+
     /**
      * Applies effects at {@code strength} (aura upgrades: % bonuses and attribute amounts are scaled), with
      * {@link Scaling} sources read from {@code source} (the aura owner) when it isn't null.

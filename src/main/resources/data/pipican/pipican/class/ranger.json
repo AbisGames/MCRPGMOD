@@ -88,6 +88,11 @@
       ],
       "name": "Expert Guide",
       "include_self": false
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_animals_spiders_beast_like_mobs",
+      "multiplier": 1.2
     }
   ],
   "special_passives": [

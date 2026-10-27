@@ -494,6 +494,11 @@ def whole_line(text, ctx):
     t = text.strip().rstrip('.')
     t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)
     low = t.lower()
+    # "+1% damage and +1% max health for your tamed animals": the "and" belongs to the animals, not you.
+    if ' and ' in low and not re.search(r'\bbut\b|\bper\b|;', low):
+        pet = pets(low, (lambda v: (0.0, [('special_stat', v)])) if ctx.get('implicit_per_point') else (lambda v: (v, None)))
+        if pet:
+            return pet
     # Evil Eye: "12% chance on hit to curse a mob for 8s with one of: Desire (stops attacking), Lethargy (Slowness II) or Pain (2 damage per second)"
     m = re.fullmatch(rf'{N}% chance on hit to curse a mob for {N}s with one of: (.+)', low)
     if m:
@@ -881,4 +886,64 @@ re.fullmatch(rf'if a hit takes a mob below {N}% health, it dies', t)
             actions.append({'type': 'pipican:resource', 'amount': float(m.group(2))})
         actions.append({'type': 'pipican:shrug'})
         return [{'type': 'pipican:on', 'event': 'low_health', 'chance': round(float(m.group(1)) / 100, 6), 'name': 'zeal', 'actions': actions}]
+    return None
+
+
+PETS = r'(?:your )?(?:tamed animals|tamed wolves, cats, horses and parrots|animals you tame|animals|pets)(?: near you| within \d+ blocks)?'
+
+
+def pets(t, scal):
+    """Tamed-animal upgrades -> pipican:pet_mod ("tamed animals +5% damage", "+1 heart to animals you tame")."""
+    def mod(parts):
+        e = {'type': 'pipican:pet_mod'}
+        scaling = None
+        for key, raw in parts:
+            v, s = scal(raw)
+            if s:
+                pct = key in ('damage', 'health', 'damage_taken')
+                sc = [{'source': src, 'per': round(per / (100 if pct else 1), 6)} for src, per in s]
+                if scaling is not None and sc != scaling:
+                    return None  # one scaling list drives every amount
+                scaling = sc
+                e['scaling'] = sc
+                e[key] = 0.0
+                continue
+            e[key] = round(v / 100, 6) if key in ('damage', 'health', 'damage_taken') else v
+        return [e]
+
+    def part(p):
+        p = p.strip()
+        m = re.fullmatch(rf'\+?{N}% (?:more )?damage', p)
+        if m:
+            return 'damage', float(m.group(1))
+        m = re.fullmatch(rf'\+?{N}% (?:max )?health', p)
+        if m:
+            return 'health', float(m.group(1))
+        m = re.fullmatch(rf'\+{N} armou?r', p)
+        if m:
+            return 'armor', float(m.group(1))
+        m = re.fullmatch(rf'\+{N} hearts?', p)
+        if m:
+            return 'hearts', float(m.group(1))
+        m = re.fullmatch(rf'\+{N} max health', p)
+        if m:
+            return 'hearts', float(m.group(1)) / 2
+        return None
+
+    def parts(text):
+        out = [part(p) for p in re.split(r'\s+and\s+|,\s*', text)]
+        return None if not out or None in out else out
+
+    m = re.fullmatch(rf'{PETS} takes? ([+-]?{N})% (?:less |more )?damage(?: taken)?', t)
+    if m:
+        v = float(m.group(1))
+        if 'less' in t and v > 0:
+            v = -v
+        return mod([('damage_taken', v)])
+    m = re.fullmatch(rf'{PETS} (?:get |gain |have )?(.+)', t)
+    if m and (ps := parts(m.group(1))):
+        return mod(ps)
+    m = re.fullmatch(rf'(.+?) (?:for|to) {PETS}', t)
+    if m and (ps := parts(m.group(1))):
+        return mod(ps)
     return None

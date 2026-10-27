@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1561**, partly working: **24**, not yet: **665**
+- Bonus phrases: **2250**. Fully working: **1580**, partly working: **24**, not yet: **646**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,14 +12,14 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 211 |
+| [Other mechanics](#other-mechanics) | 210 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 143 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 98 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 90 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 72 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 67 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 87 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 66 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 58 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 29 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 27 |
 | [Immunities](#immunities) | 21 |
 | [Critical hits](#critical-hits) | 7 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
@@ -108,7 +108,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **druid**
   - passive: no slowdown from powder snow, soul sand, cobwebs or honey
   - passive: +15% bone meal effect
-  - special passive: per 20 Wildness
   - skill Beast Bond: +10% breeding speed
 - **duelist**
   - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
@@ -679,7 +678,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Legend: everyone in your Song gets Regeneration I; your max health -10%
 - **beastmaster**
   - special passive: +1 tamed-animal regen per 20 Primal Bond
-  - general tree: Beastmaster: tamed animals +2 max health
 - **blade**
   - special tree: Red Mist: killing a bleeding mob refills 20 Bloodletting; -10% max health
 - **cavalier**
@@ -703,8 +701,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **druid**
   - special passive: +1% regeneration per 2 Wildness while standing on grass, dirt, sand or leaves
   - weakness: -25% Verdance regen inside villages
-  - skill Beast Bond: tamed animals +2 max health
-  - skill Beast Bond: tamed animals +2 max health
 - **duelist**
   - special tree: Flawless: while the foe hasn't hit you, +25% damage; -10% max health
 - **enchanter**
@@ -807,109 +803,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
   - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
 
-## Bonus against a kind of mob / marked target
-
-- **acrobat**
-  - special passive: Mobility: per 10 Poise, +5% chance a melee hit against you misses
-- **apocalyptist**
-  - weakness: villagers refuse to trade with you, animals flee from you
-- **artificer**
-  - special tree: Copper Heart: copper golems near you move and work 25% faster
-- **assassin**
-  - general tree: Death Mark: -20% damage to mobs that are targeting you
-- **astromancer**
-  - passive: Intense Light: +20% damage against undead and mobs that burn in daylight
-- **avenger**
-  - passive: Vow of Vengeance: the next mob to damage you or a player within 16 blocks becomes marked for 60s (one at a time)
-  - passive: +20% damage to your marked target and it glows for you
-  - passive: When your marked target moves away, you get Speed II for 2s
-  - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
-  - weakness: -15% damage against anything that isn't your marked target while a mark is active
-  - general tree: Blood Debt: marks last until the target dies
-  - general tree: Blood Debt: you can never mark a new one until it does
-  - special tree: Frightening Glare: marked targets within your reach deal 15% less damage
-- **beastmaster**
-  - special stat per point: +1% damage and +1% max health for your tamed animals
-  - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
-  - special passive: Primal Power: per 10 Primal Bond, tamed animals get +1 armor
-  - weakness: when one of your tamed animals dies, you get Weakness I and Slowness I for 30s
-  - general tree: Alpha: tamed animals +5% damage
-  - general tree: Pack Tactics: +10% damage to mobs your animals are attacking
-  - general tree: Loyal Beasts: tamed animals take -15% damage
-  - general tree: One With the Pack: your animals get +30% damage, but you deal -20% damage
-  - special tree: Primal Power: tamed animals +1 armor and +10% damage
-- **blade**
-  - weakness: -20% damage against mobs with natural armor (iron golems, ravagers, wardens, the Wither) and with any weapon that isn't a sword
-  - general tree: Close Quarters: +10% damage to mobs within 2 blocks
-- **brute**
-  - general tree: Crusher: +10% damage against shields and armored mobs
-- **cleric**
-  - general tree: Holy Wrath: undead you hit are set on fire for 2s
-  - general tree: Crusader: +30% damage to undead, but -10% damage to everything else
-- **conqueror**
-  - general tree: Flanking Orders: +10% damage to mobs targeting someone else
-- **death_dealer**
-  - special passive: Make Mountains of the Dead: per 10 Carnage, +5% damage to mobs below 30% health
-- **diplomat**
-  - special stat per point: -0.3% villager trade prices
-  - passive: Stay the Hand: 15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s
-  - passive: illagers are 30% slower to notice you
-  - special tree: Silver Tongue: first trade with a new villager is 50% off
-  - skill Bartering: +1 villager restock
-- **druid**
-  - special passive: Passive animals within 16 blocks never flee from you
-  - special passive: +1 heart to animals you tame
-  - general tree: Herd Warden: tamed animals near you take -15% damage
-  - skill Beast Bond: tamed animals +5% damage
-  - skill Beast Bond: tamed animals +10% damage
-- **duelist**
-  - special passive: Per 10 Finesse, +5% attack speed against the foe
-  - special tree: Lunge: +1 block reach against challenged foe
-- **exorcist**
-  - passive: Exorcism: hitting a zombie villager has 10% chance to cure it instantly
-  - weakness: -15% damage against animals, illagers and other ordinary mobs
-  - general tree: Holy Water: splash potions you throw deal +2 damage to undead
-  - general tree: Banishing: unclean mobs you hit are knocked back 50% farther
-  - general tree: Inquisitor's Fire: +30% damage to unclean, but -30% to everything else
-  - special tree: Purge the Unclean: unclean mobs you hit can't teleport for 5s (endermen, shulkers)
-- **gladiator**
-  - passive: Finishing Blow: +15% critical chance against slowed, blinded or poisoned mobs
-- **illusionist**
-  - special stat per point: +0.3% chance attacks against you hit an illusion instead
-- **inquisitor**
-  - passive: Inquisitor's Judgment: illagers, witches and Nether mobs take +15% damage from you
-- **necromancer**
-  - special stat per point: +1% damage and health for undead you command
-  - passive: Undead mobs ignore you unless you attack them
-  - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
-- **oracle**
-  - general tree: Prophet: +10% damage to mobs that glow for you
-- **paladin**
-  - special tree: Sense Evil: +5% damage to mobs that glow for you
-- **poisoner**
-  - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
-  - weakness: -25% damage to mobs that aren't poisoned or withered
-- **ranger**
-  - passive: the last mob you hit with an arrow becomes your prey for 60s
-  - passive: Natural Lore: +20% damage against animals, spiders and beast-like mobs (wolves, hoglins, ravagers)
-  - special passive: +0.5% Hunt Prey duration per Instinct point
-  - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
-  - general tree: Apex Predator: +30% damage to prey, but -15% damage to everything else
-  - special tree: Expert Tracker: your prey glows through walls up to 32 blocks
-  - special tree: Relentless Pursuit: when prey flees, you get Speed I for 3s
-  - special tree: Master Hunter: you can mark prey in melee too and prey bonus +10%
-  - special tree: Master Hunter: Hunt Prey ends instantly if you hit another mob
-- **runesmith**
-  - weakness: -15% damage with unmarked weapons per unmarked armor piece
-  - weakness: -1 armor per unmarked armor piece
-  - general tree: Runelord: unmarked gear is forbidden-tier
-- **thief**
-  - general tree: Fence: cancels the villager price penalty from your weakness
-- **witch**
-  - special tree: Green Flame: your fire damage to mobs is +15%
-- **woodwose**
-  - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
-
 ## Chance on hit / proc effects
 
 - **acrobat**
@@ -979,7 +872,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +1% poison damage and duration you apply
   - passive: brewing poison potions is 50% faster
   - special passive: Poison duration +0.1s per Toxicity
-  - special passive: Per 10 Toxicity, +5% damage to poisoned mobs
   - general tree: Poisoner: +5% poison duration
   - general tree: Paralytic: poisoned mobs also get Slowness I
   - general tree: Neurotoxin: poisoned mobs also get Weakness I
@@ -1013,6 +905,90 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: 15% chance that a harmful potion effect or magic attack aimed at you is cancelled
 - **witch**
   - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
+
+## Bonus against a kind of mob / marked target
+
+- **acrobat**
+  - special passive: Mobility: per 10 Poise, +5% chance a melee hit against you misses
+- **apocalyptist**
+  - weakness: villagers refuse to trade with you, animals flee from you
+- **artificer**
+  - special tree: Copper Heart: copper golems near you move and work 25% faster
+- **assassin**
+  - general tree: Death Mark: -20% damage to mobs that are targeting you
+- **avenger**
+  - passive: Vow of Vengeance: the next mob to damage you or a player within 16 blocks becomes marked for 60s (one at a time)
+  - passive: +20% damage to your marked target and it glows for you
+  - passive: When your marked target moves away, you get Speed II for 2s
+  - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
+  - weakness: -15% damage against anything that isn't your marked target while a mark is active
+  - general tree: Blood Debt: marks last until the target dies
+  - general tree: Blood Debt: you can never mark a new one until it does
+  - special tree: Frightening Glare: marked targets within your reach deal 15% less damage
+- **beastmaster**
+  - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
+  - special passive: Primal Power: per 10 Primal Bond, tamed animals get +1 armor
+  - weakness: when one of your tamed animals dies, you get Weakness I and Slowness I for 30s
+  - general tree: Pack Tactics: +10% damage to mobs your animals are attacking
+  - special tree: Primal Power: tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves
+- **blade**
+  - weakness: -20% damage against mobs with natural armor (iron golems, ravagers, wardens, the Wither) and with any weapon that isn't a sword
+- **brute**
+  - general tree: Crusher: +10% damage against shields and armored mobs
+- **cleric**
+  - general tree: Holy Wrath: undead you hit are set on fire for 2s
+  - general tree: Crusader: +30% damage to undead, but -10% damage to everything else
+- **death_dealer**
+  - special passive: Make Mountains of the Dead: per 10 Carnage, +5% damage to mobs below 30% health
+- **diplomat**
+  - special stat per point: -0.3% villager trade prices
+  - passive: Stay the Hand: 15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s
+  - passive: illagers are 30% slower to notice you
+  - special tree: Silver Tongue: first trade with a new villager is 50% off
+  - skill Bartering: +1 villager restock
+- **druid**
+  - special passive: Passive animals within 16 blocks never flee from you
+  - special passive: per 20 Wildness, +1 heart to animals you tame
+- **duelist**
+  - special passive: Per 10 Finesse, +5% attack speed against the foe
+  - special tree: Lunge: +1 block reach against challenged foe
+- **exorcist**
+  - passive: Exorcism: hitting a zombie villager has 10% chance to cure it instantly
+  - weakness: -15% damage against animals, illagers and other ordinary mobs
+  - general tree: Holy Water: splash potions you throw deal +2 damage to undead
+  - general tree: Banishing: unclean mobs you hit are knocked back 50% farther
+  - general tree: Inquisitor's Fire: +30% damage to unclean, but -30% to everything else
+  - special tree: Purge the Unclean: unclean mobs you hit can't teleport for 5s (endermen, shulkers)
+- **gladiator**
+  - passive: Finishing Blow: +15% critical chance against slowed, blinded or poisoned mobs
+- **illusionist**
+  - special stat per point: +0.3% chance attacks against you hit an illusion instead
+- **necromancer**
+  - special stat per point: +1% damage and health for undead you command
+  - passive: Undead mobs ignore you unless you attack them
+  - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
+- **poisoner**
+  - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
+  - weakness: -25% damage to mobs that aren't poisoned or withered
+- **ranger**
+  - passive: the last mob you hit with an arrow becomes your prey for 60s
+  - special passive: +0.5% Hunt Prey duration per Instinct point
+  - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
+  - general tree: Apex Predator: +30% damage to prey, but -15% damage to everything else
+  - special tree: Expert Tracker: your prey glows through walls up to 32 blocks
+  - special tree: Relentless Pursuit: when prey flees, you get Speed I for 3s
+  - special tree: Master Hunter: you can mark prey in melee too and prey bonus +10%
+  - special tree: Master Hunter: Hunt Prey ends instantly if you hit another mob
+- **runesmith**
+  - weakness: -15% damage with unmarked weapons per unmarked armor piece
+  - weakness: -1 armor per unmarked armor piece
+  - general tree: Runelord: unmarked gear is forbidden-tier
+- **thief**
+  - general tree: Fence: cancels the villager price penalty from your weakness
+- **witch**
+  - special tree: Green Flame: your fire damage to mobs is +15%
+- **woodwose**
+  - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
 
 ## Skill trigger approximated
 
@@ -1125,9 +1101,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Smithing: -5% anvil cost
   - skill Smithing: -5% anvil cost
 - **beastmaster**
-  - passive: Tamed wolves, cats, horses and parrots get +4 max health and +10% damage
   - special tree: Shared Spell: potion effects you drink also apply to your nearest tamed animal
-  - special tree: Primal Power: you can have at most 3 tamed wolves
 - **chronomancer**
   - passive: Potion effects on you tick down 20% slower (good ones last longer)
 - **conqueror**
