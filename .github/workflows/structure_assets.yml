@@ -22,7 +22,9 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Generate actual authored NBT assets
-        run: python3 tools/worldgen/build_full_structures.py
+        run: |
+          python3 tools/worldgen/build_full_structures.py
+          python3 tools/worldgen/build_special_landmarks.py
       - name: Validate full authored structure graph and NBT data
         run: python3 tools/worldgen/validate_full_structures.py
       - name: Install the generated structures into mod resources
@@ -52,7 +54,7 @@ jobs:
           for attempt in 1 2 3 4; do
             git fetch origin worldgen-and-ores
             # Older generator jobs must not overwrite newer source changes.
-            if ! git diff --quiet HEAD origin/worldgen-and-ores --               tools/worldgen/build_full_structures.py tools/worldgen/legacy.py               src/main/resources/data/pipican/worldgen/region_map.json               src/main/resources/data/pipican/worldgen/settlements.json               src/main/resources/data/pipican/worldgen/structure_pools_manifest.json; then
+            if ! git diff --quiet HEAD origin/worldgen-and-ores --               tools/worldgen/build_full_structures.py tools/worldgen/build_special_landmarks.py tools/worldgen/legacy.py               src/main/resources/data/pipican/worldgen/region_map.json               src/main/resources/data/pipican/worldgen/settlements.json               src/main/resources/data/pipican/worldgen/structure_pools_manifest.json; then
               echo "Generator source changed since this run; newer run owns publishing."
               exit 0
             fi

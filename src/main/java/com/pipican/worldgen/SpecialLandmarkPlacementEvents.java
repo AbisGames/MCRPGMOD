@@ -103,8 +103,10 @@ public final class SpecialLandmarkPlacementEvents {
                         var p=new BlockPos(x,yy,z);
                         var existing=level.getBlockState(p);
                         if(existing.hasBlockEntity() || 
-                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
+                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing))){
+                            Pipican.LOGGER.warn("Special placement {} obstructed at {} by {}",site.id(),p,existing);
                             return false;
+                        }
                     }
                 } else if(site.elevation()==-1){
                     int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);

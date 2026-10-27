@@ -130,6 +130,11 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         // built: the sky biome is genuinely floating terrain, not an NBT trick.
         double island=SkyIslandLayout.density(x,y,z);
         if(island>0.0)return island*strength;
+        // Authored island pads have an exact build altitude. The procedural
+        // archipelago below must not grow a second rock cap through a village
+        // or citadel just outside the sampled centre of its pad.
+        if(y>=SkyIslandLayout.FOUNDATION_Y && SkyIslandLayout.themedSkyAt(x,y,z))
+            return -4.0*Math.abs(strength);
         if(y<=32 || y>430)return 0.0;
         var reg=WorldLayout.regionAt(0L,x,z);
         if(reg.isEmpty())return 0.0;

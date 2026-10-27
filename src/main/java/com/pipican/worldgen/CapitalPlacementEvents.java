@@ -163,7 +163,10 @@ public final class CapitalPlacementEvents {
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
             if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return false;
             int top=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
-            if(top>foundationY+12 || top<foundationY-12)return false;
+            if(top>foundationY+12 || top<foundationY-12){
+                Pipican.LOGGER.warn("Capital terrain mismatch at {},{}: surface {}, foundation {}",x,z,top,foundationY);
+                return false;
+            }
         }
         for(int x=box.minX();x<=box.maxX();x++)
             for(int z=box.minZ();z<=box.maxZ();z++)
@@ -171,7 +174,10 @@ public final class CapitalPlacementEvents {
                     BlockPos position=new BlockPos(x,y,z);
                     if(protection.contains(position))return false;
                     BlockState state=level.getBlockState(position);
-                    if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state)))return false;
+                    if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state))){
+                        Pipican.LOGGER.warn("Capital placement obstructed at {} by {}",position,state);
+                        return false;
+                    }
                 }
         return true;
     }
