@@ -36,6 +36,23 @@ public final class CapitalPlacementEvents {
     private static final List<LandmarkCatalog.Landmark> LANDMARKS =
         new LandmarkCatalog().all();
 
+    /** Central keep first, then successive city rings. Existing partially
+     * generated saves without the version marker keep the legacy tile order.
+     */
+    private static final int[] CENTRE_FIRST_ORDER = buildTileOrder();
+    private static int[] buildTileOrder(){
+        List<Integer> indices=new ArrayList<>();
+        for(int i=0;i<25;i++)indices.add(i);
+        indices.sort(Comparator.comparingInt((Integer i)->
+            Math.max(Math.abs(i%5-2),Math.abs(i/5-2)))
+            .thenComparingInt(i->Math.abs(i%5-2)+Math.abs(i/5-2))
+            .thenComparingInt(i->i));
+        return indices.stream().mapToInt(Integer::intValue).toArray();
+    }
+    public static int cityTileIndex(int serialIndex,boolean centreFirst){
+        if(serialIndex<0||serialIndex>=25)throw new IllegalArgumentException();
+        return centreFirst?CENTRE_FIRST_ORDER[serialIndex]:serialIndex;
+    }
     private CapitalPlacementEvents(){}
 
     @SubscribeEvent
@@ -51,7 +68,8 @@ public final class CapitalPlacementEvents {
                 for(LandmarkCatalog.Landmark city:LANDMARKS){
                     long dx=(long)Math.floor(player.getX())-city.x();
                     long dz=(long)Math.floor(player.getZ())-city.z();
-                    if(dx*dx+dz*dz>PLAYER_TRIGGER_RADIUS_SQUARED)continue;
+                    long trigger=city.tier().equals("capital")?380L*380L:PLAYER_TRIGGER_RADIUS_SQUARED;
+                    if(dx*dx+dz*dz>trigger)continue;
                     CapitalPlacementSavedData.Progress done=progress.progress(city.id());
                     int total=city.tier().equals("capital")?63:1;
                     if(done!=null&&done.nextTile()>=total)continue;
@@ -73,6 +91,8 @@ public final class CapitalPlacementEvents {
         var state=progress.progress(city.id());
         int index=state==null?0:state.nextTile();
         boolean capital=city.tier().equals("capital");
+        String orderMarker="centre_first_"+city.id();
+        boolean centreFirst=capital&&(progress.progress(orderMarker)!=null||state==null);
         if(index>=(capital?63:1))return false;
         // The initial height is based on terrain in this save, not a
         // globally fixed sea-level or arbitrary Y constant.
@@ -86,7 +106,7 @@ public final class CapitalPlacementEvents {
         if(capital){
             JsonObject layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
             JsonElement row=index<25
-                ? layout.getAsJsonArray("relative_positions").get(index)
+                ? layout.getAsJsonArray("relative_positions").get(cityTileIndex(index,centreFirst))
                 : layout.getAsJsonArray("connectors").get(index-25);
             tile=row.getAsJsonObject();
             location=tile.get("template").getAsString();
@@ -120,6 +140,8 @@ public final class CapitalPlacementEvents {
             return false;
         }
         progress.advance(city.id(),index+1,foundationY);
+        if(capital&&centreFirst&&index==0)
+            progress.advance(orderMarker,1,foundationY);
         if((capital&&index==62)||(!capital&&index==0))
             Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;

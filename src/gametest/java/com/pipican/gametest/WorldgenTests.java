@@ -52,6 +52,14 @@ public final class WorldgenTests {
 
     private static void capitalProtection(GameTestHelper helper) {
         helper.assertTrue(CapitalStructureExclusion.all().size()==22,"capital zone count");
+        helper.assertTrue(CapitalPlacementEvents.cityTileIndex(0,true)==12,
+            "new capital saves must begin at central keep");
+        helper.assertTrue(CapitalPlacementEvents.cityTileIndex(0,false)==0,
+            "legacy capital progress must retain original order");
+        var visited=new java.util.HashSet<Integer>();
+        for(int i=0;i<25;i++)
+            helper.assertTrue(visited.add(CapitalPlacementEvents.cityTileIndex(i,true)),
+                "duplicate capital building tile");
         var preset=WorldgenJson.read("world_preset/rpg_world.json");
         var registeredBiomes=preset.getAsJsonObject("dimensions")
             .getAsJsonObject("minecraft:overworld")
