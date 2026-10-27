@@ -33,31 +33,34 @@ public final class RegionalBiomeSource extends BiomeSource {
     private final Map<String,Holder<Biome>> byId;
     private final Holder<Biome> fallback;
     private final SubregionSampler sampler;
-    private final List<CapitalBiome> capitals;
+    private final List<ProtectedSite> protectedSites;
 
-    /**
-     * Castle capitals retain their authored subregion even if the surrounding
-     * procedural Voronoi cell selects another subtype.
+    /** Native jigsaw generators only see registered biome eligibility; these
+     * protected region variants are intentionally absent from structure tags.
      */
-    private record CapitalBiome(int x,int z,int radius,String biomeId) {}
-    private static List<CapitalBiome> readCapitalBiomes() {
-        var root=WorldgenJson.read("fixed_capital_locations.json");
-        List<CapitalBiome> list=new ArrayList<>();
-        for(var element:root.getAsJsonArray("capitals")) {
-            var o=element.getAsJsonObject();
-            int radius=Math.max(290,Math.min(650,o.get("preserve_radius").getAsInt()/2));
-            list.add(new CapitalBiome(o.get("x").getAsInt(),o.get("z").getAsInt(),
-                radius,"pipican:"+o.get("region").getAsString()+"/"+o.get("subregion").getAsString()));
+    private record ProtectedSite(int x,int z,int radius,String biomeId) {}
+    private static List<ProtectedSite> readProtectedSites() {
+        List<ProtectedSite> sites=new ArrayList<>();
+        for(var zone:CapitalStructureExclusion.all()) {
+            String region=WorldLayout.authoredRegionAt(zone.x(),zone.z())
+                .orElseThrow().id();
+            sites.add(new ProtectedSite(zone.x(),zone.z(),zone.radius()+180,
+                "pipican:protected/"+region));
         }
-        return List.copyOf(list);
+        for(var landmark:new LandmarkCatalog().all()) {
+            if(landmark.tier().equals("capital"))continue;
+            sites.add(new ProtectedSite(landmark.x(),landmark.z(),
+                Math.max(landmark.radius()+150,160),
+                "pipican:protected/"+landmark.region()));
+        }
+        return List.copyOf(sites);
     }
-
 
     private RegionalBiomeSource(HolderSet<Biome> biomes,long seed){
         this.biomes=biomes;
         this.seed=seed;
         this.sampler=new SubregionSampler();
-        this.capitals=readCapitalBiomes();
+        this.protectedSites=readProtectedSites();
         Map<String,Holder<Biome>> keyed=new HashMap<>();
         for(Holder<Biome> holder:biomes)
             holder.unwrapKey().ifPresent(key -> keyed.put(key.identifier().toString(),holder));
@@ -86,13 +89,12 @@ public final class RegionalBiomeSource extends BiomeSource {
         long ux=(long)x-4600, uz=(long)z+500;
         if(y<45 && ux*ux+uz*uz<240L*240L)
             return byId.getOrDefault("pipican:umbral_chasm",fallback);
-        // Castle coordinates are fixed and never sampled from random cells.
-        for(CapitalBiome castle:capitals){
-            long dx=(long)x-castle.x(),dz=(long)z-castle.z();
-            double warpedRadius=castle.radius()
-                +WorldLayout.fractal(0x25E1B777L,x,z,220)*110.0;
-            if(dx*dx+dz*dz < warpedRadius*warpedRadius)
-                return byId.getOrDefault(castle.biomeId(),fallback);
+        // Reserve all 70 authored sites during *native* chunk generation:
+        // structure sets never target these biome variants.
+        for(ProtectedSite site:protectedSites) {
+            long dx=(long)x-site.x(),dz=(long)z-site.z(),radius=site.radius();
+            if(dx*dx+dz*dz<=radius*radius)
+                return byId.getOrDefault(site.biomeId(),fallback);
         }
         Optional<SubregionSampler.Subregion> sub=sampler.at(seed,x,z);
         if(sub.isEmpty())return fallback;
