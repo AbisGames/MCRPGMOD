@@ -118,16 +118,7 @@
     {
       "id": "bard_virtuoso",
       "name": "Virtuoso",
-      "description": {
-        "text": "Song bonuses doubled, but you deal -20% damage yourself",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Song bonuses doubled, but you deal -20% damage yourself",
       "type": "keystone",
       "x": 657,
       "y": -1304,
@@ -136,7 +127,18 @@
         "bard_lullaby"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.8
+        }
+      ]
     }
   ]
 }

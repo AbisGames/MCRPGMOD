@@ -321,7 +321,9 @@ public final class ClassEffectApplier {
                         c.bleedWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.bleedWeapons)))),
                 Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge), List.copyOf(c.executes), List.copyOf(c.auras),
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
-                new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount));
+                new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount),
+                new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))));
     }
 
     /**
@@ -428,6 +430,11 @@ public final class ClassEffectApplier {
         final List<RawAura> rawAuras = new ArrayList<>();
         final List<AuraMod> auraMods = new ArrayList<>();
         double strength = 1;
+        double cleaveFraction;
+        double cleaveRadius;
+        int cleaveTargets;
+        boolean cleaveCharged;
+        final Set<Holder<Item>> cleaveWeapons = new LinkedHashSet<>();
         double summonDamage;
         double summonHealth;
         double summonSeconds;
@@ -485,6 +492,15 @@ public final class ClassEffectApplier {
         @Override
         public void addAuraMod(String name, double radius, double k, boolean includeSelf, List<ClassEffect> effects) {
             auraMods.add(new AuraMod(name, radius, k, includeSelf, effects));
+        }
+
+        @Override
+        public void addCleave(double fraction, double radius, int maxTargets, boolean chargedOnly, Optional<HolderSet<Item>> weapons) {
+            cleaveFraction += fraction;
+            cleaveRadius += radius;
+            cleaveTargets = Math.max(cleaveTargets, maxTargets);
+            cleaveCharged |= chargedOnly;
+            weapons.ifPresent(set -> set.forEach(cleaveWeapons::add));
         }
 
         @Override

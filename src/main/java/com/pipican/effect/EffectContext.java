@@ -105,6 +105,9 @@ public interface EffectContext {
     /** Looking at a mob for {@code lookSeconds} marks it for {@code seconds}. */
     void addScrutiny(double lookSeconds, double seconds);
 
+    /** Melee hits also hit nearby mobs (values add up; max targets takes the highest). */
+    void addCleave(double fraction, double radius, int maxTargets, boolean chargedOnly, Optional<HolderSet<Item>> weapons);
+
     /** Changes an attribute of whatever the player rides. */
     void addMountUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);
 

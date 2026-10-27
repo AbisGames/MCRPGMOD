@@ -105,6 +105,9 @@ public final class BonusEvents {
         if (player.isSprinting() && ClassEffectApplier.state(player).chance(Kind.NO_SPRINT) > 0) {
             player.setSprinting(false);
         }
+        if (player.isBlocking() && ClassEffectApplier.state(player).chance(Kind.NO_SHIELD) > 0) {
+            player.stopUsingItem();
+        }
         FoodData food = player.getFoodData();
         naturalRegen(player, food);
         float now = food.exhaustionLevel;

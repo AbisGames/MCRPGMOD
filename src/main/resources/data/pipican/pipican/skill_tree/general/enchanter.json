@@ -101,16 +101,7 @@
     {
       "id": "enchanter_mind_thief",
       "name": "Mind Thief",
-      "description": {
-        "text": "charm chance doubled, but you deal -30% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "charm chance doubled, but you deal -30% damage",
       "type": "keystone",
       "x": 905,
       "y": -1568,
@@ -119,7 +110,18 @@
         "enchanter_puppeteer"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "pacify",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.7
+        }
+      ]
     }
   ]
 }

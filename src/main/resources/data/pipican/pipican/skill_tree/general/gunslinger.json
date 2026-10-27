@@ -81,16 +81,7 @@
     {
       "id": "gunslinger_hollow_point",
       "name": "Hollow Point",
-      "description": {
-        "text": "+10% damage to unarmored mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to unarmored mobs",
       "type": "notable",
       "x": -1718,
       "y": 275,
@@ -98,7 +89,16 @@
         "gunslinger_steady_hand"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "unarmored": true
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "gunslinger_showdown",

@@ -72,6 +72,16 @@
           "amount": 2.0
         }
       ]
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_explosion",
+      "multiplier": 0.5
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#minecraft:is_explosion",
+      "multiplier": 1.25
     }
   ],
   "special_passives": [

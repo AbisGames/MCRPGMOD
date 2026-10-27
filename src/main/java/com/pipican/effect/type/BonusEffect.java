@@ -40,6 +40,8 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code temple_radius}: <i>blocks</i> added to the 10-block temple ({@code pipican:temple})</li>
  *   <li>{@code healing_given}: healing your abilities and reactions do</li>
  *   <li>{@code affinity_floor}: any amount above 0 = no gear is worse than neutral for you</li>
+ *   <li>{@code offhand_swing}: the share of your melee hits on which the off-hand weapon also strikes (0.5 = every 2nd)</li>
+ *   <li>{@code no_shield}: any amount above 0 = you can not block with shields</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -48,7 +50,7 @@ import net.minecraft.util.StringRepresentable;
 public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) implements ClassEffect {
 
     public enum Kind implements StringRepresentable {
-        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN, DETECTION_RANGE, SKILL_TRAINING, KNOCKBACK, EXTRA_LOOT, EXTRA_ORE, EXTRA_CROP, ABILITY_COOLDOWN, DURABILITY, ARMOR_DURABILITY, WEAPON_DURABILITY, WEAPON_REPAIR, ARMOR_FLOOR, NO_SPRINT, HEALING_RECEIVED, TEMPLE_RADIUS, HEALING_GIVEN, AFFINITY_FLOOR;
+        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN, DETECTION_RANGE, SKILL_TRAINING, KNOCKBACK, EXTRA_LOOT, EXTRA_ORE, EXTRA_CROP, ABILITY_COOLDOWN, DURABILITY, ARMOR_DURABILITY, WEAPON_DURABILITY, WEAPON_REPAIR, ARMOR_FLOOR, NO_SPRINT, HEALING_RECEIVED, TEMPLE_RADIUS, HEALING_GIVEN, AFFINITY_FLOOR, OFFHAND_SWING, NO_SHIELD;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

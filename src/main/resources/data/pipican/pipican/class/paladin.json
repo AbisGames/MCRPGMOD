@@ -60,6 +60,28 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "second",
+      "cooldown_ticks": 100,
+      "actions": [
+        {
+          "type": "pipican:empower",
+          "target": "self",
+          "multiplier": 1.2,
+          "hits": 1,
+          "seconds": 5.0
+        },
+        {
+          "type": "pipican:empower",
+          "target": "self",
+          "multiplier": 1.2,
+          "hits": 1,
+          "seconds": 5.0,
+          "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms"
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.9

@@ -118,16 +118,7 @@
     {
       "id": "dervish_storm_of_steel",
       "name": "Storm of Steel",
-      "description": {
-        "text": "off-hand swings every attack, but -3 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "off-hand swings every attack, but -3 armor",
       "type": "keystone",
       "x": -1449,
       "y": -178,
@@ -136,7 +127,19 @@
         "dervish_deflect"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "offhand_swing",
+          "amount": 0.5
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": -3.0
+        }
+      ]
     }
   ]
 }

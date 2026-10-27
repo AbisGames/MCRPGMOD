@@ -112,6 +112,11 @@
       "type": "pipican:reaction_chance",
       "name": "prem",
       "uses": 1
+    },
+    {
+      "type": "pipican:cleave",
+      "fraction": 0.5,
+      "radius": 3
     }
   ]
 }

@@ -66,6 +66,13 @@
       "weapons": "#pipican:weapons/maces"
     },
     {
+      "type": "pipican:cleave",
+      "fraction": 0.4,
+      "radius": 2.0,
+      "charged_only": true,
+      "weapons": "#pipican:weapons/axes_maces"
+    },
+    {
       "type": "pipican:on",
       "event": "kill",
       "actions": [
@@ -98,6 +105,15 @@
         }
       ],
       "weapons": "#pipican:weapons/maces"
+    },
+    {
+      "type": "pipican:cleave",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

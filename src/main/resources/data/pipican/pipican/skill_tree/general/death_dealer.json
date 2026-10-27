@@ -55,16 +55,7 @@
     {
       "id": "death_dealer_wide_arc",
       "name": "Wide Arc",
-      "description": {
-        "text": "sweep radius +1 block",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "sweep radius +1 block",
       "type": "notable",
       "x": -1453,
       "y": 958,
@@ -72,7 +63,13 @@
         "death_dealer_cleaver"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:cleave",
+          "radius": 1.0
+        }
+      ]
     },
     {
       "id": "death_dealer_executioner_s_weight",

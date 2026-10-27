@@ -410,6 +410,7 @@ def main(spec_dir, res_dir, report_path):
         'minecraft:deep_frozen_ocean']})
     write(f'{NS}/tags/item/weapons/metal.json', {'values': [f'minecraft:{m}_{w}' for m in ('iron', 'diamond', 'netherite')
                                                             for w in ('sword', 'axe', 'pickaxe', 'shovel', 'hoe', 'spear')]})
+    write(f'{NS}/tags/item/weapons/axes_maces.json', {'values': ['#pipican:weapons/axes', '#pipican:weapons/maces']})
     write(f'{NS}/tags/item/weapons/staff.json', {'values': ['minecraft:blaze_rod', 'minecraft:stick']})
     write(f'{NS}/tags/item/armor/any.json', {'values': ['#pipican:armor/light', '#pipican:armor/medium', '#pipican:armor/heavy']})
 

@@ -187,7 +187,19 @@ def auras(t, ctx):
     words = r'([a-z][a-z ]*?)'
     # range: "Inspiring Song range +1 block per 10 Resonance", "+1 block Song range", "+3 blocks chant range",
     # "Prayer aura range -2 blocks", "per 10 Command, +1 block to all your aura ranges"
-    m = re.fullmatch(rf'{words} range ([+-]{N}) blocks?(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t) or \
+    m = re.fullmatch(rf'{words} reduction (doubled|tripled)', t)
+    if m and _aura_word(m.group(1), cid) is not None:
+        return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(1), cid), 'strength': 1.0 if m.group(2) == 'doubled' else 2.0}]
+    m = re.fullmatch(rf'\+{N}% {words} reduction', t)
+    if m and _aura_word(m.group(2), cid) is not None:
+        return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(2), cid),
+                 'effects': [{'type': 'pipican:damage_taken', 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf'{words} gives \+{N}% more (speed|movement speed|damage|armor)', t)
+    if m and _aura_word(m.group(1), cid) is not None:
+        eff = _rest(f'+{m.group(2)}% {"movement speed" if m.group(3) == "speed" else m.group(3)}', ctx)
+        if eff:
+            return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(1), cid), 'effects': eff}]
+    m = re.fullmatch(rf'{words} range ([+-]{N})(?: blocks?)?(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t) or \
         re.fullmatch(rf'([+-]?{N}) blocks? (?:to )?{words} ranges?(?: per (?:{N} )?([a-z]+)(?: points?)?)?()', t)
     if m:
         if m.re.pattern.startswith(words):
@@ -533,6 +545,29 @@ def whole_line(text, ctx):
             if float(m.group(1)) != 10:
                 out.append({'type': 'pipican:bonus', 'kind': 'temple_radius', 'amount': float(m.group(1)) - 10})
             return out
+    # Off-hand swings: "weapons in your off-hand also swing (off-hand hit every 2nd attack)",
+    # "holding a sword in your off-hand lets you hit with it too (off-hand swing every 2nd attack)"
+    m = re.fullmatch(r'(?:weapons in your off-hand also swing|holding a (sword|weapon) in your off-hand lets you hit with it too) \(off-hand (?:hit|swing) every (2nd|3rd|other) attack\)', low)
+    if m:
+        share = {'2nd': 0.5, 'other': 0.5, '3rd': 1 / 3}[m.group(2)]
+        return [{'type': 'pipican:bonus', 'kind': 'offhand_swing', 'amount': round(share, 6)}]
+    # Divine Smite: "your first melee hit every 5s deals +20% damage (+20% more against undead, Nether mobs, vexes and phantoms)"
+    m = re.fullmatch(rf'your first melee hit every {N}s deals \+{N}% damage(?: \(\+{N}% more against (.+)\))?', low)
+    if m:
+        import combat
+        secs, pct = float(m.group(1)), float(m.group(2))
+        acts = [{'type': 'pipican:empower', 'target': 'self', 'multiplier': round(1 + pct / 100, 6), 'hits': 1, 'seconds': secs}]
+        if m.group(3):
+            group = combat.mobs(m.group(4))
+            if group is None:
+                return None
+            acts.append({'type': 'pipican:empower', 'target': 'self', 'multiplier': round(1 + float(m.group(3)) / 100, 6), 'hits': 1,
+                         'seconds': secs, 'against': group})
+        return [{'type': 'pipican:on', 'event': 'second', 'cooldown_ticks': int(secs * 20), 'actions': acts}]
+    # Utter Destruction: "your TNT and explosive damage rolls high (+25% explosion damage)"
+    m = re.fullmatch(r'your tnt and explosive damage rolls high \(\+(\d+)% explosion damage\)', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'damage_types': '#minecraft:is_explosion', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
     # Premonitions: "after sleeping, you get 3 'premonitions' - each automatically turns a hit against you into a miss"
     m = re.fullmatch(rf"after sleeping, you get {N} '?premonitions'? - each automatically turns a hit against you into a miss", low)
     if m:
@@ -585,8 +620,62 @@ def pulses(t, ctx):
     return None
 
 
+CLEAVE_BASE = {}
+
+
+def strikes(t, ctx):
+    cid = ctx.get('class_id')
+    # "fully charged axe/mace hits damage all mobs within 2 blocks for 40% (sweep)" (bracket already dropped)
+    m = re.fullmatch(rf'(fully[- ]charged )?(?:(axe/mace|axe|mace|sword|melee) )?hits damage all mobs within {N} blocks for {N}%', t)
+    if m:
+        e = {'type': 'pipican:cleave', 'fraction': round(float(m.group(4)) / 100, 6), 'radius': float(m.group(3))}
+        if m.group(1):
+            e['charged_only'] = True
+        w = {'axe/mace': '#pipican:weapons/axes_maces', 'axe': '#pipican:weapons/axes', 'mace': '#pipican:weapons/maces',
+             'sword': '#pipican:weapons/swords'}.get(m.group(2) or '')
+        if w:
+            e['weapons'] = w
+        CLEAVE_BASE[cid] = e['fraction']
+        return [e]
+    m = re.fullmatch(rf'your fully[- ]charged melee hits also strike one other mob within {N} blocks for {N}% damage', t)
+    if m:
+        return [{'type': 'pipican:cleave', 'fraction': round(float(m.group(2)) / 100, 6), 'radius': float(m.group(1)), 'max_targets': 1, 'charged_only': True}]
+    m = re.fullmatch(rf'sweep radius \+{N} blocks?', t)
+    if m and cid in CLEAVE_BASE:
+        return [{'type': 'pipican:cleave', 'radius': float(m.group(1))}]
+    m = re.fullmatch(rf'sweep damage {N}%', t)
+    if m and cid in CLEAVE_BASE:
+        return [{'type': 'pipican:cleave', 'fraction': round(float(m.group(1)) / 100 - CLEAVE_BASE[cid], 6)}]
+    m = re.fullmatch(rf'sweep damage \+{N}% per ([a-z]+)(?: points?)?', t)
+    if m and cid in CLEAVE_BASE and _stat_source(m.group(2), ctx):
+        return [{'type': 'pipican:cleave', 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(1)) / 100, 6)}]}]
+    # off-hand swing upgrades: "off-hand swing every attack instead of every 2nd", "off-hand swings every attack"
+    m = re.fullmatch(r'off-hand swings? every attack(?: instead of every 2nd)?', t)
+    if m:
+        return [{'type': 'pipican:bonus', 'kind': 'offhand_swing', 'amount': 0.5}]
+    if re.fullmatch(r"you can'?t use shields|you cannot use shields", t):
+        return [{'type': 'pipican:bonus', 'kind': 'no_shield', 'amount': 1.0}]
+    # Trickery: "once every 4 seconds, your next hit deals +15% damage"
+    m = re.fullmatch(rf'once every {N} seconds?,? your next hit deals \+{N}% damage', t)
+    if m:
+        secs = float(m.group(1))
+        return [{'type': 'pipican:on', 'event': 'second', 'cooldown_ticks': int(secs * 20), 'actions': [
+            {'type': 'pipican:empower', 'target': 'self', 'multiplier': round(1 + float(m.group(2)) / 100, 6), 'hits': 1, 'seconds': secs}]}]
+    # banners: "a banner in your off-hand gives players within 8 blocks +1 armor", "banner in off-hand: allies +1 armor"
+    m = re.fullmatch(rf'(?:a )?banner in (?:your )?off-hand(?: gives players within {N} blocks|: allies) (.+)', t)
+    if m:
+        eff = _rest(m.group(2), ctx)
+        if eff:
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:holding', 'items': '#minecraft:banners', 'hand': 'off'},
+                     'effects': [{'type': 'pipican:aura', 'radius': float(m.group(1) or 8), 'effects': eff, 'include_self': False}]}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    st = strikes(t, ctx)
+    if st:
+        return st
     pu = pulses(t, ctx)
     if pu:
         return pu

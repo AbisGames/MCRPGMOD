@@ -79,6 +79,11 @@
           "operation": "add_multiplied_base"
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "offhand_swing",
+      "amount": 0.5
     }
   ],
   "special_passives": [

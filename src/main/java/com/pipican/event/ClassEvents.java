@@ -6,6 +6,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.Tags;
 import com.pipican.ability.Charged;
 import com.pipican.ability.Scrutiny;
+import com.pipican.ability.Strikes;
 import com.pipican.ability.Auras;
 import com.pipican.mastery.SkillAction;
 import java.util.concurrent.ConcurrentHashMap;
@@ -344,6 +345,9 @@ public final class ClassEvents {
                 Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);
             }
             execute(attacker, event.getEntity());
+            if (event.getSource().getDirectEntity() == attacker) {
+                Strikes.after(attacker, event.getEntity(), event.getInflictedDamage());
+            }
         }
         if (event.getEntity() instanceof ServerPlayer victim) {
             LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity l ? l : null;

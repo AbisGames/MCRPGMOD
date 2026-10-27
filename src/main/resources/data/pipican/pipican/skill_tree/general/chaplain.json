@@ -110,16 +110,7 @@
     {
       "id": "chaplain_holy_war",
       "name": "Holy War",
-      "description": {
-        "text": "chant bonuses +50%, but you deal -15% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "chant bonuses +50%, but you deal -15% damage",
       "type": "keystone",
       "x": 1158,
       "y": -889,
@@ -128,7 +119,18 @@
         "chaplain_litany"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "strength": 0.5
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.85
+        }
+      ]
     }
   ]
 }

@@ -160,6 +160,14 @@ public class Eidolon extends IronGolem implements OwnableEntity {
         }
     }
 
+    /** Re-applies the owner's upgrades now (otherwise done every 2 seconds). */
+    public void refreshUpgrades() {
+        ServerPlayer player = ownerPlayer();
+        if (player != null) {
+            applyOwnerUpgrades(player);
+        }
+    }
+
     /** Applies the owner's {@code pipican:eidolon} upgrades as modifiers (rebuilt from scratch each time). */
     private void applyOwnerUpgrades(ServerPlayer player) {
         Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> upgrades = ClassEffectApplier.state(player).eidolonUpgrades();

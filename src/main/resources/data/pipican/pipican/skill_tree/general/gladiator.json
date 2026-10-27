@@ -109,16 +109,7 @@
     {
       "id": "gladiator_death_or_glory",
       "name": "Death or Glory",
-      "description": {
-        "text": "+25% damage, but you can't use shields",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% damage, but you can't use shields",
       "type": "keystone",
       "x": -1295,
       "y": 674,
@@ -127,7 +118,18 @@
         "gladiator_hamstring"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_shield",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

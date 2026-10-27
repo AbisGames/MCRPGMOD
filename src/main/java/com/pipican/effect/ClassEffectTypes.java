@@ -1,5 +1,6 @@
 package com.pipican.effect;
 
+import com.pipican.effect.type.CleaveEffect;
 import com.pipican.effect.type.SummonModEffect;
 import com.pipican.effect.type.AuraModEffect;
 import com.pipican.effect.type.ScrutinyEffect;
@@ -76,6 +77,7 @@ public final class ClassEffectTypes {
     public static final Type SCRUTINY = register("scrutiny", ScrutinyEffect.CODEC);
     public static final Type AURA_MOD = register("aura_mod", AuraModEffect.CODEC);
     public static final Type SUMMON_MOD = register("summon_mod", SummonModEffect.CODEC);
+    public static final Type CLEAVE = register("cleave", CleaveEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}

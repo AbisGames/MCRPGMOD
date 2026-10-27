@@ -63,6 +63,13 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_plant",
+      "multiplier": 0.0
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:conditional",

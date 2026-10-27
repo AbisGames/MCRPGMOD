@@ -22,7 +22,7 @@ LEADING = [
 # "<potions...> last 20% longer/shorter"
 POTIONS = [
     (r'(?:your |the )?(?:potions|potion effects)(?: you drink| on you)?', 'potion_duration'),
-    (r'(?:your )?(?:harmful potions|harmful potion effects|potion debuffs|debuffs)(?: on you)?', 'harmful_duration'),
+    (r'(?:your )?(?:harmful potions|harmful potion effects|harmful effects|potion debuffs|debuffs)(?: on you)?', 'harmful_duration'),
     (r'(?:beneficial|good) (?:potions|potion effects)(?: on you)?', 'beneficial_duration'),
     (r'harmful (?:potion effects|effects) you apply|harmful (?:splash )?potions you throw', 'applied_harmful_duration'),
     (r'(?:potion effects|effects) you apply|thrown splash(?:/lingering)? potions', 'applied_duration'),

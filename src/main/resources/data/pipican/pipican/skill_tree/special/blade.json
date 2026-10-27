@@ -29,23 +29,21 @@
     {
       "id": "twin_fangs",
       "name": "Twin Fangs",
-      "description": {
-        "text": "off-hand swing every attack instead of every 2nd",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "off-hand swing every attack instead of every 2nd",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "offhand_swing",
+          "amount": 0.5
+        }
+      ]
     },
     {
       "id": "hemorrhage",

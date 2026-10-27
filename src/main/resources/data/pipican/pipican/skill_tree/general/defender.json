@@ -19,21 +19,19 @@
     {
       "id": "defender_shield_brother",
       "name": "Shield Brother",
-      "description": {
-        "text": "Defend range +2",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Defend range +2",
       "type": "small",
       "x": 1289,
       "y": 285,
       "links": [
         "defender_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "defend",
+          "radius": 2.0
+        }
       ]
     },
     {
@@ -57,16 +55,7 @@
     {
       "id": "defender_interpose",
       "name": "Interpose",
-      "description": {
-        "text": "+10% Defend reduction",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% Defend reduction",
       "type": "notable",
       "x": 1357,
       "y": 302,
@@ -74,7 +63,19 @@
         "defender_shield_brother"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "defend",
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.9
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "defender_taunt",
@@ -101,16 +102,7 @@
     {
       "id": "defender_living_wall",
       "name": "Living Wall",
-      "description": {
-        "text": "Defend reduction doubled, but you deal -25% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Defend reduction doubled, but you deal -25% damage",
       "type": "keystone",
       "x": 1419,
       "y": 345,
@@ -119,7 +111,18 @@
         "defender_taunt"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "defend",
+          "strength": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.75
+        }
+      ]
     }
   ]
 }

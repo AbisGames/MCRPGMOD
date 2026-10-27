@@ -67,6 +67,11 @@
   },
   "passives": [
     {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_explosion",
+      "multiplier": 0.5
+    },
+    {
       "type": "pipican:dodge",
       "chance": 0.08,
       "melee_only": true

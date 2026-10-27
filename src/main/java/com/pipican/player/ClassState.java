@@ -59,10 +59,11 @@ public record ClassState(
         List<Aura> auras,
         Scrutiny scrutiny,
         boolean favoredWeapon,
-        SummonMods summonMods) {
+        SummonMods summonMods,
+        Cleave cleave) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE);
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -109,6 +110,11 @@ public record ClassState(
 
     /** A {@code pipican:aura} the player gives nearby players. */
     public record Aura(double radius, List<ClassEffect> effects, double strength) {}
+
+    /** {@code pipican:cleave} totals. */
+    public record Cleave(double fraction, double radius, int maxTargets, boolean chargedOnly, Optional<HolderSet<Item>> weapons) {
+        public static final Cleave NONE = new Cleave(0, 0, 0, false, Optional.empty());
+    }
 
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count) {

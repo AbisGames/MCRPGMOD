@@ -469,6 +469,44 @@ def _special_forms(low, ctx, scal=lambda v: (v, None)):
     return None
 
 
+def _bulk(text):
+    """Phrasing rewrites, applied to the whole line and again to each part of it."""
+    lab = r"^((?:[A-Z][\w' -]{1,30}:\s+)?)"
+    num = r'([+-]?\d+(?:\.\d+)?)'
+    subs = [
+        (lab + r'\+?(\d+(?:\.\d+)?)% less damage from (?:all )?(?:mobs|enemies|attacks)$', r'\1-\2% damage taken'),
+        (lab + r'fall damage halved(?: again)?$', r'\1-50% fall damage taken'),
+        (lab + r'arrows shot at you are (\d+(?:\.\d+)?)% likely to be blown aside$', r'\1+\2% arrow-deflect chance'),
+        (lab + r'you deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage(?: yourself)?$', r'\1\2% damage'),
+        (lab + r'(?:you )?takes? (\d+(?:\.\d+)?)% (more|less) damage from weapons and projectiles$', r'\1takes \2% \3 melee and projectile damage'),
+        (lab + r'\+(\d+(?:\.\d+)?)% projectile damage reduction$', r'\1takes \2% less projectile damage'),
+        (lab + r'\+(\d+(?:\.\d+)?)% damage reduction\b', r'\1-\2% damage taken'),
+        (lab + r'-(\d+(?:\.\d+)?)% damage from (?:all other )?explosions$', r'\1takes \2% less explosion damage'),
+        (lab + r'take -(\d+(?:\.\d+)?)% damage from tnt traps$', r'\1takes \2% less explosion damage'),
+        (lab + r'-(\d+(?:\.\d+)?)% suffocation damage$', r'\1takes \2% less suffocation damage'),
+        (lab + r"berry bushes and cacti don't hurt you$", r'\1takes 100% less plant damage'),
+        (lab + r'takes (\d+)% more damage from (.+?),? and the wither effect$', r'\1takes \2% more damage from \3; takes \2% more wither damage'),
+        (lab + r'-(\d+(?:\.\d+)?)% damage from ((?!all\b)[a-z][a-z, ]+)$', r'\1takes \2% less damage from \3'),
+        (lab + r'([+-]\d+(?:\.\d+)?%) unarmed and ([+-]\d+(?:\.\d+)?%) (\w+) damage$', r'\1\2 damage while unarmed; \3 \4 damage'),
+        (lab + r'([+-]\d+(?:\.\d+)?%) (?:more )?unarmed/(\w+) damage$', r'\1\2 damage while unarmed; \2 \3 damage'),
+        (lab + r'unarmed and (\w+) hits ([+-]\d+(?:\.\d+)?%) damage$', r'\1\3 damage while unarmed; \3 \2 damage'),
+        (lab + r'breathe underwater, swim (\d+(?:\.\d+)?)% faster$', r'\1water breathing; +\2% swim speed'),
+        (lab + r'no mining slowdown underwater$', r'\1+0.8 underwater mining speed'),
+        (lab + r'([+-]\d+(?:\.\d+)?)% underwater damage$', r'\1\2% damage underwater'),
+        (lab + r'mobs (\d+(?:\.\d+)?)% slower to notice you$', r'\1-\2% detection range'),
+        (lab + r'(?:you )?(?:can\'t|cannot) receive the glowing effect$', r'\1immune to glowing'),
+        (lab + r'(?:no gear is worse than neutral for you|weapons you\'re clumsy or forbidden with count as neutral)$', r'\1+100% affinity floor'),
+        (lab + r'heavy armor gives \+(\d+) armor per piece$', r'\1+\2 armor per heavy armor piece'),
+        (r'\bfor (?:every|each) heavy armor piece(?: worn)?\b', r'per heavy armor piece'),
+        (r'per (\d+)% missing health\b', r'per \1 missing health percent'),
+        (r'per missing heart\b', r'per missing heart'),
+        (lab + r'(?:all your stats|every stat|all stats) \+(\d+)(?: \(.*\))?$', r'\1+\2 to every stat'),
+    ]
+    for pat, rep in subs:
+        text = re.sub(pat, rep, text, flags=re.I)
+    return text
+
+
 def translate(text, ctx):
     if not text or text.strip() in ('-', 'none', 'nothing'):
         return [], []
@@ -504,39 +542,7 @@ def translate(text, ctx):
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (\d+(?:\.\d+)?)% later', r'-\1% detection range', text, flags=re.I)
     # "+5% unarmed damage" -> "+5% damage while unarmed"
     text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) unarmed (damage|attack speed)\b', r'\1\2 \3 while unarmed', text, flags=re.I)
-    # ---- bulk phrasings
-    num = r'([+-]?\d+(?:\.\d+)?)'
-    subs = [
-        (lab + r'\+?(\d+(?:\.\d+)?)% less damage from (?:all )?(?:mobs|enemies|attacks)$', r'\1-\2% damage taken'),
-        (lab + r'fall damage halved(?: again)?$', r'\1-50% fall damage taken'),
-        (lab + r'arrows shot at you are (\d+(?:\.\d+)?)% likely to be blown aside$', r'\1+\2% arrow-deflect chance'),
-        (lab + r'you deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage(?: yourself)?$', r'\1\2% damage'),
-        (lab + r'(?:you )?takes? (\d+(?:\.\d+)?)% (more|less) damage from weapons and projectiles$', r'\1takes \2% \3 melee and projectile damage'),
-        (lab + r'\+(\d+(?:\.\d+)?)% projectile damage reduction$', r'\1takes \2% less projectile damage'),
-        (lab + r'\+(\d+(?:\.\d+)?)% damage reduction\b', r'\1-\2% damage taken'),
-        (lab + r'-(\d+(?:\.\d+)?)% damage from (?:all other )?explosions$', r'\1takes \2% less explosion damage'),
-        (lab + r'take -(\d+(?:\.\d+)?)% damage from tnt traps$', r'\1takes \2% less explosion damage'),
-        (lab + r'-(\d+(?:\.\d+)?)% suffocation damage$', r'\1takes \2% less suffocation damage'),
-        (lab + r"berry bushes and cacti don't hurt you$", r'\1takes 100% less plant damage'),
-        (lab + r'takes (\d+)% more damage from (.+?),? and the wither effect$', r'\1takes \2% more damage from \3; takes \2% more wither damage'),
-        (lab + r'-(\d+(?:\.\d+)?)% damage from ((?!all\b)[a-z][a-z, ]+)$', r'\1takes \2% less damage from \3'),
-        (lab + r'([+-]\d+(?:\.\d+)?%) unarmed and ([+-]\d+(?:\.\d+)?%) (\w+) damage$', r'\1\2 damage while unarmed; \3 \4 damage'),
-        (lab + r'([+-]\d+(?:\.\d+)?%) (?:more )?unarmed/(\w+) damage$', r'\1\2 damage while unarmed; \2 \3 damage'),
-        (lab + r'unarmed and (\w+) hits ([+-]\d+(?:\.\d+)?%) damage$', r'\1\3 damage while unarmed; \3 \2 damage'),
-        (lab + r'breathe underwater, swim (\d+(?:\.\d+)?)% faster$', r'\1water breathing; +\2% swim speed'),
-        (lab + r'no mining slowdown underwater$', r'\1+0.8 underwater mining speed'),
-        (lab + r'([+-]\d+(?:\.\d+)?)% underwater damage$', r'\1\2% damage underwater'),
-        (lab + r'mobs (\d+(?:\.\d+)?)% slower to notice you$', r'\1-\2% detection range'),
-        (lab + r'(?:you )?(?:can\'t|cannot) receive the glowing effect$', r'\1immune to glowing'),
-        (lab + r'(?:no gear is worse than neutral for you|weapons you\'re clumsy or forbidden with count as neutral)$', r'\1+100% affinity floor'),
-        (lab + r'heavy armor gives \+(\d+) armor per piece$', r'\1+\2 armor per heavy armor piece'),
-        (r'\bfor (?:every|each) heavy armor piece(?: worn)?\b', r'per heavy armor piece'),
-        (r'per (\d+)% missing health\b', r'per \1 missing health percent'),
-        (r'per missing heart\b', r'per missing heart'),
-        (lab + r'(?:all your stats|every stat|all stats) \+(\d+)(?: \(.*\))?$', r'\1+\2 to every stat'),
-    ]
-    for pat, rep in subs:
-        text = re.sub(pat, rep, text, flags=re.I)
+    text = _bulk(text)
     # jump height in blocks -> jump strength (about +0.15 per block)
     text = re.sub(lab + r'(?:jump height \+(\d+(?:\.\d+)?) blocks?|\+(\d+(?:\.\d+)?) (?:extra )?jump (?:block )?height)\b',
                   lambda m: f'{m.group(1)}+{float(m.group(2) or m.group(3)) * 0.15:g} jump strength', text, flags=re.I)
@@ -614,6 +620,7 @@ def translate(text, ctx):
 
 
 def _segment(seg, ctx):
+    seg = _bulk(seg.strip())
     mounted = bonus.mount_subject(_clean(seg).lower())
     if mounted == 'unsupported':
         return [], [seg.strip()]

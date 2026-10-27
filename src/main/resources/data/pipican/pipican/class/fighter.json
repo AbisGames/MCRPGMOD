@@ -67,6 +67,11 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "affinity_floor",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:attack_damage",
       "amount": 1.0

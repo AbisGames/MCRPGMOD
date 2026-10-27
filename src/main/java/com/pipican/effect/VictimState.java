@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
  * Every field is optional; all given ones must hold. {@code health} is health / max health (0-1);
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
-public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit) {
+public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -27,7 +27,8 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             Codec.BOOL.optionalFieldOf("marked", false).forGetter(VictimState::marked),
             Codec.BOOL.optionalFieldOf("on_fire", false).forGetter(VictimState::onFire),
             Codec.BOOL.optionalFieldOf("bleeding", false).forGetter(VictimState::bleeding),
-            Codec.BOOL.optionalFieldOf("charged_hit", false).forGetter(VictimState::chargedHit)
+            Codec.BOOL.optionalFieldOf("charged_hit", false).forGetter(VictimState::chargedHit),
+            Codec.BOOL.optionalFieldOf("unarmored", false).forGetter(VictimState::unarmored)
     ).apply(i, VictimState::new));
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
@@ -44,6 +45,9 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (chargedHit && !(attacker instanceof net.minecraft.server.level.ServerPlayer p && Charged.wasCharged(p))) {
+            return false;
+        }
+        if (unarmored && victim.getArmorValue() > 0) {
             return false;
         }
         if (bleeding && !Bleeds.isBleeding(victim)) {

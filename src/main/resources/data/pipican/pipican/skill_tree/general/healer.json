@@ -99,16 +99,7 @@
     {
       "id": "healer_saint",
       "name": "Saint",
-      "description": {
-        "text": "healing doubled, but you deal -30% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "healing doubled, but you deal -30% damage",
       "type": "keystone",
       "x": 1459,
       "y": -59,
@@ -117,7 +108,18 @@
         "healer_purify"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.7
+        }
+      ]
     }
   ]
 }

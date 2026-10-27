@@ -337,6 +337,15 @@ public final class ClassSystemTests {
         zombie.hurtServer(level, level.damageSources().playerAttack(player), 1);
         helper.assertTrue(!zombie.isAlive(), "executed below 50% health");
 
+        // Cleave: a hit also hits mobs next to the target for 50%.
+        Zombie first = helper.spawn(EntityType.ZOMBIE, new BlockPos(3, 2, 3));
+        Zombie second = helper.spawn(EntityType.ZOMBIE, new BlockPos(4, 2, 3));
+        com.pipican.ability.Strikes.after(player, first, 8);
+        helper.assertTrue(second.getHealth() < second.getMaxHealth() - 3.5 && second.getHealth() > second.getMaxHealth() - 4.5,
+                "cleaved for half (4, minus a little armor): " + second.getHealth());
+        first.discard();
+        second.discard();
+
         // Low health: the reaction reports the hit as shrugged off. (Mock players can't take real damage:
         // they count as invulnerable until a client has loaded.)
         helper.assertTrue(Reactions.fire(player, zombie, ItemStack.EMPTY, ReactionEffect.Event.LOW_HEALTH), "low-health hit shrugged off");
@@ -466,7 +475,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers
@@ -684,7 +693,10 @@ public final class ClassSystemTests {
         helper.assertTrue(!com.pipican.ability.Optimize.choose(player, raise, lower).success(), "only once per sleep");
 
         helper.runAfterDelay(45, () -> {
-            assertNear(helper, 2, eidolon.getAttribute(Attributes.ARMOR).getModifier(Pipican.id("eidolon/add_value")).amount(), "eidolon upgrade applied");
+            eidolon.refreshUpgrades();
+            var upgrade = eidolon.getAttribute(Attributes.ARMOR).getModifier(Pipican.id("eidolon/add_value"));
+            helper.assertTrue(upgrade != null, "eidolon upgrade applied");
+            assertNear(helper, 2, upgrade.amount(), "eidolon upgrade amount");
             eidolon.discard();
             helper.succeed();
         });
@@ -719,8 +731,11 @@ public final class ClassSystemTests {
             AbilityService.reset(player);
             // Remove everything the ability spawned (eidolons, summons, decoys) so it can't get in the next one's way.
             // (Only what appeared during this ability: other tests' mobs nearby are left alone.)
+            var bounds = helper.getBounds().inflate(12);
             for (var e : helper.getLevel().getEntities((net.minecraft.world.entity.Entity) null, area,
-                    e -> !(e instanceof net.minecraft.world.entity.player.Player) && !existing.contains(e))) {
+                    e -> !(e instanceof net.minecraft.world.entity.player.Player) && !existing.contains(e)
+                            && (bounds.contains(e.position()) || com.pipican.ability.Summons.isSummonOf(e, player)
+                                || e instanceof net.minecraft.world.entity.OwnableEntity o && o.getOwner() == player))) {
                 e.discard();
             }
             player.stopRiding();
