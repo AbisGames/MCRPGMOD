@@ -3,6 +3,7 @@ package com.pipican.worldgen;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.*;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
@@ -22,6 +23,61 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.DOUBLE.optionalFieldOf("strength",1.0).forGetter(RegionalElevation::strength)
         ).apply(instance,RegionalElevation::new));
+
+    /** The capital terrain anchors are sampled from the authored map, never a fixed Y. */
+    private record Capital(int x,int z) {}
+    private static final Map<String,Capital> CAPITALS=loadCapitals();
+    private static Map<String,Capital> loadCapitals() {
+        Map<String,Capital> found=new HashMap<>();
+        var root=WorldgenJson.read("fixed_capital_locations.json");
+        for(var element:root.getAsJsonArray("capitals")){
+            var c=element.getAsJsonObject();
+            found.put(c.get("region").getAsString(),
+                new Capital(c.get("x").getAsInt(),c.get("z").getAsInt()));
+        }
+        return Map.copyOf(found);
+    }
+
+    private static double bell(double v,double width) {
+        double q=v/width;
+        return Math.exp(-q*q);
+    }
+
+    /**
+     * Local geological relief is baked into the density function, not a placed
+     * structure; it adds ridges and valleys without choosing the castle's Y.
+     * The city centre stays navigable while dramatic landforms form farther out.
+     */
+    private static double capitalRelief(String region,int x,int z) {
+        var c=CAPITALS.get(region);
+        if(c==null)return 0;
+        double dx=x-c.x(),dz=z-c.z();
+        if(Math.abs(dx)>3400||Math.abs(dz)>3400)return 0;
+        double radial=Math.hypot(dx,dz);
+        double fade=Math.max(0,1-radial/3400);
+        return fade*switch(region){
+            case "elderwood" ->
+                2.0*bell(Math.abs(dx)-1150,480)*bell(dz,2300)
+                -0.19*bell(radial,520);
+            case "greyspine_mountains" ->
+                2.4*bell(dx-950,640)*bell(dz,1900)
+                +1.0*bell(dx+1100,500)*bell(dz,2000);
+            case "jade_empire" ->
+                0.72*Math.cos(Math.floor(radial/250.0)*0.7)
+                +0.46*bell(Math.abs(dz)-1200,420);
+            case "ashlands" ->
+                1.65*bell(radial-1450,560)-0.55*bell(radial,360);
+            case "whitecrown_icecap" ->
+                1.05*bell(Math.abs(dx)-820,380);
+            case "sunscorch_desert" ->
+                0.36*Math.cos(radial/210.0)+0.18*Math.sin(x/160.0);
+            case "marshfen" ->
+                -0.21+0.12*Math.sin(x/240.0)*Math.sin(z/240.0);
+            case "coral_isles","inner_sea","western_ocean","northern_ice_sea" ->
+                0.32*bell(radial,830);
+            default -> 0.24*bell(radial-1000,700);
+        };
+    }
 
     private static final KeyDispatchDataCodec<RegionalElevation> CODEC =
         KeyDispatchDataCodec.of(MAP_CODEC);
@@ -74,7 +130,8 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         double upper=98.0+Math.max(0,target)*0.95;
         double vertical=Math.max(0,Math.min(1,(upper-y)/110.0));
         double nearGround=Math.min(1,Math.max(0,(y-32)/25.0));
-        return strength*(target/130.0)*ridge*vertical*nearGround*blend;
+        double themedTerrain=capitalRelief(r.id(),x,z);
+        return strength*((target/130.0)*ridge+themedTerrain)*vertical*nearGround*blend;
     }
     @Override public double minValue(){return -4*strength;}
     @Override public double maxValue(){return 20*strength;}
