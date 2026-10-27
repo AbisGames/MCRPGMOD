@@ -174,7 +174,9 @@ public final class ClassEvents {
         if (event.getEntity() instanceof ServerPlayer victim) {
             ClassState state = ClassEffectApplier.state(victim);
             // Decoys and premonitions: "an attack against you hits a decoy instead".
-            if (source != null && Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED)) {
+            if (source != null && (Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED)
+                    || event.getSource().getDirectEntity() == source
+                    && Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED_MELEE))) {
                 victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
                 event.setCanceled(true);
                 return;

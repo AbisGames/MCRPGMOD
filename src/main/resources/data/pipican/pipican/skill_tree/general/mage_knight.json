@@ -56,16 +56,7 @@
     {
       "id": "mage_knight_spell_strike",
       "name": "Spell Strike",
-      "description": {
-        "text": "Escalating Violence +10%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Escalating Violence +10%",
       "type": "notable",
       "x": -1200,
       "y": -703,
@@ -73,7 +64,14 @@
         "mage_knight_arcane_steel"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "escalating violence",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "mage_knight_combat_casting",

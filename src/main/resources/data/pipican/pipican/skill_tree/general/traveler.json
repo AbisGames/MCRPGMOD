@@ -99,16 +99,7 @@
     {
       "id": "traveler_planeswalker",
       "name": "Planeswalker",
-      "description": {
-        "text": "Hasty Escape always triggers, but -20% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Hasty Escape always triggers, but -20% max health",
       "type": "keystone",
       "x": 79,
       "y": 1808,
@@ -117,7 +108,20 @@
         "traveler_steady_arrival"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "hasty escape",
+          "amount": 0.75
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

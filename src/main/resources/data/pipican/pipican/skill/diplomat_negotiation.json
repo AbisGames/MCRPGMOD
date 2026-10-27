@@ -3,8 +3,17 @@
   "description": "Trained by cancelling attacks with Stay the Hand and trading.",
   "icon": "minecraft:emerald",
   "trigger": {
-    "type": "pipican:did",
-    "action": "trade"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:reaction",
+        "name": "stay the hand"
+      },
+      {
+        "type": "pipican:did",
+        "action": "trade"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

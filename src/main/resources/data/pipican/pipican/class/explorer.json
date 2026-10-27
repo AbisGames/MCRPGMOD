@@ -89,7 +89,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "name": "preternatural senses"
         }
       ]
     },
@@ -162,6 +163,17 @@
         {
           "source": "special_stat",
           "per": -0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "preternatural senses",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
         }
       ]
     }

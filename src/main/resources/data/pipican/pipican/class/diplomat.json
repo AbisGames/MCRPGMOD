@@ -62,6 +62,23 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "attacked_melee",
+      "chance": 0.15,
+      "actions": [
+        {
+          "type": "pipican:control",
+          "target": "victim",
+          "mode": "pacify",
+          "seconds": 3.0
+        },
+        {
+          "type": "pipican:shrug"
+        }
+      ],
+      "name": "stay the hand"
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:holding",
@@ -87,6 +104,17 @@
         {
           "source": "special_stat",
           "per": -0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "stay the hand",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
         }
       ]
     }

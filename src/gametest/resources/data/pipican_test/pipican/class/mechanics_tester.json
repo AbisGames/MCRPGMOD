@@ -4,6 +4,7 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    { "type": "pipican:on", "event": "attacked_melee", "name": "test hand", "actions": [ { "type": "pipican:shrug" } ] },
     { "type": "pipican:damage_dealt", "damage_types": "#minecraft:is_drowning", "against": "minecraft:husk", "multiplier": 0.5, "except": true },
     { "type": "pipican:bonus", "kind": "spell_ward", "amount": 1 },
     {

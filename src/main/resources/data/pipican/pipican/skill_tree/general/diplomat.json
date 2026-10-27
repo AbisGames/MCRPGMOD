@@ -37,36 +37,25 @@
     {
       "id": "diplomat_calm_words",
       "name": "Calm Words",
-      "description": {
-        "text": "+5% Stay the Hand",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% Stay the Hand",
       "type": "small",
       "x": -200,
       "y": 1305,
       "links": [
         "diplomat_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "stay the hand",
+          "amount": 0.05
+        }
       ]
     },
     {
       "id": "diplomat_unexpected_alliances",
       "name": "Unexpected Alliances",
-      "description": {
-        "text": "hostile mobs you cancel with Stay the Hand fight other mobs for 5s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "hostile mobs you cancel with Stay the Hand fight other mobs for 5s",
       "type": "notable",
       "x": -154,
       "y": 1382,
@@ -74,7 +63,21 @@
         "diplomat_charming"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "stay the hand",
+          "actions": [
+            {
+              "type": "pipican:control",
+              "target": "victim",
+              "mode": "ally",
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "diplomat_envoy",
@@ -99,16 +102,7 @@
     {
       "id": "diplomat_peacemaker",
       "name": "Peacemaker",
-      "description": {
-        "text": "Stay the Hand 30%, but -40% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Stay the Hand 30%, but -40% damage",
       "type": "keystone",
       "x": -191,
       "y": 1448,
@@ -117,7 +111,18 @@
         "diplomat_envoy"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "stay the hand",
+          "amount": 0.15
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.6
+        }
+      ]
     }
   ]
 }

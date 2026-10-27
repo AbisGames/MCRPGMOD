@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1729**, partly working: **25**, not yet: **496**
+- Bonus phrases: **2250**. Fully working: **1739**, partly working: **25**, not yet: **486**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 168 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 128 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 76 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 71 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 41 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 32 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 31 |
+| [Other mechanics](#other-mechanics) | 163 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 127 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 74 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 70 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 31 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 30 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
 | [Immunities](#immunities) | 13 |
 | [Critical hits](#critical-hits) | 5 |
@@ -85,10 +85,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Shrapnel: explosions you cause give Slowness I
   - general tree: Bigger Booms: your TNT has +25% radius
   - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
-- **diplomat**
-  - special passive: Stay the Hand +0.3% per Rapport
-  - general tree: Calm Words: +5% Stay the Hand
-  - general tree: Peacemaker: Stay the Hand 30%, but -40% damage
 - **dreadnaught**
   - passive: heavy armor gives +1 armor per piece
   - passive: no movement penalty
@@ -112,7 +108,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **exorcist**
   - special passive: Purge bonus +0.5% per Purity
 - **explorer**
-  - special passive: Per 10 Wayfinding, +1 block glow range
   - general tree: Cartographer: maps you make explore 25% faster
 - **fighter**
   - special tree: Haft Attack: spears/tridents: every 3rd hit strikes twice
@@ -166,7 +161,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Escalating Violence +0.5% per Battle Arcana
   - special passive: Per 10 Battle Arcana, +1 escalating hit
   - general tree: Arcane Steel: +5% magic portion
-  - general tree: Spell Strike: Escalating Violence +10%
 - **magician**
   - skill Enchanting: +1 bookshelf counted around your table
 - **marauder**
@@ -424,7 +418,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Malleable: +2 Optimization amount
   - general tree: Stable Form: Optimization no longer resets on death
 - **traveler**
-  - passive: 25% chance to blink 6 blocks away with a 20s cooldown
   - special passive: Blink distance +0.1 per Displacement
   - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
 - **warlock**
@@ -475,8 +468,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Warlord: Attack Command gives Strength II; you can't sprint
 - **defender**
   - passive: Retributive Strike: when a mob within 3 blocks hits another player, your next hit on it deals +30%
-- **diplomat**
-  - general tree: Unexpected Alliances: hostile mobs you cancel with Stay the Hand fight other mobs for 5s
 - **diviner**
   - passive: Structures within 64 blocks are hinted in chat when you look at a compass
 - **dreadnaught**
@@ -556,8 +547,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Keen Senses: chests with loot within 8 blocks sparkle while you sneak
 - **transmuter**
   - general tree: Rapid Shift: you can re-Optimize once per day without sleeping
-- **traveler**
-  - passive: when you take a hit below half health
 - **warrior**
   - skill Axemanship: +10% shield-disable time when you break a shield
 - **woodwose**
@@ -683,8 +672,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Opportunist: when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve
 - **transmuter**
   - special tree: Philosopher: Optimization amount doubled; -10% max health
-- **traveler**
-  - general tree: Planeswalker: Hasty Escape always triggers, but -20% max health
 - **warlock**
   - special tree: Spell Thief Mastery: Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health
 - **witch**
@@ -718,7 +705,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **brute**
   - general tree: Crusher: +10% damage against shields and armored mobs
 - **diplomat**
-  - passive: Stay the Hand: 15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s
   - passive: illagers are 30% slower to notice you
   - skill Bartering: +1 villager restock
 - **druid**
@@ -776,8 +762,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Protector: "blocking hits aimed at mobs targeting other players / taking damage near allies" -> pipican:hurt_wearing #pipican:armor/any
 - **dervish**
   - Whirling: "landing both-hand combos" -> pipican:melee_hit
-- **diplomat**
-  - Negotiation: "cancelling attacks with Stay the Hand and trading" -> pipican:did
 - **engineer**
   - Mechanics: "your eidolon dealing damage and repairing it" -> pipican:kill
 - **explorer**
@@ -866,7 +850,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
   - special passive: Open Locks chance +0.5% per Finesse point
 - **traveler**
-  - special passive: Per 10 Displacement, Hasty Escape chance +5%
   - special tree: Thunderclap: arrivals knock mobs back
 - **warlock**
   - special stat per point: +0.5% chance to steal an incoming harmful effect

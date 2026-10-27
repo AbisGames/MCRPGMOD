@@ -61,6 +61,28 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:health",
+        "max": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "chance": 0.25,
+          "cooldown_ticks": 400,
+          "actions": [
+            {
+              "type": "pipican:blink",
+              "distance": 6.0
+            }
+          ],
+          "name": "hasty escape"
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_ender_pearl",
       "multiplier": 0.0
@@ -98,6 +120,17 @@
         {
           "source": "special_stat",
           "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "hasty escape",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
         }
       ]
     }

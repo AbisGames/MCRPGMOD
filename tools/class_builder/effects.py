@@ -526,8 +526,11 @@ def translate(text, ctx):
     # A reaction defined on a labelled line is named after the label, so upgrades can find it
     # ("Guarded Casting: whenever you spend Ward, gain +3 armor" <- "Guarded Casting lasts 5s longer").
     m = named.LABEL.match((text or '').strip())
-    if m and len(effects) == 1 and effects[0].get('type') == 'pipican:on' and 'name' not in effects[0] and not unsupported:
-        effects[0]['name'] = m.group(1).strip().lower()
+    single = effects[0] if len(effects) == 1 else None
+    if single and single.get('type') == 'pipican:conditional' and len(single.get('effects', [])) == 1:
+        single = single['effects'][0]
+    if m and single and single.get('type') == 'pipican:on' and 'name' not in single and not unsupported:
+        single['name'] = m.group(1).strip().lower()
     # Remember every reaction name the class has, for skill triggers ("landing Trickery hits").
     if ctx.get('class_id'):
         def walk(o):

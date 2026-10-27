@@ -551,6 +551,11 @@ public final class ClassSystemTests {
         husk.discard();
         notHusk.discard();
 
+        // Melee-only "attacked" reactions (Stay the Hand).
+        Zombie swinger = helper.spawn(EntityType.ZOMBIE, new BlockPos(3, 2, 2));
+        helper.assertTrue(Reactions.fire(player, swinger, ItemStack.EMPTY, ReactionEffect.Event.ATTACKED_MELEE), "melee hit cancelled");
+        swinger.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

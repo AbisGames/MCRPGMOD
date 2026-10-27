@@ -36,8 +36,11 @@ def learn(cid, lines, ctx):
         # Only auras that really work can be upgraded ("Song range +1").
         if any(e.get('type') == 'pipican:aura' for e in eff) and not uns:
             AURAS.setdefault(cid, set()).add(m.group(1).strip().lower())
-        if len(eff) == 1 and eff[0].get('type') == 'pipican:on' and not uns:
-            REACTIONS.setdefault(cid, {}).setdefault(m.group(1).strip().lower(), eff[0])
+        single = eff[0] if len(eff) == 1 else None
+        if single and single.get('type') == 'pipican:conditional' and len(single.get('effects', [])) == 1:
+            single = single['effects'][0]  # "when you take a hit below half health, 25% chance to blink"
+        if single and single.get('type') == 'pipican:on' and not uns:
+            REACTIONS.setdefault(cid, {}).setdefault(m.group(1).strip().lower(), single)
         whens = [e.get('when') for e in eff if e.get('type') == 'pipican:conditional']
         if eff and not uns and len(whens) == len(eff) and all(w == whens[0] for w in whens):
             inner = [x for e in eff for x in e['effects']]
@@ -165,6 +168,32 @@ def reaction_mods(t, ctx):
             return None
         return mod(name, **{field: 0.0, 'scaling': [{'source': src, 'per': round(value / float(n or 1), 6)}]})
 
+    # chance upgrades: "Stay the Hand +0.3% per Rapport", "+5% Stay the Hand", "Hasty Escape chance +5%",
+    # "Stay the Hand 30%" (a new total), "Hasty Escape always triggers"
+    m = re.fullmatch(rf'({names})(?: chance)? \+{N}%' + per, t)
+    m2 = re.fullmatch(rf'\+{N}% ({names})(?: chance)?', t)
+    if m or m2:
+        name, value, n, stat = (m.group(1), m.group(2), m.group(3), m.group(4)) if m else (m2.group(2), m2.group(1), None, None)
+        e = {'type': 'pipican:reaction_chance', 'name': name}
+        if stat:
+            src = _stat_source(stat, ctx)
+            if not src:
+                return None
+            e['amount'] = 0.0
+            e['scaling'] = [{'source': src, 'per': round(float(value) / 100 / float(n or 1), 6)}]
+        else:
+            e['amount'] = round(float(value) / 100, 6)
+        return [e]
+    m = re.fullmatch(rf'({names})(?: chance)? {N}%', t) or re.fullmatch(rf'({names}) always triggers()', t)
+    if m:
+        base = reactions[m.group(1)].get('chance', 1.0)
+        total = 1.0 if not m.group(2) else float(m.group(2)) / 100
+        if total > base:
+            return [{'type': 'pipican:reaction_chance', 'name': m.group(1), 'amount': round(total - base, 6)}]
+    # "hostile mobs you cancel with Stay the Hand fight other mobs for 5s"
+    m = re.fullmatch(rf'(?:hostile )?mobs you cancel with ({names}) fight other mobs for {N}s', t)
+    if m:
+        return mod(m.group(1), actions=[{'type': 'pipican:control', 'target': 'victim', 'mode': 'ally', 'seconds': float(m.group(2))}])
     m = re.fullmatch(rf'({names})(?: [a-z]+)? lasts \+?{N}s longer', t) or re.fullmatch(rf'({names}) lasts \+{N}s()', t)
     if m:
         return mod(m.group(1), seconds=float(m.group(2)))
@@ -748,6 +777,19 @@ def whole_line(text, ctx):
     m = re.fullmatch(r'(.+ (?:your )?(?:marked target|prey)) and it glows(?: for you)?', low)
     if m and (first := _rest(m.group(1), ctx)):
         return first + glows('marked targets glow', ctx)
+    # Stay the Hand: "15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s"
+    m = re.fullmatch(rf'{N}% chance that a melee hit against you is cancelled(?: and the attacker stops targeting you for {N}s)?', low)
+    if m:
+        acts = [{'type': 'pipican:shrug'}]
+        if m.group(2):
+            acts.insert(0, {'type': 'pipican:control', 'target': 'victim', 'mode': 'pacify', 'seconds': float(m.group(2))})
+        return [{'type': 'pipican:on', 'event': 'attacked_melee', 'chance': round(float(m.group(1)) / 100, 6), 'actions': acts}]
+    # Hasty Escape: "when you take a hit below half health, 25% chance to blink 6 blocks away (20s cooldown)"
+    m = re.fullmatch(rf'when you take a hit below half health, {N}% chance to blink {N} blocks away \({N}s cooldown\)', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:health', 'max': 0.5}, 'effects': [
+            {'type': 'pipican:on', 'event': 'hurt', 'chance': round(float(m.group(1)) / 100, 6), 'cooldown_ticks': int(float(m.group(3)) * 20),
+             'actions': [{'type': 'pipican:blink', 'distance': float(m.group(2))}]}]}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

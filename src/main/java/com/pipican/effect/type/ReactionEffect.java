@@ -66,7 +66,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You used (right-clicked) an item; {@code weapons} limits it to some items ("after throwing a wind charge"). */
         USE_ITEM("use_item"),
         /** You finished drinking a potion. */
-        DRINK("drink");
+        DRINK("drink"),
+        /** Like {@code attacked}, but only a melee hit (not arrows or spells); {@code pipican:shrug} cancels it. */
+        ATTACKED_MELEE("attacked_melee");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;
