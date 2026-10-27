@@ -4,19 +4,17 @@
     {
       "id": "poisoner_start",
       "name": "Poisoner",
-      "description": {
-        "text": "+5% poison duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% poison duration",
       "type": "start",
       "x": -717,
-      "y": 1024
+      "y": 1024,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "duration": 0.05
+        }
+      ]
     },
     {
       "id": "poisoner_virulent",
@@ -59,16 +57,7 @@
     {
       "id": "poisoner_paralytic",
       "name": "Paralytic",
-      "description": {
-        "text": "poisoned mobs also get Slowness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "poisoned mobs also get Slowness I",
       "type": "notable",
       "x": -775,
       "y": 1154,
@@ -76,21 +65,21 @@
         "poisoner_virulent"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "also": {
+            "minecraft:slowness": 0
+          }
+        }
+      ]
     },
     {
       "id": "poisoner_neurotoxin",
       "name": "Neurotoxin",
-      "description": {
-        "text": "poisoned mobs also get Weakness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "poisoned mobs also get Weakness I",
       "type": "notable",
       "x": -820,
       "y": 1123,
@@ -98,7 +87,16 @@
         "poisoner_tipped_arrows"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "also": {
+            "minecraft:weakness": 0
+          }
+        }
+      ]
     },
     {
       "id": "poisoner_plague_doctor",

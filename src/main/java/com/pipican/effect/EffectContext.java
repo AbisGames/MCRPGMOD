@@ -94,6 +94,9 @@ public interface EffectContext {
     /** Upgrades for the player's tamed animals. */
     void addPetMod(com.pipican.player.ClassState.PetMods mods);
 
+    /** Changes to an effect the player gives others. */
+    void addAppliedRule(Holder<MobEffect> effect, com.pipican.player.ClassState.AppliedRule rule);
+
     /**
      * Applies effects at {@code strength} (aura upgrades: % bonuses and attribute amounts are scaled), with
      * {@link Scaling} sources read from {@code source} (the aura owner) when it isn't null.

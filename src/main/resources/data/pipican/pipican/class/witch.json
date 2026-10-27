@@ -79,6 +79,11 @@
       ],
       "name": "Guidance",
       "include_self": false
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "witch_ward",
+      "amount": 1.0
     }
   ],
   "special_passives": [

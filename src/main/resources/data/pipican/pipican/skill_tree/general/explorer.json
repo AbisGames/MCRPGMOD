@@ -47,21 +47,19 @@
     {
       "id": "explorer_iron_stomach",
       "name": "Iron Stomach",
-      "description": {
-        "text": "immune to food poisoning effects",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "immune to food poisoning effects",
       "type": "small",
       "x": -1270,
       "y": 360,
       "links": [
         "explorer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "food_safe",
+          "amount": 1.0
+        }
       ]
     },
     {

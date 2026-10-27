@@ -59,16 +59,7 @@
     {
       "id": "sharpshooter_headshot",
       "name": "Headshot",
-      "description": {
-        "text": "+20% damage on hits to the upper part of a mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% damage on hits to the upper part of a mob",
       "type": "notable",
       "x": -1389,
       "y": 52,
@@ -76,7 +67,16 @@
         "sharpshooter_steady_breath"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "upper_hit": true
+          },
+          "multiplier": 1.2
+        }
+      ]
     },
     {
       "id": "sharpshooter_long_shot",

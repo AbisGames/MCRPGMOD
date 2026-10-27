@@ -66,16 +66,7 @@
     {
       "id": "will_of_iron",
       "name": "Will of Iron",
-      "description": {
-        "text": "players within 6 blocks also immune to Bad Omen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players within 6 blocks also immune to Bad Omen",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -83,7 +74,20 @@
         "cleanse"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 6.0,
+          "effects": [
+            {
+              "type": "pipican:immune",
+              "effects": "minecraft:bad_omen"
+            }
+          ],
+          "include_self": false
+        }
+      ]
     },
     {
       "id": "hammer_of_the_gods",

@@ -65,6 +65,16 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "ranged_armor_pierce",
+      "amount": 0.2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "projectile_speed",
+      "amount": 0.2
+    },
+    {
       "type": "pipican:damage_dealt",
       "multiplier": 1.15,
       "weapons": "#pipican:weapons/bows"

@@ -23,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
 public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored,
-                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther) {
+                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -36,8 +36,24 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             Codec.BOOL.optionalFieldOf("unarmored", false).forGetter(VictimState::unarmored),
             RegistryCodecs.homogeneousList(Registries.MOB_EFFECT).optionalFieldOf("effects").forGetter(VictimState::effects),
             Codec.DOUBLE.optionalFieldOf("within").forGetter(VictimState::within),
-            Codec.BOOL.optionalFieldOf("targeting_other", false).forGetter(VictimState::targetingOther)
+            Codec.BOOL.optionalFieldOf("targeting_other", false).forGetter(VictimState::targetingOther),
+            Codec.BOOL.optionalFieldOf("upper_hit", false).forGetter(VictimState::upperHit)
     ).apply(i, VictimState::new));
+
+    /**
+     * {@code upper_hit}: the hit lands on the upper part of the mob (a projectile above 70% of its height, or a
+     * melee attacker whose eyes are that high).
+     */
+    public boolean test(net.minecraft.world.damagesource.DamageSource source, LivingEntity attacker, LivingEntity victim) {
+        if (upperHit) {
+            var direct = source.getDirectEntity();
+            double y = direct == null ? attacker.getEyeY() : direct == attacker ? attacker.getEyeY() : direct.getY();
+            if (y < victim.getY() + victim.getBbHeight() * 0.7) {
+                return false;
+            }
+        }
+        return test(attacker, victim);
+    }
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
         if (health.isPresent() && !(victim.getMaxHealth() > 0 && health.get().test(victim.getHealth() / victim.getMaxHealth()))) {

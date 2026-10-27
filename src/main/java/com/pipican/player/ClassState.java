@@ -61,10 +61,11 @@ public record ClassState(
         boolean favoredWeapon,
         SummonMods summonMods,
         Cleave cleave,
-        PetMods petMods) {
+        PetMods petMods,
+        Map<Holder<MobEffect>, AppliedRule> appliedRules) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE);
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -97,7 +98,7 @@ public record ClassState(
             if (against.isPresent() && (other == null || !against.get().contains(other.getType().builtInRegistryHolder()))) {
                 return false;
             }
-            return victim.isEmpty() || other != null && self != null && victim.get().test(self, other);
+            return victim.isEmpty() || other != null && self != null && victim.get().test(source, self, other);
         }
     }
 
@@ -120,6 +121,15 @@ public record ClassState(
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count) {
         public static final SummonMods NONE = new SummonMods(0, 0, 0, 0);
+    }
+
+    /** {@code pipican:applied_effect} totals for one effect. */
+    public record AppliedRule(double seconds, double duration, int minAmplifier, Map<Holder<MobEffect>, Integer> also) {
+        public AppliedRule plus(AppliedRule o) {
+            Map<Holder<MobEffect>, Integer> merged = new java.util.LinkedHashMap<>(also);
+            o.also.forEach((k, v) -> merged.merge(k, v, Math::max));
+            return new AppliedRule(seconds + o.seconds, duration + o.duration, Math.max(minAmplifier, o.minAmplifier), Map.copyOf(merged));
+        }
     }
 
     /** {@code pipican:pet_mod} totals. */

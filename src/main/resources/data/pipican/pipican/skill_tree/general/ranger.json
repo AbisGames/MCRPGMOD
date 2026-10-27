@@ -64,16 +64,7 @@
     {
       "id": "ranger_volley",
       "name": "Volley",
-      "description": {
-        "text": "10% chance a bow shot fires a second arrow",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "10% chance a bow shot fires a second arrow",
       "type": "notable",
       "x": -872,
       "y": 182,
@@ -81,7 +72,14 @@
         "ranger_steady"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_arrow",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "ranger_stalker",

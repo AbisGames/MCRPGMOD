@@ -32,17 +32,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+1s poison duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1s poison duration",
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "seconds": 1.0
+        }
+      ]
     },
     {
       "description": "+1 Lethality",

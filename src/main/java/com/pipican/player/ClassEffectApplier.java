@@ -323,7 +323,7 @@ public final class ClassEffectApplier {
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
                 new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
-                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods);
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules));
     }
 
     /**
@@ -440,6 +440,7 @@ public final class ClassEffectApplier {
         double summonSeconds;
         int summonCount;
         ClassState.PetMods petMods = ClassState.PetMods.NONE;
+        final Map<Holder<MobEffect>, ClassState.AppliedRule> appliedRules = new java.util.HashMap<>();
 
         /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
         List<ClassState.Aura> finishAuras() {
@@ -515,6 +516,11 @@ public final class ClassEffectApplier {
         @Override
         public void addPetMod(ClassState.PetMods mods) {
             petMods = petMods.plus(mods);
+        }
+
+        @Override
+        public void addAppliedRule(Holder<MobEffect> effect, ClassState.AppliedRule rule) {
+            appliedRules.merge(effect, rule, ClassState.AppliedRule::plus);
         }
         double scrutinyLook = Double.MAX_VALUE;
         double scrutinySeconds;

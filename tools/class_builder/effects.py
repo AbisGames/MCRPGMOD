@@ -39,7 +39,8 @@ DAMAGE_TAGS = {
     'explosion': '#minecraft:is_explosion', 'explosive': '#minecraft:is_explosion', 'freezing': '#minecraft:is_freezing',
     'drowning': '#minecraft:is_drowning', 'lightning': '#minecraft:is_lightning',
     'magic': '#pipican:is_magic', 'wither': '#pipican:is_wither', 'melee': '#pipican:is_melee', 'poison': '#pipican:is_magic',
-    'ranged': '#minecraft:is_projectile', 'suffocation': '#pipican:is_suffocation', 'plant': '#pipican:is_plant',
+    'ranged': '#minecraft:is_projectile', 'suffocation': '#pipican:is_suffocation', 'plant': '#pipican:is_plant', 'falling-block': '#pipican:is_falling_block',
+    'falling block': '#pipican:is_falling_block', 'falling blocks': '#pipican:is_falling_block',
 }
 DAMAGE_TYPE_TAGS = {
     'is_magic': ['minecraft:magic', 'minecraft:indirect_magic', 'minecraft:sonic_boom', 'minecraft:thorns'],
@@ -47,6 +48,7 @@ DAMAGE_TYPE_TAGS = {
     'is_melee': ['minecraft:player_attack', 'minecraft:mob_attack', 'minecraft:mob_attack_no_aggro'],
     'is_suffocation': ['minecraft:in_wall', 'minecraft:cramming'],
     'is_plant': ['minecraft:cactus', 'minecraft:sweet_berry_bush'],
+    'is_falling_block': ['minecraft:falling_block', 'minecraft:falling_anvil', 'minecraft:falling_stalactite'],
 }
 
 # attribute phrase -> (attribute id, kind) ; kind 'flat' = amount as written, 'pct_base' = percent of base,

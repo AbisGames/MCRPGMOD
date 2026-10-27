@@ -432,6 +432,27 @@ public final class ClassSystemTests {
         assertNear(helper, 2, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), level.damageSources().playerAttack(player), glowing, player), "glowing and close");
         glowing.discard();
 
+        // Applied effects: poison you give lasts 2s longer, is Poison II and brings Slowness.
+        net.minecraft.world.entity.animal.pig.Pig pig = helper.spawn(EntityType.PIG, new BlockPos(1, 2, 2));
+        pig.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.POISON, 100, 0), player);
+        var poison = pig.getEffect(MobEffects.POISON);
+        helper.assertTrue(poison != null && poison.getAmplifier() == 1 && poison.getDuration() >= 139, "poison upgraded: " + poison);
+        helper.assertTrue(pig.hasEffect(MobEffects.SLOWNESS), "poison brings slowness");
+        pig.discard();
+
+        // Safe food: no harmful effects while eating.
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.ROTTEN_FLESH));
+        player.startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND);
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.HUNGER, 100));
+        helper.assertTrue(!player.hasEffect(MobEffects.HUNGER), "no hunger from food");
+        player.stopUsingItem();
+
+        // Armor pierce 100%: a zombie's armor doesn't soften the hit.
+        Zombie armored = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        armored.hurtServer(level, level.damageSources().playerAttack(player), 4);
+        assertNear(helper, armored.getMaxHealth() - 4, armored.getHealth(), "armor ignored");
+        armored.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);
@@ -494,7 +515,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers

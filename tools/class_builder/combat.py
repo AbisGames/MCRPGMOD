@@ -235,7 +235,7 @@ def immune(low):
     if not m:
         return None
     out, effects = [], []
-    for part in re.split(r',\s*(?:and\s+)?|\s+and\s+', m.group(1)):
+    for part in re.split(r',\s*(?:and\s+)?|\s+and\s+', re.sub(r',? and rotten flesh is normal food for you$', ', rotten flesh is normal food for you', m.group(1))):
         part = part.strip()
         part = re.sub(r'^(?:the )', '', part) if part.startswith('the ') and part not in EFFECT_NAMES else part
         part = re.sub(r' (?:effects?|damage)$', '', part) if part not in EFFECT_NAMES else part
@@ -251,6 +251,10 @@ def immune(low):
             out.append({'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_fall', 'multiplier': 0.0})
         elif part in ('drowning',):
             out.append({'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_drowning', 'multiplier': 0.0})
+        elif part in ('falling-block', 'falling block', 'falling blocks'):
+            out.append({'type': 'pipican:damage_taken', 'damage_types': '#pipican:is_falling_block', 'multiplier': 0.0})
+        elif part in ('food poisoning', 'rotten flesh is normal food for you'):
+            out.append({'type': 'pipican:bonus', 'kind': 'food_safe', 'amount': 1.0})
         elif part in ('explosions',):
             out.append({'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_explosion', 'multiplier': 0.0})
         else:

@@ -60,16 +60,7 @@
     {
       "id": "assassin_venom",
       "name": "Venom",
-      "description": {
-        "text": "your poison also gives Slowness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your poison also gives Slowness I",
       "type": "notable",
       "x": -421,
       "y": 785,
@@ -77,7 +68,16 @@
         "assassin_garrote"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "also": {
+            "minecraft:slowness": 0
+          }
+        }
+      ]
     },
     {
       "id": "assassin_shadowstep",

@@ -80,21 +80,28 @@
     {
       "id": "precise_attack",
       "name": "Precise Attack",
-      "description": {
-        "text": "swords: your hits ignore 15% armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "swords: your hits ignore 15% armor",
       "type": "small",
       "x": 0,
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/swords"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "armor_pierce",
+              "amount": 0.15
+            }
+          ]
+        }
       ]
     },
     {

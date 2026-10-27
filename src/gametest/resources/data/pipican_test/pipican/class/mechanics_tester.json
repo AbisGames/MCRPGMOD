@@ -5,6 +5,15 @@
   "base_stats": {},
   "passives": [
     {
+      "type": "pipican:applied_effect",
+      "effect": "minecraft:poison",
+      "seconds": 2,
+      "min_amplifier": 1,
+      "also": { "minecraft:slowness": 0 }
+    },
+    { "type": "pipican:bonus", "kind": "food_safe", "amount": 1 },
+    { "type": "pipican:bonus", "kind": "armor_pierce", "amount": 1 },
+    {
       "type": "pipican:pet_mod",
       "armor": 2,
       "damage_taken": -0.5

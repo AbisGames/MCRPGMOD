@@ -70,6 +70,11 @@
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_suffocation",
       "multiplier": 0.7
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_falling_block",
+      "multiplier": 0.0
     }
   ],
   "special_passives": [

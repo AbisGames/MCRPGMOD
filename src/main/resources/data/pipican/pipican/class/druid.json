@@ -68,6 +68,16 @@
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_plant",
       "multiplier": 0.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_trample",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "food_safe",
+      "amount": 1.0
     }
   ],
   "special_passives": [

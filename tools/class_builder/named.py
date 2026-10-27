@@ -829,6 +829,17 @@ re.fullmatch(rf'if a hit takes a mob below {N}% health, it dies', t)
     if m:
         return [{'type': 'pipican:damage_dealt', 'victim': {'charged_hit': True}, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
     # --- auras: "players within 10 blocks (including you) get +10% damage", "players within 4 blocks of you take 15% less damage"
+    # "players within 6 blocks also immune to Poison", "players near you are also immune to Nausea"
+    m = re.fullmatch(rf'(?:other )?players (?:within {N} blocks(?: of you)?|near you) (?:are )?also (immune to .+)', t)
+    if m:
+        import combat
+        eff = combat.immune(m.group(2))
+        if eff:
+            a = {'type': 'pipican:aura', 'radius': float(m.group(1) or 8), 'effects': eff, 'include_self': False}
+            label = LABELS.get(ctx.get('class_id'), {}).get(t)
+            if label:
+                a['name'] = label
+            return [a]
     m = re.fullmatch(rf'(?:other )?players within {N} blocks(?: of you)?( \(including you\)| including you)?,? (?:get|gain|have|take|deal) (.+)', t)
     if m:
         verb = re.search(r'\b(get|gain|have|take|deal)\b', t).group(1)

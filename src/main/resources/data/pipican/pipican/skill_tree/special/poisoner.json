@@ -29,23 +29,27 @@
     {
       "id": "antidote",
       "name": "Antidote",
-      "description": {
-        "text": "players within 6 blocks also immune to Poison",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players within 6 blocks also immune to Poison",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 6.0,
+          "effects": [
+            {
+              "type": "pipican:immune",
+              "effects": "minecraft:poison"
+            }
+          ],
+          "include_self": false
+        }
+      ]
     },
     {
       "id": "poisonous_touch",
@@ -66,16 +70,7 @@
     {
       "id": "lethal_dose",
       "name": "Lethal Dose",
-      "description": {
-        "text": "Poison II always",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Poison II always",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -83,7 +78,14 @@
         "antidote"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "min_amplifier": 1
+        }
+      ]
     },
     {
       "id": "toxic_blood",

@@ -37,21 +37,19 @@
     {
       "id": "apocalyptist_blighted",
       "name": "Blighted",
-      "description": {
-        "text": "+10% Wither duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% Wither duration",
       "type": "small",
       "x": 782,
       "y": 1064,
       "links": [
         "apocalyptist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:wither",
+          "duration": 0.1
+        }
       ]
     },
     {

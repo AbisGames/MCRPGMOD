@@ -79,16 +79,7 @@
     {
       "id": "hexer_hex_ward",
       "name": "Hex Ward",
-      "description": {
-        "text": "you can't be hit by witches' potions",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can't be hit by witches' potions",
       "type": "notable",
       "x": 820,
       "y": -1123,
@@ -96,7 +87,14 @@
         "hexer_lingering_hate"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "witch_ward",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "hexer_doom_hex",

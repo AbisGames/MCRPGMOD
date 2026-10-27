@@ -3,6 +3,7 @@ package com.pipican.effect;
 import com.pipican.effect.type.CleaveEffect;
 import com.pipican.effect.type.SummonModEffect;
 import com.pipican.effect.type.PetModEffect;
+import com.pipican.effect.type.AppliedEffectEffect;
 import com.pipican.effect.type.AuraModEffect;
 import com.pipican.effect.type.ScrutinyEffect;
 import com.pipican.effect.type.FavoredWeaponEffect;
@@ -79,6 +80,7 @@ public final class ClassEffectTypes {
     public static final Type AURA_MOD = register("aura_mod", AuraModEffect.CODEC);
     public static final Type SUMMON_MOD = register("summon_mod", SummonModEffect.CODEC);
     public static final Type PET_MOD = register("pet_mod", PetModEffect.CODEC);
+    public static final Type APPLIED_EFFECT = register("applied_effect", AppliedEffectEffect.CODEC);
     public static final Type CLEAVE = register("cleave", CleaveEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 

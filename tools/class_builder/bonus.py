@@ -322,9 +322,90 @@ def _bleed(**kw):
     return dict({'type': 'pipican:bleed'}, **kw)
 
 
+EFFECT_WORDS = {'poison': 'poison', 'slowness': 'slowness', 'weakness': 'weakness', 'wither': 'wither', 'blindness': 'blindness',
+                'nausea': 'nausea', 'hunger': 'hunger', 'mining fatigue': 'mining_fatigue', 'glowing': 'glowing'}
+LEVELS = {'i': 0, 'ii': 1, 'iii': 2, 'iv': 3}
+
+
+def _applied(effect, **kw):
+    e = {'type': 'pipican:applied_effect', 'effect': 'minecraft:' + EFFECT_WORDS[effect]}
+    e.update(kw)
+    return [e]
+
+
+def misc(t, scal):
+    """Projectile, armor-piercing, food and applied-effect lines."""
+    eff = '|'.join(EFFECT_WORDS)
+    if re.fullmatch(r'(?:you )?never trample farmland', t):
+        return [_effect('no_trample', 100, None)]
+    if re.fullmatch(r'rotten flesh, spider eyes and poisonous potatoes give no bad effects|food never gives you (?:bad|harmful) effects', t):
+        return [_effect('food_safe', 100, None)]
+    if re.fullmatch(r"you can'?t be hit by witch(?:es)?'? potions|you take no damage from witch potions(?: thrown by witches)?", t):
+        return [_effect('witch_ward', 100, None)]
+    m = re.fullmatch(rf'(?:(sword|axe|mace|spear|trident)s: )?(?:your )?(?:hits|attacks) ignore {N}% (?:of )?(?:the target\'s )?armou?r', t)
+    if m:
+        v, s = scal(float(m.group(2)))
+        e = _effect('armor_pierce', v, s)
+        if m.group(1):
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:holding', 'items': WEAPON_SPEED[m.group(1)]}, 'effects': [e]}]
+        return [e]
+    m = re.fullmatch(rf'(?:your )?arrows ignore {N}% (?:of )?armou?r(?: and fly {N}% faster)?', t)
+    if m:
+        out = [_effect('ranged_armor_pierce', float(m.group(1)), None)]
+        if m.group(2):
+            out.append(_effect('projectile_speed', float(m.group(2)), None))
+        return out
+    m = re.fullmatch(rf'\+?{N}% (?:arrow speed|arrow velocity)|(?:your )?arrows fly {N}% faster', t)
+    if m:
+        v, s = scal(float(m.group(1) or m.group(2)))
+        return [_effect('projectile_speed', v, s)]
+    m = re.fullmatch(rf'\+?{N}% chance (?:that )?a (?:bow )?shot fires a second arrow', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        return [_effect('extra_arrow', v, s)]
+    m = re.fullmatch(rf'\+?{N}% damage on hits to the upper part of a mob|\+?{N}% headshot damage', t)
+    if m:
+        v = float(m.group(1) or m.group(2))
+        return [{'type': 'pipican:damage_dealt', 'victim': {'upper_hit': True}, 'multiplier': round(1 + v / 100, 6)}]
+    # applied effects
+    m = re.fullmatch(rf'(?:your |the )?({eff}) (?:you apply |applied by you )?also gives ({eff}) (i|ii|iii)', t) or \
+        re.fullmatch(rf'({eff.replace("poison", "poisoned").replace("wither", "withered")}) mobs also get ({eff}) (i|ii|iii)', t)
+    if m:
+        src = {'poisoned': 'poison', 'withered': 'wither'}.get(m.group(1), m.group(1))
+        if src not in EFFECT_WORDS:
+            return None
+        return _applied(src, also={'minecraft:' + EFFECT_WORDS[m.group(2)]: LEVELS[m.group(3)]})
+    m = re.fullmatch(rf'(?:({eff}) (?:applied by you|you apply) is ({eff}) (ii|iii|iv)|({eff}) (ii|iii|iv) always)', t)
+    if m:
+        a, b, lv = (m.group(1), m.group(2), m.group(3)) if m.group(1) else (m.group(4), m.group(4), m.group(5))
+        if a != b:
+            return None
+        return _applied(a, min_amplifier=LEVELS[lv])
+    m = re.fullmatch(rf'\+?{N}s ({eff}) duration(?: you apply)?|({eff}) duration \+?{N}s', t)
+    if m:
+        num, what = (m.group(1), m.group(2)) if m.group(1) else (m.group(4), m.group(3))
+        v, s = scal(float(num))
+        e = _applied(what, seconds=round(v, 6))
+        if s:
+            e[0]['scaling'] = [{'source': src, 'per': round(per, 6)} for src, per in s]
+        return e
+    m = re.fullmatch(rf'\+?{N}% ({eff}) duration(?: you apply)?|({eff}) duration \+?{N}%', t)
+    if m:
+        num, what = (m.group(1), m.group(2)) if m.group(1) else (m.group(4), m.group(3))
+        v, s = scal(float(num))
+        e = _applied(what, duration=round(v / 100, 6))
+        if s:
+            e[0]['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return e
+    return None
+
+
 def chances(low, scal):
     """Bleed lines, "+5% ignite chance", parry/knockback/extra-drop chances. `low` is one clause."""
     t = low.strip().rstrip('.')
+    mi = misc(t, scal)
+    if mi:
+        return mi
     m = re.fullmatch(rf'critical (sword |axe )?hits cause bleeding - the mob takes {N} damage per second for {N}s', t)
     if m:
         e = _bleed(damage=float(m.group(2)), seconds=float(m.group(3)))
