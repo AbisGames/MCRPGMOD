@@ -76,16 +76,7 @@
     {
       "id": "dervish_blade_dance",
       "name": "Blade Dance",
-      "description": {
-        "text": "each hit gives +1% speed for 3s (stacks 10)",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "each hit gives +1% speed for 3s (stacks 10)",
       "type": "notable",
       "x": -1383,
       "y": -142,
@@ -93,7 +84,28 @@
         "dervish_twin_strike"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 3.0,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.01,
+                  "operation": "add_multiplied_base"
+                }
+              ],
+              "max_stacks": 10
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "dervish_deflect",

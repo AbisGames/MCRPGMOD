@@ -133,17 +133,35 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Woodwoses are part plant now. Fire is their worst fear.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Woodwoses are part plant now. Fire is their worst fear.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:wearing",
+          "items": [
+            "minecraft:leather_helmet",
+            "minecraft:leather_chestplate",
+            "minecraft:leather_leggings",
+            "minecraft:leather_boots"
+          ],
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_taken",
+            "damage_types": "#minecraft:is_fire",
+            "multiplier": 1.25
+          }
+        ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "weapons": "#pipican:weapons/axes",
+        "multiplier": 1.2
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

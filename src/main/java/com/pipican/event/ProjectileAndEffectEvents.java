@@ -212,6 +212,13 @@ public final class ProjectileAndEffectEvents {
     }
 
     @SubscribeEvent
+    static void onUseItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem event) {
+        if (event.getEntity() instanceof ServerPlayer player && !player.getCooldowns().isOnCooldown(event.getItemStack())) {
+            com.pipican.ability.Reactions.fire(player, null, event.getItemStack(), com.pipican.effect.type.ReactionEffect.Event.USE_ITEM);
+        }
+    }
+
+    @SubscribeEvent
     static void onTrample(BlockEvent.FarmlandTrampleEvent event) {
         if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.NO_TRAMPLE) > 0) {
             event.setCanceled(true);

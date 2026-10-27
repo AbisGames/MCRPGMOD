@@ -62,6 +62,24 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "use_item",
+      "weapons": "minecraft:wind_charge",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:slow_falling",
+              "seconds": 3.0
+            }
+          ]
+        }
+      ],
+      "name": "air walk"
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:resource",

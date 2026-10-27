@@ -162,10 +162,10 @@ def _atoms(ctx):
         (r'(?:holding|with) (?:a )?shield(?: in hand)?|(?:a )?shield in hand|you hold a shield', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}, OTHER),
         (r'wearing (\d|one|two|three|four) or more (heavy|medium|light) armor pieces|wearing (?:at least )?(\d|one|two|three|four)\+? (?:pieces of )?(heavy|medium|light) armor(?: pieces?)?',
          lambda m: {'type': 'pipican:wearing', 'items': ARMOR_TAGS[m.group(2) or m.group(4)], 'min': int(WORDS.get(m.group(1) or m.group(3), m.group(1) or m.group(3)))}, OTHER),
-        (r'wearing leather(?: armor)?', lambda m: {'type': 'pipican:wearing', 'items': [
-            'minecraft:leather_helmet', 'minecraft:leather_chestplate', 'minecraft:leather_leggings', 'minecraft:leather_boots']}, OTHER),
         (r'not wearing leather(?: armor)?', lambda m: {'type': 'pipican:wearing', 'items': [
             'minecraft:leather_helmet', 'minecraft:leather_chestplate', 'minecraft:leather_leggings', 'minecraft:leather_boots'], 'min': 0, 'max': 0}, OTHER),
+        (r'wearing leather(?: armor)?', lambda m: {'type': 'pipican:wearing', 'items': [
+            'minecraft:leather_helmet', 'minecraft:leather_chestplate', 'minecraft:leather_leggings', 'minecraft:leather_boots']}, OTHER),
         (r'wearing (?:any )?(heavy|medium|light) armor', lambda m: {'type': 'pipican:wearing', 'items': ARMOR_TAGS[m.group(1)]}, OTHER),
         (r'wearing no medium or heavy armor', lambda m: not_({'type': 'pipican:any_of', 'conditions': [
             {'type': 'pipican:wearing', 'items': ARMOR_TAGS['medium']}, {'type': 'pipican:wearing', 'items': ARMOR_TAGS['heavy']}]}), OTHER),

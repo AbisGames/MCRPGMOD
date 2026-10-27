@@ -485,6 +485,28 @@ def misc(t, scal):
         return [{'type': 'pipican:attribute', 'attribute': 'minecraft:explosion_knockback_resistance', 'amount': 1.0}]
     if re.fullmatch(r'critical hits deal maximum damage \(\+(\d+)% critical damage\)', t):
         return [{'type': 'pipican:critical', 'damage': round(float(re.search(r'\d+', t).group()) / 100, 6)}]
+    m = re.fullmatch(rf'(?:you )?takes? {N}% more damage from the first hit of every fight', t)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:not', 'condition': {'type': 'pipican:state', 'state': 'in_combat'}},
+                 'effects': [{'type': 'pipican:damage_taken', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf'sprint-hits stun (?:for )?{N}s', t)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sprinting'}, 'effects': [
+            {'type': 'pipican:on', 'event': 'melee_hit', 'actions': [{'type': 'pipican:effect', 'target': 'victim', 'effects': [
+                {'effect': 'minecraft:slowness', 'seconds': float(m.group(1)), 'amplifier': 9}]}]}]}]
+    if re.fullmatch(r'no hunger from sprinting', t):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sprinting'}, 'effects': [_effect('hunger', -100, None)]}]
+    m = re.fullmatch(rf"you can'?t hold a melee weapon in your off-hand or main hand without -{N}%(?: damage)?", t)
+    if m:
+        when = {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'main'},
+                                                         {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'off'}]}
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf"you can'?t hold any other weapon in your main hand without -{N}%(?: damage)?", t)
+    if m:
+        when = {'type': 'pipican:all_of', 'conditions': [
+            {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:holding', 'items': '#pipican:weapons/melee'}, {'type': 'pipican:holding', 'items': '#pipican:weapons/ranged'}]},
+            {'type': 'pipican:not', 'condition': {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}}]}
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]}]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

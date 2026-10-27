@@ -565,7 +565,7 @@ def _translate_line(text, ctx):
     # Phrasings: "you take +10% damage while moving", "spears deal +15% damage while mounted", "immune to X always",
     # "No fall damage below 8 blocks", "+20% stealth", "mobs notice you from 20% farther away".
     text = re.sub(lab + r'you take ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\2 damage taken', text, flags=re.I)
-    text = re.sub(lab + r'(swords|axes|spears|maces|tridents|bows|crossbows) deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\3 damage with \2', text, flags=re.I)
+    text = re.sub(lab + r'(swords|axes|spears|maces|tridents|bows|crossbows) deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b(?! to you)', r'\1\3 damage with \2', text, flags=re.I)
     text = re.sub(r'(immune to .+?) always$', r'\1', text, flags=re.I)
     text = re.sub(lab + r'\+(\d+(?:\.\d+)?)% stealth(?: \(smaller mob detection range\))?', r'\1-\2% detection range', text, flags=re.I)
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (?:from )?(\d+(?:\.\d+)?)% (farther|further)(?: away)?', r'+\1% detection range', text, flags=re.I)
@@ -642,7 +642,7 @@ def _translate_line(text, ctx):
         text = f'{m.group(1)} {m.group(3)} {m.group(2)}'
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.
     effects, unsupported = [], []
-    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b|when\b|whenever\b|after\b|every\b|a lightning\b)', text):
+    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b|when\b|whenever\b|after\b|every\b|a lightning\b|(?:swords|axes|maces|spears|tridents|bows|crossbows) deal\b)', text):
         if seg.strip():
             e, u = _segment(seg.strip(), ctx)
             effects += e

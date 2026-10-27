@@ -99,17 +99,25 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Diviners watch the future - and miss the present.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Diviners watch the future - and miss the present.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:state",
+            "state": "in_combat"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_taken",
+            "multiplier": 1.15
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

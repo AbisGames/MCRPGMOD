@@ -62,7 +62,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** A mob or player is about to hit you (before damage); {@code pipican:shrug} makes it miss ("hits a decoy instead"). */
         ATTACKED("attacked"),
         /** You finished eating; {@code weapons} limits it to some foods. */
-        EAT("eat");
+        EAT("eat"),
+        /** You used (right-clicked) an item; {@code weapons} limits it to some items ("after throwing a wind charge"). */
+        USE_ITEM("use_item");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

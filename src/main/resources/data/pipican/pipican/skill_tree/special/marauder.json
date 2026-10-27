@@ -29,23 +29,42 @@
     {
       "id": "trample",
       "name": "Trample",
-      "description": {
-        "text": "sprint-hits stun for 0.5s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "sprint-hits stun for 0.5s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "melee_hit",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "victim",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 0.5,
+                      "amplifier": 9
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "strength_from_pain",

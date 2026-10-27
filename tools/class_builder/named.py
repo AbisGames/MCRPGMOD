@@ -663,6 +663,46 @@ def whole_line(text, ctx):
         r = bonus.misc(low, lambda v: (v, None))
         if r:
             return r
+    # "for 2s after a fully charged hit, you take 20% more damage"
+    m = re.fullmatch(rf'for {N}s after a fully charged hit, you take {N}% more damage', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'melee_hit', 'victim': {'charged_hit': True}, 'actions': [
+            {'type': 'pipican:boost', 'seconds': float(m.group(1)), 'effects': [{'type': 'pipican:damage_taken', 'multiplier': round(1 + float(m.group(2)) / 100, 6)}]}]}]
+    # "every 60s in combat, a random harmful effect hits you for 3s"
+    m = re.fullmatch(rf'every {N}s in combat, a random harmful effect hits you for {N}s', low)
+    if m:
+        secs = float(m.group(2))
+        choices = [[{'type': 'pipican:effect', 'target': 'self', 'effects': [{'effect': 'minecraft:' + e, 'seconds': secs}]}]
+                   for e in ('poison', 'slowness', 'weakness', 'blindness', 'nausea', 'hunger', 'mining_fatigue')]
+        return [{'type': 'pipican:on', 'event': 'in_combat', 'cooldown_ticks': int(float(m.group(1)) * 20), 'actions': [{'type': 'pipican:random', 'choices': choices}]}]
+    # "Air Walk: after throwing a wind charge, Slow Falling for 3s"
+    m = re.fullmatch(r'after (?:throwing|using) (?:a |an )?(wind charge|ender pearl|snowball|trident|firework rocket), (.+)', low)
+    if m:
+        import combat
+        out = combat.outcome('gain ' + m.group(2), 'self')
+        if out:
+            item = 'minecraft:' + m.group(1).replace(' ', '_')
+            return [{'type': 'pipican:on', 'event': 'use_item', 'weapons': item, 'actions': out}]
+    # "Feral Soul: forms drain 50% slower"
+    m = re.fullmatch(rf'(?:your )?(?:animal )?forms drain {N}% (slower|faster)', low)
+    if m:
+        forms = [w['ability'] for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+        if forms:
+            k = float(m.group(1)) / 100 * (-1 if m.group(2) == 'slower' else 1)
+            return [{'type': 'pipican:ability_mod', 'ability': f, 'drain': round(k, 6)} for f in forms]
+    # Stacking boosts: "Blade Dance: each hit gives +1% speed for 3s (stacks 10)",
+    # "Rampage: consecutive kills within 5s add +5% damage (stacks 5)"
+    m = re.fullmatch(rf'(?:each|every) (hit|melee hit|kill|crit|critical hit) gives (.+) for {N}s \(stacks {N}\)', low) or \
+        re.fullmatch(rf'consecutive (kills|hits) within {N}s add (.+) \(stacks {N}\)()', low)
+    if m:
+        if m.re.pattern.startswith('consecutive'):
+            what, secs, bonus_text, stacks = m.group(1), float(m.group(2)), m.group(3), int(float(m.group(4)))
+        else:
+            what, bonus_text, secs, stacks = m.group(1), m.group(2), float(m.group(3)), int(float(m.group(4)))
+        event = {'hit': 'hit', 'hits': 'hit', 'melee hit': 'melee_hit', 'kill': 'kill', 'kills': 'kill', 'crit': 'crit', 'critical hit': 'crit'}[what]
+        inner = _rest(re.sub(r'([+-]\d+(?:\.\d+)?%) speed$', r'\1 movement speed', bonus_text), ctx)
+        if inner:
+            return [{'type': 'pipican:on', 'event': event, 'actions': [{'type': 'pipican:boost', 'seconds': secs, 'effects': inner, 'max_stacks': stacks}]}]
     # Dirty Fighting: "15% chance on hit to give Blindness or Slowness for 2s" (named so "+5% Dirty Fighting chance" finds it)
     m = re.fullmatch(r"dirty fighting: (.+)", text.strip().rstrip('.').lower())
     if m:

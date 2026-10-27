@@ -226,17 +226,105 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Chaos is never fully tamed.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Chaos is never fully tamed.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "in_combat",
+        "cooldown_ticks": 1200,
+        "actions": [
+          {
+            "type": "pipican:random",
+            "choices": [
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:poison",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:weakness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:blindness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:nausea",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:hunger",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:mining_fatigue",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

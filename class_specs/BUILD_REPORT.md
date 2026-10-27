@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1690**, partly working: **24**, not yet: **536**
+- Bonus phrases: **2250**. Fully working: **1701**, partly working: **24**, not yet: **525**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,9 +12,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 177 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 129 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 85 |
+| [Other mechanics](#other-mechanics) | 176 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 128 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 76 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 71 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 52 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 50 |
@@ -173,7 +173,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **magician**
   - skill Enchanting: +1 bookshelf counted around your table
 - **marauder**
-  - general tree: Rampage: consecutive kills within 5s add +5% damage (stacks 5)
   - special tree: Glorious Death: once per day
 - **miracle_worker**
   - special passive: Worker of Miracles heals +1 per 10 Devotion
@@ -414,7 +413,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Your bound weapon counts as a magic focus: its hits deal 15% of their damage as magic damage (ignores armor)
   - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
   - special passive: Magic Weapon: per 10 Binding, +2% bound weapon critical damage
-  - general tree: Soulblade: bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage
 - **technomancer**
   - special passive: Gadget bonus +0.5% per Circuitry
   - special passive: Per 20 Circuitry, +1 gadget charge stored
@@ -465,7 +463,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: +25% damage taken while Slowed or standing in a 1-block-wide space
   - general tree: Wall Run: sprinting into a wall lets you run up it for 2 blocks
 - **aeromancer**
-  - passive: Air Walk: after throwing a wind charge, Slow Falling for 3s
   - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
   - special tree: Cyclone: wind charges pull light mobs in before pushing them out
 - **artificer**
@@ -488,13 +485,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Warlord: Attack Command gives Strength II; you can't sprint
 - **defender**
   - passive: Retributive Strike: when a mob within 3 blocks hits another player, your next hit on it deals +30%
-- **dervish**
-  - general tree: Blade Dance: each hit gives +1% speed for 3s (stacks 10)
 - **diplomat**
   - general tree: Unexpected Alliances: hostile mobs you cancel with Stay the Hand fight other mobs for 5s
 - **diviner**
   - passive: Structures within 64 blocks are hinted in chat when you look at a compass
-  - weakness: takes 15% more damage from the first hit of every fight
 - **dreadnaught**
   - passive: while wearing 4 heavy pieces
 - **druid**
@@ -505,8 +499,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
-- **executioner**
-  - weakness: for 2s after a fully charged hit, you take 20% more damage
 - **geomancer**
   - passive: Earthen Defense: your resource bar absorbs damage first while you stand on stone, dirt, sand or gravel (1 point per damage)
   - passive: no fall damage when landing on stone or dirt
@@ -530,7 +522,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **mage_knight**
   - general tree: Combat Casting: taking damage doesn't drain Warfire
 - **marauder**
-  - special tree: Trample: sprint-hits stun for 0.5s
   - special tree: Glorious Death: when you'd die, you keep fighting for 5s at 1 HP, then die
 - **miracle_worker**
   - passive: Tongues: your chat messages can be read by all players within 1000 blocks when you start them with '!'
@@ -552,7 +543,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Tradition Focus: pick two elemental focus schools when you choose the class - Fire, Water, Air, Earth, Storm, Shadow, Light (sun/celestial) or Life. Damage and effects of those elements are +20% (Fire = burning/fire charges, Water = drowned/underwater/trident, Air = wind charges/fall, Earth = explosions/blocks, Storm = lightning, Shadow = darkness/wither, Light = undead/smite, Life = healing)
 - **scout**
   - general tree: Lookout: can't be hit by sneak-attack bonuses (you are never 'unaware')
-  - general tree: Pathfinder: +15% movement speed and no hunger from sprinting, but -15% melee damage
 - **sentinel**
   - general tree: Post Holder: Stand Guard bonuses doubled, but -15% damage while moving
 - **shapeshifter**
@@ -560,7 +550,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Feral Soul: forms drain 50% slower
 - **sharpshooter**
   - passive: Deadly Aim: holding a fully drawn bow for 2 extra seconds makes the shot deal +50% damage and never miss (no spread)
-  - general tree: Eagle Eye: +30% ranged damage, but you can't hold a melee weapon in your off-hand or main hand without -50%
 - **sorcerer**
   - passive: Every magic hit you land adds 1 Strain
 - **stormbringer**
@@ -572,8 +561,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Temple Guardian: Slowness becomes immobilise for 1s
 - **tenebrist**
   - passive: Cloak of Shadows: you count as being in darkness at all times - mobs detect you 30% later
-- **thaumaturge**
-  - weakness: every 60s in combat, a random harmful effect hits you for 3s
 - **thief**
   - general tree: Scale Walls: you can climb any wall like a ladder while sneaking and holding jump
   - special tree: Keen Senses: chests with loot within 8 blocks sparkle while you sneak
@@ -587,7 +574,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Forest Hide: in foliage (leaves, tall grass, ferns), sneaking makes you invisible
   - passive: Nature Bond: you can rest in a forest (sneak still for 10s) to heal 1 HP every 2s
   - special passive: Forest armor +1 per 20 Verdure
-  - weakness: +25% fire damage while not wearing leather, and axes deal +20% damage to you
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 

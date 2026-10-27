@@ -113,16 +113,7 @@
     {
       "id": "scout_pathfinder",
       "name": "Pathfinder",
-      "description": {
-        "text": "+15% movement speed and no hunger from sprinting, but -15% melee damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% movement speed and no hunger from sprinting, but -15% melee damage",
       "type": "keystone",
       "x": 167,
       "y": 945,
@@ -131,7 +122,34 @@
         "scout_lookout"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.15,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.85
+        }
+      ]
     }
   ]
 }

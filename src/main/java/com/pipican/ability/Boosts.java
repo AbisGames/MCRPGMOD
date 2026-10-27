@@ -15,17 +15,34 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public final class Boosts {
 
-    private record Boost(Object source, List<ClassEffect> effects, long until) {}
+    private record Boost(Object source, List<ClassEffect> effects, long until, int stacks) {}
 
     private static final Map<UUID, List<Boost>> ACTIVE = new ConcurrentHashMap<>();
 
     private Boosts() {}
 
     public static void add(ServerPlayer player, Object source, List<ClassEffect> effects, int ticks) {
+        add(player, source, effects, ticks, 1);
+    }
+
+    /** With {@code maxStacks} above 1, using it again while it runs adds a stack (up to the max) and restarts the timer. */
+    public static void add(ServerPlayer player, Object source, List<ClassEffect> effects, int ticks, int maxStacks) {
         List<Boost> list = ACTIVE.computeIfAbsent(player.getUUID(), k -> new ArrayList<>());
+        int stacks = 1;
+        for (Boost b : list) {
+            if (b.source == source) {
+                stacks = Math.min(Math.max(1, maxStacks), b.stacks + 1);
+            }
+        }
         list.removeIf(b -> b.source == source);
-        list.add(new Boost(source, effects, player.level().getGameTime() + ticks));
+        list.add(new Boost(source, effects, player.level().getGameTime() + ticks, stacks));
         ClassService.changed(player);
+    }
+
+    /** How many stacks of {@code source} are running (0 = none). */
+    public static int stacks(ServerPlayer player, Object source) {
+        List<Boost> list = ACTIVE.get(player.getUUID());
+        return list == null ? 0 : list.stream().filter(b -> b.source == source).mapToInt(Boost::stacks).max().orElse(0);
     }
 
     /** The effects of every running boost (read while bonuses are rebuilt). */
@@ -35,7 +52,9 @@ public final class Boosts {
             return List.of();
         }
         List<ClassEffect> out = new ArrayList<>();
-        list.forEach(b -> out.addAll(b.effects));
+        for (Boost b : list) {
+            b.effects.forEach(e -> out.add(b.stacks > 1 ? new com.pipican.effect.ScaledEffect(e, b.stacks, null) : e));
+        }
         return out;
     }
 

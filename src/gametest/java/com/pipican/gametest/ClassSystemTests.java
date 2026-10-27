@@ -627,11 +627,17 @@ public final class ClassSystemTests {
 
         // Timed boosts from reactions
         double armor = player.getAttributeValue(Attributes.ARMOR);
-        new BoostAction(5, List.of(new AttributeEffect(Attributes.ARMOR, 3, AttributeModifier.Operation.ADD_VALUE, List.of())))
+        new BoostAction(5, List.of(new AttributeEffect(Attributes.ARMOR, 3, AttributeModifier.Operation.ADD_VALUE, List.of())), 1)
                 .run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
         assertNear(helper, armor + 3, player.getAttributeValue(Attributes.ARMOR), "boost gives +3 armor");
         Boosts.clear(player);
         assertNear(helper, armor, player.getAttributeValue(Attributes.ARMOR), "boost removed");
+        var stacking = new BoostAction(5, List.of(new AttributeEffect(Attributes.ARMOR, 1, AttributeModifier.Operation.ADD_VALUE, List.of())), 3);
+        for (int n = 0; n < 4; n++) {
+            stacking.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
+        }
+        assertNear(helper, armor + 3, player.getAttributeValue(Attributes.ARMOR), "boost stacks up to 3");
+        Boosts.clear(player);
 
         // Standing still / moving
         Movement.tick(player);

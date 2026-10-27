@@ -112,17 +112,28 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "All-in swings leave you wide open.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "All-in swings leave you wide open.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "melee_hit",
+        "victim": {
+          "charged_hit": true
+        },
+        "actions": [
+          {
+            "type": "pipican:boost",
+            "seconds": 2.0,
+            "effects": [
+              {
+                "type": "pipican:damage_taken",
+                "multiplier": 1.2
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

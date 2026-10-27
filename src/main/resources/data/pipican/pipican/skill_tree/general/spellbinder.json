@@ -136,16 +136,7 @@
     {
       "id": "spellbinder_soulblade",
       "name": "Soulblade",
-      "description": {
-        "text": "bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage",
       "type": "keystone",
       "x": -831,
       "y": -480,
@@ -154,7 +145,56 @@
         "spellbinder_battle_mage"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:any_of",
+                "conditions": [
+                  {
+                    "type": "pipican:holding",
+                    "items": "#pipican:weapons/melee"
+                  },
+                  {
+                    "type": "pipican:holding",
+                    "items": "#pipican:weapons/ranged"
+                  }
+                ]
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:item_rule",
+                  "rule": "bound_weapon"
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.5
+            }
+          ]
+        }
+      ]
     }
   ]
 }
