@@ -3,7 +3,8 @@
   "description": "Trained by cursing mobs with Evil Eye.",
   "icon": "minecraft:fermented_spider_eye",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:reaction",
+    "name": "curse"
   },
   "points_to": "special",
   "classes": [

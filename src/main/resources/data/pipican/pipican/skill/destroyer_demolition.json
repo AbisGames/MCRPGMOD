@@ -3,7 +3,8 @@
   "description": "Trained by damaging mobs with explosions.",
   "icon": "minecraft:tnt",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:did",
+    "action": "explosion_hit"
   },
   "points_to": "special",
   "classes": [

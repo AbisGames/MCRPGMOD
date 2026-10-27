@@ -33,7 +33,12 @@ public record HealAction(Targets targets, double amount, double percent) impleme
     public void run(AbilityContext ctx) {
         for (LivingEntity target : targets.select(ctx)) {
             double given = ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.HEALING_GIVEN);
-            target.heal((float) ((amount + ctx.mod().heal() + percent * target.getMaxHealth()) * given));
+            float healed = (float) ((amount + ctx.mod().heal() + percent * target.getMaxHealth()) * given);
+            target.heal(healed);
+            if (target != ctx.player() && target instanceof net.minecraft.world.entity.player.Player) {
+                com.pipican.event.MasteryEvents.did(ctx.player(), new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.HEAL_OTHER,
+                        net.minecraft.world.item.ItemStack.EMPTY, java.util.Optional.empty(), java.util.Optional.of(target), healed));
+            }
         }
     }
 }

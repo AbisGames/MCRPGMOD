@@ -38,6 +38,7 @@ public final class SkillTriggerTypes {
     public static final Type MOVE = register("move", MoveTrigger.CODEC);
     public static final Type JUMP = register("jump", JumpTrigger.CODEC);
     public static final Type ABILITY = register("ability", AbilityTrigger.CODEC);
+    public static final Type REACTION = register("reaction", com.pipican.mastery.trigger.ReactionTrigger.CODEC);
     public static final Type DID = register("did", DidTrigger.CODEC);
     public static final Type FILTERED = register("filtered", FilteredTrigger.CODEC);
     public static final Type ANY = register("any", AnyTrigger.CODEC);

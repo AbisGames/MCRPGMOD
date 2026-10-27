@@ -3,7 +3,8 @@
   "description": "Trained by healing other players.",
   "icon": "minecraft:glistering_melon_slice",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "heal_other"
   },
   "points_to": "special",
   "classes": [

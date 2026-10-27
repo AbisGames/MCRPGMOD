@@ -3,7 +3,8 @@
   "description": "Trained by killing mobs with Execute.",
   "icon": "minecraft:iron_axe",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "execute"
   },
   "points_to": "special",
   "classes": [

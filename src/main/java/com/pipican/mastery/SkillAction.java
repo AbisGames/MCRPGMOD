@@ -94,7 +94,8 @@ public sealed interface SkillAction {
 
         public enum Kind implements StringRepresentable {
             CRIT, BLEED, DODGE, SPEND, HEAL, TELEPORT, ENCHANT, BREW, CRAFT, SMELT, TRADE, TAME, BREED, MINE, HARVEST, PLANT,
-            BONE_MEAL, ANVIL, LEVEL_UP, DRINK, PET_KILL, FISH, TAKE_FALL, HURT;
+            BONE_MEAL, ANVIL, LEVEL_UP, DRINK, PET_KILL, FISH, TAKE_FALL, HURT,
+            HEAL_OTHER, EXECUTE, CHARM, EXPLOSION_HIT, ACTIVE_SECOND, POISON, USE_ITEM;
 
             public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 
@@ -104,6 +105,9 @@ public sealed interface SkillAction {
             }
         }
     }
+
+    /** A named {@code pipican:on} reaction fired ("landing Trickery hits", "triggering Seize Chaos"). */
+    record Reacted(String name) implements SkillAction {}
 
     /** An active ability was used (fired by the future ability system, e.g. a dodge roll). */
     record AbilityUsed(Identifier ability, ItemStack item) implements SkillAction {}

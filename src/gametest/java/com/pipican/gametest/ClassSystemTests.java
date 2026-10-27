@@ -526,6 +526,13 @@ public final class ClassSystemTests {
                 "upgraded duration 5s: " + player.getEffect(MobEffects.NIGHT_VISION));
         helper.assertTrue(player.hasEffect(MobEffects.WATER_BREATHING), "upgrade's extra action ran");
 
+        // Skill triggers: named reactions and the new actions.
+        var reacted = new com.pipican.mastery.SkillAction.Reacted("Trickery");
+        helper.assertTrue(new com.pipican.mastery.trigger.ReactionTrigger("trickery").uses(reacted) == 1, "reaction trigger matches by name");
+        helper.assertTrue(new com.pipican.mastery.trigger.ReactionTrigger("zeal").uses(reacted) == 0, "and only that name");
+        var healOther = new com.pipican.mastery.trigger.DidTrigger(com.pipican.mastery.SkillAction.Did.Kind.HEAL_OTHER, Optional.empty(), Optional.empty());
+        helper.assertTrue(healOther.uses(com.pipican.mastery.SkillAction.Did.of(com.pipican.mastery.SkillAction.Did.Kind.HEAL_OTHER)) == 1, "heal_other trigger");
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

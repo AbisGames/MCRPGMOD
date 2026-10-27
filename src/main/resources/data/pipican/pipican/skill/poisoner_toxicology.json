@@ -3,8 +3,17 @@
   "description": "Trained by poisoning mobs and brewing poison.",
   "icon": "minecraft:pufferfish",
   "trigger": {
-    "type": "pipican:did",
-    "action": "brew"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "poison"
+      },
+      {
+        "type": "pipican:did",
+        "action": "brew"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

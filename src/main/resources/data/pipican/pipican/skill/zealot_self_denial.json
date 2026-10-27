@@ -3,9 +3,8 @@
   "description": "Trained by surviving hits with Zeal.",
   "icon": "minecraft:flint",
   "trigger": {
-    "type": "pipican:hurt_wearing",
-    "items": "#pipican:armor/any",
-    "min_pieces": 1
+    "type": "pipican:reaction",
+    "name": "zeal"
   },
   "points_to": "special",
   "classes": [

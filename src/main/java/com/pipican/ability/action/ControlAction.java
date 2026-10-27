@@ -56,6 +56,10 @@ public record ControlAction(Targets targets, Mode mode, double seconds) implemen
         for (LivingEntity target : targets.select(ctx)) {
             if (target instanceof Mob mob) {
                 MobControl.control(mob, ctx.player(), mode.mode, (long) (Math.max(0.5, seconds + ctx.mod().seconds()) * 20));
+                if (mode != Mode.FLEE) {
+                    com.pipican.event.MasteryEvents.did(ctx.player(), new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.CHARM,
+                            net.minecraft.world.item.ItemStack.EMPTY, java.util.Optional.empty(), java.util.Optional.of(mob), 0));
+                }
             }
         }
     }

@@ -3,7 +3,13 @@
   "description": "Trained by killing mobs inside your temple.",
   "icon": "minecraft:lodestone",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:temple"
+    }
   },
   "points_to": "special",
   "classes": [

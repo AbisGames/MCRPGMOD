@@ -44,6 +44,12 @@ SIMPLE = [
     (r'travelling on (?:horses|mounts)(?:, camels, donkeys, pigs and striders)?|riding', lambda m: {'type': 'pipican:move', 'mode': 'ride', 'per_blocks': 20}),
     (r'swimming distance|swimming', lambda m: {'type': 'pipican:move', 'mode': 'swim', 'per_blocks': 10}),
     (r'sprint-jumping|jumping', lambda m: {'type': 'pipican:jump'}),
+    (r'healing other players|healing others(?: with [a-z\' ]+)?|healing allies', lambda m: did('heal_other')),
+    (r'charming mobs|charming', lambda m: did('charm')),
+    (r'damaging mobs with explosions|blowing up mobs', lambda m: did('explosion_hit')),
+    (r'killing mobs with execute|executing mobs', lambda m: did('execute')),
+    (r'poisoning mobs', lambda m: did('poison')),
+    (r'throwing wind charges', lambda m: did('use_item', items=['minecraft:wind_charge'])),
     (r'taking big hits \((\d+)\+ damage\) and surviving', lambda m: filtered(did('hurt'), min_amount=float(m.group(1)))),
 ]
 
@@ -67,7 +73,7 @@ def _qualified(base, rest, ctx):
     """"killing <mobs...> <while ...>" -> filtered trigger, or None."""
     rest = rest.strip()
     when = None
-    m = re.search(r'(?:^|\s+)\b(while|when|in|at|outdoors|underground|underwater|during|with your)\b.*$', rest)
+    m = re.search(r'(?:^|\s+)\b(while|when|in|inside|at|outdoors|underground|underwater|during|with your)\b.*$', rest)
     if m:
         tail = m.group(0).strip()
         when = _ability_active(tail, ctx) or cond.parse(tail, ctx)
@@ -105,8 +111,42 @@ def _ability_active(text, ctx):
     return {'type': 'pipican:ability_active', 'ability': aid} if aid else None
 
 
+REACTION_ALIASES = {'premonitions': 'premonition', 'evil eye': 'curse', 'stay the hand': 'stay the hand', 'zeal': 'zeal'}
+
+
+def _reaction_name(name, ctx):
+    import named
+    names = named.REACTION_NAMES.get(ctx.get('class_id'), set())
+    n = name.strip().lower()
+    n = REACTION_ALIASES.get(n, n)
+    for cand in (n, re.sub(r's$', '', n)):
+        if cand in names:
+            return cand
+    return None
+
+
 def _part(t, ctx):
     t = t.strip()
+    # "landing Trickery hits", "triggering Seize Chaos", "using up premonitions", "surviving hits with Zeal"
+    m = re.fullmatch(r'(?:landing|triggering|using up|cancelling attacks with|surviving hits with|cursing mobs with|stealing effects with|'
+                     r'healing with|hitting mobs with) (.+?)(?: hits| shots)?', t)
+    if m and _reaction_name(m.group(1), ctx):
+        return {'type': 'pipican:reaction', 'name': _reaction_name(m.group(1), ctx)}
+    # "seconds spent in Divine Ecstasy", "time spent in animal forms"
+    m = re.fullmatch(r'(?:seconds|time) spent in (.+)', t)
+    if m:
+        import named
+        if re.fullmatch(r'(?:animal )?forms?', m.group(1)):
+            forms = [w for n, (w, _) in named.NAMED.get(ctx.get('class_id'), {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+            if forms:
+                return filtered(did('active_second'), when=forms[0] if len(forms) == 1 else {'type': 'pipican:any_of', 'conditions': forms})
+        aid = _ability_id(m.group(1), ctx)
+        if aid:
+            return filtered(did('active_second'), when={'type': 'pipican:ability_active', 'ability': aid})
+    # "killing mobs while they have the Wither effect"
+    m = re.fullmatch(r'killing mobs while they have the ([a-z ]+?) effect', t)
+    if m and m.group(1) in combat.EFFECT_NAMES:
+        return filtered({'type': 'pipican:kill'}, victim={'effects': 'minecraft:' + combat.EFFECT_NAMES[m.group(1)]})
     # "landing Divine Smite hits", "triggering Seize Chaos", "killing mobs with Execute", "using Optimization"
     m = re.fullmatch(r'(?:using|landing|triggering|casting|cursing mobs with|stealing effects with|killing mobs with|healing (?:others )?with) (.+?)(?: hits| shots)?', t)
     if m and _ability_id(m.group(1), ctx):

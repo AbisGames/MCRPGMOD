@@ -528,6 +528,18 @@ def translate(text, ctx):
     m = named.LABEL.match((text or '').strip())
     if m and len(effects) == 1 and effects[0].get('type') == 'pipican:on' and 'name' not in effects[0] and not unsupported:
         effects[0]['name'] = m.group(1).strip().lower()
+    # Remember every reaction name the class has, for skill triggers ("landing Trickery hits").
+    if ctx.get('class_id'):
+        def walk(o):
+            if isinstance(o, dict):
+                if o.get('type') == 'pipican:on' and o.get('name'):
+                    named.REACTION_NAMES.setdefault(ctx['class_id'], set()).add(o['name'])
+                for v in o.values():
+                    walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    walk(v)
+        walk(effects)
     return effects, unsupported
 
 

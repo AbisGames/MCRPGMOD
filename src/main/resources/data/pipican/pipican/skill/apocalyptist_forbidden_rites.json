@@ -3,7 +3,13 @@
   "description": "Trained by killing mobs while they have the Wither effect.",
   "icon": "minecraft:wither_skeleton_skull",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "effects": "minecraft:wither"
+    }
   },
   "points_to": "special",
   "classes": [

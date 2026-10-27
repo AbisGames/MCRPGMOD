@@ -3,7 +3,36 @@
   "description": "Trained by time spent in animal forms.",
   "icon": "minecraft:rabbit_foot",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "active_second"
+    },
+    "when": {
+      "type": "pipican:any_of",
+      "conditions": [
+        {
+          "type": "pipican:ability_active",
+          "ability": "pipican:shapeshifter/wolf_form"
+        },
+        {
+          "type": "pipican:ability_active",
+          "ability": "pipican:shapeshifter/bear_form"
+        },
+        {
+          "type": "pipican:ability_active",
+          "ability": "pipican:shapeshifter/cat_form"
+        },
+        {
+          "type": "pipican:ability_active",
+          "ability": "pipican:shapeshifter/fish_form"
+        },
+        {
+          "type": "pipican:ability_active",
+          "ability": "pipican:shapeshifter/bird_form"
+        }
+      ]
+    }
   },
   "points_to": "special",
   "classes": [

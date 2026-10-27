@@ -1,6 +1,7 @@
 package com.pipican.event;
 
 import com.pipican.Pipican;
+import com.pipican.event.MasteryEvents;
 import com.pipican.effect.type.BonusEffect.Kind;
 import com.pipican.player.ClassEffectApplier;
 import com.pipican.player.ClassState;
@@ -88,6 +89,10 @@ public final class ProjectileAndEffectEvents {
     static void onEffectAdded(MobEffectEvent.Added event) {
         if (busy || !(event.getEffectSource() instanceof ServerPlayer source) || source == event.getEntity()) {
             return;
+        }
+        if (event.getEffectInstance().getEffect().is(net.minecraft.world.effect.MobEffects.POISON)) {
+            MasteryEvents.did(source, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.POISON, ItemStack.EMPTY,
+                    java.util.Optional.empty(), java.util.Optional.of(event.getEntity()), 0));
         }
         MobEffectInstance effect = event.getEffectInstance();
         ClassState.AppliedRule rule = ClassEffectApplier.state(source).appliedRules().get(effect.getEffect());
@@ -215,6 +220,17 @@ public final class ProjectileAndEffectEvents {
     static void onUseItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem event) {
         if (event.getEntity() instanceof ServerPlayer player && !player.getCooldowns().isOnCooldown(event.getItemStack())) {
             com.pipican.ability.Reactions.fire(player, null, event.getItemStack(), com.pipican.effect.type.ReactionEffect.Event.USE_ITEM);
+            MasteryEvents.did(player, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.USE_ITEM, event.getItemStack(),
+                    java.util.Optional.empty(), java.util.Optional.empty(), 0));
+        }
+    }
+
+    @SubscribeEvent
+    static void onExplosionHit(net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Post event) {
+        if (event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_EXPLOSION) && event.getSource().getEntity() instanceof ServerPlayer player
+                && event.getEntity() != player) {
+            MasteryEvents.did(player, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.EXPLOSION_HIT, ItemStack.EMPTY,
+                    java.util.Optional.empty(), java.util.Optional.of(event.getEntity()), event.getInflictedDamage()));
         }
     }
 

@@ -3,7 +3,8 @@
   "description": "Trained by triggering Seize Chaos.",
   "icon": "minecraft:end_crystal",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:reaction",
+    "name": "seize chaos"
   },
   "points_to": "special",
   "classes": [

@@ -3,7 +3,8 @@
   "description": "Trained by charming mobs.",
   "icon": "minecraft:enchanted_book",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "charm"
   },
   "points_to": "special",
   "classes": [

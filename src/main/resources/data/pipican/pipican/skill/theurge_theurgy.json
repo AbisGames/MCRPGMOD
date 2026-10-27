@@ -3,7 +3,17 @@
   "description": "Trained by healing with Pious Restoration and hitting mobs with Invocation.",
   "icon": "minecraft:nether_star",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:reaction",
+        "name": "pious restoration"
+      },
+      {
+        "type": "pipican:reaction",
+        "name": "invocation"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

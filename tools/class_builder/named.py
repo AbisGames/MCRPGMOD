@@ -13,6 +13,8 @@ TRIGGERED = {'zeal': 'zeal', 'decoy': 'decoy'}
 LABELS = {}
 # class id -> aura names
 AURAS = {}
+# class id -> every pipican:on reaction name its lines produced
+REACTION_NAMES = {}
 # class id -> {label: the pipican:on reaction its line defines} ("Guarded Casting: whenever you spend Ward, ...")
 REACTIONS = {}
 LABEL = re.compile(r"^([A-Z][A-Za-z' ]{2,30}?):\s*(.+)$")

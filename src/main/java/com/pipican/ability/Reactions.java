@@ -96,6 +96,7 @@ public final class Reactions {
                         break;
                     }
                 }
+                r.name().ifPresent(n -> com.pipican.player.MasteryService.onAction(player, new com.pipican.mastery.SkillAction.Reacted(n)));
             }
         } finally {
             running = false;

@@ -3,8 +3,17 @@
   "description": "Trained by using up premonitions and spending Omens.",
   "icon": "minecraft:ender_eye",
   "trigger": {
-    "type": "pipican:did",
-    "action": "spend"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:reaction",
+        "name": "premonition"
+      },
+      {
+        "type": "pipican:did",
+        "action": "spend"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

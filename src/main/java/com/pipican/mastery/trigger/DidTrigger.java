@@ -18,7 +18,11 @@ import net.minecraft.world.level.block.Block;
  * chorus fruit, blinks), {@code enchant}, {@code brew}, {@code craft}, {@code smelt}, {@code trade}, {@code tame},
  * {@code breed}, {@code mine}, {@code harvest} (a fully grown crop), {@code plant}, {@code bone_meal}, {@code anvil},
  * {@code level_up}, {@code drink} (a potion), {@code pet_kill} (your pet or summon killed a mob), {@code fish},
- * {@code take_fall} (fall damage taken), {@code hurt} (any damage taken; {@code amount} is the damage).
+ * {@code take_fall} (fall damage taken), {@code hurt} (any damage taken; {@code amount} is the damage),
+ * {@code heal_other} (your heal reached another player), {@code execute} (an execute killed a mob), {@code charm}
+ * (you charmed or turned a mob), {@code explosion_hit} (your explosion hurt a mob), {@code active_second} (every
+ * second while one of your abilities is running; pair with an {@code ability_active} filter), {@code poison} (you
+ * poisoned a mob), {@code use_item} (you right-clicked an item; {@code items} narrows it).
  *
  * <pre>{@code { "type": "pipican:did", "action": "mine", "blocks": "#c:ores" } }</pre>
  * {@code items} / {@code blocks} narrow it to some items (crafted, enchanted, drunk...) or blocks (mined, planted...).

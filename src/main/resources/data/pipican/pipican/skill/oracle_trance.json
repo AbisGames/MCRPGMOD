@@ -3,7 +3,15 @@
   "description": "Trained by seconds spent in Divine Ecstasy.",
   "icon": "minecraft:ender_eye",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "active_second"
+    },
+    "when": {
+      "type": "pipican:ability_active",
+      "ability": "pipican:oracle/divine_ecstasy"
+    }
   },
   "points_to": "special",
   "classes": [

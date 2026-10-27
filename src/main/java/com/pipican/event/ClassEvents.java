@@ -285,6 +285,9 @@ public final class ClassEvents {
         if (player.tickCount % 20 == 0) {
             Mounts.tick(player);
             com.pipican.ability.Pets.tick(player);
+            if (!com.pipican.player.ClassService.data(player).abilityActive().isEmpty()) {
+                MasteryEvents.did(player, SkillAction.Did.Kind.ACTIVE_SECOND);
+            }
             Auras.tick(player);
             if (Combat.inCombat(player)) {
                 Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.IN_COMBAT);
@@ -443,6 +446,7 @@ public final class ClassEvents {
             if (fraction < e.threshold() && (e.victims().isEmpty() || e.victims().get().contains(victim.getType().builtInRegistryHolder()))
                     && victim.level() instanceof ServerLevel level) {
                 victim.hurtServer(level, level.damageSources().source(DamageTypes.GENERIC_KILL, attacker), Float.MAX_VALUE);
+                MasteryEvents.did(attacker, new SkillAction.Did(SkillAction.Did.Kind.EXECUTE, attacker.getMainHandItem(), Optional.empty(), Optional.of(victim), 0));
                 return;
             }
         }

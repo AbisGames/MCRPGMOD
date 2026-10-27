@@ -3,7 +3,8 @@
   "description": "Trained by healing others with Worker of Miracles.",
   "icon": "minecraft:beacon",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "heal_other"
   },
   "points_to": "special",
   "classes": [

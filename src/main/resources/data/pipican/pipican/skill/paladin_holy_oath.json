@@ -3,7 +3,8 @@
   "description": "Trained by landing Divine Smite hits.",
   "icon": "minecraft:golden_sword",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:reaction",
+    "name": "divine smite"
   },
   "points_to": "special",
   "classes": [
