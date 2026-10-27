@@ -43,7 +43,7 @@ def check_png(path):
 
 for p in palettes:
     id=p["id"]
-    for typ in ("strata","trunk","canopy","bloom"):
+    for typ in ("strata","trunk","canopy","bloom","ground"):
         name=f"{id}_{typ}"
         texture=ASSETS/f"textures/block/{name}.png"
         check_png(texture)
@@ -83,7 +83,7 @@ for p in palettes[22:]:
     assert (DATA/f"worldgen/biome/{p['id']}.json").is_file()
 surface=json.loads((DATA/"worldgen/noise_settings/rpg_overworld.json").read_text())["surface_rule"]["sequence"]
 geology=[e for e in surface if isinstance(e,dict) and e.get("type")=="minecraft:sequence" and len(e.get("sequence",[]))==27]
-assert len(geology)==1,"expected region-specific cliff strata rules"
+assert len(geology)==2,"expected distinct cliff strata and regional soil rules"
 
 capitals=json.loads((DATA/"worldgen/fixed_capital_locations.json").read_text())["capitals"]
 assert len(capitals)==22
@@ -93,6 +93,6 @@ for castle in capitals:
     assert castle["subregion"] in {x["id"] for x in region_lookup[castle["region"]]["subregions"]}
     assert castle["placement"]=="fixed"
 
-print("PASS: 27 palettes; 108 custom block textures; 81 configured features;")
+print("PASS: 27 palettes; 135 custom block textures; 81 configured features;")
 print("      125 biome definitions; 120 separate undergrowth placement sets;")
 print("      22 protected capital subregions; geology rules.")
