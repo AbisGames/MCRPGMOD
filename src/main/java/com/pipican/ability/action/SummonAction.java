@@ -70,6 +70,10 @@ public record SummonAction(EntityType<?> entity, int count, double seconds, bool
             mob.setPersistenceRequired();
             boost(mob, Attributes.ATTACK_DAMAGE, mods.damage());
             boost(mob, Attributes.MAX_HEALTH, mods.health());
+            var maxHealth = mob.getAttribute(Attributes.MAX_HEALTH);
+            if (maxHealth != null && mods.hearts() != 0) {
+                maxHealth.addPermanentModifier(new AttributeModifier(com.pipican.Pipican.id("summon_hearts"), mods.hearts() * 2, AttributeModifier.Operation.ADD_VALUE));
+            }
             mob.setHealth(mob.getMaxHealth());
             ctx.level().addFreshEntity(mob);
             Summons.track(mob, player, (long) (seconds * 20));

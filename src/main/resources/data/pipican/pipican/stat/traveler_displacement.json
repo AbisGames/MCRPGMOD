@@ -3,5 +3,12 @@
   "description": "How far reality will bend for you.",
   "max": 100,
   "exclusive": true,
-  "color": -14699622
+  "color": -14699622,
+  "per_point": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.003,
+      "operation": "add_multiplied_base"
+    }
+  ]
 }

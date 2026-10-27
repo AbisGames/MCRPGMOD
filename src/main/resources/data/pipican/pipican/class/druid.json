@@ -78,6 +78,11 @@
       "type": "pipican:bonus",
       "kind": "food_safe",
       "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "bone_meal",
+      "amount": 0.15
     }
   ],
   "special_passives": [

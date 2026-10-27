@@ -54,6 +54,12 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code enchant_levels} / {@code enchant_lapis}: <i>levels</i> / lapis refunded after each enchanting-table enchant (whole numbers)</li>
  *   <li>{@code looting}: <i>Looting levels</i> added to the weapon whenever you kill a mob</li>
  *   <li>{@code drunk_potion_duration}: how long effects from potions you drink last</li>
+ *   <li>{@code bone_meal}: a <i>chance</i> that bone meal you use grows the plant one extra step</li>
+ *   <li>{@code breeding_speed}: how much sooner animals you breed can breed again (0.1 = 10% shorter wait)</li>
+ *   <li>{@code arrow_pierce}: <i>mobs</i> your arrows pass through (whole numbers)</li>
+ *   <li>{@code pearl_range}: how far your ender pearls fly</li>
+ *   <li>{@code min_melee_damage}: <i>damage</i> your melee hits deal at least</li>
+ *   <li>{@code no_sleep}: any amount above 0 = you can't sleep in beds</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -66,7 +72,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         FOOD_SAFE, NO_TRAMPLE, ARMOR_PIERCE, RANGED_ARMOR_PIERCE, PROJECTILE_SPEED, EXTRA_ARROW, WITCH_WARD,
         NO_EATING_IN_COMBAT, ANVIL_SAFE,
         ANVIL_COST, ANVIL_LEVELS, ENCHANT_LEVELS, ENCHANT_LAPIS,
-        LOOTING, DRUNK_POTION_DURATION;
+        LOOTING, DRUNK_POTION_DURATION,
+        BONE_MEAL, BREEDING_SPEED, ARROW_PIERCE, PEARL_RANGE, MIN_MELEE_DAMAGE, NO_SLEEP;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

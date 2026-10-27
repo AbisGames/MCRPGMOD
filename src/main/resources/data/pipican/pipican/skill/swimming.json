@@ -45,17 +45,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% oxygen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% oxygen",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:oxygen_bonus",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "description": "+5% swim speed",

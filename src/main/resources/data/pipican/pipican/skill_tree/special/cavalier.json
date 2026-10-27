@@ -66,16 +66,7 @@
     {
       "id": "master_rider",
       "name": "Master Rider",
-      "description": {
-        "text": "mount gets Regeneration I while you ride",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mount gets Regeneration I while you ride",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -83,7 +74,34 @@
         "trample"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "second",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "mount",
+                  "effects": [
+                    {
+                      "effect": "minecraft:regeneration",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bonded_steed",

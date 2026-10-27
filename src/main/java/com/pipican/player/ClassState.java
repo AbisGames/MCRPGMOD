@@ -121,8 +121,8 @@ public record ClassState(
     }
 
     /** {@code pipican:summon_mod} totals. */
-    public record SummonMods(double damage, double health, double seconds, int count) {
-        public static final SummonMods NONE = new SummonMods(0, 0, 0, 0);
+    public record SummonMods(double damage, double health, double seconds, int count, double hearts) {
+        public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0);
     }
 
     /** {@code pipican:applied_effect} totals for one effect. */

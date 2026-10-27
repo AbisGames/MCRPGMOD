@@ -40,6 +40,13 @@ public final class ProjectileAndEffectEvents {
 
     @SubscribeEvent
     static void onDamage(LivingIncomingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof ServerPlayer attacker && event.getSource().getDirectEntity() == attacker
+                && event.getSource().is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)) {
+            double floor = ClassEffectApplier.state(attacker).chance(Kind.MIN_MELEE_DAMAGE);
+            if (event.getAmount() < floor) {
+                event.setAmount((float) floor);
+            }
+        }
         // Clouds from pipican:cloud reactions never hurt the player who left them.
         if (event.getSource().getDirectEntity() instanceof net.minecraft.world.entity.AreaEffectCloud && event.getSource().getEntity() == event.getEntity()
                 && event.getEntity() instanceof ServerPlayer) {
@@ -103,12 +110,28 @@ public final class ProjectileAndEffectEvents {
     }
 
     @SubscribeEvent
+    static void onPearl(EntityJoinLevelEvent event) {
+        if (!event.loadedFromDisk() && !event.getLevel().isClientSide()
+                && event.getEntity() instanceof net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl pearl
+                && pearl.getOwner() instanceof ServerPlayer player && pearl.tickCount == 0) {
+            double range = ClassEffectApplier.state(player).bonus(Kind.PEARL_RANGE);
+            if (range != 1) {
+                pearl.setDeltaMovement(pearl.getDeltaMovement().scale(range));
+            }
+        }
+    }
+
+    @SubscribeEvent
     static void onJoin(EntityJoinLevelEvent event) {
         if (busy || event.loadedFromDisk() || event.getLevel().isClientSide() || !(event.getEntity() instanceof AbstractArrow arrow)
                 || !(arrow.getOwner() instanceof ServerPlayer player) || arrow.tickCount > 0) {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
+        int pierce = (int) Math.floor(state.chance(Kind.ARROW_PIERCE) + 1e-9);
+        if (pierce > 0) {
+            arrow.setPierceLevel((byte) Math.min(127, arrow.getPierceLevel() + pierce));
+        }
         double speed = state.bonus(Kind.PROJECTILE_SPEED);
         if (speed != 1) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(speed));
@@ -126,6 +149,52 @@ public final class ProjectileAndEffectEvents {
             } finally {
                 busy = false;
             }
+        }
+    }
+
+    @SubscribeEvent
+    static void onBonemeal(net.neoforged.neoforge.event.entity.player.BonemealEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player) || !(event.getLevel() instanceof net.minecraft.server.level.ServerLevel level)
+                || !event.isValidBonemealTarget()) {
+            return;
+        }
+        double chance = ClassEffectApplier.state(player).chance(Kind.BONE_MEAL);
+        if (chance > 0 && player.getRandom().nextDouble() < chance
+                && event.getState().getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock plant
+                && plant.isBonemealSuccess(level, level.getRandom(), event.getPos(), event.getState())) {
+            plant.performBonemeal(level, level.getRandom(), event.getPos(), event.getState());
+        }
+    }
+
+    @SubscribeEvent
+    static void onBreed(net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent event) {
+        if (!(event.getCausedByPlayer() instanceof ServerPlayer player)) {
+            return;
+        }
+        double faster = Math.min(1, Math.max(0, ClassEffectApplier.state(player).chance(Kind.BREEDING_SPEED)));
+        if (faster > 0) {
+            // Runs before vanilla sets the parents' 5-minute cooldown, so shorten it right after.
+            player.level().getServer().execute(() -> {
+                for (var parent : java.util.List.of(event.getParentA(), event.getParentB())) {
+                    if (parent instanceof net.minecraft.world.entity.AgeableMob a && a.getAge() > 0) {
+                        a.setAge((int) Math.round(a.getAge() * (1 - faster)));
+                    }
+                }
+            });
+        }
+    }
+
+    @SubscribeEvent
+    static void onSleep(net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent event) {
+        if (event.getProblem() == null && ClassEffectApplier.state(event.getEntity()).chance(Kind.NO_SLEEP) > 0) {
+            event.setProblem(net.minecraft.world.entity.player.Player.BedSleepingProblem.OTHER_PROBLEM);
+        }
+    }
+
+    @SubscribeEvent
+    static void onEat(net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent.Finish event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getItem().has(DataComponents.FOOD)) {
+            com.pipican.ability.Reactions.fire(player, null, event.getItem(), com.pipican.effect.type.ReactionEffect.Event.EAT);
         }
     }
 

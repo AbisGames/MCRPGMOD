@@ -68,17 +68,26 @@
       ]
     },
     {
-      "description": {
-        "text": "eating cooked meat gives Regeneration I for 3s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "eating cooked meat gives Regeneration I for 3s",
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "eat",
+          "weapons": "#pipican:food/cooked_meat",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:regeneration",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

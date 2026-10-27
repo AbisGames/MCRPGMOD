@@ -60,7 +60,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You were struck by lightning. */
         LIGHTNING("lightning"),
         /** A mob or player is about to hit you (before damage); {@code pipican:shrug} makes it miss ("hits a decoy instead"). */
-        ATTACKED("attacked");
+        ATTACKED("attacked"),
+        /** You finished eating; {@code weapons} limits it to some foods. */
+        EAT("eat");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

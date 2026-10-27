@@ -59,6 +59,22 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:water_breathing"
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:water_movement_efficiency",
+      "amount": 0.4
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:submerged_mining_speed",
+      "amount": 0.8
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:conditional",

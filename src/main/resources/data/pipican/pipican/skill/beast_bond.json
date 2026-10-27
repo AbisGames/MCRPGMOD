@@ -41,17 +41,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% breeding speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% breeding speed",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "breeding_speed",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "description": "tamed animals +5% damage",

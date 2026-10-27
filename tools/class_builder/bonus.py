@@ -407,6 +407,58 @@ def misc(t, scal):
     if m:
         v, sc = scal(float(m.group(1)) * (1 if m.group(2) == 'longer' else -1))
         return [_effect('drunk_potion_duration', v, sc)]
+    simple = [
+        (rf'\+{N}% bone ?meal effect', 'bone_meal'), (rf'\+{N}% breeding speed', 'breeding_speed'),
+        (rf'\+{N}% (?:ender )?pearl range', 'pearl_range'),
+    ]
+    for pat, kind in simple:
+        m = re.fullmatch(pat, t)
+        if m:
+            v, sc = scal(float(m.group(1)))
+            return [_effect(kind, v, sc)]
+    m = re.fullmatch(rf'(?:your )?arrows pierce {N} (?:more )?mobs?', t)
+    if m:
+        return [_effect('arrow_pierce', float(m.group(1)) * 100, None)]
+    m = re.fullmatch(rf'any weapon(?:/tool| or tool)? does at least {N} damage', t)
+    if m:
+        return [_effect('min_melee_damage', float(m.group(1)) * 100, None)]
+    if re.fullmatch(r"you can'?t sleep(?: in beds)?|you can never sleep", t):
+        return [_effect('no_sleep', 100, None)]
+    m = re.fullmatch(r'eating cooked meat gives (.+)', t)
+    if m:
+        import combat
+        out = combat.outcome('gain ' + m.group(1), 'self')
+        if out:
+            return [{'type': 'pipican:on', 'event': 'eat', 'weapons': '#pipican:food/cooked_meat', 'actions': out}]
+    m = re.fullmatch(r'(?:your )?mount gets (.+?) while you ride', t)
+    if m:
+        import combat
+        out = combat.outcome('give ' + m.group(1), 'mount')
+        if out and out[0].get('type') == 'pipican:effect':
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'mounted'},
+                     'effects': [{'type': 'pipican:on', 'event': 'second', 'actions': out}]}]
+    m = re.fullmatch(rf'(?:minions?|servants?|summons?) \+{N} max health', t)
+    if m:
+        return [{'type': 'pipican:summon_mod', 'hearts': round(float(m.group(1)) / 2, 6)}]
+    m = re.fullmatch(rf'\+{N}% oxygen', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        e = {'type': 'pipican:attribute', 'attribute': 'minecraft:oxygen_bonus', 'amount': round(v / 100, 6)}
+        if sc:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in sc]
+        return [e]
+    if re.fullmatch(r'no mining slowdown underwater', t):
+        return [{'type': 'pipican:attribute', 'attribute': 'minecraft:submerged_mining_speed', 'amount': 0.8}]
+    if re.fullmatch(r'(?:you )?breathe underwater', t):
+        return [{'type': 'pipican:mob_effect', 'effect': 'minecraft:water_breathing'}]
+    m = re.fullmatch(rf'swim {N}% faster', t)
+    if m:
+        return [{'type': 'pipican:attribute', 'attribute': 'minecraft:water_movement_efficiency', 'amount': round(float(m.group(1)) / 100, 6)}]
+    m = re.fullmatch(r'(.+?) are neutral to you', t)
+    if m:
+        group = combat.mobs(m.group(1))
+        if group is not None:
+            return [{'type': 'pipican:ignored_by', 'mobs': group, 'unless_attacked': True}]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

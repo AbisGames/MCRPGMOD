@@ -18,21 +18,18 @@
     {
       "id": "conjurer_bigger_beasts",
       "name": "Bigger Beasts",
-      "description": {
-        "text": "minions +4 max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "minions +4 max health",
       "type": "small",
       "x": -825,
       "y": -1030,
       "links": [
         "conjurer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "hearts": 2.0
+        }
       ]
     },
     {

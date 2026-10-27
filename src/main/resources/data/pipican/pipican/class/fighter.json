@@ -72,6 +72,11 @@
       "amount": 1.0
     },
     {
+      "type": "pipican:bonus",
+      "kind": "min_melee_damage",
+      "amount": 4.0
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:attack_damage",
       "amount": 1.0

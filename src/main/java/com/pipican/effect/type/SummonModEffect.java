@@ -14,16 +14,17 @@ import java.util.List;
  * (0.1 = +10%), last {@code seconds} longer and come {@code count} more at a time. Adds up over effects.
  *
  * <pre>{@code { "type": "pipican:summon_mod", "damage": 0.1, "seconds": 10 } }</pre>
- * {@code scaling} applies to {@code damage} and {@code health}.
+ * {@code hearts} adds flat max health (in hearts). {@code scaling} applies to {@code damage} and {@code health}.
  */
-public record SummonModEffect(double damage, double health, double seconds, int count, List<Scaling> scaling) implements ClassEffect {
+public record SummonModEffect(double damage, double health, double seconds, int count, List<Scaling> scaling, double hearts) implements ClassEffect {
 
     public static final MapCodec<SummonModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.DOUBLE.optionalFieldOf("damage", 0.0).forGetter(SummonModEffect::damage),
             Codec.DOUBLE.optionalFieldOf("health", 0.0).forGetter(SummonModEffect::health),
             Codec.DOUBLE.optionalFieldOf("seconds", 0.0).forGetter(SummonModEffect::seconds),
             Codec.intRange(0, 16).optionalFieldOf("count", 0).forGetter(SummonModEffect::count),
-            Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(SummonModEffect::scaling)
+            Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(SummonModEffect::scaling),
+            Codec.DOUBLE.optionalFieldOf("hearts", 0.0).forGetter(SummonModEffect::hearts)
     ).apply(i, SummonModEffect::new));
 
     @Override
@@ -33,6 +34,6 @@ public record SummonModEffect(double damage, double health, double seconds, int 
 
     @Override
     public void apply(EffectContext ctx) {
-        ctx.addSummonMod(Scaling.evaluate(damage, scaling, ctx), Scaling.evaluate(health, scaling, ctx), seconds, count);
+        ctx.addSummonMod(Scaling.evaluate(damage, scaling, ctx), Scaling.evaluate(health, scaling, ctx), seconds, count, hearts);
     }
 }

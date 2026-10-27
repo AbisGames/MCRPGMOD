@@ -506,6 +506,18 @@ public final class ClassSystemTests {
         player.stopUsingItem();
         helper.assertTrue(player.getEffect(MobEffects.HASTE).getDuration() == 200, "drunk effect doubled: " + player.getEffect(MobEffects.HASTE).getDuration());
 
+        // Minimum melee damage 4: a 1-damage punch deals 4 (armor pierce 100% keeps it exact).
+        Zombie punched = helper.spawn(EntityType.ZOMBIE, new BlockPos(3, 2, 3));
+        punched.hurtServer(level, level.damageSources().playerAttack(player), 1);
+        assertNear(helper, punched.getMaxHealth() - 4, punched.getHealth(), "punch raised to 4");
+        punched.discard();
+
+        // Eat reactions only for the listed food.
+        Reactions.fire(player, null, new ItemStack(Items.BREAD), ReactionEffect.Event.EAT);
+        helper.assertTrue(!player.hasEffect(MobEffects.DOLPHINS_GRACE), "bread doesn't count");
+        Reactions.fire(player, null, new ItemStack(Items.COOKED_BEEF), ReactionEffect.Event.EAT);
+        helper.assertTrue(player.hasEffect(MobEffects.DOLPHINS_GRACE), "cooked beef does");
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

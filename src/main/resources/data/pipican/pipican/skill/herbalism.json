@@ -32,17 +32,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% bone meal effect",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% bone meal effect",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "bone_meal",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "+5% chance of double crop drops",

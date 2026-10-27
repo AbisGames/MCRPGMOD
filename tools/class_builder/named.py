@@ -500,6 +500,19 @@ def whole_line(text, ctx):
         a, b = _rest(m.group(1), ctx), _rest(m.group(2), ctx)
         if a and b:
             return a + b
+    # "breathe underwater, swim 40% faster, no mining slowdown underwater": parts whose wording
+    # ("underwater") would otherwise read as a condition on the whole line.
+    if ',' in low and not ctx.get('implicit_per_point') and not re.search(r'\bbut\b|;', low):
+        import bonus
+        parts = [bonus.misc(p.strip(), lambda v: (v, None)) for p in low.split(',')]
+        if all(parts):
+            return [e for p in parts for e in p]
+    # "mount gets Regeneration I while you ride": the "while" is part of the phrase, not a condition to split off.
+    if re.fullmatch(r'(?:your )?mount gets .+ while you ride', low):
+        import bonus
+        r = bonus.misc(low, lambda v: (v, None))
+        if r:
+            return r
     # Dirty Fighting: "15% chance on hit to give Blindness or Slowness for 2s" (named so "+5% Dirty Fighting chance" finds it)
     m = re.fullmatch(r"dirty fighting: (.+)", text.strip().rstrip('.').lower())
     if m:

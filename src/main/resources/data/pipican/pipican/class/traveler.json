@@ -78,6 +78,19 @@
       ]
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "pearl_range",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "Teleporting scatters your senses.",
     "effects": [

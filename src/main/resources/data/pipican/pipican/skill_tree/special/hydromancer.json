@@ -82,16 +82,7 @@
     {
       "id": "ocean_s_heart",
       "name": "Ocean's Heart",
-      "description": {
-        "text": "drowned and guardians are neutral to you; -15% max health on land",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "drowned and guardians are neutral to you; -15% max health on land",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -100,7 +91,36 @@
         "tsunami"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ignored_by",
+          "mobs": [
+            "minecraft:drowned",
+            "minecraft:guardian",
+            "minecraft:elder_guardian"
+          ],
+          "unless_attacked": true
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "in_water"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": -0.15,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

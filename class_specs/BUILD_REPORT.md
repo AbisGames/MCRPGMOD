@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1635**, partly working: **25**, not yet: **590**
+- Bonus phrases: **2250**. Fully working: **1648**, partly working: **24**, not yet: **578**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,10 +12,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 209 |
+| [Other mechanics](#other-mechanics) | 197 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 142 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 88 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 77 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 74 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 56 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 44 |
@@ -42,8 +42,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Fearsome Casting radius +1 block per 10 Corruption
   - general tree: Plague Bearer: your Wither is Wither II
   - special tree: Terror: Fearsome Casting adds Slowness I
-  - special tree: Avatar of Ruin: doubles Fearsome Casting radius
-  - special tree: Avatar of Ruin: you can't sleep in beds
+  - special tree: Avatar of Ruin: doubles Fearsome Casting radius; you can't sleep in beds
 - **arcanist**
   - special tree: Reclaim Arcana: Reclaim refunds go to 150%
 - **assassin**
@@ -106,8 +105,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: take 20% less damage from weapons and projectiles
 - **druid**
   - passive: no slowdown from powder snow, soul sand, cobwebs or honey
-  - passive: +15% bone meal effect
-  - skill Beast Bond: +10% breeding speed
 - **duelist**
   - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
   - general tree: Bind: challenged foe gets Slowness I
@@ -128,7 +125,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Wayfinding, +1 block glow range
   - general tree: Cartographer: maps you make explore 25% faster
 - **fighter**
-  - passive: any weapon/tool does at least 4 damage
   - special tree: Haft Attack: spears/tridents: every 3rd hit strikes twice
   - special tree: Powerful Attack: axes/maces: fully charged hits +15% damage
 - **geomancer**
@@ -153,11 +149,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **hexer**
   - special tree: Lethargy: Lethargy also stops jumping
 - **hydromancer**
-  - passive: breathe underwater, swim 40% faster
-  - passive: no mining slowdown underwater
   - passive: take 20% less damage from weapons and projectiles
-  - special tree: Ocean's Heart: drowned and guardians are neutral to you; -15% max health on land
-  - skill Swimming: +10% oxygen
 - **illusionist**
   - passive: Convincing Illusions: mobs that lose sight of you forget you 50% faster
   - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
@@ -249,7 +241,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Deadly Aim bonus +1% per Precision
   - special passive: Per 10 Precision, aim time -0.2s
   - general tree: Steady Breath: Deadly Aim time -0.5s
-  - general tree: Piercing: arrows pierce 1 mob
 - **sorcerer**
   - special passive: Sorcerous Outburst explosion damage +0.5 per Potency point
   - general tree: Living Bomb: Outbursts deal double damage
@@ -280,8 +271,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **transmuter**
   - special stat per point: +0.2 to every stat per 10 points (rounded down)
 - **traveler**
-  - special stat per point: +1% ender pearl range and +0.3% movement speed
-  - general tree: Far Traveler: +30% pearl range
   - general tree: Steady Arrival: no Nausea after teleporting
   - special tree: Gatekeeper: your pearls can carry a nearby player with you
 - **warlock**
@@ -297,7 +286,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: One True Weapon: other weapons are forbidden-tier
 - **witch**
   - weakness: takes 25% more fire damage and burns for 50% longer
-  - skill Herbalism: +5% bone meal effect
 - **wizard**
   - general tree: Library: +1 counted bookshelf
 - **woodwose**
@@ -662,12 +650,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **blade**
   - special tree: Red Mist: killing a bleeding mob refills 20 Bloodletting; -10% max health
 - **cavalier**
-  - special tree: Master Rider: mount gets Regeneration I while you ride
   - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
 - **chronomancer**
   - passive: Quickening: whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback
-- **conjurer**
-  - general tree: Bigger Beasts: minions +4 max health
 - **death_dealer**
   - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
 - **destroyer**
@@ -724,8 +709,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Plague Doctor: poison spreads to mobs within 2 blocks on death, but -15% max health
 - **priest**
   - weakness: in the Nether and the End: Devotion does not regenerate and Prayer is disabled
-- **ranger**
-  - skill Survival: eating cooked meat gives Regeneration I for 3s
 - **rogue**
   - special tree: Rogue Cunning: Trickery recharges twice as fast; -10% max Guile
 - **savant**

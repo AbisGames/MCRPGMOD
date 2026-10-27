@@ -39,21 +39,19 @@
     {
       "id": "sharpshooter_piercing",
       "name": "Piercing",
-      "description": {
-        "text": "arrows pierce 1 mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "arrows pierce 1 mob",
       "type": "small",
       "x": -1320,
       "y": -4,
       "links": [
         "sharpshooter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "arrow_pierce",
+          "amount": 1.0
+        }
       ]
     },
     {

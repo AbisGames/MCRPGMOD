@@ -59,16 +59,7 @@
     {
       "id": "traveler_far_traveler",
       "name": "Far Traveler",
-      "description": {
-        "text": "+30% pearl range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% pearl range",
       "type": "notable",
       "x": 103,
       "y": 1737,
@@ -76,7 +67,14 @@
         "traveler_light_traveller"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_range",
+          "amount": 0.3
+        }
+      ]
     },
     {
       "id": "traveler_steady_arrival",
