@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1648**, partly working: **24**, not yet: **578**
+- Bonus phrases: **2250**. Fully working: **1669**, partly working: **24**, not yet: **557**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,16 +12,16 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 197 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 142 |
+| [Other mechanics](#other-mechanics) | 190 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 133 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 88 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 74 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 56 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 52 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 44 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 21 |
-| [Immunities](#immunities) | 15 |
-| [Critical hits](#critical-hits) | 7 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 43 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
+| [Immunities](#immunities) | 14 |
+| [Critical hits](#critical-hits) | 5 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 | [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 1 |
 
@@ -51,7 +51,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **avenger**
   - special tree: Hound: Speed boost lasts 2s longer
 - **bard**
-  - special passive: per 10 Resonance
   - special tree: Disarming Charm: charmed mobs also get Weakness I
 - **beastmaster**
   - passive: Taming always succeeds on the first try
@@ -64,7 +63,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Champion's Resolve: Resolve trigger heals 10 HP instead
 - **chronomancer**
   - special passive: Per 10 Tempo, harmful effects on you last 3% shorter
-  - general tree: Stretch: your Speed effects last 30% longer
   - special tree: Haste: Quickening speed lasts 2s longer
 - **cleric**
   - special passive: Empowered Symbol: +1% healing done and received per 2 Conviction
@@ -177,7 +175,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Battle Arcana, +1 escalating hit
   - general tree: Arcane Steel: +5% magic portion
   - general tree: Spell Strike: Escalating Violence +10%
-  - general tree: Battlemage: +20% weapon and magic damage, but you can't use shields
 - **magician**
   - skill Enchanting: +1 bookshelf counted around your table
 - **marauder**
@@ -202,7 +199,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Aspis: players within 3 blocks behind you are protected from projectiles; -10% damage
 - **oracle**
   - passive: The Sight: invisible mobs and players within 16 blocks glow for you
-  - special passive: per 20 Communion
   - general tree: Whispers: glow range of The Sight +8 blocks
 - **paladin**
   - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
@@ -247,7 +243,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Living Bomb: you take 25% of the outburst damage yourself
   - special tree: Enlarged Spell: Outburst radius +1 block
 - **spellbinder**
-  - special passive: per 10 Binding
   - general tree: Rune Edge: +5% magic damage portion
 - **stormbringer**
   - general tree: Storm Avatar: you take 25% more fire damage
@@ -272,7 +267,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.2 to every stat per 10 points (rounded down)
 - **traveler**
   - general tree: Steady Arrival: no Nausea after teleporting
-  - special tree: Gatekeeper: your pearls can carry a nearby player with you
 - **warlock**
   - passive: you gain 10 Stolen Power instead
   - general tree: Slip Away: Vanish lasts +1s
@@ -282,8 +276,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Vanishing Escape: Vanish also teleports you up to 6 blocks away from the attacker
 - **warrior**
   - special tree: Combat Expertise: every 4th hit on the same mob deals +25% damage
-- **weapon_master**
-  - general tree: One True Weapon: other weapons are forbidden-tier
 - **witch**
   - weakness: takes 25% more fire damage and burns for 50% longer
 - **wizard**
@@ -400,7 +392,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Lichdom: +1 servant and +20% servant damage, but sunlight burns you like a zombie
   - special tree: Master of Undeath: double servant cap
 - **oracle**
-  - special passive: +1 armor while in Divine Ecstasy
   - general tree: Steady Mind: the after-effects of Ecstasy last half as long
   - general tree: Living Avatar: Divine Ecstasy bonuses +50%
   - special tree: Fearless: +15% knockback resistance in Ecstasy
@@ -437,7 +428,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **spellbinder**
   - passive: Your bound weapon counts as a magic focus: its hits deal 15% of their damage as magic damage (ignores armor)
   - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
-  - special passive: +2% bound weapon critical damage
+  - special passive: Magic Weapon: per 10 Binding, +2% bound weapon critical damage
   - general tree: Soulblade: bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage
 - **technomancer**
   - special passive: Gadget bonus +0.5% per Circuitry
@@ -463,25 +454,17 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Stable Form: Optimization no longer resets on death
 - **traveler**
   - passive: 25% chance to blink 6 blocks away with a 20s cooldown
-  - passive: Ender pearls deal no damage to you and have 30% shorter cooldown
   - special passive: Blink distance +0.1 per Displacement
-  - general tree: Light Traveller: pearl cooldown -10%
-  - special tree: Gatekeeper: +50% pearl cooldown
+  - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
 - **warlock**
   - special passive: Vanish cooldown -1% per Larceny point
   - general tree: Filch: +5% Steal Spell chance
   - general tree: Oathbreaker: Steal Spell chance doubles
 - **weapon_master**
-  - special stat per point: +0.6% damage with your favored weapon
-  - special passive: Favored damage +0.6% per Mastery
   - weakness: -20% damage with every weapon type that isn't your favored one
-  - general tree: Drilled: +5% favored damage
-  - general tree: Guard: +1 armor with favored weapon
-  - general tree: Flow State: +5% attack speed with favored weapon
   - general tree: Signature Move: every 5th hit with favored weapon is a crit
-  - general tree: One True Weapon: +30% favored damage
+  - general tree: One True Weapon: +30% favored damage, but other weapons are forbidden-tier
   - special tree: Swift Change: you can change favored weapon once per day without sleeping
-  - special tree: Weapon Specialization: +10% favored crit damage
 - **wizard**
   - special passive: +1 bookshelf counted around your enchanting table per 20 Lore
   - general tree: Library: -1 enchanting cost
@@ -761,8 +744,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Bonus against a kind of mob / marked target
 
-- **acrobat**
-  - special passive: Mobility: per 10 Poise, +5% chance a melee hit against you misses
 - **apocalyptist**
   - weakness: villagers refuse to trade with you, animals flee from you
 - **artificer**
@@ -780,7 +761,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Frightening Glare: marked targets within your reach deal 15% less damage
 - **beastmaster**
   - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
-  - special passive: Primal Power: per 10 Primal Bond, tamed animals get +1 armor
   - weakness: when one of your tamed animals dies, you get Weakness I and Slowness I for 30s
   - general tree: Pack Tactics: +10% damage to mobs your animals are attacking
   - special tree: Primal Power: tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves
@@ -790,8 +770,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Crusher: +10% damage against shields and armored mobs
 - **cleric**
   - general tree: Crusader: +30% damage to undead, but -10% damage to everything else
-- **death_dealer**
-  - special passive: Make Mountains of the Dead: per 10 Carnage, +5% damage to mobs below 30% health
 - **diplomat**
   - special stat per point: -0.3% villager trade prices
   - passive: Stay the Hand: 15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s
@@ -836,8 +814,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Runelord: unmarked gear is forbidden-tier
 - **thief**
   - general tree: Fence: cancels the villager price penalty from your weakness
-- **witch**
-  - special tree: Green Flame: your fire damage to mobs is +15%
 - **woodwose**
   - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
 
@@ -956,7 +932,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: +0.3% Reclaim chance per Arcana point
   - special tree: Recycling: Reclaim chance +5%
 - **bard**
-  - special passive: +3% chance a hostile mob you hit forgets you
+  - special passive: Disarming Charm: per 10 Resonance, +3% chance a hostile mob you hit forgets you
 - **dervish**
   - passive: +2 armor and 10% chance to parry melee hits
   - special passive: Parry chance +0.3% per Rhythm
@@ -965,8 +941,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **diviner**
   - special passive: Miss chance +0.3% per Foresight
   - special tree: Ill Fortune: mobs within 8 blocks have 10% chance to miss everyone
-- **dreadnaught**
-  - special tree: Immovable: also immune to wind charges and explosions' knockback
 - **duelist**
   - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
 - **enchanter**
@@ -1017,14 +991,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Potions, XP, loot, trading, crafting, food
 
-- **abjurer**
-  - passive: Warded: mobs deal 10% less damage to you and your potion debuffs last 20% shorter
 - **artificer**
   - special tree: Store Spell: potions you brew can be loaded into crafted gear (see section 12)
 - **beastmaster**
   - special tree: Shared Spell: potion effects you drink also apply to your nearest tamed animal
-- **chronomancer**
-  - passive: Potion effects on you tick down 20% slower (good ones last longer)
 - **conqueror**
   - general tree: Logistics: allies near you lose hunger 15% slower
 - **diplomat**
@@ -1058,8 +1028,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **destroyer**
   - passive: Immune to your own explosions
-- **diplomat**
-  - special tree: Grand Ambassador: neutral mobs never turn hostile on you; you deal -10% more damage
 - **druid**
   - special tree: Trackless: your steps never trigger sculk sensors or pressure plates
 - **gunslinger**
@@ -1088,14 +1056,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Critical hits
 
-- **assassin**
-  - special passive: Killer's Eye: per 10 Lethality, +3% critical damage
 - **dervish**
   - special tree: Counter: a successful parry makes your next hit a crit
 - **duelist**
   - special tree: Riposte: riposte hits are always critical
-- **executioner**
-  - passive: Exacting Strike: critical hits deal maximum damage (+25% critical damage)
 - **fighter**
   - passive: Weapon Mastery: 15% chance to reroll a 'glancing' (non-critical) hit into a critical hit
 - **gunslinger**

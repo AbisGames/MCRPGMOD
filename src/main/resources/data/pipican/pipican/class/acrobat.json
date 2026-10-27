@@ -83,6 +83,17 @@
           "per": -0.01
         }
       ]
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "melee_only": true,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

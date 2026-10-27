@@ -48,6 +48,7 @@ DAMAGE_TYPE_TAGS = {
     'is_melee': ['minecraft:player_attack', 'minecraft:mob_attack', 'minecraft:mob_attack_no_aggro'],
     'is_suffocation': ['minecraft:in_wall', 'minecraft:cramming'],
     'is_plant': ['minecraft:cactus', 'minecraft:sweet_berry_bush'],
+    'is_ender_pearl': ['minecraft:ender_pearl'],
     'is_falling_block': ['minecraft:falling_block', 'minecraft:falling_anvil', 'minecraft:falling_stalactite'],
 }
 
@@ -531,11 +532,17 @@ def translate(text, ctx):
         text = re.sub(r',\s*(?:and\s+)?it\b', '; it', text)
         text = re.sub(r'; it loses durability', '; bound weapon loses durability', text)
     text = re.sub(r'\bwith it\b', 'with your bound weapon', text) if re.search(r'bound weapon', original, re.I) else text
-    item = r'(bound weapon|sigil(?:-marked)? weapons?|staff)'
+    # favored weapon: "+5% favored damage", "Favored damage +0.6% per Mastery", "+1 armor with favored weapon",
+    # "+10% favored crit damage"
+    text = re.sub(r'\bfavou?red crit(?:ical)? damage\b', 'favored critical damage', text, flags=re.I)
+    text = re.sub(r'\bwith (?:your )?favou?red weapon\b', 'with your favored weapon', text, flags=re.I)
+    item = r'(bound weapon|sigil(?:-marked)? weapons?|staff|favou?red(?: weapon)?)'
     text = re.sub(rf'^{item}:\s*([+-]\d+(?:\.\d+)?% (?:more )?(?:damage|critical damage))(.*)$', r'\2 with your \1\3', text, flags=re.I)
     text = re.sub(lab + r'while (.+?), sigil weapons (?:glow and )?deal \+(\d+)% more$', r'\1while \2: +\3% damage with your sigil weapon', text, flags=re.I)
     text = re.sub(lab + rf'([+-]\d+(?:\.\d+)?%) {item} (damage|critical damage)\b(.*)$', r'\1\2 \4 with your \3\5', text, flags=re.I)
     text = re.sub(lab + rf'{item} (damage|critical damage) ([+-]\d+(?:\.\d+)?%)(.*)$', r'\1\4 \3 with your \2\5', text, flags=re.I)
+    text = re.sub(r'\bwith your (?:favored|favoured)(?: weapon)?\b', 'while holding your favored weapon', text, flags=re.I)
+    text = re.sub(r'(while holding your favored weapon) (per .+)$', r'\2 \1', text, flags=re.I)
     text = re.sub(r'^sigil armor:\s*(.+?) per piece$', r'\1 per sigil piece', text, flags=re.I)
     # Phrasings: "you take +10% damage while moving", "spears deal +15% damage while mounted", "immune to X always",
     # "No fall damage below 8 blocks", "+20% stealth", "mobs notice you from 20% farther away".
@@ -547,6 +554,9 @@ def translate(text, ctx):
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (\d+(?:\.\d+)?)% later', r'-\1% detection range', text, flags=re.I)
     # "+5% unarmed damage" -> "+5% damage while unarmed"
     text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) unarmed (damage|attack speed)\b', r'\1\2 \3 while unarmed', text, flags=re.I)
+    # "your fire damage to mobs is +15%", "+20% weapon and magic damage"
+    text = re.sub(lab + r'your (\w+ )?damage(?: to mobs)? is ([+-]\d+(?:\.\d+)?%)$', r'\1\3 \2damage', text, flags=re.I)
+    text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) (weapon|melee|ranged|magic|fire) and (weapon|melee|ranged|magic|fire) damage\b', r'\1\2 \3 damage, \2 \4 damage', text, flags=re.I)
     text = _bulk(text)
     # jump height in blocks -> jump strength (about +0.15 per block)
     text = re.sub(lab + r'(?:jump height \+(\d+(?:\.\d+)?) blocks?|\+(\d+(?:\.\d+)?) (?:extra )?jump (?:block )?height)\b',
@@ -593,9 +603,10 @@ def translate(text, ctx):
     if re.search(r'standing still|not moving', text, re.I):
         text = re.sub(r'\s+until you move\b', '', text, flags=re.I)
     # "Per 10 Brawn, +1 max health" -> "+1 max health per 10 Brawn"
-    m = re.match(r'^\s*per (\d+ )?([A-Za-z][\w \'-]*?)(?: points?)?,\s*(.+)$', text.strip(), re.I)
-    if m and ',' not in m.group(3) and ';' not in m.group(3):
-        text = f'{m.group(3)} per {m.group(1) or ""}{m.group(2)}'
+    m = re.match(r"^\s*((?:[A-Z][\w' -]{1,30}:\s+)?)per (\d+ )?([A-Za-z][\w \'-]*?)(?: points?)?,\s*(.+)$", text.strip(), re.I)
+    # (Chance lines keep their leading "per": the scaled-reaction rule reads them that way.)
+    if m and ',' not in m.group(4) and ';' not in m.group(4) and not (m.group(1) and re.search(r'\bchance (?:your|on|that your|to|for your)\b', m.group(4), re.I)):
+        text = f'{m.group(1)}{m.group(4)} per {m.group(2) or ""}{m.group(3)}'
     # "while Rage is above 75%: A, B, but C": a leading condition with a colon covers everything after it.
     m = re.match(r'^(?:[A-Z][\w\' -]{1,30}:\s+)?((?:while|when|whenever|as long as)\s+[^:]+?):\s+(.+)$', text.strip())
     if m:

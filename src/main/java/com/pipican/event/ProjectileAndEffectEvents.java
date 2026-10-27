@@ -118,6 +118,19 @@ public final class ProjectileAndEffectEvents {
             if (range != 1) {
                 pearl.setDeltaMovement(pearl.getDeltaMovement().scale(range));
             }
+            double cooldown = ClassEffectApplier.state(player).bonus(Kind.PEARL_COOLDOWN);
+            if (cooldown != 1) {
+                // The item puts its own 1s cooldown on after the pearl is spawned; replace it next.
+                int ticks = (int) Math.round(20 * cooldown);
+                player.level().getServer().execute(() -> {
+                    var cooldowns = player.getCooldowns();
+                    var group = cooldowns.getCooldownGroup(new ItemStack(Items.ENDER_PEARL));
+                    cooldowns.removeCooldown(group);
+                    if (ticks > 0) {
+                        cooldowns.addCooldown(group, ticks);
+                    }
+                });
+            }
         }
     }
 

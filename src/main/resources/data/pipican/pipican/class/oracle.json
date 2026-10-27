@@ -89,6 +89,26 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:ability_active",
+        "ability": "pipican:oracle/divine_ecstasy"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
+            }
+          ]
+        }
+      ]
     }
   ],
   "weakness": {

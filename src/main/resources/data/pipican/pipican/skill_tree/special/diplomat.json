@@ -82,16 +82,7 @@
     {
       "id": "grand_ambassador",
       "name": "Grand Ambassador",
-      "description": {
-        "text": "neutral mobs never turn hostile on you; you deal -10% more damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "neutral mobs never turn hostile on you; you deal -10% more damage",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -100,7 +91,18 @@
         "unexpected_alliances"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ignored_by",
+          "mobs": "#pipican:mobs/neutral",
+          "unless_attacked": true
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.9
+        }
+      ]
     }
   ]
 }

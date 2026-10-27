@@ -100,16 +100,7 @@
     {
       "id": "mage_knight_battlemage",
       "name": "Battlemage",
-      "description": {
-        "text": "+20% weapon and magic damage, but you can't use shields",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% weapon and magic damage, but you can't use shields",
       "type": "keystone",
       "x": -1245,
       "y": -763,
@@ -118,7 +109,23 @@
         "mage_knight_combat_casting"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_shield",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

@@ -61,6 +61,16 @@
   },
   "passives": [
     {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_ender_pearl",
+      "multiplier": 0.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "pearl_cooldown",
+      "amount": -0.3
+    },
+    {
       "type": "pipican:on",
       "event": "teleport",
       "actions": [

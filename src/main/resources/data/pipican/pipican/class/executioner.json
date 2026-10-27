@@ -69,6 +69,10 @@
     {
       "type": "pipican:execute",
       "threshold": 0.15
+    },
+    {
+      "type": "pipican:critical",
+      "damage": 0.25
     }
   ],
   "special_passives": [

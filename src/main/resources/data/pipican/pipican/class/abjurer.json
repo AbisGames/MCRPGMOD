@@ -85,6 +85,15 @@
     },
     {
       "type": "pipican:damage_taken",
+      "multiplier": 0.9
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "harmful_duration",
+      "amount": -0.2
+    },
+    {
+      "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.85
     }

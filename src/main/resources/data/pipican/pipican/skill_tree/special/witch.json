@@ -29,23 +29,21 @@
     {
       "id": "green_flame",
       "name": "Green Flame",
-      "description": {
-        "text": "your fire damage to mobs is +15%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your fire damage to mobs is +15%",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 1.15
+        }
+      ]
     },
     {
       "id": "flying_broom",

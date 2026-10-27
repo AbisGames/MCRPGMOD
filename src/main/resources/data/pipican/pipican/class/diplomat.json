@@ -88,8 +88,8 @@
       },
       {
         "type": "pipican:damage_dealt",
-        "multiplier": 0.75,
-        "weapons": "#pipican:weapons/ranged"
+        "weapons": "#pipican:weapons/ranged",
+        "multiplier": 0.75
       }
     ]
   },

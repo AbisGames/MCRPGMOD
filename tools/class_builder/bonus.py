@@ -459,6 +459,32 @@ def misc(t, scal):
         group = combat.mobs(m.group(1))
         if group is not None:
             return [{'type': 'pipican:ignored_by', 'mobs': group, 'unless_attacked': True}]
+    m = re.fullmatch(rf'(?:your )?(?:ender )?pearl cooldown ([+-]{N})%|([+-]{N})% (?:ender )?pearl cooldown', t)
+    if m:
+        v, sc = scal(float(m.group(1) or m.group(3)))
+        return [_effect('pearl_cooldown', v, sc)]
+    m = re.fullmatch(rf'ender pearls deal no damage to you(?: and have {N}% shorter cooldown)?', t)
+    if m:
+        out = [{'type': 'pipican:damage_taken', 'damage_types': '#pipican:is_ender_pearl', 'multiplier': 0.0}]
+        if m.group(1):
+            out.append(_effect('pearl_cooldown', -float(m.group(1)), None))
+        return out
+    m = re.fullmatch(rf'(?:your )?(.+?) effects last {N}% (longer|shorter)', t)
+    if m and (ids := _effect_ids(m.group(1))):
+        return _duration(ids, 1 + float(m.group(2)) / 100 * (1 if m.group(3) == 'longer' else -1))
+    m = re.fullmatch(rf'(?:your )?potion debuffs last {N}% (longer|shorter)', t)
+    if m:
+        return [_effect('harmful_duration', float(m.group(1)) * (1 if m.group(2) == 'longer' else -1), None)]
+    m = re.fullmatch(rf'potion effects on you tick down {N}% slower(?: \(good ones last longer\))?', t)
+    if m:
+        k = float(m.group(1)) / 100
+        return [_effect('potion_duration', round(100 * (1 / (1 - k) - 1), 4), None)]
+    if re.fullmatch(r'neutral mobs never turn hostile on you', t):
+        return [{'type': 'pipican:ignored_by', 'mobs': '#pipican:mobs/neutral', 'unless_attacked': True}]
+    if re.fullmatch(r"(?:also )?immune to wind charges and explosions'? knockback", t):
+        return [{'type': 'pipican:attribute', 'attribute': 'minecraft:explosion_knockback_resistance', 'amount': 1.0}]
+    if re.fullmatch(r'critical hits deal maximum damage \(\+(\d+)% critical damage\)', t):
+        return [{'type': 'pipican:critical', 'damage': round(float(re.search(r'\d+', t).group()) / 100, 6)}]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

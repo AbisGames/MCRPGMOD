@@ -507,6 +507,18 @@ def whole_line(text, ctx):
         parts = [bonus.misc(p.strip(), lambda v: (v, None)) for p in low.split(',')]
         if all(parts):
             return [e for p in parts for e in p]
+    # Exacting Strike: "critical hits deal maximum damage (+25% critical damage)" - the bracket is the number.
+    m = re.fullmatch(r'critical hits deal maximum damage \(\+(\d+)% critical damage\)', low)
+    if m:
+        return [{'type': 'pipican:critical', 'damage': round(float(m.group(1)) / 100, 6)}]
+    # "+20% damage and knockback immunity", "mobs deal 10% less damage to you and your potion debuffs last 20% shorter":
+    # two whole phrases joined by "and", with no condition that could belong to only one of them.
+    if ' and ' in low and not ctx.get('implicit_per_point') and not re.search(r'\b(?:but|per|while|when|whenever|if|during|after|in|on|for|within|near|blocks?|get|gets|gain)\b|[;,()]', low) \
+            and not re.match(r'(?:other )?(?:players|allies|tamed|your animals|animals|minions|servants|summons|pets|eidolon|(?:your )?mount)\b', low):
+        for i in [mm.start() for mm in re.finditer(r' and ', low)]:
+            a, b = _rest(low[:i], ctx), _rest(low[i + 5:], ctx)
+            if a and b:
+                return a + b
     # "mount gets Regeneration I while you ride": the "while" is part of the phrase, not a condition to split off.
     if re.fullmatch(r'(?:your )?mount gets .+ while you ride', low):
         import bonus

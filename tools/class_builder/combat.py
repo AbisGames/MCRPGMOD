@@ -22,6 +22,7 @@ MOB_GROUPS = {
     'blazes': ['minecraft:blaze'], 'creepers': ['minecraft:creeper'], 'ravagers': ['minecraft:ravager'], 'ghasts': ['minecraft:ghast'],
     'mobs that burn in daylight': ['#pipican:mobs/daylight'], 'beast-like mobs': ['#pipican:mobs/beasts'],
     'beast-like mobs (wolves, hoglins, ravagers)': ['#pipican:mobs/beasts'],
+    'neutral mobs': ['#pipican:mobs/neutral'],
     'mindless mobs': ['#pipican:mobs/mindless'], 'armored mobs': ['#pipican:mobs/armored'],
     'mobs with natural armor': ['#pipican:mobs/armored'], 'bosses': ['minecraft:wither', 'minecraft:ender_dragon', 'minecraft:warden', 'minecraft:elder_guardian'],
 }
@@ -39,6 +40,9 @@ MOB_TAGS = {
     'mobs/daylight': ['minecraft:zombie', 'minecraft:zombie_villager', 'minecraft:skeleton', 'minecraft:stray', 'minecraft:drowned',
                       'minecraft:phantom', 'minecraft:bogged'],
     'mobs/beasts': ['minecraft:wolf', 'minecraft:hoglin', 'minecraft:zoglin', 'minecraft:ravager', 'minecraft:polar_bear', 'minecraft:fox'],
+    'mobs/neutral': ['minecraft:enderman', 'minecraft:piglin', 'minecraft:zombified_piglin', 'minecraft:wolf', 'minecraft:iron_golem',
+                     'minecraft:bee', 'minecraft:polar_bear', 'minecraft:llama', 'minecraft:trader_llama', 'minecraft:panda', 'minecraft:dolphin',
+                     'minecraft:goat', 'minecraft:spider', 'minecraft:cave_spider'],
     'mobs/mindless': ['minecraft:iron_golem', 'minecraft:snow_golem', 'minecraft:slime', 'minecraft:magma_cube', 'minecraft:shulker',
                       'minecraft:wither'],
     'mobs/armored': ['minecraft:iron_golem', 'minecraft:ravager', 'minecraft:warden', 'minecraft:wither', 'minecraft:armadillo'],

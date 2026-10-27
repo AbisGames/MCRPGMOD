@@ -103,6 +103,42 @@
       },
       "effects": [
         {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.006
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.006
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
           "type": "pipican:bonus",
           "kind": "weapon_durability",
           "amount": 0.0,

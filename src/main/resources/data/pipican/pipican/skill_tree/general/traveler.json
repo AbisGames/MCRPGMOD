@@ -20,21 +20,19 @@
     {
       "id": "traveler_light_traveller",
       "name": "Light Traveller",
-      "description": {
-        "text": "pearl cooldown -10%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "pearl cooldown -10%",
       "type": "small",
       "x": 100,
       "y": 1667,
       "links": [
         "traveler_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_cooldown",
+          "amount": -0.1
+        }
       ]
     },
     {

@@ -104,6 +104,16 @@
       ],
       "damage": 0.0,
       "health": 0.0
+    },
+    {
+      "type": "pipican:pet_mod",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ],
+      "armor": 0.0
     }
   ],
   "weakness": {

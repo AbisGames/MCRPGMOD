@@ -29,23 +29,21 @@
     {
       "id": "immovable",
       "name": "Immovable",
-      "description": {
-        "text": "also immune to wind charges and explosions' knockback",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "also immune to wind charges and explosions' knockback",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:explosion_knockback_resistance",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "weapon_resistance",

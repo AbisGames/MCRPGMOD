@@ -18,56 +18,58 @@
     {
       "id": "weapon_master_drilled",
       "name": "Drilled",
-      "description": {
-        "text": "+5% favored damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% favored damage",
       "type": "small",
       "x": -1221,
       "y": -501,
       "links": [
         "weapon_master_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {
       "id": "weapon_master_guard",
       "name": "Guard",
-      "description": {
-        "text": "+1 armor with favored weapon",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 armor with favored weapon",
       "type": "small",
       "x": -1200,
       "y": -552,
       "links": [
         "weapon_master_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
       ]
     },
     {
       "id": "weapon_master_flow_state",
       "name": "Flow State",
-      "description": {
-        "text": "+5% attack speed with favored weapon",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% attack speed with favored weapon",
       "type": "notable",
       "x": -1286,
       "y": -529,
@@ -75,7 +77,23 @@
         "weapon_master_drilled"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:attack_speed",
+              "amount": 0.05,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "weapon_master_signature_move",
