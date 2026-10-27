@@ -472,10 +472,10 @@ def main(spec_dir, res_dir, report_path):
                 counts['phrases'] += 1
                 counts['full'] += 1
             else:
-                passives += tr(cid, 'passive', p, ctx)[0]
+                passives += tr(cid, 'passive', p, dict(ctx, passive=True))[0]
         special_passives = list(extra_special)
         for p in c['special_passives']:
-            special_passives += tr(cid, 'special passive', p, ctx)[0]
+            special_passives += tr(cid, 'special passive', p, dict(ctx, passive=True))[0]
         if cid in ab.WEAKNESS_EFFECTS:
             weff, wuns = ab.WEAKNESS_EFFECTS[cid], []
             counts['phrases'] += 1

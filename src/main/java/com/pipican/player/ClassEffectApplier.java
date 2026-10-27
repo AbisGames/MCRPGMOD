@@ -601,9 +601,9 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addReactionChance(String name, double amount, double multiplier) {
-            reactionChances.merge(name, new ClassState.ReactionChance(amount, multiplier),
-                    (a, b) -> new ClassState.ReactionChance(a.add() + b.add(), a.multiplier() * b.multiplier()));
+        public void addReactionChance(String name, double amount, double multiplier, double uses) {
+            reactionChances.merge(name, new ClassState.ReactionChance(amount, multiplier, uses),
+                    (a, b) -> new ClassState.ReactionChance(a.add() + b.add(), a.multiplier() * b.multiplier(), a.uses() + b.uses()));
         }
 
         @Override

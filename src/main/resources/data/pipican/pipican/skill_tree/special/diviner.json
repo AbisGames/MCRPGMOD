@@ -29,16 +29,7 @@
     {
       "id": "omens",
       "name": "Omens",
-      "description": {
-        "text": "premonitions also work on arrows",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "premonitions also work on arrows",
       "type": "small",
       "x": -35,
       "y": 70,

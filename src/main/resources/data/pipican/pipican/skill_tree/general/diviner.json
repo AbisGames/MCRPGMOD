@@ -98,16 +98,7 @@
     {
       "id": "diviner_doomsayer",
       "name": "Doomsayer",
-      "description": {
-        "text": "+2 premonitions, but -20% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 premonitions, but -20% max health",
       "type": "keystone",
       "x": 1767,
       "y": -392,
@@ -116,7 +107,20 @@
         "diviner_second_sight"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "premonition",
+          "uses": 2.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

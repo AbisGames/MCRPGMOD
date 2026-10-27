@@ -37,6 +37,17 @@ public final class Bleeds {
         return wounds != null && !wounds.isEmpty();
     }
 
+    /** A damage-over-time wound from {@code player} ({@code pipican:dot}): {@code damage} per second for {@code seconds}. */
+    public static void wound(ServerPlayer player, LivingEntity victim, double damage, double seconds, int maxStacks) {
+        long now = victim.level().getGameTime();
+        List<Wound> wounds = WOUNDS.computeIfAbsent(victim, k -> new ArrayList<>());
+        wounds.removeIf(w -> w.until <= now);
+        if (wounds.size() >= Math.max(1, maxStacks) + 8) {
+            wounds.removeFirst();
+        }
+        wounds.add(new Wound(player.getUUID(), damage, now + Math.round(seconds * 20)));
+    }
+
     /** {@code player} hit {@code victim}; {@code crit} if it was a critical hit. */
     public static void onHit(ServerPlayer player, LivingEntity victim, ClassState.Bleed bleed, boolean crit) {
         if (bleed.damage() <= 0 || bleed.seconds() <= 0 || !(crit || bleed.anyHit()) || !victim.isAlive()) {

@@ -121,7 +121,13 @@ public record ClassState(
     }
 
     /** Changes to named reactions' chances: (chance + add) x multiplier. */
-    public record ReactionChance(double add, double multiplier) {}
+    public record ReactionChance(double add, double multiplier, double uses) {}
+
+    /** Extra uses per rest for a named reaction ({@code pipican:reaction_chance} uses). */
+    public int reactionUses(ReactionEffect reaction) {
+        ReactionChance change = reaction.name().map(reactionChances::get).orElse(null);
+        return change == null ? 0 : (int) Math.floor(change.uses() + 1e-9);
+    }
 
     /** A reaction's chance after {@code pipican:reaction_chance} effects. */
     public double reactionChance(ReactionEffect reaction) {

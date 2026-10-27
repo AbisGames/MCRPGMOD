@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1458**, partly working: **20**, not yet: **771**
+- Bonus phrases: **2249**. Fully working: **1473**, partly working: **20**, not yet: **756**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,9 +13,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Other mechanics](#other-mechanics) | 288 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 172 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 158 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 99 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 95 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 93 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 73 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
@@ -439,10 +439,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **death_dealer**
   - passive: Brutal Swing: when you kill a mob with an axe or mace, your attack cooldown resets instantly
 - **diviner**
-  - passive: Premonitions: after sleeping, you get 3 'premonitions' - each automatically turns a hit against you into a miss
   - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
-  - special passive: Per 20 Foresight, +1 premonition
-  - special tree: Omens: premonitions also work on arrows
 - **dreadnaught**
   - special passive: Weapon Resistance +0.2% per Plate
   - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
@@ -460,14 +457,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **fighter**
   - weakness: -25% potion effect duration on you, and enchanting costs +1 level
 - **hexer**
-  - special stat per point: +0.5% chance your hits curse a mob
-  - passive: Evil Eye: 12% chance on hit to curse a mob for 8s with one of: Desire (stops attacking), Lethargy (Slowness II) or Pain (2 damage per second)
-  - passive: Exacting Curse: +15% damage to cursed mobs
-  - special passive: Curse chance +0.3% per Malice
   - special passive: Per 10 Malice, curses last 1s longer
   - weakness: while a curse you placed is active, you take 10% more damage
-  - general tree: Hexer: +3% curse chance
-  - general tree: Wicked: +5% curse chance
   - general tree: Lingering Hate: curses last 3s longer
   - general tree: Withering Gaze: Pain curse also gives Weakness
   - special tree: Desire: Desire-cursed mobs fight other mobs
@@ -475,13 +466,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **hydromancer**
   - special passive: Watery Form reduction +0.2% per Tide
 - **illusionist**
-  - passive: 12% chance an attack against you hits a decoy instead
-  - passive: you blink 4 blocks away
-  - special passive: Decoy chance +0.3% per Phantasm
   - special passive: Per 10 Phantasm, blink distance +1
   - weakness: decoys never fool wardens, endermen or the Wither, and you take 15% more damage from them
-  - general tree: Illusionist: +3% decoy chance
-  - general tree: Mirror Image: +5% decoy chance
   - general tree: Smoke and Mirrors: +1 blink distance
   - general tree: Phantom Strike: first hit after a blink deals +25%
   - special tree: Blur: after a decoy, you're invisible for 1s
@@ -810,7 +796,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **diplomat**
   - passive: Master of Diplomacy: villager trades cost 25% less and villagers restock twice as often for you
 - **diviner**
-  - general tree: Doomsayer: +2 premonitions, but -20% max health
   - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
 - **druid**
   - special passive: +1% regeneration per 2 Wildness while standing on grass, dirt, sand or leaves
@@ -838,8 +823,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **hexer**
   - general tree: Doom Hex: cursed mobs that die explode in a small Instant Damage cloud, but -15% max health
   - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
-- **illusionist**
-  - general tree: Hall of Mirrors: decoy chance doubled, but -25% max health
 - **infiltrator**
   - general tree: No One: Faceless works within 2 blocks, but -20% max health
   - special tree: Ghost Agent: after a stealth kill, you are invisible for 3s; -10% max health

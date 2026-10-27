@@ -96,6 +96,22 @@
       "type": "pipican:bonus",
       "kind": "durability",
       "amount": -1
+    },
+    {
+      "type": "pipican:on",
+      "event": "attacked",
+      "name": "prem",
+      "uses_per_rest": 2,
+      "actions": [
+        {
+          "type": "pipican:shrug"
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "prem",
+      "uses": 1
     }
   ]
 }

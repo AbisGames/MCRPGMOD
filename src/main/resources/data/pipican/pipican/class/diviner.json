@@ -60,6 +60,17 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "attacked",
+      "name": "premonition",
+      "uses_per_rest": 3,
+      "actions": [
+        {
+          "type": "pipican:shrug"
+        }
+      ]
+    },
+    {
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 1
@@ -73,6 +84,16 @@
         {
           "source": "special_stat",
           "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "premonition",
+      "uses_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
         }
       ]
     }

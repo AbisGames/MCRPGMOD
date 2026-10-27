@@ -80,6 +80,7 @@ VICTIM_STATES = [
      lambda m: {'not_targeting_you': True}),
     (r'(?:your |the )?marked (?:target|targets|mob|mobs|prey)|(?:your )?prey', lambda m: {'marked': True}),
     (r'burning mobs|mobs (?:that are )?on fire', lambda m: {'on_fire': True}),
+    (r'cursed (?:mobs?|targets?|foes?)', lambda m: {'marked': True}),
     (r'(?:your )?challenged foes?|(?:the |your )?(?:challenged|scrutinised|scrutinized) (?:mobs?|foes?|targets?)', lambda m: {'marked': True}),
     (r'bleeding (?:mobs|targets|enemies)|(?:mobs|targets) that are bleeding', lambda m: {'bleeding': True}),
 ]

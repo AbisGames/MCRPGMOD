@@ -172,6 +172,12 @@ public final class ClassEvents {
         LivingEntity source = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
         if (event.getEntity() instanceof ServerPlayer victim) {
             ClassState state = ClassEffectApplier.state(victim);
+            // Decoys and premonitions: "an attack against you hits a decoy instead".
+            if (source != null && Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED)) {
+                victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
+                event.setCanceled(true);
+                return;
+            }
             // Dodge: only hits from someone (mobs, players, their arrows), never falls or fire.
             if (source != null) {
                 boolean melee = event.getSource().getDirectEntity() == source;

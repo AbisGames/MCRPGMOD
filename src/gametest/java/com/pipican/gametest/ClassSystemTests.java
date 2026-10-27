@@ -342,6 +342,21 @@ public final class ClassSystemTests {
         helper.assertTrue(Reactions.fire(player, zombie, ItemStack.EMPTY, ReactionEffect.Event.LOW_HEALTH), "low-health hit shrugged off");
         helper.assertTrue(!Reactions.fire(player, zombie, ItemStack.EMPTY, ReactionEffect.Event.HURT), "other events aren't cancelled");
 
+        // Uses per rest (premonitions): 2 + 1 from an upgrade, then none until sleeping.
+        Zombie attacker = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 2, 3));
+        for (int n = 0; n < 3; n++) {
+            helper.assertTrue(Reactions.fire(player, attacker, ItemStack.EMPTY, ReactionEffect.Event.ATTACKED), "premonition " + (n + 1));
+        }
+        helper.assertTrue(!Reactions.fire(player, attacker, ItemStack.EMPTY, ReactionEffect.Event.ATTACKED), "out of premonitions");
+        Reactions.rest(player);
+        helper.assertTrue(Reactions.fire(player, attacker, ItemStack.EMPTY, ReactionEffect.Event.ATTACKED), "refilled by sleeping");
+
+        // Damage over time (Pain curse).
+        new com.pipican.ability.action.DotAction(new com.pipican.ability.Targets(com.pipican.ability.Targets.Kind.VICTIM, 6, 16, 360, Optional.empty(), false), 2, 4)
+                .run(new AbilityContext(player, Optional.empty(), attacker.position(), Optional.of(attacker), 0));
+        helper.assertTrue(Bleeds.isBleeding(attacker), "a dot is running on the mob");
+        attacker.discard();
+
         // Start reactions: entering the conditional (sneaking) fires once.
         helper.assertTrue(!player.hasEffect(MobEffects.GLOWING), "not glowing yet");
         player.setShiftKeyDown(true);

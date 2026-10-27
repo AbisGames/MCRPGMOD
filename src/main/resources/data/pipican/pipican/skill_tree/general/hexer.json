@@ -4,38 +4,34 @@
     {
       "id": "hexer_start",
       "name": "Hexer",
-      "description": {
-        "text": "+3% curse chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3% curse chance",
       "type": "start",
       "x": 717,
-      "y": -1024
+      "y": -1024,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "curse",
+          "amount": 0.03
+        }
+      ]
     },
     {
       "id": "hexer_wicked",
       "name": "Wicked",
-      "description": {
-        "text": "+5% curse chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% curse chance",
       "type": "small",
       "x": 735,
       "y": -1097,
       "links": [
         "hexer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "curse",
+          "amount": 0.05
+        }
       ]
     },
     {

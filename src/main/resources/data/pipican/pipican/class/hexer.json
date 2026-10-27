@@ -70,9 +70,88 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.12,
+      "name": "curse",
+      "actions": [
+        {
+          "type": "pipican:mark",
+          "target": "victim",
+          "seconds": 8.0,
+          "multiplier": 1.0,
+          "glow": false
+        },
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:control",
+                "target": "victim",
+                "mode": "pacify",
+                "seconds": 8.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:slowness",
+                    "seconds": 8.0,
+                    "amplifier": 1
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:dot",
+                "damage": 2.0,
+                "seconds": 8.0
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.15
+    },
+    {
       "type": "pipican:bonus",
       "kind": "applied_harmful_duration",
       "amount": 0.25
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:reaction_chance",
+      "name": "curse",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "curse",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
     }
   ],
   "weakness": {

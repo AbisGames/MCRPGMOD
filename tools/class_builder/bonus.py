@@ -303,7 +303,7 @@ def mount_subject(t):
 SWORDS = '#pipican:weapons/swords'
 CHANCE_NAMES = {'ignite': 'ignite', 'fire': 'ignite', 'burn': 'ignite', 'poison': 'poison', 'wither': 'wither',
                 'blindness': 'blindness', 'blind': 'blindness', 'charm': 'pacify', 'lightning': 'lightning',
-                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal'}
+                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal', 'curse': 'curse', 'decoy': 'decoy'}
 
 
 def _bleed(**kw):
@@ -350,6 +350,13 @@ def chances(low, scal):
         num, word = (m.group(1), m.group(2)) if m.re.pattern.startswith('\\+') else (m.group(2), m.group(1))
         v, s = scal(float(num))
         e = {'type': 'pipican:reaction_chance', 'name': CHANCE_NAMES[word], 'amount': round(v / 100, 6)}
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return [e]
+    m = re.fullmatch(rf'\+?{N}% chance (?:that )?your hits curse a mob', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        e = {'type': 'pipican:reaction_chance', 'name': 'curse', 'amount': round(v / 100, 6)}
         if s:
             e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
         return [e]

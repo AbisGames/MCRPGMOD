@@ -14,15 +14,18 @@ import java.util.List;
  * this {@code name} ("+5% ignite chance", "charm chance doubled").
  *
  * <pre>{@code { "type": "pipican:reaction_chance", "name": "ignite", "amount": 0.05 } }</pre>
- * Chance = (the reaction's own chance + every {@code amount}) x every {@code multiplier}, at most 100%.
+ * Chance = (the reaction's own chance + every {@code amount}) x every {@code multiplier}, at most 100%. {@code uses}
+ * adds uses per rest to a reaction that has {@code uses_per_rest} ("+1 premonition"; fractions from scaling round down).
  */
-public record ReactionChanceEffect(String name, double amount, double multiplier, List<Scaling> scaling) implements ClassEffect {
+public record ReactionChanceEffect(String name, double amount, double multiplier, double uses, List<Scaling> scaling, List<Scaling> usesScaling) implements ClassEffect {
 
     public static final MapCodec<ReactionChanceEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.STRING.fieldOf("name").forGetter(ReactionChanceEffect::name),
             Codec.doubleRange(-1, 1).optionalFieldOf("amount", 0.0).forGetter(ReactionChanceEffect::amount),
             Codec.doubleRange(0, 100).optionalFieldOf("multiplier", 1.0).forGetter(ReactionChanceEffect::multiplier),
-            Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(ReactionChanceEffect::scaling)
+            Codec.DOUBLE.optionalFieldOf("uses", 0.0).forGetter(ReactionChanceEffect::uses),
+            Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(ReactionChanceEffect::scaling),
+            Scaling.LIST_CODEC.optionalFieldOf("uses_scaling", List.of()).forGetter(ReactionChanceEffect::usesScaling)
     ).apply(i, ReactionChanceEffect::new));
 
     @Override
@@ -32,6 +35,6 @@ public record ReactionChanceEffect(String name, double amount, double multiplier
 
     @Override
     public void apply(EffectContext ctx) {
-        ctx.addReactionChance(name, Scaling.evaluate(amount, scaling, ctx) * ctx.rank(), multiplier);
+        ctx.addReactionChance(name, Scaling.evaluate(amount, scaling, ctx) * ctx.rank(), multiplier, Scaling.evaluate(uses, usesScaling, ctx));
     }
 }

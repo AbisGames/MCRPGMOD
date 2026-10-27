@@ -74,7 +74,7 @@ public interface EffectContext {
     void addBleed(double damage, double seconds, int maxStacks, boolean anyHit, boolean slows, Optional<HolderSet<Item>> weapons);
 
     /** Changes the chance of reactions named {@code name}. */
-    void addReactionChance(String name, double amount, double multiplier);
+    void addReactionChance(String name, double amount, double multiplier, double uses);
 
     /** A chance to avoid hits from arrows and other projectiles. */
     void addRangedDodge(double chance);

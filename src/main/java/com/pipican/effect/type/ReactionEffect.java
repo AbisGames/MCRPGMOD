@@ -31,7 +31,7 @@ import net.minecraft.world.item.Item;
  * attacker), and area targets are centred on it. Reactions never trigger other reactions.
  */
 public record ReactionEffect(Event event, double chance, int cooldownTicks, Optional<HolderSet<Item>> weapons,
-                             Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions, Optional<String> name, boolean oncePerRest) implements ClassEffect {
+                             Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions, Optional<String> name, boolean oncePerRest, int usesPerRest) implements ClassEffect {
 
     public enum Event implements StringRepresentable {
         HIT("hit"), CRIT("crit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block"),
@@ -56,7 +56,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You played a goat horn or a note block. */
         INSTRUMENT("instrument"),
         /** You were struck by lightning. */
-        LIGHTNING("lightning");
+        LIGHTNING("lightning"),
+        /** A mob or player is about to hit you (before damage); {@code pipican:shrug} makes it miss ("hits a decoy instead"). */
+        ATTACKED("attacked");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;
@@ -79,7 +81,8 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("victims").forGetter(ReactionEffect::victims),
             Codec.lazyInitialized(() -> AbilityAction.CODEC).listOf().fieldOf("actions").forGetter(ReactionEffect::actions),
             Codec.STRING.optionalFieldOf("name").forGetter(ReactionEffect::name),
-            Codec.BOOL.optionalFieldOf("once_per_rest", false).forGetter(ReactionEffect::oncePerRest)
+            Codec.BOOL.optionalFieldOf("once_per_rest", false).forGetter(ReactionEffect::oncePerRest),
+            Codec.intRange(0, 1000).optionalFieldOf("uses_per_rest", 0).forGetter(ReactionEffect::usesPerRest)
     ).apply(i, ReactionEffect::new));
 
     @Override

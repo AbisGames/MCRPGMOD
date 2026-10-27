@@ -8,7 +8,7 @@ N = r'(\d+(?:\.\d+)?)'
 NAMED = {}
 # class id -> {reaction name: [extra actions]}: "after Zeal triggers, immune to Slowness for 5s" rides on Zeal's reaction.
 EXTRA = {}
-TRIGGERED = {'zeal': 'zeal'}
+TRIGGERED = {'zeal': 'zeal', 'decoy': 'decoy'}
 # class id -> {cleaned lowercase body: label}, so a mechanic can be named after its line ("Inspiring Song: players within ...")
 LABELS = {}
 # class id -> aura names
@@ -458,8 +458,75 @@ def triggers_more(t, ctx):
     return None
 
 
+CURSE_KINDS = [
+    (r'stops attacking', lambda s: [{'type': 'pipican:control', 'target': 'victim', 'mode': 'pacify', 'seconds': s}]),
+    (r'(slowness|weakness|poison|wither|blindness)(?: (i|ii|iii|iv))?', None),
+    (rf'{N} damage per second', None),
+]
+
+
+def whole_line(text, ctx):
+    """Lines whose brackets or quotes carry the meaning, matched before notes are dropped. -> effects or None."""
+    import combat
+    t = text.strip().rstrip('.')
+    t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)
+    low = t.lower()
+    # Evil Eye: "12% chance on hit to curse a mob for 8s with one of: Desire (stops attacking), Lethargy (Slowness II) or Pain (2 damage per second)"
+    m = re.fullmatch(rf'{N}% chance on hit to curse a mob for {N}s with one of: (.+)', low)
+    if m:
+        secs = float(m.group(2))
+        choices = []
+        for part in re.split(r',\s*(?:or\s+)?|\s+or\s+', m.group(3)):
+            mm = re.fullmatch(r'[a-z]+ \((.+)\)', part.strip())
+            if not mm:
+                return None
+            what = mm.group(1)
+            if re.fullmatch(r'stops attacking', what):
+                acts = [{'type': 'pipican:control', 'target': 'victim', 'mode': 'pacify', 'seconds': secs}]
+            elif re.fullmatch(rf'{N} damage per second', what):
+                acts = [{'type': 'pipican:dot', 'damage': float(re.match(N, what).group(1)), 'seconds': secs}]
+            else:
+                entries = _effects_list(what, secs)
+                if not entries:
+                    return None
+                acts = [{'type': 'pipican:effect', 'target': 'victim', 'effects': entries}]
+            choices.append(acts)
+        return [{'type': 'pipican:on', 'event': 'hit', 'chance': round(float(m.group(1)) / 100, 6), 'name': 'curse', 'actions': [
+            {'type': 'pipican:mark', 'target': 'victim', 'seconds': secs, 'multiplier': 1.0, 'glow': False},
+            {'type': 'pipican:random', 'choices': choices}]}]
+    # Illusory Duplicates: "12% chance an attack against you hits a decoy instead; you blink 4 blocks away"
+    m = re.fullmatch(rf'{N}% chance an attack against you hits a decoy instead(?:; you blink {N} blocks away)?', low)
+    if m:
+        acts = [{'type': 'pipican:decoy', 'seconds': 3.0}]
+        if m.group(2):
+            acts.append({'type': 'pipican:blink', 'distance': float(m.group(2))})
+        acts.append({'type': 'pipican:shrug'})
+        return [{'type': 'pipican:on', 'event': 'attacked', 'chance': round(float(m.group(1)) / 100, 6), 'name': 'decoy', 'actions': acts}]
+    # Premonitions: "after sleeping, you get 3 'premonitions' - each automatically turns a hit against you into a miss"
+    m = re.fullmatch(rf"after sleeping, you get {N} '?premonitions'? - each automatically turns a hit against you into a miss", low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'attacked', 'name': 'premonition', 'uses_per_rest': int(float(m.group(1))),
+                 'actions': [{'type': 'pipican:shrug'}]}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    # premonition / curse / decoy counts and add-ons
+    m = re.fullmatch(rf'\+{N} premonitions?', t)
+    if m:
+        return [{'type': 'pipican:reaction_chance', 'name': 'premonition', 'uses': float(m.group(1))}]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N} premonitions?|\+{N} premonitions? per {N} ([a-z]+)', t)
+    if m:
+        per, stat, n = (m.group(1), m.group(2), m.group(3)) if m.group(1) else (m.group(5), m.group(6), m.group(4))
+        if _stat_source(stat, ctx):
+            return [{'type': 'pipican:reaction_chance', 'name': 'premonition', 'uses_scaling': [{'source': 'special_stat', 'per': round(float(n) / float(per), 6)}]}]
+    if re.fullmatch(r'premonitions also work on arrows', t):
+        return []  # they already do
+    m = re.fullmatch(rf"after (?:a|an) (decoy),? you(?:'re| are) invisible for {N}s", t)
+    if m and ctx.get('passive'):
+        EXTRA.setdefault(cid, {}).setdefault('decoy', []).append({'type': 'pipican:effect', 'effects': [{'effect': 'minecraft:invisibility', 'seconds': float(m.group(2))}]})
+        return []
     tm = triggers_more(t, ctx)
     if tm:
         return tm
@@ -515,11 +582,11 @@ def mechanics(t, ctx):
                 mm = re.fullmatch(rf'(.+?) for {N}s', m.group(1))
                 import bonus
                 b = bonus._boost(mm.group(1), mm.group(2), ctx) if mm else None
-            if b:
+            if b and ctx.get('passive'):
                 EXTRA.setdefault(cid, {}).setdefault(rname, []).append(b)
                 return []
         m = re.fullmatch(rf'hits within {N}s of an? {word} trigger deal \+{N}% damage', t)
-        if m:
+        if m and ctx.get('passive'):
             EXTRA.setdefault(cid, {}).setdefault(rname, []).append({'type': 'pipican:boost', 'seconds': float(m.group(1)),
                 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 + float(m.group(2)) / 100, 6)}]})
             return []

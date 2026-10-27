@@ -65,6 +65,40 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "attacked",
+      "chance": 0.12,
+      "name": "decoy",
+      "actions": [
+        {
+          "type": "pipican:decoy",
+          "seconds": 3.0
+        },
+        {
+          "type": "pipican:blink",
+          "distance": 4.0
+        },
+        {
+          "type": "pipican:shrug"
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:reaction_chance",
+      "name": "decoy",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Illusions shatter on the truly perceptive.",

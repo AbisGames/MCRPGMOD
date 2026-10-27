@@ -4,38 +4,34 @@
     {
       "id": "illusionist_start",
       "name": "Illusionist",
-      "description": {
-        "text": "+3% decoy chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3% decoy chance",
       "type": "start",
       "x": 860,
-      "y": 1349
+      "y": 1349,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "decoy",
+          "amount": 0.03
+        }
+      ]
     },
     {
       "id": "illusionist_mirror_image",
       "name": "Mirror Image",
-      "description": {
-        "text": "+5% decoy chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% decoy chance",
       "type": "small",
       "x": 920,
       "y": 1394,
       "links": [
         "illusionist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "decoy",
+          "amount": 0.05
+        }
       ]
     },
     {
@@ -105,16 +101,7 @@
     {
       "id": "illusionist_hall_of_mirrors",
       "name": "Hall of Mirrors",
-      "description": {
-        "text": "decoy chance doubled, but -25% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "decoy chance doubled, but -25% max health",
       "type": "keystone",
       "x": 973,
       "y": 1527,
@@ -123,7 +110,20 @@
         "illusionist_veil"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "decoy",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -460,6 +460,9 @@ def translate(text, ctx):
     if not text or text.strip() in ('-', 'none', 'nothing'):
         return [], []
     original = text
+    whole = named.whole_line(text, ctx)
+    if whole is not None:
+        return whole, []
     # Zeal's "(+10 Madness)" is part of what happens, not a note.
     text = re.sub(r'shrug it off entirely \(\+(\d+) ([A-Za-z ]+)\)', r'shrug it off entirely and gain \1 \2', text)
     # Class items: "Sigil weapons: +10% damage", "+3% bound weapon damage", "staff damage +1% per Staffcraft",
