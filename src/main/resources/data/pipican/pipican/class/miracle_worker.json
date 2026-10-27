@@ -70,6 +70,17 @@
           "per": 0.01
         }
       ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:miracle_worker/stigmata",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

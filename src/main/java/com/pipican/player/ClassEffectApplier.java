@@ -221,7 +221,8 @@ public final class ClassEffectApplier {
         data.abilityActive().keySet().forEach(key -> {
             Ability ability = abilities.getValue(key);
             if (ability != null) {
-                ability.effects().forEach(e -> effects.add(Map.entry(e, 1)));
+                double strength = 1 + state(player).abilityMod(key).strength();
+                ability.effects().forEach(e -> effects.add(Map.entry(strength == 1 ? e : new com.pipican.effect.ScaledEffect(e, strength, null), 1)));
             }
         });
         // Short boosts from reactions ("+15% speed for 2s after you take damage").
@@ -323,7 +324,7 @@ public final class ClassEffectApplier {
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
                 new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount, c.summonHearts),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
-                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy));
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods));
     }
 
     /**
@@ -444,6 +445,7 @@ public final class ClassEffectApplier {
         final Map<Holder<MobEffect>, ClassState.AppliedRule> appliedRules = new java.util.HashMap<>();
         final Map<Holder<MobEffect>, Double> effectDurations = new java.util.HashMap<>();
         final List<com.pipican.effect.type.IgnoredByEffect> ignoredBy = new ArrayList<>();
+        final Map<ResourceKey<Ability>, ClassState.AbilityMod> abilityMods = new java.util.HashMap<>();
 
         /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
         List<ClassState.Aura> finishAuras() {
@@ -530,6 +532,11 @@ public final class ClassEffectApplier {
         @Override
         public void addEffectDuration(Holder<MobEffect> effect, double multiplier) {
             effectDurations.merge(effect, multiplier, (a, b) -> a * b);
+        }
+
+        @Override
+        public void addAbilityMod(ResourceKey<Ability> ability, ClassState.AbilityMod mod) {
+            abilityMods.merge(ability, mod, ClassState.AbilityMod::plus);
         }
 
         @Override

@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1669**, partly working: **24**, not yet: **557**
+- Bonus phrases: **2250**. Fully working: **1674**, partly working: **24**, not yet: **552**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,10 +12,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 190 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 133 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 88 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 74 |
+| [Other mechanics](#other-mechanics) | 188 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 131 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 87 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 72 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 52 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 43 |
@@ -182,14 +182,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Rampage: consecutive kills within 5s add +5% damage (stacks 5)
   - special tree: Glorious Death: once per day
 - **miracle_worker**
-  - special passive: Stigmata radius +1 per 10 Devotion
   - special passive: Worker of Miracles heals +1 per 10 Devotion
   - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
   - general tree: Holy Presence: Stigmata Slowness becomes Slowness II
   - general tree: Saint Among Us: miracles cost half
   - general tree: Saint Among Us: max health penalty is 3 per use
   - special tree: Booming Voice: Tongues messages carry server-wide
-  - special tree: Living God: Stigmata lasts twice as long
 - **myrmidon**
   - special stat per point: +0.5% shield bash damage
   - passive: Shield Block: shields recover from axe-disable 50% faster and block 100% of melee damage from the front
@@ -393,7 +391,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Master of Undeath: double servant cap
 - **oracle**
   - general tree: Steady Mind: the after-effects of Ecstasy last half as long
-  - general tree: Living Avatar: Divine Ecstasy bonuses +50%
   - special tree: Fearless: +15% knockback resistance in Ecstasy
   - special tree: Avatar: +1 armor and +10% attack speed in Ecstasy
 - **paladin**
@@ -401,7 +398,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: killing a villager, iron golem or tamed animal empties Smite and gives Weakness I for 5 minutes
 - **priest**
   - general tree: Martyr: Prayer aura also gives allies +5% damage reduction, but you take 10% more damage
-  - special tree: Improved Shared Recovery: Shared Recovery can be used twice per rest; Prayer aura range -2 blocks
 - **ranger**
   - general tree: Stalker: +10% movement speed toward your prey
 - **rogue**
@@ -554,13 +550,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Tongues: your chat messages can be read by all players within 1000 blocks when you start them with '!'
   - general tree: Halo: you glow and light the area
   - special tree: Worker of Miracles: heal amount 10
-  - special tree: Living God: you can't sleep while it's active
+  - special tree: Living God: Stigmata lasts twice as long; you can't sleep while it's active
 - **myrmidon**
   - special stat per point: -0.2% damage taken while blocking
   - passive: sneak-attacking with a raised shield bashes for 4 damage
 - **oracle**
   - passive: Visions: you see the outline of hostile mobs through walls within 6 blocks while sneaking
-  - special passive: Divine Ecstasy lasts longer: drain -1% per 2 Communion
 - **poisoner**
   - passive: Poison Mastery: your melee hits and arrows apply Poison I for 4s (Poison II if you hold a pufferfish or poison potion in the off-hand)
 - **rogue**
@@ -613,8 +608,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Resource bar: filling, refills, spending
 
-- **aeromancer**
-  - special tree: Lord of the Air: Flight costs 30% less Breath; -15% max health
 - **arcanist**
   - passive: whenever you spend Mystic Flux
   - special tree: Archmage's Insight: every 3rd ability is free; -10% Flux regen
@@ -684,7 +677,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **necromancer**
   - special tree: Lord of Bones: servants never expire until killed; -15% max health
 - **oracle**
-  - general tree: Living Avatar: you can't leave it early and it drains 50% faster
+  - general tree: Living Avatar: Divine Ecstasy bonuses +50%, but you can't leave it early and it drains 50% faster
   - special tree: Fully Possessed: Ecstasy also gives Regeneration I; after-effects add Blindness 3s
 - **paladin**
   - special tree: Holy Radiance: unlocks Holy Radiance; -15% max Smite
@@ -734,8 +727,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Planeswalker: Hasty Escape always triggers, but -20% max health
 - **warlock**
   - special tree: Spell Thief Mastery: Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health
-- **warrior**
-  - special tree: Grit: Catch Your Breath can be used twice per rest; -10% max Stamina
 - **witch**
   - general tree: Coven: +10% max Witchery, Guidance range +2
 - **zealot**

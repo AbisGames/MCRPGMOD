@@ -100,6 +100,9 @@ public interface EffectContext {
     /** {@code effect} lasts {@code multiplier} times as long on the player. */
     void addEffectDuration(Holder<MobEffect> effect, double multiplier);
 
+    /** Upgrades one ability. */
+    void addAbilityMod(net.minecraft.resources.ResourceKey<com.pipican.ability.Ability> ability, com.pipican.player.ClassState.AbilityMod mod);
+
     /** Some mobs never target the player. */
     void addIgnoredBy(com.pipican.effect.type.IgnoredByEffect ignore);
 

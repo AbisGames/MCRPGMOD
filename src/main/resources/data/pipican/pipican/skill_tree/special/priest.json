@@ -95,16 +95,7 @@
     {
       "id": "improved_recovery",
       "name": "Improved Shared Recovery",
-      "description": {
-        "text": "Shared Recovery can be used twice per rest; Prayer aura range -2 blocks",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Shared Recovery can be used twice per rest; Prayer aura range -2 blocks",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -113,7 +104,19 @@
         "tradition"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:priest/shared_recovery",
+          "uses": 1
+        },
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "radius": -2.0
+        }
+      ]
     }
   ]
 }

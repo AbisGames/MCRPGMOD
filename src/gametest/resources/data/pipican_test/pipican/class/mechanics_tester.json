@@ -4,6 +4,7 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    { "type": "pipican:ability_mod", "ability": "pipican_test:mend", "cooldown_seconds": -1, "cost": -0.5 },
     { "type": "pipican:bonus", "kind": "min_melee_damage", "amount": 4 },
     {
       "type": "pipican:on",

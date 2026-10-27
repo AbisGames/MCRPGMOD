@@ -64,10 +64,11 @@ public record ClassState(
         PetMods petMods,
         Map<Holder<MobEffect>, AppliedRule> appliedRules,
         Map<Holder<MobEffect>, Double> effectDurations,
-        List<com.pipican.effect.type.IgnoredByEffect> ignoredBy) {
+        List<com.pipican.effect.type.IgnoredByEffect> ignoredBy,
+        Map<ResourceKey<com.pipican.ability.Ability>, AbilityMod> abilityMods) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -123,6 +124,20 @@ public record ClassState(
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count, double hearts) {
         public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0);
+    }
+
+    /** {@code pipican:ability_mod} totals for one ability. */
+    public record AbilityMod(double cooldownSeconds, double cost, double drain, double duration, double radius, int uses, double strength) {
+        public static final AbilityMod NONE = new AbilityMod(0, 0, 0, 0, 0, 0, 0);
+
+        public AbilityMod plus(AbilityMod o) {
+            return new AbilityMod(cooldownSeconds + o.cooldownSeconds, cost + o.cost, drain + o.drain, duration + o.duration, radius + o.radius,
+                    uses + o.uses, strength + o.strength);
+        }
+    }
+
+    public AbilityMod abilityMod(ResourceKey<com.pipican.ability.Ability> ability) {
+        return ability == null ? AbilityMod.NONE : abilityMods.getOrDefault(ability, AbilityMod.NONE);
     }
 
     /** {@code pipican:applied_effect} totals for one effect. */

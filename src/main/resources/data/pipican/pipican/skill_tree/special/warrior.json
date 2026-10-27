@@ -100,16 +100,7 @@
     {
       "id": "grit_mastery",
       "name": "Grit",
-      "description": {
-        "text": "Catch Your Breath can be used twice per rest; -10% max Stamina",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Catch Your Breath can be used twice per rest; -10% max Stamina",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -118,7 +109,20 @@
         "grit_heart"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:warrior/catch_your_breath",
+          "uses": 1
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -385,7 +385,9 @@ public final class ClassSystemTests {
 
         // Ability cooldowns -50%.
         Ability mend = ClassLookup.abilities(level.registryAccess()).getValue(ability("mend"));
-        helper.assertTrue(AbilityService.cooldown(player, mend) == Math.round(mend.cooldownTicks() * 0.5), "half cooldown");
+        helper.assertTrue(AbilityService.cooldown(player, mend) == Math.round(mend.cooldownTicks() * 0.5) - 20,
+                "half cooldown, then 1s off from the ability upgrade: " + AbilityService.cooldown(player, mend));
+        assertNear(helper, mend.cost() * 0.5, AbilityService.cost(player, mend), "ability upgrade halves the cost");
 
         // Class item rules: bound weapon (hotbar slot 1), sigil weapon (renamed), carrying a book.
         player.getInventory().setSelectedSlot(0);

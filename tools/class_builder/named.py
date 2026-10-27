@@ -72,11 +72,63 @@ def _stat_source(word, ctx):
     return 'special_stat' if word.lower() in (sp, 'point', 'points') else None
 
 
+def ability_mods(t, ctx):
+    """Upgrades to one of the class's abilities -> pipican:ability_mod ("Stigmata lasts twice as long")."""
+    abilities = {n: w['ability'] for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if w.get('type') == 'pipican:ability_active'}
+    if not abilities:
+        return None
+    names = '|'.join(sorted((re.escape(n) for n in abilities), key=len, reverse=True))
+    per = rf'(?: per (?:{N} )?([a-z]+)(?: points?)?)?'
+
+    def mod(name, field, value, n=None, stat=None, div=1.0):
+        e = {'type': 'pipican:ability_mod', 'ability': abilities[name]}
+        if stat:
+            src = _stat_source(stat, ctx)
+            if not src:
+                return None
+            e[field] = 0.0
+            e['scaling'] = [{'source': src, 'per': round(value / div / float(n or 1), 6)}]
+        else:
+            e[field] = round(value / div, 6) if field != 'uses' else int(value)
+        return [e]
+
+    m = re.fullmatch(rf'({names}) lasts (twice|three times) as long', t)
+    if m:
+        # Timed states last longer; toggles drain slower (whichever the ability is).
+        a = mod(m.group(1), 'duration', {'twice': 1, 'three times': 2}[m.group(2)])
+        a[0]['drain'] = {'twice': -0.5, 'three times': round(-2 / 3, 6)}[m.group(2)]
+        return a
+    m = re.fullmatch(rf'({names}) radius ([+-]{N})(?: blocks?)?' + per, t)
+    if m:
+        return mod(m.group(1), 'radius', float(m.group(2)), m.group(4), m.group(5))
+    m = re.fullmatch(rf'({names}) bonuses (doubled|\+{N}%)', t)
+    if m:
+        return mod(m.group(1), 'strength', 1.0 if m.group(2) == 'doubled' else float(m.group(3)) / 100)
+    m = re.fullmatch(rf'({names}) can be used (twice|three times) per rest', t)
+    if m:
+        return mod(m.group(1), 'uses', {'twice': 1, 'three times': 2}[m.group(2)])
+    m = re.fullmatch(rf'({names}) costs {N}% less(?: [a-z]+)?', t)
+    if m:
+        a = mod(m.group(1), 'cost', -float(m.group(2)), div=100)
+        a[0]['drain'] = a[0]['cost']
+        return a
+    m = re.fullmatch(rf'({names}) cooldown ([+-]{N})s', t)
+    if m:
+        return mod(m.group(1), 'cooldown_seconds', float(m.group(2)))
+    m = re.fullmatch(rf'({names}) lasts longer: drain ([+-]{N})%' + per, t)
+    if m:
+        return mod(m.group(1), 'drain', float(m.group(2)), m.group(4), m.group(5), div=100)
+    return None
+
+
 def segment(t, ctx):
     """Whole-segment phrases. `t` is lowercase, label already stripped."""
     import bonus
     import combat
     import effects as fx
+    am = ability_mods(t, ctx)
+    if am:
+        return am
     named = NAMED.get(ctx.get('class_id'), {})
     for name, (when, inner) in sorted(named.items(), key=lambda kv: -len(kv[0])):
         n = re.escape(name)
@@ -492,6 +544,10 @@ def whole_line(text, ctx):
     """Lines whose brackets or quotes carry the meaning, matched before notes are dropped. -> effects or None."""
     import combat
     t = text.strip().rstrip('.')
+    # "Divine Ecstasy lasts longer: drain -1% per 2 Communion" reads like a label but names the ability.
+    am = ability_mods(t.lower(), ctx)
+    if am:
+        return am
     t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)
     low = t.lower()
     # "immune to Nausea, and Blindness/Darkness last half as long": the ", and" ends the immunity list.

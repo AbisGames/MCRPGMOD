@@ -73,7 +73,7 @@ public final class AbilityService {
         if (now < readyAt) {
             return ClassService.Result.fail(Component.translatable("pipican.ability.cooldown", ability.name(), (readyAt - now + 19) / 20));
         }
-        if (ability.usesPerRest() > 0 && data.extras().restUses.getOrDefault(key, 0) >= ability.usesPerRest()) {
+        if (ability.usesPerRest() > 0 && data.extras().restUses.getOrDefault(key, 0) >= ability.usesPerRest() + ClassEffectApplier.state(player).abilityMod(key).uses()) {
             return ClassService.Result.fail(Component.translatable("pipican.ability.needs_rest", ability.name()));
         }
         if (ability.requires().isPresent() && !ability.requires().get().test(player)) {
@@ -93,12 +93,20 @@ public final class AbilityService {
 
     /** The resource an ability costs this player, after {@code ability_cost} bonuses. */
     public static double cost(ServerPlayer player, Ability ability) {
-        return ability.cost() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.ABILITY_COST);
+        var state = ClassEffectApplier.state(player);
+        return ability.cost() * state.bonus(BonusEffect.Kind.ABILITY_COST) * Math.max(0, 1 + state.abilityMod(key(player, ability)).cost());
+    }
+
+    /** The registry key of {@code ability} (abilities are looked up by value in a few places). */
+    private static ResourceKey<Ability> key(ServerPlayer player, Ability ability) {
+        return ClassLookup.abilities(player.level().registryAccess()).getResourceKey(ability).orElse(null);
     }
 
     /** An ability's cooldown for this player, after {@code ability_cooldown} bonuses. */
     public static long cooldown(ServerPlayer player, Ability ability) {
-        return Math.round(ability.cooldownTicks() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.ABILITY_COOLDOWN));
+        var state = ClassEffectApplier.state(player);
+        return Math.max(0, Math.round(ability.cooldownTicks() * state.bonus(BonusEffect.Kind.ABILITY_COOLDOWN)
+                + state.abilityMod(key(player, ability)).cooldownSeconds() * 20));
     }
 
     /** Spell points (Wizard) pay for abilities that cost resource, while there are any left. */
@@ -157,7 +165,8 @@ public final class AbilityService {
             data.abilityActive().put(key, Long.MAX_VALUE);
         } else {
             if (ability.durationTicks() > 0) {
-                data.abilityActive().put(key, now + ability.durationTicks());
+                double longer = Math.max(0, 1 + ClassEffectApplier.state(player).abilityMod(key).duration());
+                data.abilityActive().put(key, now + Math.round(ability.durationTicks() * longer));
             }
             data.abilityCooldowns().put(key, now + cooldown(player, ability));
         }
@@ -257,7 +266,8 @@ public final class AbilityService {
                 continue;
             }
             if (ability.toggle() && ability.drainPerSecond() > 0) {
-                data.setResource(Math.max(0, data.resource() - ability.drainPerSecond() / 20));
+                double drain = ability.drainPerSecond() * Math.max(0, 1 + ClassEffectApplier.state(player).abilityMod(e.getKey()).drain());
+                data.setResource(Math.max(0, data.resource() - drain / 20));
                 if (data.resource() <= 0) {
                     ending.add(e.getKey());
                     continue;

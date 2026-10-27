@@ -88,16 +88,7 @@
     {
       "id": "lord_of_the_air",
       "name": "Lord of the Air",
-      "description": {
-        "text": "Flight costs 30% less Breath; -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Flight costs 30% less Breath; -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -106,7 +97,21 @@
         "flight"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:aeromancer/flight",
+          "cost": -0.3,
+          "drain": -0.3
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

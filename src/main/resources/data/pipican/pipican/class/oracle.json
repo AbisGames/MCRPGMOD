@@ -91,6 +91,17 @@
       ]
     },
     {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:oracle/divine_ecstasy",
+      "drain": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.005
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:ability_active",
