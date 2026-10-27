@@ -74,6 +74,27 @@
       "operation": "add_multiplied_base"
     },
     {
+      "type": "pipican:on",
+      "event": "second",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "radius": 10.0,
+          "effects": [
+            {
+              "effect": "minecraft:glowing",
+              "seconds": 2.0
+            }
+          ],
+          "state": {
+            "targeting_you": true
+          }
+        }
+      ],
+      "name": "alertness"
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:nearby",
@@ -92,6 +113,17 @@
     }
   ],
   "special_passives": [
+    {
+      "type": "pipican:reaction_mod",
+      "name": "alertness",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.2
+        }
+      ]
+    },
     {
       "type": "pipican:damage_taken",
       "damage_types": "#minecraft:is_fall",

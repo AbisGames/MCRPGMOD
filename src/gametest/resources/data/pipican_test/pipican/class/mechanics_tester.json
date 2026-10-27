@@ -4,6 +4,7 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    { "type": "pipican:bonus", "kind": "spell_ward", "amount": 1 },
     {
       "type": "pipican:on",
       "event": "instrument",

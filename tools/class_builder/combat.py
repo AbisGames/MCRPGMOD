@@ -206,7 +206,7 @@ def dodge(low, ctx, scal_fn):
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance to parry (melee )?(?:hits|attacks)', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (?:miss chance|precognition)()', low) or \
         re.fullmatch(r'(?:miss chance|precognition) \+?(\d+(?:\.\d+)?)%()', low) or \
-        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (parry) chance', low) or re.fullmatch(r'(?:parry chance) \+?(\d+(?:\.\d+)?)%( )', low) or \
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (parry) chance', low) or re.fullmatch(r'(?:parry chance) \+?(\d+(?:\.\d+)?)%()', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (arrow)-?\s?deflect(?:ion)? chance', low) or re.fullmatch(r'arrow-?\s?deflect(?:ion)? chance \+?(\d+(?:\.\d+)?)%( arrow)', low)
     if not m:
         return None
@@ -214,7 +214,7 @@ def dodge(low, ctx, scal_fn):
     e = {'type': 'pipican:dodge', 'chance': round(amount / 100, 6)}
     if m.group(2) and 'arrow' in m.group(2):
         e['ranged_only'] = True
-    elif m.group(2):
+    elif m.group(2) or 'parry' in low:
         e['melee_only'] = True
     if scaling:
         e['scaling'] = [{'source': s, 'per': round(p / 100, 6)} for s, p in scaling]

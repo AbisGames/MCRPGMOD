@@ -38,11 +38,17 @@ import net.minecraft.world.phys.Vec3;
  *   <li>{@code near_victim} - in a reaction, the hostile mob closest to the one hit, within {@code radius} of it</li>
  * </ul>
  * {@code cone} (degrees, default 360) keeps only targets in front of the user. {@code entities} (an entity
- * type, list or {@code #tag}, e.g. {@code "#minecraft:undead"}) keeps only those kinds of mob.
+ * type, list or {@code #tag}, e.g. {@code "#minecraft:undead"}) keeps only those kinds of mob; {@code state} (a
+ * {@link com.pipican.effect.VictimState}, e.g. {@code { "effects": "minecraft:invisibility" }}) only those in that state.
  * Areas are centred on the action's origin: the user, or an anchored state's spot. With {@code look} and
  * nothing in the crosshair the whole use is cancelled and refunded, unless {@code "required": false}.
  */
-public record Targets(Kind target, double radius, double range, double cone, Optional<HolderSet<EntityType<?>>> entities, boolean required) {
+public record Targets(Kind target, double radius, double range, double cone, Optional<HolderSet<EntityType<?>>> entities, boolean required,
+                      Optional<com.pipican.effect.VictimState> state) {
+
+    public Targets(Kind target, double radius, double range, double cone, Optional<HolderSet<EntityType<?>>> entities, boolean required) {
+        this(target, radius, range, cone, entities, required, Optional.empty());
+    }
 
     public enum Kind implements StringRepresentable {
         SELF("self"), ALLIES("allies"), PLAYERS("players"), HOSTILES("hostiles"), MOBS("mobs"), LOOK("look"), LOOK_ALLY("look_ally"),
@@ -68,13 +74,15 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
                 Codec.doubleRange(0, 128).optionalFieldOf("range", 16.0).forGetter(Targets::range),
                 Codec.doubleRange(1, 360).optionalFieldOf("cone", 360.0).forGetter(Targets::cone),
                 RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("entities").forGetter(Targets::entities),
-                Codec.BOOL.optionalFieldOf("required", true).forGetter(Targets::required)
+                Codec.BOOL.optionalFieldOf("required", true).forGetter(Targets::required),
+                com.pipican.effect.VictimState.CODEC.optionalFieldOf("state").forGetter(Targets::state)
         ).apply(i, Targets::new));
     }
 
     public List<LivingEntity> select(AbilityContext ctx) {
         List<LivingEntity> out = new ArrayList<>(selectAll(ctx));
         entities.ifPresent(set -> out.removeIf(e -> !set.contains(e.getType().builtInRegistryHolder())));
+        state.ifPresent(st -> out.removeIf(e -> !st.test(ctx.player(), e)));
         if (out.isEmpty() && required && target == Kind.LOOK) {
             ctx.cancel(net.minecraft.network.chat.Component.translatable("pipican.ability.no_target"));
         }

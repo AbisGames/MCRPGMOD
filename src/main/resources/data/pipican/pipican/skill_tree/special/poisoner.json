@@ -90,16 +90,7 @@
     {
       "id": "toxic_blood",
       "name": "Toxic Blood",
-      "description": {
-        "text": "mobs that hit you are poisoned; healing on you is 15% weaker",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs that hit you are poisoned; healing on you is 15% weaker",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -108,7 +99,30 @@
         "lethal_dose"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:poison",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": -0.15
+        }
+      ]
     }
   ]
 }

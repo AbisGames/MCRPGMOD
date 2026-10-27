@@ -76,16 +76,7 @@
     {
       "id": "diviner_second_sight",
       "name": "Second Sight",
-      "description": {
-        "text": "invisible mobs glow",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "invisible mobs glow",
       "type": "notable",
       "x": 1705,
       "y": -350,
@@ -93,7 +84,29 @@
         "diviner_lucky_star"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "mobs",
+              "radius": 16.0,
+              "effects": [
+                {
+                  "effect": "minecraft:glowing",
+                  "seconds": 2.0
+                }
+              ],
+              "state": {
+                "effects": "minecraft:invisibility"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "diviner_doomsayer",

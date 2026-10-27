@@ -21,21 +21,19 @@
     {
       "id": "sentinel_eagle_eyes",
       "name": "Eagle Eyes",
-      "description": {
-        "text": "+8 blocks glow range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8 blocks glow range",
       "type": "small",
       "x": 200,
       "y": 1305,
       "links": [
         "sentinel_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "perfect awareness",
+          "radius": 8.0
+        }
       ]
     },
     {

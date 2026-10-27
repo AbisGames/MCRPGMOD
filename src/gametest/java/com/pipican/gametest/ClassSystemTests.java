@@ -533,6 +533,15 @@ public final class ClassSystemTests {
         var healOther = new com.pipican.mastery.trigger.DidTrigger(com.pipican.mastery.SkillAction.Did.Kind.HEAL_OTHER, Optional.empty(), Optional.empty());
         helper.assertTrue(healOther.uses(com.pipican.mastery.SkillAction.Did.of(com.pipican.mastery.SkillAction.Did.Kind.HEAL_OTHER)) == 1, "heal_other trigger");
 
+        // Spell ward 100%: harmful effects from others never land; your own still do.
+        Zombie caster = helper.spawn(EntityType.ZOMBIE, new BlockPos(3, 2, 1));
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.WEAKNESS, 100), caster);
+        helper.assertTrue(!player.hasEffect(MobEffects.WEAKNESS), "warded against a mob's weakness");
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.WEAKNESS, 100));
+        helper.assertTrue(player.hasEffect(MobEffects.WEAKNESS), "no source: not warded");
+        player.removeEffect(MobEffects.WEAKNESS);
+        caster.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);
@@ -595,7 +604,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false, false).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false, false, false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers
@@ -844,6 +853,7 @@ public final class ClassSystemTests {
             String owner = entry.getKey().identifier().getPath().split("/")[0];
             ClassService.chooseClass(player, ResourceKey.create(PipicanRegistries.CLASS, Pipican.id(owner)), false, true);
             var zombie = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 1, 1, 3);
+            zombie.setBaby(false); // a baby zombie is below eye level, so "look" abilities would miss it
             player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 2, 0, 0);
             var area = player.getBoundingBox().inflate(48);
             try {

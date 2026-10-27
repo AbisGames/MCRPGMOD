@@ -633,6 +633,17 @@ def chances(low, scal):
         if s:
             e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
         return [e]
+    m = re.fullmatch(rf'\+?{N}% chance (?:that )?your hits charm a mob', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        e = {'type': 'pipican:reaction_chance', 'name': 'pacify', 'amount': round(v / 100, 6)}
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return [e]
+    m = re.fullmatch(rf'\+?{N}% chance that a harmful potion effect or magic attack aimed at you is cancelled', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        return [_effect('spell_ward', v, s)]
     m = re.fullmatch(rf'\+?{N}% chance (?:that )?your hits curse a mob', t)
     if m:
         v, s = scal(float(m.group(1)))

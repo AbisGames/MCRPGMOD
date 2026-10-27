@@ -64,7 +64,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You finished eating; {@code weapons} limits it to some foods. */
         EAT("eat"),
         /** You used (right-clicked) an item; {@code weapons} limits it to some items ("after throwing a wind charge"). */
-        USE_ITEM("use_item");
+        USE_ITEM("use_item"),
+        /** You finished drinking a potion. */
+        DRINK("drink");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

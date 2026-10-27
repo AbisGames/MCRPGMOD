@@ -74,6 +74,11 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "spell_ward",
+      "amount": 0.15
+    },
+    {
       "type": "pipican:on",
       "event": "hurt",
       "actions": [

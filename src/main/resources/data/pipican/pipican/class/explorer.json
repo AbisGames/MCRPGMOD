@@ -119,6 +119,17 @@
         }
       ],
       "name": "respite"
+    },
+    {
+      "type": "pipican:on",
+      "event": "low_health",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:shrug"
+        }
+      ],
+      "name": "driven"
     }
   ],
   "special_passives": [

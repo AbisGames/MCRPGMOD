@@ -207,6 +207,115 @@
       ]
     },
     {
+      "type": "pipican:on",
+      "event": "drink",
+      "chance": 0.2,
+      "actions": [
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:speed",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:strength",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:regeneration",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:resistance",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:haste",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:jump_boost",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:fire_resistance",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:night_vision",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "name": "fluid magic"
+    },
+    {
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 2

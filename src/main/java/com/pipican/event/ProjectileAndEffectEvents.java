@@ -65,6 +65,11 @@ public final class ProjectileAndEffectEvents {
                 event.addReductionModifier(DamageContainer.Reduction.ARMOR, (container, reduction) -> (float) (reduction * kept));
             }
         }
+        if (event.getEntity() instanceof ServerPlayer warded && event.getSource().is(net.minecraft.tags.DamageTypeTags.WITCH_RESISTANT_TO)
+                && event.getSource().getEntity() != warded && warded.getRandom().nextDouble() < ClassEffectApplier.state(warded).chance(Kind.SPELL_WARD)) {
+            event.setCanceled(true);
+            return;
+        }
         if (event.getEntity() instanceof ServerPlayer player && event.getSource().getDirectEntity() instanceof AbstractThrownPotion
                 && event.getSource().getEntity() instanceof Witch && ClassEffectApplier.state(player).chance(Kind.WITCH_WARD) > 0) {
             event.setCanceled(true);
@@ -77,6 +82,11 @@ public final class ProjectileAndEffectEvents {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
+        double ward = state.chance(Kind.SPELL_WARD);
+        if (ward > 0 && event.getEffectSource() != null && event.getEffectSource() != player && player.getRandom().nextDouble() < ward) {
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            return;
+        }
         if (event.getEffectSource() instanceof Witch && state.chance(Kind.WITCH_WARD) > 0) {
             event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
         } else if (state.chance(Kind.FOOD_SAFE) > 0 && player.isUsingItem() && player.getUseItem().has(DataComponents.FOOD)) {
@@ -213,6 +223,9 @@ public final class ProjectileAndEffectEvents {
     static void onEat(net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent.Finish event) {
         if (event.getEntity() instanceof ServerPlayer player && event.getItem().has(DataComponents.FOOD)) {
             com.pipican.ability.Reactions.fire(player, null, event.getItem(), com.pipican.effect.type.ReactionEffect.Event.EAT);
+        }
+        if (event.getEntity() instanceof ServerPlayer player && event.getItem().has(DataComponents.POTION_CONTENTS)) {
+            com.pipican.ability.Reactions.fire(player, null, event.getItem(), com.pipican.effect.type.ReactionEffect.Event.DRINK);
         }
     }
 

@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1701**, partly working: **24**, not yet: **525**
+- Bonus phrases: **2250**. Fully working: **1719**, partly working: **25**, not yet: **506**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,15 +12,15 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 176 |
+| [Other mechanics](#other-mechanics) | 169 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 128 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 76 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 71 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 52 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 41 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 50 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 32 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 32 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
-| [Immunities](#immunities) | 14 |
+| [Immunities](#immunities) | 13 |
 | [Critical hits](#critical-hits) | 5 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 | [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 1 |
@@ -90,8 +90,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Stay the Hand +0.3% per Rapport
   - general tree: Calm Words: +5% Stay the Hand
   - general tree: Peacemaker: Stay the Hand 30%, but -40% damage
-- **diviner**
-  - general tree: Second Sight: invisible mobs glow
 - **dreadnaught**
   - passive: heavy armor gives +1 armor per piece
   - passive: no movement penalty
@@ -188,9 +186,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Turtle: blocking also stops arrows from the sides
   - special tree: Shield Mastery: +1 more armor with shield
   - special tree: Aspis: players within 3 blocks behind you are protected from projectiles; -10% damage
-- **oracle**
-  - passive: The Sight: invisible mobs and players within 16 blocks glow for you
-  - general tree: Whispers: glow range of The Sight +8 blocks
 - **paladin**
   - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
 - **priest**
@@ -211,15 +206,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Second Focus: focus bonus +10%
   - special tree: Generalist: non-focus schools get +10%
 - **scout**
-  - passive: Alertness: hostile mobs within 10 blocks that are targeting you glow
-  - special passive: Alertness range +1 block per 5 Awareness
   - general tree: Keen Eyes: +4 blocks Alertness range
   - special tree: Ghost Trail: mobs lose track of you 30% faster
 - **sentinel**
   - special stat per point: +0.5 blocks hostile-mob detection range
-  - special passive: Glow range +0.5 per Vigilance
   - general tree: Sentinel: +4 blocks detection range
-  - general tree: Eagle Eyes: +8 blocks glow range
   - special tree: Stand Guard: Stand Guard triggers after 1s
   - special tree: Sentry: players within 8 blocks also see what glows for you
 - **sharpshooter**
@@ -713,7 +704,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Death Mark: -20% damage to mobs that are targeting you
 - **avenger**
   - passive: Vow of Vengeance: the next mob to damage you or a player within 16 blocks becomes marked for 60s (one at a time)
-  - passive: +20% damage to your marked target and it glows for you
   - passive: When your marked target moves away, you get Speed II for 2s
   - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
   - weakness: -15% damage against anything that isn't your marked target while a mark is active
@@ -765,7 +755,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: +0.5% Hunt Prey duration per Instinct point
   - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
   - general tree: Apex Predator: +30% damage to prey, but -15% damage to everything else
-  - special tree: Expert Tracker: your prey glows through walls up to 32 blocks
   - special tree: Relentless Pursuit: when prey flees, you get Speed I for 3s
   - special tree: Master Hunter: you can mark prey in melee too and prey bonus +10%
   - special tree: Master Hunter: Hunt Prey ends instantly if you hit another mob
@@ -792,20 +781,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Recycling: Reclaim chance +5%
 - **bard**
   - special passive: Disarming Charm: per 10 Resonance, +3% chance a hostile mob you hit forgets you
-- **dervish**
-  - special passive: Parry chance +0.3% per Rhythm
 - **destroyer**
   - special tree: Shockwave: shockwave knocks mobs back
 - **diviner**
-  - special passive: Miss chance +0.3% per Foresight
   - special tree: Ill Fortune: mobs within 8 blocks have 10% chance to miss everyone
 - **duelist**
   - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
-- **enchanter**
-  - special stat per point: +0.5% chance your hits charm a mob
-- **explorer**
-  - passive: Driven: 10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead
-  - special tree: Driven: Driven chance 20%
 - **fighter**
   - special passive: +1% Weapon Mastery chance per 4 Discipline
 - **inquisitor**
@@ -824,15 +805,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **poisoner**
   - special stat per point: +1% poison damage and duration you apply
   - passive: brewing poison potions is 50% faster
-  - special tree: Toxic Blood: mobs that hit you are poisoned; healing on you is 15% weaker
 - **technomancer**
   - special stat per point: +0.5% chance a crafted redstone item is doubled
 - **thaumaturge**
   - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
-  - passive: Fluid Magic: potions you drink have 20% chance to also give a random positive effect
   - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
   - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
-  - special tree: Fluid Magic: random potion effect chance 35%
 - **thief**
   - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
   - special passive: Open Locks chance +0.5% per Finesse point
@@ -841,7 +819,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Thunderclap: arrivals knock mobs back
 - **warlock**
   - special stat per point: +0.5% chance to steal an incoming harmful effect
-  - passive: 15% chance that a harmful potion effect or magic attack aimed at you is cancelled
 - **witch**
   - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
 
@@ -964,7 +941,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **scout**
   - passive: Trackless: your footsteps never trigger sculk sensors, shriekers or tripwires
 - **sentinel**
-  - passive: Perfect Awareness: you can't be surprised - hostile mobs within 16 blocks and all invisible creatures glow for you
   - special tree: No Hiding: mobs you see can't become invisible to anyone near you
 - **sharpshooter**
   - special tree: Perfect Shot: armor ignore 35%

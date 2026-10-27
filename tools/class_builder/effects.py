@@ -446,7 +446,7 @@ def _resource(low, ctx):
 
 
 def _special_forms(low, ctx, scal=lambda v: (v, None)):
-    for special in (combat.immune(low), combat.taken_from(low), combat.critical(low, ctx, scal), named.pets(low, scal)):
+    for special in (combat.immune(low), combat.taken_from(low), combat.critical(low, ctx, scal), combat.dodge(low, ctx, scal), named.pets(low, scal)):
         if special is not None:
             return special
     bn = bonus.special(low, scal)
@@ -604,6 +604,7 @@ def _translate_line(text, ctx):
     text = re.sub(r'(?:healing from )?regeneration(?:/|, | and )instant health(?:,? and healing from other players)? (?:is|are) (\d+)% weaker(?: on you)?',
                   r'-\1% healing received', text, flags=re.I)
     text = re.sub(r'healing you receive is ([+-]\d+)%', r'\1% healing received', text, flags=re.I)
+    text = re.sub(r'healing on you is (\d+)% (weaker|stronger)', lambda m: ('-' if m.group(2) == 'weaker' else '+') + m.group(1) + '% healing received', text, flags=re.I)
     text = re.sub(r'(?:instant health and regeneration|regeneration and instant health) potions you throw or drink are (\d+)% stronger',
                   r'+\1% healing received', text, flags=re.I)
     # Resource regen: "Verdance regen doubles in forests; it stops completely in the Nether and the End", "Voltage regen stops while wet",

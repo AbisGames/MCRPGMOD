@@ -44,16 +44,7 @@
     {
       "id": "fluid_magic",
       "name": "Fluid Magic",
-      "description": {
-        "text": "random potion effect chance 35%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "random potion effect chance 35%",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -61,7 +52,14 @@
         "dice"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "fluid magic",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "pandemonium",

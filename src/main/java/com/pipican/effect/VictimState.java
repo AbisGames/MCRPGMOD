@@ -23,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
 public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored,
-                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit, boolean fromBehind) {
+                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit, boolean fromBehind, boolean targetingYou) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -38,7 +38,8 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             Codec.DOUBLE.optionalFieldOf("within").forGetter(VictimState::within),
             Codec.BOOL.optionalFieldOf("targeting_other", false).forGetter(VictimState::targetingOther),
             Codec.BOOL.optionalFieldOf("upper_hit", false).forGetter(VictimState::upperHit),
-            Codec.BOOL.optionalFieldOf("from_behind", false).forGetter(VictimState::fromBehind)
+            Codec.BOOL.optionalFieldOf("from_behind", false).forGetter(VictimState::fromBehind),
+            Codec.BOOL.optionalFieldOf("targeting_you", false).forGetter(VictimState::targetingYou)
     ).apply(i, VictimState::new));
 
     /**
@@ -86,6 +87,9 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (targetingOther && !(victim instanceof Mob mob && mob.getTarget() != null && mob.getTarget() != attacker)) {
+            return false;
+        }
+        if (targetingYou && !(victim instanceof Mob mob && mob.getTarget() == attacker)) {
             return false;
         }
         if (fromBehind && !behind(attacker, victim)) {

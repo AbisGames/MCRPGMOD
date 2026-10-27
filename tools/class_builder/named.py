@@ -91,6 +91,58 @@ def _first_targets(reaction):
     return None
 
 
+def _glow(target, radius, state=None):
+    a = {'type': 'pipican:effect', 'target': target, 'radius': radius, 'effects': [{'effect': 'minecraft:glowing', 'seconds': 2.0}]}
+    if state:
+        a['state'] = state
+    return a
+
+
+def glows(t, ctx):
+    """"invisible mobs glow", "hostile mobs within 10 blocks that are targeting you glow", "+8 blocks glow range"."""
+    t = re.sub(r' (?:for you|through walls)$', '', t.strip())
+    m = re.fullmatch(rf'glow range of ([a-z\' ]+) \+{N}(?: blocks?)?', t)
+    if m and m.group(1) in REACTIONS.get(ctx.get('class_id'), {}):
+        return [{'type': 'pipican:reaction_mod', 'name': m.group(1), 'radius': float(m.group(2))}]
+    m = re.fullmatch(rf'(?:your )?(?:prey|marked targets?) glows?(?: through walls)?(?: up to {N} blocks)?', t)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'second', 'actions': [_glow('mobs', float(m.group(1) or 32), {'marked': True})]}]
+    m = re.fullmatch(rf'(invisible|hostile) mobs( and players)?(?: within {N} blocks)?( that are targeting you)? glow', t) or \
+        re.fullmatch(rf"you can'?t be surprised - hostile mobs within {N} blocks and all invisible creatures glow()()()", t)
+    if not m:
+        m2 = re.fullmatch(rf'(?:\+{N} blocks? glow range|glow range \+{N}(?: blocks?)?)(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t)
+        if m2:
+            value = float(m2.group(1) or m2.group(2))
+            glowing = [n for n, r in REACTIONS.get(ctx.get('class_id'), {}).items()
+                       if any(e.get('effect') == 'minecraft:glowing' for a in r.get('actions', []) for e in a.get('effects', []))]
+            if len(glowing) != 1:
+                return None
+            e = {'type': 'pipican:reaction_mod', 'name': glowing[0]}
+            if m2.group(4):
+                src = _stat_source(m2.group(4), ctx)
+                if not src:
+                    return None
+                e['radius'] = 0.0
+                e['scaling'] = [{'source': src, 'per': round(value / float(m2.group(3) or 1), 6)}]
+            else:
+                e['radius'] = value
+            return [e]
+        return None
+    if m.re.pattern.startswith('you'):
+        r = float(m.group(1))
+        actions = [_glow('hostiles', r), _glow('mobs', r, {'effects': 'minecraft:invisibility'}),
+                   _glow('players', r, {'effects': 'minecraft:invisibility'})]
+    else:
+        r = float(m.group(3) or 16)
+        state = {'effects': 'minecraft:invisibility'} if m.group(1) == 'invisible' else {}
+        if m.group(4):
+            state['targeting_you'] = True
+        actions = [_glow('mobs' if m.group(1) == 'invisible' else 'hostiles', r, state or None)]
+        if m.group(2):
+            actions.append(_glow('players', r, {'effects': 'minecraft:invisibility'}))
+    return [{'type': 'pipican:on', 'event': 'second', 'actions': actions}]
+
+
 def reaction_mods(t, ctx):
     """Upgrades to a named reaction -> pipican:reaction_mod ("Guarded Casting lasts 5s longer")."""
     import combat
@@ -210,7 +262,7 @@ def segment(t, ctx):
     import bonus
     import combat
     import effects as fx
-    am = ability_mods(t, ctx) or reaction_mods(t, ctx)
+    am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx)
     if am:
         return am
     named = NAMED.get(ctx.get('class_id'), {})
@@ -692,6 +744,27 @@ def whole_line(text, ctx):
         if forms:
             k = float(m.group(1)) / 100 * (-1 if m.group(2) == 'slower' else 1)
             return [{'type': 'pipican:ability_mod', 'ability': f, 'drain': round(k, 6)} for f in forms]
+    # "+20% damage to your marked target and it glows for you"
+    m = re.fullmatch(r'(.+ (?:your )?(?:marked target|prey)) and it glows(?: for you)?', low)
+    if m and (first := _rest(m.group(1), ctx)):
+        return first + glows('marked targets glow', ctx)
+    # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
+    m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'low_health', 'chance': round(float(m.group(1)) / 100, 6), 'actions': [{'type': 'pipican:shrug'}]}]
+    # Fluid Magic: "potions you drink have 20% chance to also give a random positive effect"
+    m = re.fullmatch(rf'potions you drink have {N}% chance to also give a random positive effect', low)
+    if m:
+        choices = [[{'type': 'pipican:effect', 'target': 'self', 'effects': [{'effect': 'minecraft:' + e, 'seconds': 30.0}]}]
+                   for e in ('speed', 'strength', 'regeneration', 'resistance', 'haste', 'jump_boost', 'fire_resistance', 'night_vision')]
+        return [{'type': 'pipican:on', 'event': 'drink', 'chance': round(float(m.group(1)) / 100, 6), 'actions': [{'type': 'pipican:random', 'choices': choices}]}]
+    # "Driven chance 20%", "random potion effect chance 35%": a new total for the class's named chance.
+    m = re.fullmatch(rf'([a-z][a-z ]+?) chance {N}%', low)
+    if m:
+        name = {'random potion effect': 'fluid magic'}.get(m.group(1), m.group(1))
+        base = REACTIONS.get(ctx.get('class_id'), {}).get(name)
+        if base and 'chance' in base and float(m.group(2)) / 100 > base['chance']:
+            return [{'type': 'pipican:reaction_chance', 'name': name, 'amount': round(float(m.group(2)) / 100 - base['chance'], 6)}]
     # Stacking boosts: "Blade Dance: each hit gives +1% speed for 3s (stacks 10)",
     # "Rampage: consecutive kills within 5s add +5% damage (stacks 5)"
     m = re.fullmatch(rf'(?:each|every) (hit|melee hit|kill|crit|critical hit) gives (.+) for {N}s \(stacks {N}\)', low) or \

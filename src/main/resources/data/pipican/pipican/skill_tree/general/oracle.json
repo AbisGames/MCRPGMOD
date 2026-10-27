@@ -37,21 +37,19 @@
     {
       "id": "oracle_whispers",
       "name": "Whispers",
-      "description": {
-        "text": "glow range of The Sight +8 blocks",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "glow range of The Sight +8 blocks",
       "type": "small",
       "x": 812,
       "y": -115,
       "links": [
         "oracle_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "the sight",
+          "radius": 8.0
+        }
       ]
     },
     {

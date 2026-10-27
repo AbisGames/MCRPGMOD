@@ -59,6 +59,43 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "second",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "mobs",
+          "radius": 16.0,
+          "effects": [
+            {
+              "effect": "minecraft:glowing",
+              "seconds": 2.0
+            }
+          ],
+          "state": {
+            "effects": "minecraft:invisibility"
+          }
+        },
+        {
+          "type": "pipican:effect",
+          "target": "players",
+          "radius": 16.0,
+          "effects": [
+            {
+              "effect": "minecraft:glowing",
+              "seconds": 2.0
+            }
+          ],
+          "state": {
+            "effects": "minecraft:invisibility"
+          }
+        }
+      ],
+      "name": "the sight"
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:resource",

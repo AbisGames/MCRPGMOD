@@ -128,6 +128,17 @@
       ]
     },
     {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "melee_only": true,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:all_of",

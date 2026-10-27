@@ -61,6 +61,7 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code min_melee_damage}: <i>damage</i> your melee hits deal at least</li>
  *   <li>{@code no_sleep}: any amount above 0 = you can't sleep in beds</li>
  *   <li>{@code pearl_cooldown}: the cooldown after throwing an ender pearl (-0.3 = 30% shorter)</li>
+ *   <li>{@code spell_ward}: a <i>chance</i> that a harmful effect or a magic attack from someone else is cancelled</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -75,7 +76,7 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         ANVIL_COST, ANVIL_LEVELS, ENCHANT_LEVELS, ENCHANT_LAPIS,
         LOOTING, DRUNK_POTION_DURATION,
         BONE_MEAL, BREEDING_SPEED, ARROW_PIERCE, PEARL_RANGE, MIN_MELEE_DAMAGE, NO_SLEEP,
-        PEARL_COOLDOWN;
+        PEARL_COOLDOWN, SPELL_WARD;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 
