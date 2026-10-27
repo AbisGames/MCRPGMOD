@@ -21,7 +21,7 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Validate source catalogs
-        run: python3 tools/validate_worldgen.py && python3 tools/validate_biome_assets.py
+        run: python3 tools/validate_worldgen.py && python3 tools/validate_biome_assets.py && python3 tools/worldgen/validate_biome_mines.py
       - name: Generate special landmark NBT models
         run: |
           python3 tools/worldgen/build_special_landmarks.py
