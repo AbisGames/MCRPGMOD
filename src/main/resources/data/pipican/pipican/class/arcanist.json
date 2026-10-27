@@ -61,6 +61,16 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "enchant_levels",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "enchant_lapis",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:damage_dealt",
       "damage_types": "#pipican:is_magic",
       "multiplier": 1.1

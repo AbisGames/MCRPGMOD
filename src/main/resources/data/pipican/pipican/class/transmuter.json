@@ -73,7 +73,7 @@
     },
     {
       "type": "pipican:bonus",
-      "kind": "potion_duration",
+      "kind": "drunk_potion_duration",
       "amount": 0.2
     },
     {

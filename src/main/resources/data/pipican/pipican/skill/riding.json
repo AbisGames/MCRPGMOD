@@ -24,17 +24,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+2 mount max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+2 mount max health",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
     },
     {
       "description": "+5% mount jump",
@@ -48,17 +45,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+2 mount max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+2 mount max health",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
     },
     {
       "description": "+10% mount speed",

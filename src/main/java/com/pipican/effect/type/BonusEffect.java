@@ -50,6 +50,10 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code witch_ward}: any amount above 0 = witches' potions neither hurt you nor give you effects</li>
  *   <li>{@code no_eating_in_combat}: any amount above 0 = you can't start eating while in combat</li>
  *   <li>{@code anvil_safe}: any amount above 0 = anvils never get damaged when you use them</li>
+ *   <li>{@code anvil_cost}: anvil level costs (-0.5 = half); {@code anvil_levels}: <i>levels</i> off every anvil use (never below 1)</li>
+ *   <li>{@code enchant_levels} / {@code enchant_lapis}: <i>levels</i> / lapis refunded after each enchanting-table enchant (whole numbers)</li>
+ *   <li>{@code looting}: <i>Looting levels</i> added to the weapon whenever you kill a mob</li>
+ *   <li>{@code drunk_potion_duration}: how long effects from potions you drink last</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -60,7 +64,9 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
     public enum Kind implements StringRepresentable {
         EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN, DETECTION_RANGE, SKILL_TRAINING, KNOCKBACK, EXTRA_LOOT, EXTRA_ORE, EXTRA_CROP, ABILITY_COOLDOWN, DURABILITY, ARMOR_DURABILITY, WEAPON_DURABILITY, WEAPON_REPAIR, ARMOR_FLOOR, NO_SPRINT, HEALING_RECEIVED, TEMPLE_RADIUS, HEALING_GIVEN, AFFINITY_FLOOR, OFFHAND_SWING, NO_SHIELD,
         FOOD_SAFE, NO_TRAMPLE, ARMOR_PIERCE, RANGED_ARMOR_PIERCE, PROJECTILE_SPEED, EXTRA_ARROW, WITCH_WARD,
-        NO_EATING_IN_COMBAT, ANVIL_SAFE;
+        NO_EATING_IN_COMBAT, ANVIL_SAFE,
+        ANVIL_COST, ANVIL_LEVELS, ENCHANT_LEVELS, ENCHANT_LAPIS,
+        LOOTING, DRUNK_POTION_DURATION;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

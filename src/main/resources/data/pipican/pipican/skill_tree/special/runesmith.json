@@ -102,16 +102,7 @@
     {
       "id": "dwarfen_mastery",
       "name": "Dwarfen Mastery",
-      "description": {
-        "text": "anvil costs halved for you; -10% movement speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "anvil costs halved for you; -10% movement speed",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -120,7 +111,20 @@
         "thunder_rune"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "anvil_cost",
+          "amount": -0.5
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

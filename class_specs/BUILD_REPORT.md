@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1621**, partly working: **25**, not yet: **604**
+- Bonus phrases: **2250**. Fully working: **1635**, partly working: **25**, not yet: **590**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,13 +13,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Other mechanics](#other-mechanics) | 209 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 143 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 142 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 88 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 87 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 77 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 56 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 44 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 25 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 21 |
 | [Immunities](#immunities) | 15 |
 | [Critical hits](#critical-hits) | 7 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
@@ -315,7 +315,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
 - **arcanist**
   - special passive: Grindstone disenchanting gives +1% more XP per 2 Arcana
-  - special tree: Archmage's Insight: every 3rd ability is free
 - **artificer**
   - skill Smithing: +5% durability on crafted tools
   - skill Smithing: +5% durability on crafted tools
@@ -645,14 +644,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **aeromancer**
   - special tree: Lord of the Air: Flight costs 30% less Breath; -15% max health
-  - skill Windcalling: +10% Breath regen
 - **arcanist**
   - passive: whenever you spend Mystic Flux
-  - passive: Arcana Mastery: enchanting at a table costs 1 fewer level and 1 fewer lapis
-  - special tree: Archmage's Insight: -10% Flux regen
-  - skill Arcane Research: +10% Flux regen
-- **artificer**
-  - passive: Anvil repairs and renames cost 1 fewer level
+  - special tree: Archmage's Insight: every 3rd ability is free; -10% Flux regen
 - **assassin**
   - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
 - **astromancer**
@@ -670,8 +664,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **cavalier**
   - special tree: Master Rider: mount gets Regeneration I while you ride
   - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
-  - skill Riding: +2 mount max health
-  - skill Riding: +2 mount max health
 - **chronomancer**
   - passive: Quickening: whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback
 - **conjurer**
@@ -719,8 +711,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Uncommon Ability: Aptitude crit triggers every 30s; -10% max Knack
 - **mage_knight**
   - special tree: War Wizard: Escalating Violence also gives Speed I; -10% max Warfire
-- **magician**
-  - special passive: Enchanting costs 1 fewer level for every 25 Power points
 - **magus**
   - special tree: Living Staff: your staff returns to you if dropped and can't be destroyed; -10% max health
 - **necromancer**
@@ -771,7 +761,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Saint of the New God: Invocation also heals players within its radius by 2; -15% Divinity regen
 - **thief**
   - weakness: villager trades cost 20% more, and iron golems turn hostile if they see you open a chest inside a village
-  - general tree: Master Thief: +1 more Looting level, but -15% max health
   - special tree: Opportunist: when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve
 - **transmuter**
   - special tree: Philosopher: Optimization amount doubled; -10% max health
@@ -783,9 +772,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Grit: Catch Your Breath can be used twice per rest; -10% max Stamina
 - **witch**
   - general tree: Coven: +10% max Witchery, Guidance range +2
-  - general tree: Crone's Bargain: all potions you drink last 50% longer, but -15% max health
-- **wizard**
-  - passive: Enchanting costs 1 fewer level
 - **zealot**
   - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
   - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
@@ -1052,8 +1038,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Warded: mobs deal 10% less damage to you and your potion debuffs last 20% shorter
 - **artificer**
   - special tree: Store Spell: potions you brew can be loaded into crafted gear (see section 12)
-  - skill Smithing: -5% anvil cost
-  - skill Smithing: -5% anvil cost
 - **beastmaster**
   - special tree: Shared Spell: potion effects you drink also apply to your nearest tamed animal
 - **chronomancer**
@@ -1075,12 +1059,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Shieldcraft, +1 armor with shield
 - **poisoner**
   - general tree: Tipped Arrows: crafting tipped arrows gives double
-- **runesmith**
-  - special tree: Dwarfen Mastery: anvil costs halved for you; -10% movement speed
 - **sorcerer**
   - general tree: Far Reach: +15% projectile speed for thrown potions and fire charges
-- **thief**
-  - passive: Pick Pockets: +1 Looting level on all kills
 - **witch**
   - special stat per point: +1% duration of potions you brew and drink
   - passive: Potions you brew last 20% longer

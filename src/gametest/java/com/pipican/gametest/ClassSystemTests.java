@@ -481,7 +481,8 @@ public final class ClassSystemTests {
         skeleton.discard();
 
         // From-behind reactions: only when the victim faces away.
-        Zombie facing = helper.spawn(EntityType.ZOMBIE, player.blockPosition().offset(0, 0, 2));
+        Zombie facing = helper.spawn(EntityType.ZOMBIE, new BlockPos(1, 2, 4));
+        player.setPos(facing.getX(), facing.getY(), facing.getZ() - 2); // the player stands north of it
         facing.setYHeadRot(180); // facing north, toward the player
         Reactions.fire(player, facing, ItemStack.EMPTY, ReactionEffect.Event.HIT);
         helper.assertTrue(!facing.hasEffect(MobEffects.UNLUCK), "not from behind");
@@ -489,6 +490,21 @@ public final class ClassSystemTests {
         Reactions.fire(player, facing, ItemStack.EMPTY, ReactionEffect.Event.HIT);
         helper.assertTrue(facing.hasEffect(MobEffects.UNLUCK), "hit from behind");
         facing.discard();
+
+        // Anvil costs: 10 levels -> half (5) -> one fewer (4).
+        var anvil = new net.neoforged.neoforge.event.AnvilUpdateEvent(new ItemStack(Items.IRON_SWORD), new ItemStack(Items.IRON_INGOT), null,
+                new ItemStack(Items.IRON_SWORD), 10, 1, player);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(anvil);
+        helper.assertTrue(anvil.getXpCost() == 4, "anvil cost 4: " + anvil.getXpCost());
+
+        // Drunk potions last twice as long.
+        ItemStack potion = new ItemStack(Items.POTION);
+        potion.set(net.minecraft.core.component.DataComponents.POTION_CONTENTS, new net.minecraft.world.item.alchemy.PotionContents(net.minecraft.world.item.alchemy.Potions.SWIFTNESS));
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, potion);
+        player.startUsingItem(net.minecraft.world.InteractionHand.MAIN_HAND);
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.HASTE, 100));
+        player.stopUsingItem();
+        helper.assertTrue(player.getEffect(MobEffects.HASTE).getDuration() == 200, "drunk effect doubled: " + player.getEffect(MobEffects.HASTE).getDuration());
 
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),

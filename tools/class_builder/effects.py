@@ -418,7 +418,10 @@ def _resource(low, ctx):
     rn = (ctx.get('resource_name') or '').lower()
     if not rn:
         return None
-    r = re.escape(rn)
+    # "Breath of Wind" / "Mystic Flux": lines often say just "Breath" or "Flux".
+    words = rn.split()
+    names = {rn, words[0], words[-1]} if len(words) > 1 and words[0] not in ('the', 'a') else {rn}
+    r = '(?:' + '|'.join(sorted((re.escape(n) for n in names), key=len, reverse=True)) + ')'
     regen = r'regen(?:eration)?(?: per second|/s| speed| rate)?'
     for pat, target in ((rf'^{NUM}(%?) {r} {regen}$', 'regen'), (rf'^{r} {regen} {NUM}(%?)$', 'regen'),
                         (rf'^{NUM}(%?) (?:max(?:imum)? {r}|{r} max(?:imum)?)$', 'max'), (rf'^max(?:imum)? {r} {NUM}(%?)$', 'max'),

@@ -81,6 +81,17 @@
           "per": 0.01
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "enchant_levels",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.04
+        }
+      ]
     }
   ],
   "weakness": {

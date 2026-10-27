@@ -100,16 +100,7 @@
     {
       "id": "thief_master",
       "name": "Master Thief",
-      "description": {
-        "text": "+1 more Looting level, but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 more Looting level, but -15% max health",
       "type": "keystone",
       "x": -167,
       "y": 945,
@@ -118,7 +109,20 @@
         "thief_fence"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "looting",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

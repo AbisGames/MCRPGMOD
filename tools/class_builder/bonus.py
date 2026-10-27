@@ -356,6 +356,9 @@ def _duration(ids, k):
 def misc(t, scal):
     """Projectile, armor-piercing, food and applied-effect lines."""
     eff = '|'.join(EFFECT_WORDS)
+    mf = mount_flat(t, scal)
+    if mf:
+        return mf
     # effect durations on you
     m = re.fullmatch(r'(.+?) lasts? (twice|three times|half) as long(?: on you)?', t)
     if m and (ids := _effect_ids(m.group(1))):
@@ -381,6 +384,29 @@ def misc(t, scal):
                  'effects': [{'type': 'pipican:ignored_by', 'mobs': group}]}]
     if re.fullmatch(r"(?:you )?can'?t eat while in combat", t):
         return [_effect('no_eating_in_combat', 100, None)]
+    m = re.fullmatch(rf'([+-]{N})% anvil costs?(?: for you)?|anvil costs (halved)(?: for you)?', t)
+    if m:
+        v, s = scal(float(m.group(1)) if m.group(1) else -50.0)
+        return [_effect('anvil_cost', v, s)]
+    m = re.fullmatch(rf'anvil (?:repairs and renames|uses|repairs) cost {N} fewer levels?', t)
+    if m:
+        return [_effect('anvil_levels', float(m.group(1)) * 100, None)]
+    m = re.fullmatch(rf'enchanting(?: at a table)? costs {N} fewer levels?(?: and {N} fewer lapis)?', t)
+    if m:
+        v, sc = scal(float(m.group(1)) * 100)  # whole levels; _effect divides by 100
+        out = [_effect('enchant_levels', v, sc)]
+        if m.group(2):
+            if sc:
+                return None
+            out.append(_effect('enchant_lapis', float(m.group(2)) * 100, None))
+        return out
+    m = re.fullmatch(rf'\+{N} (?:more |extra )?looting levels?(?: on all kills)?', t)
+    if m and float(m.group(1)) == int(float(m.group(1))):
+        return [_effect('looting', float(m.group(1)) * 100, None)]
+    m = re.fullmatch(rf'(?:all )?potions you drink last {N}% (longer|shorter)', t)
+    if m:
+        v, sc = scal(float(m.group(1)) * (1 if m.group(2) == 'longer' else -1))
+        return [_effect('drunk_potion_duration', v, sc)]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

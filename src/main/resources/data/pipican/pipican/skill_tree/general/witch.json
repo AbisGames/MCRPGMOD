@@ -100,16 +100,7 @@
     {
       "id": "witch_crone",
       "name": "Crone's Bargain",
-      "description": {
-        "text": "all potions you drink last 50% longer, but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "all potions you drink last 50% longer, but -15% max health",
       "type": "keystone",
       "x": 480,
       "y": -831,
@@ -117,7 +108,20 @@
         "witch_coven"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "drunk_potion_duration",
+          "amount": 0.5
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

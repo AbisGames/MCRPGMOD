@@ -70,6 +70,11 @@
   "passives": [
     {
       "type": "pipican:bonus",
+      "kind": "anvil_levels",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
       "kind": "durability",
       "amount": -0.15
     },

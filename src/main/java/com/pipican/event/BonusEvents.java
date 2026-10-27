@@ -91,6 +91,9 @@ public final class BonusEvents {
             mult *= state.bonus(Kind.POTION_DURATION)
                     * state.bonus(effect.getEffect().value().isBeneficial() ? Kind.BENEFICIAL_DURATION : Kind.HARMFUL_DURATION);
             mult *= state.effectDurations().getOrDefault(effect.getEffect(), 1.0);
+            if (player.isUsingItem() && player.getUseItem().has(net.minecraft.core.component.DataComponents.POTION_CONTENTS)) {
+                mult *= state.bonus(Kind.DRUNK_POTION_DURATION);
+            }
         }
         if (mult != 1) {
             effect.duration = Math.max(1, (int) Math.round(effect.duration * mult));
@@ -298,6 +301,71 @@ public final class BonusEvents {
         if (event.getEntity() instanceof ServerPlayer player && event.getItem().has(net.minecraft.core.component.DataComponents.FOOD)
                 && ClassEffectApplier.state(player).chance(Kind.NO_EATING_IN_COMBAT) > 0 && com.pipican.ability.Combat.inCombat(player)) {
             event.setCanceled(true);
+        }
+    }
+
+    /** The player whose kill is generating loot right now (between the death and the drops events). */
+    private static @org.jspecify.annotations.Nullable ServerPlayer looter;
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
+    static void onDeathForLoot(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
+        looter = !event.isCanceled() && event.getSource().getEntity() instanceof ServerPlayer p && ClassEffectApplier.state(p).chance(Kind.LOOTING) >= 1 ? p : null;
+    }
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGHEST)
+    static void onDropsForLoot(LivingDropsEvent event) {
+        looter = null;
+    }
+
+    @SubscribeEvent
+    static void onServerTickEnd(net.neoforged.neoforge.event.tick.ServerTickEvent.Post event) {
+        looter = null;
+    }
+
+    @SubscribeEvent
+    static void onEnchantmentLevel(net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent event) {
+        ServerPlayer player = looter;
+        if (player == null || !event.isTargetting(net.minecraft.world.item.enchantment.Enchantments.LOOTING)) {
+            return;
+        }
+        event.getHolder(net.minecraft.world.item.enchantment.Enchantments.LOOTING).ifPresent(looting -> {
+            int extra = (int) Math.floor(ClassEffectApplier.state(player).chance(Kind.LOOTING) + 1e-9);
+            event.getEnchantments().set(looting, event.getEnchantments().getLevel(looting) + extra);
+        });
+    }
+
+    @SubscribeEvent
+    static void onAnvilUpdate(net.neoforged.neoforge.event.AnvilUpdateEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player) || event.getVanillaResult().output().isEmpty()) {
+            return;
+        }
+        ClassState state = ClassEffectApplier.state(player);
+        int levels = (int) Math.floor(state.chance(Kind.ANVIL_LEVELS) + 1e-9);
+        double mult = state.bonus(Kind.ANVIL_COST);
+        int cost = event.getVanillaResult().xpCost();
+        int changed = Math.max(1, (int) Math.round(cost * mult) - levels);
+        if (changed != cost) {
+            event.setXpCost(changed);
+        }
+    }
+
+    @SubscribeEvent
+    static void onEnchant(net.neoforged.neoforge.event.entity.player.PlayerEnchantItemEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        ClassState state = ClassEffectApplier.state(player);
+        int levels = (int) Math.floor(state.chance(Kind.ENCHANT_LEVELS) + 1e-9);
+        int lapis = (int) Math.floor(state.chance(Kind.ENCHANT_LAPIS) + 1e-9);
+        if (levels > 0) {
+            player.giveExperienceLevels(levels);
+        }
+        // Fired before the lapis is taken: topping the stack up makes the enchant cost that much less.
+        if (lapis > 0 && player.containerMenu instanceof net.minecraft.world.inventory.EnchantmentMenu menu) {
+            ItemStack currency = menu.getSlot(1).getItem();
+            if (!currency.isEmpty()) {
+                currency.grow(lapis);
+            }
         }
     }
 
