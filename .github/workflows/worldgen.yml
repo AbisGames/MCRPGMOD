@@ -31,8 +31,18 @@ jobs:
       - name: Compile and package NeoForge mod
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: NeoForge GameTest server smoke test
-        timeout-minutes: 15
+        timeout-minutes: 30
         run: ./gradlew runGameTestServer --no-daemon
+      - name: Preserve test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: worldgen-diagnostics-${{ github.sha }}
+          path: |
+            run/logs/
+            runs/**/logs/
+            build/reports/
+          if-no-files-found: warn
       - name: Publish compiled singleplayer test mod
         uses: actions/upload-artifact@v4
         with:

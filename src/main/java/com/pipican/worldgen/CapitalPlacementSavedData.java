@@ -22,7 +22,7 @@ public final class CapitalPlacementSavedData extends SavedData {
             Codec.INT.fieldOf("foundation_y").forGetter(Progress::foundationY)
         ).apply(instance,Progress::new));
 
-    private static final Codec<CapitalPlacementSavedData> CODEC =
+    public static final Codec<CapitalPlacementSavedData> CODEC =
         PROGRESS_CODEC.listOf().xmap(CapitalPlacementSavedData::fromList,
             state -> List.copyOf(state.progress.values()));
 

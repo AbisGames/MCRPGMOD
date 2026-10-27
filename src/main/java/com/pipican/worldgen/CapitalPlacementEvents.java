@@ -134,6 +134,12 @@ public final class CapitalPlacementEvents {
         BlockPos origin=new BlockPos(ox,foundationY,oz);
         StructurePlaceSettings options=new StructurePlaceSettings().setIgnoreEntities(true);
         BoundingBox bounds=piece.getBoundingBox(options,origin);
+        // A city's outer districts extend beyond the player's loaded view.
+        // Waiting for those chunks forever also blocks all later districts.
+        // Generate only the current piece; protection is checked before writing.
+        for(int cx=Math.floorDiv(bounds.minX(),16);cx<=Math.floorDiv(bounds.maxX(),16);cx++)
+            for(int cz=Math.floorDiv(bounds.minZ(),16);cz<=Math.floorDiv(bounds.maxZ(),16);cz++)
+                level.getChunk(cx,cz);
         if(!safeFootprint(level,bounds,foundationY)) {
             Pipican.LOGGER.warn("Unsafe terrain or obstruction at tile {} of {}; placement deferred",index,city.id());
             return false;
@@ -153,6 +159,7 @@ public final class CapitalPlacementEvents {
     // Terrain-fitted foundations must be generated separately.
     private static boolean safeFootprint(ServerLevel level,BoundingBox box,int foundationY) {
         if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return false;
+        var protection=PlayerWorldgenProtection.get(level);
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
             if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return false;
             int top=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
@@ -162,7 +169,7 @@ public final class CapitalPlacementEvents {
             for(int z=box.minZ();z<=box.maxZ();z++)
                 for(int y=box.minY();y<=box.maxY();y++) {
                     BlockPos position=new BlockPos(x,y,z);
-                    if(PlayerWorldgenProtection.get(level).contains(position))return false;
+                    if(protection.contains(position))return false;
                     BlockState state=level.getBlockState(position);
                     if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state)))return false;
                 }

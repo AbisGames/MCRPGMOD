@@ -64,7 +64,7 @@ public final class SpecialLandmarkPlacementEvents {
         }
     }
 
-    private static boolean tryPlace(ServerLevel level,Site site){
+    public static boolean tryPlace(ServerLevel level,Site site){
         var template=level.getServer().getStructureManager().get(
             Identifier.parse("pipican:"+site.template()));
         if(template.isEmpty())return false;

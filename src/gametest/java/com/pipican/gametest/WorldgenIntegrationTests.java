@@ -10,7 +10,6 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
@@ -19,8 +18,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 /** Integration checks use the actual RPG noise generator in a test-only dimension. */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class WorldgenIntegrationTests {
-    private static final ResourceKey<Level> RPG = ResourceKey.create(
-        Registries.DIMENSION, Pipican.id("rpg_integration"));
+    private static long generationSeed;
 
     @SubscribeEvent
     public static void functions(RegisterEvent event) {
@@ -39,13 +37,46 @@ public final class WorldgenIntegrationTests {
     }
 
     private static void check(GameTestHelper helper, ServerLevel level, BlockPos pos, boolean ok, String expected) {
-        helper.assertTrue(ok, "seed=" + level.getSeed() + " dimension=" + RPG.identifier()
+        helper.assertTrue(ok, "seed=" + generationSeed + " dimension=" + level.dimension().identifier()
             + " pos=" + pos + " expected=" + expected + " actual=" + level.getBlockState(pos));
     }
 
     private static void generatedChunks(GameTestHelper helper) {
+        for(long seed:new long[]{0L,123L,987654321L}){
+            generationSeed=seed;
+            verifyGenerated(helper,createLevel(helper,seed));
+        }
+        helper.succeed();
+    }
+
+    private static ServerLevel createLevel(GameTestHelper helper,long seed) {
+        var RPG=ResourceKey.create(Registries.DIMENSION,Pipican.id("rpg_integration_"+seed));
         ServerLevel level = helper.getLevel().getServer().getLevel(RPG);
-        helper.assertTrue(level != null, "test RPG dimension was not loaded");
+        // GameTestServer intentionally creates only vanilla dimensions. Build
+        // a real ServerLevel from the RPG preset instead of falling back to its
+        // flat overworld (which would make terrain assertions meaningless).
+        if(level==null){
+            var server=helper.getLevel().getServer();
+            var json=WorldgenJson.read("world_preset/rpg_world.json")
+                .getAsJsonObject("dimensions").get("minecraft:overworld");
+            var ops=net.minecraft.resources.RegistryOps.create(
+                com.mojang.serialization.JsonOps.INSTANCE,server.registryAccess());
+            var stem=net.minecraft.world.level.dimension.LevelStem.CODEC.parse(ops,json).getOrThrow();
+            try{
+                var source=net.minecraft.world.level.storage.LevelStorageSource.createDefault(
+                    server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("rpg-integration"));
+                var storage=source.validateAndCreateAccess("seed_"+seed);
+                level=new ServerLevel(server,java.util.concurrent.ForkJoinPool.commonPool(),storage,
+                    new net.minecraft.world.level.storage.DerivedLevelData(server.getWorldData(),
+                        server.getWorldData().overworldData()),RPG,stem,false,seed,List.of(),false);
+                server.forgeGetWorldMap().put(RPG,level);
+                server.markWorldsDirty();
+            }catch(java.io.IOException e){throw new java.io.UncheckedIOException(e);}
+        }
+        return level;
+    }
+
+    private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
         helper.assertTrue(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource,
             "integration test must use the real RPG generator");
         for (var island : SkyIslandLayout.ISLANDS) {
@@ -69,7 +100,21 @@ public final class WorldgenIntegrationTests {
                 "solid capital terrain " + city.id());
         }
         Pipican.LOGGER.info("RPG generated chunk checks passed for seed {}: seven sky islands and 22 capital cores",
-            level.getSeed());
-        helper.succeed();
+            generationSeed);
+        var city=new LandmarkCatalog().all().stream()
+            .filter(c->c.tier().equals("capital")&&c.region().equals("heartlands")).findFirst().orElseThrow();
+        var progress=new CapitalPlacementSavedData();
+        for(int i=0;i<63;i++){
+            helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
+                "seed="+generationSeed+" capital="+city.id()+" tile="+i+" placement deferred");
+            if(i==10){
+                var saved=CapitalPlacementSavedData.CODEC.encodeStart(
+                    com.mojang.serialization.JsonOps.INSTANCE,progress).getOrThrow();
+                progress=CapitalPlacementSavedData.CODEC.parse(
+                    com.mojang.serialization.JsonOps.INSTANCE,saved).getOrThrow();
+            }
+        }
+        helper.assertTrue(progress.progress(city.id()).nextTile()==63,"capital not completed");
+        helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,progress),"completed capital rebuilt");
     }
 }
