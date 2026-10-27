@@ -127,12 +127,17 @@ def aether():
     b.box(40,44,40,72,44,72,'quartz_bricks')
     # End portal centre: inactive, no eyes inserted. Placement/gameplay code
     # must enable activation and frame-state validation separately.
-    for x in range(53,60):
-        for z in range(53,60):b.set(x,45,z,'polished_deepslate')
+    # Vanilla-compatible 3x3 interior and exactly twelve portal frames.
     for x in range(54,59):
-        for z in (53,59):b.set(x,45,z,'end_portal_frame[facing=south,eye=false]' if z==53 else 'end_portal_frame[facing=north,eye=false]')
-    for z in range(54,59):
-        for x in (53,59):b.set(x,45,z,'end_portal_frame[facing=east,eye=false]' if x==53 else 'end_portal_frame[facing=west,eye=false]')
+        for z in range(54,59):b.set(x,45,z,'polished_deepslate')
+    for x in range(55,58):
+        for z in (54,58):
+            facing='south' if z==54 else 'north'
+            b.set(x,45,z,f'end_portal_frame[facing={facing},eye=false]')
+    for z in range(55,58):
+        for x in (54,58):
+            facing='east' if x==54 else 'west'
+            b.set(x,45,z,f'end_portal_frame[facing={facing},eye=false]')
     for x,z in ((45,45),(67,45),(45,67),(67,67)):
         b.set(x,45,z,'sea_lantern');b.set(x,46,z,'end_rod')
     return b
