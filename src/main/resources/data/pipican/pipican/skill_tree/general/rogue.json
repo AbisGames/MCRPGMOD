@@ -57,37 +57,28 @@
     {
       "id": "rogue_dirty",
       "name": "Dirty Tricks",
-      "description": {
-        "text": "+6% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% damage to unaware mobs",
       "type": "small",
       "x": 28,
       "y": 440,
       "links": [
         "rogue_quick"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.06
+        }
+      ]
     },
     {
       "id": "rogue_slippery",
       "name": "Slippery",
-      "description": {
-        "text": "+5% movement speed, 10% chance to dodge a melee hit",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% movement speed, 10% chance to dodge a melee hit",
       "type": "notable",
       "x": -27,
       "y": 440,
@@ -96,7 +87,20 @@
         "rogue_dirty"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:dodge",
+          "chance": 0.1,
+          "melee_only": true
+        }
+      ]
     },
     {
       "id": "rogue_gambler",

@@ -62,6 +62,40 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms_endermen_the_wither",
+      "multiplier": 1.25
+    },
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:nausea",
+        "minecraft:darkness",
+        "minecraft:blindness",
+        "minecraft:bad_omen"
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_taken",
+      "against": "#pipican:mobs/unclean",
+      "multiplier": 0.97
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Exorcists are trained against the unclean - not ordinary beasts.",

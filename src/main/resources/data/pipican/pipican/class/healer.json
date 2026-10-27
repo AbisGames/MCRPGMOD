@@ -66,6 +66,16 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:poison",
+        "minecraft:hunger",
+        "minecraft:wither"
+      ]
+    }
+  ],
   "weakness": {
     "description": "Healers commit to mending, never to harming.",
     "effects": [

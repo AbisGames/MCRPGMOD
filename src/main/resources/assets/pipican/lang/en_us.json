@@ -137,5 +137,6 @@
   "pipican.direction.south_west": "south-west",
   "pipican.direction.west": "west",
   "pipican.direction.north_west": "north-west",
-  "pipican.ability.nothing_to_recall": "There's nothing of yours to call back."
+  "pipican.ability.nothing_to_recall": "There's nothing of yours to call back.",
+  "pipican.dodged": "Dodged!"
 }

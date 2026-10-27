@@ -81,16 +81,7 @@
     {
       "id": "hydromancer_mist",
       "name": "Mist",
-      "description": {
-        "text": "+10% dodge in rain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% dodge in rain",
       "type": "notable",
       "x": 1190,
       "y": 719,
@@ -98,7 +89,22 @@
         "hydromancer_riptide"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          "effects": [
+            {
+              "type": "pipican:dodge",
+              "chance": 0.1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "hydromancer_child_of_the_sea",

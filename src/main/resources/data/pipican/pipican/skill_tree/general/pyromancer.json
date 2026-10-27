@@ -39,21 +39,27 @@
     {
       "id": "pyromancer_heat_shimmer",
       "name": "Heat Shimmer",
-      "description": {
-        "text": "mobs that hit you have 15% chance to catch fire",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs that hit you have 15% chance to catch fire",
       "type": "small",
       "x": -276,
       "y": -1291,
       "links": [
         "pyromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "chance": 0.15,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 0,
+              "fire_seconds": 4.0
+            }
+          ]
+        }
       ]
     },
     {

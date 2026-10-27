@@ -18,21 +18,21 @@
     {
       "id": "avenger_grudge",
       "name": "Grudge",
-      "description": {
-        "text": "+6% damage to marked target",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% damage to marked target",
       "type": "small",
       "x": 1316,
       "y": 103,
       "links": [
         "avenger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.06
+        }
       ]
     },
     {

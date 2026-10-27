@@ -62,6 +62,15 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:blindness",
+        "minecraft:darkness"
+      ]
+    }
+  ],
   "weakness": {
     "description": "Sentinels hold a post - roaming makes them uneasy.",
     "effects": [

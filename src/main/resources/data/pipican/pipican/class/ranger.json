@@ -65,6 +65,21 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "Rangers belong under open sky.",
     "effects": [

@@ -77,16 +77,7 @@
     {
       "id": "dreadnaught_anchored",
       "name": "Anchored",
-      "description": {
-        "text": "immune to Slowness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "immune to Slowness",
       "type": "notable",
       "x": -1709,
       "y": -329,
@@ -94,7 +85,13 @@
         "dreadnaught_padded"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:slowness"
+        }
+      ]
     },
     {
       "id": "dreadnaught_walking_fortress",

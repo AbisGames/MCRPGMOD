@@ -72,16 +72,7 @@
     {
       "id": "avenger_s_wrath",
       "name": "Avenger's Wrath",
-      "description": {
-        "text": "+10% damage to marked target",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to marked target",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,16 @@
         "hound"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "unending_vendetta",

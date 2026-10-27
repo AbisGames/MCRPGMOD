@@ -4,19 +4,17 @@
     {
       "id": "exorcist_start",
       "name": "Exorcist",
-      "description": {
-        "text": "+5% damage to unclean mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage to unclean mobs",
       "type": "start",
       "x": 1349,
-      "y": -860
+      "y": -860,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/unclean",
+          "multiplier": 1.05
+        }
+      ]
     },
     {
       "id": "exorcist_holy_water",

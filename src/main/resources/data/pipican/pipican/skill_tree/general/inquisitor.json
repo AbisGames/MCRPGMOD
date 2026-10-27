@@ -38,36 +38,27 @@
     {
       "id": "inquisitor_skull_mask",
       "name": "Skull Mask",
-      "description": {
-        "text": "immune to Nausea and Blindness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "immune to Nausea and Blindness",
       "type": "small",
       "x": 1184,
       "y": -585,
       "links": [
         "inquisitor_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:nausea",
+            "minecraft:blindness"
+          ]
+        }
       ]
     },
     {
       "id": "inquisitor_heretic_hunter",
       "name": "Heretic Hunter",
-      "description": {
-        "text": "+10% damage to illagers and witches",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to illagers and witches",
       "type": "notable",
       "x": 1220,
       "y": -666,
@@ -75,7 +66,14 @@
         "inquisitor_piercing_gaze"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_illagers_witches",
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "inquisitor_master_torturer",

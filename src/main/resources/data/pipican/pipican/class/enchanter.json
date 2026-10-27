@@ -61,17 +61,14 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "Charms need a mind to work on.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Charms need a mind to work on.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "against": "#pipican:mobs/mindless",
+        "multiplier": 0.7
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

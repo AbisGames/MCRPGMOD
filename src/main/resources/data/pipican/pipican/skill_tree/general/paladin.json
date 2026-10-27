@@ -77,16 +77,7 @@
     {
       "id": "paladin_zeal",
       "name": "Holy Zeal",
-      "description": {
-        "text": "+10% damage to undead and Nether mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to undead and Nether mobs",
       "type": "notable",
       "x": 872,
       "y": 182,
@@ -94,7 +85,14 @@
         "paladin_righteous"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_undead_nether_mobs",
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "paladin_beacon",

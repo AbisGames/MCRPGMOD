@@ -71,6 +71,21 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Assassins live in the dark. Daylight makes them clumsy and obvious.",

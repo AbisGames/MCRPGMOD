@@ -407,6 +407,14 @@ def main(spec_dir, res_dir, report_path):
         'minecraft:deep_frozen_ocean']})
     write(f'{NS}/tags/item/armor/any.json', {'values': ['#pipican:armor/light', '#pipican:armor/medium', '#pipican:armor/heavy']})
 
+    # Abilities unlocked by a skill tier ("Tier III: unlocks Recall Weapon ability") belong to that tier, not the class.
+    tier_granted = set()
+    for key, (owner, sk) in skill_defs.items():
+        for t_text in sk['tiers']:
+            for m in UNLOCKS.finditer(t_text or ''):
+                if (owner['id'], m.group(1).strip()) in ab.A:
+                    tier_granted.add(f'{NS}:{owner["id"]}/{slug(m.group(1).strip())}')
+
     starts = layout_starts(classes)
     first_general = True
     first_stat = True
@@ -618,7 +626,7 @@ def main(spec_dir, res_dir, report_path):
         slots = {f'{NS}:{k}': v for k, v in c['trinkets'].items() if v}
         if slots:
             rpg['trinket_slots'] = slots
-        own = [a for a in ability_ids.values() if a not in node_granted]
+        own = [a for a in ability_ids.values() if a not in node_granted and a not in tier_granted]
         if own:
             rpg['abilities'] = own
         write(f'{NS}/{NS}/class/{cid}.json', rpg)
@@ -633,8 +641,17 @@ def main(spec_dir, res_dir, report_path):
                                                          (f' {trig.get("items")}' if trig.get('items') else '')))
         tiers = []
         for t_text in s['tiers']:
-            eff, uns = tr(owner['id'], f'skill {s["name"]}', t_text or '', ctx)
-            tiers.append({'description': with_marker(t_text or '', uns, bool(eff)), 'effects': eff})
+            grants = [f'{NS}:{owner["id"]}/{slug(m.group(1).strip())}' for m in UNLOCKS.finditer(t_text or '')
+                      if (owner['id'], m.group(1).strip()) in ab.A]
+            rest = UNLOCKS.sub('', t_text or '').strip(' ;,') if grants else (t_text or '')
+            eff, uns = tr(owner['id'], f'skill {s["name"]}', rest, ctx) if rest else ([], [])
+            if grants and not rest:
+                counts['phrases'] += 1
+                counts['full'] += 1
+            tier = {'description': with_marker(t_text or '', uns, bool(eff) or bool(grants)), 'effects': eff}
+            if grants:
+                tier['grants'] = grants
+            tiers.append(tier)
         skill = {'name': s['name'], 'description': 'Trained by ' + s['trigger'] + '.',
                  'icon': skill_icon(trig, 'minecraft:' + owner['icon']), 'trigger': trig}
         if THRESHOLDS.get(s['speed'].lower()):
@@ -649,6 +666,8 @@ def main(spec_dir, res_dir, report_path):
             for u in users:
                 notes[u].append(f'references shared skill "{key}" that no file defines')
 
+    for tag, values in sorted({**fx.combat.MOB_TAGS, **fx.combat.GENERATED}.items()):
+        write(f'{NS}/tags/entity_type/{tag}.json', {'values': values})
     for tag, values in sorted(fx.cond.GROUND_TAGS.items()):
         write(f'{NS}/tags/block/{tag}.json', {'values': values})
 

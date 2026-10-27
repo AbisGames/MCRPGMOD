@@ -101,6 +101,12 @@ public final class ClassEffectApplier {
 
         applyMobEffects(player, old.mobEffects(), next.mobEffects());
         applyFlight(player, old.flight(), next.flight());
+        for (Holder<MobEffect> immune : next.immunities()) {
+            MobEffectInstance active = player.getEffect(immune);
+            if (active != null && !active.isInfiniteDuration()) {
+                player.removeEffect(immune);
+            }
+        }
 
         if (player.getHealth() > player.getMaxHealth()) {
             player.setHealth(player.getMaxHealth());
@@ -270,7 +276,8 @@ public final class ClassEffectApplier {
         c.conditions.forEach((condition, result) -> checks.add(new ClassState.ConditionCheck(condition, result)));
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
                 Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
-                List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount);
+                List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount,
+                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities));
     }
 
     /**
@@ -347,6 +354,10 @@ public final class ClassEffectApplier {
         int rank = 1;
         boolean flight;
         int spellPoints;
+        double dodge;
+        double meleeDodge;
+        final List<ClassState.Critical> criticals = new ArrayList<>();
+        final Set<Holder<MobEffect>> immunities = new HashSet<>();
         final List<ReactionEffect> reactions = new ArrayList<>();
         final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> eidolon = new HashMap<>();
         /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
@@ -400,13 +411,32 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
-            taken.add(new ClassState.DamageRule(types, weapons, multiplier));
+        public void addDamageTaken(ClassState.DamageRule rule) {
+            taken.add(rule);
         }
 
         @Override
-        public void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
-            dealt.add(new ClassState.DamageRule(types, weapons, multiplier));
+        public void addDamageDealt(ClassState.DamageRule rule) {
+            dealt.add(rule);
+        }
+
+        @Override
+        public void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons) {
+            criticals.add(new ClassState.Critical(damage, chance, weapons));
+        }
+
+        @Override
+        public void addDodge(double chance, boolean meleeOnly) {
+            if (meleeOnly) {
+                meleeDodge += chance;
+            } else {
+                dodge += chance;
+            }
+        }
+
+        @Override
+        public void addImmunity(HolderSet<MobEffect> effects) {
+            effects.forEach(immunities::add);
         }
 
         @Override

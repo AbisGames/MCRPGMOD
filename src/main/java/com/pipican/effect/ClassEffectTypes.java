@@ -6,9 +6,12 @@ import com.mojang.serialization.MapCodec;
 import com.pipican.Pipican;
 import com.pipican.effect.type.AttributeEffect;
 import com.pipican.effect.type.ConditionalEffect;
+import com.pipican.effect.type.CriticalEffect;
 import com.pipican.effect.type.DamageMultiplierEffect;
+import com.pipican.effect.type.DodgeEffect;
 import com.pipican.effect.type.EidolonEffect;
 import com.pipican.effect.type.FlightEffect;
+import com.pipican.effect.type.ImmuneEffect;
 import com.pipican.effect.type.MobEffectEffect;
 import com.pipican.effect.type.OptimizationEffect;
 import com.pipican.effect.type.ReactionEffect;
@@ -51,6 +54,9 @@ public final class ClassEffectTypes {
     public static final Type EIDOLON = register("eidolon", EidolonEffect.CODEC);
     public static final Type SPELL_POINTS = register("spell_points", SpellPointsEffect.CODEC);
     public static final Type OPTIMIZATION = register("optimization", OptimizationEffect.CODEC);
+    public static final Type CRITICAL = register("critical", CriticalEffect.CODEC);
+    public static final Type DODGE = register("dodge", DodgeEffect.CODEC);
+    public static final Type IMMUNE = register("immune", ImmuneEffect.CODEC);
 
     private ClassEffectTypes() {}
 

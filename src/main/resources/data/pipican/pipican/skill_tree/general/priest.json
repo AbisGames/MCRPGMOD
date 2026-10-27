@@ -39,21 +39,19 @@
     {
       "id": "priest_smite",
       "name": "Smite",
-      "description": {
-        "text": "+6% damage to undead",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% damage to undead",
       "type": "small",
       "x": 370,
       "y": 28,
       "links": [
         "priest_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.06
+        }
       ]
     },
     {

@@ -2,6 +2,7 @@ package com.pipican.effect;
 
 import com.pipican.condition.ClassCondition;
 import com.pipican.effect.type.ReactionEffect;
+import com.pipican.player.ClassState;
 import com.pipican.effect.type.ResourceEffect;
 import com.pipican.stat.StatDefinition;
 import java.util.Optional;
@@ -37,11 +38,20 @@ public interface EffectContext {
 
     void addMobEffect(Holder<MobEffect> effect, int amplifier);
 
-    /** Multiplies incoming damage, optionally only of {@code types} and/or dealt with one of {@code weapons}. */
-    void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier);
+    /** Multiplies incoming damage that matches the rule (damage type, weapon, attacker type). */
+    void addDamageTaken(ClassState.DamageRule rule);
 
-    /** Multiplies outgoing damage, optionally only of {@code types} and/or dealt with one of {@code weapons}. */
-    void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier);
+    /** Multiplies outgoing damage that matches the rule (damage type, weapon, victim type and state). */
+    void addDamageDealt(ClassState.DamageRule rule);
+
+    /** Critical hits: extra crit damage (0.1 = +10%) and a chance to make any hit a crit, optionally only with {@code weapons}. */
+    void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons);
+
+    /** A chance to completely avoid incoming hits (only melee hits if {@code meleeOnly}). */
+    void addDodge(double chance, boolean meleeOnly);
+
+    /** Potion effects that can't be applied to the player. */
+    void addImmunity(HolderSet<MobEffect> effects);
 
     /** Changes the resource bar's max or regen; {@code operation} is add_value or add_multiplied_base. */
     void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation);

@@ -79,16 +79,7 @@
     {
       "id": "acrobat_untouchable",
       "name": "Untouchable",
-      "description": {
-        "text": "+8% dodge chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8% dodge chance",
       "type": "notable",
       "x": 392,
       "y": 1334,
@@ -96,7 +87,13 @@
         "acrobat_fleet"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.08
+        }
+      ]
     },
     {
       "id": "acrobat_wind_dancer",

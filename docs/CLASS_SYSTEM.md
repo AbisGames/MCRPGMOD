@@ -243,6 +243,8 @@ A **skill** is something the player gets better at by doing it. Each use adds ma
 }
 ```
 
+A tier can also unlock abilities while it is reached: `"grants": [ "pipican:knight/rally" ]`.
+
 | Field | Default | Meaning |
 |---|---|---|
 | `trigger` | required | What counts as a use (table below). |
@@ -375,8 +377,11 @@ picked by `"type"`:
 | `pipican:attribute` | `attribute`, `amount`, `operation` (=`add_value`), `scaling` | Modifies any attribute. |
 | `pipican:stat` | `stat`, `amount` | Adds points to a stat (applied before everything else). |
 | `pipican:mob_effect` | `effect`, `amplifier` (=0) | Permanent potion effect (re-applied if milk removes it). |
-| `pipican:damage_taken` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. |
-| `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords). |
+| `pipican:damage_taken` | `damage_types` (tag), `weapons` (items/tag), `against` (entity types/tag), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. `against` limits it to hits from those mobs. |
+| `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `against` (entity types/tag), `victim`, `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords), `against` to those mobs (`#pipican:mobs/undead`), `victim` to mobs in a state (below). |
+| `pipican:critical` | `damage`, `chance`, `weapons`, `scaling` (damage), `chance_scaling` | Melee crits: `damage` 0.1 = crits deal +10%; `chance` = the chance a normal hit becomes a crit. Both add up. |
+| `pipican:dodge` | `chance`, `melee_only`, `scaling` | Chance to fully avoid a hit from a mob/player (not falls, fire...). Adds up, capped at 90%. |
+| `pipican:immune` | `effects` (mob effects/tag) | Those potion effects can't be applied to you (and are removed if you have them). |
 | `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
 | `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
 | `pipican:flight` | – | Creative-style flight while it counts (usually in an ability toggle). Never touches creative/spectator players. |
@@ -385,7 +390,13 @@ picked by `"type"`:
 | `pipican:spell_points` | `amount` | Spell points that refill on every sleep and pay for abilities instead of the resource. |
 | `pipican:optimization` | `amount`, `extra_loss`, `scaling` | After each sleep, pick a stat to raise by `amount` and one to lower by `amount + extra_loss` (clickable chat). |
 
+`victim` on `damage_dealt`: `{ "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true,
+"marked": true, "on_fire": true }` (every field optional; all given ones must hold). `health` is a fraction of max health.
+
 ```json
+{ "type": "pipican:damage_dealt", "against": "#pipican:mobs/undead", "multiplier": 1.2 }
+{ "type": "pipican:damage_dealt", "victim": { "health": { "max": 0.3 } }, "multiplier": 1.25 }
+{ "type": "pipican:immune", "effects": [ "minecraft:poison", "minecraft:wither" ] }
 { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
 { "type": "pipican:mob_effect", "effect": "minecraft:night_vision" }
 { "type": "pipican:stat", "stat": "mypack:strength", "amount": 2 }

@@ -26,7 +26,7 @@ public final class AbilitySlots {
 
     private AbilitySlots() {}
 
-    /** The class's own abilities first, then abilities granted by owned tree nodes, in tree order. */
+    /** The class's own abilities first, then abilities granted by owned tree nodes (in tree order) and reached mastery tiers. */
     public static List<ResourceKey<Ability>> granted(RegistryAccess access, PlayerClassData data) {
         Optional<RpgClass> cls = data.activeClass().flatMap(k -> ClassLookup.rpgClass(access, k));
         Optional<ClassProgress> progress = data.activeProgress();
@@ -47,6 +47,19 @@ public final class AbilitySlots {
                     for (Identifier id : node.grants()) {
                         out.add(ResourceKey.create(PipicanRegistries.ABILITY, id));
                     }
+                }
+            }
+        }
+        // Skill mastery tiers can unlock abilities too.
+        for (var entry : ClassLookup.skills(access).entrySet()) {
+            var skill = entry.getValue();
+            if (!skill.allowedFor(data.activeClass())) {
+                continue;
+            }
+            int tier = skill.tierFor(data.mastery(entry.getKey()));
+            for (int t = 0; t < Math.min(tier, skill.tiers().size()); t++) {
+                for (Identifier id : skill.tiers().get(t).grants()) {
+                    out.add(ResourceKey.create(PipicanRegistries.ABILITY, id));
                 }
             }
         }

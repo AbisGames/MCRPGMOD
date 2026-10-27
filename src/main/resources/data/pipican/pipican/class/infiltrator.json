@@ -68,6 +68,15 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.4
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Infiltrators avoid notice - and avoid armor that clanks.",

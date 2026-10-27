@@ -74,6 +74,21 @@
       "multiplier": 0.8
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Loud armor gives you away and slows your tricks.",

@@ -73,6 +73,37 @@
       "effect": "minecraft:night_vision"
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:light",
+        "max": 8
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        },
+        {
+          "type": "pipican:dodge",
+          "chance": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.003
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "The shadow eats at you in true light.",
     "effects": [

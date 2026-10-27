@@ -44,16 +44,7 @@
     {
       "id": "divine_vigor",
       "name": "Divine Vigor",
-      "description": {
-        "text": "also immune to Wither effect",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "also immune to Wither effect",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -61,7 +52,13 @@
         "divine_cause"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:wither"
+        }
+      ]
     },
     {
       "id": "sense_evil",

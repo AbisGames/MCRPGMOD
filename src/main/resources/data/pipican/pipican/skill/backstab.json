@@ -16,69 +16,61 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+4% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+4% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.04
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+4% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+4% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.04
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+5% critical damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% critical damage",
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+4% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+4% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.04
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+8% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+8% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.08
+        }
+      ]
     }
   ]
 }

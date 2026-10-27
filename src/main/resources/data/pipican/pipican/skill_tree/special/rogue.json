@@ -11,21 +11,21 @@
     {
       "id": "backstab",
       "name": "Backstab",
-      "description": {
-        "text": "+10% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to unaware mobs",
       "type": "small",
       "x": 35,
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.1
+        }
       ]
     },
     {

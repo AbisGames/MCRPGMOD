@@ -90,6 +90,16 @@
       ]
     },
     {
+      "type": "pipican:critical",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:max_health",
       "amount": 0.0,

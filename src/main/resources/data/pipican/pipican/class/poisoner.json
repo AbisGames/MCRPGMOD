@@ -77,6 +77,12 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:immune",
+      "effects": "minecraft:poison"
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Poisoners rely on toxins - in a straight fight they're weak.",

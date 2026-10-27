@@ -56,16 +56,7 @@
     {
       "id": "gladiator_crowd_pleaser",
       "name": "Crowd Pleaser",
-      "description": {
-        "text": "kills give Speed I for 3s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "kills give Speed I for 3s",
       "type": "notable",
       "x": -1220,
       "y": 666,
@@ -73,7 +64,25 @@
         "gladiator_sand_in_the_eyes"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:speed",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "gladiator_hamstring",

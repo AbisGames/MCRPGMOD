@@ -4,38 +4,32 @@
     {
       "id": "executioner_start",
       "name": "Executioner",
-      "description": {
-        "text": "+5% critical damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% critical damage",
       "type": "start",
       "x": -800,
-      "y": 1386
+      "y": 1386,
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.05
+        }
+      ]
     },
     {
       "id": "executioner_clean_cut",
       "name": "Clean Cut",
-      "description": {
-        "text": "+6% critical damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% critical damage",
       "type": "small",
       "x": -811,
       "y": 1460,
       "links": [
         "executioner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.06
+        }
       ]
     },
     {

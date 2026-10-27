@@ -58,6 +58,33 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "block",
+      "actions": [
+        {
+          "type": "pipican:push",
+          "target": "victim",
+          "strength": 1.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:weapons/shields"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "The shield is a myrmidon's whole style.",
     "effects": [

@@ -77,16 +77,7 @@
     {
       "id": "death_dealer_executioner_s_weight",
       "name": "Executioner's Weight",
-      "description": {
-        "text": "+10% damage to mobs below half health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to mobs below half health",
       "type": "notable",
       "x": -1482,
       "y": 912,
@@ -94,7 +85,18 @@
         "death_dealer_crusher"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "health": {
+              "max": 0.5
+            }
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "death_dealer_slaughterhouse",

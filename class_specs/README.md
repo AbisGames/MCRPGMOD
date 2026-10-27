@@ -42,6 +42,10 @@ Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fir
 | **Take more/less damage** | "takes 50% more fire damage", "-20% fall damage taken", "-10% projectile damage taken" |
 | **Resource bar** | "+10% Rage regen", "-15% max Mana", "+5 max Mana", "no Mana regen" |
 | **Only in some situations** | "+10% damage at night", "+2 armor while below half health", "-20% damage underground", "while Ward is above half: +20% speed", "+1 armor in forests", "-10% damage while no other player is within 16 blocks" |
+| **Against some mobs / mob states** | "+20% damage against undead", "+15% damage to mobs below 30% health", "+10% damage to burning / poisoned / marked mobs", "+10% damage to mobs not targeting you", "-20% damage taken from spiders" |
+| **Crits & dodging** | "+15% critical damage", "+5% crit chance with swords", "8% chance to dodge melee attacks" |
+| **Immunities** | "immune to poison", "immune to wither and hunger" |
+| **Chance on hit / kill** | "10% chance on hit to set mobs on fire", "kills give Speed I for 5s", "when hit, 20% chance to slow the attacker" |
 | **Grows with something** | "+0.25 armor per special-stat point", "+0.1 attack damage per class level", "+1% damage per 5 strength" |
 
 **Situations** you can use: wet / in water / underwater / in lava / in rain / in thunderstorms, at night / in daylight,
@@ -63,7 +67,7 @@ moving (walking, sprinting, sneaking, swimming, climbing, gliding: "every N bloc
 
 Describe them in section 12, one bold name each, with what they do and their cost:
 `Active abilities: **Haste** (Speed III + Haste II for 8s, 25 Sands), **Blink** (teleport 8 blocks where you look, 20 Waypoint)`.
-A tree node can unlock one: write "unlocks Haste ability" in its "What it gives". Abilities are translated by
+A tree node or a skill tier can unlock one: write "unlocks Haste ability" in its "What it gives" / tier bonus. Abilities are translated by
 hand into `tools/class_builder/abilities.py`, so tell Claude when you add or change one. They can:
 buff/debuff players and mobs around you or the one you look at, heal, cleanse, shield, damage (around you, in a
 cone in front of you, or the mob you look at), push, dash, blink, call lightning, summon temporary helpers

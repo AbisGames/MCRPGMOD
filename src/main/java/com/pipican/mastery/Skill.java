@@ -12,6 +12,7 @@ import java.util.Optional;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -112,10 +113,12 @@ public record Skill(
     }
 
     /** One mastery tier's bonus. {@code description} is shown to players. */
-    public record Tier(Component description, List<ClassEffect> effects) {
+    /** One mastery tier: its bonus, and any abilities it unlocks ({@code grants}, ability ids). */
+    public record Tier(Component description, List<ClassEffect> effects, List<Identifier> grants) {
         public static final Codec<Tier> CODEC = RecordCodecBuilder.create(i -> i.group(
                 ComponentSerialization.CODEC.optionalFieldOf("description", Component.empty()).forGetter(Tier::description),
-                ClassEffect.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(Tier::effects)
+                ClassEffect.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(Tier::effects),
+                Identifier.CODEC.listOf().optionalFieldOf("grants", List.of()).forGetter(Tier::grants)
         ).apply(i, Tier::new));
     }
 }

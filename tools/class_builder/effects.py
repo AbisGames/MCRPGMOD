@@ -5,6 +5,7 @@ ctx: {'special_name': 'Grit', 'special_id': 'pipican:warrior_grit', 'implicit_pe
 """
 import re
 
+import combat
 import conditions as cond
 
 CORE_STATS = ['vitality', 'strength', 'dexterity', 'agility', 'intelligence', 'wisdom', 'endurance', 'luck']
@@ -91,9 +92,9 @@ CONDITION = re.compile(r'\b(while|when|whenever|without|with no|if|unless|during
                        r'from \w+ mobs|holding|wearing|light level|darkness|in combat|unaware|marked|prey|cursed|poisoned|burning|'
                        r'transformed|berserk|stance|aura|full|empty|biomes?|forest|village|until|for \d+s|\d+s|toggle|drains|'
                        r'spend|active|tamed|pets?|mounts?|allies|minions?|summon\w*|eidolon|servants?|players)\b', re.I)
-# Words in a "Label:" prefix that mean the label is who/what gets the bonus, not just a talent name.
-SUBJECT = re.compile(r'weapon|armou?r|mount|pet|minion|all(?:y|ies)|summon|servant|sigil|rune|bound|favou?red|staff|'
-                     r'eidolon|form|gadget|decoy|song|aura|shield|bow|sword|axe|mace|spear|trident|crossbow|firearm', re.I)
+# A "Label:" prefix ending in one of these names who/what gets the bonus ("Sigil weapons:"), not a talent name.
+SUBJECT = re.compile(r'(?:weapons|armou?r|mounts|pets|minions|allies|summons|servants|sigils|runes|gadgets|decoys|eidolon|shields|bows|'
+                     r'swords|axes|maces|spears|tridents|crossbows|firearms|animals|beasts|songs|auras)$', re.I)
 ROMAN = {'i': 0, 'ii': 1, 'iii': 2, 'iv': 3}
 
 
@@ -134,7 +135,7 @@ def _clean(clause):
     c = c.replace('−', '-').replace('–', '-')
     c = re.sub(r'\s+', ' ', c)
     # Drop a "Name: " label prefix and trailing "(Label)" annotations.
-    label = re.match(r'^([A-Z][\w\' -]{1,30}):\s+(?=[+-]?\d|takes|immune|permanent|all|your|you|every)', c)
+    label = re.match(r'^([A-Z][\w\' -]{1,30}):\s+(?=\S)', c)
     if label and not SUBJECT.search(label.group(1)):
         c = c[label.end():]
     c = re.sub(r'\s*\((?:[A-Z][^)]*|book[^)]*)\)\s*$', '', c)
@@ -232,22 +233,30 @@ def _one(clause, ctx):
         if scaling:
             e['scaling'] = scaling
         return [e]
-    # "+0.5% weapon damage" etc
-    mval = re.match(r'^' + NUM + r'(%?)\s+(.*)$', low)
-    if not mval:
-        return _special_forms(low, ctx)
-    value = _num(mval.group(1))
-    pct = mval.group(2) == '%'
-    what = mval.group(3).strip()
-    what = re.sub(r'\s+(?:with any weapon|at all times|permanently|always|you deal|dealt yourself|dealt with all weapons|dealt)$', '', what)
-    what = re.sub(r'^to\s+', '', what)
-
     def scal(v):
         if sc is not None:
             return 0.0, [(source, v / every)]
         if implicit:
             return 0.0, [('special_stat', v)]
         return v, None
+
+    # "+0.5% weapon damage" etc
+    mval = re.match(r'^' + NUM + r'(%?)\s+(.*)$', low)
+    if not mval:
+        return _special_forms(low, ctx, scal)
+    value = _num(mval.group(1))
+    pct = mval.group(2) == '%'
+    what = mval.group(3).strip()
+    what = re.sub(r'\s+(?:with any weapon|at all times|permanently|always|you deal|dealt yourself|dealt with all weapons|dealt)$', '', what)
+    what = re.sub(r'^to\s+', '', what)
+
+    whole = f'{mval.group(1)}{"%" if pct else ""} {what}'
+    for special in (combat.critical(whole, ctx, scal), combat.dodge(whole, ctx, scal)):
+        if special is not None:
+            return special
+    vs = combat.against(what, ctx, value, pct, scal)
+    if vs is not None:
+        return vs
 
     # stats
     st = _stat_ids(re.sub(r'\s+points?$', '', what), ctx)
@@ -381,7 +390,10 @@ def _resource(low, ctx):
     return None
 
 
-def _special_forms(low, ctx):
+def _special_forms(low, ctx, scal=lambda v: (v, None)):
+    for special in (combat.immune(low), combat.taken_from(low), combat.critical(low, ctx, scal)):
+        if special is not None:
+            return special
     m = re.match(r'^mobs deal (\d+(?:\.\d+)?)% (more|less) damage to you$', low)
     if m:
         return [_dmg_effect(True, _num(m.group(1)) * (1 if m.group(2) == 'more' else -1))]
@@ -439,6 +451,9 @@ def translate(text, ctx):
 
 
 def _segment(seg, ctx):
+    reacted = combat.reaction(_clean(seg).lower())
+    if reacted is not None:
+        return reacted, []
     wrapped = _conditional(seg, ctx)
     if wrapped is not None:
         return wrapped, []

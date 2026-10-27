@@ -55,6 +55,23 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 2.0
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:attack_speed",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Devotion to one weapon means neglect of the rest.",

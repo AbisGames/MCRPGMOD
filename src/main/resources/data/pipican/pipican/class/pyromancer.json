@@ -60,6 +60,27 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.1
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 0.0
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 0.0
+        }
+      ]
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:damage_dealt",
@@ -74,16 +95,7 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Fire fears water.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Fire fears water.",
     "effects": [
       {
         "type": "pipican:conditional",
@@ -103,6 +115,15 @@
             "operation": "add_multiplied_base"
           }
         ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "against": [
+          "minecraft:drowned",
+          "minecraft:guardian",
+          "minecraft:elder_guardian"
+        ],
+        "multiplier": 1.25
       }
     ]
   },

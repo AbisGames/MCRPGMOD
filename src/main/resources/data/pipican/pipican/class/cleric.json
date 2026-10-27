@@ -60,7 +60,32 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:darkness",
+        "minecraft:nausea"
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#minecraft:undead",
+      "multiplier": 1.2
+    }
+  ],
   "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#minecraft:undead",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
     {
       "type": "pipican:attribute",
       "attribute": "minecraft:armor",

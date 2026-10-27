@@ -38,7 +38,9 @@ import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -140,12 +142,24 @@ public final class ClassEvents {
             }
         }
         float amount = event.getAmount();
+        LivingEntity source = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
         if (event.getEntity() instanceof ServerPlayer victim) {
-            amount *= (float) ClassState.multiplier(ClassEffectApplier.state(victim).damageTaken(), event.getSource());
+            ClassState state = ClassEffectApplier.state(victim);
+            // Dodge: only hits from someone (mobs, players, their arrows), never falls or fire.
+            if (source != null) {
+                boolean melee = event.getSource().getDirectEntity() == source;
+                double chance = state.dodgeChance() + (melee ? state.meleeDodgeChance() : 0);
+                if (chance > 0 && victim.getRandom().nextDouble() < chance) {
+                    victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
+                    event.setCanceled(true);
+                    return;
+                }
+            }
+            amount *= (float) ClassState.multiplier(state.damageTaken(), event.getSource(), source, victim);
         }
         if (event.getSource().getEntity() instanceof ServerPlayer attacker) {
             ClassState state = ClassEffectApplier.state(attacker);
-            amount *= (float) ClassState.multiplier(state.damageDealt(), event.getSource());
+            amount *= (float) ClassState.multiplier(state.damageDealt(), event.getSource(), event.getEntity(), attacker);
             ItemStack weapon = event.getSource().getWeaponItem();
             if (weapon != null && !weapon.isEmpty() && state.rpgClass().isPresent()) {
                 amount *= (float) state.rpgClass().get().affinities().resolve(weapon).tuning().damage();
@@ -276,6 +290,43 @@ public final class ClassEvents {
     public static void onWake(PlayerWakeUpEvent event) {
         if (event.getEntity() instanceof ServerPlayer player && !event.wakeImmediately()) {
             AbilityService.onWake(player);
+        }
+    }
+
+    /** Class crit bonuses: extra crit damage, and a chance to turn a normal hit into a crit. */
+    @SubscribeEvent
+    public static void onCriticalHit(CriticalHitEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+        var criticals = ClassEffectApplier.state(player).criticals();
+        if (criticals.isEmpty()) {
+            return;
+        }
+        ItemStack weapon = player.getMainHandItem();
+        double damage = 0;
+        double chance = 0;
+        for (ClassState.Critical c : criticals) {
+            if (c.weapons().isEmpty() || weapon.is(c.weapons().get())) {
+                damage += c.damage();
+                chance += c.chance();
+            }
+        }
+        if (!event.isCriticalHit() && chance > 0 && player.getRandom().nextDouble() < chance) {
+            event.setCriticalHit(true);
+            event.setDamageMultiplier(Math.max(event.getDamageMultiplier(), 1.5f));
+        }
+        if (event.isCriticalHit() && damage != 0) {
+            event.setDamageMultiplier((float) Math.max(1, event.getDamageMultiplier() * (1 + damage)));
+        }
+    }
+
+    /** Class immunities to potion effects. */
+    @SubscribeEvent
+    public static void onEffectApplicable(MobEffectEvent.Applicable event) {
+        if (event.getEntity() instanceof ServerPlayer player
+                && ClassEffectApplier.state(player).immunities().contains(event.getEffectInstance().getEffect())) {
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
         }
     }
 }

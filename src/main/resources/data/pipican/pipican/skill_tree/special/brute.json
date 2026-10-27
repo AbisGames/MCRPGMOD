@@ -90,16 +90,7 @@
     {
       "id": "unstoppable",
       "name": "Unstoppable",
-      "description": {
-        "text": "immune to Slowness and knockback; -20% attack speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "immune to Slowness and knockback; -20% attack speed",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -108,7 +99,24 @@
         "bone_and_sinew"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:slowness"
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

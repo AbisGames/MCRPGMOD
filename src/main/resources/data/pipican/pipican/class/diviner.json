@@ -65,6 +65,18 @@
       "amount": 1
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Diviners watch the future - and miss the present.",

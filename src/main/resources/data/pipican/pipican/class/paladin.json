@@ -63,6 +63,13 @@
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.9
+    },
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:poison",
+        "minecraft:hunger"
+      ]
     }
   ],
   "weakness": {

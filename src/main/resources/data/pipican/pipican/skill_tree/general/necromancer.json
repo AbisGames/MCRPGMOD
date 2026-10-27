@@ -81,16 +81,7 @@
     {
       "id": "necromancer_lich_touch",
       "name": "Lich Touch",
-      "description": {
-        "text": "your hits give Wither I for 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your hits give Wither I for 2s",
       "type": "notable",
       "x": 617,
       "y": 1246,
@@ -98,7 +89,25 @@
         "necromancer_bone_armor"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:wither",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "necromancer_lichdom",

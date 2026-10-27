@@ -56,6 +56,23 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "kill",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:speed",
+              "seconds": 3.0,
+              "amplifier": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:health",

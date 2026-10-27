@@ -4,38 +4,38 @@
     {
       "id": "assassin_start",
       "name": "Assassin",
-      "description": {
-        "text": "+5% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage to unaware mobs",
       "type": "start",
       "x": -375,
-      "y": 650
+      "y": 650,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.05
+        }
+      ]
     },
     {
       "id": "assassin_garrote",
       "name": "Garrote",
-      "description": {
-        "text": "+8% damage to unaware mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8% damage to unaware mobs",
       "type": "small",
       "x": -386,
       "y": 724,
       "links": [
         "assassin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.08
+        }
       ]
     },
     {
@@ -82,16 +82,7 @@
     {
       "id": "assassin_shadowstep",
       "name": "Shadowstep",
-      "description": {
-        "text": "after a kill, Invisibility for 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "after a kill, Invisibility for 2s",
       "type": "notable",
       "x": -469,
       "y": 757,
@@ -99,7 +90,25 @@
         "assassin_soft_soles"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:invisibility",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "assassin_death_mark",

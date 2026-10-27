@@ -58,6 +58,25 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "melee_hit",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:slowness",
+              "seconds": 1.0,
+              "amplifier": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "A defender's place is beside others - and their pace is theirs.",
     "effects": [
