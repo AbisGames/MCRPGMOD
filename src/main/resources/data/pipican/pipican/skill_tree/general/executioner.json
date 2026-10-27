@@ -55,16 +55,7 @@
     {
       "id": "executioner_merciless",
       "name": "Merciless",
-      "description": {
-        "text": "Execute threshold 20%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Execute threshold 20%",
       "type": "notable",
       "x": -846,
       "y": 1521,
@@ -72,7 +63,13 @@
         "executioner_clean_cut"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:execute",
+          "threshold": 0.2
+        }
+      ]
     },
     {
       "id": "executioner_terrifying",
@@ -99,16 +96,7 @@
     {
       "id": "executioner_headsman_s_axe",
       "name": "Headsman's Axe",
-      "description": {
-        "text": "Execute threshold 25%, but -15% damage to mobs above half health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Execute threshold 25%, but -15% damage to mobs above half health",
       "type": "keystone",
       "x": -905,
       "y": 1568,
@@ -117,7 +105,22 @@
         "executioner_terrifying"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:execute",
+          "threshold": 0.25
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "health": {
+              "min": 0.5
+            }
+          },
+          "multiplier": 0.85
+        }
+      ]
     }
   ]
 }

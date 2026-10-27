@@ -17,7 +17,8 @@
           "type": "pipican:damage_taken",
           "multiplier": 0.5
         }
-      ]
+      ],
+      "name": "Test Song"
     },
     {
       "type": "pipican:on",
@@ -80,6 +81,16 @@
           "health": 4
         }
       ]
+    },
+    {
+      "type": "pipican:aura_mod",
+      "name": "song",
+      "strength": 0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "ability_cooldown",
+      "amount": -0.5
     }
   ]
 }

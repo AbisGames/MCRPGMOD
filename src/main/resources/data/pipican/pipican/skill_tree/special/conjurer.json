@@ -50,16 +50,7 @@
     {
       "id": "powerful_monsters",
       "name": "Powerful Monsters",
-      "description": {
-        "text": "minions +20% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "minions +20% damage",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,13 @@
         "gate"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.2
+        }
+      ]
     },
     {
       "id": "steady_gate",

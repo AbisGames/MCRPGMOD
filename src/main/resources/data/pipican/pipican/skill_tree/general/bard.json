@@ -19,21 +19,24 @@
     {
       "id": "bard_rousing_verse",
       "name": "Rousing Verse",
-      "description": {
-        "text": "+3% Song damage bonus",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3% Song damage bonus",
       "type": "small",
       "x": 570,
       "y": -1191,
       "links": [
         "bard_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.03
+            }
+          ]
+        }
       ]
     },
     {
@@ -57,16 +60,7 @@
     {
       "id": "bard_ballad_of_heroes",
       "name": "Ballad of Heroes",
-      "description": {
-        "text": "Song also gives +1 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Song also gives +1 armor",
       "type": "notable",
       "x": 601,
       "y": -1254,
@@ -74,7 +68,20 @@
         "bard_rousing_verse"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bard_lullaby",

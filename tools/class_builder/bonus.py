@@ -89,12 +89,22 @@ def leading(value, what, scal):
 
 def special(low, scal):
     """Clauses that don't start with the number."""
+    import named
+    sm = named.summons(low, scal)
+    if sm:
+        return sm
     ch = chances(low, scal)
     if ch:
         return ch
     mf = mount_flat(low, scal)
     if mf:
         return mf
+    m = re.fullmatch(r'immunity to (.+)', low)
+    if m:
+        import combat
+        im = combat.immune('immune to ' + m.group(1))
+        if im:
+            return im
     if re.fullmatch(r'(?:knockback immunity|immune to knockback|immunity to knockback)', low):
         return [{'type': 'pipican:attribute', 'attribute': 'minecraft:knockback_resistance', 'amount': 1.0}]
     m = re.fullmatch(rf'(?:your )?skills train {N}% (faster|slower)', low)

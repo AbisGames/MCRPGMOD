@@ -1,5 +1,7 @@
 package com.pipican.ability;
 
+import java.util.function.ToDoubleFunction;
+import com.pipican.effect.ScaledEffect;
 import com.pipican.effect.ClassEffect;
 import com.pipican.player.ClassEffectApplier;
 import com.pipican.player.ClassService;
@@ -27,7 +29,8 @@ public final class Auras {
             }
             for (ClassState.Aura aura : ClassEffectApplier.state(other).auras()) {
                 if (other.distanceToSqr(player) <= aura.radius() * aura.radius()) {
-                    out.addAll(aura.effects());
+                    ToDoubleFunction<String> source = s -> ClassEffectApplier.sourceValue(other, s);
+                    aura.effects().forEach(e -> out.add(new ScaledEffect(e, aura.strength(), source)));
                 }
             }
         }

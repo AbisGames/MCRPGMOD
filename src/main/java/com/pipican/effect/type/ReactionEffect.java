@@ -46,7 +46,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** The (conditional) effect holding this reaction stops counting ("when Berserk ends"). */
         END("end"),
         /** You are about to die; {@code pipican:cheat_death} saves you. */
-        DEATH("death");
+        DEATH("death"),
+        /** Every second while you're in combat; give it a {@code cooldown_ticks} ("every 30s in combat"). */
+        IN_COMBAT("in_combat");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

@@ -9,6 +9,10 @@ NAMED = {}
 # class id -> {reaction name: [extra actions]}: "after Zeal triggers, immune to Slowness for 5s" rides on Zeal's reaction.
 EXTRA = {}
 TRIGGERED = {'zeal': 'zeal'}
+# class id -> {cleaned lowercase body: label}, so a mechanic can be named after its line ("Inspiring Song: players within ...")
+LABELS = {}
+# class id -> aura names
+AURAS = {}
 LABEL = re.compile(r"^([A-Z][A-Za-z' ]{2,30}?):\s*(.+)$")
 
 
@@ -16,11 +20,18 @@ def learn(cid, lines, ctx):
     """Pre-pass over a class's lines: remember every "Name: <conditional bonus>" definition."""
     import effects as fx
     found = NAMED.setdefault(cid, {})
+    labels = LABELS.setdefault(cid, {})
     for line in lines:
         m = LABEL.match((line or '').strip())
         if not m:
             continue
+        body = re.sub(r'\s*\(including you\)', ' including you', m.group(2), flags=re.I)
+        body = fx._clean(re.sub(r'\s*\([^)]*\)', '', body)).lower().strip().rstrip('.')
+        labels[body] = m.group(1).strip()
         eff, uns = fx.translate(m.group(2), dict(ctx, class_id=None))
+        # Only auras that really work can be upgraded ("Song range +1").
+        if any(e.get('type') == 'pipican:aura' for e in eff) and not uns:
+            AURAS.setdefault(cid, set()).add(m.group(1).strip().lower())
         whens = [e.get('when') for e in eff if e.get('type') == 'pipican:conditional']
         if eff and not uns and len(whens) == len(eff) and all(w == whens[0] for w in whens):
             inner = [x for e in eff for x in e['effects']]
@@ -143,8 +154,154 @@ def _rest(text, ctx):
     return eff if eff and not uns else None
 
 
+def _aura_word(word, cid):
+    """The aura a line means: "song" -> "song" if some aura of the class is called "... Song"; "aura" -> all."""
+    word = word.strip().lower()
+    if word in ('aura', 'all your aura', 'all aura', 'your aura'):
+        return ''
+    word = re.sub(r'\s+aura$', '', word)
+    for name in AURAS.get(cid, ()):
+        if word == name or word in name.split() or word.split()[-1] in name.split():
+            return word.split()[-1] if word not in name else word
+    return None
+
+
+def _per(m_per, m_stat, ctx):
+    """" per 10 Resonance" / " per point" -> special_stat scaling divisor, or None if no scaling / not the special stat."""
+    if not m_stat:
+        return 1.0, False
+    if not _stat_source(m_stat, ctx):
+        return None, False
+    return float(m_per or 1), True
+
+
+def auras(t, ctx):
+    cid = ctx.get('class_id')
+    if not AURAS.get(cid):
+        return None
+    words = r'([a-z][a-z ]*?)'
+    # range: "Inspiring Song range +1 block per 10 Resonance", "+1 block Song range", "+3 blocks chant range",
+    # "Prayer aura range -2 blocks", "per 10 Command, +1 block to all your aura ranges"
+    m = re.fullmatch(rf'{words} range ([+-]{N}) blocks?(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t) or \
+        re.fullmatch(rf'([+-]?{N}) blocks? (?:to )?{words} ranges?(?: per (?:{N} )?([a-z]+)(?: points?)?)?()', t)
+    if m:
+        if m.re.pattern.startswith(words):
+            word, amount, per, stat = m.group(1), m.group(2), m.group(4), m.group(5)
+        else:
+            amount, word, per, stat = m.group(1), m.group(3), m.group(4), m.group(5)
+        name = _aura_word(word, cid)
+        div, scaled = _per(per, stat, ctx)
+        if name is not None and div:
+            e = {'type': 'pipican:aura_mod', 'name': name}
+            if scaled:
+                e['scaling'] = [{'source': 'special_stat', 'per': round(float(amount) / div, 6)}]
+            else:
+                e['radius'] = float(amount)
+            return [e]
+    # strength: "Song bonuses doubled", "+5% Song strength", "chant bonuses +50%", "+1% strength of your Song buffs" (per point)
+    m = re.fullmatch(rf'{words} bonuses (doubled|tripled)', t)
+    if m and _aura_word(m.group(1), cid) is not None:
+        return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(1), cid), 'strength': 1.0 if m.group(2) == 'doubled' else 2.0}]
+    m = re.fullmatch(rf'\+{N}% {words} strength|{words} bonuses \+{N}%|\+{N}% strength of your {words} buffs', t)
+    if m:
+        num = m.group(1) or m.group(4) or m.group(5)
+        word = m.group(2) or m.group(3) or m.group(6)
+        name = _aura_word(word, cid)
+        if name is not None:
+            e = {'type': 'pipican:aura_mod', 'name': name}
+            if ctx.get('implicit_per_point'):
+                e['strength_scaling'] = [{'source': 'special_stat', 'per': round(float(num) / 100, 6)}]
+            else:
+                e['strength'] = round(float(num) / 100, 6)
+            return [e]
+    # extra bonuses: "+3% Song damage bonus", "+0.5% Battle Chant damage bonus" (per point), "Song also gives +1 armor",
+    # "players in your chant get +5% attack speed", "Prayer aura also gives allies +5% damage reduction",
+    # "allies in your Prayer aura deal +5% more damage"
+    m = re.fullmatch(rf'\+{N}% (?:more )?{words} damage bonus', t)
+    extra = None
+    if m:
+        word, extra = m.group(2), f'+{m.group(1)}% damage'
+    m = m or re.fullmatch(rf'{words}(?: aura)? also gives(?: allies)? (.+)', t)
+    if m and extra is None and m.re.pattern.startswith(words):
+        word, extra = m.group(1), m.group(2)
+    if extra is None:
+        m = re.fullmatch(rf'(?:players|allies) in your {words}(?: aura)? (?:get|deal|have) (.+)', t)
+        if m:
+            word, extra = m.group(1), m.group(2)
+    if extra is not None:
+        name = _aura_word(word, cid)
+        extra = re.sub(r'^\+?(\d+(?:\.\d+)?)% damage reduction$', r'-\1% damage taken', extra)
+        extra = re.sub(r'^\+?(\d+(?:\.\d+)?)% more damage$', r'+\1% damage', extra)
+        if name is not None:
+            if ctx.get('implicit_per_point'):
+                mm = re.fullmatch(rf'\+{N}% damage', extra)
+                eff = [{'type': 'pipican:damage_dealt', 'multiplier': 1.0, 'scaling': [{'source': 'special_stat', 'per': round(float(mm.group(1)) / 100, 6)}]}] if mm else None
+            else:
+                eff = _rest(extra, dict(ctx, implicit_per_point=False))
+            if eff:
+                return [{'type': 'pipican:aura_mod', 'name': name, 'effects': eff}]
+    # "you also gain your own Prayer bonus"
+    m = re.fullmatch(rf'you also (?:gain|get) your own {words} bonus(?:es)?', t)
+    if m and _aura_word(m.group(1), cid) is not None:
+        return [{'type': 'pipican:aura_mod', 'name': _aura_word(m.group(1), cid), 'include_self': True}]
+    return None
+
+
+def summons(t, scal):
+    """Minion / servant / summon upgrades."""
+    who = r'(?:minions?|servants?|summons?|summoned creatures?|conjured creatures?)'
+    m = re.fullmatch(rf'\+?{N}% {who} damage|{who} \+{N}% damage|{who} damage \+{N}%', t)
+    if m:
+        v, s = scal(float(m.group(1) or m.group(2) or m.group(3)))
+        e = {'type': 'pipican:summon_mod', 'damage': round(v / 100, 6)}
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return [e]
+    m = re.fullmatch(rf'\+?{N}% damage and health for your {who}', t)
+    if m:
+        v, s = scal(float(m.group(1)))
+        e = {'type': 'pipican:summon_mod', 'damage': round(v / 100, 6), 'health': round(v / 100, 6)}
+        if s:
+            e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
+        return [e]
+    m = re.fullmatch(rf'{who} last {N}s longer', t)
+    if m:
+        return [{'type': 'pipican:summon_mod', 'seconds': float(m.group(1))}]
+    m = re.fullmatch(rf'\+{N} {who}(?: at a time)?', t)
+    if m and float(m.group(1)) == int(float(m.group(1))):
+        v, s = scal(float(m.group(1)))
+        if s:
+            return None  # "+1 minion per 20 Summoning": counts can't scale
+        return [{'type': 'pipican:summon_mod', 'count': int(float(m.group(1)))}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    au = auras(t, ctx)
+    if au:
+        return au
+    m = re.fullmatch(rf'(?:abilities have {N}% shorter cooldowns|-{N}% ability cooldowns?|ability cooldowns -{N}%)', t)
+    if m:
+        return [{'type': 'pipican:bonus', 'kind': 'ability_cooldown', 'amount': -round(float(m.group(1) or m.group(2) or m.group(3)) / 100, 6)}]
+    m = re.fullmatch(rf'execute threshold {N}%', t)
+    if m:
+        return [{'type': 'pipican:execute', 'threshold': round(float(m.group(1)) / 100, 6)}]
+    # --- "every 30s in combat, a holy pulse hits mobs within 4 blocks - Weakness I for 3s"
+    m = re.fullmatch(rf'every {N}s (?:while )?in combat,? (.+)', t)
+    if m:
+        what = m.group(2)
+        acts = None
+        mm = re.fullmatch(rf'.*?(?:hits|affects) (?:hostile )?mobs within {N} blocks - (.+)', what)
+        if mm:
+            entries = _effects_list(mm.group(2))
+            if entries:
+                acts = [{'type': 'pipican:effect', 'target': 'hostiles', 'radius': float(mm.group(1)), 'effects': entries}]
+        mm = re.fullmatch(rf'a friendly .*?minion(?: \(vex model\))? appears to fight for {N}s', what)
+        if mm:
+            acts = [{'type': 'pipican:summon', 'entity': 'minecraft:vex', 'seconds': float(mm.group(1)), 'ally': True}]
+        if acts:
+            return [{'type': 'pipican:on', 'event': 'in_combat', 'cooldown_ticks': int(float(m.group(1)) * 20), 'actions': acts}]
     # --- add-ons to a named reaction: "after Zeal triggers, immune to ... for 5s", "hits within 5s of a Zeal trigger deal +20% damage"
     for word, rname in TRIGGERED.items():
         m = re.fullmatch(rf'after {word} triggers,? (.+)', t)
@@ -217,14 +374,23 @@ re.fullmatch(rf'if a hit takes a mob below {N}% health, it dies', t)
     if m:
         return [{'type': 'pipican:damage_dealt', 'victim': {'charged_hit': True}, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
     # --- auras: "players within 10 blocks (including you) get +10% damage", "players within 4 blocks of you take 15% less damage"
-    m = re.fullmatch(rf'(?:other )?players within {N} blocks(?: of you)?( \(including you\))?,? (?:get|gain|have|take|deal) (.+)', t)
+    m = re.fullmatch(rf'(?:other )?players within {N} blocks(?: of you)?( \(including you\)| including you)?,? (?:get|gain|have|take|deal) (.+)', t)
     if m:
         verb = re.search(r'\b(get|gain|have|take|deal)\b', t).group(1)
         rest = m.group(3)
         rest = ('takes ' + rest) if verb == 'take' else rest
-        eff = _rest(rest, ctx)
+        # "+10% damage and immunity to Darkness, Nausea and Blindness": the immunity list is one part.
+        im = re.search(r',?\s+and (immun(?:e|ity) to .+)$', rest)
+        if im:
+            first, second = _rest(rest[:im.start()], ctx), _rest(im.group(1), ctx)
+            eff = first + second if first and second else None
+        else:
+            eff = _rest(rest, ctx)
         if eff:
             a = {'type': 'pipican:aura', 'radius': float(m.group(1)), 'effects': eff}
+            label = LABELS.get(ctx.get('class_id'), {}).get(t)
+            if label:
+                a['name'] = label
             if not m.group(2):
                 a['include_self'] = False
             return [a]

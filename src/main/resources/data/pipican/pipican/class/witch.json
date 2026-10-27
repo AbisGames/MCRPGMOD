@@ -77,7 +77,20 @@
           "amount": 1
         }
       ],
+      "name": "Guidance",
       "include_self": false
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:aura_mod",
+      "name": "guidance",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

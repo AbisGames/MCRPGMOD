@@ -29,37 +29,31 @@
     {
       "id": "divine_strike",
       "name": "Divine Strike",
-      "description": {
-        "text": "allies in your Prayer aura deal +5% more damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "allies in your Prayer aura deal +5% more damage",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "inspiring",
       "name": "Inspiring Prayer",
-      "description": {
-        "text": "you also gain your own Prayer bonus",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you also gain your own Prayer bonus",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -68,7 +62,14 @@
         "divine_strike"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "include_self": true
+        }
+      ]
     },
     {
       "id": "tradition",

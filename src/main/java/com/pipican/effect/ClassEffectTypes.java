@@ -1,5 +1,7 @@
 package com.pipican.effect;
 
+import com.pipican.effect.type.SummonModEffect;
+import com.pipican.effect.type.AuraModEffect;
 import com.pipican.effect.type.ScrutinyEffect;
 import com.pipican.effect.type.FavoredWeaponEffect;
 import com.pipican.effect.type.AuraEffect;
@@ -72,6 +74,8 @@ public final class ClassEffectTypes {
     public static final Type AURA = register("aura", AuraEffect.CODEC);
     public static final Type FAVORED_WEAPON = register("favored_weapon", FavoredWeaponEffect.CODEC);
     public static final Type SCRUTINY = register("scrutiny", ScrutinyEffect.CODEC);
+    public static final Type AURA_MOD = register("aura_mod", AuraModEffect.CODEC);
+    public static final Type SUMMON_MOD = register("summon_mod", SummonModEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}

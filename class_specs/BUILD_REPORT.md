@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1338**, partly working: **16**, not yet: **895**
+- Bonus phrases: **2249**. Fully working: **1374**, partly working: **16**, not yet: **859**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,14 +12,14 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 306 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 233 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 136 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 117 |
+| [Other mechanics](#other-mechanics) | 301 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 201 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 133 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 116 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 72 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 53 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 30 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 29 |
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 7 |
 | [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 5 |
@@ -64,7 +64,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **bard**
   - special passive: per 10 Resonance
   - general tree: Lullaby: mobs within 6 blocks of you move 10% slower
-  - general tree: Virtuoso: you deal -20% damage yourself
   - special tree: Disarming Charm: charmed mobs also get Weakness I
   - special tree: Legend: your max health -10%
 - **beastmaster**
@@ -84,8 +83,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Banner Bearer: a banner in your off-hand gives players within 8 blocks +1 armor
   - special tree: Rally: Champion's Resolve also heals players within 6 blocks by 4
   - special tree: Champion's Resolve: Resolve trigger heals 10 HP instead
-- **chaplain**
-  - general tree: Holy War: you deal -15% damage
 - **chronomancer**
   - special passive: Per 10 Tempo, harmful effects on you last 3% shorter
   - general tree: Stretch: your Speed effects last 30% longer
@@ -95,8 +92,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: takes 20% more damage from wither skeletons, the Wither and the Wither effect
   - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
   - special tree: Divine Power: Icon of Faith bonuses double
-- **conjurer**
-  - general tree: Horde Master: each is 30% weaker
 - **conqueror**
   - special stat per point: +0.5% damage for players near you
   - special passive: Leadership bonus +0.5% per Command point
@@ -113,7 +108,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Bloodsoaked: full Bloodshed gives +15% damage
 - **defender**
   - special passive: Defend reduction +0.2% per Bulwark
-  - special passive: Per 10 Bulwark, +1 block Defend range
   - general tree: Shield Brother: Defend range +2
   - general tree: Interpose: +10% Defend reduction
   - general tree: Taunt: mobs within 6 blocks prefer to target you
@@ -185,6 +179,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Powerful Attack: axes/maces: fully charged hits +15% damage
   - special tree: Shield Bash: blocking an attack makes your next hit within 3s deal +25% damage
 - **geomancer**
+  - passive: -30% suffocation damage
   - special passive: Absorption efficiency +0.5% per Bedrock
   - special tree: Stone Fist: unarmed and pickaxe hits +20% damage
   - special tree: Avatar of Earth: Earthen Defense works anywhere
@@ -299,8 +294,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **priest**
   - special stat per point: +1% healing received from every source
   - general tree: Blessed: +5% healing received
-  - general tree: Martyr: you take 10% more damage
-  - special tree: Improved Shared Recovery: Shared Recovery can be used twice per rest
   - skill Mace Training: +10% fall-smash damage
   - skill Mending: +3% healing received
   - skill Mending: +3% healing received
@@ -418,7 +411,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
 - **arcanist**
   - special passive: Grindstone disenchanting gives +1% more XP per 2 Arcana
-  - special tree: Swift Arcana: abilities have 15% shorter cooldowns
   - special tree: Archmage's Insight: every 3rd ability is free
 - **artificer**
   - special stat per point: +0.5% chance that a durability point is not used
@@ -430,17 +422,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **avenger**
   - general tree: Pursuit: +8% movement speed toward the marked target
 - **bard**
-  - special stat per point: +1% strength of your Song buffs
-  - special passive: Inspiring Song range +1 block per 10 Resonance
-  - general tree: Rousing Verse: +3% Song damage bonus
-  - general tree: Ballad of Heroes: Song also gives +1 armor
-  - general tree: Virtuoso: Song bonuses doubled
+  - general tree: Virtuoso: Song bonuses doubled, but you deal -20% damage yourself
   - special tree: Swift Song: Inspiring Song refreshes twice as fast
-  - skill Performance: +1 block Song range
-  - skill Performance: +5% Song strength
-  - skill Performance: +1 block Song range
-  - skill Performance: +5% Song strength
-  - skill Performance: +10% Song strength
 - **berserker**
   - weakness: can't go Berserk again for 15s
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
@@ -450,16 +433,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Last Stand: Battle Stance bonuses doubled
   - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
 - **chaplain**
-  - special stat per point: +0.5% Battle Chant damage bonus
-  - passive: Emboldening Chant: players in your chant get +5% attack speed
-  - special passive: Chant range +1 block per 10 Sermon
   - special passive: Succor heal +1 per 10 Sermon
   - weakness: Battle Chant switches off for 10s whenever you take more than 6 damage in one hit
-  - general tree: Psalm: +5% Chant damage bonus
   - general tree: Steady Voice: Battle Chant no longer stops from big hits below 10 damage
   - general tree: Field Medic: Succor cooldown -20s
-  - general tree: Holy War: chant bonuses +50%
-  - special tree: Choir: +3 blocks chant range
+  - general tree: Holy War: chant bonuses +50%, but you deal -15% damage
   - special tree: Emboldening Chant: +5% more damage in chant
   - special tree: Succor: Succor also removes Poison and Wither
 - **chronomancer**
@@ -467,18 +445,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **cleric**
   - special tree: Turn Undead: unlocks Turn Undead (undead flee for 5s)
 - **conjurer**
-  - special stat per point: +1% damage and health for your summoned creatures
-  - passive: Conjure Tiny Monster: every 30s while in combat, a friendly silverfish-sized minion (vex model) appears to fight for 15s
   - passive: Frightening Monsters: mobs hit by your minions get Weakness I for 3s
-  - special passive: Minion damage +1% per Summoning point
   - special passive: Per 20 Summoning, +1 minion at a time
-  - general tree: Conjurer: +5% minion damage
-  - general tree: Sharper Teeth: minions +10% damage
-  - general tree: Lingering Summons: minions last 10s longer
-  - general tree: Swarm: +1 minion at a time
-  - general tree: Horde Master: +2 minions at a time
+  - general tree: Horde Master: +2 minions at a time, but each is 30% weaker
   - special tree: Fearsome: minions also apply Slowness
-  - special tree: Powerful Monsters: minions +20% damage
   - special tree: Steady Gate: minion spawn every 20s
 - **conqueror**
   - special passive: Per 10 Command, +1 block to all your aura ranges
@@ -508,8 +478,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Mecha: while in the cockpit, eidolon damage +25%
 - **executioner**
   - passive: After an Execute kill, mobs within 6 blocks get Weakness I for 3s
-  - general tree: Merciless: Execute threshold 20%
-  - general tree: Headsman's Axe: Execute threshold 25%, but -15% damage to mobs above half health
 - **fighter**
   - weakness: -25% potion effect duration on you, and enchanting costs +1 level
 - **hexer**
@@ -568,11 +536,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **necromancer**
   - passive: Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)
   - special passive: Per 20 Deathgrip, +1 servant
-  - general tree: Necromancer: +5% servant damage
-  - general tree: Master of Undeath: servants +20% damage
-  - general tree: Lichdom: +1 servant
-  - general tree: Lichdom: +20% servant damage
-  - special tree: Long Leash: servants last 30s longer
+  - general tree: Lichdom: +1 servant and +20% servant damage, but sunlight burns you like a zombie
   - special tree: Master of Undeath: double servant cap
 - **oracle**
   - special passive: +1 armor while in Divine Ecstasy
@@ -584,11 +548,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Smite bonus damage +1% per 2 Sanctity
   - weakness: killing a villager, iron golem or tamed animal empties Smite and gives Weakness I for 5 minutes
 - **priest**
-  - special passive: Prayer aura range +1 block per 10 Faith points
-  - general tree: Martyr: Prayer aura also gives allies +5% damage reduction
-  - special tree: Divine Strike: allies in your Prayer aura deal +5% more damage
-  - special tree: Inspiring Prayer: you also gain your own Prayer bonus
-  - special tree: Improved Shared Recovery: Prayer aura range -2 blocks
+  - general tree: Martyr: Prayer aura also gives allies +5% damage reduction, but you take 10% more damage
+  - special tree: Improved Shared Recovery: Shared Recovery can be used twice per rest; Prayer aura range -2 blocks
 - **ranger**
   - general tree: Stalker: +10% movement speed toward your prey
 - **rogue**
@@ -732,7 +693,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **champion**
   - general tree: Last Stand: you take +10% damage while moving
 - **chaplain**
-  - passive: Battle Chant: players within 10 blocks (including you) get +10% damage and immunity to Darkness, Nausea and Blindness
   - passive: Succor: crouching next to a downed-ish player (below 4 HP) for 3s heals them 6 HP (60s cooldown)
 - **chronomancer**
   - special tree: Slow: mobs you hit get Slowness I for 2s
@@ -818,8 +778,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **myrmidon**
   - special stat per point: -0.2% damage taken while blocking
   - passive: sneak-attacking with a raised shield bashes for 4 damage
-- **necromancer**
-  - general tree: Lichdom: sunlight burns you like a zombie
 - **oracle**
   - passive: Visions: you see the outline of hostile mobs through walls within 6 blocks while sneaking
   - special passive: Divine Ecstasy lasts longer: drain -1% per 2 Communion
@@ -870,8 +828,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Shadow Bind: your hits in darkness give Slowness I
 - **thaumaturge**
   - weakness: every 60s in combat, a random harmful effect hits you for 3s
-- **theurge**
-  - passive: Invocation: every 30s in combat, a holy pulse hits mobs within 4 blocks - Weakness I for 3s (Slowness too on undead)
 - **thief**
   - general tree: Scale Walls: you can climb any wall like a ladder while sneaking and holding jump
   - special tree: Keen Senses: chests with loot within 8 blocks sparkle while you sneak
@@ -936,7 +892,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Riding: +2 mount max health
 - **chaplain**
   - general tree: Litany: players in your chant regenerate +10% faster
-  - special tree: Voice of God: chant also gives Resistance I; Chant regen -25%
 - **chronomancer**
   - passive: Quickening: whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback
   - general tree: Time Thief: +20% attack and movement speed, but -20% max health
@@ -1444,7 +1399,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: You take no damage from witch potions thrown by witches
   - passive: Potions you brew last 20% longer
   - passive: Your Instant Health/Damage splash potions are 15% stronger
-  - special passive: Guidance range +1 block per 10 Craft
   - general tree: Familiar: tamed cats near you give +1 armor
   - special tree: Brewmistress: brewing takes 25% less time
   - skill Herbalism: eating berries/crops restores +1 hunger
@@ -1465,7 +1419,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **exorcist**
   - special tree: Will of Iron: players within 6 blocks also immune to Bad Omen
 - **geomancer**
-  - passive: -30% suffocation damage and immune to falling-block damage
+  - passive: immune to falling-block damage
 - **gunslinger**
   - passive: Six-Shooter: a pistol you modify at a smithing table holds 6 shots before reloading and never misfires
 - **hexer**

@@ -84,6 +84,19 @@ public final class ClassEffectApplier {
     private ClassEffectApplier() {}
 
     /** Last computed state for a player (empty if they have no class or were never refreshed). */
+    /** A {@link Scaling} source value for {@code player} from their current bonuses (for auras they give others). */
+    public static double sourceValue(ServerPlayer player, String source) {
+        ClassState state = state(player);
+        return switch (source) {
+            case "class_level" -> ClassService.data(player).activeProgress().map(ClassProgress::level).orElse(0);
+            case "special_stat" -> state.rpgClass().flatMap(RpgClass::specialStat).map(s -> state.stat(s.stat())).orElse(0.0);
+            default -> {
+                Identifier id = Identifier.tryParse(source);
+                yield id == null ? 0 : state.stat(ResourceKey.create(com.pipican.core.PipicanRegistries.STAT, id));
+            }
+        };
+    }
+
     public static ClassState state(ServerPlayer player) {
         return STATES.getOrDefault(player.getUUID(), ClassState.EMPTY);
     }
@@ -265,6 +278,11 @@ public final class ClassEffectApplier {
             c.rank = e.getValue();
             e.getKey().apply(c);
         }
+        // Your own auras (with their upgrades) when they include you.
+        c.rank = 1;
+        for (ClassState.Aura aura : c.finishAuras()) {
+            c.scaled(aura.strength(), null, () -> aura.effects().forEach(e -> e.apply(c)));
+        }
         applyEquipmentAffinity(player, rpgClass, data, c);
 
         // Push attribute modifiers onto the player.
@@ -302,7 +320,8 @@ public final class ClassEffectApplier {
                 new ClassState.Bleed(c.bleedDamage, c.bleedSeconds, Math.max(1, c.bleedStacks), c.bleedAnyHit, c.bleedSlows,
                         c.bleedWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.bleedWeapons)))),
                 Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge), List.copyOf(c.executes), List.copyOf(c.auras),
-                c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon);
+                c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
+                new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount));
     }
 
     /**
@@ -383,6 +402,77 @@ public final class ClassEffectApplier {
         double rangedDodge;
         final List<ClassState.Execute> executes = new ArrayList<>();
         final List<ClassState.Aura> auras = new ArrayList<>();
+        record RawAura(String name, double radius, boolean includeSelf, List<ClassEffect> effects) {}
+        record AuraMod(String name, double radius, double strength, boolean includeSelf, List<ClassEffect> effects) {}
+        final List<RawAura> rawAuras = new ArrayList<>();
+        final List<AuraMod> auraMods = new ArrayList<>();
+        double strength = 1;
+        double summonDamage;
+        double summonHealth;
+        double summonSeconds;
+        int summonCount;
+
+        /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
+        List<ClassState.Aura> finishAuras() {
+            List<ClassState.Aura> self = new ArrayList<>();
+            for (RawAura a : rawAuras) {
+                double radius = a.radius();
+                double k = 1;
+                boolean includeSelf = a.includeSelf();
+                List<ClassEffect> effects = new ArrayList<>(a.effects());
+                for (AuraMod m : auraMods) {
+                    if (m.name().isEmpty() || a.name().toLowerCase(java.util.Locale.ROOT).contains(m.name().toLowerCase(java.util.Locale.ROOT))) {
+                        radius += m.radius();
+                        k += m.strength();
+                        includeSelf |= m.includeSelf();
+                        effects.addAll(m.effects());
+                    }
+                }
+                ClassState.Aura aura = new ClassState.Aura(Math.max(0, radius), List.copyOf(effects), Math.max(0, k));
+                auras.add(aura);
+                if (includeSelf) {
+                    self.add(aura);
+                }
+            }
+            return self;
+        }
+
+        /** While applying another player's aura: their stats drive its scaling. */
+        java.util.function.@org.jspecify.annotations.Nullable ToDoubleFunction<String> sourceOverride;
+
+        @Override
+        public void scaled(double k, java.util.function.@org.jspecify.annotations.Nullable ToDoubleFunction<String> source, Runnable apply) {
+            double before = strength;
+            var beforeSource = sourceOverride;
+            strength = before * k;
+            if (source != null) {
+                sourceOverride = source;
+            }
+            try {
+                apply.run();
+            } finally {
+                strength = before;
+                sourceOverride = beforeSource;
+            }
+        }
+
+        private ClassState.DamageRule scale(ClassState.DamageRule rule) {
+            return strength == 1 ? rule : new ClassState.DamageRule(rule.types(), rule.weapons(), rule.against(), rule.victim(),
+                    1 + (rule.multiplier() - 1) * strength);
+        }
+
+        @Override
+        public void addAuraMod(String name, double radius, double k, boolean includeSelf, List<ClassEffect> effects) {
+            auraMods.add(new AuraMod(name, radius, k, includeSelf, effects));
+        }
+
+        @Override
+        public void addSummonMod(double damage, double health, double seconds, int count) {
+            summonDamage += damage;
+            summonHealth += health;
+            summonSeconds += seconds;
+            summonCount += count;
+        }
         double scrutinyLook = Double.MAX_VALUE;
         double scrutinySeconds;
         boolean favoredWeapon;
@@ -418,6 +508,9 @@ public final class ClassEffectApplier {
 
         @Override
         public double sourceValue(String source) {
+            if (sourceOverride != null) {
+                return sourceOverride.applyAsDouble(source);
+            }
             return switch (source) {
                 case "class_level" -> level;
                 case "special_stat" -> rpgClass.specialStat().map(s -> stats.getOrDefault(s.stat(), 0.0)).orElse(0.0);
@@ -440,6 +533,7 @@ public final class ClassEffectApplier {
 
         @Override
         public void addAttribute(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
+            amount *= strength;
             if (amount != 0) {
                 attributes.computeIfAbsent(attribute, a -> new HashMap<>()).merge(operation, amount, Double::sum);
             }
@@ -452,12 +546,12 @@ public final class ClassEffectApplier {
 
         @Override
         public void addDamageTaken(ClassState.DamageRule rule) {
-            taken.add(rule);
+            taken.add(scale(rule));
         }
 
         @Override
         public void addDamageDealt(ClassState.DamageRule rule) {
-            dealt.add(rule);
+            dealt.add(scale(rule));
         }
 
         @Override
@@ -519,9 +613,9 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addAura(double radius, List<ClassEffect> effects) {
+        public void addAura(String name, double radius, boolean includeSelf, List<ClassEffect> effects) {
             if (radius > 0) {
-                auras.add(new ClassState.Aura(radius, effects));
+                rawAuras.add(new RawAura(name, radius, includeSelf, effects));
             }
         }
 

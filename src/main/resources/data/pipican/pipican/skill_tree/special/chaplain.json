@@ -29,23 +29,21 @@
     {
       "id": "choir",
       "name": "Choir",
-      "description": {
-        "text": "+3 blocks chant range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3 blocks chant range",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "radius": 3.0
+        }
+      ]
     },
     {
       "id": "emboldening_chant",
@@ -94,16 +92,7 @@
     {
       "id": "voice_of_god",
       "name": "Voice of God",
-      "description": {
-        "text": "chant also gives Resistance I; Chant regen -25%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "chant also gives Resistance I; Chant regen -25%",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -112,7 +101,25 @@
         "succor"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:resistance"
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -19,21 +19,24 @@
     {
       "id": "chaplain_psalm",
       "name": "Psalm",
-      "description": {
-        "text": "+5% Chant damage bonus",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% Chant damage bonus",
       "type": "small",
       "x": 1030,
       "y": -825,
       "links": [
         "chaplain_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {

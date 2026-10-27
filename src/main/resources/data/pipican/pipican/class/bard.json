@@ -78,6 +78,7 @@
           "operation": "add_multiplied_base"
         }
       ],
+      "name": "Inspiring Song",
       "include_self": false
     },
     {
@@ -89,6 +90,28 @@
       "type": "pipican:bonus",
       "kind": "trade_price",
       "amount": -0.15
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:aura_mod",
+      "name": "song",
+      "strength_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:aura_mod",
+      "name": "inspiring song",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

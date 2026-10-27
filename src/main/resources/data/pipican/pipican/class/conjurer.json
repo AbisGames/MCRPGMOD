@@ -59,6 +59,44 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "in_combat",
+      "cooldown_ticks": 600,
+      "actions": [
+        {
+          "type": "pipican:summon",
+          "entity": "minecraft:vex",
+          "seconds": 15.0,
+          "ally": true
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:summon_mod",
+      "damage": 0.0,
+      "health": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:summon_mod",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "All power, no personal combat skill.",
     "effects": [

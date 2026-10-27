@@ -327,7 +327,8 @@ public final class ClassSystemTests {
 
         // Aura: the ally nearby takes half damage; the aura's owner doesn't (include_self false).
         Auras.tick(ally);
-        assertNear(helper, 0.5, ClassState.multiplier(ClassEffectApplier.state(ally).damageTaken(), level.damageSources().magic()), "ally inside the aura");
+        assertNear(helper, 0.25, ClassState.multiplier(ClassEffectApplier.state(ally).damageTaken(), level.damageSources().magic()),
+                "ally inside the aura: -50% at +50% strength = -75%");
         assertNear(helper, 1, ClassState.multiplier(ClassEffectApplier.state(player).damageTaken(), level.damageSources().magic()), "aura owner not affected");
 
         // Execute: a hit that leaves the mob below half health kills it.
@@ -357,6 +358,10 @@ public final class ClassSystemTests {
         helper.assertTrue(!Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.DEATH), "only once per rest");
         Reactions.rest(player);
         helper.assertTrue(Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.DEATH), "again after resting");
+
+        // Ability cooldowns -50%.
+        Ability mend = ClassLookup.abilities(level.registryAccess()).getValue(ability("mend"));
+        helper.assertTrue(AbilityService.cooldown(player, mend) == Math.round(mend.cooldownTicks() * 0.5), "half cooldown");
 
         // Favored weapon: chosen on waking from the main hand.
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));

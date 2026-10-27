@@ -277,6 +277,9 @@ public final class ClassEvents {
         if (player.tickCount % 20 == 0) {
             Mounts.tick(player);
             Auras.tick(player);
+            if (Combat.inCombat(player)) {
+                Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.IN_COMBAT);
+            }
         }
         if (player.tickCount % 5 == 0) {
             Scrutiny.tick(player);

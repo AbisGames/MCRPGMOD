@@ -58,10 +58,11 @@ public record ClassState(
         List<Execute> executes,
         List<Aura> auras,
         Scrutiny scrutiny,
-        boolean favoredWeapon) {
+        boolean favoredWeapon,
+        SummonMods summonMods) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false);
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -107,7 +108,12 @@ public record ClassState(
     public record Execute(double threshold, Optional<HolderSet<EntityType<?>>> victims) {}
 
     /** A {@code pipican:aura} the player gives nearby players. */
-    public record Aura(double radius, List<ClassEffect> effects) {}
+    public record Aura(double radius, List<ClassEffect> effects, double strength) {}
+
+    /** {@code pipican:summon_mod} totals. */
+    public record SummonMods(double damage, double health, double seconds, int count) {
+        public static final SummonMods NONE = new SummonMods(0, 0, 0, 0);
+    }
 
     /** {@code pipican:scrutiny} settings (seconds 0 = none). */
     public record Scrutiny(double lookSeconds, double seconds) {

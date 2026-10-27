@@ -1,5 +1,7 @@
 package com.pipican.effect;
 
+import org.jspecify.annotations.Nullable;
+import java.util.function.ToDoubleFunction;
 import net.minecraft.world.entity.EntityType;
 import java.util.List;
 import com.pipican.condition.ClassCondition;
@@ -80,8 +82,22 @@ public interface EffectContext {
     /** Hits that leave a mob below {@code threshold} of its health kill it (only {@code victims}, if given). */
     void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims);
 
-    /** Nearby players get {@code effects}. */
-    void addAura(double radius, List<ClassEffect> effects);
+    /** Nearby players (and you, with {@code includeSelf}) get {@code effects}. */
+    void addAura(String name, double radius, boolean includeSelf, List<ClassEffect> effects);
+
+    /** Upgrades the auras whose name contains {@code name} (all, if empty). */
+    void addAuraMod(String name, double radius, double strength, boolean includeSelf, List<ClassEffect> effects);
+
+    /** Upgrades for the player's summons. */
+    void addSummonMod(double damage, double health, double seconds, int count);
+
+    /**
+     * Applies effects at {@code strength} (aura upgrades: % bonuses and attribute amounts are scaled), with
+     * {@link Scaling} sources read from {@code source} (the aura owner) when it isn't null.
+     */
+    default void scaled(double strength, @Nullable ToDoubleFunction<String> source, Runnable apply) {
+        apply.run();
+    }
 
     /** The player picks a favored weapon type when they wake up. */
     void enableFavoredWeapon();

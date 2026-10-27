@@ -68,6 +68,7 @@
           "multiplier": 0.85
         }
       ],
+      "name": "Defend",
       "include_self": false
     },
     {
@@ -84,6 +85,18 @@
               "amplifier": 1
             }
           ]
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:aura_mod",
+      "name": "defend",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
         }
       ]
     }

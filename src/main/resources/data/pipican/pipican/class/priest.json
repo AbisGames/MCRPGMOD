@@ -67,6 +67,7 @@
           "multiplier": 1.05
         }
       ],
+      "name": "Prayer",
       "include_self": false
     },
     {
@@ -89,6 +90,16 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:aura_mod",
+      "name": "prayer",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
         }
       ]
     }

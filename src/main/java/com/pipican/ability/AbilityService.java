@@ -96,6 +96,11 @@ public final class AbilityService {
         return ability.cost() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.ABILITY_COST);
     }
 
+    /** An ability's cooldown for this player, after {@code ability_cooldown} bonuses. */
+    public static long cooldown(ServerPlayer player, Ability ability) {
+        return Math.round(ability.cooldownTicks() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.ABILITY_COOLDOWN));
+    }
+
     /** Spell points (Wizard) pay for abilities that cost resource, while there are any left. */
     private static boolean usesSpellPoint(ServerPlayer player, Ability ability) {
         return ability.cost() > 0 && !ability.spendAll() && ClassEffectApplier.state(player).spellPoints() > 0
@@ -154,7 +159,7 @@ public final class AbilityService {
             if (ability.durationTicks() > 0) {
                 data.abilityActive().put(key, now + ability.durationTicks());
             }
-            data.abilityCooldowns().put(key, now + ability.cooldownTicks());
+            data.abilityCooldowns().put(key, now + cooldown(player, ability));
         }
         if (ability.timing().anchored()) {
             ANCHORS.computeIfAbsent(player.getUUID(), k -> new ConcurrentHashMap<>()).put(key, player.position());
@@ -185,7 +190,7 @@ public final class AbilityService {
             anchors.remove(key);
         }
         if (ability.toggle()) {
-            data.abilityCooldowns().put(key, player.level().getGameTime() + ability.cooldownTicks());
+            data.abilityCooldowns().put(key, player.level().getGameTime() + cooldown(player, ability));
         }
         ClassService.changed(player);
     }

@@ -18,69 +18,54 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+1 block Song range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1 block Song range",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "radius": 1.0
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+5% Song strength",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% Song strength",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+1 block Song range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1 block Song range",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "radius": 1.0
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+5% Song strength",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% Song strength",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+10% Song strength",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% Song strength",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 0.1
+        }
+      ]
     }
   ]
 }

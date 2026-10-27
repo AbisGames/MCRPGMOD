@@ -72,6 +72,24 @@
       ]
     },
     {
+      "type": "pipican:on",
+      "event": "in_combat",
+      "cooldown_ticks": 600,
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "radius": 4.0,
+          "effects": [
+            {
+              "effect": "minecraft:weakness",
+              "seconds": 3.0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.85

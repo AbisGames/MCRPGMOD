@@ -260,7 +260,7 @@ def _one(clause, ctx):
         bn = bonus.leading(value, what, scal)
         if bn is not None:
             return bn
-    ch = bonus.chances(whole, scal)
+    ch = bonus.chances(whole, scal) or named.summons(whole, scal)
     if ch:
         return ch
     vs = combat.against(what, ctx, value, pct, scal)
@@ -443,6 +443,11 @@ def translate(text, ctx):
     original = text
     # Zeal's "(+10 Madness)" is part of what happens, not a note.
     text = re.sub(r'shrug it off entirely \(\+(\d+) ([A-Za-z ]+)\)', r'shrug it off entirely and gain \1 \2', text)
+    # "(including you)" decides who an aura reaches; it isn't a note.
+    text = re.sub(r'\s*\(including you\)', ' including you', text, flags=re.I)
+    # "+10% damage and immunity to Darkness, Nausea and Blindness": keep the immunity list together.
+    if not re.search(r'players within', text, re.I):
+        text = re.sub(r',?\s+and (immun(?:e|ity) to [^;,]+(?:, [^;,]+)*(?:,? and [^;,]+)?)$', r'; \1', text)
     # Parenthetical notes are explanations ("(potions, evoker fangs...)"); they only break the comma split.
     text = re.sub(r'\s*\([^)]*\)', '', text)
     # "after standing still for 3s, +20% damage until you move": the still condition already ends when you move.

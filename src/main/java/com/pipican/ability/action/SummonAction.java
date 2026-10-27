@@ -1,5 +1,8 @@
 package com.pipican.ability.action;
 
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import com.pipican.player.ClassEffectApplier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -37,9 +40,19 @@ public record SummonAction(EntityType<?> entity, int count, double seconds, bool
         return AbilityActionTypes.SUMMON;
     }
 
+    private static void boost(Mob mob, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute, double amount) {
+        var instance = mob.getAttribute(attribute);
+        if (instance != null && amount != 0) {
+            instance.addPermanentModifier(new AttributeModifier(com.pipican.Pipican.id("summon_mod"), amount, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        }
+    }
+
     @Override
     public void run(AbilityContext ctx) {
         var player = ctx.player();
+        var mods = ClassEffectApplier.state(player).summonMods();
+        int count = this.count + mods.count();
+        double seconds = this.seconds + mods.seconds();
         for (int n = 0; n < count; n++) {
             var spawned = entity.create(ctx.level(), EntitySpawnReason.MOB_SUMMONED);
             if (!(spawned instanceof Mob mob)) {
@@ -55,6 +68,9 @@ public record SummonAction(EntityType<?> entity, int count, double seconds, bool
                 golem.setPlayerCreated(true);
             }
             mob.setPersistenceRequired();
+            boost(mob, Attributes.ATTACK_DAMAGE, mods.damage());
+            boost(mob, Attributes.MAX_HEALTH, mods.health());
+            mob.setHealth(mob.getMaxHealth());
             ctx.level().addFreshEntity(mob);
             Summons.track(mob, player, (long) (seconds * 20));
             if (ally) {

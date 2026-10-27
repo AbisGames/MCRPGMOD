@@ -4,19 +4,16 @@
     {
       "id": "necromancer_start",
       "name": "Necromancer",
-      "description": {
-        "text": "+5% servant damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% servant damage",
       "type": "start",
       "x": 577,
-      "y": 1109
+      "y": 1109,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.05
+        }
+      ]
     },
     {
       "id": "necromancer_grave_dust",
@@ -59,16 +56,7 @@
     {
       "id": "necromancer_master_of_undeath",
       "name": "Master of Undeath",
-      "description": {
-        "text": "servants +20% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "servants +20% damage",
       "type": "notable",
       "x": 666,
       "y": 1220,
@@ -76,7 +64,13 @@
         "necromancer_grave_dust"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.2
+        }
+      ]
     },
     {
       "id": "necromancer_lich_touch",

@@ -4,19 +4,16 @@
     {
       "id": "conjurer_start",
       "name": "Conjurer",
-      "description": {
-        "text": "+5% minion damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% minion damage",
       "type": "start",
       "x": -761,
-      "y": -992
+      "y": -992,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.05
+        }
+      ]
     },
     {
       "id": "conjurer_bigger_beasts",
@@ -41,36 +38,24 @@
     {
       "id": "conjurer_sharper_teeth",
       "name": "Sharper Teeth",
-      "description": {
-        "text": "minions +10% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "minions +10% damage",
       "type": "small",
       "x": -782,
       "y": -1064,
       "links": [
         "conjurer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.1
+        }
       ]
     },
     {
       "id": "conjurer_lingering_summons",
       "name": "Lingering Summons",
-      "description": {
-        "text": "minions last 10s longer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "minions last 10s longer",
       "type": "notable",
       "x": -868,
       "y": -1086,
@@ -78,21 +63,18 @@
         "conjurer_bigger_beasts"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "seconds": 10.0
+        }
+      ]
     },
     {
       "id": "conjurer_swarm",
       "name": "Swarm",
-      "description": {
-        "text": "+1 minion at a time",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 minion at a time",
       "type": "notable",
       "x": -824,
       "y": -1120,
@@ -100,7 +82,13 @@
         "conjurer_sharper_teeth"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "count": 1
+        }
+      ]
     },
     {
       "id": "conjurer_horde_master",
