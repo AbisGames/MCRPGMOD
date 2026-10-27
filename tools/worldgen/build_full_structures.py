@@ -1039,7 +1039,9 @@ def generate():
             if dx==0 and dz==0:
                 rows.append({'template':'pipican:authored/'+s['asset_pool'],'x':0,'z':0,
                              'kind':'central_keep','size':[112,72,112]});continue
-            # Each capital receives its own reproducible civic layout, not the\n            # identical district sequence used by every other regional seat.\n            city_seed=int(hashlib.sha256((key+':'+reg).encode()).hexdigest()[:8],16)\n            i=((dx+2)*11+(dz+2)*17+city_seed)
+            # Hash each tile independently to make every capital's district
+            # placement a unique and reproducible civic plan.
+            i=int(hashlib.sha256(f'{key}:{reg}:{dx}:{dz}'.encode()).hexdigest()[:8],16)
             typ=districts[i%len(districts)]
             ident=f'capital_districts/{reg}/{key}/{dx+2}_{dz+2}_{typ}'
             write(ident,reg,typ,(92,34,92))
