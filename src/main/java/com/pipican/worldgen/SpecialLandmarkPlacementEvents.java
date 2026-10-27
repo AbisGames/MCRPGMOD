@@ -96,16 +96,28 @@ public final class SpecialLandmarkPlacementEvents {
                 if(site.elevation()>=0){
                     for(int yy=box.minY();yy<=box.maxY();yy+=4){
                         var p=new BlockPos(x,yy,z);
-                        if(!level.getBlockState(p).isAir())return false;
+                        var existing=level.getBlockState(p);
+                        if(existing.hasBlockEntity() || 
+                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
+                            return false;
                     }
                 } else if(site.elevation()==-1){
                     int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
                     if(Math.abs(surface-y)>8)return false;
+                    for(int yy=y;yy<=box.maxY();yy+=4){
+                        var existing=level.getBlockState(new BlockPos(x,yy,z));
+                        if(existing.hasBlockEntity() ||
+                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
+                            return false;
+                    }
                 } else {
                     // Underground city: do not replace existing inventories.
                     for(int yy=box.minY();yy<=box.maxY();yy+=4){
                         var p=new BlockPos(x,yy,z);
-                        if(level.getBlockState(p).hasBlockEntity())return false;
+                        var existing=level.getBlockState(p);
+                        if(existing.hasBlockEntity() ||
+                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
+                            return false;
                     }
                 }
             }

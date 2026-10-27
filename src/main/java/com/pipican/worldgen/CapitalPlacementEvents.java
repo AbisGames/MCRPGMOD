@@ -163,7 +163,7 @@ public final class CapitalPlacementEvents {
         return true;
     }
 
-    private static boolean isNatural(BlockState state) {
+    static boolean isNatural(BlockState state) {
         if(RegionalNatureBlocks.PALETTES.values().stream().anyMatch(p ->
                 state.is(p.ground().get()) || state.is(p.strata().get()) || state.is(p.trunk().get())
                 || state.is(p.canopy().get()) || state.is(p.bloom().get())))return true;

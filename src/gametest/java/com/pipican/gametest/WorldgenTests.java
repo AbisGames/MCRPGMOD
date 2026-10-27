@@ -178,6 +178,7 @@ public final class WorldgenTests {
         var dimensionRegistry=access.lookupOrThrow(Registries.DIMENSION_TYPE);
         var structureRegistry=access.lookupOrThrow(Registries.STRUCTURE);
         var poolRegistry=access.lookupOrThrow(Registries.TEMPLATE_POOL);
+        var structureSets=access.lookupOrThrow(Registries.STRUCTURE_SET);
 
         helper.assertTrue(presetRegistry.get(ResourceKey.create(Registries.WORLD_PRESET,
             Pipican.id("rpg_world"))).isPresent(),"missing RPG world preset");
@@ -224,6 +225,12 @@ public final class WorldgenTests {
             }
         }
         helper.assertTrue(structures==54,"expected 54 regional structures");
+        for(var ore:RegionalOreCatalog.ORES){
+            var key=ResourceKey.create(Registries.STRUCTURE_SET,
+                Pipican.id("regional/"+ore.region()+"/expeditions"));
+            helper.assertTrue(structureSets.get(key).isPresent(),
+                "missing consolidated regional grid "+ore.region());
+        }
 
         var manifest=WorldgenJson.read("structure_pools_manifest.json");
         int pools=0;
