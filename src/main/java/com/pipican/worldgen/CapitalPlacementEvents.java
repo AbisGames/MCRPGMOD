@@ -49,6 +49,9 @@ public final class CapitalPlacementEvents {
             .thenComparingInt(i->i));
         return indices.stream().mapToInt(Integer::intValue).toArray();
     }
+    public static int tileOrigin(int centre,boolean capital,int size,int offset){
+        return centre-(capital?46:size/2)+offset;
+    }
     public static int cityTileIndex(int serialIndex,boolean centreFirst){
         if(serialIndex<0||serialIndex>=25)throw new IllegalArgumentException();
         return centreFirst?CENTRE_FIRST_ORDER[serialIndex]:serialIndex;
@@ -125,11 +128,11 @@ public final class CapitalPlacementEvents {
         }
         // City plots are centred around the authored landmark location;
         // the +/-224 tile array is offset by -46 to centre the whole 5x5 area.
-        int ox=city.x()-(capital?46:0)+tile.get("x").getAsInt();
-        int oz=city.z()-(capital?46:0)+tile.get("z").getAsInt();
+        StructureTemplate piece=template.get();
+        int ox=tileOrigin(city.x(),capital,piece.getSize().getX(),tile.get("x").getAsInt());
+        int oz=tileOrigin(city.z(),capital,piece.getSize().getZ(),tile.get("z").getAsInt());
         BlockPos origin=new BlockPos(ox,foundationY,oz);
         StructurePlaceSettings options=new StructurePlaceSettings().setIgnoreEntities(true);
-        StructureTemplate piece=template.get();
         BoundingBox bounds=piece.getBoundingBox(options,origin);
         if(!safeFootprint(level,bounds,foundationY)) {
             Pipican.LOGGER.warn("Unsafe terrain or obstruction at tile {} of {}; placement deferred",index,city.id());

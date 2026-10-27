@@ -52,6 +52,10 @@ public final class WorldgenTests {
 
     private static void capitalProtection(GameTestHelper helper) {
         helper.assertTrue(CapitalStructureExclusion.all().size()==22,"capital zone count");
+        helper.assertTrue(CapitalPlacementEvents.tileOrigin(500,false,80,0)==460,
+            "single-template villages must be centered on authored coordinates");
+        helper.assertTrue(CapitalPlacementEvents.tileOrigin(500,true,112,0)==454,
+            "capital keep origin changed unexpectedly");
         helper.assertTrue(CapitalPlacementEvents.cityTileIndex(0,true)==12,
             "new capital saves must begin at central keep");
         helper.assertTrue(CapitalPlacementEvents.cityTileIndex(0,false)==0,
