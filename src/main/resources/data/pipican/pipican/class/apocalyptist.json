@@ -66,6 +66,23 @@
   "passives": [
     {
       "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "effects": [
+            {
+              "effect": "minecraft:weakness",
+              "seconds": 4.0
+            }
+          ],
+          "radius": 8.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
       "event": "hit",
       "chance": 0.15,
       "actions": [

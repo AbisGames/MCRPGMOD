@@ -1,5 +1,7 @@
 package com.pipican.event;
 
+import com.pipican.rpgclass.SpecialStat;
+import com.pipican.ability.Combat;
 import com.pipican.Pipican;
 import com.pipican.ability.AbilityService;
 import com.pipican.ability.Bonds;
@@ -213,6 +215,10 @@ public final class ClassEvents {
         // client is synced twice a second.
         PlayerClassData data = player.getData(PipicanAttachments.CLASS_DATA);
         double regen = state.resourceRegenPerTick();
+        if (regen < 0 && Combat.inCombat(player) && state.rpgClass().flatMap(RpgClass::specialStat).flatMap(SpecialStat::resource)
+                .map(r -> !r.drainsInCombat()).orElse(false)) {
+            regen = 0;
+        }
         if (state.resourceMax() > 0 && (regen > 0 && data.resource() < state.resourceMax() || regen < 0 && data.resource() > 0)) {
             data.setResource(Math.clamp(data.resource() + regen, 0, state.resourceMax()));
             if (player.tickCount % 10 == 0 || data.resource() >= state.resourceMax() || data.resource() <= 0) {
@@ -255,10 +261,14 @@ public final class ClassEvents {
             return;
         }
         if (event.getSource().getEntity() instanceof ServerPlayer attacker && event.getEntity() != attacker) {
+            Combat.mark(attacker);
             Reactions.onHit(attacker, event.getEntity(), event.getSource());
         }
         if (event.getEntity() instanceof ServerPlayer victim) {
             LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
+            if (attacker != null) {
+                Combat.mark(victim);
+            }
             Reactions.fire(victim, attacker, event.getSource().getWeaponItem(), ReactionEffect.Event.HURT);
         }
     }

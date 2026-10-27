@@ -459,7 +459,7 @@ def translate(text, ctx):
 
 
 def _segment(seg, ctx):
-    reacted = combat.reaction(_clean(seg).lower())
+    reacted = combat.reaction(_clean(seg).lower()) or bonus.resource(_clean(seg).lower(), ctx)
     if reacted is not None:
         return reacted, []
     wrapped = _conditional(seg, ctx)

@@ -1,5 +1,7 @@
 package com.pipican.ability.action;
 
+import com.pipican.player.ClassEffectApplier;
+import com.pipican.effect.type.BonusEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -29,6 +31,10 @@ public record ResourceAction(double amount, double percent) implements AbilityAc
     @Override
     public void run(AbilityContext ctx) {
         var data = ctx.player().getData(PipicanAttachments.CLASS_DATA);
-        data.setResource(Math.clamp(data.resource() + amount + percent * data.resourceMax(), 0, data.resourceMax()));
+        double change = amount + percent * data.resourceMax();
+        if (change > 0) {
+            change *= ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.RESOURCE_GAIN);
+        }
+        data.setResource(Math.clamp(data.resource() + change, 0, data.resourceMax()));
     }
 }

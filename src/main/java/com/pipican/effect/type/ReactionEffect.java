@@ -34,7 +34,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
                              Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions) implements ClassEffect {
 
     public enum Event implements StringRepresentable {
-        HIT("hit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block");
+        HIT("hit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block"),
+        /** An ability spent some of the resource bar. */
+        SPEND("spend"),
+        /** Woke up after sleeping. */
+        WAKE("wake");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

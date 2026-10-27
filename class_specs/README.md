@@ -40,7 +40,9 @@ Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fir
 | **Permanent potion effect** | "night vision", "haste I", "water breathing", "fire resistance" |
 | **Deal more/less damage** | "+10% damage", "+15% damage with swords", "+20% fire damage", "-30% damage with bows" |
 | **Take more/less damage** | "takes 50% more fire damage", "-20% fall damage taken", "-10% projectile damage taken" |
-| **Resource bar** | "+10% Rage regen", "-15% max Mana", "+5 max Mana", "no Mana regen" |
+| **Resource bar** | "+10% Rage regen", "-15% max Mana", "+5 max Mana", "no Mana regen", "Rage fills 25% faster", "abilities cost 10% less Mana", "your melee hits refill 2 Warfire", "every kill refills 5 Rage", "Spare Parts refill completely when you sleep", "whenever you spend Mana, gain Speed II for 3s / heal 2 HP / mobs within 8 blocks get Weakness I for 4s" |
+| **Filling bars** | in "Starts full": "no (fills by 2 per hit taken and 1 per hit dealt, drains 0.5/s out of combat)", or "fills by 8 per kill" |
+| **Health regen** | "natural regeneration is 40% faster", "+10% natural regeneration" |
 | **Only in some situations** | "+10% damage at night", "+2 armor while below half health", "-20% damage underground", "while Ward is above half: +20% speed", "+1 armor in forests", "-10% damage while no other player is within 16 blocks" |
 | **Against some mobs / mob states** | "+20% damage against undead", "+15% damage to mobs below 30% health", "+10% damage to burning / poisoned / marked mobs", "+10% damage to mobs not targeting you", "-20% damage taken from spiders" |
 | **Crits & dodging** | "+15% critical damage", "+5% crit chance with swords", "8% chance to dodge melee attacks" |
@@ -52,7 +54,7 @@ Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fir
 **Situations** you can use: wet / in water / underwater / in lava / in rain / in thunderstorms, at night / in daylight,
 outdoors / underground, in the Nether / the End, in forests / deserts / jungles / oceans / snowy or natural biomes,
 standing on stone / dirt / sand / gravel / Nether blocks, light level N or lower/higher, in darkness, below/above X%
-health, full health, your resource above/below X% or full, sprinting, sneaking, blocking, swimming, mounted / on foot,
+health, full health, your resource above/below X% or full, sprinting, sneaking, blocking, swimming, in combat, mounted / on foot,
 on fire, slowed / poisoned / withered / weakened / blinded, holding a shield / your staff, dual-wielding, wearing
 N+ heavy/medium/light armor or leather or no armor, another player / no other player / hostile mobs within N blocks.
 Combine with "and" / "or".

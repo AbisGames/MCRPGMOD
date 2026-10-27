@@ -76,16 +76,7 @@
     {
       "id": "priest_sanctified",
       "name": "Sanctified",
-      "description": {
-        "text": "+10% natural regeneration, immune to Hunger effect",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% natural regeneration, immune to Hunger effect",
       "type": "notable",
       "x": 440,
       "y": 28,
@@ -94,7 +85,18 @@
         "priest_smite"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "natural_regen",
+          "amount": 0.1
+        },
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:hunger"
+        }
+      ]
     },
     {
       "id": "priest_martyr",

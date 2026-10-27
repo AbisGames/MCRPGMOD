@@ -1,5 +1,7 @@
 package com.pipican.ability;
 
+import com.pipican.effect.type.ReactionEffect;
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.condition.ClassCondition;
 import com.pipican.core.ClassLookup;
 import com.pipican.mastery.SkillAction;
@@ -76,14 +78,20 @@ public final class AbilityService {
             return ClassService.Result.fail(Component.translatable("pipican.ability.cannot_use", ability.name()));
         }
         boolean spellPoint = usesSpellPoint(player, ability);
-        if (!spellPoint && ability.cost() > 0 && data.resource() < ability.cost()) {
-            return ClassService.Result.fail(Component.translatable("pipican.ability.no_resource", ability.name(), (int) Math.ceil(ability.cost())));
+        double cost = cost(player, ability);
+        if (!spellPoint && cost > 0 && data.resource() < cost) {
+            return ClassService.Result.fail(Component.translatable("pipican.ability.no_resource", ability.name(), (int) Math.ceil(cost)));
         }
         AbilityContext ctx = activate(player, key, ability, spellPoint);
         if (ctx.isCancelled()) {
             return ClassService.Result.fail(ctx.cancelReason());
         }
         return ClassService.Result.ok(Component.translatable("pipican.ability.used", ability.name()));
+    }
+
+    /** The resource an ability costs this player, after {@code ability_cost} bonuses. */
+    public static double cost(ServerPlayer player, Ability ability) {
+        return ability.cost() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.ABILITY_COST);
     }
 
     /** Spell points (Wizard) pay for abilities that cost resource, while there are any left. */
@@ -120,7 +128,7 @@ public final class AbilityService {
     private static AbilityContext activate(ServerPlayer player, ResourceKey<Ability> key, Ability ability, boolean spellPoint) {
         PlayerClassData data = ClassService.data(player);
         long now = player.level().getGameTime();
-        double spent = spellPoint ? 0 : ability.spendAll() ? data.resource() : Math.min(ability.cost(), data.resource());
+        double spent = spellPoint ? 0 : ability.spendAll() ? data.resource() : Math.min(cost(player, ability), data.resource());
         data.setResource(data.resource() - spent);
         if (spellPoint) {
             data.extras().spellPoints--;
@@ -154,6 +162,9 @@ public final class AbilityService {
         }
         player.level().playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 0.6f, 1.3f);
         MasteryService.onAction(player, new SkillAction.AbilityUsed(key.identifier(), player.getMainHandItem()));
+        if (spent > 0) {
+            Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.SPEND);
+        }
         // Refresh so "while active" effects and ability_active conditions take effect; also syncs.
         ClassService.changed(player);
         return ctx;
@@ -204,6 +215,7 @@ public final class AbilityService {
         if (ClassEffectApplier.state(player).optimizationAmount() > 0) {
             Optimize.prompt(player);
         }
+        Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.WAKE);
         ClassService.changed(player);
     }
 
@@ -256,7 +268,7 @@ public final class AbilityService {
                 Ability ability = registry.getValue(key);
                 Optional<ClassCondition> auto = ability.auto();
                 if (auto.isPresent() && !data.abilityActive().containsKey(key) && now >= data.abilityReadyAt(key)
-                        && data.resource() >= ability.cost() && auto.get().test(player)) {
+                        && data.resource() >= cost(player, ability) && auto.get().test(player)) {
                     activate(player, key, ability, false);
                 }
             }

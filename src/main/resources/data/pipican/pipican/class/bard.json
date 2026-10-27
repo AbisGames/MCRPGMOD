@@ -67,6 +67,11 @@
       "type": "pipican:bonus",
       "kind": "experience",
       "amount": 0.2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "trade_price",
+      "amount": -0.15
     }
   ],
   "weakness": {

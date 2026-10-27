@@ -25,12 +25,15 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code hunger}: how fast you get hungry (-0.15 = 15% slower)</li>
  *   <li>{@code trade_price}: villager and wandering trader prices (-0.05 = 5% cheaper)</li>
  *   <li>{@code draw_speed} / {@code reload_speed}: bow and trident draw / crossbow loading speed</li>
+ *   <li>{@code resource_gain}: how much the resource bar fills from {@code pipican:resource} actions (hits, kills...)</li>
+ *   <li>{@code ability_cost}: the resource cost of abilities (-0.1 = 10% cheaper)</li>
+ *   <li>{@code natural_regen}: how fast health comes back from a full food bar</li>
  * </ul>
  */
 public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) implements ClassEffect {
 
     public enum Kind implements StringRepresentable {
-        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED;
+        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -26,13 +26,14 @@ import net.neoforged.neoforge.event.entity.player.PlayerContainerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-/** Applies {@code pipican:bonus} kinds: XP, potion durations, hunger, trade prices, draw/reload speed. */
+/** Applies {@code pipican:bonus} kinds: XP, potion durations, hunger, natural regen, trade prices, draw/reload speed. */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class BonusEvents {
 
     /** Fractions of XP / use ticks carried over so small bonuses still add up. */
     private static final Map<UUID, Double> XP_REMAINDER = new ConcurrentHashMap<>();
     private static final Map<UUID, Double> USE_REMAINDER = new ConcurrentHashMap<>();
+    private static final Map<UUID, Double> REGEN_REMAINDER = new ConcurrentHashMap<>();
     private static final Map<UUID, Float> LAST_EXHAUSTION = new ConcurrentHashMap<>();
     /** Price changes made to traders that don't reset their own prices (wandering traders), undone on close. */
     private static final Map<UUID, Map<MerchantOffer, Integer>> TRADE_CHANGES = new ConcurrentHashMap<>();
@@ -84,6 +85,7 @@ public final class BonusEvents {
             return;
         }
         FoodData food = player.getFoodData();
+        naturalRegen(player, food);
         float now = food.exhaustionLevel;
         Float last = LAST_EXHAUSTION.put(player.getUUID(), now);
         double mult = ClassEffectApplier.state(player).bonus(Kind.HUNGER);
@@ -98,6 +100,20 @@ public final class BonusEvents {
         float adjusted = Math.max(0, now + (float) (gained * (mult - 1)));
         food.exhaustionLevel = adjusted;
         LAST_EXHAUSTION.put(player.getUUID(), adjusted);
+    }
+
+    /** Natural regen heals when the food tick timer reaches its threshold: move the timer faster or slower. */
+    private static void naturalRegen(ServerPlayer player, FoodData food) {
+        double extra = ClassEffectApplier.state(player).bonus(Kind.NATURAL_REGEN) - 1;
+        if (extra == 0 || food.getFoodLevel() < 18 || player.getHealth() >= player.getMaxHealth()) {
+            return;
+        }
+        double total = extra + REGEN_REMAINDER.getOrDefault(player.getUUID(), 0.0);
+        int whole = (int) total;
+        REGEN_REMAINDER.put(player.getUUID(), total - whole);
+        if (whole != 0) {
+            food.tickTimer = Math.max(0, food.tickTimer + whole);
+        }
     }
 
     @SubscribeEvent

@@ -109,16 +109,7 @@
     {
       "id": "druid_circle",
       "name": "Stone Circle",
-      "description": {
-        "text": "+30% regeneration outdoors, but -20% max health underground (no sky)",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% regeneration outdoors, but -20% max health underground (no sky)",
       "type": "keystone",
       "x": 831,
       "y": 480,
@@ -127,7 +118,41 @@
         "druid_herd"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": 0.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "sees_sky"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": -0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

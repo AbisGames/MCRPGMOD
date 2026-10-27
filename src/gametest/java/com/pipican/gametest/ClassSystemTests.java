@@ -1,5 +1,8 @@
 package com.pipican.gametest;
 
+import com.pipican.effect.type.ReactionEffect;
+import com.pipican.ability.Reactions;
+import com.pipican.ability.Combat;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import com.pipican.effect.type.BonusEffect;
@@ -301,6 +304,16 @@ public final class ClassSystemTests {
         player.addEffect(new MobEffectInstance(MobEffects.SPEED, 200));
         helper.assertTrue(player.getEffect(MobEffects.SPEED).getDuration() == 200, "beneficial effects unchanged");
         helper.assertTrue(!player.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200)), "immune to nausea");
+
+        PlayerClassData data = ClassService.data(player);
+        assertNear(helper, 0, data.resource(), "fill-type bar starts empty");
+        Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.HIT);
+        assertNear(helper, 3, data.resource(), "a hit fills 2, +50% resource gain");
+        helper.assertTrue(!Combat.inCombat(player), "not in combat yet");
+        Combat.mark(player);
+        helper.assertTrue(Combat.inCombat(player), "in combat after a hit");
+        Ability mend = ClassLookup.abilities(player.level().registryAccess()).getValue(ability("mend"));
+        assertNear(helper, 2.5, AbilityService.cost(player, mend), "abilities cost half");
         helper.succeed();
     }
 

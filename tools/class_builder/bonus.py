@@ -10,6 +10,7 @@ LEADING = [
     (r'trade prices?|villager prices', 'trade_price'),
     (r'(?:crossbow )?reload(?:ing)? speed', 'reload_speed'),
     (r'(?:bow )?draw speed', 'draw_speed'),
+    (r'(?:natural )?(?:health )?regeneration|natural regen', 'natural_regen'),
 ]
 
 # "<potions...> last 20% longer/shorter"
@@ -72,3 +73,92 @@ def special(low, scal):
         except ValueError:
             return None
     return None
+
+
+# ---------------------------------------------------------------- resource bar filling / spending
+
+def _on(event, actions, **extra):
+    return dict({'type': 'pipican:on', 'event': event, 'actions': actions}, **extra)
+
+
+def _fill(amount=None, percent=None):
+    a = {'type': 'pipican:resource'}
+    if amount is not None:
+        a['amount'] = float(amount)
+    if percent is not None:
+        a['percent'] = float(percent)
+    return a
+
+
+HITS = {'': 'hit', 'melee ': 'melee_hit', 'ranged ': 'ranged_hit', 'arrow ': 'ranged_hit'}
+
+
+def _spend_outcome(t):
+    """What spending does: "gain Speed II for 3s", "heal 2 HP", "mobs within 8 blocks get Weakness I for 4s"."""
+    import combat
+    t = t.strip().rstrip('.')
+    m = re.fullmatch(r'(?:you )?heals? (?:you )?(?:for )?(\d+(?:\.\d+)?) ?(?:hp|health)', t)
+    if m:
+        return [{'type': 'pipican:heal', 'target': 'self', 'amount': float(m.group(1))}]
+    m = re.fullmatch(r'(?:all )?(?:hostile )?mobs within (\d+) blocks (?:get|are given|receive) (.+)', t)
+    if m:
+        inner = combat.outcome('give ' + m.group(2), 'victim')
+        if inner and len(inner) == 1 and inner[0]['type'] == 'pipican:effect':
+            return [dict(inner[0], target='hostiles', radius=float(m.group(1)))]
+        return None
+    m = re.fullmatch(r'a shockwave hits (?:all )?mobs within (\d+) blocks for (\d+(?:\.\d+)?) damage', t)
+    if m:
+        return [{'type': 'pipican:damage', 'target': 'hostiles', 'radius': float(m.group(1)), 'amount': float(m.group(2))}]
+    out = combat.outcome(t, 'self')
+    if out and all(a['type'] == 'pipican:effect' and a.get('target') == 'self' for a in out):
+        return out
+    return None
+
+
+def resource(low, ctx):
+    """Whole-segment resource phrases: filling from hits/kills/damage/sleep, spending triggers, fill speed, ability cost."""
+    rn = (ctx.get('resource_name') or '').lower()
+    t = low.strip().rstrip('.')
+    if rn:
+        # "Mystic Flux" may be written as just "Flux".
+        r = '(?:' + re.escape(rn) + ('|' + re.escape(rn.split()[-1]) if ' ' in rn else '') + ')'
+        m = re.fullmatch(rf'(?:your )?(|melee |ranged |arrow )(?:hits|attacks) (?:refill|refills|restore|restores|give|gives you|add|adds) {N} {r}', t)
+        if m:
+            return [_on(HITS[m.group(1)], [_fill(m.group(2))])]
+        m = re.fullmatch(rf'{r} (?:fills|refills) by {N} (?:every time you take damage|whenever you take damage|per hit taken|when you are hit)', t)
+        if m:
+            return [_on('hurt', [_fill(m.group(1))])]
+        m = re.fullmatch(rf'(?:every|each) kill (?:refills|restores|gives you|gives) {N} {r}|killing a mob (?:refills|restores) {N} {r}', t)
+        if m:
+            return [_on('kill', [_fill(m.group(1) or m.group(2))])]
+        m = re.fullmatch(rf'{r} (?:refills?|is refilled) (?:completely|fully) (?:when|whenever|after) you sleep', t)
+        if m:
+            return [_on('wake', [_fill(percent=1)])]
+        m = re.fullmatch(rf'{r} fills {N}% (faster|slower)|{r} fills (twice|three times) as fast', t)
+        if m:
+            v = float(m.group(1)) * (1 if m.group(2) == 'faster' else -1) if m.group(1) else {'twice': 100, 'three times': 200}[m.group(3)]
+            return [_effect('resource_gain', v, None)]
+        m = re.fullmatch(rf'(?:whenever|when|every time|each time) you spend {r},? (.+)', t)
+        if m:
+            out = _spend_outcome(m.group(1))
+            if out:
+                return [_on('spend', out)]
+        m = re.fullmatch(rf'abilities cost {N}% (less|more) {r}', t)
+        if m:
+            return [_effect('ability_cost', float(m.group(1)) * (-1 if m.group(2) == 'less' else 1), None)]
+    m = re.fullmatch(rf'(?:villager )?trades cost {N}% (less|more)', t)
+    if m:
+        return [_effect('trade_price', float(m.group(1)) * (-1 if m.group(2) == 'less' else 1), None)]
+    m = re.fullmatch(rf'natural (?:health )?regeneration is {N}% (faster|slower)', t)
+    if m:
+        return [_effect('natural_regen', float(m.group(1)) * (1 if m.group(2) == 'faster' else -1), None)]
+    return None
+
+
+def fill_rules(note):
+    """The resource's "starts full" note: "fills by 2 per hit taken and 1 per hit dealt, drains 0.5/s out of combat"."""
+    note = (note or '').lower()
+    out = []
+    for n, what in re.findall(rf'{N} per (hit taken|hit dealt|kill)', note):
+        out.append(_on({'hit taken': 'hurt', 'hit dealt': 'hit', 'kill': 'kill'}[what], [_fill(n)]))
+    return out, 'out of combat' in note

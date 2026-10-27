@@ -99,6 +99,39 @@
       ]
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:biome",
+        "biomes": "#pipican:natural"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "natural_regen",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Woodwoses are part plant now. Fire is their worst fear.",

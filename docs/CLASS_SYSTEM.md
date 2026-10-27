@@ -219,7 +219,9 @@ The special stat is a normal stat (it gives its `per_point` bonuses and can be r
 `exclusive`), and it is the `special_stat` [scaling source](#scaling). `resource` is optional: when present the
 class gets a resource bar (mana, rage, energy...) next to the hotbar:
 max = `base_max + max_per_point × points`, regen/s = `regen_per_second + regen_per_point × points`.
-Spending the resource is up to the upcoming active-skill system.
+Abilities spend it (`cost`). A bar with negative regen drains instead and fills from `pipican:on` reactions with a
+`pipican:resource` action (Berserker Rage: +2 per hit taken, +1 per hit dealt); `"drains_in_combat": false` pauses
+the drain for 5 s after every hit dealt or taken.
 
 ### 2.5 Skills & mastery — `skill/<name>.json`
 
@@ -381,12 +383,12 @@ picked by `"type"`:
 | `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `against` (entity types/tag), `victim`, `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords), `against` to those mobs (`#pipican:mobs/undead`), `victim` to mobs in a state (below). |
 | `pipican:critical` | `damage`, `chance`, `weapons`, `scaling` (damage), `chance_scaling` | Melee crits: `damage` 0.1 = crits deal +10%; `chance` = the chance a normal hit becomes a crit. Both add up. |
 | `pipican:dodge` | `chance`, `melee_only`, `scaling` | Chance to fully avoid a hit from a mob/player (not falls, fire...). Adds up, capped at 90%. |
-| `pipican:bonus` | `kind`, `amount`, `scaling` | A percentage (0.1 = +10%, amounts of one kind add up) to: `experience` (XP gained), `potion_duration` / `harmful_duration` / `beneficial_duration` (effects on you), `applied_duration` / `applied_harmful_duration` (effects you put on others), `hunger` (how fast you get hungry), `trade_price` (villagers and wandering traders), `draw_speed` (bows, tridents), `reload_speed` (crossbows). |
+| `pipican:bonus` | `kind`, `amount`, `scaling` | A percentage (0.1 = +10%, amounts of one kind add up) to: `experience` (XP gained), `potion_duration` / `harmful_duration` / `beneficial_duration` (effects on you), `applied_duration` / `applied_harmful_duration` (effects you put on others), `hunger` (how fast you get hungry), `trade_price` (villagers and wandering traders), `draw_speed` (bows, tridents), `reload_speed` (crossbows), `resource_gain` (how much `pipican:resource` actions fill), `ability_cost` (-0.1 = abilities cost 10% less), `natural_regen` (health regen from a full food bar). |
 | `pipican:immune` | `effects` (mob effects/tag) | Those potion effects can't be applied to you (and are removed if you have them). |
 | `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
 | `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
 | `pipican:flight` | – | Creative-style flight while it counts (usually in an ability toggle). Never touches creative/spectator players. |
-| `pipican:on` | `event` (`hit`/`melee_hit`/`ranged_hit`/`kill`/`hurt`/`block`), `chance`, `cooldown_ticks`, `weapons`, `victims`, `actions` | Runs [ability actions](#26-active-abilities--abilitynamejson) when it happens ("10% chance your hits set mobs on fire", "kills give Speed"). |
+| `pipican:on` | `event` (`hit`/`melee_hit`/`ranged_hit`/`kill`/`hurt`/`block`/`spend`/`wake`), `chance`, `cooldown_ticks`, `weapons`, `victims`, `actions` | Runs [ability actions](#26-active-abilities--abilitynamejson) when it happens ("10% chance your hits set mobs on fire", "kills give Speed"). `spend`: an ability spent resource; `wake`: after sleeping. |
 | `pipican:eidolon` | `attribute`, `amount`, `operation`, `scaling` | Changes an attribute of your eidolon. |
 | `pipican:spell_points` | `amount` | Spell points that refill on every sleep and pay for abilities instead of the resource. |
 | `pipican:optimization` | `amount`, `extra_loss`, `scaling` | After each sleep, pick a stat to raise by `amount` and one to lower by `amount + extra_loss` (clickable chat). |
@@ -420,7 +422,7 @@ second, and a player's bonuses are rebuilt only when an answer changes.
 
 | Condition | Fields | True when |
 |---|---|---|
-| `pipican:state` | `state` | `wet` (water or rain), `in_water`, `underwater`, `in_lava`, `swimming`, `sprinting`, `sneaking`, `blocking`, `mounted`, `on_fire`, `night`, `day`, `raining`, `thundering`, `sees_sky` (outdoors; `not` it for underground) |
+| `pipican:state` | `state` | `wet` (water or rain), `in_water`, `underwater`, `in_lava`, `swimming`, `sprinting`, `sneaking`, `blocking`, `mounted`, `in_combat` (hit or was hit by a mob/player in the last 5 s), `on_fire`, `night`, `day`, `raining`, `thundering`, `sees_sky` (outdoors; `not` it for underground) |
 | `pipican:health` | `min`, `max` (0–1) | Health ÷ max health is in range. `"max": 0.5` = below half health. |
 | `pipican:resource` | `min`, `max` (0–1) | Resource bar ÷ its max is in range. `"min": 1` = full. |
 | `pipican:light` | `min`, `max` (0–15) | Light level at the feet. `"max": 8` = level 7 or lower. |

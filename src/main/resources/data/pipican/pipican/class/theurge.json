@@ -61,6 +61,17 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:heal",
+          "target": "self",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.85

@@ -22,7 +22,8 @@
       "regen_per_second": -0.5,
       "regen_per_point": 0.0,
       "color": -5040354,
-      "starts_full": false
+      "starts_full": false,
+      "drains_in_combat": false
     }
   },
   "starting_kit": [
@@ -78,6 +79,26 @@
           "type": "pipican:attribute",
           "attribute": "minecraft:armor",
           "amount": 3.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hurt",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 1.0
         }
       ]
     }

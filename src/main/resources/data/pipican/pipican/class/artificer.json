@@ -72,6 +72,16 @@
       "type": "pipican:bonus",
       "kind": "reload_speed",
       "amount": 0.1
+    },
+    {
+      "type": "pipican:on",
+      "event": "wake",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "percent": 1.0
+        }
+      ]
     }
   ],
   "weakness": {

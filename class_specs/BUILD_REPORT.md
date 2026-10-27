@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **107** (of 107 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1210**, partly working: **13**, not yet: **1026**
+- Bonus phrases: **2249**. Fully working: **1223**, partly working: **13**, not yet: **1013**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,10 +12,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 330 |
+| [Other mechanics](#other-mechanics) | 329 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 247 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 179 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 141 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 128 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 105 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 98 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 76 |
@@ -23,7 +23,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 9 |
 | [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 5 |
-| [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 4 |
+| [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 
 ## Other mechanics
 
@@ -434,7 +434,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Iron Conviction: post-Zeal immunity lasts 3s longer
   - special tree: Divine Might: +10% more Divine Might damage
   - special tree: Violent Madness: Violent Madness no longer targets players
-  - special tree: Prophet of Ruin: Zeal triggers at 3 hearts
 
 ## Active abilities (named abilities, cooldowns, auras, summons)
 
@@ -987,17 +986,14 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Lord of the Air: Flight costs 30% less Breath; -15% max health
   - skill Windcalling: +10% Breath regen
 - **apocalyptist**
-  - passive: Fearsome Casting: when you spend Doom, mobs within 8 blocks get Weakness I for 4s
   - weakness: villagers refuse to trade with you, animals flee from you, and healing from Regeneration/Instant Health is 25% weaker
 - **arcanist**
   - passive: whenever you spend Mystic Flux
   - passive: Arcana Mastery: enchanting at a table costs 1 fewer level and 1 fewer lapis
-  - general tree: Swift Arcana: abilities cost 10% less Flux
   - special tree: Archmage's Insight: -10% Flux regen
   - skill Arcane Research: +10% Flux regen
 - **artificer**
   - passive: Anvil repairs and renames cost 1 fewer level
-  - passive: Spare Parts refill completely when you sleep
   - weakness: takes 25% more lightning damage, and a lightning strike drains all Spare Parts
 - **assassin**
   - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
@@ -1007,15 +1003,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Retribution fills by 3 every time you or a nearby ally takes damage
   - special tree: Unending Vendetta: killing a marked target heals you 25%; -10% max health
 - **bard**
-  - passive: Villager trades cost 15% less (bards are welcome everywhere)
   - passive: Playing a goat horn or note block refills 10 Melody (30s cooldown)
   - weakness: -50% Melody regen and Inspiring Song is disabled when no other player is within 16 blocks
   - special tree: Legend: everyone in your Song gets Regeneration I
 - **beastmaster**
   - special passive: +1 tamed-animal regen per 20 Primal Bond
   - general tree: Beastmaster: tamed animals +2 max health
-- **berserker**
-  - general tree: Unchained: Rage fills 25% faster
 - **blade**
   - special tree: Red Mist: killing a bleeding mob refills 20 Bloodletting; -10% max health
 - **brute**
@@ -1039,7 +1032,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **death_dealer**
   - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
 - **destroyer**
-  - passive: Destruction Released: whenever you spend Devastation, a shockwave hits all mobs within 3 blocks for 2 damage
   - weakness: every time you spend Devastation
   - special tree: Controlled Burn: no self-damage when spending Devastation
 - **diplomat**
@@ -1050,7 +1042,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **druid**
   - special passive: +1% regeneration per 2 Wildness while standing on grass, dirt, sand or leaves
   - weakness: -25% Verdance regen inside villages
-  - general tree: Stone Circle: +30% regeneration outdoors, but -20% max health underground (no sky)
   - special tree: Grand Druid: Verdance regen doubles in forests; it stops completely in the Nether and the End
   - skill Beast Bond: tamed animals +2 max health
   - skill Beast Bond: tamed animals +2 max health
@@ -1067,7 +1058,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Respite: Respite also gives Regeneration I for 30s
   - special tree: Trailblazer: players within 16 blocks get +10% speed outdoors; -10% max health
 - **fighter**
-  - passive: Durable: natural regeneration is 40% faster
   - special tree: Weapon Mastery: Weapon Mastery chance +15%; -10% max health
 - **gladiator**
   - weakness: Bloodlust only fills while another player is within 32 blocks
@@ -1096,7 +1086,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Uncommon Ability: Aptitude crit triggers every 30s; -10% max Knack
 - **mage_knight**
   - passive: Escalating Violence: after spending Warfire, your next 3 melee hits deal +20% damage
-  - passive: Mage Knight Tactics: your melee hits refill 2 Warfire
   - special tree: War Wizard: Escalating Violence also gives Speed I; -10% max Warfire
 - **magician**
   - special passive: Enchanting costs 1 fewer level for every 25 Power points
@@ -1119,9 +1108,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **poisoner**
   - general tree: Plague Doctor: poison spreads to mobs within 2 blocks on death, but -15% max health
 - **priest**
-  - passive: Natural regeneration is 20% faster
   - weakness: in the Nether and the End: Devotion does not regenerate and Prayer is disabled
-  - general tree: Sanctified: +10% natural regeneration, immune to Hunger effect
   - skill Devout: +1 Devotion regen per 10s
 - **pyromancer**
   - special tree: Phoenix: once per day, when you'd die, explode in flame and heal 6 HP; -10% max health
@@ -1162,7 +1149,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **thaumaturge**
   - special tree: Lord of Misrule: you're immune to your own chaos backfires; -15% max health
 - **theurge**
-  - passive: Pious Restoration: every time you spend Divinity, heal 2 HP
   - weakness: killing villagers, golems or tamed animals locks Divinity regen for 10 minutes
   - general tree: Chosen: Invocation stuns frightened (weakened) mobs for 1s, but -20% max health
   - special tree: Saint of the New God: Invocation also heals players within its radius by 2; -15% Divinity regen
@@ -1188,11 +1174,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Grimoire: while a book, writable book or enchanted book is in your off-hand, +15% magic damage and +20% Aether regen
   - passive: Enchanting costs 1 fewer level
   - weakness: with no book anywhere in your inventory: -30% Aether regen and -10% magic damage
-- **woodwose**
-  - special stat per point: +0.1 armor and +0.5% regeneration in natural biomes
 - **zealot**
   - general tree: Martyrdom: you never naturally regenerate above half health
-  - special tree: Prophet of Ruin: Madness fills twice as fast
+  - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
 
 ## Chance on hit / proc effects
 
@@ -1759,10 +1743,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Resource bar that fills from use (only the drain works)
 
-- **berserker**
-  - resource: Rage drains 0.5/s; filling it from fighting needs the active-skill system
-- **death_dealer**
-  - resource: Bloodshed drains 0.5/s; filling it from fighting needs the active-skill system
 - **sorcerer**
   - resource: Strain drains 0.2/s; filling it from fighting needs the active-skill system
 - **zealot**

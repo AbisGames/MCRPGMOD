@@ -14,6 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import abilities as ab  # noqa: E402
+import bonus  # noqa: E402
 import effects as fx  # noqa: E402
 import parse_specs  # noqa: E402
 
@@ -482,7 +483,11 @@ def main(spec_dir, res_dir, report_path):
                 'regen_per_second': res['regen_per_second'], 'regen_per_point': res['regen_per_point'],
                 'color': color, 'starts_full': res['starts_full'],
             }
-            if res['regen_per_second'] < 0:
+            fills, out_of_combat = bonus.fill_rules(res['starts_note'])
+            if out_of_combat:
+                special_stat['resource']['drains_in_combat'] = False
+            passives += fills
+            if res['regen_per_second'] < 0 and not fills:
                 report['Resource bar that fills from use (only the drain works)'].append(
                     (cid, 'resource', f'{res["name"]} drains {abs(res["regen_per_second"])}/s; filling it from fighting needs the active-skill system'))
 

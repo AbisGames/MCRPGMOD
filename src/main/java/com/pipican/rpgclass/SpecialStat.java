@@ -36,9 +36,11 @@ public record SpecialStat(ResourceKey<StatDefinition> stat, Optional<Resource> r
     /**
      * A spendable pool tied to the special stat. Max = base_max + max_per_point * points,
      * regen per second = regen_per_second + regen_per_point * points.
-     * Spending it is up to the (future) active-skill system.
+     * Abilities spend it; {@code pipican:on} reactions with a {@code pipican:resource} action fill it.
+     * A bar with negative regen drains; with {@code drains_in_combat: false} it pauses for 5s after each hit dealt or taken.
      */
-    public record Resource(Component name, double baseMax, double maxPerPoint, double regenPerSecond, double regenPerPoint, int color, boolean startsFull) {
+    public record Resource(Component name, double baseMax, double maxPerPoint, double regenPerSecond, double regenPerPoint, int color, boolean startsFull,
+                           boolean drainsInCombat) {
         public static final Codec<Resource> CODEC = RecordCodecBuilder.create(i -> i.group(
                 ComponentSerialization.CODEC.optionalFieldOf("name", Component.literal("Resource")).forGetter(Resource::name),
                 Codec.DOUBLE.optionalFieldOf("base_max", 100.0).forGetter(Resource::baseMax),
@@ -46,7 +48,8 @@ public record SpecialStat(ResourceKey<StatDefinition> stat, Optional<Resource> r
                 Codec.DOUBLE.optionalFieldOf("regen_per_second", 1.0).forGetter(Resource::regenPerSecond),
                 Codec.DOUBLE.optionalFieldOf("regen_per_point", 0.0).forGetter(Resource::regenPerPoint),
                 Codec.INT.optionalFieldOf("color", 0xFF3F7FFF).forGetter(Resource::color),
-                Codec.BOOL.optionalFieldOf("starts_full", true).forGetter(Resource::startsFull)
+                Codec.BOOL.optionalFieldOf("starts_full", true).forGetter(Resource::startsFull),
+                Codec.BOOL.optionalFieldOf("drains_in_combat", true).forGetter(Resource::drainsInCombat)
         ).apply(i, Resource::new));
 
         public double max(double points) {

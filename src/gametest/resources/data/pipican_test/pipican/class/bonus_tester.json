@@ -2,13 +2,70 @@
   "name": "Bonus Tester",
   "description": "Test-only class for pipican:bonus, dodge and immunity effects.",
   "selectable": false,
-  "base_stats": {},
+  "base_stats": {
+    "pipican_test:focus": 0
+  },
   "passives": [
-    { "type": "pipican:bonus", "kind": "experience", "amount": 0.5 },
-    { "type": "pipican:bonus", "kind": "harmful_duration", "amount": -0.5 },
-    { "type": "pipican:bonus", "kind": "potion_duration", "amount": 0.25 },
-    { "type": "pipican:bonus", "kind": "potion_duration", "amount": -0.25 },
-    { "type": "pipican:dodge", "chance": 0.1 },
-    { "type": "pipican:immune", "effects": [ "minecraft:nausea" ] }
-  ]
+    {
+      "type": "pipican:bonus",
+      "kind": "experience",
+      "amount": 0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "harmful_duration",
+      "amount": -0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "potion_duration",
+      "amount": 0.25
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "potion_duration",
+      "amount": -0.25
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.1
+    },
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:nausea"
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "resource_gain",
+      "amount": 0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "ability_cost",
+      "amount": -0.5
+    }
+  ],
+  "special_stat": {
+    "stat": "pipican_test:focus",
+    "resource": {
+      "name": "Test Rage",
+      "base_max": 40,
+      "max_per_point": 0,
+      "regen_per_second": -1,
+      "starts_full": false,
+      "drains_in_combat": false
+    }
+  }
 }

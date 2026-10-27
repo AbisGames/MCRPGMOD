@@ -74,6 +74,7 @@ def parse(path):
             'starts_full': (_field(r, 'Starts full when the class is chosen') or 'yes').lower().startswith('y'),
             'color': hexm.group(1) if hexm else None,
             'raw_regen': _field(r, 'Regen per second'),
+            'starts_note': _field(r, 'Starts full when the class is chosen') or '',
         }
 
     c['kit'] = []
