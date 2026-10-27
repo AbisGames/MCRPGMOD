@@ -35,6 +35,7 @@ public final class RegionalMineEvents {
         if (!(event.getLevel() instanceof ServerLevel level)) return;
         if (!(level.getChunkSource().getGenerator().getBiomeSource()
                 instanceof RegionalBiomeSource)) return;
+        if (PlayerWorldgenProtection.get(level).contains(event.getPos())) return;
         Block block = event.getState().getBlock();
 
         for (Map.Entry<String, ?> entry : RegionalOreRegistries.NODES.entrySet()) {
@@ -66,8 +67,13 @@ public final class RegionalMineEvents {
         RenewableOreSavedData data=RenewableOreSavedData.get(level);
         int restored=0;
         for(RenewableOreSavedData.Node node:data.due(now,limit,n->
-                    level.hasChunkAt(BlockPos.of(n.position())))){
+                    level.hasChunkAt(BlockPos.of(n.position()))
+                    && level.getBlockState(BlockPos.of(n.position())).isAir())){
             BlockPos position=BlockPos.of(node.position());
+            if(PlayerWorldgenProtection.get(level).contains(position)){
+                data.remove(node.position());
+                continue;
+            }
             var ore=RegionalOreRegistries.NODES.get(node.oreId());
             if(ore==null){
                 data.remove(node.position());

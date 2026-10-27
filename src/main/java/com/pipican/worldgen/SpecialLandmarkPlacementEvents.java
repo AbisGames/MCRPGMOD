@@ -91,10 +91,15 @@ public final class SpecialLandmarkPlacementEvents {
         for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
             for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++)
                 if(!level.hasChunkAt(new BlockPos(cx*16,y,cz*16)))return false;
-        for(int x=box.minX();x<=box.maxX();x+=4)
-            for(int z=box.minZ();z<=box.maxZ();z+=4){
+        var protection=PlayerWorldgenProtection.get(level);
+        for(int x=box.minX();x<=box.maxX();x++)
+            for(int z=box.minZ();z<=box.maxZ();z++)
+                for(int yy=box.minY();yy<=box.maxY();yy++)
+                    if(protection.contains(new BlockPos(x,yy,z)))return false;
+        for(int x=box.minX();x<=box.maxX();x++)
+            for(int z=box.minZ();z<=box.maxZ();z++){
                 if(site.elevation()>=0){
-                    for(int yy=box.minY();yy<=box.maxY();yy+=4){
+                    for(int yy=box.minY();yy<=box.maxY();yy++){
                         var p=new BlockPos(x,yy,z);
                         var existing=level.getBlockState(p);
                         if(existing.hasBlockEntity() || 
@@ -104,7 +109,7 @@ public final class SpecialLandmarkPlacementEvents {
                 } else if(site.elevation()==-1){
                     int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
                     if(Math.abs(surface-y)>8)return false;
-                    for(int yy=y;yy<=box.maxY();yy+=4){
+                    for(int yy=y;yy<=box.maxY();yy++){
                         var existing=level.getBlockState(new BlockPos(x,yy,z));
                         if(existing.hasBlockEntity() ||
                            (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
@@ -112,7 +117,7 @@ public final class SpecialLandmarkPlacementEvents {
                     }
                 } else {
                     // Underground city: do not replace existing inventories.
-                    for(int yy=box.minY();yy<=box.maxY();yy+=4){
+                    for(int yy=box.minY();yy<=box.maxY();yy++){
                         var p=new BlockPos(x,yy,z);
                         var existing=level.getBlockState(p);
                         if(existing.hasBlockEntity() ||

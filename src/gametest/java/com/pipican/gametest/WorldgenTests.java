@@ -343,6 +343,33 @@ public final class WorldgenTests {
             "renewal overwrote player-placed stone");
         helper.assertTrue(data.due(now,8).size()==1,"blocked node should remain queued");
         data.remove(occupied.asLong());
+        // A batch full of occupied nodes must not starve an eligible node.
+        var queued=new java.util.ArrayList<net.minecraft.core.BlockPos>();
+        for(int i=0;i<16;i++){
+            var p=helper.absolutePos(new net.minecraft.core.BlockPos(i,3,4));
+            level.setBlock(p,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            data.record(p,"frostcrystal",now);
+            queued.add(p);
+        }
+        var last=data.due(now,100).getLast();
+        var open=net.minecraft.core.BlockPos.of(last.position());
+        level.setBlock(open,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);
+        helper.assertTrue(RegionalMineEvents.restoreDue(level,now,1)==1,
+            "occupied nodes starved an eligible renewal with a batch limit of one");
+        for(var p:queued)data.remove(p.asLong());
+
+        var protection=PlayerWorldgenProtection.get(level);
+        protection.protect(occupied);
+        var encoded=PlayerWorldgenProtection.CODEC.encodeStart(
+            com.mojang.serialization.JsonOps.INSTANCE,protection).getOrThrow();
+        var reloaded=PlayerWorldgenProtection.CODEC.parse(
+            com.mojang.serialization.JsonOps.INSTANCE,encoded).getOrThrow();
+        helper.assertTrue(reloaded.contains(occupied),"player block provenance lost on serialization");
+        level.setBlock(occupied,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);
+        data.record(occupied,"glacierite",now);
+        helper.assertTrue(RegionalMineEvents.restoreDue(level,now,1)==0,
+            "player-modified position became a renewable ore node");
+        helper.assertTrue(level.getBlockState(occupied).isAir(),"renewal replaced protected air");
         helper.succeed();
     }
 

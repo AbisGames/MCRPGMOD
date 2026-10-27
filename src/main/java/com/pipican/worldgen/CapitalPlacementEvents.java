@@ -149,7 +149,8 @@ public final class CapitalPlacementEvents {
             Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;
     }
-    // Full voxel check; do not mutate the world before a placement succeeds.\n    // Terrain-fitted foundations must be generated separately.
+    // Full voxel check; do not mutate the world before a placement succeeds.
+    // Terrain-fitted foundations must be generated separately.
     private static boolean safeFootprint(ServerLevel level,BoundingBox box,int foundationY) {
         if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return false;
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
@@ -160,7 +161,9 @@ public final class CapitalPlacementEvents {
         for(int x=box.minX();x<=box.maxX();x++)
             for(int z=box.minZ();z<=box.maxZ();z++)
                 for(int y=box.minY();y<=box.maxY();y++) {
-                    BlockState state=level.getBlockState(new BlockPos(x,y,z));
+                    BlockPos position=new BlockPos(x,y,z);
+                    if(PlayerWorldgenProtection.get(level).contains(position))return false;
+                    BlockState state=level.getBlockState(position);
                     if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state)))return false;
                 }
         return true;
