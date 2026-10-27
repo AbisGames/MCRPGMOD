@@ -175,6 +175,22 @@ public final class WorldgenTests {
         helper.assertTrue(count==81,"expected 81 placed biome feature types");
         helper.assertTrue(RegionalNatureBlocks.PALETTES.size()==27,
             "expected 27 biome decor palettes");
+        // Each authored subregion has its own flora placement, rather than
+        // sharing one blanket density with the parent realm.
+        var map=WorldgenJson.read("region_map.json");
+        int checked=0;
+        for(var element:map.getAsJsonArray("macro_regions")){
+            var macro=element.getAsJsonObject();
+            String prefix=macro.get("id").getAsString();
+            for(var child:macro.getAsJsonArray("subregions")){
+                String id=child.getAsJsonObject().get("id").getAsString();
+                var key=Pipican.id("subregion/"+prefix+"/"+id+"_bloom");
+                helper.assertTrue(placed.get(ResourceKey.create(Registries.PLACED_FEATURE,key))
+                    .isPresent(),"missing subregion undergrowth "+key);
+                checked++;
+            }
+        }
+        helper.assertTrue(checked==120,"expected 120 distinct undergrowth placements");
         helper.succeed();
     }
 
