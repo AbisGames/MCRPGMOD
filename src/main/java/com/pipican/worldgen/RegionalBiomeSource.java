@@ -63,7 +63,10 @@ public final class RegionalBiomeSource extends BiomeSource {
             holder.unwrapKey().ifPresent(key -> keyed.put(key.identifier().toString(),holder));
         if(keyed.isEmpty())throw new IllegalArgumentException("RegionalBiomeSource requires biomes");
         this.byId=Map.copyOf(keyed);
-        this.fallback=keyed.getOrDefault("minecraft:plains",biomes.stream().findFirst().orElseThrow());
+        // Never fall back to a vanilla biome inside the bespoke RPG preset:
+        // vanilla structure biome tags must not gain an accidental foothold.
+        this.fallback=keyed.getOrDefault("pipican:heartlands/farmland_plains",
+            biomes.stream().findFirst().orElseThrow());
     }
 
     @Override
