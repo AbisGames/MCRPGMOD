@@ -58,20 +58,29 @@ public final class RegionalMineEvents {
                     instanceof RegionalBiomeSource)) continue;
             long now = level.getGameTime();
             if (now % CHECK_INTERVAL != 0L) continue;
-            RenewableOreSavedData data = RenewableOreSavedData.get(level);
-            for (RenewableOreSavedData.Node node : data.due(now, RESTORE_BATCH)) {
-                BlockPos position = BlockPos.of(node.position());
-                if (!level.hasChunkAt(position)) continue;
-                // A player-placed block is never destroyed by a renewal.
-                if (!level.getBlockState(position).isAir()) continue;
-                var ore = RegionalOreRegistries.NODES.get(node.oreId());
-                if (ore == null) {
-                    data.remove(node.position());
-                    continue;
-                }
-                level.setBlock(position, ore.get().defaultBlockState(), 3);
-                data.remove(node.position());
-            }
+            restoreDue(level,now,RESTORE_BATCH);
         }
     }
+    /** Actual server-side restoration, callable by GameTest without waiting hours. */
+    public static int restoreDue(ServerLevel level,long now,int limit) {
+        RenewableOreSavedData data=RenewableOreSavedData.get(level);
+        int restored=0;
+        for(RenewableOreSavedData.Node node:data.due(now,limit,n->
+                    level.hasChunkAt(BlockPos.of(n.position())))){
+            BlockPos position=BlockPos.of(node.position());
+            var ore=RegionalOreRegistries.NODES.get(node.oreId());
+            if(ore==null){
+                data.remove(node.position());
+                continue;
+            }
+            // Player modifications and inventories always win over renewal.
+            if(!level.getBlockState(position).isAir())continue;
+            if(level.setBlock(position,ore.get().defaultBlockState(),3)){
+                data.remove(node.position());
+                restored++;
+            }
+        }
+        return restored;
+    }
+
 }

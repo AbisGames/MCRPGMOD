@@ -53,10 +53,14 @@ public final class RenewableOreSavedData extends SavedData {
     }
 
     public List<Node> due(long gameTime, int limit) {
+        return due(gameTime,limit,node->true);
+    }
+    /** Avoid queue starvation: unloaded nodes must not occupy the batch. */
+    public List<Node> due(long gameTime, int limit, java.util.function.Predicate<Node> eligible) {
         if (limit <= 0) return List.of();
         List<Node> result = new ArrayList<>();
         for (Node node : nodes.values()) {
-            if (node.restoreAt() <= gameTime) {
+            if (node.restoreAt() <= gameTime && eligible.test(node)) {
                 result.add(node);
                 if (result.size() == limit) break;
             }
