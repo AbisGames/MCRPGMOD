@@ -140,8 +140,8 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
             double inner=Math.min(360.0,zone.radius()*0.36);
             double outer=Math.min(750.0,zone.radius()*0.75);
             if(distance<outer){
-                double t=Math.max(0.0,Math.min(1.0,(distance-inner)/(outer-inner)));
-                double smooth=t*t*(3.0-2.0*t);
+                double siteBlend=Math.max(0.0,Math.min(1.0,(distance-inner)/(outer-inner)));
+                double smooth=siteBlend*siteBlend*(3.0-2.0*siteBlend);
                 capitalFactor=Math.min(capitalFactor,smooth);
             }
         }
