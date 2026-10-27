@@ -192,7 +192,7 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
             }
         }
         double terrace=terraceCorrection(r.id(),x,y,z);
-        return strength*(terrace+
+        return strength*(terrace*nearGround+
             ((target/130.0)*ridge+themedTerrain)*vertical*nearGround*blend*capitalFactor);
     }
     @Override public double minValue(){return -200*Math.abs(strength);}
