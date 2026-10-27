@@ -102,6 +102,17 @@
     {
       "type": "pipican:immune",
       "effects": "minecraft:wither"
+    },
+    {
+      "type": "pipican:on",
+      "event": "kill",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:cloud",
+          "effect": "minecraft:instant_damage"
+        }
+      ]
     }
   ],
   "special_passives": [

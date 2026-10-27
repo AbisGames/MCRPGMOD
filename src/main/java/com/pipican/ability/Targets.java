@@ -34,6 +34,7 @@ import net.minecraft.world.phys.Vec3;
  *   <li>{@code look_ally} - the player in the crosshair within {@code range} blocks, otherwise the user</li>
  *   <li>{@code victim} - in a {@code pipican:on} reaction, the mob that was hit or killed (or that hit you)</li>
  *   <li>{@code companions} - your summons, tamed pets and eidolon within {@code radius}</li>
+ *   <li>{@code near_victim} - in a reaction, the hostile mob closest to the one hit, within {@code radius} of it</li>
  * </ul>
  * {@code cone} (degrees, default 360) keeps only targets in front of the user. {@code entities} (an entity
  * type, list or {@code #tag}, e.g. {@code "#minecraft:undead"}) keeps only those kinds of mob.
@@ -44,7 +45,7 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
 
     public enum Kind implements StringRepresentable {
         SELF("self"), ALLIES("allies"), PLAYERS("players"), HOSTILES("hostiles"), MOBS("mobs"), LOOK("look"), LOOK_ALLY("look_ally"),
-        VICTIM("victim"), COMPANIONS("companions");
+        VICTIM("victim"), COMPANIONS("companions"), NEAR_VICTIM("near_victim");
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
         private final String name;
@@ -87,6 +88,9 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
             case SELF -> out.add(player);
             case VICTIM -> ctx.subject().filter(LivingEntity::isAlive).ifPresent(out::add);
             case COMPANIONS -> out.addAll(Companions.of(player, radius));
+            case NEAR_VICTIM -> ctx.subject().ifPresent(subject -> player.level().getEntitiesOfClass(LivingEntity.class, subject.getBoundingBox().inflate(radius),
+                            e -> e != subject && e != player && e.isAlive() && e instanceof Enemy && e.distanceTo(subject) <= radius).stream()
+                    .min(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(subject))).ifPresent(out::add));
             case LOOK -> {
                 LivingEntity hit = lookTarget(player, range);
                 if (hit != null && !(hit instanceof Player)) {

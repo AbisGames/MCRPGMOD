@@ -453,6 +453,21 @@ public final class ClassSystemTests {
         assertNear(helper, armored.getMaxHealth() - 4, armored.getHealth(), "armor ignored");
         armored.discard();
 
+        // Chain damage hits the closest other hostile; kills drop experience.
+        Zombie hitOne = helper.spawn(EntityType.ZOMBIE, new BlockPos(3, 2, 1));
+        Zombie nearOne = helper.spawn(EntityType.ZOMBIE, new BlockPos(4, 2, 1));
+        float hitBefore = hitOne.getHealth();
+        float nearBefore = nearOne.getHealth();
+        new com.pipican.ability.action.DamageAction(new com.pipican.ability.Targets(com.pipican.ability.Targets.Kind.NEAR_VICTIM, 4, 16, 360, Optional.empty(), false),
+                2, com.pipican.ability.action.DamageAction.Kind.MAGIC, 0, 0)
+                .run(new AbilityContext(player, Optional.empty(), hitOne.position(), Optional.of(hitOne), 0));
+        helper.assertTrue(hitOne.getHealth() == hitBefore && nearOne.getHealth() < nearBefore, "chained to the neighbour only: " + hitOne.getHealth() + " / " + nearOne.getHealth());
+        Reactions.fire(player, hitOne, ItemStack.EMPTY, ReactionEffect.Event.KILL);
+        helper.assertTrue(!level.getEntitiesOfClass(net.minecraft.world.entity.ExperienceOrb.class, hitOne.getBoundingBox().inflate(2)).isEmpty(), "kill dropped experience");
+        level.getEntitiesOfClass(net.minecraft.world.entity.ExperienceOrb.class, hitOne.getBoundingBox().inflate(2)).forEach(net.minecraft.world.entity.Entity::discard);
+        hitOne.discard();
+        nearOne.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

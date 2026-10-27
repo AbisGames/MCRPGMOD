@@ -27,21 +27,27 @@
     {
       "id": "stormbringer_static",
       "name": "Static",
-      "description": {
-        "text": "your hits have 10% chance to chain 2 damage to a nearby mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your hits have 10% chance to chain 2 damage to a nearby mob",
       "type": "small",
       "x": -173,
       "y": -1661,
       "links": [
         "stormbringer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.1,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "near_victim",
+              "radius": 4.0,
+              "amount": 2.0
+            }
+          ]
+        }
       ]
     },
     {

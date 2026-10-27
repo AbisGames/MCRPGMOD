@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1603**, partly working: **23**, not yet: **624**
+- Bonus phrases: **2250**. Fully working: **1607**, partly working: **23**, not yet: **620**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -16,9 +16,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 143 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 98 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 87 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 58 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 51 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 57 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 51 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 48 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 26 |
 | [Immunities](#immunities) | 15 |
 | [Critical hits](#critical-hits) | 7 |
@@ -832,7 +832,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **brute**
   - general tree: Crusher: +10% damage against shields and armored mobs
 - **cleric**
-  - general tree: Holy Wrath: undead you hit are set on fire for 2s
   - general tree: Crusader: +30% damage to undead, but -10% damage to everything else
 - **death_dealer**
   - special passive: Make Mountains of the Dead: per 10 Carnage, +5% damage to mobs below 30% health
@@ -885,90 +884,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Green Flame: your fire damage to mobs is +15%
 - **woodwose**
   - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
-
-## Chance on hit / proc effects
-
-- **acrobat**
-  - special tree: Kip-up: no slowdown after being knocked back
-  - special tree: Mobility: your movement never triggers mob 'attack of opportunity' style knockback
-- **aeromancer**
-  - special stat per point: +1% wind charge knockback
-  - passive: +50% wind charge knockback and they don't hurt you
-- **apocalyptist**
-  - passive: Hasten the Apocalypse: mobs you kill have a 10% chance to leave a lingering cloud of Instant Damage
-- **arcanist**
-  - passive: 1-in-6 chance to get it all back
-  - special passive: +0.3% Reclaim chance per Arcana point
-  - special tree: Recycling: Reclaim chance +5%
-- **bard**
-  - special passive: +3% chance a hostile mob you hit forgets you
-- **conjurer**
-  - passive: Mobs you kill have a 10% chance to drop 2 experience orbs extra
-- **dervish**
-  - passive: +2 armor and 10% chance to parry melee hits
-  - special passive: Parry chance +0.3% per Rhythm
-- **destroyer**
-  - special tree: Shockwave: shockwave knocks mobs back
-- **diviner**
-  - special passive: Miss chance +0.3% per Foresight
-  - special tree: Ill Fortune: mobs within 8 blocks have 10% chance to miss everyone
-- **dreadnaught**
-  - special tree: Immovable: also immune to wind charges and explosions' knockback
-- **duelist**
-  - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
-- **enchanter**
-  - special stat per point: +0.5% chance your hits charm a mob
-- **explorer**
-  - passive: Perseverance: Poison, Hunger and Slowness wear off 50% faster
-  - passive: Driven: 10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead
-  - special tree: Driven: Driven chance 20%
-- **fighter**
-  - special passive: +1% Weapon Mastery chance per 4 Discipline
-- **gladiator**
-  - special passive: Dirty Fighting chance +0.3% per Showmanship
-  - general tree: Sand in the Eyes: +5% Dirty Fighting chance
-- **healer**
-  - general tree: Purify: players near you lose Poison twice as fast
-- **inquisitor**
-  - general tree: Witch-Finder: +25% damage to scrutinised, but -15% to everything else
-- **mage_knight**
-  - passive: Your weapon hits deal 10% of their damage as magic damage (ignores armor)
-  - special tree: Charged Blade: first escalating hit also knocks back
-- **miracle_worker**
-  - general tree: Laying of Hands: Worker of Miracles also cures Poison and Wither
-- **myrmidon**
-  - special passive: Knockback +0.05 blocks per Shieldcraft
-  - special tree: Forceful Shield: +2 knockback blocks
-- **necromancer**
-  - special passive: Command chance +0.3% per Deathgrip
-  - general tree: Grave Dust: +5% command chance
-- **poisoner**
-  - special stat per point: +1% poison damage and duration you apply
-  - passive: brewing poison potions is 50% faster
-  - special tree: Toxic Blood: mobs that hit you are poisoned; healing on you is 15% weaker
-- **sentinel**
-  - passive: +20% damage and knockback immunity
-- **stormbringer**
-  - general tree: Static: your hits have 10% chance to chain 2 damage to a nearby mob
-- **technomancer**
-  - special stat per point: +0.5% chance a crafted redstone item is doubled
-- **thaumaturge**
-  - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
-  - passive: Fluid Magic: potions you drink have 20% chance to also give a random positive effect
-  - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
-  - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
-  - special tree: Fluid Magic: random potion effect chance 35%
-- **thief**
-  - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
-  - special passive: Open Locks chance +0.5% per Finesse point
-- **traveler**
-  - special passive: Per 10 Displacement, Hasty Escape chance +5%
-  - special tree: Thunderclap: arrivals knock mobs back
-- **warlock**
-  - special stat per point: +0.5% chance to steal an incoming harmful effect
-  - passive: 15% chance that a harmful potion effect or magic attack aimed at you is cancelled
-- **witch**
-  - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
 
 ## Skill trigger approximated
 
@@ -1071,6 +986,84 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
 - **zealot**
   - Self-Denial: "surviving hits with Zeal" -> pipican:hurt_wearing #pipican:armor/any
+
+## Chance on hit / proc effects
+
+- **acrobat**
+  - special tree: Kip-up: no slowdown after being knocked back
+  - special tree: Mobility: your movement never triggers mob 'attack of opportunity' style knockback
+- **aeromancer**
+  - special stat per point: +1% wind charge knockback
+  - passive: +50% wind charge knockback and they don't hurt you
+- **arcanist**
+  - passive: 1-in-6 chance to get it all back
+  - special passive: +0.3% Reclaim chance per Arcana point
+  - special tree: Recycling: Reclaim chance +5%
+- **bard**
+  - special passive: +3% chance a hostile mob you hit forgets you
+- **dervish**
+  - passive: +2 armor and 10% chance to parry melee hits
+  - special passive: Parry chance +0.3% per Rhythm
+- **destroyer**
+  - special tree: Shockwave: shockwave knocks mobs back
+- **diviner**
+  - special passive: Miss chance +0.3% per Foresight
+  - special tree: Ill Fortune: mobs within 8 blocks have 10% chance to miss everyone
+- **dreadnaught**
+  - special tree: Immovable: also immune to wind charges and explosions' knockback
+- **duelist**
+  - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
+- **enchanter**
+  - special stat per point: +0.5% chance your hits charm a mob
+- **explorer**
+  - passive: Perseverance: Poison, Hunger and Slowness wear off 50% faster
+  - passive: Driven: 10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead
+  - special tree: Driven: Driven chance 20%
+- **fighter**
+  - special passive: +1% Weapon Mastery chance per 4 Discipline
+- **gladiator**
+  - special passive: Dirty Fighting chance +0.3% per Showmanship
+  - general tree: Sand in the Eyes: +5% Dirty Fighting chance
+- **healer**
+  - general tree: Purify: players near you lose Poison twice as fast
+- **inquisitor**
+  - general tree: Witch-Finder: +25% damage to scrutinised, but -15% to everything else
+- **mage_knight**
+  - passive: Your weapon hits deal 10% of their damage as magic damage (ignores armor)
+  - special tree: Charged Blade: first escalating hit also knocks back
+- **miracle_worker**
+  - general tree: Laying of Hands: Worker of Miracles also cures Poison and Wither
+- **myrmidon**
+  - special passive: Knockback +0.05 blocks per Shieldcraft
+  - special tree: Forceful Shield: +2 knockback blocks
+- **necromancer**
+  - special passive: Command chance +0.3% per Deathgrip
+  - general tree: Grave Dust: +5% command chance
+- **poisoner**
+  - special stat per point: +1% poison damage and duration you apply
+  - passive: brewing poison potions is 50% faster
+  - special tree: Toxic Blood: mobs that hit you are poisoned; healing on you is 15% weaker
+- **sentinel**
+  - passive: +20% damage and knockback immunity
+- **technomancer**
+  - special stat per point: +0.5% chance a crafted redstone item is doubled
+- **thaumaturge**
+  - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
+  - passive: Fluid Magic: potions you drink have 20% chance to also give a random positive effect
+  - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
+  - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
+  - special tree: Fluid Magic: random potion effect chance 35%
+- **thief**
+  - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
+  - special passive: Open Locks chance +0.5% per Finesse point
+- **traveler**
+  - special passive: Per 10 Displacement, Hasty Escape chance +5%
+  - special tree: Thunderclap: arrivals knock mobs back
+- **warlock**
+  - special stat per point: +0.5% chance to steal an incoming harmful effect
+  - passive: 15% chance that a harmful potion effect or magic attack aimed at you is cancelled
+- **witch**
+  - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
 
 ## Potions, XP, loot, trading, crafting, food
 

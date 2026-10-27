@@ -224,6 +224,7 @@ EFFECT_NAMES = {
     'speed': 'speed', 'strength': 'strength', 'regeneration': 'regeneration', 'resistance': 'resistance', 'haste': 'haste',
     'jump boost': 'jump_boost', 'slow falling': 'slow_falling', 'invisibility': 'invisibility', 'fire resistance': 'fire_resistance',
     'absorption': 'absorption', 'night vision': 'night_vision', 'water breathing': 'water_breathing', 'luck': 'luck',
+    'instant damage': 'instant_damage', 'harming': 'instant_damage', 'instant health': 'instant_health',
     'unluck': 'unluck', 'infested': 'infested', 'oozing': 'oozing', 'weaving': 'weaving', 'wind charged': 'wind_charged',
 }
 ROMAN = {'i': 0, 'ii': 1, 'iii': 2, 'iv': 3, 'v': 4}
@@ -287,6 +288,21 @@ def outcome(text, target):
     m = re.fullmatch(r'(?:set|sets) (?:it|them|the mob|the target|the attacker|mobs) on fire(?: for (\d+)s)?|(?:catch|catches) fire|(?:ignite|ignites)(?: (?:it|them|the target|the attacker))?|be set on fire|be ignited', t)
     if m:
         return [{'type': 'pipican:damage', 'target': target, 'amount': 0, 'fire_seconds': float(m.group(1) or 4) if m.lastindex else 4.0}]
+    m = re.fullmatch(r'(?:are|is|get|gets) set on fire(?: for (\d+(?:\.\d+)?)s)?', t)
+    if m:
+        return [{'type': 'pipican:damage', 'target': target, 'amount': 0, 'fire_seconds': float(m.group(1) or 4)}]
+    m = re.fullmatch(r'chain (\d+(?:\.\d+)?) damage to (?:a |one )?nearby (?:mob|enemy)', t)
+    if m:
+        return [{'type': 'pipican:damage', 'target': 'near_victim', 'radius': 4.0, 'amount': float(m.group(1))}]
+    m = re.fullmatch(r'drop (\d+) (?:extra )?experience orbs?(?: extra)?', t)
+    if m:
+        return [{'type': 'pipican:experience', 'amount': int(m.group(1))}]
+    m = re.fullmatch(r'leave a lingering cloud of ' + eff, t)
+    if m:
+        c = {'type': 'pipican:cloud', 'effect': 'minecraft:' + EFFECT_NAMES[m.group(1)]}
+        if m.group(2) and ROMAN.get(m.group(2)):
+            c['amplifier'] = ROMAN[m.group(2)]
+        return [c]
     m = re.fullmatch(r'(?:are|is|get|gets|become|becomes) (poisoned|slowed|weakened|blinded|withered)(?: for (\d+)s)?', t)
     if m:
         name = {'poisoned': 'poison', 'slowed': 'slowness', 'weakened': 'weakness', 'blinded': 'blindness', 'withered': 'wither'}[m.group(1)]
@@ -400,6 +416,18 @@ def reaction(low):
         out = outcome(m.group(2), 'victim')
         if out:
             return [_reaction('hurt', float(m.group(1)) / 100 if m.group(1) else 1.0, out)]
+    m = re.fullmatch(r'(?:hostile )?mobs you kill have (?:a )?(\d+(?:\.\d+)?)% chance to (.+)', t)
+    if m:
+        out = outcome(m.group(2), 'victim')
+        if out:
+            return [_reaction('kill', float(m.group(1)) / 100, out)]
+    m = re.fullmatch(r'(.+?) you hit (?:are|is|get|gets) (.+)', t)
+    if m and m.group(1) not in ('mobs', 'enemies', 'targets'):
+        group = mobs(m.group(1))
+        rest = ('are ' + m.group(2)) if m.group(2).startswith('set on fire') else m.group(2)
+        out = outcome(rest, 'victim') if group else None
+        if out:
+            return [_reaction('hit', 1.0, out, victims=group)]
     m = re.fullmatch(r'(?:kills|killing a mob|killing mobs|each kill|every kill)(?: also)? (?:gives?|grants?)(?: you)? (.+)', t) or \
         re.fullmatch(r'(?:when|whenever|after) you kill (?:a mob|mobs|something),? (?:you )?(.+)', t) or \
         re.fullmatch(r'after a kill,? (.+)', t)

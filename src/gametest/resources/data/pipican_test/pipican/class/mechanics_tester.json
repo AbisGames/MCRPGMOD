@@ -5,6 +5,11 @@
   "base_stats": {},
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "kill",
+      "actions": [ { "type": "pipican:experience", "amount": 3 } ]
+    },
+    {
       "type": "pipican:applied_effect",
       "effect": "minecraft:poison",
       "seconds": 2,

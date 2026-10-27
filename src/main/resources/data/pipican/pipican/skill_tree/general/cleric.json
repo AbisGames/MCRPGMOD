@@ -75,16 +75,7 @@
     {
       "id": "cleric_holy_wrath",
       "name": "Holy Wrath",
-      "description": {
-        "text": "undead you hit are set on fire for 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "undead you hit are set on fire for 2s",
       "type": "notable",
       "x": 785,
       "y": -421,
@@ -92,7 +83,22 @@
         "cleric_censure"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "victims": "#minecraft:undead",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 0,
+              "fire_seconds": 2.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "cleric_crusader",

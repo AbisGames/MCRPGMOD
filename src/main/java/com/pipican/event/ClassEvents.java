@@ -342,11 +342,14 @@ public final class ClassEvents {
                 MasteryEvents.did(attacker, new SkillAction.Did(SkillAction.Did.Kind.CRIT, attacker.getMainHandItem(), Optional.empty(),
                         Optional.of(event.getEntity()), event.getInflictedDamage()));
             }
-            if (event.getSource().getDirectEntity() == attacker) {
+            // Only real swings: magic from abilities also names the player as its direct entity.
+            boolean swing = event.getSource().getDirectEntity() == attacker
+                    && event.getSource().is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK);
+            if (swing) {
                 Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);
             }
             execute(attacker, event.getEntity());
-            if (event.getSource().getDirectEntity() == attacker) {
+            if (swing) {
                 Strikes.after(attacker, event.getEntity(), event.getInflictedDamage());
             }
         }

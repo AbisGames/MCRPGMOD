@@ -40,6 +40,12 @@ public final class ProjectileAndEffectEvents {
 
     @SubscribeEvent
     static void onDamage(LivingIncomingDamageEvent event) {
+        // Clouds from pipican:cloud reactions never hurt the player who left them.
+        if (event.getSource().getDirectEntity() instanceof net.minecraft.world.entity.AreaEffectCloud && event.getSource().getEntity() == event.getEntity()
+                && event.getEntity() instanceof ServerPlayer) {
+            event.setCanceled(true);
+            return;
+        }
         if (event.getSource().getEntity() instanceof ServerPlayer player) {
             ClassState state = ClassEffectApplier.state(player);
             double pierce = state.chance(Kind.ARMOR_PIERCE);

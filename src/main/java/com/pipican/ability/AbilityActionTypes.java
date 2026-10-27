@@ -69,6 +69,8 @@ public final class AbilityActionTypes {
     public static final Type DASH = register("dash", DashAction.CODEC);
     public static final Type BLINK = register("blink", BlinkAction.CODEC);
     public static final Type LIGHTNING = register("lightning", LightningAction.CODEC);
+    public static final Type EXPERIENCE = register("experience", com.pipican.ability.action.ExperienceAction.CODEC);
+    public static final Type CLOUD = register("cloud", com.pipican.ability.action.CloudAction.CODEC);
     public static final Type SUMMON = register("summon", SummonAction.CODEC);
     public static final Type ABSORB = register("absorb", AbsorbAction.CODEC);
     public static final Type EXPLODE = register("explode", ExplodeAction.CODEC);
