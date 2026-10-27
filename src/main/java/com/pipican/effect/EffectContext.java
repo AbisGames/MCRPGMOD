@@ -1,5 +1,7 @@
 package com.pipican.effect;
 
+import com.pipican.condition.ClassCondition;
+import com.pipican.effect.type.ResourceEffect;
 import com.pipican.stat.StatDefinition;
 import java.util.Optional;
 import net.minecraft.core.Holder;
@@ -39,4 +41,10 @@ public interface EffectContext {
 
     /** Multiplies outgoing damage, optionally only of {@code types} and/or dealt with one of {@code weapons}. */
     void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier);
+
+    /** Changes the resource bar's max or regen; {@code operation} is add_value or add_multiplied_base. */
+    void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation);
+
+    /** Tests a condition now, and remembers it so the bonuses are rebuilt when its answer changes. */
+    boolean test(ClassCondition condition);
 }

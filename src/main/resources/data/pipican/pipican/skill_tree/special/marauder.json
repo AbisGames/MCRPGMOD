@@ -50,16 +50,7 @@
     {
       "id": "strength_from_pain",
       "name": "Strength from Pain",
-      "description": {
-        "text": "+10% more damage below half health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% more damage below half health",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,22 @@
         "reaver"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:health",
+            "max": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "warcry",

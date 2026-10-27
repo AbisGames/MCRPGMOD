@@ -63,17 +63,31 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "A commander leads from behind - and is caught out up front.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A commander leads from behind - and is caught out up front.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 16.0,
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.9
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:armor",
+            "amount": -0.1,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

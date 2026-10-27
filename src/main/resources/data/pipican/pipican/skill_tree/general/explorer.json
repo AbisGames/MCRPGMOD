@@ -21,21 +21,29 @@
     {
       "id": "explorer_trail_legs",
       "name": "Trail Legs",
-      "description": {
-        "text": "+5% movement speed outdoors",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% movement speed outdoors",
       "type": "small",
       "x": -1254,
       "y": 412,
       "links": [
         "explorer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.05,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
       ]
     },
     {
@@ -103,16 +111,7 @@
     {
       "id": "explorer_far_horizon",
       "name": "Far Horizon",
-      "description": {
-        "text": "+15% movement speed outdoors, but -15% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% movement speed outdoors, but -15% damage",
       "type": "keystone",
       "x": -1396,
       "y": 427,
@@ -121,7 +120,28 @@
         "explorer_cartographer"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.15,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.85
+        }
+      ]
     }
   ]
 }

@@ -81,16 +81,7 @@
     {
       "id": "pyromancer_ash_walker",
       "name": "Ash Walker",
-      "description": {
-        "text": "+20% movement speed on Nether blocks",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% movement speed on Nether blocks",
       "type": "notable",
       "x": -292,
       "y": -1359,
@@ -98,7 +89,24 @@
         "pyromancer_heat_shimmer"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:standing_on",
+            "blocks": "#minecraft:base_stone_nether"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "pyromancer_living_flame",

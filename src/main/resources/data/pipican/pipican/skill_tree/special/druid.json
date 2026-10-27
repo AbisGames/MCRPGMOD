@@ -15,7 +15,7 @@
         "text": "+2 Wildness; you get a warning message 30s before rain/thunder starts",
         "extra": [
           {
-            "text": " (not in game yet)",
+            "text": " (partly not in game yet)",
             "color": "dark_gray",
             "italic": true
           }
@@ -26,6 +26,13 @@
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:druid_wildness",
+          "amount": 2
+        }
       ]
     },
     {

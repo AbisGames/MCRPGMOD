@@ -55,6 +55,40 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "main"
+          },
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "No hand free for a shield or a bow.",

@@ -1,9 +1,11 @@
 package com.pipican.player;
 
 import com.pipican.Pipican;
+import com.pipican.condition.ClassCondition;
 import com.pipican.core.ClassLookup;
 import com.pipican.effect.ClassEffect;
 import com.pipican.effect.EffectContext;
+import com.pipican.effect.type.ResourceEffect;
 import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.rpgclass.RpgClass;
@@ -13,8 +15,10 @@ import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -140,7 +144,7 @@ public final class ClassEffectApplier {
         }
         RpgClass rpgClass = maybeClass.get();
         ClassProgress progress = data.activeProgress().orElseThrow();
-        Collector c = new Collector(rpgClass, progress.level());
+        Collector c = new Collector(rpgClass, progress.level(), player);
 
         // Every effect source with the rank it applies at.
         List<Map.Entry<ClassEffect, Integer>> effects = new ArrayList<>();
@@ -213,12 +217,30 @@ public final class ClassEffectApplier {
         if (rpgClass.specialStat().flatMap(SpecialStat::resource).isPresent()) {
             SpecialStat.Resource resource = rpgClass.specialStat().get().resource().get();
             double points = c.sourceValue("special_stat");
-            resourceMax = resource.max(points);
-            regenPerTick = resource.regenPerSecond(points) / 20.0;
+            resourceMax = Math.max(0, (resource.max(points) + c.resourceFlat.get(ResourceEffect.Target.MAX))
+                    * (1 + c.resourcePercent.get(ResourceEffect.Target.MAX)));
+            regenPerTick = (resource.regenPerSecond(points) + c.resourceFlat.get(ResourceEffect.Target.REGEN))
+                    * Math.max(0, 1 + c.resourcePercent.get(ResourceEffect.Target.REGEN)) / 20.0;
         }
 
+        List<ClassState.ConditionCheck> checks = new ArrayList<>();
+        c.conditions.forEach((condition, result) -> checks.add(new ClassState.ConditionCheck(condition, result)));
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
-                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick);
+                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks));
+    }
+
+    /**
+     * Re-tests every condition the last refresh depended on, and refreshes if any answer changed.
+     * Called twice a second per player. Returns true if it refreshed.
+     */
+    public static boolean recheckConditions(ServerPlayer player) {
+        for (ClassState.ConditionCheck check : state(player).conditions()) {
+            if (check.condition().test(player) != check.result()) {
+                refresh(player);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -277,16 +299,22 @@ public final class ClassEffectApplier {
     private static final class Collector implements EffectContext {
         private final RpgClass rpgClass;
         private final int level;
+        private final ServerPlayer player;
         int rank = 1;
+        /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
+        final Map<ClassCondition, Boolean> conditions = new IdentityHashMap<>();
+        final Map<ResourceEffect.Target, Double> resourceFlat = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
+        final Map<ResourceEffect.Target, Double> resourcePercent = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
         final Map<ResourceKey<StatDefinition>, Double> stats = new HashMap<>();
         final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> attributes = new HashMap<>();
         final Map<Holder<MobEffect>, Integer> mobEffects = new HashMap<>();
         final List<ClassState.DamageRule> taken = new ArrayList<>();
         final List<ClassState.DamageRule> dealt = new ArrayList<>();
 
-        Collector(RpgClass rpgClass, int level) {
+        Collector(RpgClass rpgClass, int level, ServerPlayer player) {
             this.rpgClass = rpgClass;
             this.level = level;
+            this.player = player;
         }
 
         @Override
@@ -331,6 +359,17 @@ public final class ClassEffectApplier {
         @Override
         public void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
             dealt.add(new ClassState.DamageRule(types, weapons, multiplier));
+        }
+
+        @Override
+        public void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation) {
+            // add_multiplied_total is treated like add_multiplied_base: there is only one resource "base".
+            (operation == AttributeModifier.Operation.ADD_VALUE ? resourceFlat : resourcePercent).merge(target, amount, Double::sum);
+        }
+
+        @Override
+        public boolean test(ClassCondition condition) {
+            return conditions.computeIfAbsent(condition, c -> c.test(player));
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.pipican.player;
 
+import com.pipican.condition.ClassCondition;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.stat.StatDefinition;
 import java.util.List;
@@ -30,9 +31,13 @@ public record ClassState(
         Map<Holder<MobEffect>, Integer> mobEffects,
         Set<Holder<Attribute>> touchedAttributes,
         double resourceMax,
-        double resourceRegenPerTick) {
+        double resourceRegenPerTick,
+        List<ConditionCheck> conditions) {
 
-    public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0);
+    public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of());
+
+    /** A condition the state depends on, and what it answered when the state was computed. */
+    public record ConditionCheck(ClassCondition condition, boolean result) {}
 
     /** A damage multiplier, optionally limited to damage types in a tag and/or the weapon used. */
     public record DamageRule(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {

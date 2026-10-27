@@ -60,18 +60,65 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "Starlight fades in deep places.",
-      "extra": [
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sees_sky"
+      },
+      "effects": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
         }
       ]
-    },
-    "effects": []
+    }
+  ],
+  "weakness": {
+    "description": "Starlight fades in deep places.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              }
+            },
+            {
+              "type": "pipican:dimension",
+              "dimensions": [
+                "minecraft:the_nether"
+              ]
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

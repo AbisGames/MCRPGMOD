@@ -66,6 +66,29 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sees_sky"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.003
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Always moving on - never settled.",

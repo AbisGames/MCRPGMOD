@@ -65,13 +65,19 @@
       "text": "Guns are loud and need reloading.",
       "extra": [
         {
-          "text": " (not in game yet)",
+          "text": " (partly not in game yet)",
           "color": "dark_gray",
           "italic": true
         }
       ]
     },
-    "effects": []
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "damage_types": "#pipican:is_melee",
+        "multiplier": 0.8
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

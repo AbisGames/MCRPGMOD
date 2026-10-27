@@ -31,17 +31,15 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% Orders regen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% Orders regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "description": "+1 Command",

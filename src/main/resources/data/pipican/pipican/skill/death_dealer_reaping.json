@@ -31,17 +31,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+10 max Bloodshed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10 max Bloodshed",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 10.0
+        }
+      ]
     },
     {
       "description": "+1 Carnage",

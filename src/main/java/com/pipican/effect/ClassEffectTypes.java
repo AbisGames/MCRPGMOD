@@ -5,8 +5,10 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.pipican.Pipican;
 import com.pipican.effect.type.AttributeEffect;
+import com.pipican.effect.type.ConditionalEffect;
 import com.pipican.effect.type.DamageMultiplierEffect;
 import com.pipican.effect.type.MobEffectEffect;
+import com.pipican.effect.type.ResourceEffect;
 import com.pipican.effect.type.StatEffect;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +39,8 @@ public final class ClassEffectTypes {
     public static final Type MOB_EFFECT = register("mob_effect", MobEffectEffect.CODEC);
     public static final Type DAMAGE_TAKEN = register("damage_taken", DamageMultiplierEffect.TAKEN_CODEC);
     public static final Type DAMAGE_DEALT = register("damage_dealt", DamageMultiplierEffect.DEALT_CODEC);
+    public static final Type RESOURCE = register("resource", ResourceEffect.CODEC);
+    public static final Type CONDITIONAL = register("conditional", ConditionalEffect.CODEC);
 
     private ClassEffectTypes() {}
 

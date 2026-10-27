@@ -78,13 +78,33 @@
       "text": "Fire fears water.",
       "extra": [
         {
-          "text": " (not in game yet)",
+          "text": " (partly not in game yet)",
           "color": "dark_gray",
           "italic": true
         }
       ]
     },
-    "effects": []
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "wet"
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.75
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

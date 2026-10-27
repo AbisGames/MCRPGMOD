@@ -64,6 +64,41 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": [
+          "minecraft:leather_helmet",
+          "minecraft:leather_chestplate",
+          "minecraft:leather_leggings",
+          "minecraft:leather_boots"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 0.5
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:biome",
+        "biomes": "#minecraft:is_forest"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Woodwoses are part plant now. Fire is their worst fear.",

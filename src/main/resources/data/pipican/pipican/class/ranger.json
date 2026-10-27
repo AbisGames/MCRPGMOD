@@ -66,17 +66,31 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "Rangers belong under open sky.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Rangers belong under open sky.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.2,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

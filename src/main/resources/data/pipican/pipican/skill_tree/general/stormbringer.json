@@ -4,19 +4,25 @@
     {
       "id": "stormbringer_start",
       "name": "Stormbringer",
-      "description": {
-        "text": "+5% damage in rain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage in rain",
       "type": "start",
       "x": -139,
-      "y": -1594
+      "y": -1594,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "stormbringer_static",
@@ -41,21 +47,29 @@
     {
       "id": "stormbringer_thunderhead",
       "name": "Thunderhead",
-      "description": {
-        "text": "+10% speed in rain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% speed in rain",
       "type": "small",
       "x": -118,
       "y": -1666,
       "links": [
         "stormbringer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
       ]
     },
     {
@@ -83,16 +97,7 @@
     {
       "id": "stormbringer_eye_of_the_storm",
       "name": "Eye of the Storm",
-      "description": {
-        "text": "-20% damage taken in thunderstorms",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-20% damage taken in thunderstorms",
       "type": "notable",
       "x": -124,
       "y": -1736,
@@ -100,7 +105,22 @@
         "stormbringer_thunderhead"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "thundering"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.8
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "stormbringer_storm_avatar",

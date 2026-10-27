@@ -74,6 +74,30 @@
           "per": 0.005
         }
       ]
+    },
+    {
+      "type": "pipican:resource",
+      "target": "max",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:resource",
+      "target": "regen",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

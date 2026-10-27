@@ -20,21 +20,38 @@
     {
       "id": "dervish_twin_strike",
       "name": "Twin Strike",
-      "description": {
-        "text": "+5% damage while dual-wielding",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage while dual-wielding",
       "type": "small",
       "x": -1314,
       "y": -134,
       "links": [
         "dervish_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:holding",
+                "items": "#pipican:weapons/melee",
+                "hand": "main"
+              },
+              {
+                "type": "pipican:holding",
+                "items": "#pipican:weapons/melee",
+                "hand": "off"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {

@@ -59,17 +59,31 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "A defender's place is beside others - and their pace is theirs.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A defender's place is beside others - and their pace is theirs.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 8.0,
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:movement_speed",
+            "amount": -0.1,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

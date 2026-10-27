@@ -52,6 +52,7 @@ import java.util.Map;
 public final class ClassSystemTests {
 
     private static final ResourceKey<RpgClass> TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "tester"));
+    private static final ResourceKey<RpgClass> CONDITION_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "condition_tester"));
     private static final ResourceKey<StatDefinition> MIGHT = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "might"));
     private static final ResourceKey<StatDefinition> FOCUS = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "focus"));
     private static final ResourceKey<Skill> BLADE = ResourceKey.create(PipicanRegistries.SKILL, Identifier.fromNamespaceAndPath("pipican_test", "blade"));
@@ -70,6 +71,7 @@ public final class ClassSystemTests {
         TESTS.put("stats_and_levels", ClassSystemTests::statsAndLevels);
         TESTS.put("trinkets", ClassSystemTests::trinkets);
         TESTS.put("shipped_classes", ClassSystemTests::shippedClasses);
+        TESTS.put("conditions_and_resource", ClassSystemTests::conditionsAndResource);
     }
 
     private ClassSystemTests() {}
@@ -264,6 +266,36 @@ public final class ClassSystemTests {
 
         ClassService.setLevel(player, 999);
         helper.assertTrue(ClassService.data(player).activeProgress().orElseThrow().level() == 10, "clamped to max_level");
+        helper.succeed();
+    }
+
+    /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
+    private static void conditionsAndResource(GameTestHelper helper) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, CONDITION_TESTER, false, true).success(), "choose condition tester");
+        ClassState state = ClassEffectApplier.state(player);
+        assertNear(helper, (10 + 5) * 1.5, state.resourceMax(), "resource max: (base + flat) * (1 + percent)");
+        assertNear(helper, (2 + 1) / 20.0, state.resourceRegenPerTick(), "resource regen: base + flat");
+
+        assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR), "no armor at full health");
+        assertNear(helper, 1, player.getAttributeValue(Attributes.LUCK), "not on fire -> luck");
+        helper.assertTrue(!ClassEffectApplier.recheckConditions(player), "nothing changed yet");
+
+        player.setHealth(player.getMaxHealth() * 0.25f);
+        helper.assertTrue(ClassEffectApplier.recheckConditions(player), "health condition flipped");
+        assertNear(helper, 5, player.getAttributeValue(Attributes.ARMOR), "armor below half health");
+
+        player.setShiftKeyDown(true);
+        helper.assertTrue(ClassEffectApplier.recheckConditions(player), "sneaking flipped");
+        assertNear(helper, 2, player.getAttributeValue(Attributes.ARMOR_TOUGHNESS), "toughness while sneaking");
+        assertNear(helper, 0, ClassEffectApplier.state(player).resourceRegenPerTick(), "-100% regen while sneaking");
+
+        player.setHealth(player.getMaxHealth());
+        player.setShiftKeyDown(false);
+        helper.assertTrue(ClassEffectApplier.recheckConditions(player), "both flipped back");
+        assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR), "armor gone at full health");
+        assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR_TOUGHNESS), "toughness gone");
         helper.succeed();
     }
 

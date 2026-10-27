@@ -1,0 +1,86 @@
+{
+  "name": "Condition Tester",
+  "description": "Test-only class for conditional and resource effects.",
+  "selectable": false,
+  "base_stats": {
+    "pipican_test:focus": 0
+  },
+  "special_stat": {
+    "stat": "pipican_test:focus",
+    "resource": {
+      "name": "Test Mana",
+      "base_max": 10,
+      "max_per_point": 0,
+      "regen_per_second": 2
+    }
+  },
+  "passives": [
+    {
+      "type": "pipican:resource",
+      "target": "max",
+      "amount": 0.5,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:resource",
+      "target": "max",
+      "amount": 5
+    },
+    {
+      "type": "pipican:resource",
+      "target": "regen",
+      "amount": 1
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:health",
+        "max": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 5
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sneaking"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 2
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:not",
+        "condition": {
+          "type": "pipican:state",
+          "state": "on_fire"
+        }
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:luck",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

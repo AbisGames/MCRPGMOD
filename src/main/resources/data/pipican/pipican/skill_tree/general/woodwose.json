@@ -4,19 +4,26 @@
     {
       "id": "woodwose_start",
       "name": "Woodwose",
-      "description": {
-        "text": "+1 armor in forests",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 armor in forests",
       "type": "start",
       "x": 958,
-      "y": 803
+      "y": 803,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "woodwose_barkskin",
@@ -103,16 +110,7 @@
     {
       "id": "woodwose_ent",
       "name": "Ent",
-      "description": {
-        "text": "+6 max health and +3 armor in forests, but -15% movement speed everywhere",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6 max health and +3 armor in forests, but -15% movement speed everywhere",
       "type": "keystone",
       "x": 1118,
       "y": 938,
@@ -121,7 +119,34 @@
         "woodwose_overgrowth"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 6.0
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 3.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

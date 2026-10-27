@@ -33,17 +33,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5 max Madness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5 max Madness",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 5.0
+        }
+      ]
     },
     {
       "description": "+1 Fervor",

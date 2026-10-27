@@ -151,13 +151,19 @@ public final class ClassEvents {
         if (state.rpgClass().isEmpty()) {
             return;
         }
-        // Special-stat resource regen. While regenerating, the client is synced twice a second.
+        // Special-stat resource regen (or drain, for bars with negative regen). While it changes, the
+        // client is synced twice a second.
         PlayerClassData data = player.getData(PipicanAttachments.CLASS_DATA);
-        if (state.resourceMax() > 0 && data.resource() < state.resourceMax()) {
-            data.setResource(Math.min(state.resourceMax(), data.resource() + state.resourceRegenPerTick()));
-            if (player.tickCount % 10 == 0 || data.resource() >= state.resourceMax()) {
+        double regen = state.resourceRegenPerTick();
+        if (state.resourceMax() > 0 && (regen > 0 && data.resource() < state.resourceMax() || regen < 0 && data.resource() > 0)) {
+            data.setResource(Math.clamp(data.resource() + regen, 0, state.resourceMax()));
+            if (player.tickCount % 10 == 0 || data.resource() >= state.resourceMax() || data.resource() <= 0) {
                 player.syncData(PipicanAttachments.CLASS_DATA);
             }
+        }
+        // Conditional effects ("while wet", "at night"...): rebuild bonuses when a condition flips.
+        if (player.tickCount % 10 == 0 && ClassEffectApplier.recheckConditions(player)) {
+            state = ClassEffectApplier.state(player);
         }
         if (player.tickCount % 40 == 0) {
             ClassEffectApplier.maintainMobEffects(player);

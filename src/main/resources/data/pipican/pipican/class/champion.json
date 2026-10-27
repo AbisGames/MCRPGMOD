@@ -70,17 +70,22 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Champions plant their feet. Moving breaks their rhythm.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Champions plant their feet. Moving breaks their rhythm.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "sprinting"
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.9
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

@@ -341,6 +341,14 @@ def main(spec_dir, res_dir, report_path):
     # Damage-type and armor tags used by the translations / triggers.
     for tag, values in fx.DAMAGE_TYPE_TAGS.items():
         write(f'{NS}/tags/damage_type/{tag}.json', {'values': values})
+    # Biome groups used by "in natural biomes" / "in snowy biomes" conditions.
+    write(f'{NS}/tags/worldgen/biome/natural.json', {'values': [
+        '#minecraft:is_forest', '#minecraft:is_jungle', '#minecraft:is_taiga', '#minecraft:is_savanna', 'minecraft:plains',
+        'minecraft:sunflower_plains', 'minecraft:meadow', 'minecraft:cherry_grove', 'minecraft:swamp', 'minecraft:mangrove_swamp']})
+    write(f'{NS}/tags/worldgen/biome/cold.json', {'values': [
+        'minecraft:snowy_plains', 'minecraft:ice_spikes', 'minecraft:snowy_taiga', 'minecraft:snowy_beach', 'minecraft:snowy_slopes',
+        'minecraft:frozen_peaks', 'minecraft:jagged_peaks', 'minecraft:grove', 'minecraft:frozen_river', 'minecraft:frozen_ocean',
+        'minecraft:deep_frozen_ocean']})
     write(f'{NS}/tags/item/armor/any.json', {'values': ['#pipican:armor/light', '#pipican:armor/medium', '#pipican:armor/heavy']})
 
     starts = layout_starts(classes)
@@ -357,8 +365,8 @@ def main(spec_dir, res_dir, report_path):
         cid = c['id']
         sp = c['special']
         sid = f'{NS}:{cid}_{slug(sp["name"])}'
-        ctx = {'special_name': sp['name'], 'special_id': sid}
         res = c['resource']
+        ctx = {'special_name': sp['name'], 'special_id': sid, 'resource_name': res['name'] if res else None}
         color = (0xFF << 24) | int(res['color'], 16) if res and res['color'] else -1
         if color >= 1 << 31:
             color -= 1 << 32
@@ -500,7 +508,8 @@ def main(spec_dir, res_dir, report_path):
 
     # --- skills
     for key, (owner, s) in sorted(skill_defs.items()):
-        ctx = {'special_name': owner['special']['name'], 'special_id': f'{NS}:{owner["id"]}_{slug(owner["special"]["name"])}'}
+        ctx = {'special_name': owner['special']['name'], 'special_id': f'{NS}:{owner["id"]}_{slug(owner["special"]["name"])}',
+               'resource_name': owner['resource']['name'] if owner['resource'] else None}
         trig, exact = map_trigger(s['trigger'])
         if not exact:
             report['Skill trigger approximated'].append((owner['id'], s['name'], f'"{s["trigger"]}" -> {trig["type"]}' +
@@ -523,13 +532,16 @@ def main(spec_dir, res_dir, report_path):
             for u in users:
                 notes[u].append(f'references shared skill "{key}" that no file defines')
 
+    for tag, values in sorted(fx.cond.GROUND_TAGS.items()):
+        write(f'{NS}/tags/block/{tag}.json', {'values': values})
+
     write_report(report_path, classes, report, notes, counts, skill_defs)
     print(f'{len(classes)} classes, {len(skill_defs)} skills; phrases {counts["phrases"]}: '
           f'{counts["full"]} full, {counts["partial"]} partial')
 
 
 CATEGORIES = [
-    ('Resource bar bonuses (regen, max, refills)', r'regen|refill|max \w+(?: \w+)?$|\bmax (?!health)\w+|drains|costs? \d+'),
+    ('Resource bar: filling, refills, spending', r'regen|refill|fills?\b|max \w+(?: \w+)?$|\bmax (?!health)\w+|drains|costs? \d+|spend'),
     ('Active abilities (named abilities, cooldowns, auras, summons)', r'unlock|ability|cooldown|aura|song|chant|smite|berserk|minion|eidolon|curse|decoy|blink|stance|ecstasy|execute|grimoire|temple|form\b|sigil|gadget|premonition|optimization|prayer|invocation|succor|ward\b|bound weapon|favored|staff|servant|summon|toggle|right-click|spell'),
     ('Bonus against a kind of mob / marked target', r'against|\bvs\b|undead|prey|mark|unclean|illager|animals|arthropod|golem|to mobs|boss'),
     ('Conditional bonus (while / when / where)', r'\bwhile\b|\bwhen\b|below|above|night|daylight|underground|in water|outdoors|nether|\bend\b|wet|mount|sneak|sprint|full health|dark|light|rain|biome|forest|village|holding|wearing|without|with no|in combat|first hit|for \d+s'),

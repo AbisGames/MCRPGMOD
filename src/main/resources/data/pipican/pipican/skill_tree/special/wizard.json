@@ -29,37 +29,27 @@
     {
       "id": "margins",
       "name": "Notes in the Margins",
-      "description": {
-        "text": "+15% max Aether",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% max Aether",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "id": "spell_expertise",
       "name": "Spell Expertise",
-      "description": {
-        "text": "+20% Aether regen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% Aether regen",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +57,15 @@
         "grimoire_casting"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "id": "second_tome",

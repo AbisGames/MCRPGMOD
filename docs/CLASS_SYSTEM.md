@@ -284,12 +284,48 @@ picked by `"type"`:
 | `pipican:mob_effect` | `effect`, `amplifier` (=0) | Permanent potion effect (re-applied if milk removes it). |
 | `pipican:damage_taken` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. |
 | `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords). |
+| `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
+| `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
 
 ```json
 { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
 { "type": "pipican:mob_effect", "effect": "minecraft:night_vision" }
 { "type": "pipican:stat", "stat": "mypack:strength", "amount": 2 }
 ```
+
+### Conditions
+
+`pipican:conditional` effects switch on and off with the player's situation. Conditions are re-checked twice a
+second, and a player's bonuses are rebuilt only when an answer changes.
+
+```json
+{ "type": "pipican:conditional",
+  "when": { "type": "pipican:any_of", "conditions": [
+    { "type": "pipican:not", "condition": { "type": "pipican:state", "state": "sees_sky" } },
+    { "type": "pipican:state", "state": "underwater" } ] },
+  "effects": [
+    { "type": "pipican:damage_dealt", "multiplier": 0.8 },
+    { "type": "pipican:resource", "target": "regen", "amount": -1, "operation": "add_multiplied_base" } ] }
+```
+
+| Condition | Fields | True when |
+|---|---|---|
+| `pipican:state` | `state` | `wet` (water or rain), `in_water`, `underwater`, `in_lava`, `swimming`, `sprinting`, `sneaking`, `blocking`, `mounted`, `on_fire`, `night`, `day`, `raining`, `thundering`, `sees_sky` (outdoors; `not` it for underground) |
+| `pipican:health` | `min`, `max` (0–1) | Health ÷ max health is in range. `"max": 0.5` = below half health. |
+| `pipican:resource` | `min`, `max` (0–1) | Resource bar ÷ its max is in range. `"min": 1` = full. |
+| `pipican:light` | `min`, `max` (0–15) | Light level at the feet. `"max": 8` = level 7 or lower. |
+| `pipican:dimension` | `dimensions` (list) | In one of the dimensions. |
+| `pipican:biome` | `biomes` (id / list / `#tag`) | In one of the biomes. The mod ships `#pipican:natural` and `#pipican:cold`. |
+| `pipican:standing_on` | `blocks` (id / list / `#tag`) | On the ground, on one of the blocks. |
+| `pipican:holding` | `items`, `hand` (`main` / `off` / `either`=default) | Holding one of the items. |
+| `pipican:wearing` | `items`, `min` (=1), `max` | That many worn armor pieces are among the items. `"max": 0` = none. |
+| `pipican:nearby` | `entities` (`players` / `hostile_mobs`), `radius` (=8), `min` (=1), `max` | That many others are within the radius. `"max": 0` = alone. |
+| `pipican:effect` | `effects` (id / list / `#tag`) | The player has one of the potion effects. |
+| `pipican:not` | `condition` | The condition is false. |
+| `pipican:all_of`, `pipican:any_of` | `conditions` (list) | All / at least one are true. |
+
+`min` is inclusive and `max` exclusive for fractions and light; both are inclusive for counts (`wearing`, `nearby`).
+Adding a condition type (Java): implement `condition/ClassCondition` and register it in `condition/ConditionTypes`.
 
 ### Scaling
 
@@ -420,7 +456,7 @@ com.pipican
 │   └── ClassLookup           helpers to read the registries (server & client)
 ├── rpgclass/                 the class template: RpgClass, SpecialStat, Progression, Weakness,
 │                             Affinity (tiers), AffinityRules
-├── stat/StatDefinition
+├── stat/                     StatDefinition (JSON), StatPoints (stat points from kill XP)
 ├── skill/                    passive trees: SkillTreeFile (JSON) -> SkillTrees (merge) -> SkillTree
 │                             (adjacency rules), SkillNode, NodeType, TreeRef, TreePoints, TreeKind
 ├── mastery/                  Skill (JSON), SkillTrigger + SkillTriggerTypes, SkillAction, MoveMode
@@ -428,6 +464,8 @@ com.pipican
 ├── trinket/                  TrinketSlotType, TrinketLayout, TrinketMenu, PipicanMenus
 ├── effect/                   ClassEffect (interface), ClassEffectTypes (type registry),
 │   └── type/                 the built-in effect types
+├── condition/                ClassCondition (interface), ConditionTypes (type registry), Bounds
+│   └── type/                 the built-in condition types (used by pipican:conditional)
 ├── player/
 │   ├── PlayerClassData       what is saved on the player (+ PipicanAttachments)
 │   ├── ClassProgress         level, XP, allocated nodes for one class

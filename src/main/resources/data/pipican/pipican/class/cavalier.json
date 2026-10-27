@@ -69,18 +69,47 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "Off the horse, a cavalier is just a soldier with a limp.",
-      "extra": [
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "mounted"
+      },
+      "effects": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
         }
       ]
-    },
-    "effects": []
+    }
+  ],
+  "weakness": {
+    "description": "Off the horse, a cavalier is just a soldier with a limp.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:state",
+            "state": "mounted"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:movement_speed",
+            "amount": -0.1,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

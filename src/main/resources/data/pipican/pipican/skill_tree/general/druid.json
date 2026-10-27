@@ -58,16 +58,7 @@
     {
       "id": "druid_wild_heart",
       "name": "Wild Heart",
-      "description": {
-        "text": "+2 max health in natural biomes",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 max health in natural biomes",
       "type": "notable",
       "x": 785,
       "y": 421,
@@ -75,7 +66,23 @@
         "druid_bark"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#pipican:natural"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "druid_herd",

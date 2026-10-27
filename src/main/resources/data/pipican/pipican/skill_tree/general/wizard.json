@@ -101,16 +101,7 @@
     {
       "id": "wizard_archmage",
       "name": "Path of the Archmage",
-      "description": {
-        "text": "+25% max Aether and +10% magic damage, but -15% movement speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% max Aether and +10% magic damage, but -15% movement speed",
       "type": "keystone",
       "x": 167,
       "y": -945,
@@ -119,7 +110,26 @@
         "wizard_arcane_ward"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.25,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.1
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

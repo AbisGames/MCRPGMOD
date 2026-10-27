@@ -81,16 +81,7 @@
     {
       "id": "arcanist_deep_reserves",
       "name": "Deep Reserves",
-      "description": {
-        "text": "+20% max Mystic Flux",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% max Mystic Flux",
       "type": "notable",
       "x": 103,
       "y": -1737,
@@ -98,21 +89,20 @@
         "arcanist_practice"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "id": "arcanist_unbound_mind",
       "name": "Unbound Mind",
-      "description": {
-        "text": "+30% max Mystic Flux, but -20% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% max Mystic Flux, but -20% max health",
       "type": "keystone",
       "x": 79,
       "y": -1808,
@@ -121,7 +111,21 @@
         "arcanist_deep_reserves"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.3,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

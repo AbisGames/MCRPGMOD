@@ -19,21 +19,20 @@
     {
       "id": "technomancer_capacitor",
       "name": "Capacitor",
-      "description": {
-        "text": "+20% max Voltage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% max Voltage",
       "type": "small",
       "x": -664,
       "y": -1532,
       "links": [
         "technomancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
       ]
     },
     {

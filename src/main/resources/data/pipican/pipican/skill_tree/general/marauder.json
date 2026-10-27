@@ -40,21 +40,27 @@
     {
       "id": "marauder_howl",
       "name": "Howl",
-      "description": {
-        "text": "+6% damage while sprinting",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% damage while sprinting",
       "type": "small",
       "x": -1553,
       "y": 614,
       "links": [
         "marauder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.06
+            }
+          ]
+        }
       ]
     },
     {

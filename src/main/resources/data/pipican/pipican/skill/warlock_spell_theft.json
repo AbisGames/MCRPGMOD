@@ -38,17 +38,15 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% max Stolen Power",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% max Stolen Power",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "description": "+1 Larceny",

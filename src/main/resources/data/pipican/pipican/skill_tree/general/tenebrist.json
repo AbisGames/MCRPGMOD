@@ -21,21 +21,27 @@
     {
       "id": "tenebrist_gloom",
       "name": "Gloom",
-      "description": {
-        "text": "+5% damage in darkness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage in darkness",
       "type": "small",
       "x": 664,
       "y": 1532,
       "links": [
         "tenebrist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:light",
+            "max": 8
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {
@@ -107,16 +113,7 @@
     {
       "id": "tenebrist_child_of_night",
       "name": "Child of Night",
-      "description": {
-        "text": "+30% damage in darkness, but -20% damage in daylight",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% damage in darkness, but -20% damage in daylight",
       "type": "keystone",
       "x": 693,
       "y": 1672,
@@ -125,7 +122,35 @@
         "tenebrist_pallid"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:light",
+            "max": 8
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "day"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.8
+            }
+          ]
+        }
+      ]
     }
   ]
 }

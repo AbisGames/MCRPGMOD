@@ -73,16 +73,7 @@
     {
       "id": "grit_heart",
       "name": "Iron Lungs",
-      "description": {
-        "text": "+50% Stamina regen while below half health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+50% Stamina regen while below half health",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -90,7 +81,24 @@
         "second_wind"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:health",
+            "max": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:resource",
+              "target": "regen",
+              "amount": 0.5,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "grit_mastery",

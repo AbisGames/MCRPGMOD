@@ -56,16 +56,7 @@
     {
       "id": "geomancer_bulwark_of_stone",
       "name": "Bulwark of Stone",
-      "description": {
-        "text": "+15% knockback resistance on stone",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% knockback resistance on stone",
       "type": "notable",
       "x": 1589,
       "y": 710,
@@ -73,7 +64,23 @@
         "geomancer_granite_skin"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:standing_on",
+            "blocks": "#minecraft:base_stone_overworld"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 0.15
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "geomancer_ore_sense",

@@ -63,17 +63,31 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "Sentinels hold a post - roaming makes them uneasy.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Sentinels hold a post - roaming makes them uneasy.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:state",
+              "state": "sprinting"
+            },
+            {
+              "type": "pipican:state",
+              "state": "mounted"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.9
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

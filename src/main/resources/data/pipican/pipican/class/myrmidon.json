@@ -59,17 +59,30 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "The shield is a myrmidon's whole style.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "The shield is a myrmidon's whole style.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/shields"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:armor",
+            "amount": -2.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

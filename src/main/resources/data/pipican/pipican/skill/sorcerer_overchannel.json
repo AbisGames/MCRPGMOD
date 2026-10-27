@@ -31,17 +31,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+1 max Strain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1 max Strain",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "description": "+1 Potency",

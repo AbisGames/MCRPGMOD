@@ -1,0 +1,86 @@
+package com.pipican.condition.type;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.pipican.condition.ClassCondition;
+import com.pipican.condition.ConditionTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.StringRepresentable;
+
+/**
+ * {@code pipican:state} - a simple yes/no fact about the player or their surroundings.
+ *
+ * <pre>{@code { "type": "pipican:state", "state": "wet" } }</pre>
+ */
+public record StateCondition(State state) implements ClassCondition {
+
+    public enum State implements StringRepresentable {
+        /** In water or standing in rain. */
+        WET("wet"),
+        IN_WATER("in_water"),
+        UNDERWATER("underwater"),
+        IN_LAVA("in_lava"),
+        SWIMMING("swimming"),
+        SPRINTING("sprinting"),
+        SNEAKING("sneaking"),
+        /** Holding up a shield. */
+        BLOCKING("blocking"),
+        MOUNTED("mounted"),
+        ON_FIRE("on_fire"),
+        /** Night in a dimension with a day cycle (never true in the Nether or the End). */
+        NIGHT("night"),
+        /** Daytime in a dimension with a day cycle. */
+        DAY("day"),
+        /** Rain (or snow) is falling on the player. */
+        RAINING("raining"),
+        /** A thunderstorm, and rain is falling on the player. */
+        THUNDERING("thundering"),
+        /** Nothing but transparent blocks above the player's head. "Underground" is {@code not} this. */
+        SEES_SKY("sees_sky");
+
+        public static final Codec<State> CODEC = StringRepresentable.fromEnum(State::values);
+        private final String name;
+
+        State(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return name;
+        }
+    }
+
+    public static final MapCodec<StateCondition> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+            State.CODEC.fieldOf("state").forGetter(StateCondition::state)
+    ).apply(i, StateCondition::new));
+
+    @Override
+    public ConditionTypes.Type type() {
+        return ConditionTypes.STATE;
+    }
+
+    @Override
+    public boolean test(ServerPlayer player) {
+        var level = player.level();
+        return switch (state) {
+            case WET -> player.isInWaterOrRain();
+            case IN_WATER -> player.isInWater();
+            case UNDERWATER -> player.isUnderWater();
+            case IN_LAVA -> player.isInLava();
+            case SWIMMING -> player.isSwimming();
+            case SPRINTING -> player.isSprinting();
+            case SNEAKING -> player.isShiftKeyDown();
+            case BLOCKING -> player.isBlocking();
+            case MOUNTED -> player.isPassenger();
+            case ON_FIRE -> player.isOnFire();
+            case NIGHT -> level.isDarkOutside();
+            case DAY -> !level.dimensionType().hasFixedTime() && level.isBrightOutside();
+            case RAINING -> level.isRainingAt(player.blockPosition());
+            case THUNDERING -> level.isThundering() && level.isRainingAt(player.blockPosition());
+            case SEES_SKY -> level.canSeeSky(BlockPos.containing(player.getEyePosition()));
+        };
+    }
+}

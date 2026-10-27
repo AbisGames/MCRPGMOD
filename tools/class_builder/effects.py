@@ -5,6 +5,8 @@ ctx: {'special_name': 'Grit', 'special_id': 'pipican:warrior_grit', 'implicit_pe
 """
 import re
 
+import conditions as cond
+
 CORE_STATS = ['vitality', 'strength', 'dexterity', 'agility', 'intelligence', 'wisdom', 'endurance', 'luck']
 
 NUM = r'([+-]?\d+(?:\.\d+)?)'
@@ -137,6 +139,8 @@ def _clean(clause):
         c = c[label.end():]
     c = re.sub(r'\s*\((?:[A-Z][^)]*|book[^)]*)\)\s*$', '', c)
     c = re.sub(r'^but\s+', '', c, flags=re.I)
+    c = re.sub(r'^([+-]?\d+(?:\.\d+)?%) more (?=\w*\s*damage)', r'\1 ', c)
+    c = re.sub(r'\s+everywhere(?: else)?$', '', c)
     return c.strip()
 
 
@@ -148,7 +152,7 @@ def _split(text):
         # otherwise they are part of a list ("swords, bows and crossbows").
         pieces = []
         for piece in re.split(r',\s*', chunk):
-            if pieces and not re.match(r'^\s*(?:but\s+)?(?:[+-]?\d|takes?\b|immune|mobs deal)', piece):
+            if pieces and not re.match(r'^\s*(?:but\s+)?(?:[+-]?\d|takes?\b|immune|mobs deal|no\b)', piece):
                 pieces[-1] += ', ' + piece
             else:
                 pieces.append(re.sub(r'^\s*but\s+', '', piece))
@@ -156,7 +160,7 @@ def _split(text):
     out = []
     for p in parts:
         # "+2 armor and +1 toughness" -> two clauses; keep "bow and crossbow" together
-        out.extend(re.split(r'\s+and\s+(?=[+-]\d|takes? \d|mobs deal)', p))
+        out.extend(re.split(r'\s+and\s+(?=[+-]\d|takes? \d|mobs deal|no\b)', p))
     return [p for p in out if p.strip()]
 
 
@@ -210,6 +214,21 @@ def _one(clause, ctx):
     if sc is not None:
         source, every = sc
         low = rest
+    res = _resource(low, ctx)
+    if res is not None:
+        target, value, pct = res
+        if sc is not None:
+            amount, scaling = 0.0, [{'source': source, 'per': round((value / 100 if pct else value) / every, 6)}]
+        elif implicit:
+            amount, scaling = 0.0, [{'source': 'special_stat', 'per': round(value / 100 if pct else value, 6)}]
+        else:
+            amount, scaling = round(value / 100 if pct else value, 6), None
+        e = {'type': 'pipican:resource', 'target': target, 'amount': amount}
+        if pct:
+            e['operation'] = 'add_multiplied_base'
+        if scaling:
+            e['scaling'] = scaling
+        return [e]
     # "+0.5% weapon damage" etc
     mval = re.match(r'^' + NUM + r'(%?)\s+(.*)$', low)
     if not mval:
@@ -250,9 +269,10 @@ def _one(clause, ctx):
     m = re.match(r'^(?:(.+?) )?damage(?: with (.+?))?(?: dealt)?$', what)
     if pct and m:
         qual = (m.group(1) or '').strip()
-        # In a weakness, "+25% fire damage" is extra damage taken; "-20% melee damage" is still damage dealt.
-        if qual in TAKEN_ONLY or (ctx.get('weakness') and value > 0 and qual in DAMAGE_TAGS
-                                  and qual not in ('melee', 'ranged') and not m.group(2)):
+        # Elemental damage: a bonus of "-50% fire damage" means taking less; a weakness of "+25% fire damage" means
+        # taking more. "+30% fire damage" as a bonus (or "-10% magic damage" as a weakness) is damage dealt.
+        elemental = qual in DAMAGE_TAGS and qual not in ('melee', 'ranged') and not m.group(2)
+        if qual in TAKEN_ONLY or (elemental and (value > 0) == bool(ctx.get('weakness'))):
             v, s = scal(value)
             return [_dmg_effect(True, v, dtype=DAMAGE_TAGS[qual], scaling=s)]
         withq = (m.group(2) or '').strip()
@@ -306,6 +326,26 @@ def _one(clause, ctx):
     return None
 
 
+def _resource(low, ctx):
+    """Resource-bar phrases -> (target, value, is_percent), or None."""
+    rn = (ctx.get('resource_name') or '').lower()
+    if not rn:
+        return None
+    r = re.escape(rn)
+    regen = r'regen(?:eration)?(?: per second|/s| speed| rate)?'
+    for pat, target in ((rf'^{NUM}(%?) {r} {regen}$', 'regen'), (rf'^{r} {regen} {NUM}(%?)$', 'regen'),
+                        (rf'^{NUM}(%?) (?:max(?:imum)? {r}|{r} max(?:imum)?)$', 'max'), (rf'^max(?:imum)? {r} {NUM}(%?)$', 'max'),
+                        (rf'^{r} regenerates {NUM}(%) faster$', 'regen'), (rf'^{r} drains {NUM}(%) faster$', 'regen')):
+        m = re.match(pat, low)
+        if m:
+            return target, _num(m.group(1)), m.group(2) == '%'
+    if re.match(rf'^no {r} {regen}$', low):
+        return 'regen', -100.0, True
+    if re.match(rf'^{r} (?:regen(?:eration)? doubles|regenerates twice as fast)$', low):
+        return 'regen', 100.0, True
+    return None
+
+
 def _special_forms(low, ctx):
     m = re.match(r'^mobs deal (\d+(?:\.\d+)?)% (more|less) damage to you$', low)
     if m:
@@ -341,23 +381,74 @@ def _special_forms(low, ctx):
 def translate(text, ctx):
     if not text or text.strip() in ('-', 'none', 'nothing'):
         return [], []
-    # "Per 10 Brawn, +1 max health" -> "+1 max health per 10 Brawn"
     original = text
     # Parenthetical notes are explanations ("(potions, evoker fangs...)"); they only break the comma split.
     text = re.sub(r'\s*\([^)]*\)', '', text)
+    # "Per 10 Brawn, +1 max health" -> "+1 max health per 10 Brawn"
     m = re.match(r'^\s*per (\d+ )?([A-Za-z][\w \'-]*?)(?: points?)?,\s*(.+)$', text.strip(), re.I)
     if m and ',' not in m.group(3) and ';' not in m.group(3):
         text = f'{m.group(3)} per {m.group(1) or ""}{m.group(2)}'
-    effects, unsupported = _translate(text, ctx)
-    # A partial translation is only safe when the parts that failed are separate extras. If the first part failed
-    # it usually names who gets the bonus ("Tamed wolves get +10% damage"), so nothing may apply.
-    first_failed = bool(unsupported) and _clean(_split(text)[0]) in unsupported
-    # "upside, but downside": never hand out only one half.
-    trade_off = re.search(r'\bbut\b', original, re.I) or re.search(r'\bin [A-Z]', original) or \
-        any(re.search(r'\b(?:for every|for each|per)\b', u, re.I) for u in unsupported)
-    if unsupported and effects and (first_failed or trade_off or CONDITION.search(original) or ctx.get('keystone')):
+    # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.
+    effects, unsupported = [], []
+    for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b)', text):
+        if seg.strip():
+            e, u = _segment(seg.strip(), ctx)
+            effects += e
+            unsupported += u
+    # "upside, but downside" and keystones: never hand out only one half.
+    # A note in brackets can qualify everything ("Divine Ecstasy (toggle, drains 3/s): +10% damage").
+    notes = ' '.join(re.findall(r'\(([^)]*)\)', original))
+    if unsupported and effects and (re.search(r'\bbut\b', original, re.I) or ctx.get('keystone') or re.search(r'\b(?:toggle|drains?|cooldown|while|when|only|active|lasts?)\b', notes, re.I)):
         return [], [original.strip()]
     return effects, unsupported
+
+
+def _segment(seg, ctx):
+    wrapped = _conditional(seg, ctx)
+    if wrapped is not None:
+        return wrapped, []
+    effects, unsupported = _translate(seg, ctx)
+    # A partial translation is only safe when the parts that failed are separate extras. If the first part failed
+    # it usually names who gets the bonus ("Tamed wolves get +10% damage"), so nothing may apply. A qualifier
+    # in a failed part ("in Ecstasy", "for every heavy piece", a condition word) usually covers the whole segment.
+    first_failed = bool(unsupported) and _clean(_split(seg)[0]) in unsupported
+    qualified = re.search(r'\bin [A-Z]', seg) or CONDITION.search(seg) or \
+        any(re.search(r'\b(?:for every|for each|per)\b', u, re.I) for u in unsupported)
+    if unsupported and effects and (first_failed or qualified):
+        return [], [seg]
+    return effects, unsupported
+
+
+def _conditional(text, ctx):
+    """"while X: effects" / "effects while X" / "effects underground" -> [pipican:conditional], or None."""
+    t = text.strip().rstrip('.')
+    t = re.sub(r'^[A-Z][\w\' -]{1,30}:\s+(?=(?:while|when|whenever|as long as|if|below|above|in|at|on|mounted)\b)', '', t)
+    # "mounted damage +25%" / "+5% mounted damage" -> "+25% damage while mounted"
+    t = re.sub(r'^mounted (damage|attack speed) ([+-]\d+(?:\.\d+)?%)$', r'\2 \1 while mounted', t, flags=re.I)
+    t = re.sub(r'^([+-]\d+(?:\.\d+)?%) mounted (damage|attack speed)$', r'\1 \2 while mounted', t, flags=re.I)
+    m = re.match(r'^(?:while|when|whenever|as long as|if)\s+(.+?)(?::|,)\s+(.+)$', t, re.I)
+    # "below half health, +20% melee damage": a condition first, without "while"
+    m2 = re.match(r'^([^,:]+?)(?::|,)\s+([+-]?\d.*)$', t)
+    if m:
+        cond_text, eff_text = m.group(1), m.group(2)
+    elif m2 and cond.parse(m2.group(1), ctx) is not None:
+        cond_text, eff_text = m2.group(1), m2.group(2)
+    else:
+        m = cond.TRAILING.search(t)
+        if not m or m.start() == 0:
+            return None
+        eff_text, cond_text = t[:m.start()], t[m.start():]
+    when = cond.parse(cond_text, ctx)
+    if when is None:
+        return None
+    # "-2 armor at all times and +10% damage taken while sprinting": only the rest is conditional.
+    always_text = ', '.join(c for c in _split(eff_text) if re.search(r'\bat all times\b|\balways\b', c))
+    eff_text = ', '.join(c for c in _split(eff_text) if not re.search(r'\bat all times\b|\balways\b', c))
+    always, unsupported_always = _translate(always_text, ctx) if always_text else ([], [])
+    effects, unsupported = _translate(eff_text, ctx) if eff_text else ([], [])
+    if unsupported or unsupported_always or not effects:
+        return None
+    return always + [{'type': 'pipican:conditional', 'when': when, 'effects': effects}]
 
 
 def _translate(text, ctx):

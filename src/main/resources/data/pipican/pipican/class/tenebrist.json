@@ -74,17 +74,38 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "The shadow eats at you in true light.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "The shadow eats at you in true light.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:state",
+              "state": "day"
+            },
+            {
+              "type": "pipican:state",
+              "state": "sees_sky"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:max_health",
+            "amount": -0.1,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_fire",
+        "multiplier": 1.2
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

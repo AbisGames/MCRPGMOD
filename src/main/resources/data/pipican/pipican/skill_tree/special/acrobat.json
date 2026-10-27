@@ -94,16 +94,7 @@
     {
       "id": "living_wind",
       "name": "Living Wind",
-      "description": {
-        "text": "+20% movement speed while Flow is above half; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% movement speed while Flow is above half; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -112,7 +103,30 @@
         "catfall"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

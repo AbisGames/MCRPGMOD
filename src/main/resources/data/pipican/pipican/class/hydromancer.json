@@ -59,18 +59,56 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "wet"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Hydromancers dry out.",
       "extra": [
         {
-          "text": " (not in game yet)",
+          "text": " (partly not in game yet)",
           "color": "dark_gray",
           "italic": true
         }
       ]
     },
-    "effects": []
+    "effects": [
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_fire",
+        "multiplier": 1.25
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

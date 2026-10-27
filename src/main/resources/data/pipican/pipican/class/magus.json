@@ -56,18 +56,59 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "A magus without a staff is half a mage.",
-      "extra": [
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ]
+      },
+      "effects": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.85
         }
       ]
-    },
-    "effects": []
+    }
+  ],
+  "weakness": {
+    "description": "A magus without a staff is half a mage.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.75
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

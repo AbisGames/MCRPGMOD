@@ -21,21 +21,27 @@
     {
       "id": "cavalier_saddle_born",
       "name": "Saddle-Born",
-      "description": {
-        "text": "+5% mounted damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% mounted damage",
       "type": "small",
       "x": -1299,
       "y": 234,
       "links": [
         "cavalier_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {
@@ -105,16 +111,7 @@
     {
       "id": "cavalier_knight_errant",
       "name": "Knight Errant",
-      "description": {
-        "text": "mounted damage +25%, but -25% damage on foot",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mounted damage +25%, but -25% damage on foot",
       "type": "keystone",
       "x": -1442,
       "y": 228,
@@ -123,7 +120,38 @@
         "cavalier_warhorse"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "mounted"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.75
+            }
+          ]
+        }
+      ]
     }
   ]
 }

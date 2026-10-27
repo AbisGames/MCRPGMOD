@@ -59,6 +59,14 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:block_break_speed",
+      "amount": 0.2,
+      "operation": "add_multiplied_base"
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Stone sinks and cracks in the cold and the water.",

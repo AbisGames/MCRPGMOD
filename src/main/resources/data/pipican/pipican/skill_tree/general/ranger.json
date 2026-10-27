@@ -37,21 +37,28 @@
     {
       "id": "ranger_woodcraft",
       "name": "Woodcraft",
-      "description": {
-        "text": "+3 max health outdoors",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3 max health outdoors",
       "type": "small",
       "x": -812,
       "y": 115,
       "links": [
         "ranger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 3.0
+            }
+          ]
+        }
       ]
     },
     {

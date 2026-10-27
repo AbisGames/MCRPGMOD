@@ -4,58 +4,78 @@
     {
       "id": "astromancer_start",
       "name": "Astromancer",
-      "description": {
-        "text": "+5% damage outdoors",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage outdoors",
       "type": "start",
       "x": 1187,
-      "y": -393
+      "y": -393,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "astromancer_sunlit",
       "name": "Sunlit",
-      "description": {
-        "text": "+6% magic damage in daylight",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% magic damage in daylight",
       "type": "small",
       "x": 1244,
       "y": -441,
       "links": [
         "astromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "day"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "damage_types": "#pipican:is_magic",
+              "multiplier": 1.06
+            }
+          ]
+        }
       ]
     },
     {
       "id": "astromancer_moonlit",
       "name": "Moonlit",
-      "description": {
-        "text": "+6% magic damage at night",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% magic damage at night",
       "type": "small",
       "x": 1262,
       "y": -389,
       "links": [
         "astromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "night"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "damage_types": "#pipican:is_magic",
+              "multiplier": 1.06
+            }
+          ]
+        }
       ]
     },
     {
@@ -105,16 +125,7 @@
     {
       "id": "astromancer_power_of_the_sun",
       "name": "Power of the Sun",
-      "description": {
-        "text": "+25% damage outdoors, but -25% damage underground",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% damage outdoors, but -25% damage underground",
       "type": "keystone",
       "x": 1386,
       "y": -459,
@@ -123,7 +134,38 @@
         "astromancer_solar_flare"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "sees_sky"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.75
+            }
+          ]
+        }
+      ]
     }
   ]
 }

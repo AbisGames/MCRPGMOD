@@ -40,7 +40,17 @@ Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fir
 | **Permanent potion effect** | "night vision", "haste I", "water breathing", "fire resistance" |
 | **Deal more/less damage** | "+10% damage", "+15% damage with swords", "+20% fire damage", "-30% damage with bows" |
 | **Take more/less damage** | "takes 50% more fire damage", "-20% fall damage taken", "-10% projectile damage taken" |
+| **Resource bar** | "+10% Rage regen", "-15% max Mana", "+5 max Mana", "no Mana regen" |
+| **Only in some situations** | "+10% damage at night", "+2 armor while below half health", "-20% damage underground", "while Ward is above half: +20% speed", "+1 armor in forests", "-10% damage while no other player is within 16 blocks" |
 | **Grows with something** | "+0.25 armor per special-stat point", "+0.1 attack damage per class level", "+1% damage per 5 strength" |
+
+**Situations** you can use: wet / in water / underwater / in lava / in rain / in thunderstorms, at night / in daylight,
+outdoors / underground, in the Nether / the End, in forests / deserts / jungles / oceans / snowy or natural biomes,
+standing on stone / dirt / sand / gravel / Nether blocks, light level N or lower/higher, in darkness, below/above X%
+health, full health, your resource above/below X% or full, sprinting, sneaking, blocking, swimming, mounted / on foot,
+on fire, slowed / poisoned / withered / weakened / blinded, holding a shield / your staff, dual-wielding, wearing
+N+ heavy/medium/light armor or leather or no armor, another player / no other player / hostile mobs within N blocks.
+Combine with "and" / "or".
 
 **Damage kinds** for "deal/take damage": fire, fall, projectile, explosion, magic, freezing, drowning, lightning,
 wither, melee, or "all".
