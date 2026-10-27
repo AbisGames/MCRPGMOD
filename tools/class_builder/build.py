@@ -568,7 +568,7 @@ def main(spec_dir, res_dir, report_path):
                     counts['phrases'] += 1
                     counts['full'] += 1
                 if rest:
-                    eff, uns = tr(cid, f'{kind} tree: {n["name"]}', rest, dict(ctx, keystone=n['size'] == 'keystone'))
+                    eff, uns = tr(cid, f'{kind} tree: {n["name"]}', rest, dict(ctx, keystone=n['size'] == 'keystone', node_name=n['name']))
                 elif grants:
                     counts['phrases'] += 1
                     counts['full'] += 1

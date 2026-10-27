@@ -303,7 +303,10 @@ public class Eidolon extends IronGolem implements OwnableEntity {
         }
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.IRON_INGOT) && getHealth() < getMaxHealth()) {
-            heal(10);
+            // Spare Parts: 10 HP, plus "Spare Parts heal 15 HP"-style upgrades (pipican:reaction_mod "spare parts").
+            double extra = player instanceof net.minecraft.server.level.ServerPlayer sp
+                    ? com.pipican.player.ClassEffectApplier.state(sp).reactionMods().getOrDefault("spare parts", com.pipican.player.ClassState.ReactionMod.NONE).heal() : 0;
+            heal((float) (10 + extra));
             stack.consume(1, player);
             return InteractionResult.SUCCESS;
         }

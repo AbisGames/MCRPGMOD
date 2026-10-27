@@ -50,16 +50,7 @@
     {
       "id": "worker_of_miracles",
       "name": "Worker of Miracles",
-      "description": {
-        "text": "heal amount 10",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "heal amount 10",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,14 @@
         "conviction"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "worker of miracles",
+          "heal": 4.0
+        }
+      ]
     },
     {
       "id": "divine_visage",

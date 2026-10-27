@@ -68,6 +68,9 @@ public final class Reactions {
                 if (r.victim().isPresent() && !(subject instanceof net.minecraft.world.entity.LivingEntity living && r.victim().get().test(player, living))) {
                     continue;
                 }
+                if (r.cost() > 0 && com.pipican.player.ClassService.data(player).resource() < r.cost()) {
+                    continue;
+                }
                 int uses = r.oncePerRest() ? 1 : r.usesPerRest();
                 if (uses > 0) {
                     uses += state.reactionUses(r);
@@ -84,6 +87,10 @@ public final class Reactions {
                 }
                 if (uses > 0) {
                     USED.get(player.getUUID()).merge(r, 1, Integer::sum);
+                }
+                if (r.cost() > 0) {
+                    var data = com.pipican.player.ClassService.data(player);
+                    data.setResource(data.resource() - r.cost());
                 }
                 var mod = r.name().map(n -> state.reactionMods().getOrDefault(n.toLowerCase(java.util.Locale.ROOT), ClassState.ReactionMod.NONE))
                         .orElse(ClassState.ReactionMod.NONE);

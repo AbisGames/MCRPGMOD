@@ -29,11 +29,12 @@ import net.minecraft.world.item.Item;
  * {@code kill}, {@code hurt} (something damages you), {@code block} (you block with a shield).
  * In the actions, {@code "target": "victim"} is the other side of the event (the mob hit or killed, or the
  * attacker), and area targets are centred on it. {@code victim} (a {@link com.pipican.effect.VictimState}) limits
- * the reaction to a mob in that state ("hitting a mob from behind"). Reactions never trigger other reactions.
+ * the reaction to a mob in that state ("hitting a mob from behind"). {@code cost} is resource the reaction needs and
+ * spends ("heals them 6 HP, spends 20 Miracle"); without enough it doesn't happen. Reactions never trigger other reactions.
  */
 public record ReactionEffect(Event event, double chance, int cooldownTicks, Optional<HolderSet<Item>> weapons,
                              Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions, Optional<String> name, boolean oncePerRest, int usesPerRest,
-                             Optional<com.pipican.effect.VictimState> victim) implements ClassEffect {
+                             Optional<com.pipican.effect.VictimState> victim, double cost) implements ClassEffect {
 
     public enum Event implements StringRepresentable {
         HIT("hit"), CRIT("crit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block"),
@@ -68,7 +69,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You finished drinking a potion. */
         DRINK("drink"),
         /** Like {@code attacked}, but only a melee hit (not arrows or spells); {@code pipican:shrug} cancels it. */
-        ATTACKED_MELEE("attacked_melee");
+        ATTACKED_MELEE("attacked_melee"),
+        /** You right-clicked a mob or player (the victim); {@code weapons} limits it to what you hold (air = empty hand). */
+        INTERACT("interact");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;
@@ -93,7 +96,8 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
             Codec.STRING.optionalFieldOf("name").forGetter(ReactionEffect::name),
             Codec.BOOL.optionalFieldOf("once_per_rest", false).forGetter(ReactionEffect::oncePerRest),
             Codec.intRange(0, 1000).optionalFieldOf("uses_per_rest", 0).forGetter(ReactionEffect::usesPerRest),
-            com.pipican.effect.VictimState.CODEC.optionalFieldOf("victim").forGetter(ReactionEffect::victim)
+            com.pipican.effect.VictimState.CODEC.optionalFieldOf("victim").forGetter(ReactionEffect::victim),
+            Codec.doubleRange(0, 100_000).optionalFieldOf("cost", 0.0).forGetter(ReactionEffect::cost)
     ).apply(i, ReactionEffect::new));
 
     @Override

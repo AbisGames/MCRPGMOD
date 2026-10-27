@@ -79,16 +79,7 @@
     {
       "id": "miracle_worker_laying_of_hands",
       "name": "Laying of Hands",
-      "description": {
-        "text": "Worker of Miracles also cures Poison and Wither",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Worker of Miracles also cures Poison and Wither",
       "type": "notable",
       "x": 1372,
       "y": -222,
@@ -96,7 +87,23 @@
         "miracle_worker_halo"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "worker of miracles",
+          "actions": [
+            {
+              "type": "pipican:cleanse",
+              "target": "victim",
+              "effects": [
+                "minecraft:poison",
+                "minecraft:wither"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "miracle_worker_saint_among_us",

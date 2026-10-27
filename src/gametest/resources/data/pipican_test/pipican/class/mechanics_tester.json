@@ -4,6 +4,8 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    { "type": "pipican:on", "event": "interact", "victims": "minecraft:sheep", "weapons": "minecraft:shears",
+      "actions": [ { "type": "pipican:effect", "target": "victim", "effects": [ { "effect": "minecraft:glowing", "seconds": 5 } ] } ] },
     { "type": "pipican:on", "event": "lightning", "name": "test bolt",
       "actions": [ { "type": "pipican:boost", "seconds": 5, "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 2 } ] } ] },
     { "type": "pipican:reaction_mod", "name": "test bolt", "strength": 0.5 },

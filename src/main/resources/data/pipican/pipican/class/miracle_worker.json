@@ -59,6 +59,41 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:holding",
+            "items": "minecraft:air",
+            "hand": "main"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "interact",
+          "victims": "minecraft:player",
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "victim",
+              "amount": 6.0
+            }
+          ],
+          "cost": 20.0,
+          "name": "worker of miracles"
+        }
+      ]
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:bonus",
@@ -75,6 +110,17 @@
       "type": "pipican:ability_mod",
       "ability": "pipican:miracle_worker/stigmata",
       "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "worker of miracles",
+      "heal": 0.0,
       "scaling": [
         {
           "source": "special_stat",

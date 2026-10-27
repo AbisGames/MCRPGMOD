@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1757**, partly working: **25**, not yet: **468**
+- Bonus phrases: **2250**. Fully working: **1763**, partly working: **25**, not yet: **462**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 149 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 125 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 73 |
+| [Other mechanics](#other-mechanics) | 146 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 124 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 72 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 69 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 31 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 30 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 29 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
 | [Immunities](#immunities) | 13 |
 | [Critical hits](#critical-hits) | 5 |
@@ -92,7 +92,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Lasting Charm: charms last 3s longer
 - **engineer**
   - general tree: Iron Titan: it moves 20% slower
-  - special tree: Field Repairs: Spare Parts heal 15 HP
 - **executioner**
   - general tree: Terrifying: Weakness after kill becomes Weakness II
   - special tree: Steady: exposure after charged hits lasts 1s
@@ -152,7 +151,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **marauder**
   - special tree: Glorious Death: once per day
 - **miracle_worker**
-  - special passive: Worker of Miracles heals +1 per 10 Devotion
   - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
   - general tree: Holy Presence: Stigmata Slowness becomes Slowness II
   - general tree: Saint Among Us: miracles cost half
@@ -214,8 +212,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Entropy, bad chaos outcomes are 5% rarer
   - general tree: Probability Bend: bad outcomes 20% rarer
   - special tree: Pandemonium: chaos outcomes can hit 2 mobs
-- **theurge**
-  - special tree: Pious Restoration: heal 3 HP
 - **thief**
   - special tree: Escape Artist: cobwebs don't slow you
 - **transmuter**
@@ -335,8 +331,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Sweeping Staff: staff hits sweep 1 extra mob
   - general tree: Staff of the Archmagus: +25% staff damage, but you can't use any other weapon at better than clumsy
   - special tree: Staff of Power: +1 more armor with staff
-- **miracle_worker**
-  - passive: Worker of Miracles: sneaking + right-clicking a player with an empty hand heals them 6 HP (spends 20 Miracle)
 - **necromancer**
   - passive: Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)
   - special passive: Per 20 Deathgrip, +1 servant
@@ -486,7 +480,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **miracle_worker**
   - passive: Tongues: your chat messages can be read by all players within 1000 blocks when you start them with '!'
   - general tree: Halo: you glow and light the area
-  - special tree: Worker of Miracles: heal amount 10
   - special tree: Living God: Stigmata lasts twice as long; you can't sleep while it's active
 - **myrmidon**
   - special stat per point: -0.2% damage taken while blocking
@@ -805,8 +798,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **mage_knight**
   - passive: Your weapon hits deal 10% of their damage as magic damage (ignores armor)
   - special tree: Charged Blade: first escalating hit also knocks back
-- **miracle_worker**
-  - general tree: Laying of Hands: Worker of Miracles also cures Poison and Wither
 - **myrmidon**
   - special passive: Knockback +0.05 blocks per Shieldcraft
   - special tree: Forceful Shield: +2 knockback blocks

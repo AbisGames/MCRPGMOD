@@ -568,6 +568,14 @@ public final class ClassSystemTests {
         new com.pipican.ability.action.ResetAttackAction().run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
         assertNear(helper, 1, player.getAttackStrengthScale(0), "attack cooldown reset");
 
+        // Right-click reactions: only the listed mob, only with the listed item.
+        var sheep = helper.spawn(EntityType.SHEEP, new BlockPos(2, 2, 4));
+        Reactions.fire(player, sheep, new ItemStack(Items.STICK), ReactionEffect.Event.INTERACT);
+        helper.assertTrue(!sheep.hasEffect(MobEffects.GLOWING), "wrong item");
+        Reactions.fire(player, sheep, new ItemStack(Items.SHEARS), ReactionEffect.Event.INTERACT);
+        helper.assertTrue(sheep.hasEffect(MobEffects.GLOWING), "right-clicked with shears");
+        sheep.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

@@ -254,6 +254,10 @@ public final class ProjectileAndEffectEvents {
             player.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("pipican.no_trade"));
             event.setCanceled(true);
         }
+        if (!event.isCanceled() && event.getEntity() instanceof ServerPlayer player && event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
+                && event.getTarget() instanceof net.minecraft.world.entity.LivingEntity target) {
+            com.pipican.ability.Reactions.fire(player, target, event.getItemStack(), com.pipican.effect.type.ReactionEffect.Event.INTERACT);
+        }
     }
 
     @SubscribeEvent

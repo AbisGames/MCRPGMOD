@@ -291,7 +291,7 @@ def reaction_mods(t, ctx):
     if m and m.group(4):
         return scaled(m.group(1), 'heal', float(m.group(2)), m.group(3), m.group(4))
     # "Pious Restoration: heal 3 HP" (label stripped: "heal 3 hp" arrives with the name in front), "Resolve trigger heals 10 HP instead"
-    m = re.fullmatch(rf'({names})(?: trigger)?:? heals? {N} hp(?: instead)?', t)
+    m = re.fullmatch(rf'({names})(?: trigger)?:? heals? {N} hp(?: instead)?', t) or re.fullmatch(rf'({names}) heal amount {N}', t)
     if m:
         base = [a.get('amount', 0) for a in reactions[m.group(1)].get('actions', []) if a.get('type') == 'pipican:heal']
         if len(base) == 1 and float(m.group(2)) > base[0]:
@@ -315,7 +315,13 @@ def reaction_mods(t, ctx):
         import bonus
         ids = bonus._effect_ids(m.group(2))
         if ids:
-            return mod(m.group(1), actions=[{'type': 'pipican:cleanse', 'target': 'self', 'effects': ids if len(ids) > 1 else ids[0]}])
+            healed = [a.get('target') for a in reactions[m.group(1)].get('actions', []) if a.get('type') == 'pipican:heal']
+            target = healed[0] if healed and healed[0] in ('victim', 'allies', 'players') else 'self'
+            c = {'type': 'pipican:cleanse', 'target': target, 'effects': ids if len(ids) > 1 else ids[0]}
+            for a in reactions[m.group(1)].get('actions', []):
+                if a.get('type') == 'pipican:heal' and a.get('target') == target and 'radius' in a:
+                    c['radius'] = a['radius']
+            return mod(m.group(1), actions=[c])
     return None
 
 
@@ -376,6 +382,12 @@ def segment(t, ctx):
     am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx) or static_mods(t, ctx)
     if am:
         return am
+    # A tree node named after what it upgrades ("Worker of Miracles: heal amount 10") leaves the name out of its text.
+    node = (ctx.get('node_name') or '').lower()
+    if node and not t.startswith(node) and (node in REACTIONS.get(ctx.get('class_id'), {}) or node in STATIC.get(ctx.get('class_id'), {})):
+        am = reaction_mods(f'{node} {t}', ctx) or static_mods(f'{node} {t}', ctx)
+        if am:
+            return am
     named = NAMED.get(ctx.get('class_id'), {})
     for name, (when, inner) in sorted(named.items(), key=lambda kv: -len(kv[0])):
         n = re.escape(name)
@@ -913,6 +925,21 @@ def whole_line(text, ctx):
                                                             {'type': 'pipican:still', 'seconds': float(m.group(1))}, forest]}
             return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:on', 'event': 'second', 'cooldown_ticks': int(float(m.group(3)) * 20),
                                                                                 'actions': [{'type': 'pipican:heal', 'target': 'self', 'amount': float(m.group(2))}]}]}]
+    # Worker of Miracles: "sneaking + right-clicking a player with an empty hand heals them 6 HP (spends 20 Miracle)"
+    m = re.fullmatch(rf'sneaking \+ right-clicking a player with an empty hand heals them {N} hp(?: \(spends {N} [a-z ]+\))?', low)
+    if m:
+        r = {'type': 'pipican:on', 'event': 'interact', 'victims': 'minecraft:player',
+             'actions': [{'type': 'pipican:heal', 'target': 'victim', 'amount': float(m.group(1))}]}
+        if m.group(2):
+            r['cost'] = float(m.group(2))
+        when = {'type': 'pipican:all_of', 'conditions': [{'type': 'pipican:state', 'state': 'sneaking'},
+                                                        {'type': 'pipican:holding', 'items': 'minecraft:air', 'hand': 'main'}]}
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [r]}]
+    # Spare Parts: "right-clicking the eidolon with an iron ingot heals it 10 HP"
+    m = re.fullmatch(rf'right-clicking (?:the|your) eidolon with an? ([a-z ]+?) heals it {N} hp', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'interact', 'victims': 'pipican:eidolon', 'weapons': 'minecraft:' + m.group(1).replace(' ', '_'),
+                 'actions': [{'type': 'pipican:heal', 'target': 'victim', 'amount': float(m.group(2))}]}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:
