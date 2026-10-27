@@ -56,6 +56,17 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "kill",
+      "actions": [
+        {
+          "type": "pipican:reset_attack"
+        }
+      ],
+      "weapons": "#pipican:weapons/axes_maces",
+      "name": "brutal swing"
+    },
+    {
       "type": "pipican:damage_dealt",
       "multiplier": 1.15,
       "weapons": "#pipican:weapons/axes"

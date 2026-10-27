@@ -60,6 +60,35 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:speed",
+              "seconds": 3.0,
+              "amplifier": 1
+            }
+          ]
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 3.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        }
+      ],
+      "name": "quickening"
+    },
+    {
       "type": "pipican:dodge",
       "chance": 0.1
     },

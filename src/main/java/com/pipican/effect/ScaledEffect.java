@@ -16,7 +16,7 @@ public record ScaledEffect(ClassEffect inner, double strength, @Nullable ToDoubl
 
     @Override
     public void collectStats(EffectContext ctx) {
-        inner.collectStats(ctx);
+        ctx.scaled(strength, source, () -> inner.collectStats(ctx));
     }
 
     @Override

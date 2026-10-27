@@ -83,16 +83,7 @@
     {
       "id": "champion_s_resolve",
       "name": "Champion's Resolve",
-      "description": {
-        "text": "Resolve trigger heals 10 HP instead",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Resolve trigger heals 10 HP instead",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -100,7 +91,14 @@
         "rally"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "champion's resolve",
+          "heal": 4.0
+        }
+      ]
     },
     {
       "id": "living_legend",

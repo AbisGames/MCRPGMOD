@@ -612,7 +612,7 @@ public final class ClassEffectApplier {
 
         @Override
         public void addStat(ResourceKey<StatDefinition> stat, double amount) {
-            stats.merge(stat, amount, Double::sum);
+            stats.merge(stat, amount * strength, Double::sum);
         }
 
         @Override

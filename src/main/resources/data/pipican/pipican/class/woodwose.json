@@ -97,6 +97,41 @@
           "amount": 2.0
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still",
+            "seconds": 10.0
+          },
+          {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 40,
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "amount": 1.0
+            }
+          ],
+          "name": "nature bond"
+        }
+      ]
     }
   ],
   "special_passives": [

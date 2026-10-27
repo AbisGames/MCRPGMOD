@@ -562,6 +562,12 @@ public final class ClassSystemTests {
         assertNear(helper, armorBefore + 3, player.getAttributeValue(Attributes.ARMOR), "boost +50% stronger");
         Boosts.clear(player);
 
+        // Attack reset: the next swing counts as fully charged.
+        player.resetAttackStrengthTicker();
+        helper.assertTrue(player.getAttackStrengthScale(0) < 1, "swing just used");
+        new com.pipican.ability.action.ResetAttackAction().run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
+        assertNear(helper, 1, player.getAttackStrengthScale(0), "attack cooldown reset");
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

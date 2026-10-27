@@ -29,23 +29,21 @@
     {
       "id": "hook",
       "name": "Hook",
-      "description": {
-        "text": "Containing Strike lasts 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Containing Strike lasts 2s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "containing strike",
+          "seconds": 1.0
+        }
+      ]
     },
     {
       "id": "retributive_strike",

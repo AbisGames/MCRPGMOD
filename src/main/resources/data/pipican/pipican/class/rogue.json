@@ -87,6 +87,17 @@
         }
       ],
       "name": "trickery"
+    },
+    {
+      "type": "pipican:on",
+      "event": "crit",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:reset_attack"
+        }
+      ],
+      "name": "exploit opportunity"
     }
   ],
   "special_passives": [

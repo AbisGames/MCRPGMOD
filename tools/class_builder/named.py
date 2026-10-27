@@ -188,6 +188,21 @@ def reaction_mods(t, ctx):
         return None
     names = '|'.join(sorted((re.escape(n) for n in reactions), key=len, reverse=True))
     per = rf'(?: per (?:{N} )?([a-z]+(?: (?!points?\b)[a-z]+)?)(?: points?)?)?'
+    # "Resolve trigger heals 10 HP instead": a name's last word stands for it when no other name ends that way.
+    last = {}
+    for n in reactions:
+        last.setdefault(n.split()[-1], []).append(n)
+    for word, full in last.items():
+        if len(full) == 1 and word != full[0] and len(word) > 3 and re.match(re.escape(word) + r'\b', t):
+            t = full[0] + t[len(word):]
+            break
+    # "Containing Strike lasts 2s": a new total for its effect time.
+    m = re.fullmatch(rf'({names}) lasts {N}s', t)
+    if m:
+        secs = [e.get('seconds') for a in reactions[m.group(1)].get('actions', []) for e in ([a] if a.get('type') == 'pipican:boost' else a.get('effects', []))
+                if e.get('seconds')]
+        if secs and float(m.group(2)) > secs[0]:
+            return [{'type': 'pipican:reaction_mod', 'name': m.group(1), 'seconds': round(float(m.group(2)) - secs[0], 6)}]
 
     def mod(name, **kw):
         e = {'type': 'pipican:reaction_mod', 'name': name}
@@ -213,6 +228,12 @@ def reaction_mods(t, ctx):
                     return e['amount'] * (100 if e.get('operation') else 1)
                 if e.get('type') == 'pipican:damage_dealt':
                     return (e['multiplier'] - 1) * 100
+                if e.get('type') == 'pipican:stat':
+                    return float(e['amount'])
+            if a.get('type') == 'pipican:random' and a.get('choices') and a['choices'][0]:
+                inner = base_value({'actions': a['choices'][0]})
+                if inner:
+                    return inner
         return None
     m = re.fullmatch(rf'({names})(?: damage| bonus| armor| speed)? \+{N}%?' + per, t) or \
         re.fullmatch(rf'\+{N}%? (?:more )?({names})(?: damage| bonus)?' + per + '()', t)
@@ -855,6 +876,43 @@ def whole_line(text, ctx):
         return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:health', 'max': 0.5}, 'effects': [
             {'type': 'pipican:on', 'event': 'hurt', 'chance': round(float(m.group(1)) / 100, 6), 'cooldown_ticks': int(float(m.group(3)) * 20),
              'actions': [{'type': 'pipican:blink', 'distance': float(m.group(2))}]}]}]
+    # Brutal Swing: "when you kill a mob with an axe or mace, your attack cooldown resets instantly"
+    m = re.fullmatch(r'when you kill a mob(?: with an? (axe or mace|axe|mace|sword|spear))?, your attack cooldown resets instantly', low)
+    if m:
+        r = {'type': 'pipican:on', 'event': 'kill', 'actions': [{'type': 'pipican:reset_attack'}]}
+        if m.group(1):
+            r['weapons'] = {'axe or mace': '#pipican:weapons/axes_maces', 'axe': '#pipican:weapons/axes', 'mace': '#pipican:weapons/maces',
+                            'sword': '#pipican:weapons/swords', 'spear': '#pipican:weapons/spears'}[m.group(1)]
+        return [r]
+    # Exploit Opportunity: "critical hits have a 10% chance to instantly reset your attack cooldown"
+    m = re.fullmatch(rf'critical hits have a {N}% chance to instantly reset your attack cooldown', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'crit', 'chance': round(float(m.group(1)) / 100, 6), 'actions': [{'type': 'pipican:reset_attack'}]}]
+    # Quickening: "whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback"
+    m = re.fullmatch(rf"whenever you spend [a-z ]+, gain speed (i|ii|iii) for {N}s and your movement doesn'?t provoke knockback", low)
+    if m:
+        secs = float(m.group(2))
+        return [{'type': 'pipican:on', 'event': 'spend', 'actions': [
+            {'type': 'pipican:effect', 'target': 'self', 'effects': [{'effect': 'minecraft:speed', 'seconds': secs, 'amplifier': {'i': 0, 'ii': 1, 'iii': 2}[m.group(1)]}]},
+            {'type': 'pipican:boost', 'seconds': secs, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:knockback_resistance', 'amount': 1.0}]}]}]
+    # Prodigy: "each time you sleep, one random stat gets +2 until you sleep again"
+    m = re.fullmatch(rf'each time you sleep, one random stat gets \+{N} until you sleep again', low)
+    if m:
+        import effects as fx
+        amount = int(float(m.group(1)))
+        choices = [[{'type': 'pipican:boost', 'seconds': 1200.0, 'effects': [{'type': 'pipican:stat', 'stat': 'pipican:' + st, 'amount': amount}]}]
+                   for st in fx.CORE_STATS]
+        return [{'type': 'pipican:on', 'event': 'wake', 'actions': [{'type': 'pipican:random', 'choices': choices}]}]
+    # Nature Bond: "you can rest in a forest (sneak still for 10s) to heal 1 HP every 2s"
+    m = re.fullmatch(rf'you can rest in a forest \(sneak still for {N}s\) to heal {N} hp every {N}s', low)
+    if m:
+        import conditions as cnd
+        forest = cnd.parse('in a forest', ctx)
+        if forest:
+            when = {'type': 'pipican:all_of', 'conditions': [{'type': 'pipican:state', 'state': 'sneaking'},
+                                                            {'type': 'pipican:still', 'seconds': float(m.group(1))}, forest]}
+            return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:on', 'event': 'second', 'cooldown_ticks': int(float(m.group(3)) * 20),
+                                                                                'actions': [{'type': 'pipican:heal', 'target': 'self', 'amount': float(m.group(2))}]}]}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

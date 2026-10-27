@@ -71,6 +71,122 @@
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 1
+    },
+    {
+      "type": "pipican:on",
+      "event": "wake",
+      "actions": [
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:vitality",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:strength",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:dexterity",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:agility",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:intelligence",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:wisdom",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:endurance",
+                    "amount": 2
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:boost",
+                "seconds": 1200.0,
+                "effects": [
+                  {
+                    "type": "pipican:stat",
+                    "stat": "pipican:luck",
+                    "amount": 2
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "name": "prodigy"
     }
   ],
   "special_passives": [
@@ -92,6 +208,17 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "prodigy",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
         }
       ]
     }

@@ -98,16 +98,7 @@
     {
       "id": "death_dealer_slaughterhouse",
       "name": "Slaughterhouse",
-      "description": {
-        "text": "Brutal Swing also heals 2 HP, but -3 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Brutal Swing also heals 2 HP, but -3 armor",
       "type": "keystone",
       "x": -1527,
       "y": 973,
@@ -116,7 +107,25 @@
         "death_dealer_executioner_s_weight"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "brutal swing",
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "amount": 2.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": -3.0
+        }
+      ]
     }
   ]
 }

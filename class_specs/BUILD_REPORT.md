@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1747**, partly working: **25**, not yet: **478**
+- Bonus phrases: **2250**. Fully working: **1757**, partly working: **25**, not yet: **468**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,10 +12,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 155 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 127 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 74 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 70 |
+| [Other mechanics](#other-mechanics) | 149 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 125 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 73 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 69 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 31 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 30 |
@@ -50,11 +50,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Reckless Strike: +20% melee damage at all times, but you take +15% damage
   - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
   - special tree: Reckless Strike: fatigue lasts twice as long
-- **champion**
-  - special tree: Champion's Resolve: Resolve trigger heals 10 HP instead
 - **chronomancer**
   - special passive: Per 10 Tempo, harmful effects on you last 3% shorter
-  - special tree: Haste: Quickening speed lasts 2s longer
 - **cleric**
   - special passive: Empowered Symbol: +1% healing done and received per 2 Conviction
   - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
@@ -63,11 +60,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.5% damage for players near you
   - special passive: Leadership bonus +0.5% per Command point
 - **death_dealer**
-  - general tree: Slaughterhouse: Brutal Swing also heals 2 HP, but -3 armor
   - special tree: Bloodsoaked: full Bloodshed gives +15% damage
 - **defender**
   - general tree: Taunt: mobs within 6 blocks prefer to target you
-  - special tree: Hook: Containing Strike lasts 2s
   - special tree: Retributive Strike: retribution bonus +20%
   - special tree: Aegis Eternal: you take 25% of the damage nearby allies take instead of them; -10% movement speed
 - **dervish**
@@ -148,8 +143,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Expose: scrutinised mobs take +10% damage from everyone
 - **jack_of_all_trades**
   - passive: no gear is worse than neutral for you
-  - passive: Prodigy: each time you sleep, one random stat gets +2 until you sleep again
-  - special passive: Per 10 Aptitude, Prodigy bonus +1
   - special tree: Prodigy: Prodigy picks the stat you most recently used
 - **mage_knight**
   - special passive: Per 10 Battle Arcana, +1 escalating hit
@@ -291,8 +284,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Grand Strategy: aura bonuses doubled, but your own damage -20%
   - special tree: Attack Command: goat horn cooldown -20s
   - special tree: Hold Formation: allies near you +10% knockback resistance
-- **death_dealer**
-  - passive: Brutal Swing: when you kill a mob with an axe or mace, your attack cooldown resets instantly
 - **diviner**
   - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
 - **dreadnaught**
@@ -362,8 +353,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Martyr: Prayer aura also gives allies +5% damage reduction, but you take 10% more damage
 - **ranger**
   - general tree: Stalker: +10% movement speed toward your prey
-- **rogue**
-  - passive: Exploit Opportunity: critical hits have a 10% chance to instantly reset your attack cooldown
 - **runesmith**
   - special stat per point: +0.5% damage with sigil-marked weapons
   - special stat per point: +0.05 armor with sigil-marked armor
@@ -541,7 +530,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Axemanship: +10% shield-disable time when you break a shield
 - **woodwose**
   - passive: Forest Hide: in foliage (leaves, tall grass, ferns), sneaking makes you invisible
-  - passive: Nature Bond: you can rest in a forest (sneak still for 10s) to heal 1 HP every 2s
   - special passive: Forest armor +1 per 20 Verdure
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
@@ -567,8 +555,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Red Mist: killing a bleeding mob refills 20 Bloodletting; -10% max health
 - **cavalier**
   - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
-- **chronomancer**
-  - passive: Quickening: whenever you spend Sands, gain Speed II for 3s and your movement doesn't provoke knockback
 - **death_dealer**
   - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
 - **destroyer**
