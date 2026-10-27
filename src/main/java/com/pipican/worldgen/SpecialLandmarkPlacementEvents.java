@@ -21,7 +21,7 @@ public final class SpecialLandmarkPlacementEvents {
     public record Site(String id,int x,int z,int elevation,String template) {}
     // Y=-1 means surface anchoring; Aetheris is fixed at sky island altitude.
     private static final List<Site> SITES=List.of(
-        new Site("blackspire",-4400,21100,-1,"pillager_blackspire"),
+        new Site("blackspire",3500,21300,-1,"pillager_blackspire"),
         new Site("umbral_city",4600,-500, -14,"umbral_ancient_city"),
         new Site("aetheris_citadel",5700,1600,319,"aetheris_sky_citadel")
     );
@@ -63,6 +63,28 @@ public final class SpecialLandmarkPlacementEvents {
         BoundingBox box=template.get().getBoundingBox(settings,origin);
         if(box.minY()<level.getMinY()||box.maxY()>=level.getMaxY())return false;
         if(CapitalStructureExclusion.intersects(box,200))return false;
+        for(var existing:new LandmarkCatalog().all()){
+            if(StructurePlanner.collides(site.x(),site.z(),
+                    Math.max(size.getX(),size.getZ())/2+120,
+                    existing.x(),existing.z(),existing.radius()))return false;
+        }
+        String expected=site.id().equals("blackspire")
+            ?"redrock_badlands":"greyspine_mountains";
+        if(!WorldLayout.authoredRegionAt(site.x(),site.z())
+                .map(r->r.id().equals(expected)).orElse(false))return false;
+        for(int x=box.minX();x<=box.maxX();x+=4)
+            for(int z=box.minZ();z<=box.maxZ();z+=4){
+                if(!level.hasChunkAt(new BlockPos(x,y,z)))return false;
+                if(site.elevation()>=0){
+                    for(int yy=box.minY();yy<=box.maxY();yy+=4){
+                        var p=new BlockPos(x,yy,z);
+                        if(!level.getBlockState(p).isAir())return false;
+                    }
+                } else {
+                    int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
+                    if(Math.abs(surface-y)>8)return false;
+                }
+            }
         // Do not load ungenerated neighbours as a side effect of placing.
         for(int x=box.minX();x<=box.maxX();x+=16)
             for(int z=box.minZ();z<=box.maxZ();z+=16)
