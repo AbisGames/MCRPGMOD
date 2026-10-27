@@ -45,6 +45,7 @@ public final class LandmarkCatalog {
     public List<Landmark> all(){return landmarks;}
     /** Protected circle includes an additional margin for terrain blending. */
     public boolean inProtectedZone(int x,int z,int margin){
+        if(CapitalStructureExclusion.contains(x,z,margin))return true;
         for(Landmark l:landmarks)
             if(StructurePlanner.collides(x,z,0,l.x(),l.z(),l.radius()+margin))
                 return true;
