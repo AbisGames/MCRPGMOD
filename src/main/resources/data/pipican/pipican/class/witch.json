@@ -66,6 +66,20 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:aura",
+      "radius": 8.0,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ],
+      "include_self": false
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Old stories end with a witch on a pyre.",

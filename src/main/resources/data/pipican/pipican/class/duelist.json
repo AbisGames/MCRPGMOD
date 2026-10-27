@@ -56,6 +56,30 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.2
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Duelists fight one enemy at a time. Crowds overwhelm them.",

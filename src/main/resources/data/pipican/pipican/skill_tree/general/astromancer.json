@@ -81,16 +81,7 @@
     {
       "id": "astromancer_beacon",
       "name": "Beacon",
-      "description": {
-        "text": "players within 8 blocks get Night Vision",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players within 8 blocks get Night Vision",
       "type": "notable",
       "x": 1311,
       "y": -463,
@@ -98,7 +89,20 @@
         "astromancer_sunlit"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:night_vision"
+            }
+          ],
+          "include_self": false
+        }
+      ]
     },
     {
       "id": "astromancer_solar_flare",

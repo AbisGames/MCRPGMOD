@@ -6,6 +6,7 @@ ctx: {'special_name': 'Grit', 'special_id': 'pipican:warrior_grit', 'implicit_pe
 import re
 
 import bonus
+import named
 import combat
 import conditions as cond
 
@@ -26,7 +27,7 @@ WEAPON_TAGS = {
     'bows and crossbows': ['#pipican:weapons/bows', '#pipican:weapons/crossbows'],
     'axe and mace': ['#pipican:weapons/axes', '#pipican:weapons/maces'],
     'sword and axe': ['#pipican:weapons/swords', '#pipican:weapons/axes'],
-    'ranged': ['#pipican:weapons/ranged'],
+    'ranged': ['#pipican:weapons/ranged'], 'ranged weapons': ['#pipican:weapons/ranged'], 'melee weapons': ['#pipican:weapons/melee'],
 }
 # Damage-type tags. pipican:* ones are shipped by this build (see DAMAGE_TYPE_TAGS).
 DAMAGE_TAGS = {
@@ -442,10 +443,22 @@ def translate(text, ctx):
     original = text
     # Parenthetical notes are explanations ("(potions, evoker fangs...)"); they only break the comma split.
     text = re.sub(r'\s*\([^)]*\)', '', text)
+    # "after standing still for 3s, +20% damage until you move": the still condition already ends when you move.
+    if re.search(r'standing still|not moving', text, re.I):
+        text = re.sub(r'\s+until you move\b', '', text, flags=re.I)
     # "Per 10 Brawn, +1 max health" -> "+1 max health per 10 Brawn"
     m = re.match(r'^\s*per (\d+ )?([A-Za-z][\w \'-]*?)(?: points?)?,\s*(.+)$', text.strip(), re.I)
     if m and ',' not in m.group(3) and ';' not in m.group(3):
         text = f'{m.group(3)} per {m.group(1) or ""}{m.group(2)}'
+    # "while Rage is above 75%: A, B, but C": a leading condition with a colon covers everything after it.
+    m = re.match(r'^(?:[A-Z][\w\' -]{1,30}:\s+)?((?:while|when|whenever|as long as)\s+[^:]+?):\s+(.+)$', text.strip())
+    if m:
+        when = cond.parse(m.group(1), ctx)
+        if when is not None:
+            inner, uns = translate(m.group(2), ctx)
+            if uns or not inner:
+                return [], [original.strip()]
+            return [{'type': 'pipican:conditional', 'when': when, 'effects': inner}], []
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.
     effects, unsupported = [], []
     for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b)', text):
@@ -467,7 +480,7 @@ def _segment(seg, ctx):
         return [], [seg.strip()]
     if mounted is not None:
         return mounted, []
-    reacted = combat.reaction(_clean(seg).lower()) or bonus.resource(_clean(seg).lower(), ctx) or bonus.boost(_clean(seg).lower(), ctx) or bonus.scaled_reaction(_clean(seg).lower(), ctx)
+    reacted = combat.reaction(_clean(seg).lower()) or bonus.resource(_clean(seg).lower(), ctx) or bonus.boost(_clean(seg).lower(), ctx) or bonus.scaled_reaction(_clean(seg).lower(), ctx) or named.segment(_clean(seg).lower(), ctx)
     if reacted is not None:
         return reacted, []
     wrapped = _conditional(seg, ctx)

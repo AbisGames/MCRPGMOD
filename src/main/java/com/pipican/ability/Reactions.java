@@ -29,20 +29,30 @@ public final class Reactions {
         fire(player, victim, source.getWeaponItem(), ranged ? ReactionEffect.Event.RANGED_HIT : ReactionEffect.Event.MELEE_HIT);
     }
 
-    public static void fire(ServerPlayer player, LivingEntity subject, ItemStack weapon, ReactionEffect.Event event) {
+    /** Runs these reactions now (chance and cooldown still apply). */
+    public static void fireAll(ServerPlayer player, java.util.List<ReactionEffect> reactions) {
+        run(player, null, ItemStack.EMPTY, null, reactions);
+    }
+
+    /** Fires {@code event}; returns true if an action cancelled it ({@code pipican:shrug} on a low_health hit). */
+    public static boolean fire(ServerPlayer player, LivingEntity subject, ItemStack weapon, ReactionEffect.Event event) {
+        return run(player, subject, weapon, event, ClassEffectApplier.state(player).reactions());
+    }
+
+    private static boolean run(ServerPlayer player, LivingEntity subject, ItemStack weapon, ReactionEffect.Event event, java.util.List<ReactionEffect> reactions) {
         if (running) {
-            return;
+            return false;
         }
+        boolean cancelled = false;
         var state = ClassEffectApplier.state(player);
-        var reactions = state.reactions();
         if (reactions.isEmpty()) {
-            return;
+            return false;
         }
         long now = player.level().getGameTime();
         running = true;
         try {
             for (ReactionEffect r : reactions) {
-                if (r.event() != event || player.getRandom().nextDouble() >= state.reactionChance(r)) {
+                if (event != null && r.event() != event || player.getRandom().nextDouble() >= state.reactionChance(r)) {
                     continue;
                 }
                 if (r.weapons().isPresent() && (weapon == null || weapon.isEmpty() || !weapon.is(r.weapons().get()))) {
@@ -63,6 +73,7 @@ public final class Reactions {
                 for (var action : r.actions()) {
                     action.run(ctx);
                     if (ctx.isCancelled()) {
+                        cancelled = true;
                         break;
                     }
                 }
@@ -70,6 +81,7 @@ public final class Reactions {
         } finally {
             running = false;
         }
+        return cancelled;
     }
 
     public static void forget(ServerPlayer player) {

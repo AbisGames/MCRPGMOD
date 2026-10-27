@@ -1,5 +1,9 @@
 package com.pipican.effect;
 
+import com.pipican.effect.type.ScrutinyEffect;
+import com.pipican.effect.type.FavoredWeaponEffect;
+import com.pipican.effect.type.AuraEffect;
+import com.pipican.effect.type.ExecuteEffect;
 import com.pipican.effect.type.ReactionChanceEffect;
 import com.pipican.effect.type.BleedEffect;
 import com.pipican.effect.type.MountEffect;
@@ -64,6 +68,10 @@ public final class ClassEffectTypes {
     public static final Type MOUNT = register("mount", MountEffect.CODEC);
     public static final Type BLEED = register("bleed", BleedEffect.CODEC);
     public static final Type REACTION_CHANCE = register("reaction_chance", ReactionChanceEffect.CODEC);
+    public static final Type EXECUTE = register("execute", ExecuteEffect.CODEC);
+    public static final Type AURA = register("aura", AuraEffect.CODEC);
+    public static final Type FAVORED_WEAPON = register("favored_weapon", FavoredWeaponEffect.CODEC);
+    public static final Type SCRUTINY = register("scrutiny", ScrutinyEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}

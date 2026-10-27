@@ -88,16 +88,7 @@
     {
       "id": "hammer_of_the_gods",
       "name": "Hammer of the Gods",
-      "description": {
-        "text": "unclean mobs below 20% health die from your hits; Sanctification regen -25%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unclean mobs below 20% health die from your hits; Sanctification regen -25%",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -106,7 +97,20 @@
         "will_of_iron"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:execute",
+          "threshold": 0.2,
+          "victims": "#pipican:mobs/unclean"
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

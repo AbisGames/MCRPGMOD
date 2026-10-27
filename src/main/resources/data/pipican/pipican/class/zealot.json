@@ -55,6 +55,19 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "low_health",
+      "chance": 0.3,
+      "name": "shrug",
+      "actions": [
+        {
+          "type": "pipican:shrug"
+        }
+      ]
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:damage_dealt",
@@ -63,6 +76,17 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "shrug",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
         }
       ]
     }

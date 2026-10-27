@@ -1,5 +1,12 @@
 package com.pipican.event;
 
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.neoforged.neoforge.common.Tags;
+import com.pipican.ability.Charged;
+import com.pipican.ability.Scrutiny;
+import com.pipican.ability.Auras;
 import com.pipican.mastery.SkillAction;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
@@ -90,6 +97,8 @@ public final class ClassEvents {
             Boosts.forget(player);
             Combat.forget(player);
             Movement.forget(player);
+            Auras.forget(player);
+            Scrutiny.forget(player);
         }
     }
 
@@ -175,6 +184,13 @@ public final class ClassEvents {
                 }
             }
             amount *= (float) ClassState.multiplier(state.damageTaken(), event.getSource(), source, victim);
+            // Zeal: "when a hit would bring you below 2 hearts".
+            if (amount > 0 && victim.getHealth() - amount < 4 && victim.getHealth() > 0
+                    && Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.LOW_HEALTH)) {
+                victim.sendOverlayMessage(Component.translatable("pipican.shrugged"));
+                event.setCanceled(true);
+                return;
+            }
         }
         if (event.getSource().getEntity() instanceof ServerPlayer attacker) {
             ClassState state = ClassEffectApplier.state(attacker);
@@ -248,6 +264,10 @@ public final class ClassEvents {
         Boosts.tick(player);
         if (player.tickCount % 20 == 0) {
             Mounts.tick(player);
+            Auras.tick(player);
+        }
+        if (player.tickCount % 5 == 0) {
+            Scrutiny.tick(player);
         }
         // Conditional effects ("while wet", "at night"...): rebuild bonuses when a condition flips.
         if (player.tickCount % 10 == 0 && ClassEffectApplier.recheckConditions(player)) {
@@ -284,7 +304,7 @@ public final class ClassEvents {
         if (event.getInflictedDamage() <= 0) {
             return;
         }
-        if (Bleeds.ticking()) {
+        if (Bleeds.ticking() || event.getSource().is(DamageTypes.GENERIC_KILL)) {
             return;
         }
         if (event.getSource().getEntity() instanceof ServerPlayer attacker && event.getEntity() != attacker) {
@@ -300,6 +320,7 @@ public final class ClassEvents {
             if (event.getSource().getDirectEntity() == attacker) {
                 Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);
             }
+            execute(attacker, event.getEntity());
         }
         if (event.getEntity() instanceof ServerPlayer victim) {
             LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
@@ -367,6 +388,29 @@ public final class ClassEvents {
         }
         if (event.isCriticalHit() && damage != 0) {
             event.setDamageMultiplier((float) Math.max(1, event.getDamageMultiplier() * (1 + damage)));
+        }
+    }
+
+    /** {@code pipican:execute}: the hit left the mob low enough to finish it. */
+    private static void execute(ServerPlayer attacker, LivingEntity victim) {
+        if (!victim.isAlive() || victim instanceof Player || victim.getType().builtInRegistryHolder().is(Tags.EntityTypes.BOSSES) || victim.getMaxHealth() <= 0) {
+            return;
+        }
+        double fraction = victim.getHealth() / victim.getMaxHealth();
+        for (ClassState.Execute e : ClassEffectApplier.state(attacker).executes()) {
+            if (fraction < e.threshold() && (e.victims().isEmpty() || e.victims().get().contains(victim.getType().builtInRegistryHolder()))
+                    && victim.level() instanceof ServerLevel level) {
+                victim.hurtServer(level, level.damageSources().source(DamageTypes.GENERIC_KILL, attacker), Float.MAX_VALUE);
+                return;
+            }
+        }
+    }
+
+    /** Remembers how charged each attack was, for "fully charged hits" bonuses (the charge resets before damage). */
+    @SubscribeEvent
+    public static void onAttack(AttackEntityEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            Charged.remember(player);
         }
     }
 

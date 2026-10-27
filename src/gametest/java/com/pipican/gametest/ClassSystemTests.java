@@ -1,5 +1,9 @@
 package com.pipican.gametest;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.GameType;
+import com.pipican.ability.FavoredWeapon;
+import com.pipican.ability.Auras;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.monster.zombie.Zombie;
@@ -80,6 +84,7 @@ public final class ClassSystemTests {
     private static final ResourceKey<RpgClass> TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "tester"));
     private static final ResourceKey<RpgClass> CONDITION_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "condition_tester"));
     private static final ResourceKey<RpgClass> ABILITY_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "ability_tester"));
+    private static final ResourceKey<RpgClass> MECHANICS_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "mechanics_tester"));
     private static final ResourceKey<RpgClass> BONUS_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "bonus_tester"));
     private static final ResourceKey<StatDefinition> MIGHT = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "might"));
     private static final ResourceKey<StatDefinition> FOCUS = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "focus"));
@@ -104,6 +109,7 @@ public final class ClassSystemTests {
         TESTS.put("shipped_abilities", ClassSystemTests::shippedAbilities);
         TESTS.put("ability_mechanics", ClassSystemTests::abilityMechanics);
         TESTS.put("bonuses", ClassSystemTests::bonuses);
+        TESTS.put("class_mechanics", ClassSystemTests::classMechanics);
     }
 
     private ClassSystemTests() {}
@@ -130,6 +136,11 @@ public final class ClassSystemTests {
         ClassService.Result result = ClassService.chooseClass(player, TESTER, true, true);
         helper.assertTrue(result.success(), "chooseClass failed: " + result.message().getString());
         return player;
+    }
+
+    /** Removes a mock player so its class (auras...) can't reach players in other tests. */
+    private static void dismiss(GameTestHelper helper, ServerPlayer player) {
+        helper.getLevel().removePlayerImmediately(player, net.minecraft.world.entity.Entity.RemovalReason.DISCARDED);
     }
 
     private static void assertNear(GameTestHelper helper, double expected, double actual, String what) {
@@ -302,6 +313,49 @@ public final class ClassSystemTests {
     }
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
+    /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    private static void classMechanics(GameTestHelper helper) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        @SuppressWarnings("removal")
+        ServerPlayer ally = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, MECHANICS_TESTER, false, true).success(), "choose mechanics tester");
+        helper.assertTrue(ClassService.chooseClass(ally, TESTER, false, true).success(), "ally picks a class");
+        player.setGameMode(GameType.SURVIVAL);
+        ally.setGameMode(GameType.SURVIVAL);
+        ServerLevel level = helper.getLevel();
+
+        // Aura: the ally nearby takes half damage; the aura's owner doesn't (include_self false).
+        Auras.tick(ally);
+        assertNear(helper, 0.5, ClassState.multiplier(ClassEffectApplier.state(ally).damageTaken(), level.damageSources().magic()), "ally inside the aura");
+        assertNear(helper, 1, ClassState.multiplier(ClassEffectApplier.state(player).damageTaken(), level.damageSources().magic()), "aura owner not affected");
+
+        // Execute: a hit that leaves the mob below half health kills it.
+        Zombie zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        zombie.setHealth(9);
+        zombie.hurtServer(level, level.damageSources().playerAttack(player), 1);
+        helper.assertTrue(!zombie.isAlive(), "executed below 50% health");
+
+        // Low health: the reaction reports the hit as shrugged off. (Mock players can't take real damage:
+        // they count as invulnerable until a client has loaded.)
+        helper.assertTrue(Reactions.fire(player, zombie, ItemStack.EMPTY, ReactionEffect.Event.LOW_HEALTH), "low-health hit shrugged off");
+        helper.assertTrue(!Reactions.fire(player, zombie, ItemStack.EMPTY, ReactionEffect.Event.HURT), "other events aren't cancelled");
+
+        // Start reactions: entering the conditional (sneaking) fires once.
+        helper.assertTrue(!player.hasEffect(MobEffects.GLOWING), "not glowing yet");
+        player.setShiftKeyDown(true);
+        ClassEffectApplier.recheckConditions(player);
+        helper.assertTrue(player.hasEffect(MobEffects.GLOWING), "start reaction fired");
+
+        // Favored weapon: chosen on waking from the main hand.
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+        AbilityService.onWake(player);
+        helper.assertTrue(FavoredWeapon.holding(player), "swords are favored");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_AXE));
+        helper.assertTrue(!FavoredWeapon.holding(player), "an axe isn't");
+        helper.succeed();
+    }
+
     /** pipican:bonus (XP, potion durations), dodge and immunities. */
     private static void bonuses(GameTestHelper helper) {
         @SuppressWarnings("removal")
@@ -347,7 +401,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers
@@ -559,6 +613,9 @@ public final class ClassSystemTests {
     private static void shippedAbilities(GameTestHelper helper) {
         var registry = ClassLookup.abilities(helper.getLevel().registryAccess());
         int count = 0;
+        // Whatever was here before the test (other tests' mobs) stays; everything the abilities make is removed.
+        var existing = new java.util.HashSet<>(helper.getLevel().getEntities((net.minecraft.world.entity.Entity) null,
+                helper.getBounds().inflate(64), e -> true));
         for (var entry : registry.entrySet()) {
             if (!entry.getKey().identifier().getNamespace().equals(Pipican.MOD_ID)) {
                 continue;
@@ -569,6 +626,7 @@ public final class ClassSystemTests {
             ClassService.chooseClass(player, ResourceKey.create(PipicanRegistries.CLASS, Pipican.id(owner)), false, true);
             var zombie = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 1, 1, 3);
             player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 2, 0, 0);
+            var area = player.getBoundingBox().inflate(48);
             try {
                 AbilityService.force(player, entry.getKey());
             } catch (RuntimeException e) {
@@ -579,11 +637,13 @@ public final class ClassSystemTests {
                     entry.getKey().identifier() + " should damage the zombie in front of the player");
             AbilityService.reset(player);
             // Remove everything the ability spawned (eidolons, summons, decoys) so it can't get in the next one's way.
-            for (var e : helper.getLevel().getEntities((net.minecraft.world.entity.Entity) null, player.getBoundingBox().inflate(48),
-                    e -> !(e instanceof net.minecraft.world.entity.player.Player))) {
+            // (Only what appeared during this ability: other tests' mobs nearby are left alone.)
+            for (var e : helper.getLevel().getEntities((net.minecraft.world.entity.Entity) null, area,
+                    e -> !(e instanceof net.minecraft.world.entity.player.Player) && !existing.contains(e))) {
                 e.discard();
             }
             player.stopRiding();
+            dismiss(helper, player);
             count++;
         }
         helper.assertTrue(count == 107, "expected 107 shipped abilities, ran " + count);
@@ -615,6 +675,7 @@ public final class ClassSystemTests {
             ServerPlayer player = helper.makeMockServerPlayerInLevel();
             ClassService.Result result = ClassService.chooseClass(player, key, true, true);
             helper.assertTrue(result.success(), id + ": " + result.message().getString());
+            dismiss(helper, player);
         }
         helper.assertTrue(count == 84, "expected 84 shipped classes, found " + count);
         helper.succeed();

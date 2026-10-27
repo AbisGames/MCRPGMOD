@@ -58,6 +58,19 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "charged_hit": true
+      },
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:execute",
+      "threshold": 0.15
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:critical",
@@ -66,6 +79,15 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:execute",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.001
         }
       ]
     },

@@ -1,5 +1,6 @@
 package com.pipican.player;
 
+import com.pipican.effect.ClassEffect;
 import com.pipican.condition.ClassCondition;
 import com.pipican.effect.VictimState;
 import com.pipican.effect.type.BonusEffect;
@@ -53,10 +54,14 @@ public record ClassState(
         Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> mountUpgrades,
         Bleed bleed,
         Map<String, ReactionChance> reactionChances,
-        double rangedDodgeChance) {
+        double rangedDodgeChance,
+        List<Execute> executes,
+        List<Aura> auras,
+        Scrutiny scrutiny,
+        boolean favoredWeapon) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0);
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -96,6 +101,17 @@ public record ClassState(
     /** Bleeding the player causes ({@code pipican:bleed} effects added up). */
     public record Bleed(double damage, double seconds, int maxStacks, boolean anyHit, boolean slows, Optional<HolderSet<Item>> weapons) {
         public static final Bleed NONE = new Bleed(0, 0, 1, false, false, Optional.empty());
+    }
+
+    /** A {@code pipican:execute}: below this fraction of max health, the player's hits kill. */
+    public record Execute(double threshold, Optional<HolderSet<EntityType<?>>> victims) {}
+
+    /** A {@code pipican:aura} the player gives nearby players. */
+    public record Aura(double radius, List<ClassEffect> effects) {}
+
+    /** {@code pipican:scrutiny} settings (seconds 0 = none). */
+    public record Scrutiny(double lookSeconds, double seconds) {
+        public static final Scrutiny NONE = new Scrutiny(0, 0);
     }
 
     /** Changes to named reactions' chances: (chance + add) x multiplier. */

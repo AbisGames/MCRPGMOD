@@ -92,16 +92,7 @@
     {
       "id": "trailblazer",
       "name": "Trailblazer",
-      "description": {
-        "text": "players within 16 blocks get +10% speed outdoors; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players within 16 blocks get +10% speed outdoors; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -110,7 +101,37 @@
         "survivor"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 16.0,
+          "effects": [
+            {
+              "type": "pipican:conditional",
+              "when": {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              },
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.1,
+                  "operation": "add_multiplied_base"
+                }
+              ]
+            }
+          ],
+          "include_self": false
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -3,9 +3,15 @@
   "description": "Trained by taking damage while Berserk.",
   "icon": "minecraft:netherite_axe",
   "trigger": {
-    "type": "pipican:hurt_wearing",
-    "items": "#pipican:armor/any",
-    "min_pieces": 1
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "hurt"
+    },
+    "when": {
+      "type": "pipican:resource",
+      "min": 0.75
+    }
   },
   "points_to": "special",
   "classes": [

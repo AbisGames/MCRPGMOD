@@ -83,6 +83,63 @@
       ]
     },
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.75
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 6.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:slowness",
+            "minecraft:weakness"
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/ranged",
+          "multiplier": 0.8
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.75
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "start",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 3.0
+                }
+              ],
+              "radius": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:on",
       "event": "hurt",
       "actions": [
@@ -112,6 +169,47 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.75
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.75
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.002
+            }
+          ]
         }
       ]
     }

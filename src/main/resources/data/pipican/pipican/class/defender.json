@@ -60,6 +60,17 @@
   },
   "passives": [
     {
+      "type": "pipican:aura",
+      "radius": 4.0,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.85
+        }
+      ],
+      "include_self": false
+    },
+    {
       "type": "pipican:on",
       "event": "melee_hit",
       "actions": [

@@ -61,6 +61,19 @@
   "passives": [
     {
       "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:empower",
+          "target": "self",
+          "multiplier": 1.2,
+          "hits": 3,
+          "seconds": 15.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
       "event": "melee_hit",
       "actions": [
         {

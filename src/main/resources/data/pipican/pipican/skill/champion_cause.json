@@ -3,7 +3,22 @@
   "description": "Trained by fighting in Battle Stance.",
   "icon": "minecraft:bell",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "when": {
+      "type": "pipican:all_of",
+      "conditions": [
+        {
+          "type": "pipican:state",
+          "state": "sneaking"
+        },
+        {
+          "type": "pipican:still"
+        }
+      ]
+    }
   },
   "points_to": "special",
   "classes": [

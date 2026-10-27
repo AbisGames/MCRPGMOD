@@ -59,6 +59,17 @@
   },
   "passives": [
     {
+      "type": "pipican:aura",
+      "radius": 8.0,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.05
+        }
+      ],
+      "include_self": false
+    },
+    {
       "type": "pipican:damage_dealt",
       "against": "#minecraft:undead",
       "multiplier": 1.1

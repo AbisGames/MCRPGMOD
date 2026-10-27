@@ -1,5 +1,8 @@
 package com.pipican.player;
 
+import net.minecraft.world.entity.EntityType;
+import com.pipican.ability.Reactions;
+import com.pipican.ability.Auras;
 import java.util.LinkedHashSet;
 import com.pipican.ability.Boosts;
 import com.pipican.effect.type.BonusEffect;
@@ -101,6 +104,9 @@ public final class ClassEffectApplier {
 
         ClassState next = compute(player);
         STATES.put(player.getUUID(), next);
+        // "When you go Berserk": start reactions inside a conditional fire when it starts to count.
+        List<ReactionEffect> started = next.reactions().stream()
+                .filter(r -> r.event() == ReactionEffect.Event.START && !old.reactions().contains(r)).toList();
 
         applyMobEffects(player, old.mobEffects(), next.mobEffects());
         applyFlight(player, old.flight(), next.flight());
@@ -119,6 +125,9 @@ public final class ClassEffectApplier {
         data.setResourceMax(next.resourceMax());
         data.setResource(Math.min(data.resource(), next.resourceMax()));
         player.syncData(PipicanAttachments.CLASS_DATA);
+        if (!started.isEmpty()) {
+            Reactions.fireAll(player, started);
+        }
     }
 
     /** Grants or removes class flight. Creative and spectator players keep their own flight rules. */
@@ -199,6 +208,8 @@ public final class ClassEffectApplier {
         });
         // Short boosts from reactions ("+15% speed for 2s after you take damage").
         Boosts.effects(player).forEach(e -> effects.add(Map.entry(e, 1)));
+        // Auras of nearby players ("players within 10 blocks get +5% damage").
+        Auras.effects(player).forEach(e -> effects.add(Map.entry(e, 1)));
         // Skill mastery: every reached tier's effects (tiers stack).
         ClassLookup.skills(access).entrySet().forEach(entry -> {
             Skill skill = entry.getValue();
@@ -285,7 +296,8 @@ public final class ClassEffectApplier {
                 List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses), Map.copyOf(c.mount),
                 new ClassState.Bleed(c.bleedDamage, c.bleedSeconds, Math.max(1, c.bleedStacks), c.bleedAnyHit, c.bleedSlows,
                         c.bleedWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.bleedWeapons)))),
-                Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge));
+                Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge), List.copyOf(c.executes), List.copyOf(c.auras),
+                c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon);
     }
 
     /**
@@ -364,6 +376,11 @@ public final class ClassEffectApplier {
         int spellPoints;
         double dodge;
         double rangedDodge;
+        final List<ClassState.Execute> executes = new ArrayList<>();
+        final List<ClassState.Aura> auras = new ArrayList<>();
+        double scrutinyLook = Double.MAX_VALUE;
+        double scrutinySeconds;
+        boolean favoredWeapon;
         double bleedDamage;
         double bleedSeconds;
         int bleedStacks;
@@ -487,6 +504,33 @@ public final class ClassEffectApplier {
         public void addReactionChance(String name, double amount, double multiplier) {
             reactionChances.merge(name, new ClassState.ReactionChance(amount, multiplier),
                     (a, b) -> new ClassState.ReactionChance(a.add() + b.add(), a.multiplier() * b.multiplier()));
+        }
+
+        @Override
+        public void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims) {
+            if (threshold > 0) {
+                executes.add(new ClassState.Execute(Math.min(threshold, 0.9), victims));
+            }
+        }
+
+        @Override
+        public void addAura(double radius, List<ClassEffect> effects) {
+            if (radius > 0) {
+                auras.add(new ClassState.Aura(radius, effects));
+            }
+        }
+
+        @Override
+        public void enableFavoredWeapon() {
+            favoredWeapon = true;
+        }
+
+        @Override
+        public void addScrutiny(double lookSeconds, double seconds) {
+            if (lookSeconds > 0) {
+                scrutinyLook = Math.min(scrutinyLook, lookSeconds);
+            }
+            scrutinySeconds = Math.max(scrutinySeconds, seconds);
         }
 
         @Override

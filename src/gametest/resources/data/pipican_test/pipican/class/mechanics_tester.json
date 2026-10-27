@@ -1,0 +1,14 @@
+{
+  "name": "Mechanics Tester",
+  "description": "Test-only class for execute, auras, low-health reactions, start reactions and favored weapons.",
+  "selectable": false,
+  "base_stats": {},
+  "passives": [
+    { "type": "pipican:execute", "threshold": 0.5 },
+    { "type": "pipican:aura", "radius": 8, "include_self": false, "effects": [ { "type": "pipican:damage_taken", "multiplier": 0.5 } ] },
+    { "type": "pipican:on", "event": "low_health", "actions": [ { "type": "pipican:shrug" } ] },
+    { "type": "pipican:conditional", "when": { "type": "pipican:state", "state": "sneaking" }, "effects": [
+      { "type": "pipican:on", "event": "start", "actions": [ { "type": "pipican:effect", "effects": [ { "effect": "minecraft:glowing", "seconds": 10 } ] } ] } ] },
+    { "type": "pipican:favored_weapon" }
+  ]
+}

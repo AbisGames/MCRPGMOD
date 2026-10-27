@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **107** (of 107 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1302**, partly working: **15**, not yet: **932**
+- Bonus phrases: **2249**. Fully working: **1330**, partly working: **15**, not yet: **904**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 318 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 246 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 142 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 124 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 75 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 75 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 56 |
+| [Other mechanics](#other-mechanics) | 308 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 235 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 138 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 121 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 72 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 52 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 30 |
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 7 |
@@ -112,7 +112,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Follow-Through: sweep damage 60%
   - special tree: Bloodsoaked: full Bloodshed gives +15% damage
 - **defender**
-  - passive: Defend: players within 4 blocks of you take 15% less damage
   - special passive: Defend reduction +0.2% per Bulwark
   - special passive: Per 10 Bulwark, +1 block Defend range
   - general tree: Shield Brother: Defend range +2
@@ -158,13 +157,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: per 20 Wildness
   - skill Beast Bond: +10% breeding speed
 - **duelist**
-  - passive: it deals 20% less damage to anyone
-  - passive: you
   - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
-  - general tree: En Garde: +5% damage to challenged foe
   - general tree: Bind: challenged foe gets Slowness I
   - general tree: Lone Wolf: Duel bonuses doubled
-  - special tree: Duel Mastery: +10% more damage to challenged foe
 - **enchanter**
   - special passive: Charm duration +0.1s per Glamour
   - general tree: Puppeteer: charmed mobs attack other hostile mobs
@@ -173,7 +168,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Iron Titan: it moves 20% slower
   - special tree: Field Repairs: Spare Parts heal 15 HP
 - **executioner**
-  - passive: fully charged hits deal +20%
   - general tree: Black Hood: mobs notice you 10% later
   - general tree: Terrifying: Weakness after kill becomes Weakness II
   - special tree: Steady: exposure after charged hits lasts 1s
@@ -301,11 +295,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **paladin**
   - passive: Divine Smite: your first melee hit every 5s deals +20% damage (+20% more against undead, Nether mobs, vexes and phantoms)
   - special passive: Faith Healing: +1% healing received per 2 Sanctity
-  - general tree: Beacon of Hope: other players within 8 blocks get +2 armor
-  - general tree: Beacon of Hope: you get -10% movement speed
+  - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
 - **priest**
   - special stat per point: +1% healing received from every source
-  - passive: Prayer: other players within 8 blocks deal +5% damage
   - general tree: Blessed: +5% healing received
   - general tree: Martyr: you take 10% more damage
   - special tree: Improved Shared Recovery: Shared Recovery can be used twice per rest
@@ -406,7 +398,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **weapon_master**
   - general tree: One True Weapon: other weapons are forbidden-tier
 - **witch**
-  - passive: Guidance: other players within 8 blocks get +1 Luck
   - weakness: takes 25% more fire damage and burns for 50% longer
   - skill Herbalism: +5% bone meal effect
 - **wizard**
@@ -418,7 +409,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: After Zeal triggers
   - passive: Divine Might: hits within 5s of a Zeal trigger deal +20% damage
   - special passive: Per 10 Fervor, Divine Might +5%
-  - weakness: +30% damage, then Madness resets
   - general tree: Flagellant: +5% damage per missing heart (max +25%)
   - special tree: Iron Conviction: post-Zeal immunity lasts 3s longer
   - special tree: Divine Might: +10% more Divine Might damage
@@ -441,7 +431,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Pursuit: +8% movement speed toward the marked target
 - **bard**
   - special stat per point: +1% strength of your Song buffs
-  - passive: Inspiring Song: players within 10 blocks get +5% damage and +5% movement speed
   - special passive: Inspiring Song range +1 block per 10 Resonance
   - general tree: Rousing Verse: +3% Song damage bonus
   - general tree: Ballad of Heroes: Song also gives +1 armor
@@ -453,18 +442,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Performance: +5% Song strength
   - skill Performance: +10% Song strength
 - **berserker**
-  - passive: Berserk: while Rage is above 75%: +6 max health, +25% melee damage, immune to Slowness and Weakness, but -20% damage with ranged weapons
-  - passive: Frightful Wrath: when you go Berserk, mobs within 6 blocks get Slowness I for 3s
-  - special passive: Berserk melee bonus +1% per 2 Fury
-  - special passive: Ferocious Wrath: +0.2% movement speed per Fury while Berserk
   - weakness: when Berserk ends: Weakness I and Slowness I for 8s
   - weakness: can't go Berserk again for 15s
-  - special tree: Ferocious Wrath: +15% movement speed while Berserk
   - special tree: Fury Unleashed: once per rest, when you would die, go Berserk instead with 4 HP
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
 - **champion**
-  - special stat per point: +0.3% damage and -0.2% damage taken while in Battle Stance
-  - special passive: Battle Stance bonuses +1% per 4 Resolve
   - special passive: Champion's Resolve cooldown -1% per Resolve point
   - general tree: Hold the Line: Battle Stance also gives knockback immunity
   - general tree: Last Stand: Battle Stance bonuses doubled
@@ -528,7 +510,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Mecha: while in the cockpit, eidolon damage +25%
 - **executioner**
   - passive: After an Execute kill, mobs within 6 blocks get Weakness I for 3s
-  - special passive: Execute threshold +0.1% per Severance
   - general tree: Merciless: Execute threshold 20%
   - general tree: Headsman's Axe: Execute threshold 25%, but -15% damage to mobs above half health
 - **fighter**
@@ -701,8 +682,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Oathbreaker: Steal Spell chance doubles
 - **weapon_master**
   - special stat per point: +0.6% damage with your favored weapon
-  - passive: Favored Weapon: when you sleep, the weapon type in your main hand becomes your favored weapon type (sword, axe, spear, mace, trident, bow or crossbow)
-  - passive: Weapon Specialization: favored weapon critical hits deal +20%
   - special passive: Favored damage +0.6% per Mastery
   - special passive: Per 10 Mastery, favored weapon loses durability 5% slower
   - weakness: -20% damage with every weapon type that isn't your favored one
@@ -745,7 +724,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **astromancer**
   - passive: Inner Radiance: you emit light (dynamic light level 12) while Starlight is above half
   - special passive: Light radius +1 per 20 Radiance
-  - general tree: Beacon: players within 8 blocks get Night Vision
 - **blade**
   - passive: Swift Blade: holding a sword in your off-hand lets you hit with it too (off-hand swing every 2nd attack)
 - **cavalier**
@@ -791,7 +769,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: -20% damage with iron, diamond and netherite weapons
   - special tree: Weather Eye: you get a warning message 30s before rain/thunder starts
 - **duelist**
-  - passive: the first mob you hit becomes your challenged foe for 30s
+  - passive: Challenge: the first mob you hit becomes your challenged foe for 30s; it deals 20% less damage to anyone but you
   - passive: Riposte: when your challenged foe attacks you and misses or is blocked, you counterattack instantly
   - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
 - **enchanter**
@@ -799,7 +777,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
 - **executioner**
-  - passive: if a hit takes a mob below 15% health, it dies
   - weakness: for 2s after a fully charged hit, you take 20% more damage
 - **explorer**
   - passive: Preternatural Senses: hostile mobs within 12 blocks glow while you sneak
@@ -827,8 +804,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Faceless: while sneaking and not attacking, hostile mobs beyond 4 blocks can't see you at all
   - passive: Your nameplate is hidden from other players while sneaking or invisible
   - weakness: while wearing any medium or heavy armor, Faceless doesn't work
-- **inquisitor**
-  - passive: Scrutiny: the mob you look at for 2s becomes scrutinised - it glows, you see its health, and you deal +15% damage to it
 - **jack_of_all_trades**
   - passive: Flexible Profession: every shared skill trains 25% faster for you
 - **mage_knight**
@@ -922,9 +897,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: +25% fire damage while not wearing leather, and axes deal +20% damage to you
   - special tree: Green Man: -10% max health outside forests
 - **zealot**
-  - passive: when a hit would bring you below 2 hearts
   - passive: immune to Slowness, Weakness and Nausea for 5s
-  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you
+  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
   - general tree: Fanatic: immune to Nausea and Darkness always
 
 ## Resource bar: filling, refills, spending
@@ -996,12 +970,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Puppet Master: you can keep one charmed mob as a pet until you sleep; -15% max health
 - **executioner**
   - special tree: Inevitable: executed mobs drop +1 Looting; -10% max health
-- **exorcist**
-  - special tree: Hammer of the Gods: unclean mobs below 20% health die from your hits; Sanctification regen -25%
 - **explorer**
   - weakness: -25% Endurance regen within 64 blocks of your bed/spawn point
   - special tree: Respite: Respite also gives Regeneration I for 30s
-  - special tree: Trailblazer: players within 16 blocks get +10% speed outdoors; -10% max health
 - **fighter**
   - special tree: Weapon Mastery: Weapon Mastery chance +15%; -10% max health
 - **gladiator**
@@ -1030,7 +1001,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **jack_of_all_trades**
   - special tree: Uncommon Ability: Aptitude crit triggers every 30s; -10% max Knack
 - **mage_knight**
-  - passive: Escalating Violence: after spending Warfire, your next 3 melee hits deal +20% damage
   - special tree: War Wizard: Escalating Violence also gives Speed I; -10% max Warfire
 - **magician**
   - special passive: Enchanting costs 1 fewer level for every 25 Power points
@@ -1120,7 +1090,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Enchanting costs 1 fewer level
   - weakness: with no book anywhere in your inventory: -30% Aether regen and -10% magic damage
 - **zealot**
-  - general tree: Martyrdom: you never naturally regenerate above half health
+  - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
   - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
 
 ## Bonus against a kind of mob / marked target
@@ -1178,8 +1148,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Beast Bond: tamed animals +5% damage
   - skill Beast Bond: tamed animals +10% damage
 - **duelist**
-  - special stat per point: +0.5% damage against your challenged foe
-  - passive: Duel Mastery: +20% damage against your challenged foe
   - special passive: Per 10 Finesse, +5% attack speed against the foe
   - special tree: Lunge: +1 block reach against challenged foe
 - **exorcist**
@@ -1194,7 +1162,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **illusionist**
   - special stat per point: +0.3% chance attacks against you hit an illusion instead
 - **inquisitor**
-  - special stat per point: +0.5% damage against your scrutinised target
   - passive: Inquisitor's Judgment: illagers, witches and Nether mobs take +15% damage from you
 - **necromancer**
   - special stat per point: +1% damage and health for undead you command
@@ -1309,7 +1276,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **ranger**
   - general tree: Volley: 10% chance a bow shot fires a second arrow
 - **sentinel**
-  - passive: +20% damage and knockback immunity until you move
+  - passive: +20% damage and knockback immunity
 - **sharpshooter**
   - general tree: Headshot: +20% damage on hits to the upper part of a mob
 - **stormbringer**
@@ -1336,11 +1303,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: 15% chance that a harmful potion effect or magic attack aimed at you is cancelled
 - **witch**
   - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
-- **zealot**
-  - passive: 30% chance to shrug it off entirely
-  - special passive: Zeal chance +0.3% per Fervor
-  - general tree: Unbroken: Zeal chance +10%
-  - general tree: Martyrdom: Zeal chance doubled
 
 ## Skill trigger approximated
 
@@ -1355,10 +1317,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **bard**
   - Repertoire: "allies killing mobs inside your Song" -> pipican:kill
   - Performance: "using goat horns, note blocks and jukeboxes near other players" -> pipican:kill
-- **berserker**
-  - Bloodrage: "taking damage while Berserk" -> pipican:hurt_wearing #pipican:armor/any
-- **champion**
-  - Cause: "fighting in Battle Stance" -> pipican:melee_hit
 - **chaplain**
   - Liturgy: "allies killing mobs inside your Battle Chant" -> pipican:kill
 - **conqueror**
@@ -1375,8 +1333,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Negotiation: "cancelling attacks with Stay the Hand and trading" -> pipican:did
 - **diviner**
   - Augury: "using up premonitions and spending Omens" -> pipican:did
-- **duelist**
-  - Single Combat: "killing challenged foes" -> pipican:kill
 - **enchanter**
   - Beguiling: "charming mobs" -> pipican:kill
 - **engineer**
@@ -1398,8 +1354,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Maledictions: "cursing mobs with Evil Eye" -> pipican:melee_hit
 - **infiltrator**
   - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
-- **inquisitor**
-  - Interrogation: "killing scrutinised mobs" -> pipican:kill
 - **jack_of_all_trades**
   - Dabbling: "using 4+ different item types in combat in one day" -> pipican:kill
 - **mage_knight**

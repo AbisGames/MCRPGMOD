@@ -138,5 +138,14 @@
   "pipican.direction.west": "west",
   "pipican.direction.north_west": "north-west",
   "pipican.ability.nothing_to_recall": "There's nothing of yours to call back.",
-  "pipican.dodged": "Dodged!"
+  "pipican.dodged": "Dodged!",
+  "pipican.shrugged": "Shrugged it off!",
+  "pipican.favored_weapon": "Your favored weapon is now: %s",
+  "pipican.weapon_kind.swords": "swords",
+  "pipican.weapon_kind.axes": "axes",
+  "pipican.weapon_kind.spears": "spears",
+  "pipican.weapon_kind.maces": "maces",
+  "pipican.weapon_kind.tridents": "tridents",
+  "pipican.weapon_kind.bows": "bows",
+  "pipican.weapon_kind.crossbows": "crossbows"
 }

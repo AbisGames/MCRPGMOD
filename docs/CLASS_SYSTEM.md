@@ -343,6 +343,7 @@ sight cancels the use unless `"required": false`.
 | `pipican:weather` | `seconds`, `thunder` | Starts rain or a storm. |
 | `pipican:resource` | `amount`, `percent` | Refills (or drains) your resource bar. |
 | `pipican:mark` | targets (=look), `seconds`, `multiplier`, `shared`, `next_hit`, `projectile_only`, `glow` | Your damage to marked mobs is multiplied (`shared`: everyone's; `next_hit`: used up by one hit). |
+| `pipican:shrug` | – | In a `low_health` reaction: the hit misses. Put it last. |
 | `pipican:boost` | `seconds`, `effects` (class effects) | Gives you those [effects](#3-effects) for a few seconds; the same boost again restarts the timer. Mostly in `pipican:on` ("+15% speed for 2s after you take damage"). |
 | `pipican:empower` | targets (=self), `multiplier`, `bonus`, `bonus_per_spent`, `hits`, `seconds`, `against`, `effects` | "Your next hit…": bigger damage and/or potion effects. |
 | `pipican:imbue` | `hits`, `seconds` | Uses up the off-hand potion: your next hits apply it. |
@@ -389,19 +390,23 @@ picked by `"type"`:
 | `pipican:dodge` | `chance`, `melee_only`, `ranged_only`, `scaling` | Chance to fully avoid a hit from a mob/player (not falls, fire...). Adds up, capped at 90%. |
 | `pipican:bonus` | `kind`, `amount`, `scaling` | A percentage (0.1 = +10%, amounts of one kind add up) to: `experience` (XP gained), `potion_duration` / `harmful_duration` / `beneficial_duration` (effects on you), `applied_duration` / `applied_harmful_duration` (effects you put on others), `hunger` (how fast you get hungry), `trade_price` (villagers and wandering traders), `draw_speed` (bows, tridents), `reload_speed` (crossbows), `resource_gain` (how much `pipican:resource` actions fill), `ability_cost` (-0.1 = abilities cost 10% less), `natural_regen` (health regen from a full food bar), `detection_range` (how far mobs notice you), `skill_training` (mastery gain), `knockback` (how far your hits push mobs), and the chances `extra_loot` / `extra_ore` / `extra_crop` (0.1 = 10% chance of one more mob drop / double ore or mature crop drops). |
 | `pipican:bleed` | `damage`, `seconds`, `max_stacks`, `any_hit`, `slows`, `weapons`, `scaling` (seconds) | Crits (or every hit with `any_hit`) make mobs bleed: `damage` per second for `seconds`. Every bleed effect adds up, so upgrades are just `{ "seconds": 1 }`; `max_stacks` takes the highest. |
+| `pipican:execute` | `threshold`, `victims`, `scaling` | Your hits kill a mob they leave below `threshold` of its max health (never players or bosses). |
+| `pipican:aura` | `radius`, `include_self` (=true), `effects`, `scaling` (radius) | Other players within `radius` get those effects (evaluated for them); several auras add up. |
+| `pipican:favored_weapon` | – | On waking, the weapon kind in your main hand (sword, axe, spear, mace, trident, bow, crossbow) becomes your favored weapon; use the `pipican:holding_favored` condition. |
+| `pipican:scrutiny` | `look_seconds`, `seconds`, `scaling` (look time) | A mob you keep looking at for `look_seconds` is marked (and glows) for `seconds`. |
 | `pipican:reaction_chance` | `name`, `amount`, `multiplier`, `scaling` | Raises the chance of your `pipican:on` reactions with that `name` ("+5% ignite chance"): (chance + amounts) × multipliers. |
 | `pipican:immune` | `effects` (mob effects/tag) | Those potion effects can't be applied to you (and are removed if you have them). |
 | `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
 | `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
 | `pipican:flight` | – | Creative-style flight while it counts (usually in an ability toggle). Never touches creative/spectator players. |
-| `pipican:on` | `event` (`hit`/`melee_hit`/`ranged_hit`/`crit`/`kill`/`hurt`/`block`/`spend`/`wake`), `chance`, `name`, `cooldown_ticks`, `weapons`, `victims`, `actions` | Runs [ability actions](#26-active-abilities--abilitynamejson) when it happens ("10% chance your hits set mobs on fire", "kills give Speed"). `crit`: a critical hit landed; `spend`: an ability spent resource; `wake`: after sleeping. `name` lets `pipican:reaction_chance` change its chance. |
+| `pipican:on` | `event` (`hit`/`melee_hit`/`ranged_hit`/`crit`/`kill`/`hurt`/`block`/`spend`/`wake`/`low_health`/`start`), `chance`, `name`, `cooldown_ticks`, `weapons`, `victims`, `actions` | Runs [ability actions](#26-active-abilities--abilitynamejson) when it happens ("10% chance your hits set mobs on fire", "kills give Speed"). `crit`: a critical hit landed; `low_health`: a hit is about to drop you below 2 hearts (the `pipican:shrug` action cancels it); `start`: inside a `pipican:conditional`, fires when the condition starts to hold ("when you go Berserk"); `spend`: an ability spent resource; `wake`: after sleeping. `name` lets `pipican:reaction_chance` change its chance. |
 | `pipican:eidolon` | `attribute`, `amount`, `operation`, `scaling` | Changes an attribute of your eidolon. |
 | `pipican:mount` | `attribute`, `amount`, `operation`, `scaling` | Changes an attribute of whatever you ride (max health, armor, toughness, speed, jump strength, attack damage); removed when you dismount. |
 | `pipican:spell_points` | `amount` | Spell points that refill on every sleep and pay for abilities instead of the resource. |
 | `pipican:optimization` | `amount`, `extra_loss`, `scaling` | After each sleep, pick a stat to raise by `amount` and one to lower by `amount + extra_loss` (clickable chat). |
 
 `victim` on `damage_dealt`: `{ "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true,
-"marked": true, "on_fire": true, "bleeding": true }` (every field optional; all given ones must hold). `health` is a fraction of max health.
+"marked": true, "on_fire": true, "bleeding": true, "charged_hit": true }` (`charged_hit`: your attack was fully charged) (every field optional; all given ones must hold). `health` is a fraction of max health.
 
 ```json
 { "type": "pipican:damage_dealt", "against": "#pipican:mobs/undead", "multiplier": 1.2 }
@@ -442,6 +447,7 @@ second, and a player's bonuses are rebuilt only when an answer changes.
 | `pipican:effect` | `effects` (id / list / `#tag`) | The player has one of the potion effects. |
 | `pipican:ability_active` | `ability` | One of the player's ability states/toggles is running. |
 | `pipican:has_eidolon` | – | The player's eidolon exists. |
+| `pipican:holding_favored` | – | Your main hand holds your favored weapon kind. |
 | `pipican:still` | `seconds` (=1) | Hasn't moved for that long. `not` it (with `seconds: 0.5`) for "while moving". |
 | `pipican:not` | `condition` | The condition is false. |
 | `pipican:all_of`, `pipican:any_of` | `conditions` (list) | All / at least one are true. |

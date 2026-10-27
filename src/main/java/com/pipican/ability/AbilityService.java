@@ -218,6 +218,9 @@ public final class AbilityService {
         if (ClassEffectApplier.state(player).optimizationAmount() > 0) {
             Optimize.prompt(player);
         }
+        if (ClassEffectApplier.state(player).favoredWeapon()) {
+            FavoredWeapon.choose(player);
+        }
         Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.WAKE);
         ClassService.changed(player);
     }

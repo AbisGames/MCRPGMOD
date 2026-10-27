@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import abilities as ab  # noqa: E402
 import bonus  # noqa: E402
 import triggers  # noqa: E402
+import named  # noqa: E402
 import effects as fx  # noqa: E402
 import parse_specs  # noqa: E402
 
@@ -432,7 +433,8 @@ def main(spec_dir, res_dir, report_path):
         sp = c['special']
         sid = f'{NS}:{cid}_{slug(sp["name"])}'
         res = c['resource']
-        ctx = {'special_name': sp['name'], 'special_id': sid, 'resource_name': res['name'] if res else None}
+        ctx = {'special_name': sp['name'], 'special_id': sid, 'resource_name': res['name'] if res else None, 'class_id': cid}
+        named.learn(cid, c['passives'] + c['special_passives'], ctx)
         color = (0xFF << 24) | int(res['color'], 16) if res and res['color'] else -1
         if color >= 1 << 31:
             color -= 1 << 32

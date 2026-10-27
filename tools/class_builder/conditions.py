@@ -55,7 +55,8 @@ def _frac(word):
 def _atoms(ctx):
     rn = re.escape((ctx.get('resource_name') or '\0').lower())
     num = r'(\d+(?:\.\d+)?%|half|a quarter)'
-    return [
+    import named
+    return named.atoms(ctx) + [
         # health
         (rf'(?:you\'?re |you are |while )?(?:below|under|at or below) {num}(?: of your)?(?: max)? (?:health|hp)', lambda m: {'type': 'pipican:health', 'max': _frac(m.group(1))}, OTHER),
         (rf'(?:above|over) {num}(?: of your)?(?: max)? (?:health|hp)', lambda m: {'type': 'pipican:health', 'min': _frac(m.group(1))}, OTHER),
@@ -114,6 +115,7 @@ def _atoms(ctx):
             {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'off'}]}, OTHER),
         (r'(slowed|poisoned|withered|weakened|blinded)', lambda m: {'type': 'pipican:effect', 'effects': 'minecraft:' + {
             'slowed': 'slowness', 'poisoned': 'poison', 'withered': 'wither', 'weakened': 'weakness', 'blinded': 'blindness'}[m.group(1)]}, OTHER),
+        (r'(?:with|holding|using) your favored weapon(?: type)?', lambda m: {'type': 'pipican:holding_favored'}, OTHER),
         (r'not holding your staff', lambda m: not_({'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}), OTHER),
         (r'holding your staff|with your staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
         (r'not sneaking', lambda m: not_(state('sneaking')), OTHER),

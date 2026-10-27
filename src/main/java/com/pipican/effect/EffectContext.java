@@ -1,5 +1,7 @@
 package com.pipican.effect;
 
+import net.minecraft.world.entity.EntityType;
+import java.util.List;
 import com.pipican.condition.ClassCondition;
 import com.pipican.effect.type.BonusEffect;
 import com.pipican.effect.type.ReactionEffect;
@@ -74,6 +76,18 @@ public interface EffectContext {
 
     /** A chance to avoid hits from arrows and other projectiles. */
     void addRangedDodge(double chance);
+
+    /** Hits that leave a mob below {@code threshold} of its health kill it (only {@code victims}, if given). */
+    void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims);
+
+    /** Nearby players get {@code effects}. */
+    void addAura(double radius, List<ClassEffect> effects);
+
+    /** The player picks a favored weapon type when they wake up. */
+    void enableFavoredWeapon();
+
+    /** Looking at a mob for {@code lookSeconds} marks it for {@code seconds}. */
+    void addScrutiny(double lookSeconds, double seconds);
 
     /** Changes an attribute of whatever the player rides. */
     void addMountUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);

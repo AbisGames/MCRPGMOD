@@ -1,5 +1,6 @@
 package com.pipican.effect;
 
+import com.pipican.ability.Charged;
 import com.pipican.ability.Bleeds;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -13,11 +14,11 @@ import net.minecraft.world.entity.player.Player;
 
 /**
  * What a damage bonus requires of the mob being hit ({@code "victim"} on {@code pipican:damage_dealt}):
- * <pre>{@code "victim": { "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true, "marked": true, "on_fire": true, "bleeding": true } }</pre>
+ * <pre>{@code "victim": { "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true, "marked": true, "on_fire": true, "bleeding": true, "charged_hit": true } }</pre>
  * Every field is optional; all given ones must hold. {@code health} is health / max health (0-1);
  * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
  */
-public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding) {
+public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -25,7 +26,8 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             Codec.BOOL.optionalFieldOf("not_targeting_you", false).forGetter(VictimState::notTargetingYou),
             Codec.BOOL.optionalFieldOf("marked", false).forGetter(VictimState::marked),
             Codec.BOOL.optionalFieldOf("on_fire", false).forGetter(VictimState::onFire),
-            Codec.BOOL.optionalFieldOf("bleeding", false).forGetter(VictimState::bleeding)
+            Codec.BOOL.optionalFieldOf("bleeding", false).forGetter(VictimState::bleeding),
+            Codec.BOOL.optionalFieldOf("charged_hit", false).forGetter(VictimState::chargedHit)
     ).apply(i, VictimState::new));
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
@@ -39,6 +41,9 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (marked && !(attacker instanceof Player p && Marks.isMarkedBy(victim, p))) {
+            return false;
+        }
+        if (chargedHit && !(attacker instanceof net.minecraft.server.level.ServerPlayer p && Charged.wasCharged(p))) {
             return false;
         }
         if (bleeding && !Bleeds.isBleeding(victim)) {

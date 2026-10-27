@@ -95,6 +95,8 @@ def special(low, scal):
     mf = mount_flat(low, scal)
     if mf:
         return mf
+    if re.fullmatch(r'(?:knockback immunity|immune to knockback|immunity to knockback)', low):
+        return [{'type': 'pipican:attribute', 'attribute': 'minecraft:knockback_resistance', 'amount': 1.0}]
     m = re.fullmatch(rf'(?:your )?skills train {N}% (faster|slower)', low)
     if m:
         v, s = scal(float(m.group(1)) * (1 if m.group(2) == 'faster' else -1))
@@ -160,6 +162,9 @@ def _spend_outcome(t):
         if inner and len(inner) == 1 and inner[0]['type'] == 'pipican:effect':
             return [dict(inner[0], target='hostiles', radius=float(m.group(1)))]
         return None
+    m = re.fullmatch(rf'your next {N} (melee )?hits deal \+{N}% damage', t)
+    if m:
+        return [{'type': 'pipican:empower', 'target': 'self', 'multiplier': round(1 + float(m.group(3)) / 100, 6), 'hits': int(float(m.group(1))), 'seconds': 15.0}]
     m = re.fullmatch(r'a shockwave hits (?:all )?mobs within (\d+) blocks for (\d+(?:\.\d+)?) damage', t)
     if m:
         return [{'type': 'pipican:damage', 'target': 'hostiles', 'radius': float(m.group(1)), 'amount': float(m.group(2))}]
@@ -192,7 +197,7 @@ def resource(low, ctx):
         if m:
             v = float(m.group(1)) * (1 if m.group(2) == 'faster' else -1) if m.group(1) else {'twice': 100, 'three times': 200}[m.group(3)]
             return [_effect('resource_gain', v, None)]
-        m = re.fullmatch(rf'(?:whenever|when|every time|each time) you spend {r},? (.+)', t)
+        m = re.fullmatch(rf'(?:whenever|when|every time|each time) you spend {r},? (.+)', t) or re.fullmatch(rf'after spending {r},? (.+)', t)
         if m:
             out = _spend_outcome(m.group(1))
             if out:
@@ -280,7 +285,7 @@ def mount_subject(t):
 SWORDS = '#pipican:weapons/swords'
 CHANCE_NAMES = {'ignite': 'ignite', 'fire': 'ignite', 'burn': 'ignite', 'poison': 'poison', 'wither': 'wither',
                 'blindness': 'blindness', 'blind': 'blindness', 'charm': 'pacify', 'lightning': 'lightning',
-                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea'}
+                'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'shrug'}
 
 
 def _bleed(**kw):

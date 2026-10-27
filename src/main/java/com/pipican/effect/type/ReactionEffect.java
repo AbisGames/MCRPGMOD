@@ -38,7 +38,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** An ability spent some of the resource bar. */
         SPEND("spend"),
         /** Woke up after sleeping. */
-        WAKE("wake");
+        WAKE("wake"),
+        /** A hit is about to drop you below 2 hearts (4 health); {@code pipican:shrug} cancels it. */
+        LOW_HEALTH("low_health"),
+        /** The (conditional) effect holding this reaction starts to count ("when you go Berserk"). */
+        START("start");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

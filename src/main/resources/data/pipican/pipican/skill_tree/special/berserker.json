@@ -59,16 +59,7 @@
     {
       "id": "ferocious",
       "name": "Ferocious Wrath",
-      "description": {
-        "text": "+15% movement speed while Berserk",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% movement speed while Berserk",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -76,7 +67,24 @@
         "iron_hide"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.75
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.15,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "fury_unleashed",

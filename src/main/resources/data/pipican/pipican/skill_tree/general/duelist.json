@@ -19,21 +19,21 @@
     {
       "id": "duelist_en_garde",
       "name": "En Garde",
-      "description": {
-        "text": "+5% damage to challenged foe",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage to challenged foe",
       "type": "small",
       "x": -1282,
       "y": -315,
       "links": [
         "duelist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.05
+        }
       ]
     },
     {

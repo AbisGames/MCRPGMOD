@@ -3,7 +3,13 @@
   "description": "Trained by killing scrutinised mobs.",
   "icon": "minecraft:skeleton_skull",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "marked": true
+    }
   },
   "points_to": "special",
   "classes": [

@@ -63,7 +63,8 @@ public final class PlayerClassData {
                 Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.INT).optionalFieldOf("rest_uses", Map.of()).forGetter(e -> e.restUses),
                 Codec.INT.optionalFieldOf("spell_points", 0).forGetter(e -> e.spellPoints),
                 UUIDUtil.CODEC.optionalFieldOf("bond").forGetter(e -> e.bond),
-                Optimization.CODEC.optionalFieldOf("optimization").forGetter(e -> e.optimization)
+                Optimization.CODEC.optionalFieldOf("optimization").forGetter(e -> e.optimization),
+                Codec.STRING.optionalFieldOf("favored_weapon").forGetter(e -> e.favoredWeapon)
         ).apply(i, Extras::new));
 
         public Optional<GlobalPos> waypoint;
@@ -71,18 +72,20 @@ public final class PlayerClassData {
         public int spellPoints;
         public Optional<UUID> bond;
         public Optional<Optimization> optimization;
+        public Optional<String> favoredWeapon;
 
         Extras(Optional<GlobalPos> waypoint, Map<ResourceKey<Ability>, Integer> restUses, int spellPoints, Optional<UUID> bond,
-               Optional<Optimization> optimization) {
+               Optional<Optimization> optimization, Optional<String> favoredWeapon) {
             this.waypoint = waypoint;
             this.restUses = new HashMap<>(restUses);
             this.spellPoints = spellPoints;
             this.bond = bond;
             this.optimization = optimization;
+            this.favoredWeapon = favoredWeapon;
         }
 
         Extras() {
-            this(Optional.empty(), Map.of(), 0, Optional.empty(), Optional.empty());
+            this(Optional.empty(), Map.of(), 0, Optional.empty(), Optional.empty(), Optional.empty());
         }
     }
 
