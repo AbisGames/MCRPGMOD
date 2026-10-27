@@ -13,6 +13,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 /** Persistent provenance: a player-placed natural block is still a player build.
  * Marks survive removal, preventing placed ores from becoming renewable nodes.
@@ -34,6 +35,15 @@ public final class PlayerWorldgenProtection extends SavedData {
     public boolean contains(BlockPos pos) { return positions.contains(pos.asLong()); }
     public void protect(BlockPos pos) {
         if (positions.add(pos.asLong())) setDirty();
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void broken(BreakBlockEvent event) {
+        if (!(event.getLevel() instanceof ServerLevel level)
+                || !(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource)) return;
+        // RegionalMineEvents runs at NORMAL and records genuine renewable nodes
+        // first. All other excavation must survive deferred city placement.
+        if (!RenewableOreSavedData.get(level).contains(event.getPos())) get(level).protect(event.getPos());
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

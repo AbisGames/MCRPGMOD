@@ -52,6 +52,8 @@ public final class RenewableOreSavedData extends SavedData {
         setDirty();
     }
 
+    public boolean contains(BlockPos position) { return nodes.containsKey(position.asLong()); }
+
     public List<Node> due(long gameTime, int limit) {
         return due(gameTime,limit,node->true);
     }

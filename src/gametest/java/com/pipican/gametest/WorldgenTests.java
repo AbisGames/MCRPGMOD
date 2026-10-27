@@ -29,7 +29,8 @@ public final class WorldgenTests {
         "nature_features_loaded", WorldgenTests::natureFeaturesLoaded,
         "ore_restoration", WorldgenTests::oreRestoration,
         "sky_island_geometry", WorldgenTests::skyIslandGeometry,
-        "vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion
+        "vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion,
+        "regional_ore_harvest", WorldgenTests::regionalOreHarvest
     );
     private WorldgenTests(){}
 
@@ -320,6 +321,22 @@ public final class WorldgenTests {
         helper.assertTrue(!site.ready(1000),"occupied site blocked");
         site.setOccupied(false);
         helper.assertTrue(site.ready(1000),"renewed site ready");
+        helper.succeed();
+    }
+    private static void regionalOreHarvest(GameTestHelper helper) {
+        var level=helper.getLevel();
+        var pos=helper.absolutePos(new net.minecraft.core.BlockPos(2,2,2));
+        var pickaxe=new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.NETHERITE_PICKAXE);
+        var empty=net.minecraft.world.item.ItemStack.EMPTY;
+        for(var ore:RegionalOreCatalog.ORES){
+            var state=RegionalOreRegistries.NODES.get(ore.id()).get().defaultBlockState();
+            helper.assertTrue(pickaxe.isCorrectToolForDrops(state),"pickaxe cannot harvest "+ore.id());
+            helper.assertTrue(!empty.isCorrectToolForDrops(state),"bare hand can harvest "+ore.id());
+            var drops=net.minecraft.world.level.block.Block.getDrops(state,level,pos,null,null,pickaxe);
+            var expected=RegionalOreRegistries.MATERIALS.get(ore.id()).get();
+            helper.assertTrue(drops.size()==1&&drops.getFirst().is(expected)&&drops.getFirst().getCount()==1,
+                "incorrect regional material drop for "+ore.id()+": "+drops);
+        }
         helper.succeed();
     }
     /** Live blocks + saved data, not just a mocked cooldown timer. */

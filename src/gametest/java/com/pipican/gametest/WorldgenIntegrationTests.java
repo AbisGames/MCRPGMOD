@@ -71,7 +71,7 @@ public final class WorldgenIntegrationTests {
                         server.getWorldData().overworldData()),RPG,stem,false,seed,List.of(),false);
                 server.forgeGetWorldMap().put(RPG,level);
                 server.markWorldsDirty();
-            }catch(java.io.IOException e){throw new java.io.UncheckedIOException(e);}
+            }catch(Exception e){throw new IllegalStateException("Unable to open temporary RPG test world for seed "+seed,e);}
         }
         return level;
     }
