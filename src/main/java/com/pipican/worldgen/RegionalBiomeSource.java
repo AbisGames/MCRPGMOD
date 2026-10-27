@@ -75,6 +75,14 @@ public final class RegionalBiomeSource extends BiomeSource {
     @Override
     public Holder<Biome> getNoiseBiome(int quartX,int quartY,int quartZ,Climate.Sampler climate){
         int x=quartX*4,z=quartZ*4,y=quartY*4;
+        // Anchor the three unique landmarks to the correct vertical biome.
+        // These zones are intentionally separate from the 22 fixed capitals.
+        long ax=(long)x-5700, az=(long)z-1600;
+        if(y>=280 && ax*ax+az*az<260L*260L)
+            return byId.getOrDefault("pipican:aetheris_expanse",fallback);
+        long ux=(long)x-4600, uz=(long)z+500;
+        if(y<45 && ux*ux+uz*uz<240L*240L)
+            return byId.getOrDefault("pipican:umbral_chasm",fallback);
         // Castle coordinates are fixed and never sampled from random cells.
         for(CapitalBiome castle:capitals){
             long dx=(long)x-castle.x(),dz=(long)z-castle.z();
