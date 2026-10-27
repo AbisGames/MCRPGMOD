@@ -143,8 +143,8 @@ public final class CapitalPlacementEvents {
 
     private static boolean isNatural(BlockState state) {
         if(RegionalNatureBlocks.PALETTES.values().stream().anyMatch(p ->
-                state.is(p.ground()) || state.is(p.strata()) || state.is(p.trunk())
-                || state.is(p.canopy()) || state.is(p.bloom())))return true;
+                state.is(p.ground().get()) || state.is(p.strata().get()) || state.is(p.trunk().get())
+                || state.is(p.canopy().get()) || state.is(p.bloom().get())))return true;
         return state.is(net.minecraft.tags.BlockTags.DIRT)
             || state.is(net.minecraft.tags.BlockTags.SAND)
             || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)
