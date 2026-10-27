@@ -31,10 +31,10 @@ public final class RegionalNatureBlocks {
                 p->p.strength(3.3F,9.0F).requiresCorrectToolForDrops().sound(SoundType.STONE));
             var trunk=BLOCKS.registerBlock(id+"_trunk",RotatedPillarBlock::new,
                 p->p.strength(2.1F).sound(SoundType.WOOD));
-            var canopy=BLOCKS.registerBlock(id+"_canopy",LeavesBlock::new,
+            var canopy=BLOCKS.registerBlock(id+"_canopy",properties -> new TintedParticleLeavesBlock(0.02F,properties),
                 p->p.strength(0.2F).randomTicks().noOcclusion().sound(SoundType.GRASS));
             var bloom=BLOCKS.registerBlock(id+"_bloom",TallGrassBlock::new,
-                p->p.noCollission().instabreak().noOcclusion().sound(SoundType.GRASS));
+                p->p.noCollision().instabreak().noOcclusion().sound(SoundType.GRASS));
             ITEMS.registerSimpleBlockItem(strata);
             ITEMS.registerSimpleBlockItem(trunk);
             ITEMS.registerSimpleBlockItem(canopy);
