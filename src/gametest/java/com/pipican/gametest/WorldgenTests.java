@@ -26,7 +26,10 @@ public final class WorldgenTests {
         "renewable_mine", WorldgenTests::renewableMine,
         "structure_nbt_load", WorldgenTests::structureNbtLoad,
         "registries_loaded", WorldgenTests::registriesLoaded,
-        "nature_features_loaded", WorldgenTests::natureFeaturesLoaded
+        "nature_features_loaded", WorldgenTests::natureFeaturesLoaded,
+        "ore_restoration", WorldgenTests::oreRestoration,
+        "sky_island_geometry", WorldgenTests::skyIslandGeometry,
+        "vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion
     );
     private WorldgenTests(){}
 
@@ -255,4 +258,77 @@ public final class WorldgenTests {
         helper.assertTrue(site.ready(1000),"renewed site ready");
         helper.succeed();
     }
+    /** Live blocks + saved data, not just a mocked cooldown timer. */
+    private static void oreRestoration(GameTestHelper helper) {
+        var level=helper.getLevel();
+        long now=level.getGameTime();
+        var restored=helper.absolutePos(new net.minecraft.core.BlockPos(2,2,2));
+        var occupied=helper.absolutePos(new net.minecraft.core.BlockPos(3,2,2));
+        level.setBlock(restored,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);
+        level.setBlock(occupied,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+        var data=RenewableOreSavedData.get(level);
+        data.record(restored,"frostcrystal",now);
+        data.record(occupied,"glacierite",now);
+        helper.assertTrue(RegionalMineEvents.restoreDue(level,now,8)==1,
+            "one open mine node should be restored");
+        helper.assertTrue(level.getBlockState(restored)
+            .is(RegionalOreRegistries.NODES.get("frostcrystal").get()),
+            "real ore block was not restored");
+        helper.assertTrue(level.getBlockState(occupied)
+            .is(net.minecraft.world.level.block.Blocks.STONE),
+            "renewal overwrote player-placed stone");
+        helper.assertTrue(data.due(now,8).size()==1,"blocked node should remain queued");
+        data.remove(occupied.asLong());
+        helper.succeed();
+    }
+
+    private static void skyIslandGeometry(GameTestHelper helper) {
+        var islands=SkyIslandLayout.ISLANDS;
+        helper.assertTrue(islands.size()==7,"expected one floating city and six villages");
+        helper.assertTrue(islands.stream().filter(SkyIslandLayout.Island::citadel).count()==1,
+            "Aetheris must have exactly one castle");
+        helper.assertTrue(SpecialLandmarkPlacementEvents.sites().size()==9,
+            "three special regions plus six sky villages expected");
+        for(var island:islands){
+            helper.assertTrue(SkyIslandLayout.density(island.x(),318,island.z())>2,
+                "floating island foundation missing: "+island.id());
+            helper.assertTrue(SkyIslandLayout.density(island.x(),319,island.z())==0,
+                "floating island would bury the model: "+island.id());
+            helper.assertTrue(SkyIslandLayout.themedSkyAt(island.x(),319,island.z()),
+                "island not flagged as a sky biome: "+island.id());
+        }
+        var underground=SpecialLandmarkPlacementEvents.sites().stream()
+            .filter(site->site.id().equals("umbral_city")).findFirst().orElseThrow();
+        helper.assertTrue(SpecialLandmarkPlacementEvents.resolveY(underground,200)==-14,
+            "underground city incorrectly anchored to overworld surface");
+        helper.succeed();
+    }
+
+    /** Ensures that no vanilla structure lists a Pipican RPG biome as eligible.
+     * Does not change vanilla's registries or ordinary Minecraft worlds.
+     */
+    private static void vanillaStructureExclusion(GameTestHelper helper) {
+        var access=helper.getLevel().registryAccess();
+        var structures=access.lookupOrThrow(Registries.STRUCTURE).listElements()
+            .filter(entry->entry.key().identifier().getNamespace().equals("minecraft"))
+            .toList();
+        var biomes=access.lookupOrThrow(Registries.BIOME);
+        var preset=WorldgenJson.read("world_preset/rpg_world.json");
+        var entries=preset.getAsJsonObject("dimensions")
+            .getAsJsonObject("minecraft:overworld")
+            .getAsJsonObject("generator")
+            .getAsJsonObject("biome_source")
+            .getAsJsonArray("biomes");
+        for(var entry:entries) {
+            var name=net.minecraft.resources.Identifier.parse(entry.getAsString());
+            var key=ResourceKey.create(Registries.BIOME,name);
+            var holder=biomes.get(key).orElseThrow();
+            for(var vanilla:structures)
+                helper.assertTrue(!vanilla.value().biomes().contains(holder),
+                    "vanilla structure "+vanilla.key().identifier()+
+                    " enabled in RPG biome "+name);
+        }
+        helper.succeed();
+    }
+
 }
