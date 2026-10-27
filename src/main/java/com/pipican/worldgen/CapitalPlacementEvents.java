@@ -115,7 +115,6 @@ public final class CapitalPlacementEvents {
             Pipican.LOGGER.warn("Unsafe terrain or obstruction at tile {} of {}; placement deferred",index,city.id());
             return false;
         }
-        clearNaturalOverburden(level,bounds,foundationY);
         if(!piece.placeInWorld(level,origin,origin,options,level.getRandom(),2)){
             Pipican.LOGGER.warn("Failed to place tile {} of {}",index,city.id());
             return false;
@@ -125,7 +124,7 @@ public final class CapitalPlacementEvents {
             Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;
     }
-    // Fail closed when the footprint is too steep or contains non-natural blocks.
+    // Full voxel check; do not mutate the world before a placement succeeds.\n    // Terrain-fitted foundations must be generated separately.
     private static boolean safeFootprint(ServerLevel level,BoundingBox box,int foundationY) {
         if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return false;
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
@@ -133,9 +132,9 @@ public final class CapitalPlacementEvents {
             int top=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
             if(top>foundationY+12 || top<foundationY-12)return false;
         }
-        for(int x=box.minX();x<=box.maxX();x+=4)
-            for(int z=box.minZ();z<=box.maxZ();z+=4)
-                for(int y=Math.max(box.minY(),foundationY);y<=box.maxY();y+=4) {
+        for(int x=box.minX();x<=box.maxX();x++)
+            for(int z=box.minZ();z<=box.maxZ();z++)
+                for(int y=box.minY();y<=box.maxY();y++) {
                     BlockState state=level.getBlockState(new BlockPos(x,y,z));
                     if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state)))return false;
                 }
@@ -143,6 +142,9 @@ public final class CapitalPlacementEvents {
     }
 
     private static boolean isNatural(BlockState state) {
+        if(RegionalNatureBlocks.PALETTES.values().stream().anyMatch(p ->
+                state.is(p.ground()) || state.is(p.strata()) || state.is(p.trunk())
+                || state.is(p.canopy()) || state.is(p.bloom())))return true;
         return state.is(net.minecraft.tags.BlockTags.DIRT)
             || state.is(net.minecraft.tags.BlockTags.SAND)
             || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)
@@ -154,17 +156,6 @@ public final class CapitalPlacementEvents {
             || state.is(Blocks.SNOW_BLOCK) || state.is(Blocks.GRAVEL)
             || state.is(Blocks.CLAY) || state.is(Blocks.WATER)
             || state.is(Blocks.LAVA);
-    }
-
-    private static void clearNaturalOverburden(ServerLevel level,BoundingBox box,int foundationY) {
-        for(int x=box.minX();x<=box.maxX();x++)
-            for(int z=box.minZ();z<=box.maxZ();z++)
-                for(int y=Math.max(box.minY(),foundationY);y<=box.maxY();y++){
-                    BlockPos pos=new BlockPos(x,y,z);
-                    BlockState state=level.getBlockState(pos);
-                    if(!state.isAir() && isNatural(state))
-                        level.setBlock(pos,Blocks.AIR.defaultBlockState(),2);
-                }
     }
 
 }
