@@ -102,7 +102,7 @@ public final class CapitalPlacementEvents {
         var center=new BlockPos(city.x(),64,city.z());
         if(!level.hasChunkAt(center))return false;
         int foundationY=state==null?
-            Math.min(level.getHeight(Heightmap.Types.WORLD_SURFACE,city.x(),city.z()),
+            Math.min(terrainSurface(level,city.x(),city.z()),
                 level.getMaxY()-75) : state.foundationY();
         JsonObject tile;
         String location;
@@ -144,10 +144,20 @@ public final class CapitalPlacementEvents {
             Pipican.LOGGER.warn("Unsafe terrain or obstruction at tile {} of {}; placement deferred",index,city.id());
             return false;
         }
+        if(!safeFoundation(level,bounds,foundationY))return false;
         if(!piece.placeInWorld(level,origin,origin,options,level.getRandom(),2)){
             Pipican.LOGGER.warn("Failed to place tile {} of {}",index,city.id());
             return false;
         }
+        var palette=RegionalNatureBlocks.PALETTES.get(city.region());
+        BlockState support=palette==null?Blocks.STONE.defaultBlockState():palette.strata().get().defaultBlockState();
+        for(int x=bounds.minX();x<=bounds.maxX();x++)
+            for(int z=bounds.minZ();z<=bounds.maxZ();z++)
+                for(int y=foundationY-1;y>=foundationY-12;y--){
+                    var p=new BlockPos(x,y,z);
+                    if(level.getBlockState(p).isSolid())break;
+                    level.setBlock(p,support,2);
+                }
         progress.advance(city.id(),index+1,foundationY);
         if(capital&&centreFirst&&index==0)
             progress.advance(orderMarker,1,foundationY);
@@ -156,13 +166,13 @@ public final class CapitalPlacementEvents {
         return true;
     }
     // Full voxel check; do not mutate the world before a placement succeeds.
-    // Terrain-fitted foundations must be generated separately.
+    // Foundation volume is checked separately before either phase writes.
     private static boolean safeFootprint(ServerLevel level,BoundingBox box,int foundationY) {
         if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return false;
         var protection=PlayerWorldgenProtection.get(level);
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
             if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return false;
-            int top=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
+            int top=terrainSurface(level,x,z);
             if(top>foundationY+12 || top<foundationY-12){
                 Pipican.LOGGER.warn("Capital terrain mismatch at {},{}: surface {}, foundation {}",x,z,top,foundationY);
                 return false;
@@ -182,10 +192,57 @@ public final class CapitalPlacementEvents {
         return true;
     }
 
+    private static int terrainSurface(ServerLevel level,int x,int z){
+        int y=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
+        while(y>level.getMinY()){
+            var state=level.getBlockState(new BlockPos(x,y-1,z));
+            boolean foliage=state.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock
+                || state.is(net.minecraft.tags.BlockTags.LOGS) || state.is(net.minecraft.tags.BlockTags.LEAVES)
+                || state.is(Blocks.SNOW);
+            if(!foliage)for(var p:RegionalNatureBlocks.PALETTES.values())
+                if(state.is(p.trunk().get())||state.is(p.canopy().get())||state.is(p.bloom().get())){foliage=true;break;}
+            if(!foliage)break;
+            y--;
+        }
+        return y;
+    }
+
+    private static boolean safeFoundation(ServerLevel level,BoundingBox box,int foundationY){
+        var protection=PlayerWorldgenProtection.get(level);
+        for(int x=box.minX();x<=box.maxX();x++)
+            for(int z=box.minZ();z<=box.maxZ();z++){
+                boolean supported=false;
+                for(int y=foundationY-1;y>=Math.max(level.getMinY(),foundationY-12);y--){
+                    var pos=new BlockPos(x,y,z);
+                    var state=level.getBlockState(pos);
+                    if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!isNatural(state))){
+                        Pipican.LOGGER.warn("Capital foundation obstructed at {} by {}",pos,state);
+                        return false;
+                    }
+                    if(state.isSolid()){supported=true;break;}
+                }
+                if(!supported)return false;
+            }
+        return true;
+    }
+
+    private static final class NaturalPalette {
+        static final Set<net.minecraft.world.level.block.Block> BLOCKS=load();
+        private static Set<net.minecraft.world.level.block.Block> load(){
+            var result=new HashSet<net.minecraft.world.level.block.Block>();
+            for(var p:RegionalNatureBlocks.PALETTES.values()){
+                result.add(p.ground().get());result.add(p.strata().get());
+                result.add(p.trunk().get());result.add(p.canopy().get());result.add(p.bloom().get());
+            }
+            return Set.copyOf(result);
+        }
+    }
     static boolean isNatural(BlockState state) {
-        if(RegionalNatureBlocks.PALETTES.values().stream().anyMatch(p ->
-                state.is(p.ground().get()) || state.is(p.strata().get()) || state.is(p.trunk().get())
-                || state.is(p.canopy().get()) || state.is(p.bloom().get())))return true;
+        // Modern vanilla biomes include bushes, ferns and other vegetation
+        // outside FLOWERS/LOGS. Player provenance is checked before this
+        // classification, so player-planted vegetation remains protected.
+        if(state.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock)return true;
+        if(NaturalPalette.BLOCKS.contains(state.getBlock()))return true;
         return state.is(net.minecraft.tags.BlockTags.DIRT)
             || state.is(net.minecraft.tags.BlockTags.SAND)
             || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)

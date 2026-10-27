@@ -234,6 +234,22 @@ public final class WorldgenIntegrationTests {
         }
         helper.assertTrue(progress.progress(city.id()).nextTile()==63,"capital not completed");
         helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,progress),"completed capital rebuilt");
+        var layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
+        for(String collection:List.of("relative_positions","connectors"))
+            for(var element:layout.getAsJsonArray(collection)){
+                var row=element.getAsJsonObject();
+                var template=level.getServer().getStructureManager().get(
+                    net.minecraft.resources.Identifier.parse(row.get("template").getAsString())).orElseThrow();
+                var size=template.getSize();
+                int x=CapitalPlacementEvents.tileOrigin(city.x(),true,size.getX(),row.get("x").getAsInt());
+                int z=CapitalPlacementEvents.tileOrigin(city.z(),true,size.getZ(),row.get("z").getAsInt());
+                int y=progress.progress(city.id()).foundationY()-1;
+                for(int dx:new int[]{0,size.getX()/2,size.getX()-1})
+                    for(int dz:new int[]{0,size.getZ()/2,size.getZ()-1}){
+                        var pos=new BlockPos(x+dx,y,z+dz);
+                        check(helper,level,pos,level.getBlockState(pos).isSolid(),"supported capital foundation "+city.id());
+                    }
+            }
         }
     }
 }
