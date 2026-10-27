@@ -19,6 +19,8 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class WorldgenIntegrationTests {
     private static long generationSeed;
+    private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
+        STORAGE=new java.util.HashMap<>();
 
     @SubscribeEvent
     public static void functions(RegisterEvent event) {
@@ -44,7 +46,9 @@ public final class WorldgenIntegrationTests {
     private static void generatedChunks(GameTestHelper helper) {
         for(long seed:new long[]{0L,123L,987654321L}){
             generationSeed=seed;
-            verifyGenerated(helper,createLevel(helper,seed));
+            var level=createLevel(helper,seed);
+            try{verifyGenerated(helper,level);}
+            finally{saveAndClose(helper,level.dimension());}
         }
         helper.succeed();
     }
@@ -66,6 +70,7 @@ public final class WorldgenIntegrationTests {
                 var source=net.minecraft.world.level.storage.LevelStorageSource.createDefault(
                     server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("rpg-integration"));
                 var storage=source.validateAndCreateAccess("seed_"+seed);
+                STORAGE.put(RPG,storage);
                 level=new ServerLevel(server,java.util.concurrent.ForkJoinPool.commonPool(),storage,
                     new net.minecraft.world.level.storage.DerivedLevelData(server.getWorldData(),
                         server.getWorldData().overworldData()),RPG,stem,false,seed,List.of(),false);
@@ -74,6 +79,20 @@ public final class WorldgenIntegrationTests {
             }catch(Exception e){throw new IllegalStateException("Unable to open temporary RPG test world for seed "+seed,e);}
         }
         return level;
+    }
+
+    private static void saveAndClose(GameTestHelper helper,ResourceKey<Level> key){
+        var server=helper.getLevel().getServer();
+        var level=server.getLevel(key);
+        if(level==null)return;
+        try{
+            level.save(null,true,false);
+            server.forgeGetWorldMap().remove(key);
+            server.markWorldsDirty();
+            level.close();
+            var storage=STORAGE.remove(key);
+            if(storage!=null)storage.close();
+        }catch(Exception e){throw new IllegalStateException("Saving temporary RPG integration world "+key,e);}
     }
 
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
@@ -87,6 +106,34 @@ public final class WorldgenIntegrationTests {
                 check(helper,level,floor,level.getBlockState(floor).isSolid(), "solid island support " + island.id());
                 var clearance = floor.above(4);
                 check(helper,level,clearance,level.getBlockState(clearance).isAir(), "clear building space " + island.id());
+            }
+        }
+        for(var site:SpecialLandmarkPlacementEvents.sites()){
+            if(!site.id().startsWith("aetheris_"))continue;
+            var template=level.getServer().getStructureManager().get(
+                Pipican.id(site.template())).orElseThrow();
+            var size=template.getSize();
+            int minX=site.x()-size.getX()/2,minZ=site.z()-size.getZ()/2;
+            for(int cx=Math.floorDiv(minX,16);cx<=Math.floorDiv(minX+size.getX()-1,16);cx++)
+                for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)
+                    level.getChunk(cx,cz);
+            helper.assertTrue(SpecialLandmarkPlacementEvents.tryPlace(level,site),
+                "seed="+generationSeed+" failed sky structure placement: "+site.id());
+            if(site.id().equals("aetheris_citadel")){
+                int frames=0;
+                for(int x=54;x<=58;x++)for(int z=54;z<=58;z++){
+                    var pos=new BlockPos(minX+x,site.elevation()+45,minZ+z);
+                    var block=level.getBlockState(pos);
+                    if(block.is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME)){
+                        frames++;
+                        var expected=x==54?net.minecraft.core.Direction.EAST:
+                            x==58?net.minecraft.core.Direction.WEST:
+                            z==54?net.minecraft.core.Direction.SOUTH:net.minecraft.core.Direction.NORTH;
+                        check(helper,level,pos,block.getValue(net.minecraft.world.level.block.EndPortalFrameBlock.FACING)==expected,
+                            "inward-facing End portal frame");
+                    }
+                }
+                helper.assertTrue(frames==12,"Sky Citadel must contain twelve End portal frames");
             }
         }
         // A physically generated capital core in every region, not a density calculation.
@@ -103,15 +150,17 @@ public final class WorldgenIntegrationTests {
             generationSeed);
         var city=new LandmarkCatalog().all().stream()
             .filter(c->c.tier().equals("capital")&&c.region().equals("heartlands")).findFirst().orElseThrow();
-        var progress=new CapitalPlacementSavedData();
+        var progress=CapitalPlacementSavedData.get(level);
         for(int i=0;i<63;i++){
             helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
                 "seed="+generationSeed+" capital="+city.id()+" tile="+i+" placement deferred");
             if(i==10){
-                var saved=CapitalPlacementSavedData.CODEC.encodeStart(
-                    com.mojang.serialization.JsonOps.INSTANCE,progress).getOrThrow();
-                progress=CapitalPlacementSavedData.CODEC.parse(
-                    com.mojang.serialization.JsonOps.INSTANCE,saved).getOrThrow();
+                var key=level.dimension();
+                saveAndClose(helper,key);
+                level=createLevel(helper,generationSeed);
+                progress=CapitalPlacementSavedData.get(level);
+                helper.assertTrue(progress.progress(city.id())!=null&&progress.progress(city.id()).nextTile()==11,
+                    "partially built capital progress lost after actual disk save/reload");
             }
         }
         helper.assertTrue(progress.progress(city.id()).nextTile()==63,"capital not completed");
