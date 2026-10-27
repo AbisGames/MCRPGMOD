@@ -1,6 +1,6 @@
 /* Deterministic 16x16 terrain sprite generator for the RPG biome palette.
  * A texture is identified by its hexadecimal palette color, type (0 strata,
- * 1 trunk, 2 foliage, 3 flowering grass) and seed. Uses no libraries and
+ * 1 trunk, 2 foliage, 3 flowering grass, 4 ground) and seed. Uses no libraries and
  * returns PNG binary as base64; safe to reproduce original assets.
  */
 function makeBiomePng(rgb,type,seed){
@@ -12,7 +12,8 @@ function makeBiomePng(rgb,type,seed){
             const n=(rng>>>12)&255;
             let shade=type===0?(Math.floor(y/4)%2?-.06:.08)+((x*5+y)%9===0?-.18:0)
                 :type===1?(x%4===0?-.24:.06)+(y%7===0?-.1:0)
-                :type===2?(n<65?-.25:.08):.15;
+                :type===2?(n<65?-.25:.08)
+                :type===4?((x*3+y*5)%11===0?.28:-.12)+(Math.floor(y/3)%2?.045:-.035):.15;
             let alpha=255;
             if(type===2 && n<44) alpha=0;
             if(type===3){
