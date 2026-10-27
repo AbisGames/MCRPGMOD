@@ -69,6 +69,25 @@ public final class WorldgenTests {
         for(var biome:registeredBiomes)
             helper.assertTrue(biome.getAsString().startsWith("pipican:"),
                 "vanilla biome leaked into custom world preset: "+biome);
+        for(var landmark:new LandmarkCatalog().all())
+            helper.assertTrue(!StructurePlanner.canPlaceFootprint(
+                landmark.x()-8,landmark.z()-8,landmark.x()+8,landmark.z()+8,0),
+                "settlement reservation ignored: "+landmark.id());
+        for(var site:SpecialLandmarkPlacementEvents.sites())
+            helper.assertTrue(!StructurePlanner.canPlaceFootprint(
+                site.x()-8,site.z()-8,site.x()+8,site.z()+8,0),
+                "special site reservation ignored: "+site.id());
+        for(long seed:List.of(0L,123L,987654321L))
+            for(StructurePlanner.Type type:StructurePlanner.Type.values())
+                for(int xx=-4;xx<5;xx++)for(int zz=-4;zz<5;zz++){
+                    var candidate=StructurePlanner.atCell(seed,xx,zz,400,type);
+                    if(candidate.isPresent()){
+                        var c=candidate.get();
+                        helper.assertTrue(StructurePlanner.canPlaceFootprint(
+                            c.x()-40,c.z()-40,c.x()+40,c.z()+40,100),
+                            "unsafe deterministic placement candidate");
+                    }
+                }
         for(var zone:CapitalStructureExclusion.all()) {
             helper.assertTrue(CapitalStructureExclusion.contains(zone.x(),zone.z(),0),
                 "capital centre not reserved: "+zone.id());
@@ -184,6 +203,15 @@ public final class WorldgenTests {
             helper.assertTrue(biomeRegistry.get(ResourceKey.create(Registries.BIOME,
                 Pipican.id(extra.id()))).isPresent(),"missing fantasy biome "+extra.id());
         }
+        for(var region:WorldLayout.REGIONS)
+            helper.assertTrue(biomeRegistry.get(ResourceKey.create(Registries.BIOME,
+                Pipican.id("protected/"+region.id()))).isPresent(),
+                "missing regional protection biome "+region.id());
+        for(String sanctuary:List.of("aetheris_sanctuary","umbral_sanctuary",
+                "redrock_sanctuary"))
+            helper.assertTrue(biomeRegistry.get(ResourceKey.create(Registries.BIOME,
+                Pipican.id(sanctuary))).isPresent(),
+                "missing unique landmark protection biome "+sanctuary);
 
         int structures=0;
         for(var ore:RegionalOreCatalog.ORES){
