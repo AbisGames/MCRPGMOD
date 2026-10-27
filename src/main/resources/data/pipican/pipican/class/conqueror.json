@@ -62,6 +62,43 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:aura",
+      "radius": 10.0,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "in_combat"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.05,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ],
+      "name": "Direct the Troops",
+      "include_self": false
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:aura_mod",
+      "name": "",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "A commander leads from behind - and is caught out up front.",
     "effects": [

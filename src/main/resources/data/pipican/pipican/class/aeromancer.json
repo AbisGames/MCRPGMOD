@@ -60,6 +60,22 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.25
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.0
+        }
+      ]
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:dodge",

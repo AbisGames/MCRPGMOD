@@ -28,6 +28,7 @@ WEAPON_TAGS = {
     'axe and mace': ['#pipican:weapons/axes', '#pipican:weapons/maces'],
     'sword and axe': ['#pipican:weapons/swords', '#pipican:weapons/axes'],
     'staff': ['#pipican:weapons/staff'], 'staffs': ['#pipican:weapons/staff'], 'staff of magic': ['#pipican:weapons/staff'],
+    'iron, diamond and netherite weapons': ['#pipican:weapons/metal'],
     'ranged': ['#pipican:weapons/ranged'], 'ranged weapons': ['#pipican:weapons/ranged'], 'melee weapons': ['#pipican:weapons/melee'],
 }
 # Damage-type tags. pipican:* ones are shipped by this build (see DAMAGE_TYPE_TAGS).
@@ -477,11 +478,21 @@ def translate(text, ctx):
     text = re.sub(lab + rf'([+-]\d+(?:\.\d+)?%) {item} (damage|critical damage)\b(.*)$', r'\1\2 \4 with your \3\5', text, flags=re.I)
     text = re.sub(lab + rf'{item} (damage|critical damage) ([+-]\d+(?:\.\d+)?%)(.*)$', r'\1\4 \3 with your \2\5', text, flags=re.I)
     text = re.sub(r'^sigil armor:\s*(.+?) per piece$', r'\1 per sigil piece', text, flags=re.I)
+    # Phrasings: "you take +10% damage while moving", "spears deal +15% damage while mounted", "immune to X always",
+    # "No fall damage below 8 blocks", "+20% stealth", "mobs notice you from 20% farther away".
+    text = re.sub(lab + r'you take ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\2 damage taken', text, flags=re.I)
+    text = re.sub(lab + r'(swords|axes|spears|maces|tridents|bows|crossbows) deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\3 damage with \2', text, flags=re.I)
+    text = re.sub(r'(immune to .+?) always$', r'\1', text, flags=re.I)
+    text = re.sub(lab + r'\+(\d+(?:\.\d+)?)% stealth(?: \(smaller mob detection range\))?', r'\1-\2% detection range', text, flags=re.I)
+    text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (?:from )?(\d+(?:\.\d+)?)% (farther|further)(?: away)?', r'+\1% detection range', text, flags=re.I)
+    text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (\d+(?:\.\d+)?)% later', r'-\1% detection range', text, flags=re.I)
     # "(including you)" decides who an aura reaches; it isn't a note.
     text = re.sub(r'\s*\(including you\)', ' including you', text, flags=re.I)
     # "+10% damage and immunity to Darkness, Nausea and Blindness": keep the immunity list together.
     if not re.search(r'players within', text, re.I):
         text = re.sub(r',?\s+and (immun(?:e|ity) to [^;,]+(?:, [^;,]+)*(?:,? and [^;,]+)?)$', r'; \1', text)
+    # "(60s cooldown)" limits how often a reaction fires; keep it.
+    text = re.sub(r'\s*\((\d+(?:\.\d+)?)s cooldown\)', r' with a \1s cooldown', text, flags=re.I)
     # Parenthetical notes are explanations ("(potions, evoker fangs...)"); they only break the comma split.
     text = re.sub(r'\s*\([^)]*\)', '', text)
     # "after standing still for 3s, +20% damage until you move": the still condition already ends when you move.
@@ -500,6 +511,10 @@ def translate(text, ctx):
             if uns or not inner:
                 return [], [original.strip()]
             return [{'type': 'pipican:conditional', 'when': when, 'effects': inner}], []
+    # "+1 armor while standing on stone per 10 Bedrock" / "... piece, per 20 Ingenuity": scaling goes before the condition.
+    m = re.match(r'^(.+?)\s+((?:while|when|in|on|at)\s.+?),?\s+(per \d+ [A-Za-z][\w\' -]*?(?: points?)?)$', text.strip())
+    if m and ';' not in text and not re.search(r'\bbut\b', text):
+        text = f'{m.group(1)} {m.group(3)} {m.group(2)}'
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.
     effects, unsupported = [], []
     for seg in re.split(r';\s*|,?\s+but\s+|,\s+and\s+(?=[+-]?\d|takes?\b|no\b)', text):
@@ -544,7 +559,7 @@ def _conditional(text, ctx):
     t = text.strip().rstrip('.')
     t = re.sub(r'^[A-Z][\w\' -]{1,30}:\s+(?=(?:while|when|whenever|as long as|if|below|above|in|at|on|mounted)\b)', '', t)
     # "mounted damage +25%" / "+5% mounted damage" -> "+25% damage while mounted"
-    t = re.sub(r'^mounted (damage|attack speed) ([+-]\d+(?:\.\d+)?%)$', r'\2 \1 while mounted', t, flags=re.I)
+    t = re.sub(r'^mounted (damage|attack speed) ([+-]\d+(?:\.\d+)?%)( per .+)?$', lambda m: f'{m.group(2)} {m.group(1)}{m.group(3) or ""} while mounted', t, flags=re.I)
     t = re.sub(r'^([+-]\d+(?:\.\d+)?%) mounted (damage|attack speed)$', r'\1 \2 while mounted', t, flags=re.I)
     m = re.match(r'^(?:while|when|whenever|as long as|if)\s+(.+?)(?::|,)\s+(.+)$', t, re.I)
     # "below half health, +20% melee damage": a condition first, without "while"

@@ -102,6 +102,25 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:light",
+        "max": 8
+      },
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
     }
   ],
   "weakness": {

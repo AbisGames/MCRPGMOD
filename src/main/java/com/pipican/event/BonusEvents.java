@@ -102,6 +102,9 @@ public final class BonusEvents {
             return;
         }
         durability(player);
+        if (player.isSprinting() && ClassEffectApplier.state(player).chance(Kind.NO_SPRINT) > 0) {
+            player.setSprinting(false);
+        }
         FoodData food = player.getFoodData();
         naturalRegen(player, food);
         float now = food.exhaustionLevel;

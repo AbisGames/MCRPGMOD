@@ -72,16 +72,7 @@
     {
       "id": "slow",
       "name": "Slow",
-      "description": {
-        "text": "mobs you hit get Slowness I for 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs you hit get Slowness I for 2s",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,25 @@
         "haste"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "pause",

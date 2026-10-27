@@ -65,6 +65,31 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:aura",
+      "radius": 16.0,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.05,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ],
+      "name": "Expert Guide",
+      "include_self": false
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:damage_dealt",

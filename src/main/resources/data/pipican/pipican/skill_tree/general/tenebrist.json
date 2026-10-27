@@ -64,16 +64,7 @@
     {
       "id": "tenebrist_shadow_bind",
       "name": "Shadow Bind",
-      "description": {
-        "text": "your hits in darkness give Slowness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your hits in darkness give Slowness I",
       "type": "notable",
       "x": 691,
       "y": 1597,
@@ -81,7 +72,34 @@
         "tenebrist_gloom"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:light",
+            "max": 8
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "hit",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "victim",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "tenebrist_pallid",

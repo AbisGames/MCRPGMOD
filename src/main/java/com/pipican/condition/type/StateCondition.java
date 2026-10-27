@@ -28,6 +28,8 @@ public record StateCondition(State state) implements ClassCondition {
         /** Holding up a shield. */
         BLOCKING("blocking"),
         MOUNTED("mounted"),
+        /** Standing on solid ground (not falling, flying or swimming). */
+        ON_GROUND("on_ground"),
         /** Hit, or was hit by, a mob or player within the last 5 seconds. */
         IN_COMBAT("in_combat"),
         ON_FIRE("on_fire"),
@@ -77,6 +79,7 @@ public record StateCondition(State state) implements ClassCondition {
             case SNEAKING -> player.isShiftKeyDown();
             case BLOCKING -> player.isBlocking();
             case MOUNTED -> player.isPassenger();
+            case ON_GROUND -> player.onGround();
             case IN_COMBAT -> player instanceof net.minecraft.server.level.ServerPlayer sp && com.pipican.ability.Combat.inCombat(sp);
             case ON_FIRE -> player.isOnFire();
             case NIGHT -> level.isDarkOutside();

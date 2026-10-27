@@ -77,16 +77,7 @@
     {
       "id": "zealot_fanatic",
       "name": "Fanatic",
-      "description": {
-        "text": "immune to Nausea and Darkness always",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "immune to Nausea and Darkness always",
       "type": "notable",
       "x": 1740,
       "y": -48,
@@ -94,7 +85,16 @@
         "zealot_flagellant"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:nausea",
+            "minecraft:darkness"
+          ]
+        }
+      ]
     },
     {
       "id": "zealot_martyrdom",

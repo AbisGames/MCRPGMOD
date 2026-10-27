@@ -55,16 +55,7 @@
     {
       "id": "paladin_sense",
       "name": "Sense Enemies",
-      "description": {
-        "text": "hostile mobs within 12 blocks glow when you hold a shield",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "hostile mobs within 12 blocks glow when you hold a shield",
       "type": "notable",
       "x": 881,
       "y": 127,
@@ -72,7 +63,35 @@
         "paladin_aegis"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/shields"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "second",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "hostiles",
+                  "radius": 12.0,
+                  "effects": [
+                    {
+                      "effect": "minecraft:glowing",
+                      "seconds": 2.0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "paladin_zeal",

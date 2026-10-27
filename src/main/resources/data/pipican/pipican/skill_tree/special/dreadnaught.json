@@ -92,16 +92,7 @@
     {
       "id": "colossus",
       "name": "Colossus",
-      "description": {
-        "text": "+4 armor, but you can't sprint",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+4 armor, but you can't sprint",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -110,7 +101,19 @@
         "unbreakable"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 4.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_sprint",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

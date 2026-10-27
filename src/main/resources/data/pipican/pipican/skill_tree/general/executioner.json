@@ -35,21 +35,19 @@
     {
       "id": "executioner_black_hood",
       "name": "Black Hood",
-      "description": {
-        "text": "mobs notice you 10% later",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs notice you 10% later",
       "type": "small",
       "x": -859,
       "y": 1433,
       "links": [
         "executioner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.1
+        }
       ]
     },
     {

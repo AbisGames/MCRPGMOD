@@ -67,6 +67,28 @@
       "operation": "add_multiplied_base"
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:standing_on",
+        "blocks": "#minecraft:base_stone_overworld"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Stone sinks and cracks in the cold and the water.",

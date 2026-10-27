@@ -136,17 +136,27 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Assassins live in the dark. Daylight makes them clumsy and obvious.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Assassins live in the dark. Daylight makes them clumsy and obvious.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:light",
+          "min": 12
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          }
+        ]
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "detection_range",
+        "amount": 0.2
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

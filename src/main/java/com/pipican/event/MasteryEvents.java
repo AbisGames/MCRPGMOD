@@ -119,6 +119,9 @@ public final class MasteryEvents {
 
     public static void did(ServerPlayer player, SkillAction.Did.Kind kind) {
         MasteryService.onAction(player, SkillAction.Did.of(kind));
+        if (kind == SkillAction.Did.Kind.TELEPORT) {
+            com.pipican.ability.Reactions.fire(player, null, player.getMainHandItem(), com.pipican.effect.type.ReactionEffect.Event.TELEPORT);
+        }
     }
 
     public static void did(ServerPlayer player, SkillAction.Did action) {

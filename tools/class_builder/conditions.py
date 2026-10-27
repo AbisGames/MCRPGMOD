@@ -22,6 +22,10 @@ WORDS = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'a': 1, 'an': 1, 'any': 1}
 
 # Kinds: "place" conditions joined by "and" mean "in any of these places" ("in the Nether and deserts").
 PLACE, OTHER = 'place', 'other'
+# The Cleric's "icon of faith": a totem or golden item in the off-hand.
+ICON = ['minecraft:totem_of_undying', 'minecraft:golden_sword', 'minecraft:golden_axe', 'minecraft:golden_pickaxe', 'minecraft:golden_shovel',
+        'minecraft:golden_hoe', 'minecraft:golden_apple', 'minecraft:enchanted_golden_apple', 'minecraft:gold_ingot', 'minecraft:gold_nugget',
+        'minecraft:golden_carrot', 'minecraft:clock']
 
 
 GROUND = {'stone': '#minecraft:base_stone_overworld', 'dirt': '#minecraft:dirt', 'grass': '#minecraft:dirt',
@@ -81,12 +85,14 @@ def _atoms(ctx):
         (r'(?:in |during )?(?:the )?rain', lambda m: state('raining'), PLACE),
         # sky, time, place
         (r'underground(?: with no sky access)?|with no sky access|without sky access|no sky access', lambda m: NO_SKY, PLACE),
+        (r'(?:while )?travelling outdoors', lambda m: state('sees_sky'), PLACE),
         (r'outdoors|under the open sky|in the open|outside', lambda m: state('sees_sky'), PLACE),
         (r'(?:at |during the )?night(?:time)?', lambda m: state('night'), OTHER),
         (r'(?:in )?daylight|during the day|in the day(?:time)?|by day', lambda m: state('day'), OTHER),
         (r'(?:in )?the nether', lambda m: {'type': 'pipican:dimension', 'dimensions': ['minecraft:the_nether']}, PLACE),
         (r'(?:in )?the end\b', lambda m: {'type': 'pipican:dimension', 'dimensions': ['minecraft:the_end']}, PLACE),
         (r'(?:in )?(?:the )?overworld', lambda m: {'type': 'pipican:dimension', 'dimensions': ['minecraft:overworld']}, PLACE),
+        (r'outside (?:of )?(?:a )?forests?', lambda m: not_({'type': 'pipican:biome', 'biomes': '#minecraft:is_forest'}), PLACE),
         (r'(?:in )?(?:a )?forests?', lambda m: {'type': 'pipican:biome', 'biomes': '#minecraft:is_forest'}, PLACE),
         (r'(?:in )?(?:a )?deserts?', lambda m: {'type': 'pipican:biome', 'biomes': ['minecraft:desert']}, PLACE),
         (r'(?:in )?(?:a )?jungles?', lambda m: {'type': 'pipican:biome', 'biomes': '#minecraft:is_jungle'}, PLACE),
@@ -137,14 +143,20 @@ def _atoms(ctx):
         (r'(?:with |holding )?a banner in your off-hand|banner in off-hand', lambda m: {'type': 'pipican:holding', 'items': '#minecraft:banners', 'hand': 'off'}, OTHER),
         (r'holding a weapon in your off-hand', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'off'}, OTHER),
         (r'with (?:your )?staff(?: of magic)?|holding a staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
+        (r'(?:while )?standing on solid ground|on solid ground', lambda m: state('on_ground'), OTHER),
+        (r'(?:while )?(?:holding|with) a trident', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/tridents'}, OTHER),
+        (r'(?:while )?wearing any copper armor(?: piece)?', lambda m: {'type': 'pipican:wearing', 'items': [
+            'minecraft:copper_helmet', 'minecraft:copper_chestplate', 'minecraft:copper_leggings', 'minecraft:copper_boots']}, OTHER),
+        (r'without an icon in hand', lambda m: not_({'type': 'pipican:holding', 'items': ICON, 'hand': 'off'}), OTHER),
+        (r'(?:while )?holding your icon', lambda m: {'type': 'pipican:holding', 'items': ICON, 'hand': 'off'}, OTHER),
         (r'not holding your staff', lambda m: not_({'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}), OTHER),
         (r'holding your staff|with your staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
         (r'not sneaking', lambda m: not_(state('sneaking')), OTHER),
-        (r'sneaking|crouching', lambda m: state('sneaking'), OTHER),
+        (r'sneaking|crouching|you sneak|you crouch', lambda m: state('sneaking'), OTHER),
         (r'(?:on fire|burning)', lambda m: state('on_fire'), OTHER),
         # equipment
         (r'(?:without|with no) (?:a )?shield(?: in hand)?|not holding a shield', lambda m: not_({'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}), OTHER),
-        (r'(?:holding|with) a shield(?: in hand)?|(?:a )?shield in hand', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}, OTHER),
+        (r'(?:holding|with) a shield(?: in hand)?|(?:a )?shield in hand|you hold a shield', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}, OTHER),
         (r'wearing (\d|one|two|three|four) or more (heavy|medium|light) armor pieces|wearing (?:at least )?(\d|one|two|three|four)\+? (?:pieces of )?(heavy|medium|light) armor(?: pieces?)?',
          lambda m: {'type': 'pipican:wearing', 'items': ARMOR_TAGS[m.group(2) or m.group(4)], 'min': int(WORDS.get(m.group(1) or m.group(3), m.group(1) or m.group(3)))}, OTHER),
         (r'wearing leather(?: armor)?', lambda m: {'type': 'pipican:wearing', 'items': [
@@ -162,7 +174,7 @@ def _atoms(ctx):
         (r'no other players? (?:is |are )?within (\d+) blocks', lambda m: {'type': 'pipican:nearby', 'entities': 'players', 'radius': float(m.group(1)), 'min': 0, 'max': 0}, OTHER),
         (r'(?:another|other|an allied) players? (?:is |are )?within (\d+) blocks|(?:with )?an ally within (\d+) blocks|(?:near|close to) (?:another player|an ally|allies)',
          lambda m: {'type': 'pipican:nearby', 'entities': 'players', 'radius': float(m.group(1) or m.group(2) or 8)}, OTHER),
-        (r'(?:a|any) hostile mobs? (?:is |are )?within (\d+) blocks|hostile mobs? within (\d+) blocks',
+        (r'(?:a|any) (?:hostile )?mobs? (?:is |are )?within (\d+) blocks|hostile mobs? within (\d+) blocks',
          lambda m: {'type': 'pipican:nearby', 'entities': 'hostile_mobs', 'radius': float(m.group(1) or m.group(2))}, OTHER),
         (r'no hostile mobs? (?:is |are )?within (\d+) blocks', lambda m: {'type': 'pipican:nearby', 'entities': 'hostile_mobs', 'radius': float(m.group(1)), 'min': 0, 'max': 0}, OTHER),
         (r'(\d+)\+ hostile mobs (?:are )?within (\d+) blocks', lambda m: {'type': 'pipican:nearby', 'entities': 'hostile_mobs', 'radius': float(m.group(2)), 'min': int(m.group(1))}, OTHER),
@@ -211,4 +223,6 @@ TRAILING = re.compile(
     r'in light level\b|below half health\b|below \d+% health\b|above half health\b|at full health\b|'
     r'with (?:your |the |a |any )?(?:bound weapon|sigil(?:-marked)? weapons?|staff|weapon that isn\'t your bound weapon)\b|with \d sigil\b|'
     r'with no book\b|while (?:a )?book\b|holding a weapon in your off-hand\b|'
+    r'in combat\b|out of combat\b|'
+    r'outside (?:of )?forests?\b|on solid ground\b|without an icon\b|while holding\b|while travelling\b|while wearing\b|while not\b|'
     r'on foot\b|on (?:stone|dirt|sand|gravel|netherrack|nether blocks)\b|(?:standing|you stand) on\b|in lava\b|without (?:a )?shield\b|with (?:a )?shield\b|on dry land\b|out of (?:the )?water\b)', re.I)

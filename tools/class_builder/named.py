@@ -347,8 +347,53 @@ def durability(t, ctx):
     return None
 
 
+def reactions_more(t, ctx):
+    """More reaction phrasings: "mobs you hit get Slowness I for 2s" (optionally "in water" / "in darkness"),
+    "when you take damage, become invisible for 2s (60s cooldown)", "after teleporting, ...", "hostile mobs within 12 blocks
+    glow while you sneak"."""
+    import conditions as cond
+    m = re.fullmatch(r'(?:mobs you hit|your hits)(?: (in .+?|while .+?))? (?:get|give(?: them)?) (.+)', t)
+    if m:
+        entries = _effects_list(m.group(2), 3.0)
+        if entries:
+            r = {'type': 'pipican:on', 'event': 'hit', 'actions': [{'type': 'pipican:effect', 'target': 'victim', 'effects': entries}]}
+            if m.group(1):
+                when = cond.parse(m.group(1), ctx)
+                return [{'type': 'pipican:conditional', 'when': when, 'effects': [r]}] if when else None
+            return [r]
+    m = re.fullmatch(rf'when you take damage,? (?:become |you become |turn )?(invisible|.+?) for {N}s(?: with an? {N}s cooldown)?', t)
+    if m:
+        entries = [{'effect': 'minecraft:invisibility', 'seconds': float(m.group(2))}] if m.group(1) == 'invisible' else _effects_list(f'{m.group(1)} for {m.group(2)}s')
+        if entries:
+            r = {'type': 'pipican:on', 'event': 'hurt', 'actions': [{'type': 'pipican:effect', 'effects': entries}]}
+            if m.group(3):
+                r['cooldown_ticks'] = int(float(m.group(3)) * 20)
+            return [r]
+    m = re.fullmatch(r'after (?:any )?teleport(?:ing)?(?: \(pearl or blink\))?,? (.+)', t)
+    if m:
+        what = m.group(1)
+        mm = re.fullmatch(r'mobs near your arrival point get (.+)', what)
+        if mm:
+            entries = _effects_list(mm.group(1), 3.0)
+            if entries:
+                return [{'type': 'pipican:on', 'event': 'teleport', 'actions': [{'type': 'pipican:effect', 'target': 'hostiles', 'radius': 4.0, 'effects': entries}]}]
+        entries = _effects_list(what)
+        if entries:
+            return [{'type': 'pipican:on', 'event': 'teleport', 'actions': [{'type': 'pipican:effect', 'effects': entries}]}]
+    m = re.fullmatch(rf'hostile mobs within {N} blocks glow (?:while|when) (.+)', t)
+    if m:
+        when = cond.parse('while ' + m.group(2), ctx)
+        if when:
+            return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:on', 'event': 'second', 'actions': [
+                {'type': 'pipican:effect', 'target': 'hostiles', 'radius': float(m.group(1)), 'effects': [{'effect': 'minecraft:glowing', 'seconds': 2.0}]}]}]}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    rm = reactions_more(t, ctx)
+    if rm:
+        return rm
     du = durability(t, ctx)
     if du:
         return du

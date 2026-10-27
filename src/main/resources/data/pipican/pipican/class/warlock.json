@@ -72,6 +72,24 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "hurt",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "effects": [
+            {
+              "effect": "minecraft:invisibility",
+              "seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "cooldown_ticks": 1200
+    }
+  ],
   "special_passives": [
     {
       "type": "pipican:conditional",

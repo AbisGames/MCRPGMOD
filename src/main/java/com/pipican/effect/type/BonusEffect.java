@@ -35,6 +35,7 @@ import net.minecraft.util.StringRepresentable;
  *       the main-hand item) loses durability (-0.15 = 15% slower, -1 = never)</li>
  *   <li>{@code weapon_repair}: <i>points</i> of durability the main-hand item gets back every 10s (not a %)</li>
  *   <li>{@code armor_floor}: worn armor never drops below this fraction of its durability (0.1 = 10%)</li>
+ *   <li>{@code no_sprint}: any amount above 0 = you can not sprint</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -43,7 +44,7 @@ import net.minecraft.util.StringRepresentable;
 public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) implements ClassEffect {
 
     public enum Kind implements StringRepresentable {
-        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN, DETECTION_RANGE, SKILL_TRAINING, KNOCKBACK, EXTRA_LOOT, EXTRA_ORE, EXTRA_CROP, ABILITY_COOLDOWN, DURABILITY, ARMOR_DURABILITY, WEAPON_DURABILITY, WEAPON_REPAIR, ARMOR_FLOOR;
+        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN, DETECTION_RANGE, SKILL_TRAINING, KNOCKBACK, EXTRA_LOOT, EXTRA_ORE, EXTRA_CROP, ABILITY_COOLDOWN, DURABILITY, ARMOR_DURABILITY, WEAPON_DURABILITY, WEAPON_REPAIR, ARMOR_FLOOR, NO_SPRINT;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

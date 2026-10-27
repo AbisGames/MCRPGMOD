@@ -105,6 +105,13 @@ def special(low, scal):
         im = combat.immune('immune to ' + m.group(1))
         if im:
             return im
+    m = re.fullmatch(r'no fall damage(?: below (\d+) blocks)?', low)
+    if m:
+        if m.group(1):
+            return [{'type': 'pipican:attribute', 'attribute': 'minecraft:safe_fall_distance', 'amount': float(m.group(1)) - 3}]
+        return [{'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_fall', 'multiplier': 0.0}]
+    if re.fullmatch(r"(?:you )?can'?t sprint|you cannot sprint", low):
+        return [{'type': 'pipican:bonus', 'kind': 'no_sprint', 'amount': 1.0}]
     if re.fullmatch(r'(?:knockback immunity|immune to knockback|immunity to knockback)', low):
         return [{'type': 'pipican:attribute', 'attribute': 'minecraft:knockback_resistance', 'amount': 1.0}]
     m = re.fullmatch(rf'(?:your )?skills train {N}% (faster|slower)', low)

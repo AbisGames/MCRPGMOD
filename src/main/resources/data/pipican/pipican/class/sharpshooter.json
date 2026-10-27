@@ -100,17 +100,30 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Sharpshooters are lost in close quarters.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Sharpshooters are lost in close quarters.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "hostile_mobs",
+          "radius": 3.0
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "damage_types": "#pipican:is_melee",
+            "multiplier": 0.7
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:armor",
+            "amount": -0.1,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

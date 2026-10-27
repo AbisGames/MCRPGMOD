@@ -91,13 +91,19 @@
       "text": "Druids shun forged iron and the stink of cities.",
       "extra": [
         {
-          "text": " (not in game yet)",
+          "text": " (partly not in game yet)",
           "color": "dark_gray",
           "italic": true
         }
       ]
     },
-    "effects": []
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "weapons": "#pipican:weapons/metal",
+        "multiplier": 0.8
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

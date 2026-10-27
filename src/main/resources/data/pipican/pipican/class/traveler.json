@@ -59,18 +59,44 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "Teleporting scatters your senses.",
-      "extra": [
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "teleport",
+      "actions": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "radius": 4.0,
+          "effects": [
+            {
+              "effect": "minecraft:slowness",
+              "seconds": 2.0
+            }
+          ]
         }
       ]
-    },
-    "effects": []
+    }
+  ],
+  "weakness": {
+    "description": "Teleporting scatters your senses.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "teleport",
+        "actions": [
+          {
+            "type": "pipican:effect",
+            "effects": [
+              {
+                "effect": "minecraft:nausea",
+                "seconds": 2.0
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

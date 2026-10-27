@@ -94,6 +94,31 @@
       "type": "pipican:bonus",
       "kind": "durability",
       "amount": -0.005
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": [
+          "minecraft:copper_helmet",
+          "minecraft:copper_chestplate",
+          "minecraft:copper_leggings",
+          "minecraft:copper_boots"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
+            }
+          ]
+        }
+      ]
     }
   ],
   "weakness": {

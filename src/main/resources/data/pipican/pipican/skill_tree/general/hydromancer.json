@@ -59,16 +59,7 @@
     {
       "id": "hydromancer_undertow",
       "name": "Undertow",
-      "description": {
-        "text": "mobs you hit in water get Slowness II",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs you hit in water get Slowness II",
       "type": "notable",
       "x": 1218,
       "y": 671,
@@ -76,7 +67,35 @@
         "hydromancer_gills"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "in_water"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "hit",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "victim",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 3.0,
+                      "amplifier": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "hydromancer_mist",

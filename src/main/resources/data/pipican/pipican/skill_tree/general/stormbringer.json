@@ -75,16 +75,7 @@
     {
       "id": "stormbringer_conductor",
       "name": "Conductor",
-      "description": {
-        "text": "lightning chance doubled while holding a trident",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "lightning chance doubled while holding a trident",
       "type": "notable",
       "x": -179,
       "y": -1731,
@@ -92,7 +83,23 @@
         "stormbringer_static"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/tridents"
+          },
+          "effects": [
+            {
+              "type": "pipican:reaction_chance",
+              "name": "lightning",
+              "multiplier": 2.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "stormbringer_eye_of_the_storm",

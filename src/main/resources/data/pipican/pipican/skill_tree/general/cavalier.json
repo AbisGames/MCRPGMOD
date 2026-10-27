@@ -64,16 +64,7 @@
     {
       "id": "cavalier_lance_charge",
       "name": "Lance Charge",
-      "description": {
-        "text": "spears deal +15% damage while mounted",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "spears deal +15% damage while mounted",
       "type": "notable",
       "x": -1369,
       "y": 245,
@@ -81,7 +72,23 @@
         "cavalier_saddle_born"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "weapons": "#pipican:weapons/spears",
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "cavalier_warhorse",

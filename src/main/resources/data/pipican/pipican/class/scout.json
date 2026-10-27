@@ -72,6 +72,23 @@
       "attribute": "minecraft:movement_speed",
       "amount": 0.12,
       "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:nearby",
+        "entities": "players",
+        "radius": 16.0,
+        "min": 0,
+        "max": 0
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.2
+        }
+      ]
     }
   ],
   "special_passives": [

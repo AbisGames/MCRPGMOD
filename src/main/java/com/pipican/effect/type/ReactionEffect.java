@@ -48,7 +48,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You are about to die; {@code pipican:cheat_death} saves you. */
         DEATH("death"),
         /** Every second while you're in combat; give it a {@code cooldown_ticks} ("every 30s in combat"). */
-        IN_COMBAT("in_combat");
+        IN_COMBAT("in_combat"),
+        /** Every second (usually inside a {@code pipican:conditional}: "while you sneak, nearby mobs glow"). */
+        SECOND("second"),
+        /** You teleported (ender pearl, chorus fruit, blink). */
+        TELEPORT("teleport");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;
