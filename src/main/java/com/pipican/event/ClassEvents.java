@@ -210,6 +210,18 @@ public final class ClassEvents {
 
     // ------------------------------------------------------------------ class XP, death
 
+    /** "When you would die": a death reaction with {@code pipican:cheat_death} keeps the player alive. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
+    public static void onPlayerDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && !event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            LivingEntity killer = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
+            if (Reactions.fire(player, killer, ItemStack.EMPTY, ReactionEffect.Event.DEATH) && player.getHealth() > 0) {
+                event.setCanceled(true);
+                player.sendOverlayMessage(Component.translatable("pipican.cheated_death"));
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
         // Killing a mob gives kill XP based on its max health: class XP and stat points.

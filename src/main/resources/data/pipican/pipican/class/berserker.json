@@ -219,13 +219,42 @@
       "text": "When the rage leaves, it takes everything with it.",
       "extra": [
         {
-          "text": " (not in game yet)",
+          "text": " (partly not in game yet)",
           "color": "dark_gray",
           "italic": true
         }
       ]
     },
-    "effects": []
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:resource",
+          "min": 0.75
+        },
+        "effects": [
+          {
+            "type": "pipican:on",
+            "event": "end",
+            "actions": [
+              {
+                "type": "pipican:effect",
+                "effects": [
+                  {
+                    "effect": "minecraft:weakness",
+                    "seconds": 8.0
+                  },
+                  {
+                    "effect": "minecraft:slowness",
+                    "seconds": 8.0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

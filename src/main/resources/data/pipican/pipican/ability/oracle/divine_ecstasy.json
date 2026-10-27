@@ -1,0 +1,26 @@
+{
+  "name": "Divine Ecstasy",
+  "description": "Toggle (drains 3 Ecstasy/s): +6 max health, immune to Weakness and Slowness, +10% damage.",
+  "icon": "minecraft:nether_star",
+  "cooldown_ticks": 100,
+  "toggle": true,
+  "drain_per_second": 3,
+  "effects": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:max_health",
+      "amount": 6
+    },
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:weakness",
+        "minecraft:slowness"
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.1
+    }
+  ]
+}

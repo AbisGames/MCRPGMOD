@@ -19,6 +19,8 @@ public final class Reactions {
 
     private static final Map<UUID, Map<ReactionEffect, Long>> COOLDOWNS = new ConcurrentHashMap<>();
     private static boolean running;
+    /** {@code once_per_rest} reactions already used since the player last slept. */
+    private static final Map<UUID, java.util.Set<ReactionEffect>> USED = new ConcurrentHashMap<>();
 
     private Reactions() {}
 
@@ -61,12 +63,18 @@ public final class Reactions {
                 if (subject != null && r.victims().isPresent() && !r.victims().get().contains(subject.getType().builtInRegistryHolder())) {
                     continue;
                 }
+                if (r.oncePerRest() && USED.computeIfAbsent(player.getUUID(), k -> ConcurrentHashMap.newKeySet()).contains(r)) {
+                    continue;
+                }
                 var cooldowns = COOLDOWNS.computeIfAbsent(player.getUUID(), k -> new ConcurrentHashMap<>());
                 if (cooldowns.getOrDefault(r, 0L) > now) {
                     continue;
                 }
                 if (r.cooldownTicks() > 0) {
                     cooldowns.put(r, now + r.cooldownTicks());
+                }
+                if (r.oncePerRest()) {
+                    USED.get(player.getUUID()).add(r);
                 }
                 AbilityContext ctx = new AbilityContext(player, Optional.empty(), subject != null ? subject.position() : player.position(),
                         Optional.ofNullable(subject), 0);
@@ -82,6 +90,11 @@ public final class Reactions {
             running = false;
         }
         return cancelled;
+    }
+
+    /** After sleeping: {@code once_per_rest} reactions can trigger again. */
+    public static void rest(ServerPlayer player) {
+        USED.remove(player.getUUID());
     }
 
     public static void forget(ServerPlayer player) {

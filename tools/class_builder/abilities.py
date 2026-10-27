@@ -295,6 +295,15 @@ A = {
         pulse_actions=[damage(3, 'look', range=16, required=False, fire_seconds=3)],
         approx='invisible while on; every second burns the mob you look at (no steering)'),
     ('witch', 'Lasting Bond'): dict(icon='lead', cooldown=60, actions=[{'type': 'pipican:bond', 'range': 16}]),
+    # Passives written as toggles: real toggle abilities (the passive line becomes their description).
+    ('oracle', 'Divine Ecstasy'): dict(icon='nether_star', toggle=True, drain=3, cooldown=5, effects=[
+        attr('max_health', 6), {'type': 'pipican:immune', 'effects': ['minecraft:weakness', 'minecraft:slowness']}, dealt(1.1)],
+        description='Toggle (drains 3 Ecstasy/s): +6 max health, immune to Weakness and Slowness, +10% damage.'),
+    ('miracle_worker', 'Stigmata'): dict(icon='totem_of_undying', toggle=True, drain=4, cooldown=10, pulse=20,
+        requires={'type': 'pipican:resource', 'min': 0.999},
+        effects=[dealt(1.15), {'type': 'pipican:mob_effect', 'effect': 'minecraft:regeneration'}],
+        pulse_actions=[effect('hostiles', E('slowness', 2), E('weakness', 2), radius=8)],
+        description='Toggle once Miracle is full (drains 4/s): mobs within 8 blocks get Slowness and Weakness; you get +15% damage and Regeneration I.'),
     ('woodwose', 'Treeform'): dict(icon='oak_sapling', toggle=True, cooldown=10, effects=[
         {'type': 'pipican:mob_effect', 'effect': 'minecraft:invisibility'}, {'type': 'pipican:mob_effect', 'effect': 'minecraft:slowness', 'amplifier': 9},
         {'type': 'pipican:mob_effect', 'effect': 'minecraft:regeneration', 'amplifier': 1}],
@@ -313,6 +322,8 @@ A = {
 # Abilities a class has even though section 12 doesn't list them (the spec describes them elsewhere).
 EXTRA = {
     'engineer': ['Build Eidolon'],
+    'oracle': ['Divine Ecstasy'],
+    'miracle_worker': ['Stigmata'],
 }
 
 # Spec abilities that are really passive rules, handled by NODE_EFFECTS or passives instead.
@@ -331,6 +342,8 @@ PASSIVE_EFFECTS = {
                                        'scaling': [{'source': 'special_stat', 'per': 0.05}]}],
     ('engineer', 'Eidolon:'): [],       # the eidolon itself: the Build Eidolon ability (EXTRA)
     ('engineer', 'Spare Parts:'): [],   # built into the eidolon: iron ingots heal it 10
+    ('oracle', 'Divine Ecstasy (toggle'): [],   # the Divine Ecstasy ability (EXTRA)
+    ('miracle_worker', 'Stigmata:'): [],        # the Stigmata ability (EXTRA)
 }
 
 # Hand-written weakness effects: class -> effects (replace the translated ones).

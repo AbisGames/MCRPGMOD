@@ -107,6 +107,8 @@ public final class ClassEffectApplier {
         // "When you go Berserk": start reactions inside a conditional fire when it starts to count.
         List<ReactionEffect> started = next.reactions().stream()
                 .filter(r -> r.event() == ReactionEffect.Event.START && !old.reactions().contains(r)).toList();
+        List<ReactionEffect> ended = old.reactions().stream()
+                .filter(r -> r.event() == ReactionEffect.Event.END && !next.reactions().contains(r)).toList();
 
         applyMobEffects(player, old.mobEffects(), next.mobEffects());
         applyFlight(player, old.flight(), next.flight());
@@ -127,6 +129,9 @@ public final class ClassEffectApplier {
         player.syncData(PipicanAttachments.CLASS_DATA);
         if (!started.isEmpty()) {
             Reactions.fireAll(player, started);
+        }
+        if (!ended.isEmpty() && player.isAlive()) {
+            Reactions.fireAll(player, ended);
         }
     }
 

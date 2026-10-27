@@ -346,6 +346,17 @@ public final class ClassSystemTests {
         player.setShiftKeyDown(true);
         ClassEffectApplier.recheckConditions(player);
         helper.assertTrue(player.hasEffect(MobEffects.GLOWING), "start reaction fired");
+        player.setShiftKeyDown(false);
+        ClassEffectApplier.recheckConditions(player);
+        helper.assertTrue(player.hasEffect(MobEffects.SPEED), "end reaction fired when sneaking stopped");
+
+        // Death: cheat_death saves you once per rest, then again after sleeping.
+        player.setHealth(0.5f);
+        helper.assertTrue(Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.DEATH), "saved from death");
+        assertNear(helper, 4, player.getHealth(), "left at 4 health");
+        helper.assertTrue(!Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.DEATH), "only once per rest");
+        Reactions.rest(player);
+        helper.assertTrue(Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.DEATH), "again after resting");
 
         // Favored weapon: chosen on waking from the main hand.
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
@@ -646,7 +657,7 @@ public final class ClassSystemTests {
             dismiss(helper, player);
             count++;
         }
-        helper.assertTrue(count == 107, "expected 107 shipped abilities, ran " + count);
+        helper.assertTrue(count == 109, "expected 109 shipped abilities, ran " + count);
         helper.succeed();
     }
 

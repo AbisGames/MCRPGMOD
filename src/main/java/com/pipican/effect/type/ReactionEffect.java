@@ -31,7 +31,7 @@ import net.minecraft.world.item.Item;
  * attacker), and area targets are centred on it. Reactions never trigger other reactions.
  */
 public record ReactionEffect(Event event, double chance, int cooldownTicks, Optional<HolderSet<Item>> weapons,
-                             Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions, Optional<String> name) implements ClassEffect {
+                             Optional<HolderSet<EntityType<?>>> victims, List<AbilityAction> actions, Optional<String> name, boolean oncePerRest) implements ClassEffect {
 
     public enum Event implements StringRepresentable {
         HIT("hit"), CRIT("crit"), MELEE_HIT("melee_hit"), RANGED_HIT("ranged_hit"), KILL("kill"), HURT("hurt"), BLOCK("block"),
@@ -42,7 +42,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** A hit is about to drop you below 2 hearts (4 health); {@code pipican:shrug} cancels it. */
         LOW_HEALTH("low_health"),
         /** The (conditional) effect holding this reaction starts to count ("when you go Berserk"). */
-        START("start");
+        START("start"),
+        /** The (conditional) effect holding this reaction stops counting ("when Berserk ends"). */
+        END("end"),
+        /** You are about to die; {@code pipican:cheat_death} saves you. */
+        DEATH("death");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;
@@ -64,7 +68,8 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
             RegistryCodecs.homogeneousList(Registries.ITEM).optionalFieldOf("weapons").forGetter(ReactionEffect::weapons),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("victims").forGetter(ReactionEffect::victims),
             Codec.lazyInitialized(() -> AbilityAction.CODEC).listOf().fieldOf("actions").forGetter(ReactionEffect::actions),
-            Codec.STRING.optionalFieldOf("name").forGetter(ReactionEffect::name)
+            Codec.STRING.optionalFieldOf("name").forGetter(ReactionEffect::name),
+            Codec.BOOL.optionalFieldOf("once_per_rest", false).forGetter(ReactionEffect::oncePerRest)
     ).apply(i, ReactionEffect::new));
 
     @Override

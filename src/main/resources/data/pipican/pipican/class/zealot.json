@@ -60,8 +60,36 @@
       "type": "pipican:on",
       "event": "low_health",
       "chance": 0.3,
-      "name": "shrug",
+      "name": "zeal",
       "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 10.0
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 5.0,
+          "effects": [
+            {
+              "type": "pipican:immune",
+              "effects": [
+                "minecraft:slowness",
+                "minecraft:weakness",
+                "minecraft:nausea"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 5.0,
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            }
+          ]
+        },
         {
           "type": "pipican:shrug"
         }
@@ -81,7 +109,7 @@
     },
     {
       "type": "pipican:reaction_chance",
-      "name": "shrug",
+      "name": "zeal",
       "amount": 0.0,
       "scaling": [
         {

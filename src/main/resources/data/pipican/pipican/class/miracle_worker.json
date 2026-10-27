@@ -106,5 +106,8 @@
     "pipican:ring": 1,
     "pipican:cloak": 1,
     "pipican:belt": 1
-  }
+  },
+  "abilities": [
+    "pipican:miracle_worker/stigmata"
+  ]
 }

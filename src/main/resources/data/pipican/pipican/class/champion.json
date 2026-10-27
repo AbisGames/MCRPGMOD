@@ -89,6 +89,28 @@
       ]
     },
     {
+      "type": "pipican:on",
+      "event": "low_health",
+      "cooldown_ticks": 6000,
+      "actions": [
+        {
+          "type": "pipican:heal",
+          "target": "self",
+          "amount": 6.0
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 5.0,
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:knockback_resistance",
       "amount": 0.1

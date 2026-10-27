@@ -69,7 +69,7 @@
       "effects": [
         {
           "type": "pipican:reaction_chance",
-          "name": "shrug",
+          "name": "zeal",
           "amount": 0.1
         }
       ]

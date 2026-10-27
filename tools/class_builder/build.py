@@ -435,6 +435,11 @@ def main(spec_dir, res_dir, report_path):
         res = c['resource']
         ctx = {'special_name': sp['name'], 'special_id': sid, 'resource_name': res['name'] if res else None, 'class_id': cid}
         named.learn(cid, c['passives'] + c['special_passives'], ctx)
+        # Every ability is also a named state: "+1 armor while in Divine Ecstasy", "when Divine Ecstasy ends".
+        for name in list(spec_abilities(c)) + ab.EXTRA.get(cid, []):
+            if (cid, name) in ab.A:
+                named.NAMED[cid].setdefault(name.lower(), ({'type': 'pipican:ability_active', 'ability': f'{NS}:{cid}/{slug(name)}'},
+                                                           ab.A[(cid, name)].get('effects', [])))
         color = (0xFF << 24) | int(res['color'], 16) if res and res['color'] else -1
         if color >= 1 << 31:
             color -= 1 << 32
@@ -528,7 +533,7 @@ def main(spec_dir, res_dir, report_path):
                 report['Abilities not in game yet'].append((cid, f'ability {name}', desc or 'unlocked by a tree node'))
                 continue
             ability_ids[name.lower()] = f'{NS}:{cid}/{slug(name)}'
-            write(f'{NS}/{NS}/ability/{cid}/{slug(name)}.json', ability_json(name, desc, d))
+            write(f'{NS}/{NS}/ability/{cid}/{slug(name)}.json', ability_json(name, desc or d.get('description'), d))
             counts['abilities'] += 1
             if d.get('approx'):
                 notes[cid].append(f'ability {name}: {d["approx"]}')
@@ -625,6 +630,12 @@ def main(spec_dir, res_dir, report_path):
             'progression': {'max_level': c['max_level'], 'starting_skill_points': c['free_general'],
                             'starting_special_skill_points': c['free_special']},
         }
+        for e in passives + special_passives:
+            extra = named.EXTRA.get(cid, {}).get(e.get('name')) if e.get('type') == 'pipican:on' else None
+            if extra:
+                acts = e['actions']
+                end = len(acts) - 1 if acts and acts[-1]['type'] in ('pipican:shrug', 'pipican:cheat_death') else len(acts)
+                e['actions'] = acts[:end] + extra + acts[end:]
         if passives:
             rpg['passives'] = passives
         if special_passives:

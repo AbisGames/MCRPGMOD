@@ -1,5 +1,6 @@
 package com.pipican.ability;
 
+import com.pipican.ability.action.CheatDeathAction;
 import com.pipican.ability.action.ShrugAction;
 import com.pipican.ability.action.BoostAction;
 import com.mojang.serialization.Codec;
@@ -72,6 +73,7 @@ public final class AbilityActionTypes {
     public static final Type RESOURCE = register("resource", ResourceAction.CODEC);
     public static final Type MARK = register("mark", MarkAction.CODEC);
     public static final Type BOOST = register("boost", BoostAction.CODEC);
+    public static final Type CHEAT_DEATH = register("cheat_death", CheatDeathAction.CODEC);
     public static final Type SHRUG = register("shrug", ShrugAction.CODEC);
     public static final Type EMPOWER = register("empower", EmpowerAction.CODEC);
     public static final Type IMBUE = register("imbue", ImbueAction.CODEC);

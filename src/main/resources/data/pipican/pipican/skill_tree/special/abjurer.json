@@ -94,7 +94,16 @@
     {
       "id": "inviolable",
       "name": "Inviolable",
-      "description": "immune to knockback while Ward is above half; -10% movement speed",
+      "description": {
+        "text": "immune to knockback while Ward is above half; -10% movement speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -103,29 +112,7 @@
         "ward_allies"
       ],
       "cost": 3,
-      "required_level": 35,
-      "effects": [
-        {
-          "type": "pipican:conditional",
-          "when": {
-            "type": "pipican:resource",
-            "min": 0.5
-          },
-          "effects": [
-            {
-              "type": "pipican:attribute",
-              "attribute": "minecraft:knockback_resistance",
-              "amount": 1.0
-            }
-          ]
-        },
-        {
-          "type": "pipican:attribute",
-          "attribute": "minecraft:movement_speed",
-          "amount": -0.1,
-          "operation": "add_multiplied_base"
-        }
-      ]
+      "required_level": 35
     }
   ]
 }

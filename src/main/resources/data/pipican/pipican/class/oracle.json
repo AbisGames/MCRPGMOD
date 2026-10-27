@@ -59,18 +59,70 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "The entity inside leaves cracks in the mind.",
-      "extra": [
+  "special_passives": [
+    {
+      "type": "pipican:resource",
+      "target": "max",
+      "amount": 0.0,
+      "scaling": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "source": "special_stat",
+          "per": 0.5
         }
       ]
     },
-    "effects": []
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:ability_active",
+        "ability": "pipican:oracle/divine_ecstasy"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.002
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "The entity inside leaves cracks in the mind.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:ability_active",
+          "ability": "pipican:oracle/divine_ecstasy"
+        },
+        "effects": [
+          {
+            "type": "pipican:on",
+            "event": "end",
+            "actions": [
+              {
+                "type": "pipican:effect",
+                "effects": [
+                  {
+                    "effect": "minecraft:nausea",
+                    "seconds": 6.0
+                  },
+                  {
+                    "effect": "minecraft:slowness",
+                    "seconds": 4.0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",
@@ -101,5 +153,8 @@
     "pipican:amulet": 2,
     "pipican:ring": 1,
     "pipican:charm": 1
-  }
+  },
+  "abilities": [
+    "pipican:oracle/divine_ecstasy"
+  ]
 }

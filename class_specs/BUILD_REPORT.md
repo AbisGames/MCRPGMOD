@@ -3,8 +3,8 @@
 Generated from `class_specs/*.md` by the class builder. Everything listed here is **not in the game yet**:
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
-- Classes built: **84**, skills: **109**, active abilities: **107** (of 107 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1330**, partly working: **15**, not yet: **904**
+- Classes built: **84**, skills: **109**, active abilities: **109** (of 109 named in the specs)
+- Bonus phrases: **2249**. Fully working: **1338**, partly working: **16**, not yet: **895**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 308 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 235 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 138 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 121 |
+| [Other mechanics](#other-mechanics) | 306 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 233 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 136 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 117 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 72 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 71 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 52 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 53 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 30 |
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 7 |
@@ -406,8 +406,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Nature Bond heal speed +1% per Verdure
   - special tree: Nature's Resilience: absorption +2 more hearts
 - **zealot**
-  - passive: After Zeal triggers
-  - passive: Divine Might: hits within 5s of a Zeal trigger deal +20% damage
   - special passive: Per 10 Fervor, Divine Might +5%
   - general tree: Flagellant: +5% damage per missing heart (max +25%)
   - special tree: Iron Conviction: post-Zeal immunity lasts 3s longer
@@ -416,6 +414,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Active abilities (named abilities, cooldowns, auras, summons)
 
+- **abjurer**
+  - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
 - **arcanist**
   - special passive: Grindstone disenchanting gives +1% more XP per 2 Arcana
   - special tree: Swift Arcana: abilities have 15% shorter cooldowns
@@ -442,9 +442,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Performance: +5% Song strength
   - skill Performance: +10% Song strength
 - **berserker**
-  - weakness: when Berserk ends: Weakness I and Slowness I for 8s
   - weakness: can't go Berserk again for 15s
-  - special tree: Fury Unleashed: once per rest, when you would die, go Berserk instead with 4 HP
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
 - **champion**
   - special passive: Champion's Resolve cooldown -1% per Resolve point
@@ -578,7 +576,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Master of Undeath: double servant cap
 - **oracle**
   - special passive: +1 armor while in Divine Ecstasy
-  - weakness: when Divine Ecstasy ends: Nausea for 6s and Slowness I for 4s
   - general tree: Steady Mind: the after-effects of Ecstasy last half as long
   - general tree: Living Avatar: Divine Ecstasy bonuses +50%
   - special tree: Fearless: +15% knockback resistance in Ecstasy
@@ -733,7 +730,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Lance Charge: spears deal +15% damage while mounted
   - special tree: Trample: your mount damages small mobs it runs into
 - **champion**
-  - passive: Champion's Resolve: once per 5 minutes, when you'd drop below 2 hearts, heal 6 HP and gain +20% damage for 5s
   - general tree: Last Stand: you take +10% damage while moving
 - **chaplain**
   - passive: Battle Chant: players within 10 blocks (including you) get +10% damage and immunity to Darkness, Nausea and Blindness
@@ -897,7 +893,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: +25% fire damage while not wearing leather, and axes deal +20% damage to you
   - special tree: Green Man: -10% max health outside forests
 - **zealot**
-  - passive: immune to Slowness, Weakness and Nausea for 5s
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
   - general tree: Fanatic: immune to Nausea and Darkness always
 
@@ -1009,13 +1004,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Living Staff: your staff returns to you if dropped and can't be destroyed; -10% max health
 - **miracle_worker**
   - special stat per point: +1% healing given and +0.1 max health
-  - passive: Stigmata: once Miracle is full, you can take on the appearance of your god (toggle, drains 4/s): mobs within 8 blocks get Slowness and Weakness, you get +15% damage and Regeneration I
 - **necromancer**
   - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
   - special tree: Lord of Bones: servants never expire until killed; -15% max health
 - **oracle**
-  - special stat per point: +0.5 Ecstasy max and +0.2% damage while in Divine Ecstasy
-  - passive: Divine Ecstasy (toggle, drains 3 Ecstasy/s): +6 max health, immune to Weakness, Slowness and fear-type effects, +10% damage
   - general tree: Living Avatar: you can't leave it early and it drains 50% faster
   - special tree: Fully Possessed: Ecstasy also gives Regeneration I
 - **paladin**
@@ -1025,8 +1017,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **priest**
   - weakness: in the Nether and the End: Devotion does not regenerate and Prayer is disabled
   - skill Devout: +1 Devotion regen per 10s
-- **pyromancer**
-  - special tree: Phoenix: once per day, when you'd die, explode in flame and heal 6 HP; -10% max health
 - **ranger**
   - skill Survival: eating cooked meat gives Regeneration I for 3s
 - **rogue**
@@ -1306,6 +1296,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Skill trigger approximated
 
+- **abjurer**
+  - Abjuration: "taking damage while Ward is above half" -> pipican:hurt_wearing #pipican:armor/any
 - **aeromancer**
   - Windcalling: "throwing wind charges and falling long distances safely" -> pipican:jump
 - **apocalyptist**

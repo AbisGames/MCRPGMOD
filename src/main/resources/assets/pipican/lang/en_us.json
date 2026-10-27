@@ -147,5 +147,6 @@
   "pipican.weapon_kind.maces": "maces",
   "pipican.weapon_kind.tridents": "tridents",
   "pipican.weapon_kind.bows": "bows",
-  "pipican.weapon_kind.crossbows": "crossbows"
+  "pipican.weapon_kind.crossbows": "crossbows",
+  "pipican.cheated_death": "Not today!"
 }

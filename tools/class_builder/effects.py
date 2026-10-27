@@ -441,6 +441,8 @@ def translate(text, ctx):
     if not text or text.strip() in ('-', 'none', 'nothing'):
         return [], []
     original = text
+    # Zeal's "(+10 Madness)" is part of what happens, not a note.
+    text = re.sub(r'shrug it off entirely \(\+(\d+) ([A-Za-z ]+)\)', r'shrug it off entirely and gain \1 \2', text)
     # Parenthetical notes are explanations ("(potions, evoker fangs...)"); they only break the comma split.
     text = re.sub(r'\s*\([^)]*\)', '', text)
     # "after standing still for 3s, +20% damage until you move": the still condition already ends when you move.
@@ -521,8 +523,11 @@ def _conditional(text, ctx):
     if when is None:
         return None
     # "-2 armor at all times and +10% damage taken while sprinting": only the rest is conditional.
-    always_text = ', '.join(c for c in _split(eff_text) if re.search(r'\bat all times\b|\balways\b', c))
-    eff_text = ', '.join(c for c in _split(eff_text) if not re.search(r'\bat all times\b|\balways\b', c))
+    # A resource bar's max isn't a situational bonus ("+0.5 Ecstasy max and +0.2% damage while in Divine Ecstasy").
+    rn = re.escape((ctx.get('resource_name') or '\0').lower())
+    keep = re.compile(rf'\bat all times\b|\balways\b|^[+-]?\d+(?:\.\d+)?%? (?:max {rn}|{rn} max)\b', re.I)
+    always_text = ', '.join(c for c in _split(eff_text) if keep.search(c.strip()))
+    eff_text = ', '.join(c for c in _split(eff_text) if not keep.search(c.strip()))
     always, unsupported_always = _translate(always_text, ctx) if always_text else ([], [])
     effects, unsupported = _translate(eff_text, ctx) if eff_text else ([], [])
     if unsupported or unsupported_always or not effects:

@@ -221,6 +221,7 @@ public final class AbilityService {
         if (ClassEffectApplier.state(player).favoredWeapon()) {
             FavoredWeapon.choose(player);
         }
+        Reactions.rest(player);
         Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.WAKE);
         ClassService.changed(player);
     }
