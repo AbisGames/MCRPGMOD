@@ -1,0 +1,130 @@
+{
+  "name": "Berserker",
+  "description": "A warrior whose rage turns them into a wild, unstoppable killer - hard to control, harder to kill.",
+  "icon": "minecraft:netherite_axe",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 6,
+    "pipican:dexterity": 1,
+    "pipican:agility": 2,
+    "pipican:endurance": 5,
+    "pipican:luck": 1,
+    "pipican:berserker_fury": 8
+  },
+  "special_stat": {
+    "stat": "pipican:berserker_fury",
+    "resource": {
+      "name": "Rage",
+      "base_max": 40.0,
+      "max_per_point": 2.0,
+      "regen_per_second": -0.5,
+      "regen_per_point": 0.0,
+      "color": -5040354,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_axe"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:cooked_beef",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "berserker_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/berserker",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "berserker_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_melee",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "When the rage leaves, it takes everything with it.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "name": "Thaumaturge",
+  "description": "A slightly unhinged master of Chaos magic who rolls the dice on every spell - and usually wins.",
+  "icon": "minecraft:end_crystal",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 3,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 5,
+    "pipican:endurance": 1,
+    "pipican:luck": 5,
+    "pipican:thaumaturge_entropy": 10
+  },
+  "special_stat": {
+    "stat": "pipican:thaumaturge_entropy",
+    "resource": {
+      "name": "Chaos",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -49707,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:potion",
+      "count": 3,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:awkward"
+        }
+      }
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "thaumaturge_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/thaumaturge",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "thaumaturge_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:luck",
+      "amount": 2
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Chaos is never fully tamed.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:charm": 1
+  }
+}

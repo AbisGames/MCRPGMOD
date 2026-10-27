@@ -1,0 +1,81 @@
+{
+  "name": "Riding",
+  "description": "Trained by travelling on horses, camels, donkeys, pigs and striders.",
+  "icon": "minecraft:feather",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "walk",
+    "per_blocks": 50
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:cavalier"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+5% mount speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+2 mount max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% mount jump",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+2 mount max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+10% mount speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

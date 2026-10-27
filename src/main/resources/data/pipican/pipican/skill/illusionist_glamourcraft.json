@@ -1,0 +1,67 @@
+{
+  "name": "Glamourcraft",
+  "description": "Trained by dodging hits with decoys.",
+  "icon": "minecraft:glass",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:illusionist"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Phantasm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:illusionist_phantasm",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Phantasm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:illusionist_phantasm",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Mirage regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Phantasm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:illusionist_phantasm",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Phantasm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:illusionist_phantasm",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

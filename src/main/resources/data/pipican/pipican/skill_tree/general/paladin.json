@@ -1,0 +1,123 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "paladin_start",
+      "name": "Paladin",
+      "description": "+1 armor",
+      "type": "start",
+      "x": 739,
+      "y": 130,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "paladin_righteous",
+      "name": "Righteous",
+      "description": "+5% melee damage",
+      "type": "small",
+      "x": 812,
+      "y": 115,
+      "links": [
+        "paladin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "paladin_aegis",
+      "name": "Aegis",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 803,
+      "y": 169,
+      "links": [
+        "paladin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "paladin_sense",
+      "name": "Sense Enemies",
+      "description": {
+        "text": "hostile mobs within 12 blocks glow when you hold a shield",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 881,
+      "y": 127,
+      "links": [
+        "paladin_aegis"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "paladin_zeal",
+      "name": "Holy Zeal",
+      "description": {
+        "text": "+10% damage to undead and Nether mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 872,
+      "y": 182,
+      "links": [
+        "paladin_righteous"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "paladin_beacon",
+      "name": "Beacon of Hope",
+      "description": {
+        "text": "other players within 8 blocks get +2 armor, but you get -10% movement speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 945,
+      "y": 167,
+      "links": [
+        "paladin_sense",
+        "paladin_zeal"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

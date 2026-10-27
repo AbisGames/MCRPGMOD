@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "woodwose_start",
+      "name": "Woodwose",
+      "description": {
+        "text": "+1 armor in forests",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 958,
+      "y": 803
+    },
+    {
+      "id": "woodwose_barkskin",
+      "name": "Barkskin",
+      "description": "+2 armor",
+      "type": "small",
+      "x": 1029,
+      "y": 827,
+      "links": [
+        "woodwose_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "woodwose_thorns",
+      "name": "Thorns",
+      "description": {
+        "text": "mobs that melee you take 1 damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 994,
+      "y": 870,
+      "links": [
+        "woodwose_start"
+      ]
+    },
+    {
+      "id": "woodwose_deep_roots",
+      "name": "Deep Roots",
+      "description": {
+        "text": "+20% knockback resistance on grass",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1082,
+      "y": 872,
+      "links": [
+        "woodwose_barkskin"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "woodwose_overgrowth",
+      "name": "Overgrowth",
+      "description": {
+        "text": "crops grow 25% faster near you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1047,
+      "y": 915,
+      "links": [
+        "woodwose_thorns"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "woodwose_ent",
+      "name": "Ent",
+      "description": {
+        "text": "+6 max health and +3 armor in forests, but -15% movement speed everywhere",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1118,
+      "y": 938,
+      "links": [
+        "woodwose_deep_roots",
+        "woodwose_overgrowth"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

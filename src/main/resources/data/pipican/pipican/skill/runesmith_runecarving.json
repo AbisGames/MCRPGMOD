@@ -1,0 +1,67 @@
+{
+  "name": "Runecarving",
+  "description": "Trained by applying armor trims and renaming weapons at anvils.",
+  "icon": "minecraft:coast_armor_trim_smithing_template",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:runesmith"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Runecraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:runesmith_runecraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Runecraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:runesmith_runecraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Rune Power regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Runecraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:runesmith_runecraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Runecraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:runesmith_runecraft",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

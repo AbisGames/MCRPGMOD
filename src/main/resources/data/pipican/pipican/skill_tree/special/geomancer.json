@@ -1,0 +1,118 @@
+{
+  "name": "Geomancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Earthen Defense",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "rooted",
+      "name": "Rooted",
+      "description": "+2 Bedrock",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:geomancer_bedrock",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "stone_fist",
+      "name": "Stone Fist",
+      "description": {
+        "text": "unarmed and pickaxe hits +20% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "earth_walker",
+      "name": "Earth Walker",
+      "description": {
+        "text": "unlocks Earth Glide ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "rooted"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "quake",
+      "name": "Quake",
+      "description": {
+        "text": "unlocks Quake ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "stone_fist"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "avatar_of_earth",
+      "name": "Avatar of Earth",
+      "description": {
+        "text": "Earthen Defense works anywhere; -20% movement speed in water and air",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "earth_walker",
+        "quake"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

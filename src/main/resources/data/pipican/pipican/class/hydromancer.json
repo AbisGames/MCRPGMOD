@@ -1,0 +1,110 @@
+{
+  "name": "Hydromancer",
+  "description": "Bonded to a water genie, the hydromancer flows out of grapples, swims like a dolphin and becomes water itself.",
+  "icon": "minecraft:heart_of_the_sea",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 1,
+    "pipican:dexterity": 2,
+    "pipican:agility": 5,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 1,
+    "pipican:luck": 1,
+    "pipican:hydromancer_tide": 10
+  },
+  "special_stat": {
+    "stat": "pipican:hydromancer_tide",
+    "resource": {
+      "name": "Current",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -14716975,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:trident"
+    },
+    {
+      "id": "minecraft:turtle_helmet"
+    },
+    {
+      "id": "minecraft:water_bucket"
+    },
+    {
+      "id": "minecraft:cooked_salmon",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "hydromancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/hydromancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "hydromancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Hydromancers dry out.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

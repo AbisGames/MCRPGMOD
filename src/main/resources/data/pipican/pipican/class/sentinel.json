@@ -1,0 +1,126 @@
+{
+  "name": "Sentinel",
+  "description": "A guardian with supernatural senses - never surprised, sees the invisible and owns the ground they stand on.",
+  "icon": "minecraft:spyglass",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 6,
+    "pipican:strength": 5,
+    "pipican:dexterity": 5,
+    "pipican:agility": 2,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 3,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:sentinel_vigilance": 10
+  },
+  "special_stat": {
+    "stat": "pipican:sentinel_vigilance",
+    "resource": {
+      "name": "Watch",
+      "base_max": 50.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -3562437,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:spyglass"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "sentinel_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/sentinel",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "sentinel_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Sentinels hold a post - roaming makes them uneasy.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

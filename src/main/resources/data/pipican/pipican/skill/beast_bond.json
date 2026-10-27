@@ -1,0 +1,90 @@
+{
+  "name": "Beast Bond",
+  "description": "Trained by taming and breeding animals.",
+  "icon": "minecraft:oak_sapling",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:beastmaster",
+    "pipican:druid",
+    "pipican:ranger",
+    "pipican:shapeshifter",
+    "pipican:woodwose"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "tamed animals +2 max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+10% breeding speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "tamed animals +5% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "tamed animals +2 max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "tamed animals +10% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Brawn",
+  "description": "Raw physical strength built over countless hours.",
+  "max": 100,
+  "exclusive": true,
+  "color": -4959446,
+  "per_point": [
+    {
+      "attribute": "minecraft:max_health",
+      "amount": 0.1
+    }
+  ]
+}

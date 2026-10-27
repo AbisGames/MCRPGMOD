@@ -1,0 +1,146 @@
+{
+  "name": "Jack-of-All-Trades",
+  "description": "A dabbler in everything who finds a way to succeed when they should fail.",
+  "icon": "minecraft:bundle",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 3,
+    "pipican:dexterity": 4,
+    "pipican:agility": 4,
+    "pipican:intelligence": 3,
+    "pipican:wisdom": 3,
+    "pipican:endurance": 3,
+    "pipican:luck": 2,
+    "pipican:jack_of_all_trades_aptitude": 10
+  },
+  "special_stat": {
+    "stat": "pipican:jack_of_all_trades_aptitude",
+    "resource": {
+      "name": "Knack",
+      "base_max": 50.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -7363750,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 16
+    },
+    {
+      "id": "minecraft:stone_pickaxe"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "jack_of_all_trades_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/jack_of_all_trades",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "jack_of_all_trades_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Master of none.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

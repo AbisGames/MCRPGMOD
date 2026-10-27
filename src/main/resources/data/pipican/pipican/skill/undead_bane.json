@@ -1,0 +1,87 @@
+{
+  "name": "Undead Bane",
+  "description": "Trained by killing undead mobs (zombies, skeletons, phantoms, drowned, wither skeletons...).",
+  "icon": "minecraft:golden_apple",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:astromancer",
+    "pipican:cleric",
+    "pipican:exorcist",
+    "pipican:inquisitor",
+    "pipican:necromancer",
+    "pipican:paladin",
+    "pipican:priest",
+    "pipican:templar",
+    "pipican:theurge"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+3% damage to undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+3% damage to undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "-5% damage taken from undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+3% damage to undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+6% damage to undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

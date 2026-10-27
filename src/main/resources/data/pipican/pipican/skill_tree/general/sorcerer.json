@@ -1,0 +1,121 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "sorcerer_start",
+      "name": "Sorcerer",
+      "description": "+5% magic damage",
+      "type": "start",
+      "x": -130,
+      "y": -739,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "sorcerer_surge",
+      "name": "Surge",
+      "description": "+6% magic damage",
+      "type": "small",
+      "x": -169,
+      "y": -803,
+      "links": [
+        "sorcerer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "sorcerer_insulated",
+      "name": "Insulated",
+      "description": "-10% explosion damage taken",
+      "type": "small",
+      "x": -115,
+      "y": -812,
+      "links": [
+        "sorcerer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_explosion",
+          "multiplier": 0.9
+        }
+      ]
+    },
+    {
+      "id": "sorcerer_far",
+      "name": "Far Reach",
+      "description": {
+        "text": "+15% projectile speed for thrown potions and fire charges",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -182,
+      "y": -872,
+      "links": [
+        "sorcerer_surge"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "sorcerer_empowered",
+      "name": "Empowered",
+      "description": "+12% magic damage",
+      "type": "notable",
+      "x": -127,
+      "y": -881,
+      "links": [
+        "sorcerer_insulated",
+        "sorcerer_far"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.12
+        }
+      ]
+    },
+    {
+      "id": "sorcerer_living_bomb",
+      "name": "Living Bomb",
+      "description": {
+        "text": "Outbursts deal double damage, but you take 25% of the outburst damage yourself",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -167,
+      "y": -945,
+      "links": [
+        "sorcerer_empowered"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

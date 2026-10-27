@@ -1,0 +1,118 @@
+{
+  "name": "Hexer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Evil Eye",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "spiteful",
+      "name": "Spiteful",
+      "description": "+2 Malice",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hexer_malice",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "desire",
+      "name": "Desire",
+      "description": {
+        "text": "Desire-cursed mobs fight other mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "lethargy",
+      "name": "Lethargy",
+      "description": {
+        "text": "Lethargy also stops jumping",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "spiteful"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "pain",
+      "name": "Pain",
+      "description": {
+        "text": "Pain curse deals 3 per second",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "desire"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "arch_hexer",
+      "name": "Arch-Hexer",
+      "description": {
+        "text": "you can curse 3 mobs at once; Spite regen -25%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "lethargy",
+        "pain"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

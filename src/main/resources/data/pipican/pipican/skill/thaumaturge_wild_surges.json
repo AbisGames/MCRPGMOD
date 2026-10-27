@@ -1,0 +1,67 @@
+{
+  "name": "Wild Surges",
+  "description": "Trained by triggering Seize Chaos.",
+  "icon": "minecraft:end_crystal",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:thaumaturge"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Entropy",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thaumaturge_entropy",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Entropy",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thaumaturge_entropy",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Chaos regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Entropy",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thaumaturge_entropy",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Entropy",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thaumaturge_entropy",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

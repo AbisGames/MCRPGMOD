@@ -1,0 +1,123 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "death_dealer_start",
+      "name": "Death Dealer",
+      "description": "+5% axe damage",
+      "type": "start",
+      "x": -1349,
+      "y": 860,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "death_dealer_cleaver",
+      "name": "Cleaver",
+      "description": "+6% axe damage",
+      "type": "small",
+      "x": -1394,
+      "y": 920,
+      "links": [
+        "death_dealer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "death_dealer_crusher",
+      "name": "Crusher",
+      "description": "+6% mace damage",
+      "type": "small",
+      "x": -1423,
+      "y": 874,
+      "links": [
+        "death_dealer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/maces",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "death_dealer_wide_arc",
+      "name": "Wide Arc",
+      "description": {
+        "text": "sweep radius +1 block",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1453,
+      "y": 958,
+      "links": [
+        "death_dealer_cleaver"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "death_dealer_executioner_s_weight",
+      "name": "Executioner's Weight",
+      "description": {
+        "text": "+10% damage to mobs below half health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1482,
+      "y": 912,
+      "links": [
+        "death_dealer_crusher"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "death_dealer_slaughterhouse",
+      "name": "Slaughterhouse",
+      "description": {
+        "text": "Brutal Swing also heals 2 HP, but -3 armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1527,
+      "y": 973,
+      "links": [
+        "death_dealer_wide_arc",
+        "death_dealer_executioner_s_weight"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

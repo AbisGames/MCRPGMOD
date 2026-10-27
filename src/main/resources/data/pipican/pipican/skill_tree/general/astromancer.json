@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "astromancer_start",
+      "name": "Astromancer",
+      "description": {
+        "text": "+5% damage outdoors",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 1187,
+      "y": -393
+    },
+    {
+      "id": "astromancer_sunlit",
+      "name": "Sunlit",
+      "description": {
+        "text": "+6% magic damage in daylight",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1244,
+      "y": -441,
+      "links": [
+        "astromancer_start"
+      ]
+    },
+    {
+      "id": "astromancer_moonlit",
+      "name": "Moonlit",
+      "description": {
+        "text": "+6% magic damage at night",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1262,
+      "y": -389,
+      "links": [
+        "astromancer_start"
+      ]
+    },
+    {
+      "id": "astromancer_beacon",
+      "name": "Beacon",
+      "description": {
+        "text": "players within 8 blocks get Night Vision",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1311,
+      "y": -463,
+      "links": [
+        "astromancer_sunlit"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "astromancer_solar_flare",
+      "name": "Solar Flare",
+      "description": {
+        "text": "mobs that hit you have 10% chance to be set on fire",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1328,
+      "y": -411,
+      "links": [
+        "astromancer_moonlit"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "astromancer_power_of_the_sun",
+      "name": "Power of the Sun",
+      "description": {
+        "text": "+25% damage outdoors, but -25% damage underground",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1386,
+      "y": -459,
+      "links": [
+        "astromancer_beacon",
+        "astromancer_solar_flare"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

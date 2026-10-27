@@ -1,0 +1,7 @@
+{
+  "name": "Tempest",
+  "description": "The storm you carry inside.",
+  "max": 100,
+  "exclusive": true,
+  "color": -3510
+}

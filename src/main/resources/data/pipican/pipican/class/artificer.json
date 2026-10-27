@@ -1,0 +1,113 @@
+{
+  "name": "Artificer",
+  "description": "A tinkerer who fuses magic and machinery, keeping gear in top shape and building mechanical servants.",
+  "icon": "minecraft:crafter",
+  "selectable": true,
+  "base_health": 22.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:strength": 2,
+    "pipican:dexterity": 4,
+    "pipican:agility": 1,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:artificer_ingenuity": 8
+  },
+  "special_stat": {
+    "stat": "pipican:artificer_ingenuity",
+    "resource": {
+      "name": "Spare Parts",
+      "base_max": 20.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.1,
+      "regen_per_point": 0.01,
+      "color": -3904965,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:crossbow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 16
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:copper_ingot",
+      "count": 8
+    },
+    {
+      "id": "minecraft:crafting_table"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "artificer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/artificer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "artificer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Metal and magic attract the storm.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:belt": 2
+  }
+}

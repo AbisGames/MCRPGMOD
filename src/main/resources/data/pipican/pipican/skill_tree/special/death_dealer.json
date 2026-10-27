@@ -1,0 +1,118 @@
+{
+  "name": "Death Dealer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Brutal Swing",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "heft",
+      "name": "Heft",
+      "description": "+2 Carnage",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:death_dealer_carnage",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "follow_through",
+      "name": "Follow-Through",
+      "description": {
+        "text": "sweep damage 60%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "mountains_of_the_dead",
+      "name": "Mountains of the Dead",
+      "description": {
+        "text": "unlocks Whirlwind ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "heft"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "bloodsoaked",
+      "name": "Bloodsoaked",
+      "description": {
+        "text": "full Bloodshed gives +15% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "follow_through"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "reaper",
+      "name": "Reaper",
+      "description": {
+        "text": "mobs below 15% health that you sweep die instantly; -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mountains_of_the_dead",
+        "bloodsoaked"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

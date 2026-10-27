@@ -1,0 +1,118 @@
+{
+  "name": "Stormbringer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Powered by Storm",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "crackle",
+      "name": "Crackle",
+      "description": "+2 Tempest",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:stormbringer_tempest",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "ride_the_lightning",
+      "name": "Ride the Lightning",
+      "description": {
+        "text": "unlocks Lightning Dash ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "chain_lightning",
+      "name": "Chain Lightning",
+      "description": {
+        "text": "lightning arcs to 2 more mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "crackle"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "call_the_storm",
+      "name": "Call the Storm",
+      "description": {
+        "text": "unlocks Summon Storm ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "ride_the_lightning"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "stormlord",
+      "name": "Stormlord",
+      "description": {
+        "text": "Powered by Storm lasts 3 minutes; you can't wear iron or netherite armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "chain_lightning",
+        "call_the_storm"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

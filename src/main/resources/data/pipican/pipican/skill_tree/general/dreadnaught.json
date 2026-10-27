@@ -1,0 +1,123 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "dreadnaught_start",
+      "name": "Dreadnaught",
+      "description": "+1 armor",
+      "type": "start",
+      "x": -1576,
+      "y": -278,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "dreadnaught_riveted",
+      "name": "Riveted",
+      "description": "+1 armor toughness",
+      "type": "small",
+      "x": -1649,
+      "y": -263,
+      "links": [
+        "dreadnaught_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "dreadnaught_padded",
+      "name": "Padded",
+      "description": "+3 max health",
+      "type": "small",
+      "x": -1640,
+      "y": -317,
+      "links": [
+        "dreadnaught_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "dreadnaught_deflection",
+      "name": "Deflection",
+      "description": {
+        "text": "+10% projectile damage reduction",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1718,
+      "y": -275,
+      "links": [
+        "dreadnaught_riveted"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "dreadnaught_anchored",
+      "name": "Anchored",
+      "description": {
+        "text": "immune to Slowness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1709,
+      "y": -329,
+      "links": [
+        "dreadnaught_padded"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "dreadnaught_walking_fortress",
+      "name": "Walking Fortress",
+      "description": {
+        "text": "+30% damage reduction, but -15% movement speed and -15% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1783,
+      "y": -314,
+      "links": [
+        "dreadnaught_deflection",
+        "dreadnaught_anchored"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

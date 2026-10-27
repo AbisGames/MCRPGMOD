@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "hexer_start",
+      "name": "Hexer",
+      "description": {
+        "text": "+3% curse chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 717,
+      "y": -1024
+    },
+    {
+      "id": "hexer_wicked",
+      "name": "Wicked",
+      "description": {
+        "text": "+5% curse chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 735,
+      "y": -1097,
+      "links": [
+        "hexer_start"
+      ]
+    },
+    {
+      "id": "hexer_lingering_hate",
+      "name": "Lingering Hate",
+      "description": {
+        "text": "curses last 3s longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 780,
+      "y": -1066,
+      "links": [
+        "hexer_start"
+      ]
+    },
+    {
+      "id": "hexer_withering_gaze",
+      "name": "Withering Gaze",
+      "description": {
+        "text": "Pain curse also gives Weakness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 775,
+      "y": -1154,
+      "links": [
+        "hexer_wicked"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "hexer_hex_ward",
+      "name": "Hex Ward",
+      "description": {
+        "text": "you can't be hit by witches' potions",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 820,
+      "y": -1123,
+      "links": [
+        "hexer_lingering_hate"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "hexer_doom_hex",
+      "name": "Doom Hex",
+      "description": {
+        "text": "cursed mobs that die explode in a small Instant Damage cloud, but -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 837,
+      "y": -1196,
+      "links": [
+        "hexer_withering_gaze",
+        "hexer_hex_ward"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

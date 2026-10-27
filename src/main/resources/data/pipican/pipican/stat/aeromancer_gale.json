@@ -1,0 +1,14 @@
+{
+  "name": "Gale",
+  "description": "The strength of your bond with the wind genie.",
+  "max": 100,
+  "exclusive": true,
+  "color": -4200193,
+  "per_point": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.005,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

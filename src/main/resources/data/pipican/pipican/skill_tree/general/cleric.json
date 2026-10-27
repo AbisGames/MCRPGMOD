@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "cleric_start",
+      "name": "Cleric",
+      "description": {
+        "text": "+5% damage to undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 650,
+      "y": -375
+    },
+    {
+      "id": "cleric_scripture",
+      "name": "Scripture",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 696,
+      "y": -434,
+      "links": [
+        "cleric_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "cleric_censure",
+      "name": "Censure",
+      "description": {
+        "text": "+8% damage to undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 724,
+      "y": -386,
+      "links": [
+        "cleric_start"
+      ]
+    },
+    {
+      "id": "cleric_bulwark",
+      "name": "Bulwark of Faith",
+      "description": {
+        "text": "-10% damage taken from undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 757,
+      "y": -469,
+      "links": [
+        "cleric_scripture"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "cleric_holy_wrath",
+      "name": "Holy Wrath",
+      "description": {
+        "text": "undead you hit are set on fire for 2s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 785,
+      "y": -421,
+      "links": [
+        "cleric_censure"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "cleric_crusader",
+      "name": "Crusader",
+      "description": {
+        "text": "+30% damage to undead, but -10% damage to everything else",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 831,
+      "y": -480,
+      "links": [
+        "cleric_bulwark",
+        "cleric_holy_wrath"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

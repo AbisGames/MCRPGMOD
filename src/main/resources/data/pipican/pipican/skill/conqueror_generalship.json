@@ -1,0 +1,67 @@
+{
+  "name": "Generalship",
+  "description": "Trained by allies killing mobs you've hit in the last 4s.",
+  "icon": "minecraft:goat_horn",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:conqueror"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Command",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conqueror_command",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Command",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conqueror_command",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Orders regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Command",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conqueror_command",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Command",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conqueror_command",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

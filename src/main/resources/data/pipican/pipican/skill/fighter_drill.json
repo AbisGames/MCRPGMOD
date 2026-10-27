@@ -1,0 +1,71 @@
+{
+  "name": "Drill",
+  "description": "Trained by killing mobs with 3 or more different weapon types in the same day.",
+  "icon": "minecraft:diamond_sword",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    200,
+    800,
+    2400,
+    6000,
+    14000
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican:fighter"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Discipline",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:fighter_discipline",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Discipline",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:fighter_discipline",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 attack damage",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_damage",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Discipline",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:fighter_discipline",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Discipline",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:fighter_discipline",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

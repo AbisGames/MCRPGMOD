@@ -1,0 +1,118 @@
+{
+  "name": "Witch Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Guidance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "witch_fire",
+      "name": "Witch Fire",
+      "description": "+2 Craft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:witch_craft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "green_flame",
+      "name": "Green Flame",
+      "description": {
+        "text": "your fire damage to mobs is +15%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "flying_broom",
+      "name": "Flying Broom",
+      "description": {
+        "text": "unlocks the Flying Broom ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "witch_fire"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "brewmistress",
+      "name": "Brewmistress",
+      "description": {
+        "text": "brewing takes 25% less time",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "green_flame"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "lasting_bond",
+      "name": "Lasting Bond",
+      "description": {
+        "text": "bond with one player: you each heal 50% of what the other heals while within 32 blocks; Guidance range -2",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "flying_broom",
+        "brewmistress"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

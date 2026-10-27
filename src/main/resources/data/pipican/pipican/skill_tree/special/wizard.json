@@ -1,0 +1,118 @@
+{
+  "name": "Wizard Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Grimoire",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "grimoire_casting",
+      "name": "Grimoire Casting",
+      "description": "+2 Lore",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wizard_lore",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "margins",
+      "name": "Notes in the Margins",
+      "description": {
+        "text": "+15% max Aether",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "spell_expertise",
+      "name": "Spell Expertise",
+      "description": {
+        "text": "+20% Aether regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "grimoire_casting"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "second_tome",
+      "name": "Second Tome",
+      "description": {
+        "text": "Grimoire bonus also works with a book in any hotbar slot",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "margins"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "spell_mastery",
+      "name": "Spell Mastery",
+      "description": {
+        "text": "6 'spell points' per rest that pay for abilities instead of Aether; -10% Aether regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "spell_expertise",
+        "second_tome"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Athletics",
+  "description": "Trained by sprinting.",
+  "icon": "minecraft:feather",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "sprint",
+    "per_blocks": 10
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:acrobat",
+    "pipican:aeromancer",
+    "pipican:berserker",
+    "pipican:explorer",
+    "pipican:marauder",
+    "pipican:scout",
+    "pipican:traveler"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+2% sprint speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "-5% hunger from sprinting",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+2% sprint speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "-5% hunger from sprinting",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+4% sprint speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

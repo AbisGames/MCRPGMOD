@@ -1,0 +1,118 @@
+{
+  "name": "Gladiator Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Dirty Fighting",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "ruthless",
+      "name": "Ruthless",
+      "description": "+2 Showmanship",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gladiator_showmanship",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "low_blow",
+      "name": "Low Blow",
+      "description": {
+        "text": "Dirty Fighting can also apply Weakness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "win_at_any_cost",
+      "name": "Win at Any Cost",
+      "description": {
+        "text": "+10% more damage to affected mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "ruthless"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "finishing_blow",
+      "name": "Finishing Blow",
+      "description": {
+        "text": "unlocks Coup de Grace ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "low_blow"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "champion_of_the_pits",
+      "name": "Champion of the Pits",
+      "description": {
+        "text": "every kill refills 10% health; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "win_at_any_cost",
+        "finishing_blow"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

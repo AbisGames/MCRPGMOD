@@ -1,0 +1,125 @@
+{
+  "name": "Champion",
+  "description": "A warrior who fights for a cause. Plants their feet, takes a stance and refuses to fall.",
+  "icon": "minecraft:bell",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 6,
+    "pipican:dexterity": 3,
+    "pipican:agility": 1,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 3,
+    "pipican:endurance": 6,
+    "pipican:luck": 1,
+    "pipican:champion_resolve": 10
+  },
+  "special_stat": {
+    "stat": "pipican:champion_resolve",
+    "resource": {
+      "name": "Valor",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.05,
+      "color": -3002577,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:white_banner"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "champion_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/champion",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "champion_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:knockback_resistance",
+      "amount": 0.1
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Champions plant their feet. Moving breaks their rhythm.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

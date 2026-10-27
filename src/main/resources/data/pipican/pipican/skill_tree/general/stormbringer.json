@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "stormbringer_start",
+      "name": "Stormbringer",
+      "description": {
+        "text": "+5% damage in rain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -139,
+      "y": -1594
+    },
+    {
+      "id": "stormbringer_static",
+      "name": "Static",
+      "description": {
+        "text": "your hits have 10% chance to chain 2 damage to a nearby mob",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -173,
+      "y": -1661,
+      "links": [
+        "stormbringer_start"
+      ]
+    },
+    {
+      "id": "stormbringer_thunderhead",
+      "name": "Thunderhead",
+      "description": {
+        "text": "+10% speed in rain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -118,
+      "y": -1666,
+      "links": [
+        "stormbringer_start"
+      ]
+    },
+    {
+      "id": "stormbringer_conductor",
+      "name": "Conductor",
+      "description": {
+        "text": "lightning chance doubled while holding a trident",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -179,
+      "y": -1731,
+      "links": [
+        "stormbringer_static"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "stormbringer_eye_of_the_storm",
+      "name": "Eye of the Storm",
+      "description": {
+        "text": "-20% damage taken in thunderstorms",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -124,
+      "y": -1736,
+      "links": [
+        "stormbringer_thunderhead"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "stormbringer_storm_avatar",
+      "name": "Storm Avatar",
+      "description": {
+        "text": "your lightning chance works in any rain, but you take 25% more fire damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -158,
+      "y": -1803,
+      "links": [
+        "stormbringer_conductor",
+        "stormbringer_eye_of_the_storm"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "name": "Necromancer",
+  "description": "A master of death magic who commands the undead and refuses to die.",
+  "icon": "minecraft:skeleton_skull",
+  "selectable": true,
+  "base_health": 26.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 9,
+    "pipican:wisdom": 8,
+    "pipican:endurance": 4,
+    "pipican:luck": 1,
+    "pipican:necromancer_deathgrip": 10
+  },
+  "special_stat": {
+    "stat": "pipican:necromancer_deathgrip",
+    "resource": {
+      "name": "Necrosis",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -12817590,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bone",
+      "count": 4
+    },
+    {
+      "id": "minecraft:rotten_flesh",
+      "count": 4
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "necromancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/necromancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "necromancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "The living sense the grave on you.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:charm": 1
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "assassin_start",
+      "name": "Assassin",
+      "description": {
+        "text": "+5% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -375,
+      "y": 650
+    },
+    {
+      "id": "assassin_garrote",
+      "name": "Garrote",
+      "description": {
+        "text": "+8% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -386,
+      "y": 724,
+      "links": [
+        "assassin_start"
+      ]
+    },
+    {
+      "id": "assassin_soft_soles",
+      "name": "Soft Soles",
+      "description": "+10% sneaking speed",
+      "type": "small",
+      "x": -434,
+      "y": 696,
+      "links": [
+        "assassin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "assassin_venom",
+      "name": "Venom",
+      "description": {
+        "text": "your poison also gives Slowness I",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -421,
+      "y": 785,
+      "links": [
+        "assassin_garrote"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "assassin_shadowstep",
+      "name": "Shadowstep",
+      "description": {
+        "text": "after a kill, Invisibility for 2s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -469,
+      "y": 757,
+      "links": [
+        "assassin_soft_soles"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "assassin_death_mark",
+      "name": "Death Mark",
+      "description": {
+        "text": "Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -480,
+      "y": 831,
+      "links": [
+        "assassin_venom",
+        "assassin_shadowstep"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

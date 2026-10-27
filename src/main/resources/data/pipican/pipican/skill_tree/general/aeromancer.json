@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "aeromancer_start",
+      "name": "Aeromancer",
+      "description": "+5% movement speed",
+      "type": "start",
+      "x": -453,
+      "y": -1165,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "aeromancer_updraft",
+      "name": "Updraft",
+      "description": {
+        "text": "+1 jump height",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -504,
+      "y": -1220,
+      "links": [
+        "aeromancer_start"
+      ]
+    },
+    {
+      "id": "aeromancer_tailwind",
+      "name": "Tailwind",
+      "description": "+6% movement speed",
+      "type": "small",
+      "x": -453,
+      "y": -1240,
+      "links": [
+        "aeromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.06,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "aeromancer_deflecting_winds",
+      "name": "Deflecting Winds",
+      "description": {
+        "text": "+10% arrow-deflect chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -529,
+      "y": -1286,
+      "links": [
+        "aeromancer_updraft"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "aeromancer_skyborn",
+      "name": "Skyborn",
+      "description": "-30% fall damage at all times",
+      "type": "notable",
+      "x": -478,
+      "y": -1305,
+      "links": [
+        "aeromancer_tailwind"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.7
+        }
+      ]
+    },
+    {
+      "id": "aeromancer_eye_of_the_storm",
+      "name": "Eye of the Storm",
+      "description": {
+        "text": "you can glide like with an elytra without one, but -3 armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -529,
+      "y": -1361,
+      "links": [
+        "aeromancer_deflecting_winds",
+        "aeromancer_skyborn"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

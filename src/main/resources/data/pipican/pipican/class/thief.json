@@ -1,0 +1,123 @@
+{
+  "name": "Thief",
+  "description": "A light-fingered burglar who gets more out of every chest and mob, climbs anything and dodges trouble.",
+  "icon": "minecraft:chest",
+  "selectable": true,
+  "base_health": 24.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:strength": 1,
+    "pipican:dexterity": 5,
+    "pipican:agility": 5,
+    "pipican:intelligence": 2,
+    "pipican:endurance": 1,
+    "pipican:luck": 4,
+    "pipican:thief_finesse": 8
+  },
+  "special_stat": {
+    "stat": "pipican:thief_finesse",
+    "resource": {
+      "name": "Nerve",
+      "base_max": 30.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.05,
+      "color": -2051526,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 16
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bundle"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "thief_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/thief",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "thief_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Word gets around about thieves.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1
+  }
+}

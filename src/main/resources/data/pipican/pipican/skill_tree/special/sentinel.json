@@ -1,0 +1,118 @@
+{
+  "name": "Sentinel Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Perfect Awareness",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "keen",
+      "name": "Keen",
+      "description": "+2 Vigilance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sentinel_vigilance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "no_hiding",
+      "name": "No Hiding",
+      "description": {
+        "text": "mobs you see can't become invisible to anyone near you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "stand_guard",
+      "name": "Stand Guard",
+      "description": {
+        "text": "Stand Guard triggers after 1s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "keen"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "description": {
+        "text": "players within 8 blocks also see what glows for you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "no_hiding"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "unsleeping",
+      "name": "Unsleeping",
+      "description": {
+        "text": "you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "stand_guard",
+        "sentry"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

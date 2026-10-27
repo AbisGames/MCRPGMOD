@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "diplomat_start",
+      "name": "Diplomat",
+      "description": {
+        "text": "-5% trade prices",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -163,
+      "y": 1239
+    },
+    {
+      "id": "diplomat_charming",
+      "name": "Charming",
+      "description": {
+        "text": "-5% trade prices",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -145,
+      "y": 1312,
+      "links": [
+        "diplomat_start"
+      ]
+    },
+    {
+      "id": "diplomat_calm_words",
+      "name": "Calm Words",
+      "description": {
+        "text": "+5% Stay the Hand",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -200,
+      "y": 1305,
+      "links": [
+        "diplomat_start"
+      ]
+    },
+    {
+      "id": "diplomat_unexpected_alliances",
+      "name": "Unexpected Alliances",
+      "description": {
+        "text": "hostile mobs you cancel with Stay the Hand fight other mobs for 5s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -154,
+      "y": 1382,
+      "links": [
+        "diplomat_charming"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "diplomat_envoy",
+      "name": "Envoy",
+      "description": {
+        "text": "Hero of the Village lasts twice as long",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -209,
+      "y": 1375,
+      "links": [
+        "diplomat_calm_words"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "diplomat_peacemaker",
+      "name": "Peacemaker",
+      "description": {
+        "text": "Stay the Hand 30%, but -40% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -191,
+      "y": 1448,
+      "links": [
+        "diplomat_unexpected_alliances",
+        "diplomat_envoy"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Arena",
+  "description": "Trained by killing mobs that have a harmful effect.",
+  "icon": "minecraft:trident",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:gladiator"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Showmanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gladiator_showmanship",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Showmanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gladiator_showmanship",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Bloodlust regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Showmanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gladiator_showmanship",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Showmanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gladiator_showmanship",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Scrutiny",
+  "description": "The inquisitor's piercing gaze.",
+  "max": 100,
+  "exclusive": true,
+  "color": -1251626
+}

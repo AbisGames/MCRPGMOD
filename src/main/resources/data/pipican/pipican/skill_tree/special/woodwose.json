@@ -1,0 +1,118 @@
+{
+  "name": "Woodwose Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Forest Hide",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "green_blood",
+      "name": "Green Blood",
+      "description": "+2 Verdure",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "oak_hide",
+      "name": "Oak Hide",
+      "description": {
+        "text": "unlocks Oak Hide ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "nature_s_resilience",
+      "name": "Nature's Resilience",
+      "description": {
+        "text": "absorption +2 more hearts",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "green_blood"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "nature_bond",
+      "name": "Nature Bond",
+      "description": {
+        "text": "unlocks Treeform ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "oak_hide"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "green_man",
+      "name": "Green Man",
+      "description": {
+        "text": "passive animals follow you and hostile spiders ignore you; -10% max health outside forests",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "nature_s_resilience",
+        "nature_bond"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

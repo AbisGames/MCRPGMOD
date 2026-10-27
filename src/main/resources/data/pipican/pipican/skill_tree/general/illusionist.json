@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "illusionist_start",
+      "name": "Illusionist",
+      "description": {
+        "text": "+3% decoy chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 860,
+      "y": 1349
+    },
+    {
+      "id": "illusionist_mirror_image",
+      "name": "Mirror Image",
+      "description": {
+        "text": "+5% decoy chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 920,
+      "y": 1394,
+      "links": [
+        "illusionist_start"
+      ]
+    },
+    {
+      "id": "illusionist_smoke_and_mirrors",
+      "name": "Smoke and Mirrors",
+      "description": {
+        "text": "+1 blink distance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 874,
+      "y": 1423,
+      "links": [
+        "illusionist_start"
+      ]
+    },
+    {
+      "id": "illusionist_phantom_strike",
+      "name": "Phantom Strike",
+      "description": {
+        "text": "first hit after a blink deals +25%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 958,
+      "y": 1453,
+      "links": [
+        "illusionist_mirror_image"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "illusionist_veil",
+      "name": "Veil",
+      "description": {
+        "text": "mobs 25% slower to notice you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 912,
+      "y": 1482,
+      "links": [
+        "illusionist_smoke_and_mirrors"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "illusionist_hall_of_mirrors",
+      "name": "Hall of Mirrors",
+      "description": {
+        "text": "decoy chance doubled, but -25% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 973,
+      "y": 1527,
+      "links": [
+        "illusionist_phantom_strike",
+        "illusionist_veil"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

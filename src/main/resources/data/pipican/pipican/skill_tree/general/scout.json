@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "scout_start",
+      "name": "Scout",
+      "description": "+3% movement speed",
+      "type": "start",
+      "x": 130,
+      "y": 739,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "scout_light_feet",
+      "name": "Light Feet",
+      "description": "+4% movement speed",
+      "type": "small",
+      "x": 169,
+      "y": 803,
+      "links": [
+        "scout_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.04,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "scout_keen_eyes",
+      "name": "Keen Eyes",
+      "description": {
+        "text": "+4 blocks Alertness range",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 115,
+      "y": 812,
+      "links": [
+        "scout_start"
+      ]
+    },
+    {
+      "id": "scout_skirmisher",
+      "name": "Skirmisher",
+      "description": {
+        "text": "+10% bow damage while moving",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 182,
+      "y": 872,
+      "links": [
+        "scout_light_feet"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "scout_lookout",
+      "name": "Lookout",
+      "description": {
+        "text": "can't be hit by sneak-attack bonuses (you are never 'unaware')",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 127,
+      "y": 881,
+      "links": [
+        "scout_keen_eyes"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "scout_pathfinder",
+      "name": "Pathfinder",
+      "description": {
+        "text": "+15% movement speed and no hunger from sprinting, but -15% melee damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 167,
+      "y": 945,
+      "links": [
+        "scout_skirmisher",
+        "scout_lookout"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

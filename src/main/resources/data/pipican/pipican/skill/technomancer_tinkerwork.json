@@ -1,0 +1,67 @@
+{
+  "name": "Tinkerwork",
+  "description": "Trained by crafting and placing redstone components.",
+  "icon": "minecraft:observer",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:technomancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Voltage regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

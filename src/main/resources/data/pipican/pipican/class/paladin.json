@@ -1,0 +1,128 @@
+{
+  "name": "Paladin",
+  "description": "A holy knight who burns divine power into every strike and shields the innocent from darkness.",
+  "icon": "minecraft:golden_sword",
+  "selectable": true,
+  "base_health": 26.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 5,
+    "pipican:dexterity": 1,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 4,
+    "pipican:endurance": 4,
+    "pipican:luck": 1,
+    "pipican:paladin_sanctity": 8
+  },
+  "special_stat": {
+    "stat": "pipican:paladin_sanctity",
+    "resource": {
+      "name": "Smite",
+      "base_max": 30.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.5,
+      "regen_per_point": 0.05,
+      "color": -10166,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "paladin_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/paladin",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "paladin_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 0.9
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "A paladin's power flows from an oath, and oaths can break.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1
+  }
+}

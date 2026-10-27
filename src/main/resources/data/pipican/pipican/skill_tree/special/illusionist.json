@@ -1,0 +1,118 @@
+{
+  "name": "Illusionist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Illusory Duplicates",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "glamour",
+      "name": "Glamour",
+      "description": "+2 Phantasm",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:illusionist_phantasm",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "blur",
+      "name": "Blur",
+      "description": {
+        "text": "after a decoy, you're invisible for 1s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "convincing_illusions",
+      "name": "Convincing Illusions",
+      "description": {
+        "text": "unlocks Decoy ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "glamour"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "phantasmal_killer",
+      "name": "Phantasmal Killer",
+      "description": {
+        "text": "unlocks Nightmare ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "blur"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "unreal",
+      "name": "Unreal",
+      "description": {
+        "text": "you can pass through mobs and they lose track every 10s; -10% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "convincing_illusions",
+        "phantasmal_killer"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

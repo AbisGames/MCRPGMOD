@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "astromancer_stat_start",
+      "name": "Astromancer",
+      "type": "start",
+      "x": 712,
+      "y": -236
+    },
+    {
+      "id": "astromancer_celestial_mind",
+      "name": "Celestial Mind",
+      "description": "+2 Wisdom, +1 Intelligence",
+      "type": "small",
+      "x": 769,
+      "y": -255,
+      "links": [
+        "astromancer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "astromancer_bright",
+      "name": "Bright",
+      "description": "+2 Intelligence, +1 Luck",
+      "type": "small",
+      "x": 826,
+      "y": -274,
+      "links": [
+        "astromancer_celestial_mind"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

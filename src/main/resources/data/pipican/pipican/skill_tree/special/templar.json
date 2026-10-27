@@ -1,0 +1,118 @@
+{
+  "name": "Templar Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Temple of Faith",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "consecrate",
+      "name": "Consecrate",
+      "description": "+2 Sanctum",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:templar_sanctum",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "wide_sanctum",
+      "name": "Wide Sanctum",
+      "description": {
+        "text": "+5 temple radius",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "temple_guardian",
+      "name": "Temple Guardian",
+      "description": {
+        "text": "Slowness becomes immobilise for 1s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "consecrate"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "portable_shrine",
+      "name": "Portable Shrine",
+      "description": {
+        "text": "unlocks Consecrate Ground ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "wide_sanctum"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "living_temple",
+      "name": "Living Temple",
+      "description": {
+        "text": "your temple follows you (radius 6); -15% temple bonuses",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "temple_guardian",
+        "portable_shrine"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

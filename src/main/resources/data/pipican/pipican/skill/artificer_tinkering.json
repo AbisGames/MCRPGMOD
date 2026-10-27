@@ -1,0 +1,67 @@
+{
+  "name": "Tinkering",
+  "description": "Trained by crafting redstone components, rails and mechanisms.",
+  "icon": "minecraft:crafter",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:artificer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Spare Parts max",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

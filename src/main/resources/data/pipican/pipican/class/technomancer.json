@@ -1,0 +1,116 @@
+{
+  "name": "Technomancer",
+  "description": "A mage-engineer who fuses Technomancy with redstone - quick gadgets, and later objects that come to life.",
+  "icon": "minecraft:observer",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 2,
+    "pipican:dexterity": 4,
+    "pipican:agility": 1,
+    "pipican:intelligence": 9,
+    "pipican:wisdom": 4,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:technomancer_circuitry": 10
+  },
+  "special_stat": {
+    "stat": "pipican:technomancer_circuitry",
+    "resource": {
+      "name": "Voltage",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -2087909,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:redstone",
+      "count": 8
+    },
+    {
+      "id": "minecraft:repeater",
+      "count": 2
+    },
+    {
+      "id": "minecraft:crossbow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 8
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "technomancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/technomancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "technomancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Gadgets break in harsh environments.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1,
+    "pipican:charm": 1
+  }
+}

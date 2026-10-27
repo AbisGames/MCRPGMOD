@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "enchanter_start",
+      "name": "Enchanter",
+      "description": {
+        "text": "+3% charm chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 800,
+      "y": -1386
+    },
+    {
+      "id": "enchanter_captivate",
+      "name": "Captivate",
+      "description": {
+        "text": "+5% charm chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 811,
+      "y": -1460,
+      "links": [
+        "enchanter_start"
+      ]
+    },
+    {
+      "id": "enchanter_spellwright",
+      "name": "Spellwright",
+      "description": {
+        "text": "+10% extra-enchantment chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 859,
+      "y": -1433,
+      "links": [
+        "enchanter_start"
+      ]
+    },
+    {
+      "id": "enchanter_countercharm",
+      "name": "Countercharm",
+      "description": {
+        "text": "players near you are also immune to Nausea",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 846,
+      "y": -1521,
+      "links": [
+        "enchanter_captivate"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "enchanter_puppeteer",
+      "name": "Puppeteer",
+      "description": {
+        "text": "charmed mobs attack other hostile mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 894,
+      "y": -1493,
+      "links": [
+        "enchanter_spellwright"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "enchanter_mind_thief",
+      "name": "Mind Thief",
+      "description": {
+        "text": "charm chance doubled, but you deal -30% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 905,
+      "y": -1568,
+      "links": [
+        "enchanter_countercharm",
+        "enchanter_puppeteer"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

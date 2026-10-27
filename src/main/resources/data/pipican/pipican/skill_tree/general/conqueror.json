@@ -1,0 +1,126 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "conqueror_start",
+      "name": "Conqueror",
+      "description": "+3% damage",
+      "type": "start",
+      "x": -1600,
+      "y": 0,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "conqueror_drillmaster",
+      "name": "Drillmaster",
+      "description": {
+        "text": "allies near you +2% attack speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1670,
+      "y": 28,
+      "links": [
+        "conqueror_start"
+      ]
+    },
+    {
+      "id": "conqueror_war_banner",
+      "name": "War Banner",
+      "description": {
+        "text": "banner in off-hand: allies +1 armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1670,
+      "y": -27,
+      "links": [
+        "conqueror_start"
+      ]
+    },
+    {
+      "id": "conqueror_flanking_orders",
+      "name": "Flanking Orders",
+      "description": {
+        "text": "+10% damage to mobs targeting someone else",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1740,
+      "y": 28,
+      "links": [
+        "conqueror_drillmaster"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "conqueror_logistics",
+      "name": "Logistics",
+      "description": {
+        "text": "allies near you lose hunger 15% slower",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1740,
+      "y": -27,
+      "links": [
+        "conqueror_war_banner"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "conqueror_grand_strategy",
+      "name": "Grand Strategy",
+      "description": {
+        "text": "aura bonuses doubled, but your own damage -20%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1810,
+      "y": 0,
+      "links": [
+        "conqueror_flanking_orders",
+        "conqueror_logistics"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

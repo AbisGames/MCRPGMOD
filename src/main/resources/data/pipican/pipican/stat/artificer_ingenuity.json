@@ -1,0 +1,7 @@
+{
+  "name": "Ingenuity",
+  "description": "Clever hands and a head full of schematics. Feeds Spare Parts and durability bonuses.",
+  "max": 100,
+  "exclusive": true,
+  "color": -3904965
+}

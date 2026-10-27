@@ -1,0 +1,89 @@
+{
+  "name": "Herbalism",
+  "description": "Trained by harvesting fully grown crops, berries, flowers and mushrooms.",
+  "icon": "minecraft:cauldron",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:druid",
+    "pipican:jack_of_all_trades",
+    "pipican:witch",
+    "pipican:woodwose"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+5% chance of double crop drops",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% bone meal effect",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% chance of double crop drops",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "eating berries/crops restores +1 hunger",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+10% chance of double crop drops",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

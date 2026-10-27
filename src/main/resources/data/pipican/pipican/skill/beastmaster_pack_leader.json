@@ -1,0 +1,67 @@
+{
+  "name": "Pack Leader",
+  "description": "Trained by your tamed animals killing mobs.",
+  "icon": "minecraft:lead",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:beastmaster"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Primal Bond",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:beastmaster_primal_bond",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Primal Bond",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:beastmaster_primal_bond",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Wild Spirit regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Primal Bond",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:beastmaster_primal_bond",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Primal Bond",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:beastmaster_primal_bond",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

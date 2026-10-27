@@ -1,0 +1,122 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "warrior_start",
+      "name": "Warrior",
+      "description": "+1 attack damage",
+      "type": "start",
+      "x": -300,
+      "y": 0,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_damage",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "warrior_drill",
+      "name": "Weapon Drill",
+      "description": "+4% weapon damage",
+      "type": "small",
+      "x": -370,
+      "y": 28,
+      "links": [
+        "warrior_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.04
+        }
+      ]
+    },
+    {
+      "id": "warrior_hardy",
+      "name": "Hardy",
+      "description": "+2 max health",
+      "type": "small",
+      "x": -370,
+      "y": -27,
+      "links": [
+        "warrior_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "warrior_footwork",
+      "name": "Footwork",
+      "description": "+4% attack speed",
+      "type": "small",
+      "x": -440,
+      "y": 28,
+      "links": [
+        "warrior_drill"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.04,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "warrior_veteran",
+      "name": "Veteran",
+      "description": "+1 armor, +8% weapon damage",
+      "type": "notable",
+      "x": -440,
+      "y": -27,
+      "links": [
+        "warrior_hardy",
+        "warrior_footwork"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.08
+        }
+      ]
+    },
+    {
+      "id": "warrior_combat_mastery",
+      "name": "Combat Mastery",
+      "description": {
+        "text": "your fully-charged melee hits also strike one other mob within 2 blocks for 50% damage, but -10% damage with bows and crossbows",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -510,
+      "y": 0,
+      "links": [
+        "warrior_veteran"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "name": "Sorcerer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Sorcery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "enlarged",
+      "name": "Enlarged Spell",
+      "description": {
+        "text": "Outburst radius +1 block",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ]
+    },
+    {
+      "id": "potent",
+      "name": "Potent Spell",
+      "description": "+2 Potency",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sorcerer_potency",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "lasting",
+      "name": "Lasting Spell",
+      "description": {
+        "text": "potion effects you apply last 30% longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "enlarged"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "greater_sorcery",
+      "name": "Greater Sorcery",
+      "description": {
+        "text": "Strain drains 50% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "potent"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "sorcerous_blast",
+      "name": "Sorcerous Blast",
+      "description": {
+        "text": "unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "lasting",
+        "greater_sorcery"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

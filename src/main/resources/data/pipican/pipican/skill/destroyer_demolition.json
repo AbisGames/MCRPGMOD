@@ -1,0 +1,67 @@
+{
+  "name": "Demolition",
+  "description": "Trained by damaging mobs with explosions.",
+  "icon": "minecraft:tnt",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:destroyer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Ruin",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:destroyer_ruin",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Ruin",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:destroyer_ruin",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Devastation regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Ruin",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:destroyer_ruin",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Ruin",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:destroyer_ruin",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

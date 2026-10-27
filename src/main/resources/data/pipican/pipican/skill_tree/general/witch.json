@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "witch_start",
+      "name": "Witch",
+      "description": {
+        "text": "+5% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 375,
+      "y": -650
+    },
+    {
+      "id": "witch_hedge",
+      "name": "Hedge Lore",
+      "description": {
+        "text": "+8% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 386,
+      "y": -724,
+      "links": [
+        "witch_start"
+      ]
+    },
+    {
+      "id": "witch_familiar",
+      "name": "Familiar",
+      "description": {
+        "text": "tamed cats near you give +1 armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 434,
+      "y": -696,
+      "links": [
+        "witch_start"
+      ]
+    },
+    {
+      "id": "witch_hex",
+      "name": "Hex",
+      "description": {
+        "text": "harmful potion effects you apply last 20% longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 421,
+      "y": -785,
+      "links": [
+        "witch_hedge"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "witch_coven",
+      "name": "Coven",
+      "description": {
+        "text": "+10% max Witchery, Guidance range +2",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 469,
+      "y": -757,
+      "links": [
+        "witch_familiar",
+        "witch_hex"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "witch_crone",
+      "name": "Crone's Bargain",
+      "description": {
+        "text": "all potions you drink last 50% longer, but -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 480,
+      "y": -831,
+      "links": [
+        "witch_coven"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

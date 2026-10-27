@@ -1,0 +1,77 @@
+{
+  "name": "Crossbowmanship",
+  "description": "Trained by hitting mobs with crossbow bolts.",
+  "icon": "minecraft:crossbow",
+  "trigger": {
+    "type": "pipican:ranged_hit",
+    "items": "#pipican:weapons/crossbows"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:artificer",
+    "pipican:assassin",
+    "pipican:engineer",
+    "pipican:fighter",
+    "pipican:gunslinger",
+    "pipican:sharpshooter",
+    "pipican:technomancer"
+  ],
+  "tiers": [
+    {
+      "description": "+3% crossbow damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% reload speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+3% crossbow damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% reload speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+6% crossbow damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

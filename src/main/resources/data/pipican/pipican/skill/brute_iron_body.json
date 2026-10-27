@@ -1,0 +1,66 @@
+{
+  "name": "Iron Body",
+  "description": "Trained by taking big hits (5+ damage) and surviving.",
+  "icon": "minecraft:anvil",
+  "trigger": {
+    "type": "pipican:hurt_wearing",
+    "items": "#pipican:armor/any",
+    "min_pieces": 1
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:brute"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Brawn",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:brute_brawn",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Brawn",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:brute_brawn",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+3 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Brawn",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:brute_brawn",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Brawn",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:brute_brawn",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

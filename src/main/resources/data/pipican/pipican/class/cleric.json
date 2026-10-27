@@ -1,0 +1,123 @@
+{
+  "name": "Cleric",
+  "description": "A militant champion of the gods who drives back the undead with holy symbols and righteous steel.",
+  "icon": "minecraft:totem_of_undying",
+  "selectable": true,
+  "base_health": 26.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 4,
+    "pipican:intelligence": 2,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:cleric_conviction": 8
+  },
+  "special_stat": {
+    "stat": "pipican:cleric_conviction",
+    "resource": {
+      "name": "Grace",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -3656,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_axe"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:golden_apple"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "cleric_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/cleric",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "cleric_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "special_passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "The cleric's purity draws the hunger of the damned.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1
+  }
+}

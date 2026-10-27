@@ -1,0 +1,118 @@
+{
+  "name": "Marauder Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Powerful Charge",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "reaver",
+      "name": "Reaver",
+      "description": "+2 Savagery",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:marauder_savagery",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "trample",
+      "name": "Trample",
+      "description": {
+        "text": "sprint-hits stun for 0.5s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "strength_from_pain",
+      "name": "Strength from Pain",
+      "description": {
+        "text": "+10% more damage below half health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "reaver"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "warcry",
+      "name": "Warcry",
+      "description": {
+        "text": "unlocks Warcry ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "trample"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "glorious_death",
+      "name": "Glorious Death",
+      "description": {
+        "text": "when you'd die, you keep fighting for 5s at 1 HP, then die; once per day",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "strength_from_pain",
+        "warcry"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

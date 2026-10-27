@@ -1,0 +1,118 @@
+{
+  "name": "Thaumaturge Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Seize Chaos",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "dice",
+      "name": "Dice",
+      "description": "+2 Entropy",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thaumaturge_entropy",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "reroll",
+      "name": "Reroll",
+      "description": {
+        "text": "unlocks Reroll ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "fluid_magic",
+      "name": "Fluid Magic",
+      "description": {
+        "text": "random potion effect chance 35%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "dice"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "pandemonium",
+      "name": "Pandemonium",
+      "description": {
+        "text": "chaos outcomes can hit 2 mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "reroll"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "lord_of_misrule",
+      "name": "Lord of Misrule",
+      "description": {
+        "text": "you're immune to your own chaos backfires; -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "fluid_magic",
+        "pandemonium"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

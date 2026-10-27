@@ -12,6 +12,8 @@ An RPG mod for **Minecraft 26.1.2** on **NeoForge** (mod id `pipican`, package `
 - **Skill mastery**: skills (weapons, movement, blocking, later abilities) level up by use through 5 tiers; each tier
   gives a bonus and a passive-tree point.
 - **Stats** of any number (eight built in); kill XP gives both **class levels** and **stat points**.
+- **84 classes** (4 novice, 16 expert, 64 master) built from the plain-language specs in `class_specs/`;
+  see `class_specs/BUILD_REPORT.md` for what isn't in the game yet.
 - **Equipment affinities** (mastery → forbidden) for every weapon, armor piece and trinket.
 - **Per-class trinket slots** (rings, amulet, shoulderpad, ...).
 

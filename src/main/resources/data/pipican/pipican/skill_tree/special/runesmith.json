@@ -1,0 +1,118 @@
+{
+  "name": "Runesmith Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Sigils of Power",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "chisel",
+      "name": "Chisel",
+      "description": "+2 Runecraft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:runesmith_runecraft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "fire_rune",
+      "name": "Fire Rune",
+      "description": {
+        "text": "sigil weapon hits ignite for 2s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "mighty_sigils",
+      "name": "Mighty Sigils",
+      "description": {
+        "text": "Mighty Sigils triggers at 75% Rune Power",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "chisel"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "thunder_rune",
+      "name": "Thunder Rune",
+      "description": {
+        "text": "unlocks Rune Blast ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "fire_rune"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "dwarfen_mastery",
+      "name": "Dwarfen Mastery",
+      "description": {
+        "text": "anvil costs halved for you; -10% movement speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mighty_sigils",
+        "thunder_rune"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

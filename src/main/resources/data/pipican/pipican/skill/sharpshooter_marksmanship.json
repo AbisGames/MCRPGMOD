@@ -1,0 +1,67 @@
+{
+  "name": "Marksmanship",
+  "description": "Trained by landing Deadly Aim shots.",
+  "icon": "minecraft:bow",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:sharpshooter"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Precision",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sharpshooter_precision",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Precision",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sharpshooter_precision",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Focus regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Precision",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sharpshooter_precision",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Precision",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sharpshooter_precision",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

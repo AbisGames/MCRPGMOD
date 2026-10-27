@@ -1,0 +1,133 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "geomancer_start",
+      "name": "Geomancer",
+      "description": "+1 armor",
+      "type": "start",
+      "x": 1450,
+      "y": 676,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "geomancer_granite_skin",
+      "name": "Granite Skin",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 1525,
+      "y": 681,
+      "links": [
+        "geomancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "geomancer_prospector",
+      "name": "Prospector",
+      "description": "+10% mining speed",
+      "type": "small",
+      "x": 1502,
+      "y": 731,
+      "links": [
+        "geomancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:block_break_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "geomancer_bulwark_of_stone",
+      "name": "Bulwark of Stone",
+      "description": {
+        "text": "+15% knockback resistance on stone",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1589,
+      "y": 710,
+      "links": [
+        "geomancer_granite_skin"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "geomancer_ore_sense",
+      "name": "Ore Sense",
+      "description": {
+        "text": "ores within 6 blocks glow while you sneak",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1565,
+      "y": 760,
+      "links": [
+        "geomancer_prospector"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "geomancer_living_mountain",
+      "name": "Living Mountain",
+      "description": "+4 armor and +20% knockback resistance, but -15% movement speed",
+      "type": "keystone",
+      "x": 1640,
+      "y": 765,
+      "links": [
+        "geomancer_bulwark_of_stone",
+        "geomancer_ore_sense"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 4.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.2
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

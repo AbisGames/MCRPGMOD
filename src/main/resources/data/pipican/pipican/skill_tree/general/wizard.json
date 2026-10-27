@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "wizard_start",
+      "name": "Wizard",
+      "description": {
+        "text": "+5% experience gained",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 130,
+      "y": -739
+    },
+    {
+      "id": "wizard_study",
+      "name": "Study",
+      "description": "+5% magic damage",
+      "type": "small",
+      "x": 115,
+      "y": -812,
+      "links": [
+        "wizard_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "wizard_annotations",
+      "name": "Annotations",
+      "description": {
+        "text": "+10% experience gained",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 169,
+      "y": -803,
+      "links": [
+        "wizard_start"
+      ]
+    },
+    {
+      "id": "wizard_library",
+      "name": "Library",
+      "description": {
+        "text": "+1 counted bookshelf, -1 enchanting cost",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 127,
+      "y": -881,
+      "links": [
+        "wizard_annotations"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "wizard_arcane_ward",
+      "name": "Arcane Ward",
+      "description": "-12% magic damage taken",
+      "type": "notable",
+      "x": 182,
+      "y": -872,
+      "links": [
+        "wizard_study"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.88
+        }
+      ]
+    },
+    {
+      "id": "wizard_archmage",
+      "name": "Path of the Archmage",
+      "description": {
+        "text": "+25% max Aether and +10% magic damage, but -15% movement speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 167,
+      "y": -945,
+      "links": [
+        "wizard_library",
+        "wizard_arcane_ward"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Watchkeeping",
+  "description": "Trained by killing mobs while Stand Guard is active.",
+  "icon": "minecraft:spyglass",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:sentinel"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Vigilance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sentinel_vigilance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Vigilance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sentinel_vigilance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Watch regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Vigilance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sentinel_vigilance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Vigilance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sentinel_vigilance",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

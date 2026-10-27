@@ -1,0 +1,7 @@
+{
+  "name": "Command",
+  "description": "Tactical authority over a battlefield.",
+  "max": 100,
+  "exclusive": true,
+  "color": -10802554
+}

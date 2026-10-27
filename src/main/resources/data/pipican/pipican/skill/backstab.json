@@ -1,0 +1,84 @@
+{
+  "name": "Backstab",
+  "description": "Trained by damaging mobs that are not targeting you.",
+  "icon": "minecraft:leather_boots",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:assassin",
+    "pipican:blade",
+    "pipican:executioner",
+    "pipican:infiltrator",
+    "pipican:rogue",
+    "pipican:thief"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+4% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+4% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% critical damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+4% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+8% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

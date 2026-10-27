@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "shapeshifter_start",
+      "name": "Shapeshifter",
+      "description": {
+        "text": "+5% unarmed damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 1311,
+      "y": 918
+    },
+    {
+      "id": "shapeshifter_wolf_heart",
+      "name": "Wolf Heart",
+      "description": {
+        "text": "wolf form +10% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1384,
+      "y": 935,
+      "links": [
+        "shapeshifter_start"
+      ]
+    },
+    {
+      "id": "shapeshifter_bear_hide",
+      "name": "Bear Hide",
+      "description": {
+        "text": "bear form +4 max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1352,
+      "y": 980,
+      "links": [
+        "shapeshifter_start"
+      ]
+    },
+    {
+      "id": "shapeshifter_cat_s_grace",
+      "name": "Cat's Grace",
+      "description": {
+        "text": "cat form +10% speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1441,
+      "y": 975,
+      "links": [
+        "shapeshifter_wolf_heart"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "shapeshifter_seal_skin",
+      "name": "Seal Skin",
+      "description": {
+        "text": "fish form +20% swim speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1410,
+      "y": 1021,
+      "links": [
+        "shapeshifter_bear_hide"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "shapeshifter_feral_soul",
+      "name": "Feral Soul",
+      "description": {
+        "text": "forms drain 50% slower, but in human form you deal -20% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1483,
+      "y": 1038,
+      "links": [
+        "shapeshifter_cat_s_grace",
+        "shapeshifter_seal_skin"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

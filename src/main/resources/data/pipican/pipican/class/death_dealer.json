@@ -1,0 +1,159 @@
+{
+  "name": "Death Dealer",
+  "description": "A heavy-weapon reaper who carves through crowds - every kill feeds the next swing.",
+  "icon": "minecraft:netherite_axe",
+  "selectable": true,
+  "base_health": 36.0,
+  "base_stats": {
+    "pipican:vitality": 6,
+    "pipican:strength": 9,
+    "pipican:dexterity": 2,
+    "pipican:agility": 1,
+    "pipican:endurance": 6,
+    "pipican:luck": 2,
+    "pipican:death_dealer_carnage": 10
+  },
+  "special_stat": {
+    "stat": "pipican:death_dealer_carnage",
+    "resource": {
+      "name": "Bloodshed",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": -0.5,
+      "regen_per_point": 0.0,
+      "color": -7466992,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_axe"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:cooked_beef",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "death_dealer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/death_dealer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "death_dealer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.15,
+      "weapons": "#pipican:weapons/axes"
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.15,
+      "weapons": "#pipican:weapons/maces"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.006
+        }
+      ],
+      "weapons": "#pipican:weapons/axes"
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.006
+        }
+      ],
+      "weapons": "#pipican:weapons/maces"
+    }
+  ],
+  "weakness": {
+    "description": "Heavy weapons need room and time.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.8,
+        "weapons": "#pipican:weapons/swords"
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.8,
+        "weapons": "#pipican:weapons/bows"
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.8,
+        "weapons": "#pipican:weapons/crossbows"
+      },
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:attack_speed",
+        "amount": -0.1,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

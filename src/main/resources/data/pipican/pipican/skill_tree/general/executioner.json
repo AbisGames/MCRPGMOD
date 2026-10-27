@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "executioner_start",
+      "name": "Executioner",
+      "description": {
+        "text": "+5% critical damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -800,
+      "y": 1386
+    },
+    {
+      "id": "executioner_clean_cut",
+      "name": "Clean Cut",
+      "description": {
+        "text": "+6% critical damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -811,
+      "y": 1460,
+      "links": [
+        "executioner_start"
+      ]
+    },
+    {
+      "id": "executioner_black_hood",
+      "name": "Black Hood",
+      "description": {
+        "text": "mobs notice you 10% later",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -859,
+      "y": 1433,
+      "links": [
+        "executioner_start"
+      ]
+    },
+    {
+      "id": "executioner_merciless",
+      "name": "Merciless",
+      "description": {
+        "text": "Execute threshold 20%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -846,
+      "y": 1521,
+      "links": [
+        "executioner_clean_cut"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "executioner_terrifying",
+      "name": "Terrifying",
+      "description": {
+        "text": "Weakness after kill becomes Weakness II",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -894,
+      "y": 1493,
+      "links": [
+        "executioner_black_hood"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "executioner_headsman_s_axe",
+      "name": "Headsman's Axe",
+      "description": {
+        "text": "Execute threshold 25%, but -15% damage to mobs above half health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -905,
+      "y": 1568,
+      "links": [
+        "executioner_merciless",
+        "executioner_terrifying"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

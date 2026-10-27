@@ -1,0 +1,118 @@
+{
+  "name": "Dreadnaught Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Iron Clad",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "heavy_plate",
+      "name": "Heavy Plate",
+      "description": "+2 Plate",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dreadnaught_plate",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "immovable",
+      "name": "Immovable",
+      "description": {
+        "text": "also immune to wind charges and explosions' knockback",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "weapon_resistance",
+      "name": "Weapon Resistance",
+      "description": {
+        "text": "+10% more weapon resistance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "heavy_plate"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "unbreakable",
+      "name": "Unbreakable",
+      "description": {
+        "text": "armor never drops below 10% durability while worn",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "immovable"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "colossus",
+      "name": "Colossus",
+      "description": {
+        "text": "+4 armor, but you can't sprint",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "weapon_resistance",
+        "unbreakable"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

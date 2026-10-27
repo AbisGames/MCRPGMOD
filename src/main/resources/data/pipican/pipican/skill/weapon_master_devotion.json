@@ -1,0 +1,67 @@
+{
+  "name": "Devotion",
+  "description": "Trained by killing mobs with your favored weapon.",
+  "icon": "minecraft:diamond_sword",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:weapon_master"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Mastery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:weapon_master_mastery",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Mastery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:weapon_master_mastery",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Focus regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Mastery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:weapon_master_mastery",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Mastery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:weapon_master_mastery",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

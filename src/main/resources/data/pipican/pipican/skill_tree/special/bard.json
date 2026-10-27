@@ -1,0 +1,118 @@
+{
+  "name": "Bard Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Song Magic",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "encore",
+      "name": "Encore",
+      "description": "+2 Resonance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:bard_resonance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "swift_song",
+      "name": "Swift Song",
+      "description": {
+        "text": "Inspiring Song refreshes twice as fast",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "disarming_charm",
+      "name": "Disarming Charm",
+      "description": {
+        "text": "charmed mobs also get Weakness I",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "encore"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "dirge",
+      "name": "Dirge",
+      "description": {
+        "text": "unlocks Dirge ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "swift_song"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "legend",
+      "name": "Legend",
+      "description": {
+        "text": "everyone in your Song gets Regeneration I; your max health -10%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "disarming_charm",
+        "dirge"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

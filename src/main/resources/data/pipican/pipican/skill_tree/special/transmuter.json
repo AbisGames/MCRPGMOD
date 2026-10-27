@@ -1,0 +1,118 @@
+{
+  "name": "Transmuter Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Optimization",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "transmute",
+      "name": "Transmute",
+      "description": "+2 Flux",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:transmuter_flux",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "alchemical_body",
+      "name": "Alchemical Body",
+      "description": {
+        "text": "+10% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "alter_self",
+      "name": "Alter Self",
+      "description": {
+        "text": "unlocks Alter Self ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "transmute"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "transmute_matter",
+      "name": "Transmute Matter",
+      "description": {
+        "text": "unlocks Transmute ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "alchemical_body"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "philosopher",
+      "name": "Philosopher",
+      "description": {
+        "text": "Optimization amount doubled; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "alter_self",
+        "transmute_matter"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

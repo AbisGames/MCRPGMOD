@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "cavalier_start",
+      "name": "Cavalier",
+      "description": {
+        "text": "+5% mount speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -1235,
+      "y": 196
+    },
+    {
+      "id": "cavalier_saddle_born",
+      "name": "Saddle-Born",
+      "description": {
+        "text": "+5% mounted damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1299,
+      "y": 234,
+      "links": [
+        "cavalier_start"
+      ]
+    },
+    {
+      "id": "cavalier_barding",
+      "name": "Barding",
+      "description": {
+        "text": "mount +2 armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1308,
+      "y": 179,
+      "links": [
+        "cavalier_start"
+      ]
+    },
+    {
+      "id": "cavalier_lance_charge",
+      "name": "Lance Charge",
+      "description": {
+        "text": "spears deal +15% damage while mounted",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1369,
+      "y": 245,
+      "links": [
+        "cavalier_saddle_born"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "cavalier_warhorse",
+      "name": "Warhorse",
+      "description": {
+        "text": "mount +6 max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1377,
+      "y": 190,
+      "links": [
+        "cavalier_barding"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "cavalier_knight_errant",
+      "name": "Knight Errant",
+      "description": {
+        "text": "mounted damage +25%, but -25% damage on foot",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1442,
+      "y": 228,
+      "links": [
+        "cavalier_lance_charge",
+        "cavalier_warhorse"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

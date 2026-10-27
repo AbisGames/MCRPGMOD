@@ -1,0 +1,118 @@
+{
+  "name": "Theurge Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Invocation",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "devotions",
+      "name": "Devotions",
+      "description": "+2 Piety",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:theurge_piety",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "pious_restoration",
+      "name": "Pious Restoration",
+      "description": {
+        "text": "heal 3 HP",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "invocation",
+      "name": "Invocation",
+      "description": {
+        "text": "Invocation radius +2",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "devotions"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "holy_word",
+      "name": "Holy Word",
+      "description": {
+        "text": "unlocks Holy Word ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "pious_restoration"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "saint_of_the_new_god",
+      "name": "Saint of the New God",
+      "description": {
+        "text": "Invocation also heals players within its radius by 2; -15% Divinity regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "invocation",
+        "holy_word"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

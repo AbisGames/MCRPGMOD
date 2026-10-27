@@ -1,0 +1,7 @@
+{
+  "name": "Faith",
+  "description": "Strength of devotion. Powers healing and holy damage.",
+  "max": 100,
+  "exclusive": true,
+  "color": -863893
+}

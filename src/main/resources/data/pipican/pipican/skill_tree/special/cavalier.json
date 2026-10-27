@@ -1,0 +1,118 @@
+{
+  "name": "Cavalier Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Combat Riding",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "spurs",
+      "name": "Spurs",
+      "description": "+2 Horsemanship",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cavalier_horsemanship",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "trample",
+      "name": "Trample",
+      "description": {
+        "text": "your mount damages small mobs it runs into",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "devastating_charge",
+      "name": "Devastating Charge",
+      "description": {
+        "text": "unlocks Charge ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "spurs"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "master_rider",
+      "name": "Master Rider",
+      "description": {
+        "text": "mount gets Regeneration I while you ride",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "trample"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "bonded_steed",
+      "name": "Bonded Steed",
+      "description": {
+        "text": "your mount respawns at your bed a day after dying; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "devastating_charge",
+        "master_rider"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

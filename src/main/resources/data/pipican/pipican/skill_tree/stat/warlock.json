@@ -1,0 +1,66 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "warlock_stat_start",
+      "name": "Warlock",
+      "type": "start",
+      "x": 225,
+      "y": 390
+    },
+    {
+      "id": "warlock_sly",
+      "name": "Sly",
+      "description": "+2 Intelligence, +1 Agility",
+      "type": "small",
+      "x": 255,
+      "y": 442,
+      "links": [
+        "warlock_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "warlock_cursed_luck",
+      "name": "Cursed Luck",
+      "description": "+2 Luck, -1 Wisdom, +1 Intelligence",
+      "type": "small",
+      "x": 285,
+      "y": 494,
+      "links": [
+        "warlock_sly"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": -1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

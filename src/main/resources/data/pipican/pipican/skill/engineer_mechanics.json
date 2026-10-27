@@ -1,0 +1,67 @@
+{
+  "name": "Mechanics",
+  "description": "Trained by your eidolon dealing damage and repairing it.",
+  "icon": "minecraft:iron_block",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:engineer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Engineering",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:engineer_engineering",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Engineering",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:engineer_engineering",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Fuel regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Engineering",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:engineer_engineering",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Engineering",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:engineer_engineering",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

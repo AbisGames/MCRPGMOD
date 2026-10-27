@@ -1,0 +1,7 @@
+{
+  "name": "Finesse",
+  "description": "Single-combat precision.",
+  "max": 100,
+  "exclusive": true,
+  "color": -855310
+}

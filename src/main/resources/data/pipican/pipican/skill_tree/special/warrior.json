@@ -1,0 +1,119 @@
+{
+  "name": "Warrior Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Catch Your Breath",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "second_wind",
+      "name": "Second Wind",
+      "description": "+2 Grit",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warrior_grit",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "forceful",
+      "name": "Forceful Strike",
+      "description": {
+        "text": "critical hits deal +10% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "expertise",
+      "name": "Combat Expertise",
+      "description": {
+        "text": "every 4th hit on the same mob deals +25% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "second_wind",
+        "forceful"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "grit_heart",
+      "name": "Iron Lungs",
+      "description": {
+        "text": "+50% Stamina regen while below half health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "second_wind"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "grit_mastery",
+      "name": "Grit",
+      "description": {
+        "text": "Catch Your Breath can be used twice per rest; -10% max Stamina",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "expertise",
+        "grit_heart"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

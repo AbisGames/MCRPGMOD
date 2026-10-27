@@ -1,0 +1,118 @@
+{
+  "name": "Inquisitor Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Scrutiny",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "cold_eyes",
+      "name": "Cold Eyes",
+      "description": "+2 Scrutiny",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:inquisitor_scrutiny",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "dreadful_threat",
+      "name": "Dreadful Threat",
+      "description": {
+        "text": "Weakness II",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "inquisitor_s_judgment",
+      "name": "Inquisitor's Judgment",
+      "description": {
+        "text": "+10% judgment damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "cold_eyes"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "expose",
+      "name": "Expose",
+      "description": {
+        "text": "scrutinised mobs take +10% damage from everyone",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "dreadful_threat"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "grand_inquisitor",
+      "name": "Grand Inquisitor",
+      "description": {
+        "text": "scrutinise 2 mobs at once; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "inquisitor_s_judgment",
+        "expose"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

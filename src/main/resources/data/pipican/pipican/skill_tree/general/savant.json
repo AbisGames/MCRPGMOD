@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "savant_start",
+      "name": "Savant",
+      "description": {
+        "text": "+5% experience",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 402,
+      "y": -1184
+    },
+    {
+      "id": "savant_bookish",
+      "name": "Bookish",
+      "description": {
+        "text": "+10% experience",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 398,
+      "y": -1259,
+      "links": [
+        "savant_start"
+      ]
+    },
+    {
+      "id": "savant_cross_discipline",
+      "name": "Cross-Discipline",
+      "description": "+5% magic damage",
+      "type": "small",
+      "x": 450,
+      "y": -1241,
+      "links": [
+        "savant_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "savant_library_mind",
+      "name": "Library Mind",
+      "description": {
+        "text": "+20% max Insight",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 421,
+      "y": -1325,
+      "links": [
+        "savant_bookish"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "savant_fast_learner",
+      "name": "Fast Learner",
+      "description": {
+        "text": "skills train 15% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 473,
+      "y": -1307,
+      "links": [
+        "savant_cross_discipline"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "savant_omniscient",
+      "name": "Omniscient",
+      "description": {
+        "text": "+1 more focus school, but -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 469,
+      "y": -1383,
+      "links": [
+        "savant_library_mind",
+        "savant_fast_learner"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

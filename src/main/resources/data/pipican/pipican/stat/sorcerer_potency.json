@@ -1,0 +1,7 @@
+{
+  "name": "Potency",
+  "description": "Raw force behind your magic. Makes everything hit harder - including your own outbursts.",
+  "max": 100,
+  "exclusive": true,
+  "color": -3137125
+}

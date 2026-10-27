@@ -1,0 +1,92 @@
+{
+  "name": "Swordsmanship",
+  "description": "Trained by hitting mobs with swords.",
+  "icon": "minecraft:iron_sword",
+  "trigger": {
+    "type": "pipican:melee_hit",
+    "items": "#pipican:weapons/swords"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:assassin",
+    "pipican:avenger",
+    "pipican:bard",
+    "pipican:blade",
+    "pipican:cavalier",
+    "pipican:champion",
+    "pipican:conqueror",
+    "pipican:defender",
+    "pipican:dervish",
+    "pipican:dreadnaught",
+    "pipican:duelist",
+    "pipican:executioner",
+    "pipican:fighter",
+    "pipican:gladiator",
+    "pipican:inquisitor",
+    "pipican:jack_of_all_trades",
+    "pipican:mage_knight",
+    "pipican:myrmidon",
+    "pipican:paladin",
+    "pipican:rogue",
+    "pipican:sentinel",
+    "pipican:spellbinder",
+    "pipican:templar",
+    "pipican:warrior",
+    "pipican:weapon_master"
+  ],
+  "tiers": [
+    {
+      "description": "+3% sword damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+3% sword damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% sword attack speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+3% sword damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+6% sword damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

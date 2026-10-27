@@ -1,6 +1,7 @@
 package com.pipican.gametest;
 
 import com.pipican.Pipican;
+import com.pipican.core.ClassLookup;
 import com.pipican.core.PipicanConfig;
 import com.pipican.core.PipicanRegistries;
 import com.pipican.mastery.MoveMode;
@@ -13,6 +14,7 @@ import com.pipican.player.MasteryService;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.rpgclass.RpgClass;
+import com.pipican.skill.NodeType;
 import com.pipican.skill.SkillTree;
 import com.pipican.skill.SkillTrees;
 import com.pipican.skill.TreeKind;
@@ -67,6 +69,7 @@ public final class ClassSystemTests {
         TESTS.put("affinity_and_damage", ClassSystemTests::affinityAndDamage);
         TESTS.put("stats_and_levels", ClassSystemTests::statsAndLevels);
         TESTS.put("trinkets", ClassSystemTests::trinkets);
+        TESTS.put("shipped_classes", ClassSystemTests::shippedClasses);
     }
 
     private ClassSystemTests() {}
@@ -261,6 +264,36 @@ public final class ClassSystemTests {
 
         ClassService.setLevel(player, 999);
         helper.assertTrue(ClassService.data(player).activeProgress().orElseThrow().level() == 10, "clamped to max_level");
+        helper.succeed();
+    }
+
+    /** Every class the mod ships (built from class_specs/) can be chosen, and its three trees resolve to their start nodes. */
+    private static void shippedClasses(GameTestHelper helper) {
+        var access = helper.getLevel().registryAccess();
+        int count = 0;
+        for (var entry : ClassLookup.classes(access).entrySet()) {
+            ResourceKey<RpgClass> key = entry.getKey();
+            if (!key.identifier().getNamespace().equals(Pipican.MOD_ID)) {
+                continue;
+            }
+            count++;
+            RpgClass cls = entry.getValue();
+            String id = key.identifier().toString();
+            for (TreeKind kind : TreeKind.values()) {
+                var ref = cls.tree(kind);
+                helper.assertTrue(ref.isPresent(), id + " has no " + kind.getSerializedName() + " tree");
+                var tree = ClassLookup.tree(access, cls, kind);
+                helper.assertTrue(tree.isPresent(), id + ": " + kind.getSerializedName() + " tree " + ref.get().tree() + " doesn't exist");
+                var start = tree.get().node(ref.get().start());
+                helper.assertTrue(start.isPresent() && start.get().type() == NodeType.START,
+                        id + ": start node " + ref.get().start() + " missing from " + ref.get().tree());
+            }
+            @SuppressWarnings("removal")
+            ServerPlayer player = helper.makeMockServerPlayerInLevel();
+            ClassService.Result result = ClassService.chooseClass(player, key, true, true);
+            helper.assertTrue(result.success(), id + ": " + result.message().getString());
+        }
+        helper.assertTrue(count == 84, "expected 84 shipped classes, found " + count);
         helper.succeed();
     }
 

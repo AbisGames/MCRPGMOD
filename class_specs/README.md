@@ -13,6 +13,22 @@ Plain-language class designs. Claude turns each file here into the real JSON dat
 
 The spec files stay here as the source of truth: to change a class, edit its spec and ask Claude to rebuild it.
 
+## Rebuilding
+
+[`tools/class_builder/`](../tools/class_builder) turns every spec into JSON and rewrites
+[`BUILD_REPORT.md`](BUILD_REPORT.md) (what isn't in the game yet, grouped by missing feature). From the repo root:
+
+```
+python3 tools/class_builder/build.py class_specs src/main/resources class_specs/BUILD_REPORT.md
+```
+
+It regenerates `data/pipican/pipican/{class,skill,skill_tree}` and the special stats from scratch, so **don't
+hand-edit those files**: change the spec (or the builder) and rebuild. Then run `./gradlew runGameTestServer`;
+the `shipped_classes` test checks that every class loads and its three trees resolve.
+
+[`CLASSES.md`](CLASSES.md) is the index of all classes (tiers, special stats, resources, where each one sits
+in the shared tree).
+
 ## What bonuses are possible right now
 
 Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fire damage").

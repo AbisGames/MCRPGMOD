@@ -1,0 +1,7 @@
+{
+  "name": "Horsemanship",
+  "description": "Your bond and skill with mounts.",
+  "max": 100,
+  "exclusive": true,
+  "color": -13807704
+}

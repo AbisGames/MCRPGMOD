@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "runesmith_start",
+      "name": "Runesmith",
+      "description": "+1 armor",
+      "type": "start",
+      "x": -611,
+      "y": -1091,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "runesmith_deep_cuts",
+      "name": "Deep Cuts",
+      "description": {
+        "text": "+5% sigil weapon damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -669,
+      "y": -1138,
+      "links": [
+        "runesmith_start"
+      ]
+    },
+    {
+      "id": "runesmith_etched_plate",
+      "name": "Etched Plate",
+      "description": {
+        "text": "+1 armor per sigil piece",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -621,
+      "y": -1165,
+      "links": [
+        "runesmith_start"
+      ]
+    },
+    {
+      "id": "runesmith_runes_of_return",
+      "name": "Runes of Return",
+      "description": {
+        "text": "sigil weapons lose durability 30% slower",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -703,
+      "y": -1199,
+      "links": [
+        "runesmith_deep_cuts"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "runesmith_ward_rune",
+      "name": "Ward Rune",
+      "description": {
+        "text": "-10% magic damage with 4 sigil pieces",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -655,
+      "y": -1226,
+      "links": [
+        "runesmith_etched_plate"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "runesmith_runelord",
+      "name": "Runelord",
+      "description": {
+        "text": "sigil bonuses doubled, but unmarked gear is forbidden-tier",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -713,
+      "y": -1274,
+      "links": [
+        "runesmith_runes_of_return",
+        "runesmith_ward_rune"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

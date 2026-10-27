@@ -1,0 +1,129 @@
+{
+  "name": "Healer",
+  "description": "A master of Life magic whose touch closes wounds, cures poison and keeps whole parties standing.",
+  "icon": "minecraft:glistering_melon_slice",
+  "selectable": true,
+  "base_health": 32.0,
+  "base_stats": {
+    "pipican:vitality": 6,
+    "pipican:strength": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 5,
+    "pipican:wisdom": 8,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:healer_vitality_flow": 10
+  },
+  "special_stat": {
+    "stat": "pipican:healer_vitality_flow",
+    "resource": {
+      "name": "Lifeblood",
+      "base_max": 70.0,
+      "max_per_point": 5.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -10755974,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:glistering_melon_slice",
+      "count": 2
+    },
+    {
+      "id": "minecraft:splash_potion",
+      "count": 1,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:healing"
+        }
+      }
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "healer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/healer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "healer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": "Healers commit to mending, never to harming.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.75
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

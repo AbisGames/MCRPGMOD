@@ -1,0 +1,114 @@
+{
+  "name": "Brute Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Brawn",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "muscle",
+      "name": "Muscle",
+      "description": "+2 Brawn",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:brute_brawn",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "shove",
+      "name": "Shove",
+      "description": {
+        "text": "melee knockback +25%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "mighty_thews",
+      "name": "Mighty Thews",
+      "description": "+10% melee damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "muscle"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "bone_and_sinew",
+      "name": "Bone and Sinew",
+      "description": "+1 armor toughness",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "shove"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "unstoppable",
+      "name": "Unstoppable",
+      "description": {
+        "text": "immune to Slowness and knockback; -20% attack speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mighty_thews",
+        "bone_and_sinew"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

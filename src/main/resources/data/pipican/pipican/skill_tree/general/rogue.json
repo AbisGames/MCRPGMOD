@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "rogue_start",
+      "name": "Rogue",
+      "description": "+3% movement speed",
+      "type": "start",
+      "x": 0,
+      "y": 300,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "rogue_quick",
+      "name": "Quick Hands",
+      "description": "+5% attack speed",
+      "type": "small",
+      "x": 28,
+      "y": 370,
+      "links": [
+        "rogue_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "rogue_light_step",
+      "name": "Light Step",
+      "description": "-15% fall damage",
+      "type": "small",
+      "x": -27,
+      "y": 370,
+      "links": [
+        "rogue_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "id": "rogue_dirty",
+      "name": "Dirty Tricks",
+      "description": {
+        "text": "+6% damage to unaware mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 28,
+      "y": 440,
+      "links": [
+        "rogue_quick"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "rogue_slippery",
+      "name": "Slippery",
+      "description": {
+        "text": "+5% movement speed, 10% chance to dodge a melee hit",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -27,
+      "y": 440,
+      "links": [
+        "rogue_light_step",
+        "rogue_dirty"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "rogue_gambler",
+      "name": "Gambler",
+      "description": {
+        "text": "+2 Luck and critical hits deal +20% damage, but -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 510,
+      "links": [
+        "rogue_slippery"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

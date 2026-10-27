@@ -1,0 +1,118 @@
+{
+  "name": "Astromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Inner Radiance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "starfire",
+      "name": "Starfire",
+      "description": "+2 Radiance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:astromancer_radiance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "corona",
+      "name": "Corona",
+      "description": {
+        "text": "Blindness chance +5%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "intense_light",
+      "name": "Intense Light",
+      "description": {
+        "text": "+10% more damage vs undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "starfire"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "blinding_corona",
+      "name": "Blinding Corona",
+      "description": {
+        "text": "unlocks Corona Burst ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "corona"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "living_star",
+      "name": "Living Star",
+      "description": {
+        "text": "you glow and give Glowing to every mob within 10 blocks; mobs notice you from 50% farther",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "intense_light",
+        "blinding_corona"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

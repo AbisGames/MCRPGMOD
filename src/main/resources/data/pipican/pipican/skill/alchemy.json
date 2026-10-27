@@ -1,0 +1,91 @@
+{
+  "name": "Alchemy",
+  "description": "Trained by brewing potions.",
+  "icon": "minecraft:enchanted_book",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:apocalyptist",
+    "pipican:destroyer",
+    "pipican:healer",
+    "pipican:hexer",
+    "pipican:magician",
+    "pipican:poisoner",
+    "pipican:savant",
+    "pipican:sorcerer",
+    "pipican:thaumaturge",
+    "pipican:transmuter",
+    "pipican:warlock",
+    "pipican:witch",
+    "pipican:wizard"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+5% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "brewing is 10% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+10% potion duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

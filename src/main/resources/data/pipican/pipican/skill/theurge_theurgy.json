@@ -1,0 +1,67 @@
+{
+  "name": "Theurgy",
+  "description": "Trained by healing with Pious Restoration and hitting mobs with Invocation.",
+  "icon": "minecraft:nether_star",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:theurge"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Piety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:theurge_piety",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Piety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:theurge_piety",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Divinity regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Piety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:theurge_piety",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Piety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:theurge_piety",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

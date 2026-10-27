@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "arcanist_start",
+      "name": "Arcanist",
+      "description": {
+        "text": "+5% experience gained",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 70,
+      "y": -1598
+    },
+    {
+      "id": "arcanist_theory",
+      "name": "Theory",
+      "description": "+6% magic damage",
+      "type": "small",
+      "x": 45,
+      "y": -1670,
+      "links": [
+        "arcanist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "arcanist_practice",
+      "name": "Practice",
+      "description": {
+        "text": "+10% experience gained",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 100,
+      "y": -1667,
+      "links": [
+        "arcanist_start"
+      ]
+    },
+    {
+      "id": "arcanist_swift_arcana",
+      "name": "Swift Arcana",
+      "description": {
+        "text": "abilities cost 10% less Flux",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 48,
+      "y": -1740,
+      "links": [
+        "arcanist_theory"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "arcanist_deep_reserves",
+      "name": "Deep Reserves",
+      "description": {
+        "text": "+20% max Mystic Flux",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 103,
+      "y": -1737,
+      "links": [
+        "arcanist_practice"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "arcanist_unbound_mind",
+      "name": "Unbound Mind",
+      "description": {
+        "text": "+30% max Mystic Flux, but -20% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 79,
+      "y": -1808,
+      "links": [
+        "arcanist_swift_arcana",
+        "arcanist_deep_reserves"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

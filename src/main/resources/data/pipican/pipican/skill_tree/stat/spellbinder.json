@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "spellbinder_stat_start",
+      "name": "Spellbinder",
+      "type": "start",
+      "x": -390,
+      "y": -225
+    },
+    {
+      "id": "spellbinder_arcane_arm",
+      "name": "Arcane Arm",
+      "description": "+2 Strength, +1 Intelligence",
+      "type": "small",
+      "x": -442,
+      "y": -255,
+      "links": [
+        "spellbinder_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "spellbinder_focused",
+      "name": "Focused",
+      "description": "+2 Intelligence, +1 Dexterity",
+      "type": "small",
+      "x": -494,
+      "y": -285,
+      "links": [
+        "spellbinder_arcane_arm"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

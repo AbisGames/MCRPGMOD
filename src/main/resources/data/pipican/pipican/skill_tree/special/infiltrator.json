@@ -1,0 +1,118 @@
+{
+  "name": "Infiltrator Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Faceless",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "disguise",
+      "name": "Disguise",
+      "description": "+2 Subtlety",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:infiltrator_subtlety",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quiet",
+      "name": "Quiet",
+      "description": {
+        "text": "no footstep sounds",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "treacherous_strike",
+      "name": "Treacherous Strike",
+      "description": {
+        "text": "+15% more Treacherous Strike damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "disguise"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "vanish",
+      "name": "Vanish",
+      "description": {
+        "text": "unlocks Vanish ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quiet"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "ghost_agent",
+      "name": "Ghost Agent",
+      "description": {
+        "text": "after a stealth kill, you are invisible for 3s; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "treacherous_strike",
+        "vanish"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

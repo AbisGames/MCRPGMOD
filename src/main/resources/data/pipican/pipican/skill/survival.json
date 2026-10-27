@@ -1,0 +1,74 @@
+{
+  "name": "Survival",
+  "description": "Trained by killing mobs outdoors at night.",
+  "icon": "minecraft:bow",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:explorer",
+    "pipican:ranger"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "-5% hunger drain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "-5% hunger drain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "eating cooked meat gives Regeneration I for 3s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

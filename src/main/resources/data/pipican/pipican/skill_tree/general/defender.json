@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "defender_start",
+      "name": "Defender",
+      "description": "+1 armor",
+      "type": "start",
+      "x": 1215,
+      "y": 295,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "defender_shield_brother",
+      "name": "Shield Brother",
+      "description": {
+        "text": "Defend range +2",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1289,
+      "y": 285,
+      "links": [
+        "defender_start"
+      ]
+    },
+    {
+      "id": "defender_plate",
+      "name": "Plate",
+      "description": "+2 armor",
+      "type": "small",
+      "x": 1276,
+      "y": 339,
+      "links": [
+        "defender_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "defender_interpose",
+      "name": "Interpose",
+      "description": {
+        "text": "+10% Defend reduction",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1357,
+      "y": 302,
+      "links": [
+        "defender_shield_brother"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "defender_taunt",
+      "name": "Taunt",
+      "description": {
+        "text": "mobs within 6 blocks prefer to target you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1344,
+      "y": 355,
+      "links": [
+        "defender_plate"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "defender_living_wall",
+      "name": "Living Wall",
+      "description": {
+        "text": "Defend reduction doubled, but you deal -25% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1419,
+      "y": 345,
+      "links": [
+        "defender_interpose",
+        "defender_taunt"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

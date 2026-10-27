@@ -1,0 +1,67 @@
+{
+  "name": "Arcane Research",
+  "description": "Trained by enchanting items and combining enchanted books.",
+  "icon": "minecraft:lapis_lazuli",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:arcanist"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:arcanist_arcana",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:arcanist_arcana",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Flux regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:arcanist_arcana",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:arcanist_arcana",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

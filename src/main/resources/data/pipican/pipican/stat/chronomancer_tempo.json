@@ -1,0 +1,19 @@
+{
+  "name": "Tempo",
+  "description": "Your grip on the flow of time.",
+  "max": 100,
+  "exclusive": true,
+  "color": -2509734,
+  "per_point": [
+    {
+      "attribute": "minecraft:attack_speed",
+      "amount": 0.003,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.003,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

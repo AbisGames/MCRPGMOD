@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "ranger_start",
+      "name": "Ranger",
+      "description": "+5% bow damage",
+      "type": "start",
+      "x": -739,
+      "y": 130,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/bows",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "ranger_steady",
+      "name": "Steady Aim",
+      "description": "+6% bow damage",
+      "type": "small",
+      "x": -803,
+      "y": 169,
+      "links": [
+        "ranger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/bows",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "ranger_woodcraft",
+      "name": "Woodcraft",
+      "description": {
+        "text": "+3 max health outdoors",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -812,
+      "y": 115,
+      "links": [
+        "ranger_start"
+      ]
+    },
+    {
+      "id": "ranger_volley",
+      "name": "Volley",
+      "description": {
+        "text": "10% chance a bow shot fires a second arrow",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -872,
+      "y": 182,
+      "links": [
+        "ranger_steady"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "ranger_stalker",
+      "name": "Stalker",
+      "description": {
+        "text": "+10% movement speed toward your prey",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -881,
+      "y": 127,
+      "links": [
+        "ranger_woodcraft"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "ranger_apex",
+      "name": "Apex Predator",
+      "description": {
+        "text": "+30% damage to prey, but -15% damage to everything else",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -945,
+      "y": 167,
+      "links": [
+        "ranger_volley",
+        "ranger_stalker"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

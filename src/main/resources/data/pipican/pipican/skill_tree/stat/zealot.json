@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "zealot_stat_start",
+      "name": "Zealot",
+      "type": "start",
+      "x": 959,
+      "y": -42
+    },
+    {
+      "id": "zealot_fanatical",
+      "name": "Fanatical",
+      "description": "+2 Strength, +1 Wisdom",
+      "type": "small",
+      "x": 1019,
+      "y": -44,
+      "links": [
+        "zealot_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "zealot_wasted_frame",
+      "name": "Wasted Frame",
+      "description": "+2 Vitality, +1 Endurance",
+      "type": "small",
+      "x": 1079,
+      "y": -47,
+      "links": [
+        "zealot_fanatical"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

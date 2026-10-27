@@ -1,0 +1,108 @@
+{
+  "name": "Duelist",
+  "description": "A one-on-one specialist who challenges a single foe, pins them down and ripostes every mistake.",
+  "icon": "minecraft:iron_sword",
+  "selectable": true,
+  "base_health": 32.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 4,
+    "pipican:dexterity": 7,
+    "pipican:agility": 5,
+    "pipican:intelligence": 2,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:duelist_finesse": 10
+  },
+  "special_stat": {
+    "stat": "pipican:duelist_finesse",
+    "resource": {
+      "name": "Panache",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -855310,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "duelist_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/duelist",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "duelist_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Duelists fight one enemy at a time. Crowds overwhelm them.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

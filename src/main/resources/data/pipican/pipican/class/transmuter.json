@@ -1,0 +1,103 @@
+{
+  "name": "Transmuter",
+  "description": "A changeable master of Alteration who reshapes their own body each day and eventually improves everything.",
+  "icon": "minecraft:brewing_stand",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 3,
+    "pipican:dexterity": 3,
+    "pipican:agility": 3,
+    "pipican:intelligence": 4,
+    "pipican:wisdom": 4,
+    "pipican:endurance": 3,
+    "pipican:luck": 2,
+    "pipican:transmuter_flux": 10
+  },
+  "special_stat": {
+    "stat": "pipican:transmuter_flux",
+    "resource": {
+      "name": "Alteration",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -11159392,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:brewing_stand"
+    },
+    {
+      "id": "minecraft:glass_bottle",
+      "count": 2
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "transmuter_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/transmuter",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "transmuter_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Never quite the same twice.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

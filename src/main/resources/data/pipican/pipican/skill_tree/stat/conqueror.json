@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "conqueror_stat_start",
+      "name": "Conqueror",
+      "type": "start",
+      "x": -960,
+      "y": 0
+    },
+    {
+      "id": "conqueror_commanding",
+      "name": "Commanding",
+      "description": "+2 Wisdom, +1 Strength",
+      "type": "small",
+      "x": -1020,
+      "y": 0,
+      "links": [
+        "conqueror_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "conqueror_strategic",
+      "name": "Strategic",
+      "description": "+2 Intelligence, +1 Vitality",
+      "type": "small",
+      "x": -1080,
+      "y": 0,
+      "links": [
+        "conqueror_commanding"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

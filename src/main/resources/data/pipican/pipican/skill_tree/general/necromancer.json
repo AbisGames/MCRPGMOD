@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "necromancer_start",
+      "name": "Necromancer",
+      "description": {
+        "text": "+5% servant damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 577,
+      "y": 1109
+    },
+    {
+      "id": "necromancer_grave_dust",
+      "name": "Grave Dust",
+      "description": {
+        "text": "+5% command chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 634,
+      "y": 1158,
+      "links": [
+        "necromancer_start"
+      ]
+    },
+    {
+      "id": "necromancer_bone_armor",
+      "name": "Bone Armor",
+      "description": "+2 armor",
+      "type": "small",
+      "x": 585,
+      "y": 1184,
+      "links": [
+        "necromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "necromancer_master_of_undeath",
+      "name": "Master of Undeath",
+      "description": {
+        "text": "servants +20% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 666,
+      "y": 1220,
+      "links": [
+        "necromancer_grave_dust"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "necromancer_lich_touch",
+      "name": "Lich Touch",
+      "description": {
+        "text": "your hits give Wither I for 2s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 617,
+      "y": 1246,
+      "links": [
+        "necromancer_bone_armor"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "necromancer_lichdom",
+      "name": "Lichdom",
+      "description": {
+        "text": "+1 servant and +20% servant damage, but sunlight burns you like a zombie",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 674,
+      "y": 1295,
+      "links": [
+        "necromancer_master_of_undeath",
+        "necromancer_lich_touch"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

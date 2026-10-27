@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "sharpshooter_start",
+      "name": "Sharpshooter",
+      "description": "+5% bow damage",
+      "type": "start",
+      "x": -1250,
+      "y": 22,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/bows",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "sharpshooter_steady_breath",
+      "name": "Steady Breath",
+      "description": {
+        "text": "Deadly Aim time -0.5s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1319,
+      "y": 51,
+      "links": [
+        "sharpshooter_start"
+      ]
+    },
+    {
+      "id": "sharpshooter_piercing",
+      "name": "Piercing",
+      "description": {
+        "text": "arrows pierce 1 mob",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1320,
+      "y": -4,
+      "links": [
+        "sharpshooter_start"
+      ]
+    },
+    {
+      "id": "sharpshooter_headshot",
+      "name": "Headshot",
+      "description": {
+        "text": "+20% damage on hits to the upper part of a mob",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1389,
+      "y": 52,
+      "links": [
+        "sharpshooter_steady_breath"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "sharpshooter_long_shot",
+      "name": "Long Shot",
+      "description": {
+        "text": "+10% damage per 16 blocks of distance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1390,
+      "y": -3,
+      "links": [
+        "sharpshooter_piercing"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "sharpshooter_eagle_eye",
+      "name": "Eagle Eye",
+      "description": {
+        "text": "+30% ranged damage, but you can't hold a melee weapon in your off-hand or main hand without -50%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1460,
+      "y": 25,
+      "links": [
+        "sharpshooter_headshot",
+        "sharpshooter_long_shot"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

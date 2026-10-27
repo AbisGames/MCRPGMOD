@@ -1,0 +1,67 @@
+{
+  "name": "Miracles",
+  "description": "Trained by healing others with Worker of Miracles.",
+  "icon": "minecraft:beacon",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:miracle_worker"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Devotion",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:miracle_worker_devotion",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Devotion",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:miracle_worker_devotion",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Miracle regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Devotion",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:miracle_worker_devotion",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Devotion",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:miracle_worker_devotion",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

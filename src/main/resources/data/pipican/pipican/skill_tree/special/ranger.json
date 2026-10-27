@@ -1,0 +1,118 @@
+{
+  "name": "Ranger Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Hunt Prey",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "alertness",
+      "name": "Alertness",
+      "description": "+2 Instinct",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:ranger_instinct",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "natural_lore",
+      "name": "Natural Lore",
+      "description": {
+        "text": "+10% damage to animals and beasts",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "expert_tracker",
+      "name": "Expert Tracker",
+      "description": {
+        "text": "your prey glows through walls up to 32 blocks",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "alertness"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "relentless",
+      "name": "Relentless Pursuit",
+      "description": {
+        "text": "when prey flees, you get Speed I for 3s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "natural_lore"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "master_hunter",
+      "name": "Master Hunter",
+      "description": {
+        "text": "you can mark prey in melee too and prey bonus +10%; Hunt Prey ends instantly if you hit another mob",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "expert_tracker",
+        "relentless"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

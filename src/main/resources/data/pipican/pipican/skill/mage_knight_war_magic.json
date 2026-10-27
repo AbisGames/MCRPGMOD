@@ -1,0 +1,67 @@
+{
+  "name": "War Magic",
+  "description": "Trained by hitting mobs while Escalating Violence is active.",
+  "icon": "minecraft:blaze_rod",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:mage_knight"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Battle Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:mage_knight_battle_arcana",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Battle Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:mage_knight_battle_arcana",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Warfire regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Battle Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:mage_knight_battle_arcana",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Battle Arcana",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:mage_knight_battle_arcana",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "Battle-Hardened",
+  "description": "Trained by killing hostile mobs while below half health.",
+  "icon": "minecraft:iron_sword",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    200,
+    800,
+    2400,
+    6000,
+    14000
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican:warrior"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Grit",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warrior_grit",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Grit",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warrior_grit",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Grit",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warrior_grit",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Grit",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warrior_grit",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

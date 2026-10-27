@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "pyromancer_start",
+      "name": "Pyromancer",
+      "description": "+5% fire damage",
+      "type": "start",
+      "x": -287,
+      "y": -1217,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "pyromancer_kindling",
+      "name": "Kindling",
+      "description": {
+        "text": "+5% ignite chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -329,
+      "y": -1279,
+      "links": [
+        "pyromancer_start"
+      ]
+    },
+    {
+      "id": "pyromancer_heat_shimmer",
+      "name": "Heat Shimmer",
+      "description": {
+        "text": "mobs that hit you have 15% chance to catch fire",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -276,
+      "y": -1291,
+      "links": [
+        "pyromancer_start"
+      ]
+    },
+    {
+      "id": "pyromancer_wildfire",
+      "name": "Wildfire",
+      "description": {
+        "text": "burning mobs spread fire to adjacent mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -345,
+      "y": -1347,
+      "links": [
+        "pyromancer_kindling"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "pyromancer_ash_walker",
+      "name": "Ash Walker",
+      "description": {
+        "text": "+20% movement speed on Nether blocks",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -292,
+      "y": -1359,
+      "links": [
+        "pyromancer_heat_shimmer"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "pyromancer_living_flame",
+      "name": "Living Flame",
+      "description": {
+        "text": "+30% fire damage, but you take 25% more damage from water, snow and ice mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -335,
+      "y": -1421,
+      "links": [
+        "pyromancer_wildfire",
+        "pyromancer_ash_walker"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Savagery",
+  "description": "The wildness of the raid.",
+  "max": 100,
+  "exclusive": true,
+  "color": -13935448
+}

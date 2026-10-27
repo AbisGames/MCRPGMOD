@@ -1,0 +1,117 @@
+{
+  "name": "Diplomat",
+  "description": "A silver-tongued negotiator who turns enemies into allies and talks their way out of death.",
+  "icon": "minecraft:emerald",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 1,
+    "pipican:dexterity": 3,
+    "pipican:agility": 3,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 1,
+    "pipican:luck": 2,
+    "pipican:diplomat_rapport": 10
+  },
+  "special_stat": {
+    "stat": "pipican:diplomat_rapport",
+    "resource": {
+      "name": "Persuasion",
+      "base_max": 50.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -13842584,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:emerald",
+      "count": 8
+    },
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "diplomat_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/diplomat",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "diplomat_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": "Diplomats win with words, not blades.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "damage_types": "#pipican:is_melee",
+        "multiplier": 0.75
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.75,
+        "weapons": "#pipican:weapons/ranged"
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

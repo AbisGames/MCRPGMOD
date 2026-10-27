@@ -1,0 +1,118 @@
+{
+  "name": "Poisoner Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Poison Mastery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "distillation",
+      "name": "Distillation",
+      "description": "+2 Toxicity",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:poisoner_toxicity",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "antidote",
+      "name": "Antidote",
+      "description": {
+        "text": "players within 6 blocks also immune to Poison",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "poisonous_touch",
+      "name": "Poisonous Touch",
+      "description": {
+        "text": "unlocks Poison Needle ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "distillation"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "lethal_dose",
+      "name": "Lethal Dose",
+      "description": {
+        "text": "Poison II always",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "antidote"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "toxic_blood",
+      "name": "Toxic Blood",
+      "description": {
+        "text": "mobs that hit you are poisoned; healing on you is 15% weaker",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "poisonous_touch",
+        "lethal_dose"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "templar_start",
+      "name": "Templar",
+      "description": "+1 armor",
+      "type": "start",
+      "x": 1526,
+      "y": 481,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "templar_hallowed",
+      "name": "Hallowed",
+      "description": {
+        "text": "+5% temple damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1601,
+      "y": 476,
+      "links": [
+        "templar_start"
+      ]
+    },
+    {
+      "id": "templar_guardian_s_oath",
+      "name": "Guardian's Oath",
+      "description": "+3 max health",
+      "type": "small",
+      "x": 1584,
+      "y": 528,
+      "links": [
+        "templar_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "templar_sacred_ground",
+      "name": "Sacred Ground",
+      "description": {
+        "text": "players in your temple regenerate 20% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1668,
+      "y": 497,
+      "links": [
+        "templar_hallowed"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "templar_holy_bulwark",
+      "name": "Holy Bulwark",
+      "description": {
+        "text": "+1 more temple armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1651,
+      "y": 549,
+      "links": [
+        "templar_guardian_s_oath"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "templar_fortress_temple",
+      "name": "Fortress Temple",
+      "description": {
+        "text": "temple bonuses doubled, but outside it you lose all class passives",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1726,
+      "y": 544,
+      "links": [
+        "templar_sacred_ground",
+        "templar_holy_bulwark"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

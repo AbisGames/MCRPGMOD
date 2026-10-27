@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "hydromancer_stat_start",
+      "name": "Hydromancer",
+      "type": "start",
+      "x": 650,
+      "y": 375
+    },
+    {
+      "id": "hydromancer_fluid",
+      "name": "Fluid",
+      "description": "+2 Agility, +1 Wisdom",
+      "type": "small",
+      "x": 701,
+      "y": 405,
+      "links": [
+        "hydromancer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_deep_mind",
+      "name": "Deep Mind",
+      "description": "+2 Intelligence, +1 Vitality",
+      "type": "small",
+      "x": 753,
+      "y": 435,
+      "links": [
+        "hydromancer_fluid"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

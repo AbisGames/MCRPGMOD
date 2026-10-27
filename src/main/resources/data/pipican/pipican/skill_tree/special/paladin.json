@@ -1,0 +1,118 @@
+{
+  "name": "Paladin Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Divine Smite",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "divine_cause",
+      "name": "Divine Cause",
+      "description": "+2 Sanctity",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:paladin_sanctity",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "faith_healing",
+      "name": "Faith Healing",
+      "description": {
+        "text": "unlocks Lay on Hands ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "divine_vigor",
+      "name": "Divine Vigor",
+      "description": {
+        "text": "also immune to Wither effect",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "divine_cause"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "sense_evil",
+      "name": "Sense Evil",
+      "description": {
+        "text": "+5% damage to mobs that glow for you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "faith_healing"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "holy_radiance",
+      "name": "Holy Radiance",
+      "description": {
+        "text": "unlocks Holy Radiance; -15% max Smite",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "divine_vigor",
+        "sense_evil"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

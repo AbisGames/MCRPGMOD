@@ -1,0 +1,66 @@
+{
+  "name": "Ironclad",
+  "description": "Trained by taking damage while wearing 4 heavy armor pieces.",
+  "icon": "minecraft:iron_chestplate",
+  "trigger": {
+    "type": "pipican:hurt_wearing",
+    "items": "#pipican:armor/heavy",
+    "min_pieces": 4
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:dreadnaught"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Plate",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dreadnaught_plate",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Plate",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dreadnaught_plate",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 armor",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Plate",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dreadnaught_plate",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Plate",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dreadnaught_plate",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

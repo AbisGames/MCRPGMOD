@@ -1,0 +1,7 @@
+{
+  "name": "Sermon",
+  "description": "The power of your voice to stir the faithful.",
+  "max": 100,
+  "exclusive": true,
+  "color": -1596869
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Larceny",
+  "description": "A talent for taking what isn't yours - especially magic.",
+  "max": 100,
+  "exclusive": true,
+  "color": -13913184
+}

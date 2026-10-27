@@ -1,0 +1,67 @@
+{
+  "name": "Purging",
+  "description": "Trained by killing unclean mobs (undead, Nether, End, vexes, phantoms).",
+  "icon": "minecraft:totem_of_undying",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:exorcist"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Purity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:exorcist_purity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Purity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:exorcist_purity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Sanctification regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Purity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:exorcist_purity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Purity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:exorcist_purity",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

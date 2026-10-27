@@ -1,0 +1,66 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "jack_of_all_trades_stat_start",
+      "name": "Jack-of-All-Trades",
+      "type": "start",
+      "x": -208,
+      "y": 937
+    },
+    {
+      "id": "jack_of_all_trades_versatile",
+      "name": "Versatile",
+      "description": "+1 Strength, +1 Dexterity, +1 Intelligence",
+      "type": "small",
+      "x": -221,
+      "y": 996,
+      "links": [
+        "jack_of_all_trades_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "jack_of_all_trades_lucky_generalist",
+      "name": "Lucky Generalist",
+      "description": "+2 Luck, +1 Agility",
+      "type": "small",
+      "x": -234,
+      "y": 1054,
+      "links": [
+        "jack_of_all_trades_versatile"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

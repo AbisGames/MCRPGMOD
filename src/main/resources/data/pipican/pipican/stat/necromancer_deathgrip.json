@@ -1,0 +1,7 @@
+{
+  "name": "Deathgrip",
+  "description": "Your hold over the boundary of death.",
+  "max": 100,
+  "exclusive": true,
+  "color": -12817590
+}

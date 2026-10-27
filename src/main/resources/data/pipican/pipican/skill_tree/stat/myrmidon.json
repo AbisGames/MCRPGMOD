@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "myrmidon_stat_start",
+      "name": "Myrmidon",
+      "type": "start",
+      "x": -902,
+      "y": -328
+    },
+    {
+      "id": "myrmidon_strong_arm",
+      "name": "Strong Arm",
+      "description": "+2 Strength, +1 Endurance",
+      "type": "small",
+      "x": -958,
+      "y": -349,
+      "links": [
+        "myrmidon_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "myrmidon_sturdy",
+      "name": "Sturdy",
+      "description": "+2 Endurance, +1 Vitality",
+      "type": "small",
+      "x": -1015,
+      "y": -369,
+      "links": [
+        "myrmidon_strong_arm"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

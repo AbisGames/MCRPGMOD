@@ -1,0 +1,7 @@
+{
+  "name": "Devotion",
+  "description": "Absolute conviction.",
+  "max": 100,
+  "exclusive": true,
+  "color": -536
+}

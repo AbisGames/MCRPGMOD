@@ -1,0 +1,13 @@
+{
+  "name": "Sanctity",
+  "description": "The holy power stored in your oath. Fuels Smite and protects you.",
+  "max": 100,
+  "exclusive": true,
+  "color": -10166,
+  "per_point": [
+    {
+      "attribute": "minecraft:armor",
+      "amount": 0.05
+    }
+  ]
+}

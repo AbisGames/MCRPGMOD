@@ -1,0 +1,126 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "weapon_master_start",
+      "name": "Weapon Master",
+      "description": "+3% damage",
+      "type": "start",
+      "x": -1146,
+      "y": -498,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "weapon_master_drilled",
+      "name": "Drilled",
+      "description": {
+        "text": "+5% favored damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1221,
+      "y": -501,
+      "links": [
+        "weapon_master_start"
+      ]
+    },
+    {
+      "id": "weapon_master_guard",
+      "name": "Guard",
+      "description": {
+        "text": "+1 armor with favored weapon",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1200,
+      "y": -552,
+      "links": [
+        "weapon_master_start"
+      ]
+    },
+    {
+      "id": "weapon_master_flow_state",
+      "name": "Flow State",
+      "description": {
+        "text": "+5% attack speed with favored weapon",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1286,
+      "y": -529,
+      "links": [
+        "weapon_master_drilled"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "weapon_master_signature_move",
+      "name": "Signature Move",
+      "description": {
+        "text": "every 5th hit with favored weapon is a crit",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1264,
+      "y": -579,
+      "links": [
+        "weapon_master_guard"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "weapon_master_one_true_weapon",
+      "name": "One True Weapon",
+      "description": {
+        "text": "+30% favored damage, but other weapons are forbidden-tier",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1339,
+      "y": -582,
+      "links": [
+        "weapon_master_flow_state",
+        "weapon_master_signature_move"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

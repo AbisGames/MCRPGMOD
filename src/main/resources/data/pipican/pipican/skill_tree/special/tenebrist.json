@@ -1,0 +1,118 @@
+{
+  "name": "Tenebrist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Cloak of Shadows",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "darkness_within",
+      "name": "Darkness Within",
+      "description": "+2 Umbra",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:tenebrist_umbra",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "snuff",
+      "name": "Snuff",
+      "description": {
+        "text": "torches within 4 blocks flicker - mobs near you can't see you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "shadow_form",
+      "name": "Shadow Form",
+      "description": {
+        "text": "unlocks Shadow Form ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "darkness_within"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "shadow_step",
+      "name": "Shadow Step",
+      "description": {
+        "text": "unlocks Shadow Step ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "snuff"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "void_touched",
+      "name": "Void-Touched",
+      "description": {
+        "text": "Shadow Form works in any light; -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "shadow_form",
+        "shadow_step"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

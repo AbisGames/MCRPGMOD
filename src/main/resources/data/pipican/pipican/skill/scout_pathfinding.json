@@ -1,0 +1,69 @@
+{
+  "name": "Pathfinding",
+  "description": "Trained by discovering new chunks / travelling long distances.",
+  "icon": "minecraft:feather",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "walk",
+    "per_blocks": 50
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:scout"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Awareness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:scout_awareness",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Awareness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:scout_awareness",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Stride regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Awareness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:scout_awareness",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Awareness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:scout_awareness",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

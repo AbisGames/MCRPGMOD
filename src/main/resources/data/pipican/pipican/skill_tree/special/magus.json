@@ -1,0 +1,118 @@
+{
+  "name": "Magus Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Staff of Magic",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "carved_runes",
+      "name": "Carved Runes",
+      "description": "+2 Staffcraft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magus_staffcraft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "long_reach",
+      "name": "Long Reach",
+      "description": {
+        "text": "+0.5 reach with staff",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "staff_of_power",
+      "name": "Staff of Power",
+      "description": {
+        "text": "+1 more armor with staff",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "carved_runes"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "staff_strike",
+      "name": "Staff Strike",
+      "description": {
+        "text": "unlocks Staff Bolt ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "long_reach"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "living_staff",
+      "name": "Living Staff",
+      "description": {
+        "text": "your staff returns to you if dropped and can't be destroyed; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "staff_of_power",
+        "staff_strike"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

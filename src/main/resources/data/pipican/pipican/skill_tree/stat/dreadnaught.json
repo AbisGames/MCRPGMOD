@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "dreadnaught_stat_start",
+      "name": "Dreadnaught",
+      "type": "start",
+      "x": -945,
+      "y": -167
+    },
+    {
+      "id": "dreadnaught_ox_strong",
+      "name": "Ox-Strong",
+      "description": "+2 Strength, +1 Endurance",
+      "type": "small",
+      "x": -1005,
+      "y": -177,
+      "links": [
+        "dreadnaught_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "dreadnaught_iron_body",
+      "name": "Iron Body",
+      "description": "+2 Endurance, +1 Vitality",
+      "type": "small",
+      "x": -1064,
+      "y": -188,
+      "links": [
+        "dreadnaught_ox_strong"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

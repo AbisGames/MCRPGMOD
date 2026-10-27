@@ -1,0 +1,81 @@
+{
+  "name": "Archery",
+  "description": "Trained by hitting mobs with arrows from a bow.",
+  "icon": "minecraft:bow",
+  "trigger": {
+    "type": "pipican:ranged_hit",
+    "items": "#pipican:weapons/bows"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:bard",
+    "pipican:fighter",
+    "pipican:jack_of_all_trades",
+    "pipican:poisoner",
+    "pipican:ranger",
+    "pipican:rogue",
+    "pipican:scout",
+    "pipican:sentinel",
+    "pipican:sharpshooter",
+    "pipican:warrior",
+    "pipican:weapon_master"
+  ],
+  "tiers": [
+    {
+      "description": "+3% bow damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/bows",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% draw speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+3% bow damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/bows",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% draw speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+6% bow damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/bows",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

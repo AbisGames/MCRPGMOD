@@ -1,0 +1,155 @@
+{
+  "name": "Sharpshooter",
+  "description": "A master archer who lines up the perfect shot and threads arrows through any gap.",
+  "icon": "minecraft:bow",
+  "selectable": true,
+  "base_health": 32.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 3,
+    "pipican:dexterity": 10,
+    "pipican:agility": 4,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:sharpshooter_precision": 10
+  },
+  "special_stat": {
+    "stat": "pipican:sharpshooter_precision",
+    "resource": {
+      "name": "Focus",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -10712006,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:crossbow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 48
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "sharpshooter_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/sharpshooter",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "sharpshooter_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.15,
+      "weapons": "#pipican:weapons/bows"
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.15,
+      "weapons": "#pipican:weapons/crossbows"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.006
+        }
+      ],
+      "weapons": "#pipican:weapons/bows"
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.006
+        }
+      ],
+      "weapons": "#pipican:weapons/crossbows"
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Sharpshooters are lost in close quarters.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

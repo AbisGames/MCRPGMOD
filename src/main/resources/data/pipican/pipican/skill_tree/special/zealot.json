@@ -1,0 +1,118 @@
+{
+  "name": "Zealot Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Zeal",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "burning_faith",
+      "name": "Burning Faith",
+      "description": "+2 Fervor",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:zealot_fervor",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "iron_conviction",
+      "name": "Iron Conviction",
+      "description": {
+        "text": "post-Zeal immunity lasts 3s longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "divine_might",
+      "name": "Divine Might",
+      "description": {
+        "text": "+10% more Divine Might damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "burning_faith"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "violent_madness",
+      "name": "Violent Madness",
+      "description": {
+        "text": "Violent Madness no longer targets players",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "iron_conviction"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "prophet_of_ruin",
+      "name": "Prophet of Ruin",
+      "description": {
+        "text": "Zeal triggers at 3 hearts; Madness fills twice as fast",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "divine_might",
+        "violent_madness"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

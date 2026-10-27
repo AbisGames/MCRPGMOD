@@ -1,0 +1,126 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "chronomancer_start",
+      "name": "Chronomancer",
+      "description": "+3% movement speed",
+      "type": "start",
+      "x": 233,
+      "y": -1228,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "chronomancer_fast_hands",
+      "name": "Fast Hands",
+      "description": "+6% attack speed",
+      "type": "small",
+      "x": 219,
+      "y": -1302,
+      "links": [
+        "chronomancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.06,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "chronomancer_fleeting",
+      "name": "Fleeting",
+      "description": "+5% movement speed",
+      "type": "small",
+      "x": 273,
+      "y": -1292,
+      "links": [
+        "chronomancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "chronomancer_foresight",
+      "name": "Foresight",
+      "description": {
+        "text": "+5% Precognition",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 232,
+      "y": -1371,
+      "links": [
+        "chronomancer_fast_hands"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "chronomancer_stretch",
+      "name": "Stretch",
+      "description": {
+        "text": "your Speed effects last 30% longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 286,
+      "y": -1360,
+      "links": [
+        "chronomancer_fleeting"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "chronomancer_time_thief",
+      "name": "Time Thief",
+      "description": {
+        "text": "+20% attack and movement speed, but -20% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 272,
+      "y": -1434,
+      "links": [
+        "chronomancer_foresight",
+        "chronomancer_stretch"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

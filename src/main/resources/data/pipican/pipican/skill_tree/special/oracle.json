@@ -1,0 +1,118 @@
+{
+  "name": "Oracle Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Divine Ecstasy",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "open_vessel",
+      "name": "Open Vessel",
+      "description": "+2 Communion",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:oracle_communion",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "fearless",
+      "name": "Fearless",
+      "description": {
+        "text": "+15% knockback resistance in Ecstasy",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "commune",
+      "name": "Commune with the Gods",
+      "description": {
+        "text": "unlocks Commune ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "open_vessel"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "avatar",
+      "name": "Avatar",
+      "description": {
+        "text": "+1 armor and +10% attack speed in Ecstasy",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "fearless"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "possessed",
+      "name": "Fully Possessed",
+      "description": {
+        "text": "Ecstasy also gives Regeneration I; after-effects add Blindness 3s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "commune",
+        "avatar"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

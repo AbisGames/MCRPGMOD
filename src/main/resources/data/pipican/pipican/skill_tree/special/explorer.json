@@ -1,0 +1,118 @@
+{
+  "name": "Explorer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Perseverance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "hardship",
+      "name": "Hardship",
+      "description": "+2 Wayfinding",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:explorer_wayfinding",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "respite",
+      "name": "Respite",
+      "description": {
+        "text": "Respite also gives Regeneration I for 30s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "driven",
+      "name": "Driven",
+      "description": {
+        "text": "Driven chance 20%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "hardship"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "survivor",
+      "name": "Survivor",
+      "description": {
+        "text": "immune to freezing",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "respite"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "trailblazer",
+      "name": "Trailblazer",
+      "description": {
+        "text": "players within 16 blocks get +10% speed outdoors; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "driven",
+        "survivor"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

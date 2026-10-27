@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "hexer_stat_start",
+      "name": "Hexer",
+      "type": "start",
+      "x": 430,
+      "y": -614
+    },
+    {
+      "id": "hexer_malicious",
+      "name": "Malicious",
+      "description": "+2 Intelligence, +1 Luck",
+      "type": "small",
+      "x": 465,
+      "y": -664,
+      "links": [
+        "hexer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "hexer_bitter_will",
+      "name": "Bitter Will",
+      "description": "+2 Wisdom, +1 Agility",
+      "type": "small",
+      "x": 499,
+      "y": -713,
+      "links": [
+        "hexer_malicious"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

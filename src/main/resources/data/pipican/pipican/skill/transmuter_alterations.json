@@ -1,0 +1,67 @@
+{
+  "name": "Alterations",
+  "description": "Trained by drinking potions and using Optimization.",
+  "icon": "minecraft:brewing_stand",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:transmuter"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Flux",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:transmuter_flux",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Flux",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:transmuter_flux",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Alteration regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Flux",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:transmuter_flux",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Flux",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:transmuter_flux",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

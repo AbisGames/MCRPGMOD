@@ -1,0 +1,144 @@
+{
+  "name": "Wizard",
+  "description": "A scholar of magic who keeps their power in a grimoire. Unmatched knowledge, deep Mana reserves.",
+  "icon": "minecraft:writable_book",
+  "selectable": true,
+  "base_health": 22.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 9,
+    "pipican:wisdom": 4,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:wizard_lore": 8
+  },
+  "special_stat": {
+    "stat": "pipican:wizard_lore",
+    "resource": {
+      "name": "Aether",
+      "base_max": 60.0,
+      "max_per_point": 5.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.1,
+      "color": -13743144,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:writable_book"
+    },
+    {
+      "id": "minecraft:book",
+      "count": 1
+    },
+    {
+      "id": "minecraft:lapis_lazuli",
+      "count": 4
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "wizard_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/wizard",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "wizard_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Without the grimoire, a wizard is just a nervous scholar.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": [
+          "minecraft:book",
+          "minecraft:enchanted_book"
+        ],
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 2
+  }
+}

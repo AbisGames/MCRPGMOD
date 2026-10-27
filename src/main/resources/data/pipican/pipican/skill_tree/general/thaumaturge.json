@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "thaumaturge_start",
+      "name": "Thaumaturge",
+      "description": "+1 Luck",
+      "type": "start",
+      "x": 60,
+      "y": -1249,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_lucky_streak",
+      "name": "Lucky Streak",
+      "description": "+1 Luck",
+      "type": "small",
+      "x": 36,
+      "y": -1320,
+      "links": [
+        "thaumaturge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_wild_magic",
+      "name": "Wild Magic",
+      "description": {
+        "text": "+5% Seize Chaos chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 91,
+      "y": -1317,
+      "links": [
+        "thaumaturge_start"
+      ]
+    },
+    {
+      "id": "thaumaturge_probability_bend",
+      "name": "Probability Bend",
+      "description": {
+        "text": "bad outcomes 20% rarer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 39,
+      "y": -1390,
+      "links": [
+        "thaumaturge_lucky_streak"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "thaumaturge_chaos_shield",
+      "name": "Chaos Shield",
+      "description": {
+        "text": "10% chance an incoming hit is redirected to a random nearby mob",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 94,
+      "y": -1387,
+      "links": [
+        "thaumaturge_wild_magic"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "thaumaturge_agent_of_chaos",
+      "name": "Agent of Chaos",
+      "description": {
+        "text": "Seize Chaos chance doubled, but outcomes are fully random",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 70,
+      "y": -1458,
+      "links": [
+        "thaumaturge_probability_bend",
+        "thaumaturge_chaos_shield"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

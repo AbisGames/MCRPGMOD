@@ -1,0 +1,118 @@
+{
+  "name": "Pyromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Flame Blessing",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "fan_the_flames",
+      "name": "Fan the Flames",
+      "description": "+2 Inferno",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:pyromancer_inferno",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "hotter",
+      "name": "Hotter",
+      "description": {
+        "text": "burning mobs take +1 damage per second",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "immolating_flames",
+      "name": "Immolating Flames",
+      "description": {
+        "text": "ignite chance +10%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "fan_the_flames"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "firebolt",
+      "name": "Firebolt",
+      "description": {
+        "text": "unlocks Firebolt ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "hotter"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "phoenix",
+      "name": "Phoenix",
+      "description": {
+        "text": "once per day, when you'd die, explode in flame and heal 6 HP; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "immolating_flames",
+        "firebolt"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

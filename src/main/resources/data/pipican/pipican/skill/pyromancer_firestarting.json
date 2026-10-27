@@ -1,0 +1,67 @@
+{
+  "name": "Firestarting",
+  "description": "Trained by setting mobs on fire and killing burning mobs.",
+  "icon": "minecraft:blaze_powder",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:pyromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Inferno",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:pyromancer_inferno",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Inferno",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:pyromancer_inferno",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Embers regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Inferno",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:pyromancer_inferno",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Inferno",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:pyromancer_inferno",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

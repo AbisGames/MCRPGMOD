@@ -1,0 +1,67 @@
+{
+  "name": "Augury",
+  "description": "Trained by using up premonitions and spending Omens.",
+  "icon": "minecraft:ender_eye",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:diviner"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Foresight",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diviner_foresight",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Foresight",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diviner_foresight",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Omens regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Foresight",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diviner_foresight",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Foresight",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diviner_foresight",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

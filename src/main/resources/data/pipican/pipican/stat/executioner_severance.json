@@ -1,0 +1,7 @@
+{
+  "name": "Severance",
+  "description": "Anatomical knowledge of where to cut.",
+  "max": 100,
+  "exclusive": true,
+  "color": -14935012
+}

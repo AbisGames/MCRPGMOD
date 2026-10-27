@@ -1,0 +1,127 @@
+{
+  "name": "Spellbinder Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Spellbound Weapon",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "recall",
+      "name": "Recall",
+      "description": {
+        "text": "+2 Binding; unlocks Recall Weapon ability",
+        "extra": [
+          {
+            "text": " (partly not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:spellbinder_binding",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "mend",
+      "name": "Mend",
+      "description": {
+        "text": "bound weapon slowly repairs 1 durability every 10s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "invest_power",
+      "name": "Invest Power",
+      "description": {
+        "text": "unlocks Invest Power ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "recall"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "sacrifice",
+      "name": "Sacrifice",
+      "description": {
+        "text": "unlocks Sacrifice ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "mend"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "magic_weapon",
+      "name": "Magic Weapon",
+      "description": {
+        "text": "the magic damage portion of your hits rises to 35%; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "invest_power",
+        "sacrifice"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

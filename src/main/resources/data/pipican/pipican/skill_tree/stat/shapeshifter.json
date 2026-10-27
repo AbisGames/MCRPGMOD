@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "shapeshifter_stat_start",
+      "name": "Shapeshifter",
+      "type": "start",
+      "x": 786,
+      "y": 551
+    },
+    {
+      "id": "shapeshifter_primal",
+      "name": "Primal",
+      "description": "+2 Strength, +1 Agility",
+      "type": "small",
+      "x": 836,
+      "y": 585,
+      "links": [
+        "shapeshifter_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "shapeshifter_adaptable",
+      "name": "Adaptable",
+      "description": "+2 Wisdom, +1 Vitality",
+      "type": "small",
+      "x": 885,
+      "y": 619,
+      "links": [
+        "shapeshifter_primal"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "apocalyptist_start",
+      "name": "Apocalyptist",
+      "description": "+5% magic damage",
+      "type": "start",
+      "x": 761,
+      "y": 992,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_dark_whispers",
+      "name": "Dark Whispers",
+      "description": "+6% magic damage",
+      "type": "small",
+      "x": 825,
+      "y": 1030,
+      "links": [
+        "apocalyptist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_blighted",
+      "name": "Blighted",
+      "description": {
+        "text": "+10% Wither duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 782,
+      "y": 1064,
+      "links": [
+        "apocalyptist_start"
+      ]
+    },
+    {
+      "id": "apocalyptist_harbinger",
+      "name": "Harbinger",
+      "description": {
+        "text": "mobs near you take 1 damage every 3s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 868,
+      "y": 1086,
+      "links": [
+        "apocalyptist_dark_whispers"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "apocalyptist_plague_bearer",
+      "name": "Plague Bearer",
+      "description": {
+        "text": "your Wither is Wither II",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 824,
+      "y": 1120,
+      "links": [
+        "apocalyptist_blighted"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "apocalyptist_end_of_days",
+      "name": "End of Days",
+      "description": {
+        "text": "+25% magic damage, but you slowly take 1 damage every 10s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 889,
+      "y": 1158,
+      "links": [
+        "apocalyptist_harbinger",
+        "apocalyptist_plague_bearer"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

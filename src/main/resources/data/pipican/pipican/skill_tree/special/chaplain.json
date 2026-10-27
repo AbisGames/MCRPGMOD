@@ -1,0 +1,118 @@
+{
+  "name": "Chaplain Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Battle Chant",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "hymn",
+      "name": "Hymn",
+      "description": "+2 Sermon",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chaplain_sermon",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "choir",
+      "name": "Choir",
+      "description": {
+        "text": "+3 blocks chant range",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "emboldening_chant",
+      "name": "Emboldening Chant",
+      "description": {
+        "text": "+5% more damage in chant",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "hymn"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "succor",
+      "name": "Succor",
+      "description": {
+        "text": "Succor also removes Poison and Wither",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "choir"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "voice_of_god",
+      "name": "Voice of God",
+      "description": {
+        "text": "chant also gives Resistance I; Chant regen -25%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "emboldening_chant",
+        "succor"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

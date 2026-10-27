@@ -1,0 +1,118 @@
+{
+  "name": "Sharpshooter Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Deadly Aim",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "calm",
+      "name": "Calm",
+      "description": "+2 Precision",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sharpshooter_precision",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quick_nock",
+      "name": "Quick Nock",
+      "description": {
+        "text": "+15% draw speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "perfect_shot",
+      "name": "Perfect Shot",
+      "description": {
+        "text": "armor ignore 35%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "calm"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "called_shot",
+      "name": "Called Shot",
+      "description": {
+        "text": "unlocks Called Shot ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quick_nock"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "unerring",
+      "name": "Unerring",
+      "description": {
+        "text": "Deadly Aim shots always crit; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "perfect_shot",
+        "called_shot"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

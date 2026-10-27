@@ -1,0 +1,67 @@
+{
+  "name": "Knifework",
+  "description": "Trained by making mobs bleed.",
+  "icon": "minecraft:iron_sword",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:blade"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Edge",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:blade_edge",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Edge",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:blade_edge",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+1s bleed duration",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Edge",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:blade_edge",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Edge",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:blade_edge",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

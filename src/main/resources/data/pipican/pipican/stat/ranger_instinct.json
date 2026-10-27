@@ -1,0 +1,7 @@
+{
+  "name": "Instinct",
+  "description": "The hunter's sixth sense.",
+  "max": 100,
+  "exclusive": true,
+  "color": -11765202
+}

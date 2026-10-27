@@ -1,0 +1,118 @@
+{
+  "name": "Chronomancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Quickening",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "accelerate",
+      "name": "Accelerate",
+      "description": "+2 Tempo",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chronomancer_tempo",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "haste",
+      "name": "Haste",
+      "description": {
+        "text": "Quickening speed lasts 2s longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "precognition",
+      "name": "Precognition",
+      "description": {
+        "text": "unlocks Insight: after you dodge, your next hit is a guaranteed crit",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "accelerate"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "slow",
+      "name": "Slow",
+      "description": {
+        "text": "mobs you hit get Slowness I for 2s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "haste"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "pause",
+      "name": "Pause",
+      "description": {
+        "text": "unlocks Time Stop ability; hunger drains 50% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "precognition",
+        "slow"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

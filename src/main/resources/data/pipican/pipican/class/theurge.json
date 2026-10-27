@@ -1,0 +1,121 @@
+{
+  "name": "Theurge",
+  "description": "A holy caster with a direct line to their god, healing allies and stunning the wicked with pulses of divine power.",
+  "icon": "minecraft:nether_star",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 5,
+    "pipican:wisdom": 9,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:theurge_piety": 10
+  },
+  "special_stat": {
+    "stat": "pipican:theurge_piety",
+    "resource": {
+      "name": "Divinity",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -6774,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:book"
+    },
+    {
+      "id": "minecraft:golden_apple"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "theurge_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/theurge",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "theurge_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 0.85
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "A theurge's power is borrowed - and the lender is watching.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

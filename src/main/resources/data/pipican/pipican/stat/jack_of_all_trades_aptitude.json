@@ -1,0 +1,14 @@
+{
+  "name": "Aptitude",
+  "description": "A little bit of everything.",
+  "max": 100,
+  "exclusive": true,
+  "color": -7363750,
+  "per_point": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.002,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

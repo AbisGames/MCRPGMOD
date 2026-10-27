@@ -1,0 +1,67 @@
+{
+  "name": "Stormcalling",
+  "description": "Trained by fighting in rain and thunderstorms.",
+  "icon": "minecraft:lightning_rod",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:stormbringer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Tempest",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:stormbringer_tempest",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Tempest",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:stormbringer_tempest",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Charge regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Tempest",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:stormbringer_tempest",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Tempest",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:stormbringer_tempest",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

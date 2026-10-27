@@ -1,0 +1,7 @@
+{
+  "name": "Vengeance",
+  "description": "The heat of the oath you swore.",
+  "max": 100,
+  "exclusive": true,
+  "color": -4058066
+}

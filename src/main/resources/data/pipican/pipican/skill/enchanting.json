@@ -1,0 +1,95 @@
+{
+  "name": "Enchanting",
+  "description": "Trained by enchanting items at an enchanting table.",
+  "icon": "minecraft:enchanted_book",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:abjurer",
+    "pipican:arcanist",
+    "pipican:enchanter",
+    "pipican:mage_knight",
+    "pipican:magician",
+    "pipican:magus",
+    "pipican:savant",
+    "pipican:spellbinder",
+    "pipican:witch",
+    "pipican:wizard"
+  ],
+  "tiers": [
+    {
+      "description": {
+        "text": "+5% chance of a better enchantment roll",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "-1 lapis cost on level-3 enchants",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+5% chance of a better enchantment roll",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+1 bookshelf counted around your table",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": {
+        "text": "+10% chance of a better enchantment roll",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    }
+  ]
+}

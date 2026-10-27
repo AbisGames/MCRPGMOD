@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "tenebrist_start",
+      "name": "Tenebrist",
+      "description": {
+        "text": "-5% detection range",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 612,
+      "y": 1478
+    },
+    {
+      "id": "tenebrist_gloom",
+      "name": "Gloom",
+      "description": {
+        "text": "+5% damage in darkness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 664,
+      "y": 1532,
+      "links": [
+        "tenebrist_start"
+      ]
+    },
+    {
+      "id": "tenebrist_dusk_step",
+      "name": "Dusk Step",
+      "description": "+10% sneaking speed",
+      "type": "small",
+      "x": 614,
+      "y": 1553,
+      "links": [
+        "tenebrist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "tenebrist_shadow_bind",
+      "name": "Shadow Bind",
+      "description": {
+        "text": "your hits in darkness give Slowness I",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 691,
+      "y": 1597,
+      "links": [
+        "tenebrist_gloom"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "tenebrist_pallid",
+      "name": "Pallid",
+      "description": "-15% wither and poison damage",
+      "type": "notable",
+      "x": 640,
+      "y": 1618,
+      "links": [
+        "tenebrist_dusk_step"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_wither",
+          "multiplier": 0.85
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "id": "tenebrist_child_of_night",
+      "name": "Child of Night",
+      "description": {
+        "text": "+30% damage in darkness, but -20% damage in daylight",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 693,
+      "y": 1672,
+      "links": [
+        "tenebrist_shadow_bind",
+        "tenebrist_pallid"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

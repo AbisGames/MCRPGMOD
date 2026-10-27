@@ -1,0 +1,127 @@
+{
+  "name": "Thief Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Thievery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "escape_artist",
+      "name": "Escape Artist",
+      "description": {
+        "text": "+2 Finesse; cobwebs don't slow you",
+        "extra": [
+          {
+            "text": " (partly not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thief_finesse",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "hide_in_shadows",
+      "name": "Hide in Shadows",
+      "description": {
+        "text": "-30% mob detection range in light level 7 or lower",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "keen_senses",
+      "name": "Keen Senses",
+      "description": {
+        "text": "chests with loot within 8 blocks sparkle while you sneak",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "escape_artist"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "dodge",
+      "name": "Dodge",
+      "description": {
+        "text": "+6% Dodge chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "hide_in_shadows"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "opportunist",
+      "name": "Opportunist",
+      "description": {
+        "text": "when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "keen_senses",
+        "dodge"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

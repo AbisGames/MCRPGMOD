@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "explorer_start",
+      "name": "Explorer",
+      "description": {
+        "text": "-10% hunger drain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -1195,
+      "y": 365
+    },
+    {
+      "id": "explorer_trail_legs",
+      "name": "Trail Legs",
+      "description": {
+        "text": "+5% movement speed outdoors",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1254,
+      "y": 412,
+      "links": [
+        "explorer_start"
+      ]
+    },
+    {
+      "id": "explorer_iron_stomach",
+      "name": "Iron Stomach",
+      "description": {
+        "text": "immune to food poisoning effects",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1270,
+      "y": 360,
+      "links": [
+        "explorer_start"
+      ]
+    },
+    {
+      "id": "explorer_pack_mule",
+      "name": "Pack Mule",
+      "description": "+10% knockback resistance",
+      "type": "notable",
+      "x": -1321,
+      "y": 433,
+      "links": [
+        "explorer_trail_legs"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "explorer_cartographer",
+      "name": "Cartographer",
+      "description": {
+        "text": "maps you make explore 25% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1337,
+      "y": 380,
+      "links": [
+        "explorer_iron_stomach"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "explorer_far_horizon",
+      "name": "Far Horizon",
+      "description": {
+        "text": "+15% movement speed outdoors, but -15% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1396,
+      "y": 427,
+      "links": [
+        "explorer_pack_mule",
+        "explorer_cartographer"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

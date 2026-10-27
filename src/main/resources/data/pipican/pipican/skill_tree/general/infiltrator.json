@@ -1,0 +1,128 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "infiltrator_start",
+      "name": "Infiltrator",
+      "description": {
+        "text": "-5% detection range",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 346,
+      "y": 1562
+    },
+    {
+      "id": "infiltrator_grey_man",
+      "name": "Grey Man",
+      "description": {
+        "text": "-10% detection range",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 388,
+      "y": 1624,
+      "links": [
+        "infiltrator_start"
+      ]
+    },
+    {
+      "id": "infiltrator_shadow_step",
+      "name": "Shadow Step",
+      "description": "+10% sneaking speed",
+      "type": "small",
+      "x": 335,
+      "y": 1636,
+      "links": [
+        "infiltrator_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "infiltrator_ambush",
+      "name": "Ambush",
+      "description": {
+        "text": "first round of combat: +20% damage and speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 403,
+      "y": 1693,
+      "links": [
+        "infiltrator_grey_man"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "infiltrator_forgettable",
+      "name": "Forgettable",
+      "description": {
+        "text": "mobs forget you 1s faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 350,
+      "y": 1705,
+      "links": [
+        "infiltrator_shadow_step"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "infiltrator_no_one",
+      "name": "No One",
+      "description": {
+        "text": "Faceless works within 2 blocks, but -20% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 392,
+      "y": 1767,
+      "links": [
+        "infiltrator_ambush",
+        "infiltrator_forgettable"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

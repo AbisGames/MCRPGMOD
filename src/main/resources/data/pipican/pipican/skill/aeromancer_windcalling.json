@@ -1,0 +1,67 @@
+{
+  "name": "Windcalling",
+  "description": "Trained by throwing wind charges and falling long distances safely.",
+  "icon": "minecraft:rabbit_foot",
+  "trigger": {
+    "type": "pipican:jump"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:aeromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Gale",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:aeromancer_gale",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Gale",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:aeromancer_gale",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Breath regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Gale",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:aeromancer_gale",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Gale",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:aeromancer_gale",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

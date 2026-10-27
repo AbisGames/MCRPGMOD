@@ -1,0 +1,165 @@
+{
+  "name": "Brute",
+  "description": "Pure muscle and toughness. Shrugs off blows that would drop anyone else and hits like a falling tree.",
+  "icon": "minecraft:anvil",
+  "selectable": true,
+  "base_health": 40.0,
+  "base_stats": {
+    "pipican:vitality": 7,
+    "pipican:strength": 9,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:endurance": 7,
+    "pipican:luck": 1,
+    "pipican:brute_brawn": 10
+  },
+  "special_stat": {
+    "stat": "pipican:brute_brawn",
+    "resource": {
+      "name": "Might",
+      "base_max": 40.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.5,
+      "regen_per_point": 0.05,
+      "color": -4959446,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_axe"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:cooked_beef",
+      "count": 8
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "brute_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/brute",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "brute_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_melee",
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:knockback_resistance",
+      "amount": 0.2
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_melee",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.006
+        }
+      ]
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:knockback_resistance",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:max_health",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Big and slow.",
+    "effects": [
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:movement_speed",
+        "amount": -0.1,
+        "operation": "add_multiplied_base"
+      },
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:attack_speed",
+        "amount": -0.1,
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

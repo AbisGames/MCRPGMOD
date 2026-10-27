@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "gunslinger_start",
+      "name": "Gunslinger",
+      "description": {
+        "text": "+5% firearm damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": -1576,
+      "y": 278
+    },
+    {
+      "id": "gunslinger_quick_draw",
+      "name": "Quick Draw",
+      "description": {
+        "text": "first shot after swapping to a gun deals +25%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1640,
+      "y": 317,
+      "links": [
+        "gunslinger_start"
+      ]
+    },
+    {
+      "id": "gunslinger_steady_hand",
+      "name": "Steady Hand",
+      "description": {
+        "text": "+5% accuracy",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1649,
+      "y": 263,
+      "links": [
+        "gunslinger_start"
+      ]
+    },
+    {
+      "id": "gunslinger_fan_the_hammer",
+      "name": "Fan the Hammer",
+      "description": {
+        "text": "+15% fire rate",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1709,
+      "y": 329,
+      "links": [
+        "gunslinger_quick_draw"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "gunslinger_hollow_point",
+      "name": "Hollow Point",
+      "description": {
+        "text": "+10% damage to unarmored mobs",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1718,
+      "y": 275,
+      "links": [
+        "gunslinger_steady_hand"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "gunslinger_showdown",
+      "name": "Showdown",
+      "description": {
+        "text": "+30% firearm damage, but you can't wear heavy armor without -50% accuracy",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1783,
+      "y": 314,
+      "links": [
+        "gunslinger_fan_the_hammer",
+        "gunslinger_hollow_point"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

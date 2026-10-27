@@ -1,0 +1,14 @@
+{
+  "name": "Discipline",
+  "description": "Years of drilling. Every point makes your style sharper.",
+  "max": 100,
+  "exclusive": true,
+  "color": -6641740,
+  "per_point": [
+    {
+      "attribute": "minecraft:attack_speed",
+      "amount": 0.002,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

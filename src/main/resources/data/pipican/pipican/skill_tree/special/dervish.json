@@ -1,0 +1,118 @@
+{
+  "name": "Dervish Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Ambidexterity",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "flow",
+      "name": "Flow",
+      "description": "+2 Rhythm",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dervish_rhythm",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "counter",
+      "name": "Counter",
+      "description": {
+        "text": "a successful parry makes your next hit a crit",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "off_hand_parry",
+      "name": "Off-Hand Parry",
+      "description": {
+        "text": "+1 armor while dual-wielding",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "flow"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "two_weapon_mastery",
+      "name": "Two Weapon Mastery",
+      "description": {
+        "text": "combo bonus +15%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "counter"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "whirling_death",
+      "name": "Whirling Death",
+      "description": {
+        "text": "unlocks Whirl ability; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "off_hand_parry",
+        "two_weapon_mastery"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

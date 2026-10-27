@@ -1,0 +1,79 @@
+{
+  "name": "Mace Training",
+  "description": "Trained by hitting mobs with maces.",
+  "icon": "minecraft:mace",
+  "trigger": {
+    "type": "pipican:melee_hit",
+    "items": "#pipican:weapons/maces"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:artificer",
+    "pipican:brute",
+    "pipican:chaplain",
+    "pipican:cleric",
+    "pipican:death_dealer",
+    "pipican:dreadnaught",
+    "pipican:exorcist",
+    "pipican:fighter",
+    "pipican:paladin",
+    "pipican:priest",
+    "pipican:weapon_master",
+    "pipican:zealot"
+  ],
+  "tiers": [
+    {
+      "description": "+3% mace damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/maces",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+3% mace damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/maces",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% fall-smash damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+3% mace damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/maces",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+6% mace damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/maces",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

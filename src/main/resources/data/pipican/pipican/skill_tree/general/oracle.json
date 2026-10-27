@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "oracle_start",
+      "name": "Oracle",
+      "description": "+1 max health",
+      "type": "start",
+      "x": 739,
+      "y": -130,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "oracle_vessel",
+      "name": "Vessel",
+      "description": "+2 max health",
+      "type": "small",
+      "x": 803,
+      "y": -169,
+      "links": [
+        "oracle_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "oracle_whispers",
+      "name": "Whispers",
+      "description": {
+        "text": "glow range of The Sight +8 blocks",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 812,
+      "y": -115,
+      "links": [
+        "oracle_start"
+      ]
+    },
+    {
+      "id": "oracle_steady_mind",
+      "name": "Steady Mind",
+      "description": {
+        "text": "the after-effects of Ecstasy last half as long",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 872,
+      "y": -182,
+      "links": [
+        "oracle_vessel"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "oracle_prophet",
+      "name": "Prophet",
+      "description": {
+        "text": "+10% damage to mobs that glow for you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 881,
+      "y": -127,
+      "links": [
+        "oracle_whispers"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "oracle_avatar",
+      "name": "Living Avatar",
+      "description": {
+        "text": "Divine Ecstasy bonuses +50%, but you can't leave it early and it drains 50% faster",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 945,
+      "y": -167,
+      "links": [
+        "oracle_steady_mind",
+        "oracle_prophet"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

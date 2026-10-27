@@ -1,0 +1,67 @@
+{
+  "name": "Warding the Shrine",
+  "description": "Trained by killing mobs inside your temple.",
+  "icon": "minecraft:lodestone",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:templar"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Sanctum",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:templar_sanctum",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Sanctum",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:templar_sanctum",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Consecration regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Sanctum",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:templar_sanctum",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Sanctum",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:templar_sanctum",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "name": "Gunslinger Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Six-Shooter",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "custom_grip",
+      "name": "Custom Grip",
+      "description": "+2 Trigger Finger",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gunslinger_trigger_finger",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "speed_loader",
+      "name": "Speed Loader",
+      "description": {
+        "text": "+20% reload speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "deadeye_shot",
+      "name": "Deadeye Shot",
+      "description": {
+        "text": "unlocks Deadeye ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "custom_grip"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "ricochet",
+      "name": "Ricochet",
+      "description": {
+        "text": "bullets bounce to a second mob within 4 blocks for 50%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "speed_loader"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "last_gunslinger",
+      "name": "Last Gunslinger",
+      "description": {
+        "text": "6th shot in a cylinder always crits; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "deadeye_shot",
+        "ricochet"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

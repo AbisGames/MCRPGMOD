@@ -1,0 +1,14 @@
+{
+  "name": "Poise",
+  "description": "Perfect body control.",
+  "max": 100,
+  "exclusive": true,
+  "color": -13183293,
+  "per_point": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.003,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

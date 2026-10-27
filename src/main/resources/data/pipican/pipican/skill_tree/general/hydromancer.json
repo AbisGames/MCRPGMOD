@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "hydromancer_start",
+      "name": "Hydromancer",
+      "description": "+10% swim speed",
+      "type": "start",
+      "x": 1083,
+      "y": 625,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_gills",
+      "name": "Gills",
+      "description": {
+        "text": "+5% underwater damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1157,
+      "y": 636,
+      "links": [
+        "hydromancer_start"
+      ]
+    },
+    {
+      "id": "hydromancer_riptide",
+      "name": "Riptide",
+      "description": {
+        "text": "tridents with Riptide work without rain while Current is above half",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1129,
+      "y": 684,
+      "links": [
+        "hydromancer_start"
+      ]
+    },
+    {
+      "id": "hydromancer_undertow",
+      "name": "Undertow",
+      "description": {
+        "text": "mobs you hit in water get Slowness II",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1218,
+      "y": 671,
+      "links": [
+        "hydromancer_gills"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "hydromancer_mist",
+      "name": "Mist",
+      "description": {
+        "text": "+10% dodge in rain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1190,
+      "y": 719,
+      "links": [
+        "hydromancer_riptide"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "hydromancer_child_of_the_sea",
+      "name": "Child of the Sea",
+      "description": {
+        "text": "+30% damage in water, but -20% damage on dry land",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1264,
+      "y": 730,
+      "links": [
+        "hydromancer_undertow",
+        "hydromancer_mist"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

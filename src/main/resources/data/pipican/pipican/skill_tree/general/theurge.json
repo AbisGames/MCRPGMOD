@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "theurge_start",
+      "name": "Theurge",
+      "description": {
+        "text": "+5% healing",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 1478,
+      "y": -612
+    },
+    {
+      "id": "theurge_prayerful",
+      "name": "Prayerful",
+      "description": {
+        "text": "+8% healing",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1532,
+      "y": -664,
+      "links": [
+        "theurge_start"
+      ]
+    },
+    {
+      "id": "theurge_halo",
+      "name": "Halo",
+      "description": {
+        "text": "-10% damage from undead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1553,
+      "y": -614,
+      "links": [
+        "theurge_start"
+      ]
+    },
+    {
+      "id": "theurge_pulse",
+      "name": "Pulse",
+      "description": {
+        "text": "Invocation every 20s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1597,
+      "y": -691,
+      "links": [
+        "theurge_prayerful"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "theurge_divine_aegis",
+      "name": "Divine Aegis",
+      "description": "+1 armor",
+      "type": "notable",
+      "x": 1618,
+      "y": -640,
+      "links": [
+        "theurge_halo"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "theurge_chosen",
+      "name": "Chosen",
+      "description": {
+        "text": "Invocation stuns frightened (weakened) mobs for 1s, but -20% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1672,
+      "y": -693,
+      "links": [
+        "theurge_pulse",
+        "theurge_divine_aegis"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Liturgy",
+  "description": "Trained by allies killing mobs inside your Battle Chant.",
+  "icon": "minecraft:book",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:chaplain"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Sermon",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chaplain_sermon",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Sermon",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chaplain_sermon",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Chant regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Sermon",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chaplain_sermon",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Sermon",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chaplain_sermon",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

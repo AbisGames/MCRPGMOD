@@ -1,0 +1,118 @@
+{
+  "name": "Myrmidon Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Shield Block",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "heavy_shield",
+      "name": "Heavy Shield",
+      "description": "+2 Shieldcraft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:myrmidon_shieldcraft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "forceful_shield",
+      "name": "Forceful Shield",
+      "description": {
+        "text": "+2 knockback blocks",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "shield_bash",
+      "name": "Shield Bash",
+      "description": {
+        "text": "unlocks Shield Charge ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "heavy_shield"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "shield_mastery",
+      "name": "Shield Mastery",
+      "description": {
+        "text": "+1 more armor with shield",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "forceful_shield"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "aspis",
+      "name": "Aspis",
+      "description": {
+        "text": "players within 3 blocks behind you are protected from projectiles; -10% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "shield_bash",
+        "shield_mastery"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

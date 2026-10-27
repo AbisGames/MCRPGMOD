@@ -1,0 +1,17 @@
+{
+  "name": "Bulwark",
+  "description": "How much punishment you can soak for others.",
+  "max": 100,
+  "exclusive": true,
+  "color": -11899764,
+  "per_point": [
+    {
+      "attribute": "minecraft:armor",
+      "amount": 0.1
+    },
+    {
+      "attribute": "minecraft:knockback_resistance",
+      "amount": 0.003
+    }
+  ]
+}

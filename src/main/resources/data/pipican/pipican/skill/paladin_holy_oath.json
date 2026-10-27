@@ -1,0 +1,67 @@
+{
+  "name": "Holy Oath",
+  "description": "Trained by landing Divine Smite hits.",
+  "icon": "minecraft:golden_sword",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:paladin"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Sanctity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:paladin_sanctity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Sanctity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:paladin_sanctity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Smite regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Sanctity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:paladin_sanctity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Sanctity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:paladin_sanctity",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

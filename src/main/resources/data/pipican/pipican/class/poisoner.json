@@ -1,0 +1,130 @@
+{
+  "name": "Poisoner",
+  "description": "A dealer in toxins who coats every blade and arrow, and carries a poisoned needle for emergencies.",
+  "icon": "minecraft:pufferfish",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 2,
+    "pipican:dexterity": 7,
+    "pipican:agility": 5,
+    "pipican:intelligence": 5,
+    "pipican:endurance": 2,
+    "pipican:luck": 2,
+    "pipican:poisoner_toxicity": 10
+  },
+  "special_stat": {
+    "stat": "pipican:poisoner_toxicity",
+    "resource": {
+      "name": "Venom",
+      "base_max": 50.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -6561745,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 16
+    },
+    {
+      "id": "minecraft:splash_potion",
+      "count": 2,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:poison"
+        }
+      }
+    },
+    {
+      "id": "minecraft:pufferfish"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "poisoner_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/poisoner",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "poisoner_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Poisoners rely on toxins - in a straight fight they're weak.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

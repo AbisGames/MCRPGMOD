@@ -1,0 +1,122 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "champion_start",
+      "name": "Champion",
+      "description": "+1 armor",
+      "type": "start",
+      "x": 1586,
+      "y": 209,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "champion_stalwart",
+      "name": "Stalwart",
+      "description": "+3 max health",
+      "type": "small",
+      "x": 1659,
+      "y": 191,
+      "links": [
+        "champion_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "champion_sure_strike",
+      "name": "Sure Strike",
+      "description": "+5% damage",
+      "type": "small",
+      "x": 1652,
+      "y": 245,
+      "links": [
+        "champion_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "champion_banner_bearer",
+      "name": "Banner Bearer",
+      "description": {
+        "text": "a banner in your off-hand gives players within 8 blocks +1 armor",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1729,
+      "y": 200,
+      "links": [
+        "champion_stalwart"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "champion_hold_the_line",
+      "name": "Hold the Line",
+      "description": {
+        "text": "Battle Stance also gives knockback immunity",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1722,
+      "y": 254,
+      "links": [
+        "champion_sure_strike"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "champion_last_stand",
+      "name": "Last Stand",
+      "description": {
+        "text": "Battle Stance bonuses doubled, but you take +10% damage while moving",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1795,
+      "y": 236,
+      "links": [
+        "champion_banner_bearer",
+        "champion_hold_the_line"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

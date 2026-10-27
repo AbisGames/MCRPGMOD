@@ -1,0 +1,7 @@
+{
+  "name": "Corruption",
+  "description": "The darkness eating you from inside - and the power it gives.",
+  "max": 100,
+  "exclusive": true,
+  "color": -11634146
+}

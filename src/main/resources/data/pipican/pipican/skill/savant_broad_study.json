@@ -1,0 +1,67 @@
+{
+  "name": "Broad Study",
+  "description": "Trained by using magic of both focus schools in one fight.",
+  "icon": "minecraft:bookshelf",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:savant"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Breadth",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:savant_breadth",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Breadth",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:savant_breadth",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Insight regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Breadth",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:savant_breadth",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Breadth",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:savant_breadth",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

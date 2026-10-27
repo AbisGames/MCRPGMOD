@@ -1,0 +1,67 @@
+{
+  "name": "Espionage",
+  "description": "Trained by sneaking past hostile mobs within 4 blocks unnoticed.",
+  "icon": "minecraft:leather_helmet",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:infiltrator"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Subtlety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:infiltrator_subtlety",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Subtlety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:infiltrator_subtlety",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Cover regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Subtlety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:infiltrator_subtlety",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Subtlety",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:infiltrator_subtlety",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

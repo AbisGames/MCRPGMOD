@@ -1,0 +1,118 @@
+{
+  "name": "Beastmaster Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Primal Bond",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "kinship",
+      "name": "Kinship",
+      "description": "+2 Primal Bond",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:beastmaster_primal_bond",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "primal_beast",
+      "name": "Primal Beast",
+      "description": {
+        "text": "+10% more unarmed/axe damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "shared_spell",
+      "name": "Shared Spell",
+      "description": {
+        "text": "potion effects you drink also apply to your nearest tamed animal",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "kinship"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "call_of_the_wild",
+      "name": "Call of the Wild",
+      "description": {
+        "text": "unlocks Call of the Wild ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "primal_beast"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "primal_power",
+      "name": "Primal Power",
+      "description": {
+        "text": "tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "shared_spell",
+        "call_of_the_wild"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

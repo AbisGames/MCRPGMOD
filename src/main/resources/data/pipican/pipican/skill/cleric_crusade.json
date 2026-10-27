@@ -1,0 +1,67 @@
+{
+  "name": "Crusade",
+  "description": "Trained by killing undead mobs.",
+  "icon": "minecraft:totem_of_undying",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:cleric"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Conviction",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cleric_conviction",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Conviction",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cleric_conviction",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Grace regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Conviction",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cleric_conviction",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Conviction",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cleric_conviction",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

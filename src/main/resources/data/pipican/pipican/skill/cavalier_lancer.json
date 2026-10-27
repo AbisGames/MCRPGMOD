@@ -1,0 +1,67 @@
+{
+  "name": "Lancer",
+  "description": "Trained by hitting mobs while mounted.",
+  "icon": "minecraft:saddle",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:cavalier"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Horsemanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cavalier_horsemanship",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Horsemanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cavalier_horsemanship",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Charge regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Horsemanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cavalier_horsemanship",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Horsemanship",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cavalier_horsemanship",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

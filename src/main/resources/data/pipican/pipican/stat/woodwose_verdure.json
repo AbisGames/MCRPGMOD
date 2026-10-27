@@ -1,0 +1,7 @@
+{
+  "name": "Verdure",
+  "description": "How much of the forest grows in you.",
+  "max": 100,
+  "exclusive": true,
+  "color": -11630033
+}

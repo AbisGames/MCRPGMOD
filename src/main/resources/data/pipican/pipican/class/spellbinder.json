@@ -1,0 +1,110 @@
+{
+  "name": "Spellbinder",
+  "description": "A warrior-mage who binds magic into one weapon - it can't be lost, burns with eldritch fire and hits like a spell.",
+  "icon": "minecraft:amethyst_shard",
+  "selectable": true,
+  "base_health": 24.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 4,
+    "pipican:dexterity": 3,
+    "pipican:agility": 2,
+    "pipican:intelligence": 4,
+    "pipican:wisdom": 2,
+    "pipican:endurance": 2,
+    "pipican:spellbinder_binding": 8
+  },
+  "special_stat": {
+    "stat": "pipican:spellbinder_binding",
+    "resource": {
+      "name": "Eldritch Charge",
+      "base_max": 30.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -12590880,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:lapis_lazuli",
+      "count": 4
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "spellbinder_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/spellbinder",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "spellbinder_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "A spellbinder's magic only lives in one blade.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:charm": 1
+  }
+}

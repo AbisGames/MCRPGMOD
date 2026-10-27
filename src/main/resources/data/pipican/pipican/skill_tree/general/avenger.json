@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "avenger_start",
+      "name": "Avenger",
+      "description": "+3% damage",
+      "type": "start",
+      "x": 1244,
+      "y": 123,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "avenger_grudge",
+      "name": "Grudge",
+      "description": {
+        "text": "+6% damage to marked target",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1316,
+      "y": 103,
+      "links": [
+        "avenger_start"
+      ]
+    },
+    {
+      "id": "avenger_unyielding",
+      "name": "Unyielding",
+      "description": "+3 max health",
+      "type": "small",
+      "x": 1311,
+      "y": 158,
+      "links": [
+        "avenger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "avenger_pursuit",
+      "name": "Pursuit",
+      "description": {
+        "text": "+8% movement speed toward the marked target",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1386,
+      "y": 110,
+      "links": [
+        "avenger_grudge"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "avenger_righteous_fury",
+      "name": "Righteous Fury",
+      "description": {
+        "text": "+1 armor per 25% missing health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1380,
+      "y": 165,
+      "links": [
+        "avenger_unyielding"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "avenger_blood_debt",
+      "name": "Blood Debt",
+      "description": {
+        "text": "marks last until the target dies, but you can never mark a new one until it does",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1453,
+      "y": 144,
+      "links": [
+        "avenger_pursuit",
+        "avenger_righteous_fury"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

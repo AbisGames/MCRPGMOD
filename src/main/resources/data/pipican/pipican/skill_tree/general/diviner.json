@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "diviner_start",
+      "name": "Diviner",
+      "description": "+1 Luck",
+      "type": "start",
+      "x": 1562,
+      "y": -346,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "diviner_third_eye",
+      "name": "Third Eye",
+      "description": {
+        "text": "+5% miss chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1624,
+      "y": -388,
+      "links": [
+        "diviner_start"
+      ]
+    },
+    {
+      "id": "diviner_lucky_star",
+      "name": "Lucky Star",
+      "description": "+1 Luck",
+      "type": "small",
+      "x": 1636,
+      "y": -335,
+      "links": [
+        "diviner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "diviner_read_the_signs",
+      "name": "Read the Signs",
+      "description": {
+        "text": "loot chests show their contents' rarity colour",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1693,
+      "y": -403,
+      "links": [
+        "diviner_third_eye"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "diviner_second_sight",
+      "name": "Second Sight",
+      "description": {
+        "text": "invisible mobs glow",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1705,
+      "y": -350,
+      "links": [
+        "diviner_lucky_star"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "diviner_doomsayer",
+      "name": "Doomsayer",
+      "description": {
+        "text": "+2 premonitions, but -20% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1767,
+      "y": -392,
+      "links": [
+        "diviner_read_the_signs",
+        "diviner_second_sight"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

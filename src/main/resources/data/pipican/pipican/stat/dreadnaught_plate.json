@@ -1,0 +1,7 @@
+{
+  "name": "Plate",
+  "description": "Expertise in heavy armor.",
+  "max": 100,
+  "exclusive": true,
+  "color": -9736331
+}

@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "oracle_stat_start",
+      "name": "Oracle",
+      "type": "start",
+      "x": 443,
+      "y": -78
+    },
+    {
+      "id": "oracle_mystic",
+      "name": "Mystic",
+      "description": "+2 Wisdom, +1 Luck",
+      "type": "small",
+      "x": 502,
+      "y": -89,
+      "links": [
+        "oracle_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "oracle_hardy_host",
+      "name": "Hardy Host",
+      "description": "+2 Vitality, +1 Strength",
+      "type": "small",
+      "x": 561,
+      "y": -99,
+      "links": [
+        "oracle_mystic"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

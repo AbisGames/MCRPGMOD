@@ -1,0 +1,118 @@
+{
+  "name": "Conqueror Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Battlefield Leadership",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "tactician",
+      "name": "Tactician",
+      "description": "+2 Command",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conqueror_command",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "forward",
+      "name": "Forward!",
+      "description": {
+        "text": "Direct the Troops gives +5% more speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "attack_command",
+      "name": "Attack Command",
+      "description": {
+        "text": "goat horn cooldown -20s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "tactician"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "hold_formation",
+      "name": "Hold Formation",
+      "description": {
+        "text": "allies near you +10% knockback resistance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "forward"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "warlord",
+      "name": "Warlord",
+      "description": {
+        "text": "Attack Command gives Strength II; you can't sprint",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "attack_command",
+        "hold_formation"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

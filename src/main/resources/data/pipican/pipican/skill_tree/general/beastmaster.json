@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "beastmaster_start",
+      "name": "Beastmaster",
+      "description": {
+        "text": "tamed animals +2 max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "start",
+      "x": 1162,
+      "y": 462
+    },
+    {
+      "id": "beastmaster_alpha",
+      "name": "Alpha",
+      "description": {
+        "text": "tamed animals +5% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1237,
+      "y": 462,
+      "links": [
+        "beastmaster_start"
+      ]
+    },
+    {
+      "id": "beastmaster_hide_like_leather",
+      "name": "Hide Like Leather",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 1217,
+      "y": 513,
+      "links": [
+        "beastmaster_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "beastmaster_pack_tactics",
+      "name": "Pack Tactics",
+      "description": {
+        "text": "+10% damage to mobs your animals are attacking",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1302,
+      "y": 488,
+      "links": [
+        "beastmaster_alpha"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "beastmaster_loyal_beasts",
+      "name": "Loyal Beasts",
+      "description": {
+        "text": "tamed animals take -15% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1282,
+      "y": 539,
+      "links": [
+        "beastmaster_hide_like_leather"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "beastmaster_one_with_the_pack",
+      "name": "One With the Pack",
+      "description": {
+        "text": "your animals get +30% damage, but you deal -20% damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1357,
+      "y": 539,
+      "links": [
+        "beastmaster_pack_tactics",
+        "beastmaster_loyal_beasts"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

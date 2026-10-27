@@ -1,0 +1,7 @@
+{
+  "name": "Engineering",
+  "description": "Mastery over your great machine.",
+  "max": 100,
+  "exclusive": true,
+  "color": -3563206
+}

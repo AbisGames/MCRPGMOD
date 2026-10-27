@@ -1,0 +1,118 @@
+{
+  "name": "Shapeshifter Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Superior Transformation",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "fluid_flesh",
+      "name": "Fluid Flesh",
+      "description": "+2 Mutability",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:shapeshifter_mutability",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quick_change",
+      "name": "Quick Change",
+      "description": {
+        "text": "no cooldown between forms",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "bird_form",
+      "name": "Bird Form",
+      "description": {
+        "text": "unlocks a bird form (slow-fall glide)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "fluid_flesh"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "dire_form",
+      "name": "Dire Form",
+      "description": {
+        "text": "forms also give +1 armor toughness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quick_change"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "thousand_faces",
+      "name": "Thousand Faces",
+      "description": {
+        "text": "you can disguise as a villager to be ignored by illagers; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "bird_form",
+        "dire_form"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

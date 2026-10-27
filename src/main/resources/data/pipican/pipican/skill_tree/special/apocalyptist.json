@@ -1,0 +1,122 @@
+{
+  "name": "Apocalyptist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Fearsome Casting",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "black_pages",
+      "name": "Black Pages",
+      "description": "+2 Corruption",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:apocalyptist_corruption",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "terror",
+      "name": "Terror",
+      "description": {
+        "text": "Fearsome Casting adds Slowness I",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "hasten_the_apocalypse",
+      "name": "Hasten the Apocalypse",
+      "description": {
+        "text": "unlocks Hasten the Apocalypse ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "black_pages"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "unholy_vigor",
+      "name": "Unholy Vigor",
+      "description": "+2 max health per 10 Corruption",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "terror"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "avatar_of_ruin",
+      "name": "Avatar of Ruin",
+      "description": {
+        "text": "doubles Fearsome Casting radius; you can't sleep in beds",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "hasten_the_apocalypse",
+        "unholy_vigor"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

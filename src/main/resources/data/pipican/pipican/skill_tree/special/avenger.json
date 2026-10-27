@@ -1,0 +1,118 @@
+{
+  "name": "Avenger Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Vow of Vengeance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "sworn",
+      "name": "Sworn",
+      "description": "+2 Vengeance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:avenger_vengeance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "hound",
+      "name": "Hound",
+      "description": {
+        "text": "Speed boost lasts 2s longer",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "frightening_glare",
+      "name": "Frightening Glare",
+      "description": {
+        "text": "marked targets within your reach deal 15% less damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "sworn"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "avenger_s_wrath",
+      "name": "Avenger's Wrath",
+      "description": {
+        "text": "+10% damage to marked target",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "hound"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "unending_vendetta",
+      "name": "Unending Vendetta",
+      "description": {
+        "text": "killing a marked target heals you 25%; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "frightening_glare",
+        "avenger_s_wrath"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

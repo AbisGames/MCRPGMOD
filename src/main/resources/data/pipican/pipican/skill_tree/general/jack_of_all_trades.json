@@ -1,0 +1,195 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "jack_of_all_trades_start",
+      "name": "Jack-of-All-Trades",
+      "description": "+1 Luck",
+      "type": "start",
+      "x": -346,
+      "y": 1562,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "jack_of_all_trades_handy",
+      "name": "Handy",
+      "description": "+3% all damage",
+      "type": "small",
+      "x": -335,
+      "y": 1636,
+      "links": [
+        "jack_of_all_trades_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "jack_of_all_trades_quick_study",
+      "name": "Quick Study",
+      "description": {
+        "text": "+10% experience",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -388,
+      "y": 1624,
+      "links": [
+        "jack_of_all_trades_start"
+      ]
+    },
+    {
+      "id": "jack_of_all_trades_improviser",
+      "name": "Improviser",
+      "description": "+5% attack speed",
+      "type": "notable",
+      "x": -350,
+      "y": 1705,
+      "links": [
+        "jack_of_all_trades_handy"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "jack_of_all_trades_polymath",
+      "name": "Polymath",
+      "description": "+1 to every stat",
+      "type": "notable",
+      "x": -403,
+      "y": 1693,
+      "links": [
+        "jack_of_all_trades_quick_study"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "jack_of_all_trades_renaissance",
+      "name": "Renaissance",
+      "description": "+2 to every stat, but -10% max health",
+      "type": "keystone",
+      "x": -392,
+      "y": 1767,
+      "links": [
+        "jack_of_all_trades_improviser",
+        "jack_of_all_trades_polymath"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "name": "Arcanist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Arcana Mastery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "formulae",
+      "name": "Formulae",
+      "description": "+2 Arcana",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:arcanist_arcana",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "recycling",
+      "name": "Recycling",
+      "description": {
+        "text": "Reclaim chance +5%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "swift_arcana",
+      "name": "Swift Arcana",
+      "description": {
+        "text": "abilities have 15% shorter cooldowns",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "formulae"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "reclaim_arcana",
+      "name": "Reclaim Arcana",
+      "description": {
+        "text": "Reclaim refunds go to 150%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "recycling"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "archmage_s_insight",
+      "name": "Archmage's Insight",
+      "description": {
+        "text": "every 3rd ability is free; -10% Flux regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "swift_arcana",
+        "reclaim_arcana"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

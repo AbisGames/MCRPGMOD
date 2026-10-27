@@ -1,0 +1,67 @@
+{
+  "name": "Interrogation",
+  "description": "Trained by killing scrutinised mobs.",
+  "icon": "minecraft:skeleton_skull",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:inquisitor"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Scrutiny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:inquisitor_scrutiny",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Scrutiny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:inquisitor_scrutiny",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Judgment regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Scrutiny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:inquisitor_scrutiny",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Scrutiny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:inquisitor_scrutiny",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Tumbling",
+  "description": "Trained by taking fall damage and dodging attacks.",
+  "icon": "minecraft:rabbit_foot",
+  "trigger": {
+    "type": "pipican:jump"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:acrobat"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Poise",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:acrobat_poise",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Poise",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:acrobat_poise",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+0.5 safe-fall blocks",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:safe_fall_distance",
+          "amount": 0.5
+        }
+      ]
+    },
+    {
+      "description": "+1 Poise",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:acrobat_poise",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Poise",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:acrobat_poise",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

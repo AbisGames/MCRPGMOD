@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "explorer_stat_start",
+      "name": "Explorer",
+      "type": "start",
+      "x": -717,
+      "y": 219
+    },
+    {
+      "id": "explorer_hardy",
+      "name": "Hardy",
+      "description": "+2 Vitality, +1 Endurance",
+      "type": "small",
+      "x": -775,
+      "y": 237,
+      "links": [
+        "explorer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "explorer_fleet",
+      "name": "Fleet",
+      "description": "+2 Agility, +1 Dexterity",
+      "type": "small",
+      "x": -832,
+      "y": 254,
+      "links": [
+        "explorer_hardy"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

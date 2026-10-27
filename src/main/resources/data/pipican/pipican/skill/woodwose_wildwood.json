@@ -1,0 +1,67 @@
+{
+  "name": "Wildwood",
+  "description": "Trained by planting trees and fighting in forests.",
+  "icon": "minecraft:oak_leaves",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:woodwose"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Sap regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "name": "Zealot",
+  "description": "A wandering fanatic who trades sanity for second chances - failure is just a reason to try again.",
+  "icon": "minecraft:flint",
+  "selectable": true,
+  "base_health": 36.0,
+  "base_stats": {
+    "pipican:vitality": 7,
+    "pipican:strength": 6,
+    "pipican:dexterity": 2,
+    "pipican:agility": 2,
+    "pipican:wisdom": 4,
+    "pipican:endurance": 4,
+    "pipican:luck": 1,
+    "pipican:zealot_fervor": 10
+  },
+  "special_stat": {
+    "stat": "pipican:zealot_fervor",
+    "resource": {
+      "name": "Madness",
+      "base_max": 50.0,
+      "max_per_point": 3.0,
+      "regen_per_second": -0.3,
+      "regen_per_point": 0.0,
+      "color": -2541013,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_axe"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "zealot_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/zealot",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "zealot_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Zeal cracks the mind.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

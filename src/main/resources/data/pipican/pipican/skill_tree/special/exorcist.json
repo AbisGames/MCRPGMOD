@@ -1,0 +1,118 @@
+{
+  "name": "Exorcist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Exorcism",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "rite",
+      "name": "Rite",
+      "description": "+2 Purity",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:exorcist_purity",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "cleanse",
+      "name": "Cleanse",
+      "description": {
+        "text": "unlocks Exorcise ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "purge_the_unclean",
+      "name": "Purge the Unclean",
+      "description": {
+        "text": "unclean mobs you hit can't teleport for 5s (endermen, shulkers)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "rite"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "will_of_iron",
+      "name": "Will of Iron",
+      "description": {
+        "text": "players within 6 blocks also immune to Bad Omen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "cleanse"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "hammer_of_the_gods",
+      "name": "Hammer of the Gods",
+      "description": {
+        "text": "unclean mobs below 20% health die from your hits; Sanctification regen -25%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "purge_the_unclean",
+        "will_of_iron"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

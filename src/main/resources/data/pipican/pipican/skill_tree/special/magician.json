@@ -1,0 +1,117 @@
+{
+  "name": "Magician Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Tradition",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "cantrip",
+      "name": "Cantrip",
+      "description": "+2 Power",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magician_power",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "counterspell",
+      "name": "Counterspell",
+      "description": "-10% more magic damage taken",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.9
+        }
+      ]
+    },
+    {
+      "id": "spell_recovery",
+      "name": "Spell Recovery",
+      "description": {
+        "text": "+25% Mana regen while below half Mana",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "cantrip"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "deep_well",
+      "name": "Deep Well",
+      "description": {
+        "text": "+20% max Mana",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "cantrip",
+        "counterspell"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "improved_recovery",
+      "name": "Improved Spell Recovery",
+      "description": {
+        "text": "once per rest, refill 50% Mana instantly when you drop below 10%; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "spell_recovery",
+        "deep_well"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

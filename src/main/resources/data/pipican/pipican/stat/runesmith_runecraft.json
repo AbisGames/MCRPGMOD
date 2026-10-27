@@ -1,0 +1,7 @@
+{
+  "name": "Runecraft",
+  "description": "Skill at carving and charging runes.",
+  "max": 100,
+  "exclusive": true,
+  "color": -12604939
+}

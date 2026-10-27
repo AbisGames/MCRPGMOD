@@ -1,0 +1,118 @@
+{
+  "name": "Champion Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Battle Stance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "firm_footing",
+      "name": "Firm Footing",
+      "description": "+2 Resolve",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:champion_resolve",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "rally",
+      "name": "Rally",
+      "description": {
+        "text": "Champion's Resolve also heals players within 6 blocks by 4",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "unbowed",
+      "name": "Unbowed",
+      "description": {
+        "text": "-10% damage taken below half health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "firm_footing"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "champion_s_resolve",
+      "name": "Champion's Resolve",
+      "description": {
+        "text": "Resolve trigger heals 10 HP instead",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "rally"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "living_legend",
+      "name": "Living Legend",
+      "description": {
+        "text": "Battle Stance can be held while walking slowly; -10% movement speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "unbowed",
+        "champion_s_resolve"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

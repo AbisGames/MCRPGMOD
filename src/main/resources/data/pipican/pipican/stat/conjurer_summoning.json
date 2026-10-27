@@ -1,0 +1,7 @@
+{
+  "name": "Summoning",
+  "description": "How much of the void you can drag into the world.",
+  "max": 100,
+  "exclusive": true,
+  "color": -14775156
+}

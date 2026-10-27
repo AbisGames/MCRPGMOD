@@ -1,0 +1,140 @@
+{
+  "name": "Acrobat",
+  "description": "A tumbler and cat-burglar who moves like water - over walls, past enemies and off any height.",
+  "icon": "minecraft:feather",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 2,
+    "pipican:dexterity": 6,
+    "pipican:agility": 9,
+    "pipican:intelligence": 1,
+    "pipican:endurance": 3,
+    "pipican:luck": 2,
+    "pipican:acrobat_poise": 10
+  },
+  "special_stat": {
+    "stat": "pipican:acrobat_poise",
+    "resource": {
+      "name": "Flow",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.08,
+      "color": -13183293,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:leather_boots"
+    },
+    {
+      "id": "minecraft:slime_ball",
+      "count": 4
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "acrobat_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/acrobat",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "acrobat_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.15,
+      "operation": "add_multiplied_base"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_fall",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": {
+      "text": "Acrobats rely on space and speed. Trapped, they flounder.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": "Warlock",
+  "description": "An oath-breaker who steals magic from others, turning enemy potions and spells into their own power.",
+  "icon": "minecraft:ominous_bottle",
+  "selectable": true,
+  "base_health": 22.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:strength": 1,
+    "pipican:dexterity": 2,
+    "pipican:agility": 3,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 3,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:warlock_larceny": 8
+  },
+  "special_stat": {
+    "stat": "pipican:warlock_larceny",
+    "resource": {
+      "name": "Stolen Power",
+      "base_max": 20.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.2,
+      "regen_per_point": 0.02,
+      "color": -13913184,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:crossbow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 8
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:splash_potion",
+      "count": 1,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:weakness"
+        }
+      }
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "warlock_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/warlock",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "warlock_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Stolen magic fights back against healing.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1
+  }
+}

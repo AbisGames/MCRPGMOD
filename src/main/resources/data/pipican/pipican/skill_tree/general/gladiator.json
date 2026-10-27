@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "gladiator_start",
+      "name": "Gladiator",
+      "description": "+3% damage",
+      "type": "start",
+      "x": -1109,
+      "y": 577,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "gladiator_sand_in_the_eyes",
+      "name": "Sand in the Eyes",
+      "description": {
+        "text": "+5% Dirty Fighting chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1158,
+      "y": 634,
+      "links": [
+        "gladiator_start"
+      ]
+    },
+    {
+      "id": "gladiator_net_and_trident",
+      "name": "Net and Trident",
+      "description": "+10% trident damage",
+      "type": "small",
+      "x": -1184,
+      "y": 585,
+      "links": [
+        "gladiator_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/tridents",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "gladiator_crowd_pleaser",
+      "name": "Crowd Pleaser",
+      "description": {
+        "text": "kills give Speed I for 3s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1220,
+      "y": 666,
+      "links": [
+        "gladiator_sand_in_the_eyes"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "gladiator_hamstring",
+      "name": "Hamstring",
+      "description": {
+        "text": "Dirty Fighting slow is Slowness II",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1246,
+      "y": 617,
+      "links": [
+        "gladiator_net_and_trident"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "gladiator_death_or_glory",
+      "name": "Death or Glory",
+      "description": {
+        "text": "+25% damage, but you can't use shields",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1295,
+      "y": 674,
+      "links": [
+        "gladiator_crowd_pleaser",
+        "gladiator_hamstring"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

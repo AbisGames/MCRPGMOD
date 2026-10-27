@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "zealot_start",
+      "name": "Zealot",
+      "description": "+3 max health",
+      "type": "start",
+      "x": 1598,
+      "y": -70,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "zealot_ascetic",
+      "name": "Ascetic",
+      "description": {
+        "text": "-15% hunger drain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1667,
+      "y": -100,
+      "links": [
+        "zealot_start"
+      ]
+    },
+    {
+      "id": "zealot_flagellant",
+      "name": "Flagellant",
+      "description": {
+        "text": "+5% damage per missing heart (max +25%)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1670,
+      "y": -45,
+      "links": [
+        "zealot_start"
+      ]
+    },
+    {
+      "id": "zealot_unbroken",
+      "name": "Unbroken",
+      "description": {
+        "text": "Zeal chance +10%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1737,
+      "y": -103,
+      "links": [
+        "zealot_ascetic"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "zealot_fanatic",
+      "name": "Fanatic",
+      "description": {
+        "text": "immune to Nausea and Darkness always",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1740,
+      "y": -48,
+      "links": [
+        "zealot_flagellant"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "zealot_martyrdom",
+      "name": "Martyrdom",
+      "description": {
+        "text": "Zeal chance doubled, but you never naturally regenerate above half health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1808,
+      "y": -79,
+      "links": [
+        "zealot_unbroken",
+        "zealot_fanatic"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

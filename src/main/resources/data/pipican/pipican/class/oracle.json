@@ -1,0 +1,105 @@
+{
+  "name": "Oracle",
+  "description": "A vessel for spirits and gods. When possessed, the oracle becomes fearless, tough and all-seeing - at a price to the mind.",
+  "icon": "minecraft:ender_eye",
+  "selectable": true,
+  "base_health": 24.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 2,
+    "pipican:intelligence": 3,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:oracle_communion": 8
+  },
+  "special_stat": {
+    "stat": "pipican:oracle_communion",
+    "resource": {
+      "name": "Ecstasy",
+      "base_max": 30.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.4,
+      "regen_per_point": 0.04,
+      "color": -6595329,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:spyglass"
+    },
+    {
+      "id": "minecraft:leather_helmet"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "oracle_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/oracle",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "oracle_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "The entity inside leaves cracks in the mind.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:charm": 1
+  }
+}

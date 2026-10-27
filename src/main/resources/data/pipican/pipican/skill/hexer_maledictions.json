@@ -1,0 +1,67 @@
+{
+  "name": "Maledictions",
+  "description": "Trained by cursing mobs with Evil Eye.",
+  "icon": "minecraft:fermented_spider_eye",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:hexer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Malice",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hexer_malice",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Malice",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hexer_malice",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Spite regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Malice",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hexer_malice",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Malice",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hexer_malice",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

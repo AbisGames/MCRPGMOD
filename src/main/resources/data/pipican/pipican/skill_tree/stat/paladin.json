@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "paladin_stat_start",
+      "name": "Paladin",
+      "type": "start",
+      "x": 443,
+      "y": 78
+    },
+    {
+      "id": "paladin_valiant",
+      "name": "Valiant",
+      "description": "+2 Strength, +1 Wisdom",
+      "type": "small",
+      "x": 502,
+      "y": 89,
+      "links": [
+        "paladin_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "paladin_unbowed",
+      "name": "Unbowed",
+      "description": "+2 Endurance, +1 Vitality",
+      "type": "small",
+      "x": 561,
+      "y": 99,
+      "links": [
+        "paladin_valiant"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

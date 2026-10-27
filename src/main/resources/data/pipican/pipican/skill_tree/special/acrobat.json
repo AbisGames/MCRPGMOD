@@ -1,0 +1,118 @@
+{
+  "name": "Acrobat Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Acrobatics",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "somersault",
+      "name": "Somersault",
+      "description": "+2 Poise",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:acrobat_poise",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "kip_up",
+      "name": "Kip-up",
+      "description": {
+        "text": "no slowdown after being knocked back",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "mobility",
+      "name": "Mobility",
+      "description": {
+        "text": "your movement never triggers mob 'attack of opportunity' style knockback",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "somersault"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "catfall",
+      "name": "Catfall",
+      "description": {
+        "text": "fall damage halved again",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "kip_up"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "living_wind",
+      "name": "Living Wind",
+      "description": {
+        "text": "+20% movement speed while Flow is above half; -10% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mobility",
+        "catfall"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

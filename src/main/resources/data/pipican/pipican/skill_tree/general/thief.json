@@ -1,0 +1,126 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "thief_start",
+      "name": "Thief",
+      "description": "+1 Luck",
+      "type": "start",
+      "x": -130,
+      "y": 739,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "thief_sticky",
+      "name": "Sticky Fingers",
+      "description": {
+        "text": "+5% extra mob loot chance",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -115,
+      "y": 812,
+      "links": [
+        "thief_start"
+      ]
+    },
+    {
+      "id": "thief_quiet",
+      "name": "Quiet Steps",
+      "description": "+10% sneaking speed",
+      "type": "small",
+      "x": -169,
+      "y": 803,
+      "links": [
+        "thief_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "thief_climber",
+      "name": "Scale Walls",
+      "description": {
+        "text": "you can climb any wall like a ladder while sneaking and holding jump",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -127,
+      "y": 881,
+      "links": [
+        "thief_quiet"
+      ],
+      "cost": 2,
+      "required_level": 10
+    },
+    {
+      "id": "thief_fence",
+      "name": "Fence",
+      "description": {
+        "text": "cancels the villager price penalty from your weakness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -182,
+      "y": 872,
+      "links": [
+        "thief_sticky"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "thief_master",
+      "name": "Master Thief",
+      "description": {
+        "text": "+1 more Looting level, but -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -167,
+      "y": 945,
+      "links": [
+        "thief_climber",
+        "thief_fence"
+      ],
+      "cost": 3,
+      "required_level": 25
+    }
+  ]
+}

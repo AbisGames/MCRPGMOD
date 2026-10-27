@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "technomancer_start",
+      "name": "Technomancer",
+      "description": "+5% crossbow damage",
+      "type": "start",
+      "x": -612,
+      "y": -1478,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "technomancer_capacitor",
+      "name": "Capacitor",
+      "description": {
+        "text": "+20% max Voltage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -664,
+      "y": -1532,
+      "links": [
+        "technomancer_start"
+      ]
+    },
+    {
+      "id": "technomancer_overclocked",
+      "name": "Overclocked",
+      "description": "+10% attack speed",
+      "type": "small",
+      "x": -614,
+      "y": -1553,
+      "links": [
+        "technomancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "technomancer_spring_loaded",
+      "name": "Spring-Loaded",
+      "description": {
+        "text": "+15% crossbow reload speed",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -691,
+      "y": -1597,
+      "links": [
+        "technomancer_capacitor"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "technomancer_gyro_stabilizer",
+      "name": "Gyro Stabilizer",
+      "description": "+10% knockback resistance",
+      "type": "notable",
+      "x": -640,
+      "y": -1618,
+      "links": [
+        "technomancer_overclocked"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "technomancer_mad_inventor",
+      "name": "Mad Inventor",
+      "description": {
+        "text": "gadget bonus doubled, but 10% chance gadgets misfire and damage you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -693,
+      "y": -1672,
+      "links": [
+        "technomancer_spring_loaded",
+        "technomancer_gyro_stabilizer"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

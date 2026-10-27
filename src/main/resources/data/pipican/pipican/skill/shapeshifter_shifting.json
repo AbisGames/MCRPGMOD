@@ -1,0 +1,67 @@
+{
+  "name": "Shifting",
+  "description": "Trained by time spent in animal forms.",
+  "icon": "minecraft:rabbit_foot",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:shapeshifter"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Mutability",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:shapeshifter_mutability",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Mutability",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:shapeshifter_mutability",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Change regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Mutability",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:shapeshifter_mutability",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Mutability",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:shapeshifter_mutability",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

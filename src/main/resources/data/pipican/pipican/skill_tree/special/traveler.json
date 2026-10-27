@@ -1,0 +1,118 @@
+{
+  "name": "Traveler Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Hasty Escape",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "fold_space",
+      "name": "Fold Space",
+      "description": "+2 Displacement",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:traveler_displacement",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "thunderclap",
+      "name": "Thunderclap",
+      "description": {
+        "text": "arrivals knock mobs back",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "blink",
+      "name": "Blink",
+      "description": {
+        "text": "unlocks Blink ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "fold_space"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "recall",
+      "name": "Recall",
+      "description": {
+        "text": "unlocks Recall ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "thunderclap"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "gatekeeper",
+      "name": "Gatekeeper",
+      "description": {
+        "text": "your pearls can carry a nearby player with you; +50% pearl cooldown",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "blink",
+        "recall"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Arcane Study",
+  "description": "Trained by gaining experience levels.",
+  "icon": "minecraft:enchanted_book",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    200,
+    800,
+    2400,
+    6000,
+    14000
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican:magician"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Power",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magician_power",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Power",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magician_power",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Mana regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Power",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magician_power",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Power",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magician_power",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "name": "Mage Knight Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Escalating Violence",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "battle_hymn",
+      "name": "Battle Hymn",
+      "description": "+2 Battle Arcana",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:mage_knight_battle_arcana",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "charged_blade",
+      "name": "Charged Blade",
+      "description": {
+        "text": "first escalating hit also knocks back",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "mage_knight_tactics",
+      "name": "Mage Knight Tactics",
+      "description": {
+        "text": "+2 more Warfire per hit",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "battle_hymn"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "spellguard",
+      "name": "Spellguard",
+      "description": "-15% magic damage taken",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "charged_blade"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "id": "war_wizard",
+      "name": "War Wizard",
+      "description": {
+        "text": "Escalating Violence also gives Speed I; -10% max Warfire",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mage_knight_tactics",
+        "spellguard"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

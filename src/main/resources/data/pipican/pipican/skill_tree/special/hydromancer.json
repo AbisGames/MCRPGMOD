@@ -1,0 +1,118 @@
+{
+  "name": "Hydromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Flow",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "wave",
+      "name": "Wave",
+      "description": "+2 Tide",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hydromancer_tide",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "slippery",
+      "name": "Slippery",
+      "description": {
+        "text": "immune to being held (guardians' beam slow too)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "watery_form",
+      "name": "Watery Form",
+      "description": {
+        "text": "unlocks Watery Form ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "wave"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "tsunami",
+      "name": "Tsunami",
+      "description": {
+        "text": "unlocks Wave ability",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "slippery"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "ocean_s_heart",
+      "name": "Ocean's Heart",
+      "description": {
+        "text": "drowned and guardians are neutral to you; -15% max health on land",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "watery_form",
+        "tsunami"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

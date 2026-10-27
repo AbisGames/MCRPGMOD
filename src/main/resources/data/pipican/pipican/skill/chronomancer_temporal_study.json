@@ -1,0 +1,67 @@
+{
+  "name": "Temporal Study",
+  "description": "Trained by dodging with Precognition and spending Sands.",
+  "icon": "minecraft:clock",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:chronomancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Tempo",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chronomancer_tempo",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Tempo",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chronomancer_tempo",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Sands regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Tempo",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chronomancer_tempo",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Tempo",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chronomancer_tempo",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

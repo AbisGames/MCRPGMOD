@@ -1,0 +1,133 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "magician_start",
+      "name": "Magician",
+      "description": "+5% magic damage",
+      "type": "start",
+      "x": 0,
+      "y": -300,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "magician_focus",
+      "name": "Focus",
+      "description": "+5% magic damage",
+      "type": "small",
+      "x": -27,
+      "y": -370,
+      "links": [
+        "magician_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "magician_ward",
+      "name": "Minor Ward",
+      "description": "-8% magic damage taken",
+      "type": "small",
+      "x": 28,
+      "y": -370,
+      "links": [
+        "magician_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.92
+        }
+      ]
+    },
+    {
+      "id": "magician_scholar",
+      "name": "Scholar",
+      "description": {
+        "text": "+10% experience gained",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -27,
+      "y": -440,
+      "links": [
+        "magician_focus"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "magician_arcane_mind",
+      "name": "Arcane Mind",
+      "description": {
+        "text": "+10% magic damage, +5% potion duration",
+        "extra": [
+          {
+            "text": " (partly not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 28,
+      "y": -440,
+      "links": [
+        "magician_scholar",
+        "magician_ward"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "magician_glass_cannon",
+      "name": "Glass Cannon",
+      "description": "+25% magic damage, but -20% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": -510,
+      "links": [
+        "magician_arcane_mind"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

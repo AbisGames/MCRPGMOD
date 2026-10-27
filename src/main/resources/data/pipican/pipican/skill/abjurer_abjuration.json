@@ -1,0 +1,69 @@
+{
+  "name": "Abjuration",
+  "description": "Trained by taking damage while Ward is above half.",
+  "icon": "minecraft:shield",
+  "trigger": {
+    "type": "pipican:hurt_wearing",
+    "items": "#pipican:armor/any",
+    "min_pieces": 1
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:abjurer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Warding",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:abjurer_warding",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Warding",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:abjurer_warding",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Ward regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Warding",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:abjurer_warding",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Warding",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:abjurer_warding",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

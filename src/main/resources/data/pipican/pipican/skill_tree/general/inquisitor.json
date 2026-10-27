@@ -1,0 +1,126 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "inquisitor_start",
+      "name": "Inquisitor",
+      "description": "+3% damage",
+      "type": "start",
+      "x": 1109,
+      "y": -577,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_piercing_gaze",
+      "name": "Piercing Gaze",
+      "description": {
+        "text": "+5% damage to scrutinised",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1158,
+      "y": -634,
+      "links": [
+        "inquisitor_start"
+      ]
+    },
+    {
+      "id": "inquisitor_skull_mask",
+      "name": "Skull Mask",
+      "description": {
+        "text": "immune to Nausea and Blindness",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1184,
+      "y": -585,
+      "links": [
+        "inquisitor_start"
+      ]
+    },
+    {
+      "id": "inquisitor_heretic_hunter",
+      "name": "Heretic Hunter",
+      "description": {
+        "text": "+10% damage to illagers and witches",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1220,
+      "y": -666,
+      "links": [
+        "inquisitor_piercing_gaze"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "inquisitor_master_torturer",
+      "name": "Master Torturer",
+      "description": {
+        "text": "scrutinised mobs drop +1 loot",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1246,
+      "y": -617,
+      "links": [
+        "inquisitor_skull_mask"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "inquisitor_witch_finder",
+      "name": "Witch-Finder",
+      "description": {
+        "text": "+25% damage to scrutinised, but -15% to everything else",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1295,
+      "y": -674,
+      "links": [
+        "inquisitor_heretic_hunter",
+        "inquisitor_master_torturer"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

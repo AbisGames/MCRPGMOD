@@ -1,0 +1,79 @@
+{
+  "name": "Swimming",
+  "description": "Trained by swimming distance and fighting underwater.",
+  "icon": "minecraft:feather",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "swim",
+    "per_blocks": 10
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:hydromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+5% swim speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% oxygen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+5% swim speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% underwater damage",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+10% swim speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.1
+        }
+      ]
+    }
+  ]
+}

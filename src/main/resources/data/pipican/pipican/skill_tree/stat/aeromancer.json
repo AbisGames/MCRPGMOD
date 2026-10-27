@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "aeromancer_stat_start",
+      "name": "Aeromancer",
+      "type": "start",
+      "x": -272,
+      "y": -699
+    },
+    {
+      "id": "aeromancer_airy",
+      "name": "Airy",
+      "description": "+2 Agility, +1 Intelligence",
+      "type": "small",
+      "x": -294,
+      "y": -755,
+      "links": [
+        "aeromancer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "aeromancer_clear_mind",
+      "name": "Clear Mind",
+      "description": "+2 Wisdom, +1 Luck",
+      "type": "small",
+      "x": -315,
+      "y": -811,
+      "links": [
+        "aeromancer_airy"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

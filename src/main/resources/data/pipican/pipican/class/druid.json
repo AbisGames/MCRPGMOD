@@ -1,0 +1,122 @@
+{
+  "name": "Druid",
+  "description": "A guardian of the Old Faith who moves through the wilds untouched and speaks for beasts and green things.",
+  "icon": "minecraft:oak_sapling",
+  "selectable": true,
+  "base_health": 26.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 3,
+    "pipican:intelligence": 2,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 2,
+    "pipican:druid_wildness": 8
+  },
+  "special_stat": {
+    "stat": "pipican:druid_wildness",
+    "resource": {
+      "name": "Verdance",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -13653937,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:wooden_spear"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bone_meal",
+      "count": 4
+    },
+    {
+      "id": "minecraft:sweet_berries",
+      "count": 8
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "druid_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/druid",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "druid_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Druids shun forged iron and the stink of cities.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": [
+          "minecraft:wooden_sword",
+          "minecraft:stone_sword",
+          "minecraft:wooden_axe",
+          "minecraft:stone_axe"
+        ],
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1
+  }
+}

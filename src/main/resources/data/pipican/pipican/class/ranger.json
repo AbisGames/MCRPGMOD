@@ -1,0 +1,124 @@
+{
+  "name": "Ranger",
+  "description": "A wilderness hunter who marks prey, never gets lost and never gets surprised.",
+  "icon": "minecraft:bow",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 2,
+    "pipican:dexterity": 6,
+    "pipican:agility": 3,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 2,
+    "pipican:endurance": 2,
+    "pipican:ranger_instinct": 8
+  },
+  "special_stat": {
+    "stat": "pipican:ranger_instinct",
+    "resource": {
+      "name": "Quarry",
+      "base_max": 30.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.5,
+      "regen_per_point": 0.05,
+      "color": -11765202,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 32
+    },
+    {
+      "id": "minecraft:stone_axe"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:compass"
+    },
+    {
+      "id": "minecraft:cooked_porkchop",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "ranger_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/ranger",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "ranger_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "weakness": {
+    "description": {
+      "text": "Rangers belong under open sky.",
+      "extra": [
+        {
+          "text": " (not in game yet)",
+          "color": "dark_gray",
+          "italic": true
+        }
+      ]
+    },
+    "effects": []
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

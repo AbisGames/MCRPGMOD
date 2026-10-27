@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "mage_knight_start",
+      "name": "Mage Knight",
+      "description": "+3% weapon damage",
+      "type": "start",
+      "x": -1066,
+      "y": -653,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "mage_knight_arcane_steel",
+      "name": "Arcane Steel",
+      "description": {
+        "text": "+5% magic portion",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -1140,
+      "y": -666,
+      "links": [
+        "mage_knight_start"
+      ]
+    },
+    {
+      "id": "mage_knight_drilled_caster",
+      "name": "Drilled Caster",
+      "description": "+1 armor",
+      "type": "small",
+      "x": -1111,
+      "y": -713,
+      "links": [
+        "mage_knight_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "mage_knight_spell_strike",
+      "name": "Spell Strike",
+      "description": {
+        "text": "Escalating Violence +10%",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1200,
+      "y": -703,
+      "links": [
+        "mage_knight_arcane_steel"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "mage_knight_combat_casting",
+      "name": "Combat Casting",
+      "description": {
+        "text": "taking damage doesn't drain Warfire",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -1171,
+      "y": -750,
+      "links": [
+        "mage_knight_drilled_caster"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "mage_knight_battlemage",
+      "name": "Battlemage",
+      "description": {
+        "text": "+20% weapon and magic damage, but you can't use shields",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": -1245,
+      "y": -763,
+      "links": [
+        "mage_knight_spell_strike",
+        "mage_knight_combat_casting"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

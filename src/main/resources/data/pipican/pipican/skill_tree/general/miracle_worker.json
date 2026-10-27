@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "miracle_worker_start",
+      "name": "Miracle Worker",
+      "description": "+2 max health",
+      "type": "start",
+      "x": 1230,
+      "y": -224,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "miracle_worker_blessed_body",
+      "name": "Blessed Body",
+      "description": "+3 max health",
+      "type": "small",
+      "x": 1294,
+      "y": -264,
+      "links": [
+        "miracle_worker_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "miracle_worker_halo",
+      "name": "Halo",
+      "description": {
+        "text": "you glow and light the area",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": 1304,
+      "y": -210,
+      "links": [
+        "miracle_worker_start"
+      ]
+    },
+    {
+      "id": "miracle_worker_holy_presence",
+      "name": "Holy Presence",
+      "description": {
+        "text": "Stigmata Slowness becomes Slowness II",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1363,
+      "y": -276,
+      "links": [
+        "miracle_worker_blessed_body"
+      ],
+      "cost": 2,
+      "required_level": 12
+    },
+    {
+      "id": "miracle_worker_laying_of_hands",
+      "name": "Laying of Hands",
+      "description": {
+        "text": "Worker of Miracles also cures Poison and Wither",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 1372,
+      "y": -222,
+      "links": [
+        "miracle_worker_halo"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "miracle_worker_saint_among_us",
+      "name": "Saint Among Us",
+      "description": {
+        "text": "miracles cost half, but max health penalty is 3 per use",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 1436,
+      "y": -262,
+      "links": [
+        "miracle_worker_holy_presence",
+        "miracle_worker_laying_of_hands"
+      ],
+      "cost": 3,
+      "required_level": 30
+    }
+  ]
+}

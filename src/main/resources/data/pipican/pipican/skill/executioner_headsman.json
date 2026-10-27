@@ -1,0 +1,67 @@
+{
+  "name": "Headsman",
+  "description": "Trained by killing mobs with Execute.",
+  "icon": "minecraft:iron_axe",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:executioner"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Severance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:executioner_severance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Severance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:executioner_severance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+10% Dread regen",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Severance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:executioner_severance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Severance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:executioner_severance",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

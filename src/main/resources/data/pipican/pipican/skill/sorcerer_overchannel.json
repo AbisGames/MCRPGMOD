@@ -1,0 +1,67 @@
+{
+  "name": "Overchannel",
+  "description": "Trained by triggering Sorcerous Outbursts and landing magic hits while Strain is above half.",
+  "icon": "minecraft:fire_charge",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:sorcerer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Potency",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sorcerer_potency",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Potency",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sorcerer_potency",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+1 max Strain",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "+1 Potency",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sorcerer_potency",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Potency",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sorcerer_potency",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}
