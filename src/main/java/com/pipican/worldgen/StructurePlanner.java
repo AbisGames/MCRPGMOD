@@ -20,6 +20,7 @@ public final class StructurePlanner {
         int radius=spacing/3;
         int x=cx+(int)Math.floorMod(v,2L*radius+1)-radius;
         int z=cz+(int)Math.floorMod(v>>>16,2L*radius+1)-radius;
+        if(CapitalStructureExclusion.contains(x,z,350))return Optional.empty();
         return WorldLayout.regionAt(seed,x,z)
             .map(r->new Candidate(type,x,z,r.id()));
     }
