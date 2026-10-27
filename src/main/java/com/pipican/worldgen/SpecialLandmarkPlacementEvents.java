@@ -34,6 +34,12 @@ public final class SpecialLandmarkPlacementEvents {
         return List.copyOf(sites);
     }
     private SpecialLandmarkPlacementEvents() {}
+    /** -1 alone means surface. Negative underground Y values are literal. */
+    public static int resolveY(Site site,int terrainY) {
+        return site.elevation()==-1?terrainY:site.elevation();
+    }
+    public static List<Site> sites(){return SITES;}
+
 
     @SubscribeEvent
     public static void tick(ServerTickEvent.Post event){
@@ -62,9 +68,10 @@ public final class SpecialLandmarkPlacementEvents {
         var template=level.getServer().getStructureManager().get(
             Identifier.parse("pipican:"+site.template()));
         if(template.isEmpty())return false;
-        int y=site.elevation()<0
+        int terrainY=site.elevation()==-1
             ?level.getHeight(Heightmap.Types.WORLD_SURFACE,site.x(),site.z())
-            :site.elevation();
+            :0;
+        int y=resolveY(site,terrainY);
         var size=template.get().getSize();
         var origin=new BlockPos(site.x()-size.getX()/2,y,site.z()-size.getZ()/2);
         var settings=new StructurePlaceSettings().setIgnoreEntities(true);
@@ -80,23 +87,28 @@ public final class SpecialLandmarkPlacementEvents {
             ?"redrock_badlands":"greyspine_mountains";
         if(!WorldLayout.authoredRegionAt(site.x(),site.z())
                 .map(r->r.id().equals(expected)).orElse(false))return false;
+        // Every potentially touched chunk must already exist in memory.
+        for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
+            for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++)
+                if(!level.hasChunkAt(new BlockPos(cx*16,y,cz*16)))return false;
         for(int x=box.minX();x<=box.maxX();x+=4)
             for(int z=box.minZ();z<=box.maxZ();z+=4){
-                if(!level.hasChunkAt(new BlockPos(x,y,z)))return false;
                 if(site.elevation()>=0){
                     for(int yy=box.minY();yy<=box.maxY();yy+=4){
                         var p=new BlockPos(x,yy,z);
                         if(!level.getBlockState(p).isAir())return false;
                     }
-                } else {
+                } else if(site.elevation()==-1){
                     int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
                     if(Math.abs(surface-y)>8)return false;
+                } else {
+                    // Underground city: do not replace existing inventories.
+                    for(int yy=box.minY();yy<=box.maxY();yy+=4){
+                        var p=new BlockPos(x,yy,z);
+                        if(level.getBlockState(p).hasBlockEntity())return false;
+                    }
                 }
             }
-        // Do not load ungenerated neighbours as a side effect of placing.
-        for(int x=box.minX();x<=box.maxX();x+=16)
-            for(int z=box.minZ();z<=box.maxZ();z+=16)
-                if(!level.hasChunkAt(new BlockPos(x,y,z)))return false;
         return template.get().placeInWorld(level,origin,origin,settings,level.getRandom(),2);
     }
 }
