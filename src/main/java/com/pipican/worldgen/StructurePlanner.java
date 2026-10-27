@@ -24,6 +24,11 @@ public final class StructurePlanner {
         return WorldLayout.regionAt(seed,x,z)
             .map(r->new Candidate(type,x,z,r.id()));
     }
+    /** Must be checked against each candidate's complete footprint, not its centre alone. */
+    public static boolean canPlaceFootprint(int minX,int minZ,int maxX,int maxZ,int margin) {
+        if(minX>maxX||minZ>maxZ)throw new IllegalArgumentException("Invalid footprint");
+        return !CapitalStructureExclusion.intersects(minX,minZ,maxX,maxZ,margin);
+    }
     public static boolean collides(int x1,int z1,int radius1,int x2,int z2,int radius2){
         long dx=(long)x1-x2,dz=(long)z1-z2,lim=(long)radius1+radius2;
         return dx*dx+dz*dz<lim*lim;
