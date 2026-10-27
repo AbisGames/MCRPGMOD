@@ -131,7 +131,21 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         double vertical=Math.max(0,Math.min(1,(upper-y)/110.0));
         double nearGround=Math.min(1,Math.max(0,(y-32)/25.0));
         double themedTerrain=capitalRelief(r.id(),x,z);
-        return strength*((target/130.0)*ridge+themedTerrain)*vertical*nearGround*blend;
+        // Quiet the added regional mountain density inside an authored capital.
+        // Fall off smoothly outside the castle core; vanilla density remains
+        // untouched and the physical castle Y must still be verified.
+        double capitalFactor=1.0;
+        for(var zone:CapitalStructureExclusion.all()){
+            double distance=Math.hypot((double)x-zone.x(),(double)z-zone.z());
+            double inner=Math.min(360.0,zone.radius()*0.36);
+            double outer=Math.min(750.0,zone.radius()*0.75);
+            if(distance<outer){
+                double t=Math.max(0.0,Math.min(1.0,(distance-inner)/(outer-inner)));
+                double smooth=t*t*(3.0-2.0*t);
+                capitalFactor=Math.min(capitalFactor,smooth);
+            }
+        }
+        return strength*((target/130.0)*ridge+themedTerrain)*vertical*nearGround*blend*capitalFactor;
     }
     @Override public double minValue(){return -4*strength;}
     @Override public double maxValue(){return 20*strength;}
