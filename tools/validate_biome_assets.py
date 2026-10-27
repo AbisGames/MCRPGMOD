@@ -94,5 +94,5 @@ for castle in capitals:
     assert castle["placement"]=="fixed"
 
 print("PASS: 27 palettes; 135 custom block textures; 81 configured features;")
-print("      125 biome definitions; 120 separate undergrowth placement sets;")
+print("      148 biome definitions (including 23 protected); 120 undergrowth sets;")
 print("      22 protected capital subregions; geology rules.")
