@@ -105,17 +105,32 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Scouts travel light - armor just gets in the way.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Scouts travel light - armor just gets in the way.",
+    "effects": [
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:armor",
+        "amount": 0.0,
+        "scaling": [
+          {
+            "source": "heavy_armor",
+            "per": -1.0
+          }
+        ]
+      },
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:movement_speed",
+        "amount": 0.0,
+        "operation": "add_multiplied_base",
+        "scaling": [
+          {
+            "source": "heavy_armor",
+            "per": -0.04
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

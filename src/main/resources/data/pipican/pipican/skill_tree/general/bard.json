@@ -86,16 +86,7 @@
     {
       "id": "bard_lullaby",
       "name": "Lullaby",
-      "description": {
-        "text": "mobs within 6 blocks of you move 10% slower",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs within 6 blocks of you move 10% slower",
       "type": "notable",
       "x": 650,
       "y": -1229,
@@ -103,7 +94,26 @@
         "bard_silver_tongue"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 6.0,
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "bard_virtuoso",

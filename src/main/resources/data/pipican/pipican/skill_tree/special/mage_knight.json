@@ -50,16 +50,7 @@
     {
       "id": "mage_knight_tactics",
       "name": "Mage Knight Tactics",
-      "description": {
-        "text": "+2 more Warfire per hit",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 more Warfire per hit",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,19 @@
         "battle_hymn"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "melee_hit",
+          "actions": [
+            {
+              "type": "pipican:resource",
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "spellguard",

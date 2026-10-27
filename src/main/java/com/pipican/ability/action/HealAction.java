@@ -1,5 +1,7 @@
 package com.pipican.ability.action;
 
+import com.pipican.effect.type.BonusEffect;
+import com.pipican.player.ClassEffectApplier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -30,7 +32,8 @@ public record HealAction(Targets targets, double amount, double percent) impleme
     @Override
     public void run(AbilityContext ctx) {
         for (LivingEntity target : targets.select(ctx)) {
-            target.heal((float) (amount + percent * target.getMaxHealth()));
+            double given = ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.HEALING_GIVEN);
+            target.heal((float) ((amount + percent * target.getMaxHealth()) * given));
         }
     }
 }

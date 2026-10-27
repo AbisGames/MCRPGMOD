@@ -59,6 +59,19 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_given",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Every miracle costs the body.",

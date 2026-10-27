@@ -18,21 +18,21 @@
     {
       "id": "inquisitor_piercing_gaze",
       "name": "Piercing Gaze",
-      "description": {
-        "text": "+5% damage to scrutinised",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% damage to scrutinised",
       "type": "small",
       "x": 1158,
       "y": -634,
       "links": [
         "inquisitor_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.05
+        }
       ]
     },
     {

@@ -76,6 +76,17 @@
       ]
     },
     {
+      "type": "pipican:on",
+      "event": "wake",
+      "actions": [
+        {
+          "type": "pipican:heal",
+          "target": "self",
+          "percent": 1.0
+        }
+      ]
+    },
+    {
       "type": "pipican:bonus",
       "kind": "healing_received",
       "amount": 0.3

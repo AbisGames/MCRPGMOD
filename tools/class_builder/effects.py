@@ -29,6 +29,8 @@ WEAPON_TAGS = {
     'sword and axe': ['#pipican:weapons/swords', '#pipican:weapons/axes'],
     'staff': ['#pipican:weapons/staff'], 'staffs': ['#pipican:weapons/staff'], 'staff of magic': ['#pipican:weapons/staff'],
     'iron, diamond and netherite weapons': ['#pipican:weapons/metal'],
+    'firearm': ['#pipican:weapons/crossbows'], 'firearms': ['#pipican:weapons/crossbows'], 'gun': ['#pipican:weapons/crossbows'],
+    'pickaxe': ['#minecraft:pickaxes'], 'pickaxes': ['#minecraft:pickaxes'],
     'ranged': ['#pipican:weapons/ranged'], 'ranged weapons': ['#pipican:weapons/ranged'], 'melee weapons': ['#pipican:weapons/melee'],
 }
 # Damage-type tags. pipican:* ones are shipped by this build (see DAMAGE_TYPE_TAGS).
@@ -37,12 +39,14 @@ DAMAGE_TAGS = {
     'explosion': '#minecraft:is_explosion', 'explosive': '#minecraft:is_explosion', 'freezing': '#minecraft:is_freezing',
     'drowning': '#minecraft:is_drowning', 'lightning': '#minecraft:is_lightning',
     'magic': '#pipican:is_magic', 'wither': '#pipican:is_wither', 'melee': '#pipican:is_melee', 'poison': '#pipican:is_magic',
-    'ranged': '#minecraft:is_projectile',
+    'ranged': '#minecraft:is_projectile', 'suffocation': '#pipican:is_suffocation', 'plant': '#pipican:is_plant',
 }
 DAMAGE_TYPE_TAGS = {
     'is_magic': ['minecraft:magic', 'minecraft:indirect_magic', 'minecraft:sonic_boom', 'minecraft:thorns'],
     'is_wither': ['minecraft:wither', 'minecraft:wither_skull'],
     'is_melee': ['minecraft:player_attack', 'minecraft:mob_attack', 'minecraft:mob_attack_no_aggro'],
+    'is_suffocation': ['minecraft:in_wall', 'minecraft:cramming'],
+    'is_plant': ['minecraft:cactus', 'minecraft:sweet_berry_bush'],
 }
 
 # attribute phrase -> (attribute id, kind) ; kind 'flat' = amount as written, 'pct_base' = percent of base,
@@ -56,6 +60,9 @@ ATTRS = {
     'toughness': ('minecraft:armor_toughness', 'flat'),
     'attack damage': ('minecraft:attack_damage', 'flat'),
     'reach': ('minecraft:entity_interaction_range', 'flat'),
+    'jump strength': ('minecraft:jump_strength', 'flat'),
+    'oxygen': ('minecraft:oxygen_bonus', 'flat'),
+    'underwater mining speed': ('minecraft:submerged_mining_speed', 'flat'),
     'attack reach': ('minecraft:entity_interaction_range', 'flat'),
     'block reach': ('minecraft:block_interaction_range', 'flat'),
     'safe-fall blocks': ('minecraft:safe_fall_distance', 'flat'),
@@ -198,6 +205,12 @@ def _scaling(rest, ctx):
         source = 'special_stat'
     elif src in ('sigil piece', 'sigil armor piece', 'sigil-marked armor piece', 'piece of sigil armor'):
         source = 'sigil_armor'
+    elif src in ('heavy armor piece', 'heavy piece', 'heavy armor piece worn', 'piece of heavy armor'):
+        source = 'heavy_armor'
+    elif src in ('missing heart',):
+        source = 'missing_hearts'
+    elif src in ('missing health percent',):
+        source = 'missing_health_percent'
     else:
         return None, rest
     return (source, every), rest[:m.start()].strip()
@@ -491,6 +504,47 @@ def translate(text, ctx):
     text = re.sub(r'(?:hostile )?mobs (?:notice|detect) you (\d+(?:\.\d+)?)% later', r'-\1% detection range', text, flags=re.I)
     # "+5% unarmed damage" -> "+5% damage while unarmed"
     text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) unarmed (damage|attack speed)\b', r'\1\2 \3 while unarmed', text, flags=re.I)
+    # ---- bulk phrasings
+    num = r'([+-]?\d+(?:\.\d+)?)'
+    subs = [
+        (lab + r'\+?(\d+(?:\.\d+)?)% less damage from (?:all )?(?:mobs|enemies|attacks)$', r'\1-\2% damage taken'),
+        (lab + r'fall damage halved(?: again)?$', r'\1-50% fall damage taken'),
+        (lab + r'arrows shot at you are (\d+(?:\.\d+)?)% likely to be blown aside$', r'\1+\2% arrow-deflect chance'),
+        (lab + r'you deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage(?: yourself)?$', r'\1\2% damage'),
+        (lab + r'(?:you )?takes? (\d+(?:\.\d+)?)% (more|less) damage from weapons and projectiles$', r'\1takes \2% \3 melee and projectile damage'),
+        (lab + r'\+(\d+(?:\.\d+)?)% projectile damage reduction$', r'\1takes \2% less projectile damage'),
+        (lab + r'\+(\d+(?:\.\d+)?)% damage reduction\b', r'\1-\2% damage taken'),
+        (lab + r'-(\d+(?:\.\d+)?)% damage from (?:all other )?explosions$', r'\1takes \2% less explosion damage'),
+        (lab + r'take -(\d+(?:\.\d+)?)% damage from tnt traps$', r'\1takes \2% less explosion damage'),
+        (lab + r'-(\d+(?:\.\d+)?)% suffocation damage$', r'\1takes \2% less suffocation damage'),
+        (lab + r"berry bushes and cacti don't hurt you$", r'\1takes 100% less plant damage'),
+        (lab + r'takes (\d+)% more damage from (.+?),? and the wither effect$', r'\1takes \2% more damage from \3; takes \2% more wither damage'),
+        (lab + r'-(\d+(?:\.\d+)?)% damage from ((?!all\b)[a-z][a-z, ]+)$', r'\1takes \2% less damage from \3'),
+        (lab + r'([+-]\d+(?:\.\d+)?%) unarmed and ([+-]\d+(?:\.\d+)?%) (\w+) damage$', r'\1\2 damage while unarmed; \3 \4 damage'),
+        (lab + r'([+-]\d+(?:\.\d+)?%) (?:more )?unarmed/(\w+) damage$', r'\1\2 damage while unarmed; \2 \3 damage'),
+        (lab + r'unarmed and (\w+) hits ([+-]\d+(?:\.\d+)?%) damage$', r'\1\3 damage while unarmed; \3 \2 damage'),
+        (lab + r'breathe underwater, swim (\d+(?:\.\d+)?)% faster$', r'\1water breathing; +\2% swim speed'),
+        (lab + r'no mining slowdown underwater$', r'\1+0.8 underwater mining speed'),
+        (lab + r'([+-]\d+(?:\.\d+)?)% underwater damage$', r'\1\2% damage underwater'),
+        (lab + r'mobs (\d+(?:\.\d+)?)% slower to notice you$', r'\1-\2% detection range'),
+        (lab + r'(?:you )?(?:can\'t|cannot) receive the glowing effect$', r'\1immune to glowing'),
+        (lab + r'(?:no gear is worse than neutral for you|weapons you\'re clumsy or forbidden with count as neutral)$', r'\1+100% affinity floor'),
+        (lab + r'heavy armor gives \+(\d+) armor per piece$', r'\1+\2 armor per heavy armor piece'),
+        (r'\bfor (?:every|each) heavy armor piece(?: worn)?\b', r'per heavy armor piece'),
+        (r'per (\d+)% missing health\b', r'per \1 missing health percent'),
+        (r'per missing heart\b', r'per missing heart'),
+        (lab + r'(?:all your stats|every stat|all stats) \+(\d+)(?: \(.*\))?$', r'\1+\2 to every stat'),
+    ]
+    for pat, rep in subs:
+        text = re.sub(pat, rep, text, flags=re.I)
+    # jump height in blocks -> jump strength (about +0.15 per block)
+    text = re.sub(lab + r'(?:jump height \+(\d+(?:\.\d+)?) blocks?|\+(\d+(?:\.\d+)?) (?:extra )?jump (?:block )?height)\b',
+                  lambda m: f'{m.group(1)}+{float(m.group(2) or m.group(3)) * 0.15:g} jump strength', text, flags=re.I)
+    text = re.sub(lab + r'\+(\d+(?:\.\d+)?) jump height\b', lambda m: f'{m.group(1)}+{float(m.group(2)) * 0.15:g} jump strength', text, flags=re.I)
+    # "-1 armor and -4% movement speed per heavy armor piece": the trailing "per X" covers both parts.
+    m = re.match(r'^((?:[A-Z][\w\' -]{1,30}:\s+)?)([+-]\d+(?:\.\d+)?%? [a-z][a-z ]*?) and ([+-]\d+(?:\.\d+)?%? [a-z][a-z ]*?) (per (?:\d+ )?[a-z][\w \'-]*)$', text.strip())
+    if m and 'per' not in m.group(2):
+        text = f'{m.group(1)}{m.group(2)} {m.group(4)}, {m.group(3)} {m.group(4)}'
     # Temple upgrades: "+5% temple damage", "+1 more temple armor", "Per 10 Sanctum, temple armor bonus +1"
     text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%?) (?:more )?temple (damage|armor)\b', r'\1\2 \3 inside your temple', text, flags=re.I)
     text = re.sub(lab + r'(per \d+ \w+,\s*)?temple (armor|damage) bonus ([+-]\d+(?:\.\d+)?%?)', r'\1\2\4 \3 inside your temple', text, flags=re.I)

@@ -19,21 +19,27 @@
     {
       "id": "hydromancer_gills",
       "name": "Gills",
-      "description": {
-        "text": "+5% underwater damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% underwater damage",
       "type": "small",
       "x": 1157,
       "y": 636,
       "links": [
         "hydromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "underwater"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
       ]
     },
     {

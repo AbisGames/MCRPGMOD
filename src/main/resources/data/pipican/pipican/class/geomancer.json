@@ -65,6 +65,11 @@
       "attribute": "minecraft:block_break_speed",
       "amount": 0.2,
       "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_suffocation",
+      "multiplier": 0.7
     }
   ],
   "special_passives": [

@@ -78,7 +78,7 @@ def _atoms(ctx):
         (r'(?:in )?rain or water|wet', lambda m: state('wet'), OTHER),
         (r'underwater|submerged', lambda m: state('underwater'), PLACE),
         (r'(?:in|standing in) water', lambda m: state('in_water'), PLACE),
-        (r'on dry land|out of (?:the )?water', lambda m: not_(state('in_water')), PLACE),
+        (r'on dry land|on land|out of (?:the )?water', lambda m: not_(state('in_water')), PLACE),
         (r'swimming', lambda m: state('swimming'), OTHER),
         (r'(?:in )?lava', lambda m: state('in_lava'), PLACE),
         (r'(?:in |during )?(?:thunderstorms?|storms?|thunder)', lambda m: state('thundering'), PLACE),
@@ -159,7 +159,7 @@ def _atoms(ctx):
         (r'(?:on fire|burning)', lambda m: state('on_fire'), OTHER),
         # equipment
         (r'(?:without|with no) (?:a )?shield(?: in hand)?|not holding a shield', lambda m: not_({'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}), OTHER),
-        (r'(?:holding|with) a shield(?: in hand)?|(?:a )?shield in hand|you hold a shield', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}, OTHER),
+        (r'(?:holding|with) (?:a )?shield(?: in hand)?|(?:a )?shield in hand|you hold a shield', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/shields'}, OTHER),
         (r'wearing (\d|one|two|three|four) or more (heavy|medium|light) armor pieces|wearing (?:at least )?(\d|one|two|three|four)\+? (?:pieces of )?(heavy|medium|light) armor(?: pieces?)?',
          lambda m: {'type': 'pipican:wearing', 'items': ARMOR_TAGS[m.group(2) or m.group(4)], 'min': int(WORDS.get(m.group(1) or m.group(3), m.group(1) or m.group(3)))}, OTHER),
         (r'wearing leather(?: armor)?', lambda m: {'type': 'pipican:wearing', 'items': [
@@ -226,6 +226,7 @@ TRAILING = re.compile(
     r'in light level\b|below half health\b|below \d+% health\b|above half health\b|at full health\b|'
     r'with (?:your |the |a |any )?(?:bound weapon|sigil(?:-marked)? weapons?|staff|weapon that isn\'t your bound weapon)\b|with \d sigil\b|'
     r'with no book\b|while (?:a )?book\b|holding a weapon in your off-hand\b|'
+    r'on land\b|with shield\b|'
     r'while unarmed\b|with your fists\b|bare-handed\b|'
     r'in combat\b|out of combat\b|inside your temple\b|in your temple\b|when more than \d+ blocks\b|'
     r'outside (?:of )?forests?\b|on solid ground\b|without an icon\b|while holding\b|while travelling\b|while wearing\b|while not\b|'

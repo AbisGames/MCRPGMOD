@@ -541,8 +541,55 @@ def whole_line(text, ctx):
     return None
 
 
+def pulses(t, ctx):
+    """Every-N-seconds effects, block follow-ups, sleep heals, glowing, per-hit refills, heal on kill."""
+    rn = (ctx.get('resource_name') or '').lower()
+    m = re.fullmatch(rf'(?:hostile )?mobs near you take {N} damage every {N}s', t)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'second', 'cooldown_ticks': int(float(m.group(2)) * 20),
+                 'actions': [{'type': 'pipican:damage', 'target': 'hostiles', 'radius': 4.0, 'amount': float(m.group(1))}]}]
+    m = re.fullmatch(rf'you (?:slowly )?take {N} damage every {N}s', t)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'second', 'cooldown_ticks': int(float(m.group(2)) * 20),
+                 'actions': [{'type': 'pipican:damage', 'target': 'self', 'amount': float(m.group(1))}]}]
+    m = re.fullmatch(rf'(?:hostile )?mobs within {N} blocks of you move {N}% slower', t)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'second', 'actions': [{'type': 'pipican:effect', 'target': 'hostiles', 'radius': float(m.group(1)),
+                 'effects': [{'effect': 'minecraft:slowness', 'seconds': 2.0}]}]}]
+    m = re.fullmatch(rf'(?:after a block,? (?:your )?next hit \+{N}%(?: damage)?|blocking an attack makes your next hit within {N}s deal \+{N}% damage)', t)
+    if m:
+        pct = float(m.group(1) or m.group(3))
+        return [{'type': 'pipican:on', 'event': 'block', 'actions': [{'type': 'pipican:empower', 'target': 'self',
+                 'multiplier': round(1 + pct / 100, 6), 'hits': 1, 'seconds': float(m.group(2) or 5)}]}]
+    m = re.fullmatch(rf'sleeping heals you(?: and players within {N} blocks)? fully', t)
+    if m:
+        acts = [{'type': 'pipican:heal', 'target': 'self', 'percent': 1.0}]
+        if m.group(1):
+            acts.append({'type': 'pipican:heal', 'target': 'players', 'radius': float(m.group(1)), 'percent': 1.0})
+        return [{'type': 'pipican:on', 'event': 'wake', 'actions': acts}]
+    m = re.fullmatch(rf'you glow(?: and give glowing to every mob within {N} blocks)?', t)
+    if m:
+        out = [{'type': 'pipican:mob_effect', 'effect': 'minecraft:glowing'}]
+        if m.group(1):
+            out.append({'type': 'pipican:on', 'event': 'second', 'actions': [{'type': 'pipican:effect', 'target': 'hostiles',
+                        'radius': float(m.group(1)), 'effects': [{'effect': 'minecraft:glowing', 'seconds': 2.0}]}]})
+        return out
+    m = re.fullmatch(rf'heal {N} hp on each kill|each kill heals you {N} hp', t)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'actions': [{'type': 'pipican:heal', 'target': 'self', 'amount': float(m.group(1) or m.group(2))}]}]
+    if rn:
+        r = '(?:' + re.escape(rn) + ('|' + re.escape(rn.split()[-1]) if ' ' in rn else '') + ')'
+        m = re.fullmatch(rf'\+{N} (?:more )?{r} per (?:melee )?hit', t)
+        if m:
+            return [{'type': 'pipican:on', 'event': 'melee_hit', 'actions': [{'type': 'pipican:resource', 'amount': float(m.group(1))}]}]
+    return None
+
+
 def mechanics(t, ctx):
     cid = ctx.get('class_id')
+    pu = pulses(t, ctx)
+    if pu:
+        return pu
     # premonition / curse / decoy counts and add-ons
     m = re.fullmatch(rf'temple radius \+{N} blocks? per ([a-z]+)(?: points?)?|\+{N} temple radius', t)
     if m:

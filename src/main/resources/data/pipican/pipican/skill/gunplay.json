@@ -12,17 +12,14 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+3% firearm damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+3% firearm damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.03
+        }
+      ]
     },
     {
       "description": "+5% reload speed",
@@ -35,17 +32,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+3% firearm damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+3% firearm damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.03
+        }
+      ]
     },
     {
       "description": "+5% reload speed",
@@ -58,17 +52,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+6% firearm damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+6% firearm damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.06
+        }
+      ]
     }
   ]
 }

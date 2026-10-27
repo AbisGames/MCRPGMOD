@@ -95,6 +95,30 @@
       "multiplier": 0.85
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_given",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "A theurge's power is borrowed - and the lender is watching.",

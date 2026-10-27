@@ -4,19 +4,17 @@
     {
       "id": "gunslinger_start",
       "name": "Gunslinger",
-      "description": {
-        "text": "+5% firearm damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% firearm damage",
       "type": "start",
       "x": -1576,
-      "y": 278
+      "y": 278,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.05
+        }
+      ]
     },
     {
       "id": "gunslinger_quick_draw",

@@ -55,16 +55,7 @@
     {
       "id": "berserker_bloodlust",
       "name": "Bloodlust",
-      "description": {
-        "text": "heal 1 HP on each kill",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "heal 1 HP on each kill",
       "type": "notable",
       "x": -757,
       "y": 469,
@@ -72,7 +63,20 @@
         "berserker_savage"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "berserker_unchained",

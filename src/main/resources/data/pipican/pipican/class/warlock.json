@@ -88,6 +88,10 @@
         }
       ],
       "cooldown_ticks": 1200
+    },
+    {
+      "type": "pipican:immune",
+      "effects": "minecraft:glowing"
     }
   ],
   "special_passives": [

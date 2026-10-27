@@ -328,6 +328,26 @@ public final class ClassEffectApplier {
      * Re-tests every condition the last refresh depended on, and refreshes if any answer changed.
      * Called twice a second per player. Returns true if it refreshed.
      */
+    /** Missing-health scaling sources: whole missing hearts, or whole missing percent of max health. */
+    static double healthSource(ServerPlayer player, String source) {
+        double missing = Math.max(0, player.getMaxHealth() - player.getHealth());
+        return source.equals("missing_hearts") ? Math.floor(missing / 2)
+                : player.getMaxHealth() <= 0 ? 0 : Math.floor(missing / player.getMaxHealth() * 100);
+    }
+
+    /** A runtime-only "condition": holds while a health-based scaling source still has the value bonuses were built with. */
+    record SourceCheck(String source, double value) implements com.pipican.condition.ClassCondition {
+        @Override
+        public com.pipican.condition.ConditionTypes.Type type() {
+            return com.pipican.condition.ConditionTypes.HEALTH;
+        }
+
+        @Override
+        public boolean test(ServerPlayer player) {
+            return healthSource(player, source) == value;
+        }
+    }
+
     public static boolean recheckConditions(ServerPlayer player) {
         for (ClassState.ConditionCheck check : state(player).conditions()) {
             if (check.condition().test(player) != check.result()) {
@@ -345,7 +365,8 @@ public final class ClassEffectApplier {
     private static void applyEquipmentAffinity(ServerPlayer player, RpgClass rpgClass, PlayerClassData data, Collector c) {
         // Held item: attack speed.
         ItemStack mainHand = player.getMainHandItem();
-        Affinity held = rpgClass.affinities().resolve(mainHand);
+        boolean floor = c.bonuses.getOrDefault(BonusEffect.Kind.AFFINITY_FLOOR, 0.0) > 0;
+        Affinity held = rpgClass.affinities().resolve(mainHand).atLeastNeutral(floor);
         c.addAttribute(Attributes.ATTACK_SPEED, held.tuning().attackSpeed() - 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
         // Armor: scale the armor/toughness each piece gives, and slow the player per bad piece.
@@ -355,7 +376,7 @@ public final class ClassEffectApplier {
             if (stack.isEmpty()) {
                 continue;
             }
-            var tier = rpgClass.affinities().resolve(stack).tuning();
+            var tier = rpgClass.affinities().resolve(stack).atLeastNeutral(floor).tuning();
             double[] armor = new double[2];
             stack.forEachModifier(slot, (attribute, modifier) -> {
                 if (modifier.operation() != AttributeModifier.Operation.ADD_VALUE) {
@@ -515,6 +536,13 @@ public final class ClassEffectApplier {
                 case "class_level" -> level;
                 case "special_stat" -> rpgClass.specialStat().map(s -> stats.getOrDefault(s.stat(), 0.0)).orElse(0.0);
                 case "sigil_armor" -> com.pipican.ability.SpecialItems.sigilArmor(player);
+                case "heavy_armor" -> com.pipican.ability.SpecialItems.heavyArmor(player);
+                case "missing_hearts", "missing_health_percent" -> {
+                    double value = healthSource(player, source);
+                    // Rebuild the bonuses when this value changes (checked with the conditions).
+                    conditions.put(new SourceCheck(source, value), true);
+                    yield value;
+                }
                 default -> {
                     Identifier id = Identifier.tryParse(source);
                     yield id == null ? 0 : stats.getOrDefault(ResourceKey.create(com.pipican.core.PipicanRegistries.STAT, id), 0.0);

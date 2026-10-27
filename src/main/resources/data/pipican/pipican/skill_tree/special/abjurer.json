@@ -50,16 +50,7 @@
     {
       "id": "warded",
       "name": "Warded",
-      "description": {
-        "text": "+5% less damage from mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% less damage from mobs",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,13 @@
         "layered_ward"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.95
+        }
+      ]
     },
     {
       "id": "ward_allies",

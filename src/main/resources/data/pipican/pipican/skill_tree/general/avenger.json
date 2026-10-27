@@ -78,16 +78,7 @@
     {
       "id": "avenger_righteous_fury",
       "name": "Righteous Fury",
-      "description": {
-        "text": "+1 armor per 25% missing health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 armor per 25% missing health",
       "type": "notable",
       "x": 1380,
       "y": 165,
@@ -95,7 +86,20 @@
         "avenger_unyielding"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "missing_health_percent",
+              "per": 0.04
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "avenger_blood_debt",

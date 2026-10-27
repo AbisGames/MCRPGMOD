@@ -100,16 +100,7 @@
     {
       "id": "shield_bash",
       "name": "Shield Bash",
-      "description": {
-        "text": "blocking an attack makes your next hit within 3s deal +25% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "blocking an attack makes your next hit within 3s deal +25% damage",
       "type": "notable",
       "x": -70,
       "y": 70,
@@ -117,7 +108,22 @@
         "start"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "block",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.25,
+              "hits": 1,
+              "seconds": 3.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "swift_reload",

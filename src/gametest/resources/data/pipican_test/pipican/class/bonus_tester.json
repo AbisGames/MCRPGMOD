@@ -92,6 +92,17 @@
       "type": "pipican:bonus",
       "kind": "healing_received",
       "amount": -0.5
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor_toughness",
+      "amount": 0,
+      "scaling": [
+        {
+          "source": "missing_hearts",
+          "per": 1
+        }
+      ]
     }
   ],
   "special_stat": {

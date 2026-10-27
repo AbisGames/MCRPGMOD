@@ -4,58 +4,52 @@
     {
       "id": "theurge_start",
       "name": "Theurge",
-      "description": {
-        "text": "+5% healing",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% healing",
       "type": "start",
       "x": 1478,
-      "y": -612
+      "y": -612,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "id": "theurge_prayerful",
       "name": "Prayerful",
-      "description": {
-        "text": "+8% healing",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8% healing",
       "type": "small",
       "x": 1532,
       "y": -664,
       "links": [
         "theurge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.08
+        }
       ]
     },
     {
       "id": "theurge_halo",
       "name": "Halo",
-      "description": {
-        "text": "-10% damage from undead",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-10% damage from undead",
       "type": "small",
       "x": 1553,
       "y": -614,
       "links": [
         "theurge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": "#minecraft:undead",
+          "multiplier": 0.9
+        }
       ]
     },
     {

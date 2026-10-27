@@ -92,6 +92,23 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "wake",
+      "actions": [
+        {
+          "type": "pipican:heal",
+          "target": "self",
+          "percent": 1.0
+        },
+        {
+          "type": "pipican:heal",
+          "target": "players",
+          "radius": 16.0,
+          "percent": 1.0
+        }
+      ]
     }
   ],
   "special_passives": [

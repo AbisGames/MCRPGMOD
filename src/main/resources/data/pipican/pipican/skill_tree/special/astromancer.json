@@ -84,16 +84,7 @@
     {
       "id": "living_star",
       "name": "Living Star",
-      "description": {
-        "text": "you glow and give Glowing to every mob within 10 blocks; mobs notice you from 50% farther",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you glow and give Glowing to every mob within 10 blocks; mobs notice you from 50% farther",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -102,7 +93,35 @@
         "blinding_corona"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:glowing"
+        },
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 10.0,
+              "effects": [
+                {
+                  "effect": "minecraft:glowing",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": 0.5
+        }
+      ]
     }
   ]
 }

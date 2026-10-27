@@ -4,38 +4,34 @@
     {
       "id": "healer_start",
       "name": "Healer",
-      "description": {
-        "text": "+10% healing given",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% healing given",
       "type": "start",
       "x": 1249,
-      "y": -51
+      "y": -51,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "healer_gentle_hands",
       "name": "Gentle Hands",
-      "description": {
-        "text": "+10% healing given",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% healing given",
       "type": "small",
       "x": 1318,
       "y": -81,
       "links": [
         "healer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.1
+        }
       ]
     },
     {

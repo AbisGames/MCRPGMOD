@@ -12,7 +12,9 @@ LEADING = [
     (r'(?:bow )?draw speed', 'draw_speed'),
     (r'(?:natural )?(?:health )?regeneration|natural regen', 'natural_regen'),
     (r'hunger(?: drain)?|hunger loss|food drain', 'hunger'),
-    (r'healing received|healing taken|incoming healing', 'healing_received'),
+    (r'healing received(?: from every source)?|healing taken|incoming healing', 'healing_received'),
+    (r'healing given|healing done|healing(?: you give)?', 'healing_given'),
+    (r'affinity floor', 'affinity_floor'),
     (r'(?:mob )?detection range|detection range of mobs', 'detection_range'),
     (r'skill training speed|skill training|mastery gain|skill xp', 'skill_training'),
 ]
@@ -106,6 +108,16 @@ def special(low, scal):
         im = combat.immune('immune to ' + m.group(1))
         if im:
             return im
+    if re.fullmatch(r'(?:saint: )?healing doubled', low):
+        return [_effect('healing_given', 100, None)]
+    m = re.fullmatch(rf'\+{N}% healing (?:you give and receive|done and received|given and received)', low)
+    if m:
+        v, s = scal(float(m.group(1)))
+        return [_effect('healing_given', v, s), _effect('healing_received', v, s)]
+    m = re.fullmatch(rf'\+{N} to every stat', low)
+    if m:
+        import effects as fx
+        return [{'type': 'pipican:stat', 'stat': 'pipican:' + st, 'amount': int(float(m.group(1)))} for st in fx.CORE_STATS]
     m = re.fullmatch(r'no fall damage(?: below (\d+) blocks)?', low)
     if m:
         if m.group(1):

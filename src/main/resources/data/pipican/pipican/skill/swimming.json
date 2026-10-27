@@ -68,17 +68,22 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% underwater damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% underwater damage",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "underwater"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
     },
     {
       "description": "+10% swim speed",

@@ -79,16 +79,7 @@
     {
       "id": "exorcist_iron_will",
       "name": "Iron Will",
-      "description": {
-        "text": "-20% damage from vexes, phantoms and endermen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-20% damage from vexes, phantoms and endermen",
       "type": "notable",
       "x": 1482,
       "y": -912,
@@ -96,7 +87,18 @@
         "exorcist_litany"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": [
+            "minecraft:vex",
+            "minecraft:phantom",
+            "minecraft:enderman"
+          ],
+          "multiplier": 0.8
+        }
+      ]
     },
     {
       "id": "exorcist_inquisitor_s_fire",

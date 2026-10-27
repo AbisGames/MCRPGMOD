@@ -74,6 +74,11 @@
           "multiplier": 0.0
         }
       ]
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.15,
+      "ranged_only": true
     }
   ],
   "special_passives": [

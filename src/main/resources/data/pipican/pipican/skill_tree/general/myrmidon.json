@@ -79,16 +79,7 @@
     {
       "id": "myrmidon_counterbash",
       "name": "Counterbash",
-      "description": {
-        "text": "after a block, next hit +20%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "after a block, next hit +20%",
       "type": "notable",
       "x": -1626,
       "y": -621,
@@ -96,7 +87,22 @@
         "myrmidon_boss_strike"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "block",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.2,
+              "hits": 1,
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "myrmidon_living_wall",

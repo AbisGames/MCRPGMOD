@@ -29,23 +29,37 @@
     {
       "id": "primal_beast",
       "name": "Primal Beast",
-      "description": {
-        "text": "+10% more unarmed/axe damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% more unarmed/axe damage",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:air"
+            ],
+            "hand": "main"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "shared_spell",

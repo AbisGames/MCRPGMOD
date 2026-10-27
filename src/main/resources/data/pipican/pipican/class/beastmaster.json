@@ -65,6 +65,29 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:air"
+        ],
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/axes",
+      "multiplier": 1.1
+    }
+  ],
   "weakness": {
     "description": {
       "text": "When the beast suffers, so do you.",

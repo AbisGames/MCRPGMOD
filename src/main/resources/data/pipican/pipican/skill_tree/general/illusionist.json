@@ -79,16 +79,7 @@
     {
       "id": "illusionist_veil",
       "name": "Veil",
-      "description": {
-        "text": "mobs 25% slower to notice you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs 25% slower to notice you",
       "type": "notable",
       "x": 912,
       "y": 1482,
@@ -96,7 +87,14 @@
         "illusionist_smoke_and_mirrors"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.25
+        }
+      ]
     },
     {
       "id": "illusionist_hall_of_mirrors",

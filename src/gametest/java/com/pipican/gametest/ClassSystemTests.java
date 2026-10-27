@@ -493,6 +493,16 @@ public final class ClassSystemTests {
         assertNear(helper, 12, player.getHealth(), "half healing received");
         player.setHealth(player.getMaxHealth());
 
+        // Scaling with missing health refreshes as health changes.
+        player.setHealth(player.getMaxHealth());
+        ClassEffectApplier.recheckConditions(player);
+        assertNear(helper, 0, player.getAttributeValue(Attributes.ARMOR_TOUGHNESS), "full health: no bonus");
+        player.setHealth(player.getMaxHealth() - 6);
+        ClassEffectApplier.recheckConditions(player);
+        assertNear(helper, 3, player.getAttributeValue(Attributes.ARMOR_TOUGHNESS), "3 missing hearts: +3 toughness");
+        player.setHealth(player.getMaxHealth());
+        ClassEffectApplier.recheckConditions(player);
+
         // Timed boosts from reactions
         double armor = player.getAttributeValue(Attributes.ARMOR);
         new BoostAction(5, List.of(new AttributeEffect(Attributes.ARMOR, 3, AttributeModifier.Operation.ADD_VALUE, List.of())))

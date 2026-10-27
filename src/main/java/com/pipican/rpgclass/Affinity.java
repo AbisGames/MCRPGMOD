@@ -43,6 +43,11 @@ public enum Affinity implements StringRepresentable {
         return "pipican.affinity." + name;
     }
 
+    /** This tier, but never worse than neutral when {@code floor} ("no gear is worse than neutral for you"). */
+    public Affinity atLeastNeutral(boolean floor) {
+        return floor && ordinal() > NEUTRAL.ordinal() ? NEUTRAL : this;
+    }
+
     /** The configured numbers for this tier. */
     public PipicanConfig.TierValues tuning() {
         return PipicanConfig.tier(this);

@@ -57,16 +57,7 @@
     {
       "id": "apocalyptist_harbinger",
       "name": "Harbinger",
-      "description": {
-        "text": "mobs near you take 1 damage every 3s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs near you take 1 damage every 3s",
       "type": "notable",
       "x": 868,
       "y": 1086,
@@ -74,7 +65,22 @@
         "apocalyptist_dark_whispers"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 60,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "hostiles",
+              "radius": 4.0,
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "apocalyptist_plague_bearer",
@@ -101,16 +107,7 @@
     {
       "id": "apocalyptist_end_of_days",
       "name": "End of Days",
-      "description": {
-        "text": "+25% magic damage, but you slowly take 1 damage every 10s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% magic damage, but you slowly take 1 damage every 10s",
       "type": "keystone",
       "x": 889,
       "y": 1158,
@@ -119,7 +116,26 @@
         "apocalyptist_plague_bearer"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 200,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "self",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     }
   ]
 }

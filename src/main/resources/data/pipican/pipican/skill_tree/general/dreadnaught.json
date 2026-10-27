@@ -55,16 +55,7 @@
     {
       "id": "dreadnaught_deflection",
       "name": "Deflection",
-      "description": {
-        "text": "+10% projectile damage reduction",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% projectile damage reduction",
       "type": "notable",
       "x": -1718,
       "y": -275,
@@ -72,7 +63,14 @@
         "dreadnaught_riveted"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 0.9
+        }
+      ]
     },
     {
       "id": "dreadnaught_anchored",
@@ -96,16 +94,7 @@
     {
       "id": "dreadnaught_walking_fortress",
       "name": "Walking Fortress",
-      "description": {
-        "text": "+30% damage reduction, but -15% movement speed and -15% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% damage reduction, but -15% movement speed and -15% damage",
       "type": "keystone",
       "x": -1783,
       "y": -314,
@@ -114,7 +103,23 @@
         "dreadnaught_anchored"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.7
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.85
+        }
+      ]
     }
   ]
 }

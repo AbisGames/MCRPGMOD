@@ -33,6 +33,19 @@ public final class SpecialItems {
         return isWeapon(hand) && hand.has(DataComponents.CUSTOM_NAME);
     }
 
+    private static final TagKey<Item> HEAVY = TagKey.create(Registries.ITEM, Pipican.id("armor/heavy"));
+
+    /** Worn heavy armor pieces (iron, diamond, netherite...). */
+    public static int heavyArmor(ServerPlayer player) {
+        int n = 0;
+        for (EquipmentSlot slot : ARMOR) {
+            if (player.getItemBySlot(slot).is(HEAVY)) {
+                n++;
+            }
+        }
+        return n;
+    }
+
     /** Worn armor pieces with an armor trim. */
     public static int sigilArmor(ServerPlayer player) {
         int n = 0;

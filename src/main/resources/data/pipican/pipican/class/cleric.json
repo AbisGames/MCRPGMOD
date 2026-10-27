@@ -131,17 +131,22 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "The cleric's purity draws the hunger of the damned.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "The cleric's purity draws the hunger of the damned.",
+    "effects": [
+      {
+        "type": "pipican:damage_taken",
+        "against": [
+          "minecraft:wither_skeleton",
+          "minecraft:wither"
+        ],
+        "multiplier": 1.2
+      },
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#pipican:is_wither",
+        "multiplier": 1.2
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",
