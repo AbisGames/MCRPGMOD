@@ -101,16 +101,7 @@
     {
       "id": "berserker_reckless",
       "name": "Reckless Strike",
-      "description": {
-        "text": "+20% melee damage at all times, but you take +15% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% melee damage at all times, but you take +15% damage",
       "type": "keystone",
       "x": -831,
       "y": 480,
@@ -119,7 +110,18 @@
         "berserker_unchained"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.15
+        }
+      ]
     }
   ]
 }

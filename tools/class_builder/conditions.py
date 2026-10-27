@@ -75,6 +75,7 @@ def _atoms(ctx):
         (rf'{rn} is full|(?:at )?full {rn}', lambda m: {'type': 'pipican:resource', 'min': 1.0}, OTHER),
         (rf'{rn} is empty', lambda m: {'type': 'pipican:resource', 'max': 0.0001}, OTHER),
         # water & weather
+        (r'in water and (?:in the )?air', lambda m: {'type': 'pipican:any_of', 'conditions': [state('in_water'), not_(state('on_ground'))]}, OTHER),
         (r'(?:in )?rain or water|wet', lambda m: state('wet'), OTHER),
         (r'underwater|submerged', lambda m: state('underwater'), PLACE),
         (r'(?:in|standing in) water', lambda m: state('in_water'), PLACE),
@@ -136,6 +137,9 @@ def _atoms(ctx):
          lambda m: {'type': 'pipican:holding', 'items': ['minecraft:book', 'minecraft:writable_book', 'minecraft:enchanted_book'], 'hand': 'off'}, OTHER),
         (r'with no book anywhere in your inventory|without a book in your inventory', lambda m: not_({'type': 'pipican:carrying',
          'items': ['minecraft:book', 'minecraft:writable_book', 'minecraft:written_book', 'minecraft:enchanted_book']}), OTHER),
+        (r'without (?:an|your) icon(?: of faith)?(?: in (?:hand|your off-hand))?', lambda m: not_({'type': 'pipican:holding', 'items': ['minecraft:totem_of_undying', 'minecraft:golden_sword', 'minecraft:golden_axe', 'minecraft:golden_pickaxe', 'minecraft:golden_shovel',
+            'minecraft:golden_hoe', 'minecraft:golden_apple', 'minecraft:enchanted_golden_apple', 'minecraft:gold_ingot', 'minecraft:gold_nugget',
+            'minecraft:golden_carrot', 'minecraft:clock'], 'hand': 'off'}), OTHER),
         (r'(?:while )?holding a totem_of_undying or golden item in the off-hand', lambda m: {'type': 'pipican:holding', 'items': [
             'minecraft:totem_of_undying', 'minecraft:golden_sword', 'minecraft:golden_axe', 'minecraft:golden_pickaxe', 'minecraft:golden_shovel',
             'minecraft:golden_hoe', 'minecraft:golden_apple', 'minecraft:enchanted_golden_apple', 'minecraft:gold_ingot', 'minecraft:gold_nugget',
@@ -230,4 +234,5 @@ TRAILING = re.compile(
     r'while unarmed\b|with your fists\b|bare-handed\b|'
     r'in combat\b|out of combat\b|inside your temple\b|in your temple\b|when more than \d+ blocks\b|'
     r'outside (?:of )?forests?\b|on solid ground\b|without an icon\b|while holding\b|while travelling\b|while wearing\b|while not\b|'
+    r'in human form\b|in (?:any )?(?:animal )?form\b|while transformed\b|in water and air\b|'
     r'on foot\b|on (?:stone|dirt|sand|gravel|netherrack|nether blocks)\b|(?:standing|you stand) on\b|in lava\b|without (?:a )?shield\b|with (?:a )?shield\b|on dry land\b|out of (?:the )?water\b)', re.I)

@@ -492,6 +492,8 @@ def _bulk(text):
         (lab + r'fall damage halved(?: again)?$', r'\1-50% fall damage taken'),
         (lab + r'arrows shot at you are (\d+(?:\.\d+)?)% likely to be blown aside$', r'\1+\2% arrow-deflect chance'),
         (lab + r'you deal ([+-]\d+(?:\.\d+)?)% (?:more )?damage(?: yourself)?$', r'\1\2% damage'),
+        (lab + r'you take ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\2 damage taken'),
+        (lab + r'(without [a-z ]+?),? you deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage$', r'\1\3 damage \2'),
         (lab + r'(?:you )?takes? (\d+(?:\.\d+)?)% (more|less) damage from weapons and projectiles$', r'\1takes \2% \3 melee and projectile damage'),
         (lab + r'\+(\d+(?:\.\d+)?)% projectile damage reduction$', r'\1takes \2% less projectile damage'),
         (lab + r'\+(\d+(?:\.\d+)?)% damage reduction\b', r'\1-\2% damage taken'),
@@ -590,6 +592,8 @@ def _translate_line(text, ctx):
     # "your fire damage to mobs is +15%", "+20% weapon and magic damage"
     text = re.sub(lab + r'your (\w+ )?damage(?: to mobs)? is ([+-]\d+(?:\.\d+)?%)$', r'\1\3 \2damage', text, flags=re.I)
     text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) (weapon|melee|ranged|magic|fire) and (weapon|melee|ranged|magic|fire) damage\b', r'\1\2 \3 damage, \2 \4 damage', text, flags=re.I)
+    # "in human form you deal -20% damage" -> "-20% damage in human form"
+    text = re.sub(r'\bin (human|any animal|animal|any) form,? you deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\2 damage in \1 form', text, flags=re.I)
     text = _bulk(text)
     # jump height in blocks -> jump strength (about +0.15 per block)
     text = re.sub(lab + r'(?:jump height \+(\d+(?:\.\d+)?) blocks?|\+(\d+(?:\.\d+)?) (?:extra )?jump (?:block )?height)\b',

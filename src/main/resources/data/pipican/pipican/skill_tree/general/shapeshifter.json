@@ -142,16 +142,7 @@
     {
       "id": "shapeshifter_feral_soul",
       "name": "Feral Soul",
-      "description": {
-        "text": "forms drain 50% slower, but in human form you deal -20% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "forms drain 50% slower, but in human form you deal -20% damage",
       "type": "keystone",
       "x": 1483,
       "y": 1038,
@@ -160,7 +151,71 @@
         "shapeshifter_seal_skin"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/wolf_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/bear_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/cat_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/fish_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/bird_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/wolf_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/bear_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/cat_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/fish_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/bird_form"
+                }
+              ]
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.8
+            }
+          ]
+        }
+      ]
     }
   ]
 }

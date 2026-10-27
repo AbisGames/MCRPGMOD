@@ -128,16 +128,7 @@
     {
       "id": "champion_last_stand",
       "name": "Last Stand",
-      "description": {
-        "text": "Battle Stance bonuses doubled, but you take +10% damage while moving",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Battle Stance bonuses doubled, but you take +10% damage while moving",
       "type": "keystone",
       "x": 1795,
       "y": 236,
@@ -146,7 +137,50 @@
         "champion_hold_the_line"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "sneaking"
+              },
+              {
+                "type": "pipican:still"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.166667
+            },
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.75
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:still",
+              "seconds": 0.5
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
     }
   ]
 }

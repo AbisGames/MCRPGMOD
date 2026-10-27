@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1770**, partly working: **25**, not yet: **455**
+- Bonus phrases: **2250**. Fully working: **1777**, partly working: **25**, not yet: **448**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,10 +12,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 141 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 124 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 70 |
+| [Other mechanics](#other-mechanics) | 139 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 122 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 68 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 64 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 29 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
@@ -47,7 +47,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **beastmaster**
   - passive: Taming always succeeds on the first try
 - **berserker**
-  - general tree: Reckless Strike: +20% melee damage at all times, but you take +15% damage
   - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
   - special tree: Reckless Strike: fatigue lasts twice as long
 - **chronomancer**
@@ -55,7 +54,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **cleric**
   - special passive: Empowered Symbol: +1% healing done and received per 2 Conviction
   - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
-  - special tree: Divine Power: Icon of Faith bonuses double
 - **conqueror**
   - special stat per point: +0.5% damage for players near you
   - special passive: Leadership bonus +0.5% per Command point
@@ -249,7 +247,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
 - **champion**
   - special passive: Champion's Resolve cooldown -1% per Resolve point
-  - general tree: Last Stand: Battle Stance bonuses doubled
   - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
 - **chaplain**
   - passive: Succor: crouching next to a downed-ish player (below 4 HP) for 3s heals them 6 HP (60s cooldown)
@@ -355,7 +352,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +1% bonus from your current form
   - passive: Swift Transformation: changing form is instant and cleanses Slowness
   - special passive: Form bonuses +1% per Mutability
-  - general tree: Feral Soul: in human form you deal -20% damage
   - special tree: Quick Change: no cooldown between forms
 - **sharpshooter**
   - general tree: Long Shot: +10% damage per 16 blocks of distance
@@ -402,120 +398,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **woodwose**
   - passive: Nature's Resilience: bone-mealing a plant gives you +2 absorption hearts for 30s (60s cooldown)
   - general tree: Deep Roots: +20% knockback resistance on grass
-
-## Conditional bonus (while / when / where)
-
-- **acrobat**
-  - passive: landing from any fall can't break your legs below 2 hearts
-  - passive: You can walk through other players and pass by mobs without being pushed
-  - passive: No slowdown from soul sand, honey, cobwebs or when swimming
-  - weakness: +25% damage taken while Slowed or standing in a 1-block-wide space
-  - general tree: Wall Run: sprinting into a wall lets you run up it for 2 blocks
-- **aeromancer**
-  - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
-  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **artificer**
-  - special passive: +0.25% chance per Ingenuity point to get an extra output item when crafting arrows, rails or redstone components
-- **assassin**
-  - passive: if that brings it below 20% health, it dies
-- **astromancer**
-  - passive: Inner Radiance: you emit light (dynamic light level 12) while Starlight is above half
-  - special passive: Light radius +1 per 20 Radiance
-- **cavalier**
-  - passive: Devastating Charge: sprinting or riding at full speed into a mob adds +20% damage to the hit (+40% mounted)
-  - passive: You never fall off when your mount is hit
-  - special tree: Trample: your mount damages small mobs it runs into
-- **champion**
-  - general tree: Last Stand: you take +10% damage while moving
-- **cleric**
-  - special tree: Divine Power: without an icon in hand you deal -10% damage
-- **conqueror**
-  - passive: Battlefield Leadership: when you hit a mob, players within 10 blocks deal +10% damage to it for 4s
-  - special tree: Warlord: Attack Command gives Strength II; you can't sprint
-- **defender**
-  - passive: Retributive Strike: when a mob within 3 blocks hits another player, your next hit on it deals +30%
-- **diviner**
-  - passive: Structures within 64 blocks are hinted in chat when you look at a compass
-- **dreadnaught**
-  - passive: while wearing 4 heavy pieces
-- **druid**
-  - special tree: Weather Eye: you get a warning message 30s before rain/thunder starts
-- **duelist**
-  - passive: Challenge: the first mob you hit becomes your challenged foe for 30s; it deals 20% less damage to anyone but you
-  - passive: Riposte: when your challenged foe attacks you and misses or is blocked, you counterattack instantly
-  - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
-- **engineer**
-  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
-- **geomancer**
-  - passive: no fall damage when landing on stone or dirt
-  - weakness: -25% movement speed while swimming and takes 25% more freezing damage
-  - general tree: Ore Sense: ores within 6 blocks glow while you sneak
-  - special tree: Avatar of Earth: Earthen Defense works anywhere; -20% movement speed in water and air
-- **gunslinger**
-  - general tree: Showdown: +30% firearm damage, but you can't wear heavy armor without -50% accuracy
-- **healer**
-  - general tree: Triage: players below 30% health heal twice as fast from you
-- **hydromancer**
-  - passive: Flow: while wet (rain or water), you can't be slowed or caught by cobwebs/powder snow and +10% damage
-  - passive: in water
-  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
-- **infiltrator**
-  - passive: Faceless: while sneaking and not attacking, hostile mobs beyond 4 blocks can't see you at all
-  - passive: Your nameplate is hidden from other players while sneaking or invisible
-  - weakness: while wearing any medium or heavy armor, Faceless doesn't work
-- **jack_of_all_trades**
-  - passive: Flexible Profession: every shared skill trains 25% faster for you
-- **mage_knight**
-  - general tree: Combat Casting: taking damage doesn't drain Warfire
-- **marauder**
-  - special tree: Glorious Death: when you'd die, you keep fighting for 5s at 1 HP, then die
-- **miracle_worker**
-  - passive: Tongues: your chat messages can be read by all players within 1000 blocks when you start them with '!'
-  - general tree: Halo: you glow and light the area
-  - special tree: Living God: Stigmata lasts twice as long; you can't sleep while it's active
-- **myrmidon**
-  - special stat per point: -0.2% damage taken while blocking
-  - passive: sneak-attacking with a raised shield bashes for 4 damage
-- **oracle**
-  - passive: Visions: you see the outline of hostile mobs through walls within 6 blocks while sneaking
-- **poisoner**
-  - passive: Poison Mastery: your melee hits and arrows apply Poison I for 4s (Poison II if you hold a pufferfish or poison potion in the off-hand)
-- **rogue**
-  - special passive: +0.2% chance per Cunning point to get one extra item when a mob drops loot
-  - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
-  - special tree: Subterfuge: mobs you hit while sneaking forget you 25% faster
-- **savant**
-  - passive: Tradition Focus: pick two elemental focus schools when you choose the class - Fire, Water, Air, Earth, Storm, Shadow, Light (sun/celestial) or Life. Damage and effects of those elements are +20% (Fire = burning/fire charges, Water = drowned/underwater/trident, Air = wind charges/fall, Earth = explosions/blocks, Storm = lightning, Shadow = darkness/wither, Light = undead/smite, Life = healing)
-- **scout**
-  - general tree: Lookout: can't be hit by sneak-attack bonuses (you are never 'unaware')
-- **sentinel**
-  - general tree: Post Holder: Stand Guard bonuses doubled, but -15% damage while moving
-- **shapeshifter**
-  - weakness: while transformed you can't use weapons, bows, shields or items (only bare-handed attacks)
-  - general tree: Feral Soul: forms drain 50% slower
-- **sorcerer**
-  - passive: Every magic hit you land adds 1 Strain
-- **stormbringer**
-  - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
-  - general tree: Storm Avatar: your lightning chance works in any rain
-  - special tree: Chain Lightning: lightning arcs to 2 more mobs
-  - special tree: Stormlord: you can't wear iron or netherite armor
-- **templar**
-  - special tree: Temple Guardian: Slowness becomes immobilise for 1s
-- **tenebrist**
-  - passive: Cloak of Shadows: you count as being in darkness at all times - mobs detect you 30% later
-- **thief**
-  - general tree: Scale Walls: you can climb any wall like a ladder while sneaking and holding jump
-  - special tree: Keen Senses: chests with loot within 8 blocks sparkle while you sneak
-- **transmuter**
-  - general tree: Rapid Shift: you can re-Optimize once per day without sleeping
-- **warrior**
-  - skill Axemanship: +10% shield-disable time when you break a shield
-- **woodwose**
-  - passive: Forest Hide: in foliage (leaves, tall grass, ferns), sneaking makes you invisible
-  - special passive: Forest armor +1 per 20 Verdure
-- **zealot**
-  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
 ## Resource bar: filling, refills, spending
 
@@ -636,6 +518,111 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **zealot**
   - general tree: Martyrdom: Zeal chance doubled, but you never naturally regenerate above half health
   - special tree: Prophet of Ruin: Zeal triggers at 3 hearts; Madness fills twice as fast
+
+## Conditional bonus (while / when / where)
+
+- **acrobat**
+  - passive: landing from any fall can't break your legs below 2 hearts
+  - passive: You can walk through other players and pass by mobs without being pushed
+  - passive: No slowdown from soul sand, honey, cobwebs or when swimming
+  - weakness: +25% damage taken while Slowed or standing in a 1-block-wide space
+  - general tree: Wall Run: sprinting into a wall lets you run up it for 2 blocks
+- **aeromancer**
+  - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
+  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
+- **artificer**
+  - special passive: +0.25% chance per Ingenuity point to get an extra output item when crafting arrows, rails or redstone components
+- **assassin**
+  - passive: if that brings it below 20% health, it dies
+- **astromancer**
+  - passive: Inner Radiance: you emit light (dynamic light level 12) while Starlight is above half
+  - special passive: Light radius +1 per 20 Radiance
+- **cavalier**
+  - passive: Devastating Charge: sprinting or riding at full speed into a mob adds +20% damage to the hit (+40% mounted)
+  - passive: You never fall off when your mount is hit
+  - special tree: Trample: your mount damages small mobs it runs into
+- **conqueror**
+  - passive: Battlefield Leadership: when you hit a mob, players within 10 blocks deal +10% damage to it for 4s
+  - special tree: Warlord: Attack Command gives Strength II; you can't sprint
+- **defender**
+  - passive: Retributive Strike: when a mob within 3 blocks hits another player, your next hit on it deals +30%
+- **diviner**
+  - passive: Structures within 64 blocks are hinted in chat when you look at a compass
+- **dreadnaught**
+  - passive: while wearing 4 heavy pieces
+- **druid**
+  - special tree: Weather Eye: you get a warning message 30s before rain/thunder starts
+- **duelist**
+  - passive: Challenge: the first mob you hit becomes your challenged foe for 30s; it deals 20% less damage to anyone but you
+  - passive: Riposte: when your challenged foe attacks you and misses or is blocked, you counterattack instantly
+  - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
+- **engineer**
+  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
+- **geomancer**
+  - passive: no fall damage when landing on stone or dirt
+  - weakness: -25% movement speed while swimming and takes 25% more freezing damage
+  - general tree: Ore Sense: ores within 6 blocks glow while you sneak
+- **gunslinger**
+  - general tree: Showdown: +30% firearm damage, but you can't wear heavy armor without -50% accuracy
+- **healer**
+  - general tree: Triage: players below 30% health heal twice as fast from you
+- **hydromancer**
+  - passive: Flow: while wet (rain or water), you can't be slowed or caught by cobwebs/powder snow and +10% damage
+  - passive: in water
+  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
+- **infiltrator**
+  - passive: Faceless: while sneaking and not attacking, hostile mobs beyond 4 blocks can't see you at all
+  - passive: Your nameplate is hidden from other players while sneaking or invisible
+  - weakness: while wearing any medium or heavy armor, Faceless doesn't work
+- **jack_of_all_trades**
+  - passive: Flexible Profession: every shared skill trains 25% faster for you
+- **mage_knight**
+  - general tree: Combat Casting: taking damage doesn't drain Warfire
+- **marauder**
+  - special tree: Glorious Death: when you'd die, you keep fighting for 5s at 1 HP, then die
+- **miracle_worker**
+  - passive: Tongues: your chat messages can be read by all players within 1000 blocks when you start them with '!'
+  - general tree: Halo: you glow and light the area
+- **myrmidon**
+  - special stat per point: -0.2% damage taken while blocking
+  - passive: sneak-attacking with a raised shield bashes for 4 damage
+- **oracle**
+  - passive: Visions: you see the outline of hostile mobs through walls within 6 blocks while sneaking
+- **poisoner**
+  - passive: Poison Mastery: your melee hits and arrows apply Poison I for 4s (Poison II if you hold a pufferfish or poison potion in the off-hand)
+- **rogue**
+  - special passive: +0.2% chance per Cunning point to get one extra item when a mob drops loot
+  - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
+  - special tree: Subterfuge: mobs you hit while sneaking forget you 25% faster
+- **savant**
+  - passive: Tradition Focus: pick two elemental focus schools when you choose the class - Fire, Water, Air, Earth, Storm, Shadow, Light (sun/celestial) or Life. Damage and effects of those elements are +20% (Fire = burning/fire charges, Water = drowned/underwater/trident, Air = wind charges/fall, Earth = explosions/blocks, Storm = lightning, Shadow = darkness/wither, Light = undead/smite, Life = healing)
+- **scout**
+  - general tree: Lookout: can't be hit by sneak-attack bonuses (you are never 'unaware')
+- **shapeshifter**
+  - weakness: while transformed you can't use weapons, bows, shields or items (only bare-handed attacks)
+- **sorcerer**
+  - passive: Every magic hit you land adds 1 Strain
+- **stormbringer**
+  - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
+  - general tree: Storm Avatar: your lightning chance works in any rain
+  - special tree: Chain Lightning: lightning arcs to 2 more mobs
+  - special tree: Stormlord: you can't wear iron or netherite armor
+- **templar**
+  - special tree: Temple Guardian: Slowness becomes immobilise for 1s
+- **tenebrist**
+  - passive: Cloak of Shadows: you count as being in darkness at all times - mobs detect you 30% later
+- **thief**
+  - general tree: Scale Walls: you can climb any wall like a ladder while sneaking and holding jump
+  - special tree: Keen Senses: chests with loot within 8 blocks sparkle while you sneak
+- **transmuter**
+  - general tree: Rapid Shift: you can re-Optimize once per day without sleeping
+- **warrior**
+  - skill Axemanship: +10% shield-disable time when you break a shield
+- **woodwose**
+  - passive: Forest Hide: in foliage (leaves, tall grass, ferns), sneaking makes you invisible
+  - special passive: Forest armor +1 per 20 Verdure
+- **zealot**
+  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
 ## Bonus against a kind of mob / marked target
 

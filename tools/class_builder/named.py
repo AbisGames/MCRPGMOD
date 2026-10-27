@@ -404,6 +404,31 @@ def segment(t, ctx):
         return scaled_field({'type': 'pipican:deadly_aim'}, 'hold_seconds', -float(m.group(1)), m.group(2), m.group(3))
     if re.fullmatch(r'deadly aim shots always crit', t):
         return [{'type': 'pipican:deadly_aim', 'crit': True}]
+    m = re.fullmatch(rf'(?:your )?(?:animal )?forms drain {N}% (slower|faster)', t)
+    if m:
+        forms = [w['ability'] for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+        if forms:
+            k = float(m.group(1)) / 100 * (-1 if m.group(2) == 'slower' else 1)
+            return [{'type': 'pipican:ability_mod', 'ability': f, 'drain': round(k, 6)} for f in forms]
+    # "Icon of Faith bonuses double", "Stand Guard bonuses doubled": the named state's bonuses count twice as much.
+    m = re.fullmatch(r'([a-z\' ]+?) bonuses (?:double|doubled)', t)
+    if m and m.group(1) in NAMED.get(ctx.get('class_id'), {}):
+        when, inner = NAMED[ctx['class_id']][m.group(1)]
+        extra = []
+        for e in inner:
+            c = dict(e)
+            if 'multiplier' in e and e['type'] in ('pipican:damage_dealt', 'pipican:damage_taken'):
+                mult = e['multiplier']
+                if mult <= 0 or 'scaling' in e:
+                    return None
+                c['multiplier'] = round((2 * mult - 1) / mult, 6)  # x m again would give m^2; this lands on 1 + 2(m - 1)
+            elif e['type'] == 'pipican:attribute' and 'scaling' not in e:
+                pass  # the same amount again
+            else:
+                return None
+            extra.append(c)
+        if extra:
+            return [{'type': 'pipican:conditional', 'when': when, 'effects': extra}]
     am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx) or static_mods(t, ctx)
     if am:
         return am
@@ -981,6 +1006,13 @@ def whole_line(text, ctx):
     if m:
         REACTION_NAMES.setdefault(ctx.get('class_id'), set()).add('deadly aim')
         return [{'type': 'pipican:deadly_aim', 'base': True, 'hold_seconds': float(m.group(1)), 'damage': round(float(m.group(2)) / 100, 6)}]
+    # Living God: "Stigmata lasts twice as long; you can't sleep while it's active" - "it" is the ability just named.
+    m = re.fullmatch(r"(.+?) lasts (twice|three times) as long; you can'?t sleep while it'?s active", low)
+    if m:
+        first = ability_mods(f'{m.group(1)} lasts {m.group(2)} as long', ctx)
+        if first:
+            return first + [{'type': 'pipican:conditional', 'when': {'type': 'pipican:ability_active', 'ability': first[0]['ability']},
+                             'effects': [{'type': 'pipican:bonus', 'kind': 'no_sleep', 'amount': 1.0}]}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

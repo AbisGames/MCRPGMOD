@@ -96,16 +96,7 @@
     {
       "id": "avatar_of_earth",
       "name": "Avatar of Earth",
-      "description": {
-        "text": "Earthen Defense works anywhere; -20% movement speed in water and air",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Earthen Defense works anywhere; -20% movement speed in water and air",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -114,7 +105,40 @@
         "quake"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource_shield",
+          "absorb": 1.0
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "in_water"
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:state",
+                  "state": "on_ground"
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": -0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
