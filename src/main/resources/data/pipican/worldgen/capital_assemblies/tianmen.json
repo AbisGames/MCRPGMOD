@@ -9,86 +9,9 @@
   "tile_pitch": 112,
   "relative_positions": [
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/0_0_residences",
+      "template": "pipican:capital_districts/jade_empire/tianmen/0_0_military",
       "x": -224,
       "z": -224,
-      "kind": "residences",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/1_0_temple",
-      "x": -112,
-      "z": -224,
-      "kind": "temple",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/2_0_harbor",
-      "x": 0,
-      "z": -224,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/3_0_garden",
-      "x": 112,
-      "z": -224,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/4_0_academy",
-      "x": 224,
-      "z": -224,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/0_1_garden",
-      "x": -224,
-      "z": -112,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/1_1_academy",
-      "x": -112,
-      "z": -112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/2_1_military",
-      "x": 0,
-      "z": -112,
       "kind": "military",
       "size": [
         92,
@@ -97,10 +20,87 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/3_1_artisan",
+      "template": "pipican:capital_districts/jade_empire/tianmen/1_0_artisan",
+      "x": -112,
+      "z": -224,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/2_0_artisan",
+      "x": 0,
+      "z": -224,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/3_0_military",
+      "x": 112,
+      "z": -224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/4_0_military",
+      "x": 224,
+      "z": -224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/0_1_market",
+      "x": -224,
+      "z": -112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/1_1_market",
+      "x": -112,
+      "z": -112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/2_1_harbor",
+      "x": 0,
+      "z": -112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/3_1_temple",
       "x": 112,
       "z": -112,
-      "kind": "artisan",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -108,10 +108,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/4_1_market",
+      "template": "pipican:capital_districts/jade_empire/tianmen/4_1_harbor",
       "x": 224,
       "z": -112,
-      "kind": "market",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -119,10 +119,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/0_2_artisan",
+      "template": "pipican:capital_districts/jade_empire/tianmen/0_2_military",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/1_2_market",
+      "template": "pipican:capital_districts/jade_empire/tianmen/1_2_temple",
       "x": -112,
       "z": 0,
-      "kind": "market",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/3_2_temple",
+      "template": "pipican:capital_districts/jade_empire/tianmen/3_2_garden",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -163,20 +163,9 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/4_2_harbor",
+      "template": "pipican:capital_districts/jade_empire/tianmen/4_2_temple",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/0_3_temple",
-      "x": -224,
-      "z": 112,
       "kind": "temple",
       "size": [
         92,
@@ -185,10 +174,21 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/1_3_harbor",
-      "x": -112,
+      "template": "pipican:capital_districts/jade_empire/tianmen/0_3_harbor",
+      "x": -224,
       "z": 112,
       "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/1_3_military",
+      "x": -112,
+      "z": 112,
+      "kind": "military",
       "size": [
         92,
         34,
@@ -218,10 +218,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/4_3_military",
+      "template": "pipican:capital_districts/jade_empire/tianmen/4_3_artisan",
       "x": 224,
       "z": 112,
-      "kind": "military",
+      "kind": "artisan",
       "size": [
         92,
         34,
@@ -229,8 +229,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/0_4_academy",
+      "template": "pipican:capital_districts/jade_empire/tianmen/0_4_harbor",
       "x": -224,
+      "z": 224,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/jade_empire/tianmen/1_4_academy",
+      "x": -112,
       "z": 224,
       "kind": "academy",
       "size": [
@@ -240,10 +251,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/1_4_military",
-      "x": -112,
+      "template": "pipican:capital_districts/jade_empire/tianmen/2_4_harbor",
+      "x": 0,
       "z": 224,
-      "kind": "military",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -251,8 +262,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/2_4_artisan",
-      "x": 0,
+      "template": "pipican:capital_districts/jade_empire/tianmen/3_4_artisan",
+      "x": 112,
       "z": 224,
       "kind": "artisan",
       "size": [
@@ -262,21 +273,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/jade_empire/tianmen/3_4_market",
-      "x": 112,
-      "z": 224,
-      "kind": "market",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/jade_empire/tianmen/4_4_residences",
+      "template": "pipican:capital_districts/jade_empire/tianmen/4_4_market",
       "x": 224,
       "z": 224,
-      "kind": "residences",
+      "kind": "market",
       "size": [
         92,
         34,

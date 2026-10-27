@@ -31,10 +31,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/2_0_harbor",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_0_garden",
       "x": 0,
       "z": -224,
-      "kind": "harbor",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -42,10 +42,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/3_0_garden",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_0_military",
       "x": 112,
       "z": -224,
-      "kind": "garden",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -64,30 +64,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/0_1_garden",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_1_military",
       "x": -224,
-      "z": -112,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/1_1_academy",
-      "x": -112,
-      "z": -112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/2_1_military",
-      "x": 0,
       "z": -112,
       "kind": "military",
       "size": [
@@ -97,10 +75,32 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/3_1_artisan",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_1_harbor",
+      "x": -112,
+      "z": -112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_1_market",
+      "x": 0,
+      "z": -112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_1_temple",
       "x": 112,
       "z": -112,
-      "kind": "artisan",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -108,10 +108,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/4_1_market",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_1_military",
       "x": 224,
       "z": -112,
-      "kind": "market",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -119,10 +119,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/0_2_artisan",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_2_military",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/1_2_market",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_2_residences",
       "x": -112,
       "z": 0,
-      "kind": "market",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/3_2_temple",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_2_academy",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -163,10 +163,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/4_2_harbor",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_2_artisan",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
+      "kind": "artisan",
       "size": [
         92,
         34,
@@ -174,10 +174,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/0_3_temple",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_3_artisan",
       "x": -224,
       "z": 112,
-      "kind": "temple",
+      "kind": "artisan",
       "size": [
         92,
         34,
@@ -185,10 +185,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/1_3_harbor",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_3_residences",
       "x": -112,
       "z": 112,
-      "kind": "harbor",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -196,10 +196,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/2_3_garden",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_3_harbor",
       "x": 0,
       "z": 112,
-      "kind": "garden",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -218,10 +218,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/4_3_military",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_3_market",
       "x": 224,
       "z": 112,
-      "kind": "military",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -240,10 +240,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/1_4_military",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_4_garden",
       "x": -112,
       "z": 224,
-      "kind": "military",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -251,10 +251,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/2_4_artisan",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_4_academy",
       "x": 0,
       "z": 224,
-      "kind": "artisan",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -262,10 +262,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/lotus_delta/vanhara/3_4_market",
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_4_garden",
       "x": 112,
       "z": 224,
-      "kind": "market",
+      "kind": "garden",
       "size": [
         92,
         34,

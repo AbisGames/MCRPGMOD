@@ -9,10 +9,10 @@
   "tile_pitch": 112,
   "relative_positions": [
     {
-      "template": "pipican:capital_districts/ashlands/morvath/0_0_residences",
+      "template": "pipican:capital_districts/ashlands/morvath/0_0_garden",
       "x": -224,
       "z": -224,
-      "kind": "residences",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -20,10 +20,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/1_0_temple",
+      "template": "pipican:capital_districts/ashlands/morvath/1_0_military",
       "x": -112,
       "z": -224,
-      "kind": "temple",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -31,9 +31,64 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/2_0_harbor",
+      "template": "pipican:capital_districts/ashlands/morvath/2_0_garden",
       "x": 0,
       "z": -224,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/3_0_market",
+      "x": 112,
+      "z": -224,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/4_0_military",
+      "x": 224,
+      "z": -224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/0_1_market",
+      "x": -224,
+      "z": -112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/1_1_garden",
+      "x": -112,
+      "z": -112,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/2_1_harbor",
+      "x": 0,
+      "z": -112,
       "kind": "harbor",
       "size": [
         92,
@@ -42,52 +97,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/3_0_garden",
+      "template": "pipican:capital_districts/ashlands/morvath/3_1_military",
       "x": 112,
-      "z": -224,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/4_0_academy",
-      "x": 224,
-      "z": -224,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/0_1_garden",
-      "x": -224,
-      "z": -112,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/1_1_academy",
-      "x": -112,
-      "z": -112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/2_1_military",
-      "x": 0,
       "z": -112,
       "kind": "military",
       "size": [
@@ -97,21 +108,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/3_1_artisan",
-      "x": 112,
-      "z": -112,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/4_1_market",
+      "template": "pipican:capital_districts/ashlands/morvath/4_1_garden",
       "x": 224,
       "z": -112,
-      "kind": "market",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -119,10 +119,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/0_2_artisan",
+      "template": "pipican:capital_districts/ashlands/morvath/0_2_residences",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/1_2_market",
+      "template": "pipican:capital_districts/ashlands/morvath/1_2_harbor",
       "x": -112,
       "z": 0,
-      "kind": "market",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/3_2_temple",
+      "template": "pipican:capital_districts/ashlands/morvath/3_2_academy",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -163,10 +163,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/4_2_harbor",
+      "template": "pipican:capital_districts/ashlands/morvath/4_2_military",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -174,10 +174,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/0_3_temple",
+      "template": "pipican:capital_districts/ashlands/morvath/0_3_residences",
       "x": -224,
       "z": 112,
-      "kind": "temple",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -185,19 +185,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/1_3_harbor",
+      "template": "pipican:capital_districts/ashlands/morvath/1_3_garden",
       "x": -112,
-      "z": 112,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/2_3_garden",
-      "x": 0,
       "z": 112,
       "kind": "garden",
       "size": [
@@ -207,10 +196,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/3_3_academy",
-      "x": 112,
+      "template": "pipican:capital_districts/ashlands/morvath/2_3_market",
+      "x": 0,
       "z": 112,
-      "kind": "academy",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -218,10 +207,21 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/4_3_military",
+      "template": "pipican:capital_districts/ashlands/morvath/3_3_residences",
+      "x": 112,
+      "z": 112,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/4_3_garden",
       "x": 224,
       "z": 112,
-      "kind": "military",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -229,10 +229,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/0_4_academy",
+      "template": "pipican:capital_districts/ashlands/morvath/0_4_garden",
       "x": -224,
       "z": 224,
-      "kind": "academy",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -240,8 +240,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/1_4_military",
+      "template": "pipican:capital_districts/ashlands/morvath/1_4_residences",
       "x": -112,
+      "z": 224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/ashlands/morvath/2_4_military",
+      "x": 0,
       "z": 224,
       "kind": "military",
       "size": [
@@ -251,21 +262,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/ashlands/morvath/2_4_artisan",
-      "x": 0,
-      "z": 224,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/ashlands/morvath/3_4_market",
+      "template": "pipican:capital_districts/ashlands/morvath/3_4_harbor",
       "x": 112,
       "z": 224,
-      "kind": "market",
+      "kind": "harbor",
       "size": [
         92,
         34,

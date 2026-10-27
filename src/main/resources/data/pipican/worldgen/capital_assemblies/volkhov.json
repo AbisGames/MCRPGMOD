@@ -9,10 +9,10 @@
   "tile_pitch": 112,
   "relative_positions": [
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_0_residences",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_0_academy",
       "x": -224,
       "z": -224,
-      "kind": "residences",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -20,10 +20,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_0_temple",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_0_garden",
       "x": -112,
       "z": -224,
-      "kind": "temple",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -42,10 +42,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_0_garden",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_0_temple",
       "x": 112,
       "z": -224,
-      "kind": "garden",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -53,10 +53,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_0_academy",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_0_temple",
       "x": 224,
       "z": -224,
-      "kind": "academy",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -64,10 +64,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_1_garden",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_1_harbor",
       "x": -224,
       "z": -112,
-      "kind": "garden",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -75,41 +75,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_1_academy",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_1_market",
       "x": -112,
-      "z": -112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/2_1_military",
-      "x": 0,
-      "z": -112,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_1_artisan",
-      "x": 112,
-      "z": -112,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_1_market",
-      "x": 224,
       "z": -112,
       "kind": "market",
       "size": [
@@ -119,10 +86,43 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_2_artisan",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/2_1_temple",
+      "x": 0,
+      "z": -112,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_1_academy",
+      "x": 112,
+      "z": -112,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_1_residences",
+      "x": 224,
+      "z": -112,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_2_garden",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_2_temple",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_2_artisan",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "artisan",
       "size": [
         92,
         34,
@@ -163,10 +163,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_2_harbor",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_2_residences",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -174,8 +174,41 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_3_temple",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_3_market",
       "x": -224,
+      "z": 112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_3_military",
+      "x": -112,
+      "z": 112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/2_3_academy",
+      "x": 0,
+      "z": 112,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_3_temple",
+      "x": 112,
       "z": 112,
       "kind": "temple",
       "size": [
@@ -185,10 +218,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_3_harbor",
-      "x": -112,
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_3_academy",
+      "x": 224,
       "z": 112,
-      "kind": "harbor",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -196,9 +229,9 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/2_3_garden",
-      "x": 0,
-      "z": 112,
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_4_garden",
+      "x": -224,
+      "z": 224,
       "kind": "garden",
       "size": [
         92,
@@ -207,43 +240,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/3_3_academy",
-      "x": 112,
-      "z": 112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_3_military",
-      "x": 224,
-      "z": 112,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/0_4_academy",
-      "x": -224,
-      "z": 224,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_4_military",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/1_4_academy",
       "x": -112,
       "z": 224,
-      "kind": "military",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -251,10 +251,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/2_4_artisan",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/2_4_military",
       "x": 0,
       "z": 224,
-      "kind": "artisan",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -273,10 +273,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_4_residences",
+      "template": "pipican:capital_districts/pinewall_taiga/volkhov/4_4_academy",
       "x": 224,
       "z": 224,
-      "kind": "residences",
+      "kind": "academy",
       "size": [
         92,
         34,

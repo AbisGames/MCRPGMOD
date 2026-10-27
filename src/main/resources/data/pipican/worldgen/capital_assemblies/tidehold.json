@@ -31,19 +31,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/2_0_harbor",
+      "template": "pipican:capital_districts/western_ocean/tidehold/2_0_garden",
       "x": 0,
-      "z": -224,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/3_0_garden",
-      "x": 112,
       "z": -224,
       "kind": "garden",
       "size": [
@@ -53,9 +42,31 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/4_0_academy",
+      "template": "pipican:capital_districts/western_ocean/tidehold/3_0_artisan",
+      "x": 112,
+      "z": -224,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/4_0_artisan",
       "x": 224,
       "z": -224,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/0_1_academy",
+      "x": -224,
+      "z": -112,
       "kind": "academy",
       "size": [
         92,
@@ -64,8 +75,41 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/0_1_garden",
-      "x": -224,
+      "template": "pipican:capital_districts/western_ocean/tidehold/1_1_temple",
+      "x": -112,
+      "z": -112,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/2_1_academy",
+      "x": 0,
+      "z": -112,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/3_1_temple",
+      "x": 112,
+      "z": -112,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/4_1_garden",
+      "x": 224,
       "z": -112,
       "kind": "garden",
       "size": [
@@ -75,54 +119,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/1_1_academy",
-      "x": -112,
-      "z": -112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/2_1_military",
-      "x": 0,
-      "z": -112,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/3_1_artisan",
-      "x": 112,
-      "z": -112,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/4_1_market",
-      "x": 224,
-      "z": -112,
-      "kind": "market",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/0_2_artisan",
+      "template": "pipican:capital_districts/western_ocean/tidehold/0_2_residences",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/1_2_market",
+      "template": "pipican:capital_districts/western_ocean/tidehold/1_2_academy",
       "x": -112,
       "z": 0,
-      "kind": "market",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/3_2_temple",
+      "template": "pipican:capital_districts/western_ocean/tidehold/3_2_garden",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -163,10 +163,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/4_2_harbor",
+      "template": "pipican:capital_districts/western_ocean/tidehold/4_2_artisan",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
+      "kind": "artisan",
       "size": [
         92,
         34,
@@ -185,8 +185,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/1_3_harbor",
+      "template": "pipican:capital_districts/western_ocean/tidehold/1_3_academy",
       "x": -112,
+      "z": 112,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/2_3_harbor",
+      "x": 0,
       "z": 112,
       "kind": "harbor",
       "size": [
@@ -196,21 +207,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/2_3_garden",
-      "x": 0,
-      "z": 112,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/3_3_academy",
+      "template": "pipican:capital_districts/western_ocean/tidehold/3_3_artisan",
       "x": 112,
       "z": 112,
-      "kind": "academy",
+      "kind": "artisan",
       "size": [
         92,
         34,
@@ -229,10 +229,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/0_4_academy",
+      "template": "pipican:capital_districts/western_ocean/tidehold/0_4_garden",
       "x": -224,
       "z": 224,
-      "kind": "academy",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -240,19 +240,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/1_4_military",
+      "template": "pipican:capital_districts/western_ocean/tidehold/1_4_artisan",
       "x": -112,
-      "z": 224,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/western_ocean/tidehold/2_4_artisan",
-      "x": 0,
       "z": 224,
       "kind": "artisan",
       "size": [
@@ -262,10 +251,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/3_4_market",
-      "x": 112,
+      "template": "pipican:capital_districts/western_ocean/tidehold/2_4_harbor",
+      "x": 0,
       "z": 224,
-      "kind": "market",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -273,10 +262,21 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/western_ocean/tidehold/4_4_residences",
+      "template": "pipican:capital_districts/western_ocean/tidehold/3_4_harbor",
+      "x": 112,
+      "z": 224,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/western_ocean/tidehold/4_4_harbor",
       "x": 224,
       "z": 224,
-      "kind": "residences",
+      "kind": "harbor",
       "size": [
         92,
         34,

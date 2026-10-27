@@ -20,10 +20,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_0_temple",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_0_market",
       "x": -112,
       "z": -224,
-      "kind": "temple",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -42,10 +42,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_0_garden",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_0_academy",
       "x": 112,
       "z": -224,
-      "kind": "garden",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -53,10 +53,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_0_academy",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_0_harbor",
       "x": 224,
       "z": -224,
-      "kind": "academy",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -64,10 +64,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_1_garden",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_1_residences",
       "x": -224,
       "z": -112,
-      "kind": "garden",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -75,10 +75,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_1_academy",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_1_residences",
       "x": -112,
       "z": -112,
-      "kind": "academy",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -86,10 +86,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/2_1_military",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/2_1_harbor",
       "x": 0,
       "z": -112,
-      "kind": "military",
+      "kind": "harbor",
       "size": [
         92,
         34,
@@ -97,10 +97,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_1_artisan",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_1_garden",
       "x": 112,
       "z": -112,
-      "kind": "artisan",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -108,20 +108,9 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_1_market",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_1_artisan",
       "x": 224,
       "z": -112,
-      "kind": "market",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_2_artisan",
-      "x": -224,
-      "z": 0,
       "kind": "artisan",
       "size": [
         92,
@@ -130,10 +119,21 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_2_market",
-      "x": -112,
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_2_market",
+      "x": -224,
       "z": 0,
       "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_2_military",
+      "x": -112,
+      "z": 0,
+      "kind": "military",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_2_temple",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_2_residences",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -163,42 +163,9 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_2_harbor",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_2_garden",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_3_temple",
-      "x": -224,
-      "z": 112,
-      "kind": "temple",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_3_harbor",
-      "x": -112,
-      "z": 112,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/2_3_garden",
-      "x": 0,
-      "z": 112,
       "kind": "garden",
       "size": [
         92,
@@ -207,10 +174,43 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_3_academy",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_3_military",
+      "x": -224,
+      "z": 112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_3_residences",
+      "x": -112,
+      "z": 112,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/2_3_harbor",
+      "x": 0,
+      "z": 112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/3_3_market",
       "x": 112,
       "z": 112,
-      "kind": "academy",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -218,10 +218,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_3_military",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_3_residences",
       "x": 224,
       "z": 112,
-      "kind": "military",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -229,8 +229,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_4_academy",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/0_4_residences",
       "x": -224,
+      "z": 224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_4_academy",
+      "x": -112,
       "z": 224,
       "kind": "academy",
       "size": [
@@ -240,21 +251,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/1_4_military",
-      "x": -112,
-      "z": 224,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/2_4_artisan",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/2_4_temple",
       "x": 0,
       "z": 224,
-      "kind": "artisan",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -273,10 +273,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_4_residences",
+      "template": "pipican:capital_districts/sunscorch_desert/qasr_zahir/4_4_garden",
       "x": 224,
       "z": 224,
-      "kind": "residences",
+      "kind": "garden",
       "size": [
         92,
         34,

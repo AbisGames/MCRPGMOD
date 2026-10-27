@@ -9,19 +9,8 @@
   "tile_pitch": 112,
   "relative_positions": [
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_0_residences",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_0_temple",
       "x": -224,
-      "z": -224,
-      "kind": "residences",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_0_temple",
-      "x": -112,
       "z": -224,
       "kind": "temple",
       "size": [
@@ -31,30 +20,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_0_harbor",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_0_market",
+      "x": -112,
+      "z": -224,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_0_academy",
       "x": 0,
-      "z": -224,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_0_garden",
-      "x": 112,
-      "z": -224,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_0_academy",
-      "x": 224,
       "z": -224,
       "kind": "academy",
       "size": [
@@ -64,8 +42,41 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_1_garden",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_0_artisan",
+      "x": 112,
+      "z": -224,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_0_temple",
+      "x": 224,
+      "z": -224,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_1_artisan",
       "x": -224,
+      "z": -112,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_1_garden",
+      "x": -112,
       "z": -112,
       "kind": "garden",
       "size": [
@@ -75,8 +86,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_1_academy",
-      "x": -112,
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_1_garden",
+      "x": 0,
+      "z": -112,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_1_academy",
+      "x": 112,
       "z": -112,
       "kind": "academy",
       "size": [
@@ -86,32 +108,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_1_military",
-      "x": 0,
-      "z": -112,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_1_artisan",
-      "x": 112,
-      "z": -112,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_1_market",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_1_academy",
       "x": 224,
       "z": -112,
-      "kind": "market",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -119,10 +119,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_2_artisan",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_2_temple",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "temple",
       "size": [
         92,
         34,
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_2_market",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_2_residences",
       "x": -112,
       "z": 0,
-      "kind": "market",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -152,10 +152,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_2_temple",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_2_market",
       "x": 112,
       "z": 0,
-      "kind": "temple",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -163,10 +163,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_2_harbor",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_2_academy",
       "x": 224,
       "z": 0,
-      "kind": "harbor",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -174,20 +174,9 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_3_temple",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_3_harbor",
       "x": -224,
       "z": 112,
-      "kind": "temple",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_3_harbor",
-      "x": -112,
-      "z": 112,
       "kind": "harbor",
       "size": [
         92,
@@ -196,10 +185,21 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_3_garden",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/1_3_market",
+      "x": -112,
+      "z": 112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_3_market",
       "x": 0,
       "z": 112,
-      "kind": "garden",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -218,10 +218,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_3_military",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_3_market",
       "x": 224,
       "z": 112,
-      "kind": "military",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -229,10 +229,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_4_academy",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/0_4_residences",
       "x": -224,
       "z": 224,
-      "kind": "academy",
+      "kind": "residences",
       "size": [
         92,
         34,
@@ -251,10 +251,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_4_artisan",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/2_4_garden",
       "x": 0,
       "z": 224,
-      "kind": "artisan",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -262,10 +262,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_4_market",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/3_4_garden",
       "x": 112,
       "z": 224,
-      "kind": "market",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -273,10 +273,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_4_residences",
+      "template": "pipican:capital_districts/emerald_jungle/yaxcala/4_4_harbor",
       "x": 224,
       "z": 224,
-      "kind": "residences",
+      "kind": "harbor",
       "size": [
         92,
         34,

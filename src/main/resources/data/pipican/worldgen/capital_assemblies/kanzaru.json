@@ -20,10 +20,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_0_temple",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_0_garden",
       "x": -112,
       "z": -224,
-      "kind": "temple",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -31,8 +31,30 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_0_harbor",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_0_military",
       "x": 0,
+      "z": -224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_0_residences",
+      "x": 112,
+      "z": -224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_0_harbor",
+      "x": 224,
       "z": -224,
       "kind": "harbor",
       "size": [
@@ -42,32 +64,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_0_garden",
-      "x": 112,
-      "z": -224,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_0_academy",
-      "x": 224,
-      "z": -224,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_1_garden",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_1_market",
       "x": -224,
       "z": -112,
-      "kind": "garden",
+      "kind": "market",
       "size": [
         92,
         34,
@@ -86,8 +86,19 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_1_military",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_1_harbor",
       "x": 0,
+      "z": -112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_1_military",
+      "x": 112,
       "z": -112,
       "kind": "military",
       "size": [
@@ -97,21 +108,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_1_artisan",
-      "x": 112,
-      "z": -112,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_1_market",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_1_garden",
       "x": 224,
       "z": -112,
-      "kind": "market",
+      "kind": "garden",
       "size": [
         92,
         34,
@@ -119,10 +119,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_2_artisan",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_2_military",
       "x": -224,
       "z": 0,
-      "kind": "artisan",
+      "kind": "military",
       "size": [
         92,
         34,
@@ -130,10 +130,10 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_2_market",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_2_academy",
       "x": -112,
       "z": 0,
-      "kind": "market",
+      "kind": "academy",
       "size": [
         92,
         34,
@@ -152,19 +152,8 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_2_temple",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_2_harbor",
       "x": 112,
-      "z": 0,
-      "kind": "temple",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_2_harbor",
-      "x": 224,
       "z": 0,
       "kind": "harbor",
       "size": [
@@ -174,8 +163,30 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_3_temple",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_2_academy",
+      "x": 224,
+      "z": 0,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_3_military",
       "x": -224,
+      "z": 112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_3_temple",
+      "x": -112,
       "z": 112,
       "kind": "temple",
       "size": [
@@ -185,86 +196,9 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_3_harbor",
-      "x": -112,
-      "z": 112,
-      "kind": "harbor",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_3_garden",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_3_market",
       "x": 0,
       "z": 112,
-      "kind": "garden",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_3_academy",
-      "x": 112,
-      "z": 112,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_3_military",
-      "x": 224,
-      "z": 112,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_4_academy",
-      "x": -224,
-      "z": 224,
-      "kind": "academy",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_4_military",
-      "x": -112,
-      "z": 224,
-      "kind": "military",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_4_artisan",
-      "x": 0,
-      "z": 224,
-      "kind": "artisan",
-      "size": [
-        92,
-        34,
-        92
-      ]
-    },
-    {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_4_market",
-      "x": 112,
-      "z": 224,
       "kind": "market",
       "size": [
         92,
@@ -273,10 +207,76 @@
       ]
     },
     {
-      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_4_residences",
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_3_market",
+      "x": 112,
+      "z": 112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_3_artisan",
       "x": 224,
+      "z": 112,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_4_residences",
+      "x": -224,
       "z": 224,
       "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_4_temple",
+      "x": -112,
+      "z": 224,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_4_military",
+      "x": 0,
+      "z": 224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_4_residences",
+      "x": 112,
+      "z": 224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_4_temple",
+      "x": 224,
+      "z": 224,
+      "kind": "temple",
       "size": [
         92,
         34,
