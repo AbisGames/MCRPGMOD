@@ -229,6 +229,23 @@ public final class WorldgenTests {
             }
         }
         helper.assertTrue(structures==54,"expected 54 regional structures");
+        // Sky, underground, and reef jigsaws must not inherit the
+        // surface heightmap; they have exact world-coordinate elevations.
+        for(var spec:List.of(
+                Map.entry("aetheris_expanse",319),
+                Map.entry("umbral_chasm",-20),
+                Map.entry("verdant_depths",-12),
+                Map.entry("shimmering_reefs",43))){
+            for(String kind:List.of("castle","dungeon","mine","village")){
+                var def=WorldgenJson.read("structure/regional/"+spec.getKey()+"/"+kind+".json");
+                helper.assertTrue(!def.has("project_start_to_heightmap"),
+                    "exotic structure incorrectly projects to surface");
+                helper.assertTrue(def.getAsJsonObject("start_height")
+                    .get("absolute").getAsInt()==spec.getValue(),
+                    "incorrect fixed-Y exotic structure "+spec.getKey()+"/"+kind);
+            }
+        }
+
         for(var ore:RegionalOreCatalog.ORES){
             var key=ResourceKey.create(Registries.STRUCTURE_SET,
                 Pipican.id("regional/"+ore.region()+"/expeditions"));
