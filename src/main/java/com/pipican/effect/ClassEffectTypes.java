@@ -84,6 +84,7 @@ public final class ClassEffectTypes {
     public static final Type EFFECT_DURATION = register("effect_duration", com.pipican.effect.type.EffectDurationEffect.CODEC);
     public static final Type IGNORED_BY = register("ignored_by", com.pipican.effect.type.IgnoredByEffect.CODEC);
     public static final Type ABILITY_MOD = register("ability_mod", com.pipican.effect.type.AbilityModEffect.CODEC);
+    public static final Type REACTION_MOD = register("reaction_mod", com.pipican.effect.type.ReactionModEffect.CODEC);
     public static final Type CLEAVE = register("cleave", CleaveEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 

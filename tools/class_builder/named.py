@@ -13,6 +13,8 @@ TRIGGERED = {'zeal': 'zeal', 'decoy': 'decoy'}
 LABELS = {}
 # class id -> aura names
 AURAS = {}
+# class id -> {label: the pipican:on reaction its line defines} ("Guarded Casting: whenever you spend Ward, ...")
+REACTIONS = {}
 LABEL = re.compile(r"^([A-Z][A-Za-z' ]{2,30}?):\s*(.+)$")
 
 
@@ -32,6 +34,8 @@ def learn(cid, lines, ctx):
         # Only auras that really work can be upgraded ("Song range +1").
         if any(e.get('type') == 'pipican:aura' for e in eff) and not uns:
             AURAS.setdefault(cid, set()).add(m.group(1).strip().lower())
+        if len(eff) == 1 and eff[0].get('type') == 'pipican:on' and not uns:
+            REACTIONS.setdefault(cid, {}).setdefault(m.group(1).strip().lower(), eff[0])
         whens = [e.get('when') for e in eff if e.get('type') == 'pipican:conditional']
         if eff and not uns and len(whens) == len(eff) and all(w == whens[0] for w in whens):
             inner = [x for e in eff for x in e['effects']]
@@ -70,6 +74,84 @@ def _scaled_copy(effects, per, source, only=None):
 def _stat_source(word, ctx):
     sp = (ctx.get('special_name') or '').lower()
     return 'special_stat' if word.lower() in (sp, 'point', 'points') else None
+
+
+def _first_targets(reaction):
+    """Target fields of a reaction's first area action, for an added action that should hit the same mobs."""
+    actions = reaction.get('actions', [])
+    selfish = any(a.get('target') == 'self' for a in actions)
+    for a in actions:
+        if a.get('target') in ('hostiles', 'mobs', 'allies', 'players'):
+            out = {k: a[k] for k in ('target', 'radius', 'entities') if k in a}
+            if out['target'] == 'players' and selfish:
+                out['target'] = 'allies'  # "heals you and players within 16 blocks"
+            return out
+    return None
+
+
+def reaction_mods(t, ctx):
+    """Upgrades to a named reaction -> pipican:reaction_mod ("Guarded Casting lasts 5s longer")."""
+    import combat
+    reactions = REACTIONS.get(ctx.get('class_id'), {})
+    if not reactions:
+        return None
+    names = '|'.join(sorted((re.escape(n) for n in reactions), key=len, reverse=True))
+    per = rf'(?: per (?:{N} )?([a-z]+)(?: points?)?)?'
+
+    def mod(name, **kw):
+        e = {'type': 'pipican:reaction_mod', 'name': name}
+        e.update(kw)
+        return [e]
+
+    def scaled(name, field, value, n, stat):
+        if not stat:
+            return mod(name, **{field: value})
+        src = _stat_source(stat, ctx)
+        if not src:
+            return None
+        return mod(name, **{field: 0.0, 'scaling': [{'source': src, 'per': round(value / float(n or 1), 6)}]})
+
+    m = re.fullmatch(rf'({names})(?: [a-z]+)? lasts \+?{N}s longer', t) or re.fullmatch(rf'({names}) lasts \+{N}s()', t)
+    if m:
+        return mod(m.group(1), seconds=float(m.group(2)))
+    m = re.fullmatch(rf'({names}) (?:radius|range) ([+-]{N})(?: blocks?)?' + per, t)
+    if m:
+        return scaled(m.group(1), 'radius', float(m.group(2)), m.group(4), m.group(5))
+    m = re.fullmatch(rf'doubles ({names}) radius', t)
+    if m:
+        tg = _first_targets(reactions[m.group(1)])
+        if tg and 'radius' in tg:
+            return mod(m.group(1), radius=float(tg['radius']))
+    m = re.fullmatch(rf'({names}) (?:heals? )?\+{N}(?: hp)?' + per, t)
+    if m and m.group(4):
+        return scaled(m.group(1), 'heal', float(m.group(2)), m.group(3), m.group(4))
+    # "Pious Restoration: heal 3 HP" (label stripped: "heal 3 hp" arrives with the name in front), "Resolve trigger heals 10 HP instead"
+    m = re.fullmatch(rf'({names})(?: trigger)?:? heals? {N} hp(?: instead)?', t)
+    if m:
+        base = [a.get('amount', 0) for a in reactions[m.group(1)].get('actions', []) if a.get('type') == 'pipican:heal']
+        if len(base) == 1 and float(m.group(2)) > base[0]:
+            return mod(m.group(1), heal=round(float(m.group(2)) - base[0], 6))
+    # "Fearsome Casting adds Slowness I", "Vanish also clears Slowness and Weakness", "also heals players within 6 blocks by 4"
+    m = re.fullmatch(rf'({names}) (?:also )?(?:adds|also gives) (.+)', t)
+    if m:
+        tg = _first_targets(reactions[m.group(1)])
+        out = combat.outcome('give ' + m.group(2), 'victim')
+        if tg and out and out[0].get('type') == 'pipican:effect':
+            out[0].update(tg)
+            return mod(m.group(1), actions=out)
+    m = re.fullmatch(rf'({names}) also heals players within {N} blocks by {N}', t)
+    if m:
+        return mod(m.group(1), actions=[{'type': 'pipican:heal', 'target': 'allies', 'radius': float(m.group(2)), 'amount': float(m.group(3))}])
+    m = re.fullmatch(rf'({names}) also heals (?:you )?{N} hp', t)
+    if m:
+        return mod(m.group(1), actions=[{'type': 'pipican:heal', 'target': 'self', 'amount': float(m.group(2))}])
+    m = re.fullmatch(rf'({names}) also (?:clears|removes|cures) (.+)', t)
+    if m:
+        import bonus
+        ids = bonus._effect_ids(m.group(2))
+        if ids:
+            return mod(m.group(1), actions=[{'type': 'pipican:cleanse', 'target': 'self', 'effects': ids if len(ids) > 1 else ids[0]}])
+    return None
 
 
 def ability_mods(t, ctx):
@@ -126,7 +208,7 @@ def segment(t, ctx):
     import bonus
     import combat
     import effects as fx
-    am = ability_mods(t, ctx)
+    am = ability_mods(t, ctx) or reaction_mods(t, ctx)
     if am:
         return am
     named = NAMED.get(ctx.get('class_id'), {})
@@ -545,7 +627,7 @@ def whole_line(text, ctx):
     import combat
     t = text.strip().rstrip('.')
     # "Divine Ecstasy lasts longer: drain -1% per 2 Communion" reads like a label but names the ability.
-    am = ability_mods(t.lower(), ctx)
+    am = ability_mods(t.lower(), ctx) or reaction_mods(re.sub(r'^([a-z\' -]+): ', r'\1 ', t.lower()), ctx)
     if am:
         return am
     t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)

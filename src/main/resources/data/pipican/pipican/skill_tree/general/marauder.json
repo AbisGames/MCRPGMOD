@@ -20,21 +20,19 @@
     {
       "id": "marauder_bloodthirst",
       "name": "Bloodthirst",
-      "description": {
-        "text": "Bloodthirst lasts 2s longer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Bloodthirst lasts 2s longer",
       "type": "small",
       "x": -1532,
       "y": 664,
       "links": [
         "marauder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "bloodthirst",
+          "seconds": 2.0
+        }
       ]
     },
     {

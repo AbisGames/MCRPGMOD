@@ -29,23 +29,21 @@
     {
       "id": "quick_ward",
       "name": "Quick Ward",
-      "description": {
-        "text": "Guarded Casting lasts 5s longer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Guarded Casting lasts 5s longer",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "guarded casting",
+          "seconds": 5.0
+        }
+      ]
     },
     {
       "id": "warded",

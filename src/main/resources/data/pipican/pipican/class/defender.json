@@ -86,7 +86,8 @@
             }
           ]
         }
-      ]
+      ],
+      "name": "containing strike"
     }
   ],
   "special_passives": [

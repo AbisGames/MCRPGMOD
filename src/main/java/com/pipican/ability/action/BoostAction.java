@@ -32,6 +32,6 @@ public record BoostAction(double seconds, List<ClassEffect> effects) implements 
 
     @Override
     public void run(AbilityContext ctx) {
-        Boosts.add(ctx.player(), this, effects, (int) Math.round(seconds * 20));
+        Boosts.add(ctx.player(), this, effects, (int) Math.round(Math.max(0.05, seconds + ctx.mod().seconds()) * 20));
     }
 }

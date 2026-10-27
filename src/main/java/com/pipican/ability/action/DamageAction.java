@@ -71,7 +71,7 @@ public record DamageAction(Targets targets, double amount, Kind kind, double exe
                 target.igniteForSeconds((float) fireSeconds);
             }
             if (amount > 0) {
-                target.hurtServer(ctx.level(), source, (float) amount);
+                target.hurtServer(ctx.level(), source, (float) (amount + ctx.mod().damage()));
             }
         }
     }

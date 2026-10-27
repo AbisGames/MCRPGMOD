@@ -89,7 +89,8 @@
             }
           ]
         }
-      ]
+      ],
+      "name": "bloodthirst"
     },
     {
       "type": "pipican:conditional",

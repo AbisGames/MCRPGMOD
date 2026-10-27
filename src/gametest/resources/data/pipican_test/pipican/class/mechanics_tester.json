@@ -4,6 +4,18 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
+    {
+      "type": "pipican:on",
+      "event": "instrument",
+      "name": "test horn",
+      "actions": [ { "type": "pipican:effect", "target": "self", "effects": [ { "effect": "minecraft:night_vision", "seconds": 2 } ] } ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "Test Horn",
+      "seconds": 3,
+      "actions": [ { "type": "pipican:effect", "target": "self", "effects": [ { "effect": "minecraft:water_breathing", "seconds": 2 } ] } ]
+    },
     { "type": "pipican:ability_mod", "ability": "pipican_test:mend", "cooldown_seconds": -1, "cost": -0.5 },
     { "type": "pipican:bonus", "kind": "min_melee_damage", "amount": 4 },
     {

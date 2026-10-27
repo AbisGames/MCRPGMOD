@@ -62,6 +62,36 @@
       "type": "pipican:bonus",
       "kind": "offhand_swing",
       "amount": 0.5
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "main"
+          },
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:dodge",
+          "chance": 0.1,
+          "melee_only": true
+        }
+      ]
     }
   ],
   "special_passives": [

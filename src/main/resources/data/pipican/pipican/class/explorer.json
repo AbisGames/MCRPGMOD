@@ -117,7 +117,8 @@
           "radius": 16.0,
           "percent": 1.0
         }
-      ]
+      ],
+      "name": "respite"
     }
   ],
   "special_passives": [

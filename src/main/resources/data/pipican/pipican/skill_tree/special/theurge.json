@@ -50,16 +50,7 @@
     {
       "id": "invocation",
       "name": "Invocation",
-      "description": {
-        "text": "Invocation radius +2",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Invocation radius +2",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,14 @@
         "devotions"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "radius": 2.0
+        }
+      ]
     },
     {
       "id": "holy_word",

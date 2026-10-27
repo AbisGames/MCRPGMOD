@@ -71,7 +71,8 @@
           "seconds": 15.0,
           "ally": true
         }
-      ]
+      ],
+      "name": "conjure tiny monster"
     },
     {
       "type": "pipican:on",

@@ -33,7 +33,7 @@ public record HealAction(Targets targets, double amount, double percent) impleme
     public void run(AbilityContext ctx) {
         for (LivingEntity target : targets.select(ctx)) {
             double given = ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.HEALING_GIVEN);
-            target.heal((float) ((amount + percent * target.getMaxHealth()) * given));
+            target.heal((float) ((amount + ctx.mod().heal() + percent * target.getMaxHealth()) * given));
         }
     }
 }

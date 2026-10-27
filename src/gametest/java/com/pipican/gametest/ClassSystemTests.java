@@ -520,6 +520,12 @@ public final class ClassSystemTests {
         Reactions.fire(player, null, new ItemStack(Items.COOKED_BEEF), ReactionEffect.Event.EAT);
         helper.assertTrue(player.hasEffect(MobEffects.DOLPHINS_GRACE), "cooked beef does");
 
+        // Reaction upgrades: the named reaction lasts 3s longer and also gives Water Breathing.
+        Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.INSTRUMENT);
+        helper.assertTrue(player.getEffect(MobEffects.NIGHT_VISION) != null && player.getEffect(MobEffects.NIGHT_VISION).getDuration() == 100,
+                "upgraded duration 5s: " + player.getEffect(MobEffects.NIGHT_VISION));
+        helper.assertTrue(player.hasEffect(MobEffects.WATER_BREATHING), "upgrade's extra action ran");
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

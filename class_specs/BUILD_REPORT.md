@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1674**, partly working: **24**, not yet: **552**
+- Bonus phrases: **2250**. Fully working: **1690**, partly working: **24**, not yet: **536**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 188 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 131 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 87 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 72 |
+| [Other mechanics](#other-mechanics) | 177 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 129 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 85 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 71 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 52 |
-| [Skill trigger approximated](#skill-trigger-approximated) | 51 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 43 |
+| [Skill trigger approximated](#skill-trigger-approximated) | 50 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 41 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
 | [Immunities](#immunities) | 14 |
 | [Critical hits](#critical-hits) | 5 |
@@ -29,7 +29,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **abjurer**
   - special passive: Guarded Casting armor +1 per 20 Warding
-  - special tree: Quick Ward: Guarded Casting lasts 5s longer
   - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
 - **acrobat**
   - special passive: Jump height +0.05 blocks per 10 Poise
@@ -39,10 +38,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Updraft: +1 jump height
   - special tree: Gust: wind charges you throw deal +2 damage
 - **apocalyptist**
-  - special passive: Fearsome Casting radius +1 block per 10 Corruption
   - general tree: Plague Bearer: your Wither is Wither II
-  - special tree: Terror: Fearsome Casting adds Slowness I
-  - special tree: Avatar of Ruin: doubles Fearsome Casting radius; you can't sleep in beds
 - **arcanist**
   - special tree: Reclaim Arcana: Reclaim refunds go to 150%
 - **assassin**
@@ -59,7 +55,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
   - special tree: Reckless Strike: fatigue lasts twice as long
 - **champion**
-  - special tree: Rally: Champion's Resolve also heals players within 6 blocks by 4
   - special tree: Champion's Resolve: Resolve trigger heals 10 HP instead
 - **chronomancer**
   - special passive: Per 10 Tempo, harmful effects on you last 3% shorter
@@ -178,7 +173,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **magician**
   - skill Enchanting: +1 bookshelf counted around your table
 - **marauder**
-  - general tree: Bloodthirst: Bloodthirst lasts 2s longer
   - general tree: Rampage: consecutive kills within 5s add +5% damage (stacks 5)
   - special tree: Glorious Death: once per day
 - **miracle_worker**
@@ -225,10 +219,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **sentinel**
   - special stat per point: +0.5 blocks hostile-mob detection range
   - special passive: Glow range +0.5 per Vigilance
-  - special passive: Per 10 Vigilance, Stand Guard +5% damage
   - general tree: Sentinel: +4 blocks detection range
   - general tree: Eagle Eyes: +8 blocks glow range
-  - general tree: Watchtower: Stand Guard +10% damage
   - special tree: Stand Guard: Stand Guard triggers after 1s
   - special tree: Sentry: players within 8 blocks also see what glows for you
 - **sharpshooter**
@@ -257,7 +249,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Probability Bend: bad outcomes 20% rarer
   - special tree: Pandemonium: chaos outcomes can hit 2 mobs
 - **theurge**
-  - special passive: Per 10 Piety, Pious Restoration +1 HP
   - special tree: Pious Restoration: heal 3 HP
 - **thief**
   - special tree: Escape Artist: cobwebs don't slow you
@@ -267,8 +258,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Steady Arrival: no Nausea after teleporting
 - **warlock**
   - passive: you gain 10 Stolen Power instead
-  - general tree: Slip Away: Vanish lasts +1s
-  - general tree: Shroud: Vanish also clears Slowness and Weakness
   - general tree: Oathbreaker: you can no longer benefit from beacons
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
   - special tree: Vanishing Escape: Vanish also teleports you up to 6 blocks away from the attacker
@@ -441,9 +430,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **tenebrist**
   - passive: Shadow Form: in light level 7 or lower, you're invisible while sneaking and +15% damage
 - **theurge**
-  - special passive: Invocation radius +0.1 per Piety
   - general tree: Pulse: Invocation every 20s
-  - special tree: Invocation: Invocation radius +2
 - **transmuter**
   - special passive: Optimization amount +1 per 20 Flux
   - general tree: Malleable: +2 Optimization amount
@@ -502,7 +489,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **defender**
   - passive: Retributive Strike: when a mob within 3 blocks hits another player, your next hit on it deals +30%
 - **dervish**
-  - passive: while holding a weapon in both hands
   - general tree: Blade Dance: each hit gives +1% speed for 3s (stacks 10)
 - **diplomat**
   - general tree: Unexpected Alliances: hostile mobs you cancel with Stay the Hand fight other mobs for 5s
@@ -568,7 +554,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Lookout: can't be hit by sneak-attack bonuses (you are never 'unaware')
   - general tree: Pathfinder: +15% movement speed and no hunger from sprinting, but -15% melee damage
 - **sentinel**
-  - passive: after standing still for 3s
   - general tree: Post Holder: Stand Guard bonuses doubled, but -15% damage while moving
 - **shapeshifter**
   - weakness: while transformed you can't use weapons, bows, shields or items (only bare-handed attacks)
@@ -649,7 +634,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Inevitable: executed mobs drop +1 Looting; -10% max health
 - **explorer**
   - weakness: -25% Endurance regen within 64 blocks of your bed/spawn point
-  - special tree: Respite: Respite also gives Regeneration I for 30s
 - **fighter**
   - special tree: Weapon Mastery: Weapon Mastery chance +15%; -10% max health
 - **gladiator**
@@ -885,8 +869,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Broad Study: "using magic of both focus schools in one fight" -> pipican:kill
 - **scout**
   - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **sentinel**
-  - Watchkeeping: "killing mobs while Stand Guard is active" -> pipican:kill
 - **shapeshifter**
   - Shifting: "time spent in animal forms" -> pipican:kill
 - **sharpshooter**
@@ -925,7 +907,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **bard**
   - special passive: Disarming Charm: per 10 Resonance, +3% chance a hostile mob you hit forgets you
 - **dervish**
-  - passive: +2 armor and 10% chance to parry melee hits
   - special passive: Parry chance +0.3% per Rhythm
 - **destroyer**
   - special tree: Shockwave: shockwave knocks mobs back
@@ -958,8 +939,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +1% poison damage and duration you apply
   - passive: brewing poison potions is 50% faster
   - special tree: Toxic Blood: mobs that hit you are poisoned; healing on you is 15% weaker
-- **sentinel**
-  - passive: +20% damage and knockback immunity
 - **technomancer**
   - special stat per point: +0.5% chance a crafted redstone item is doubled
 - **thaumaturge**

@@ -79,7 +79,8 @@
           "seconds": 5.0,
           "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms"
         }
-      ]
+      ],
+      "name": "divine smite"
     },
     {
       "type": "pipican:damage_taken",

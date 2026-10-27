@@ -68,7 +68,8 @@
           "target": "victim",
           "strength": 1.0
         }
-      ]
+      ],
+      "name": "forceful shield"
     },
     {
       "type": "pipican:conditional",

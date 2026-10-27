@@ -87,7 +87,8 @@
           ]
         }
       ],
-      "cooldown_ticks": 1200
+      "cooldown_ticks": 1200,
+      "name": "vanish"
     },
     {
       "type": "pipican:immune",

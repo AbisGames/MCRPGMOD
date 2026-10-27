@@ -69,7 +69,8 @@
           "target": "self",
           "amount": 2.0
         }
-      ]
+      ],
+      "name": "pious restoration"
     },
     {
       "type": "pipican:on",
@@ -87,7 +88,8 @@
             }
           ]
         }
-      ]
+      ],
+      "name": "invocation"
     },
     {
       "type": "pipican:damage_taken",
@@ -115,6 +117,28 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "invocation",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "pious restoration",
+      "heal": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
         }
       ]
     }

@@ -84,7 +84,8 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
     private List<LivingEntity> selectAll(AbilityContext ctx) {
         ServerPlayer player = ctx.player();
         // pipican:ability_mod radius upgrades for the ability running this action.
-        double radius = this.radius + ctx.ability().map(key -> com.pipican.player.ClassEffectApplier.state(player).abilityMod(key).radius()).orElse(0.0);
+        double radius = this.radius + ctx.ability().map(key -> com.pipican.player.ClassEffectApplier.state(player).abilityMod(key).radius()).orElse(0.0)
+                + ctx.mod().radius();
         Vec3 origin = ctx.origin();
         List<LivingEntity> out = new ArrayList<>();
         switch (target) {

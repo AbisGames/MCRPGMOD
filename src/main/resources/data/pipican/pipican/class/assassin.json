@@ -95,7 +95,8 @@
             }
           ]
         }
-      ]
+      ],
+      "name": "quick reflexes"
     },
     {
       "type": "pipican:on",

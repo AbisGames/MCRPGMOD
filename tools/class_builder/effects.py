@@ -232,6 +232,14 @@ def _one(clause, ctx):
         b = _one_inner(f'{m.group(1)} {m.group(3)}{tail}', ctx)
         if a and b:
             return a + b
+    # "+20% damage and knockback immunity": two whole bonuses (no shared "per" tail to share out).
+    low = _clean(clause).lower()
+    if ' and ' in low and not re.search(r'\bper\b|for every', low):
+        for mm in re.finditer(r' and ', low):
+            a = _one_inner(low[:mm.start()], ctx)
+            b = _one_inner(low[mm.end():], ctx) if a else None
+            if a and b:
+                return a + b
     return None
 
 
@@ -514,6 +522,16 @@ def _bulk(text):
 
 
 def translate(text, ctx):
+    effects, unsupported = _translate_line(text, ctx)
+    # A reaction defined on a labelled line is named after the label, so upgrades can find it
+    # ("Guarded Casting: whenever you spend Ward, gain +3 armor" <- "Guarded Casting lasts 5s longer").
+    m = named.LABEL.match((text or '').strip())
+    if m and len(effects) == 1 and effects[0].get('type') == 'pipican:on' and 'name' not in effects[0] and not unsupported:
+        effects[0]['name'] = m.group(1).strip().lower()
+    return effects, unsupported
+
+
+def _translate_line(text, ctx):
     if not text or text.strip() in ('-', 'none', 'nothing'):
         return [], []
     original = text
@@ -602,6 +620,8 @@ def translate(text, ctx):
     # "after standing still for 3s, +20% damage until you move": the still condition already ends when you move.
     if re.search(r'standing still|not moving', text, re.I):
         text = re.sub(r'\s+until you move\b', '', text, flags=re.I)
+    # "Stand Guard: after standing still for 3s, +20% damage": the label only names the leading condition's bonus.
+    text = re.sub(r"^[A-Z][\w' -]{1,30}:\s+(?=(?:after|while|whenever|when|during|if)\b[^,:]*,)", '', text.strip())
     # "Per 10 Brawn, +1 max health" -> "+1 max health per 10 Brawn"
     m = re.match(r"^\s*((?:[A-Z][\w' -]{1,30}:\s+)?)per (\d+ )?([A-Za-z][\w \'-]*?)(?: points?)?,\s*(.+)$", text.strip(), re.I)
     # (Chance lines keep their leading "per": the scaled-reaction rule reads them that way.)

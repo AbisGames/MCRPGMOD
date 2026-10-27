@@ -81,7 +81,8 @@
             }
           ]
         }
-      ]
+      ],
+      "name": "guarded casting"
     },
     {
       "type": "pipican:damage_taken",

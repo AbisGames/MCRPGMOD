@@ -55,7 +55,7 @@ public record ControlAction(Targets targets, Mode mode, double seconds) implemen
     public void run(AbilityContext ctx) {
         for (LivingEntity target : targets.select(ctx)) {
             if (target instanceof Mob mob) {
-                MobControl.control(mob, ctx.player(), mode.mode, (long) (seconds * 20));
+                MobControl.control(mob, ctx.player(), mode.mode, (long) (Math.max(0.5, seconds + ctx.mod().seconds()) * 20));
             }
         }
     }

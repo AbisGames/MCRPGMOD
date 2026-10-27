@@ -70,7 +70,8 @@
           "hits": 3,
           "seconds": 15.0
         }
-      ]
+      ],
+      "name": "escalating violence"
     },
     {
       "type": "pipican:on",
@@ -80,7 +81,8 @@
           "type": "pipican:resource",
           "amount": 2.0
         }
-      ]
+      ],
+      "name": "mage knight tactics"
     }
   ],
   "special_passives": [

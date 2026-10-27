@@ -29,23 +29,33 @@
     {
       "id": "terror",
       "name": "Terror",
-      "description": {
-        "text": "Fearsome Casting adds Slowness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Fearsome Casting adds Slowness I",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "fearsome casting",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 3.0
+                }
+              ],
+              "radius": 8.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "hasten_the_apocalypse",
@@ -92,16 +102,7 @@
     {
       "id": "avatar_of_ruin",
       "name": "Avatar of Ruin",
-      "description": {
-        "text": "doubles Fearsome Casting radius; you can't sleep in beds",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "doubles Fearsome Casting radius; you can't sleep in beds",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -110,7 +111,19 @@
         "unholy_vigor"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "fearsome casting",
+          "radius": 8.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_sleep",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

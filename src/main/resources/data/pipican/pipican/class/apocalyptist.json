@@ -79,7 +79,8 @@
           ],
           "radius": 8.0
         }
-      ]
+      ],
+      "name": "fearsome casting"
     },
     {
       "type": "pipican:on",
@@ -112,7 +113,8 @@
           "type": "pipican:cloud",
           "effect": "minecraft:instant_damage"
         }
-      ]
+      ],
+      "name": "hasten the apocalypse"
     }
   ],
   "special_passives": [
@@ -146,6 +148,17 @@
         {
           "source": "special_stat",
           "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "fearsome casting",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
         }
       ]
     }

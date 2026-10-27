@@ -111,7 +111,8 @@
           ]
         }
       ],
-      "cooldown_ticks": 1200
+      "cooldown_ticks": 1200,
+      "name": "attack command"
     }
   ],
   "special_passives": [

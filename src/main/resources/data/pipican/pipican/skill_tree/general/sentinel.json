@@ -59,16 +59,7 @@
     {
       "id": "sentinel_watchtower",
       "name": "Watchtower",
-      "description": {
-        "text": "Stand Guard +10% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Stand Guard +10% damage",
       "type": "notable",
       "x": 209,
       "y": 1375,
@@ -76,7 +67,22 @@
         "sentinel_eagle_eyes"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:still",
+            "seconds": 3.0
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "sentinel_night_watch",

@@ -324,7 +324,7 @@ public final class ClassEffectApplier {
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
                 new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount, c.summonHearts),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
-                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods));
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods));
     }
 
     /**
@@ -446,6 +446,7 @@ public final class ClassEffectApplier {
         final Map<Holder<MobEffect>, Double> effectDurations = new java.util.HashMap<>();
         final List<com.pipican.effect.type.IgnoredByEffect> ignoredBy = new ArrayList<>();
         final Map<ResourceKey<Ability>, ClassState.AbilityMod> abilityMods = new java.util.HashMap<>();
+        final Map<String, ClassState.ReactionMod> reactionMods = new java.util.HashMap<>();
 
         /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
         List<ClassState.Aura> finishAuras() {
@@ -532,6 +533,11 @@ public final class ClassEffectApplier {
         @Override
         public void addEffectDuration(Holder<MobEffect> effect, double multiplier) {
             effectDurations.merge(effect, multiplier, (a, b) -> a * b);
+        }
+
+        @Override
+        public void addReactionMod(String name, ClassState.ReactionMod mod) {
+            reactionMods.merge(name, mod, ClassState.ReactionMod::plus);
         }
 
         @Override

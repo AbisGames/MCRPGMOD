@@ -1,5 +1,7 @@
 package com.pipican.ability;
 
+import com.pipican.player.ClassState;
+
 import com.pipican.effect.type.ReactionEffect;
 import com.pipican.player.ClassEffectApplier;
 import java.util.Map;
@@ -83,9 +85,11 @@ public final class Reactions {
                 if (uses > 0) {
                     USED.get(player.getUUID()).merge(r, 1, Integer::sum);
                 }
+                var mod = r.name().map(n -> state.reactionMods().getOrDefault(n.toLowerCase(java.util.Locale.ROOT), ClassState.ReactionMod.NONE))
+                        .orElse(ClassState.ReactionMod.NONE);
                 AbilityContext ctx = new AbilityContext(player, Optional.empty(), subject != null ? subject.position() : player.position(),
-                        Optional.ofNullable(subject), 0);
-                for (var action : r.actions()) {
+                        Optional.ofNullable(subject), 0).withMod(mod);
+                for (var action : java.util.stream.Stream.concat(r.actions().stream(), mod.actions().stream()).toList()) {
                     action.run(ctx);
                     if (ctx.isCancelled()) {
                         cancelled = true;

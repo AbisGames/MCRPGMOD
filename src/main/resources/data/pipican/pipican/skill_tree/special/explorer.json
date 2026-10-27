@@ -29,23 +29,33 @@
     {
       "id": "respite",
       "name": "Respite",
-      "description": {
-        "text": "Respite also gives Regeneration I for 30s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Respite also gives Regeneration I for 30s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "respite",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "allies",
+              "effects": [
+                {
+                  "effect": "minecraft:regeneration",
+                  "seconds": 30.0
+                }
+              ],
+              "radius": 16.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "driven",

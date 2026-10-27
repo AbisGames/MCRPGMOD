@@ -85,7 +85,8 @@
           "hits": 1,
           "seconds": 4.0
         }
-      ]
+      ],
+      "name": "trickery"
     }
   ],
   "special_passives": [

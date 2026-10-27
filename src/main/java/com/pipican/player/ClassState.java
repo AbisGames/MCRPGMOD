@@ -65,10 +65,11 @@ public record ClassState(
         Map<Holder<MobEffect>, AppliedRule> appliedRules,
         Map<Holder<MobEffect>, Double> effectDurations,
         List<com.pipican.effect.type.IgnoredByEffect> ignoredBy,
-        Map<ResourceKey<com.pipican.ability.Ability>, AbilityMod> abilityMods) {
+        Map<ResourceKey<com.pipican.ability.Ability>, AbilityMod> abilityMods,
+        Map<String, ReactionMod> reactionMods) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -124,6 +125,17 @@ public record ClassState(
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count, double hearts) {
         public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0);
+    }
+
+    /** {@code pipican:reaction_mod} totals for one reaction name. */
+    public record ReactionMod(double seconds, double radius, double heal, double damage, List<com.pipican.ability.AbilityAction> actions) {
+        public static final ReactionMod NONE = new ReactionMod(0, 0, 0, 0, List.of());
+
+        public ReactionMod plus(ReactionMod o) {
+            List<com.pipican.ability.AbilityAction> all = new java.util.ArrayList<>(actions);
+            all.addAll(o.actions);
+            return new ReactionMod(seconds + o.seconds, radius + o.radius, heal + o.heal, damage + o.damage, List.copyOf(all));
+        }
     }
 
     /** {@code pipican:ability_mod} totals for one ability. */

@@ -25,6 +25,8 @@ public final class AbilityContext {
     private final Optional<LivingEntity> subject;
     private final double spent;
     private Component cancelled;
+    /** Upgrades of the reaction running these actions ({@code pipican:reaction_mod}); NONE otherwise. */
+    private com.pipican.player.ClassState.ReactionMod mod = com.pipican.player.ClassState.ReactionMod.NONE;
 
     public AbilityContext(ServerPlayer player, Optional<ResourceKey<Ability>> ability, Vec3 origin, Optional<LivingEntity> subject, double spent) {
         this.player = player;
@@ -56,6 +58,15 @@ public final class AbilityContext {
 
     public Optional<LivingEntity> subject() {
         return subject;
+    }
+
+    public com.pipican.player.ClassState.ReactionMod mod() {
+        return mod;
+    }
+
+    public AbilityContext withMod(com.pipican.player.ClassState.ReactionMod mod) {
+        this.mod = mod;
+        return this;
     }
 
     public double spent() {
