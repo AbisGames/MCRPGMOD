@@ -20,6 +20,11 @@ jobs:
           java-version: '25'
       - name: Validate source catalogs
         run: python3 tools/validate_worldgen.py && python3 tools/validate_biome_assets.py
+      - name: Generate special landmark NBT models
+        run: |
+          python3 tools/worldgen/build_special_landmarks.py
+          mkdir -p src/main/resources/data/pipican/structure/special
+          cp tools/worldgen/output/data/pipican/structure/special/*.nbt src/main/resources/data/pipican/structure/special/
       - name: Compile and package NeoForge mod
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: NeoForge GameTest server smoke test
