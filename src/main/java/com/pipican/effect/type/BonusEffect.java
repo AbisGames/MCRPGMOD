@@ -28,12 +28,14 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code resource_gain}: how much the resource bar fills from {@code pipican:resource} actions (hits, kills...)</li>
  *   <li>{@code ability_cost}: the resource cost of abilities (-0.1 = 10% cheaper)</li>
  *   <li>{@code natural_regen}: how fast health comes back from a full food bar</li>
+ *   <li>{@code detection_range}: how far away mobs notice you (-0.1 = 10% closer, like sneaking)</li>
+ *   <li>{@code skill_training}: how fast skills gain mastery</li>
  * </ul>
  */
 public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) implements ClassEffect {
 
     public enum Kind implements StringRepresentable {
-        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN;
+        EXPERIENCE, POTION_DURATION, HARMFUL_DURATION, BENEFICIAL_DURATION, APPLIED_DURATION, APPLIED_HARMFUL_DURATION, HUNGER, TRADE_PRICE, DRAW_SPEED, RELOAD_SPEED, RESOURCE_GAIN, ABILITY_COST, NATURAL_REGEN, DETECTION_RANGE, SKILL_TRAINING;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

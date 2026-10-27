@@ -38,23 +38,30 @@
     {
       "id": "hide_in_shadows",
       "name": "Hide in Shadows",
-      "description": {
-        "text": "-30% mob detection range in light level 7 or lower",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-30% mob detection range in light level 7 or lower",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:light",
+            "max": 8
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.3
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "keen_senses",

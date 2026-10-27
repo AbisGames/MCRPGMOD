@@ -99,6 +99,11 @@ def _atoms(ctx):
         (r'(?:in )?(?:darkness|the dark|low light|dim light|shadows?)', lambda m: {'type': 'pipican:light', 'max': 8}, OTHER),
         (r'(?:in )?(?:bright light|full light)', lambda m: {'type': 'pipican:light', 'min': 12}, OTHER),
         # movement
+        (r'(?:after )?standing still for (\d+(?:\.\d+)?)\s?s(?:econds?)?', lambda m: {'type': 'pipican:still', 'seconds': float(m.group(1))}, OTHER),
+        (r'(?:standing still|not moving|stationary)', lambda m: {'type': 'pipican:still'}, OTHER),
+        (r'moving', lambda m: not_({'type': 'pipican:still', 'seconds': 0.5}), OTHER),
+        (r'out of combat|not in combat', lambda m: not_(state('in_combat')), OTHER),
+        (r'(?:in|during) combat|fighting', lambda m: state('in_combat'), OTHER),
         (r'not mounted|not riding|on foot|dismounted', lambda m: not_(state('mounted')), OTHER),
         (r'mounted|riding(?: a \w+)?|on horseback|you ride', lambda m: state('mounted'), OTHER),
         (r'not sprinting', lambda m: not_(state('sprinting')), OTHER),

@@ -4,19 +4,18 @@
     {
       "id": "cavalier_start",
       "name": "Cavalier",
-      "description": {
-        "text": "+5% mount speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% mount speed",
       "type": "start",
       "x": -1235,
-      "y": 196
+      "y": 196,
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "id": "cavalier_saddle_born",
@@ -47,21 +46,19 @@
     {
       "id": "cavalier_barding",
       "name": "Barding",
-      "description": {
-        "text": "mount +2 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mount +2 armor",
       "type": "small",
       "x": -1308,
       "y": 179,
       "links": [
         "cavalier_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
       ]
     },
     {
@@ -89,16 +86,7 @@
     {
       "id": "cavalier_warhorse",
       "name": "Warhorse",
-      "description": {
-        "text": "mount +6 max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mount +6 max health",
       "type": "notable",
       "x": -1377,
       "y": 190,
@@ -106,7 +94,14 @@
         "cavalier_barding"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:max_health",
+          "amount": 6.0
+        }
+      ]
     },
     {
       "id": "cavalier_knight_errant",

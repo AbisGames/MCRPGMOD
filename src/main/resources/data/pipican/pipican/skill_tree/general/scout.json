@@ -59,16 +59,7 @@
     {
       "id": "scout_skirmisher",
       "name": "Skirmisher",
-      "description": {
-        "text": "+10% bow damage while moving",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% bow damage while moving",
       "type": "notable",
       "x": 182,
       "y": 872,
@@ -76,7 +67,26 @@
         "scout_light_feet"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:still",
+              "seconds": 0.5
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "weapons": "#pipican:weapons/bows",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "scout_lookout",

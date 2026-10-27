@@ -82,6 +82,54 @@
           "multiplier": 1.2
         }
       ]
+    },
+    {
+      "type": "pipican:mount",
+      "attribute": "minecraft:armor",
+      "amount": 4.0
+    },
+    {
+      "type": "pipican:mount",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.1,
+      "operation": "add_multiplied_base"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:mount",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:mount",
+      "attribute": "minecraft:max_health",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:mount",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

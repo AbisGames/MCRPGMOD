@@ -83,6 +83,17 @@
           "per": 0.002
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "skill_training",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

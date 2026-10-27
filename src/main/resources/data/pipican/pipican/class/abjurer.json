@@ -67,6 +67,23 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:boost",
+          "seconds": 10.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 3.0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.85

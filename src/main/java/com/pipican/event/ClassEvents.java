@@ -1,5 +1,8 @@
 package com.pipican.event;
 
+import com.pipican.ability.Mounts;
+import com.pipican.ability.Movement;
+import com.pipican.ability.Boosts;
 import com.pipican.rpgclass.SpecialStat;
 import com.pipican.ability.Combat;
 import com.pipican.Pipican;
@@ -74,6 +77,9 @@ public final class ClassEvents {
             ClassEffectApplier.forget(player);
             Reactions.forget(player);
             Empowers.forget(player);
+            Boosts.forget(player);
+            Combat.forget(player);
+            Movement.forget(player);
         }
     }
 
@@ -191,6 +197,7 @@ public final class ClassEvents {
         // Running ability states end on death; so does Optimization.
         if (event.getEntity() instanceof ServerPlayer player) {
             AbilityService.clearActive(player);
+            Boosts.clear(player);
             Empowers.forget(player);
             Optimize.onDeath(player);
         }
@@ -226,6 +233,11 @@ public final class ClassEvents {
             }
         }
         AbilityService.tick(player);
+        Movement.tick(player);
+        Boosts.tick(player);
+        if (player.tickCount % 20 == 0) {
+            Mounts.tick(player);
+        }
         // Conditional effects ("while wet", "at night"...): rebuild bonuses when a condition flips.
         if (player.tickCount % 10 == 0 && ClassEffectApplier.recheckConditions(player)) {
             state = ClassEffectApplier.state(player);

@@ -4,38 +4,34 @@
     {
       "id": "infiltrator_start",
       "name": "Infiltrator",
-      "description": {
-        "text": "-5% detection range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-5% detection range",
       "type": "start",
       "x": 346,
-      "y": 1562
+      "y": 1562,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.05
+        }
+      ]
     },
     {
       "id": "infiltrator_grey_man",
       "name": "Grey Man",
-      "description": {
-        "text": "-10% detection range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-10% detection range",
       "type": "small",
       "x": 388,
       "y": 1624,
       "links": [
         "infiltrator_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.1
+        }
       ]
     },
     {

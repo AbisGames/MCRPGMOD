@@ -1,5 +1,6 @@
 package com.pipican.ability;
 
+import com.pipican.ability.action.BoostAction;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
@@ -69,6 +70,7 @@ public final class AbilityActionTypes {
     public static final Type WEATHER = register("weather", WeatherAction.CODEC);
     public static final Type RESOURCE = register("resource", ResourceAction.CODEC);
     public static final Type MARK = register("mark", MarkAction.CODEC);
+    public static final Type BOOST = register("boost", BoostAction.CODEC);
     public static final Type EMPOWER = register("empower", EmpowerAction.CODEC);
     public static final Type IMBUE = register("imbue", ImbueAction.CODEC);
     public static final Type CONTROL = register("control", ControlAction.CODEC);

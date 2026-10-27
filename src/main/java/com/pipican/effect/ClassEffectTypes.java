@@ -1,5 +1,6 @@
 package com.pipican.effect;
 
+import com.pipican.effect.type.MountEffect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
@@ -58,6 +59,7 @@ public final class ClassEffectTypes {
     public static final Type CRITICAL = register("critical", CriticalEffect.CODEC);
     public static final Type DODGE = register("dodge", DodgeEffect.CODEC);
     public static final Type IMMUNE = register("immune", ImmuneEffect.CODEC);
+    public static final Type MOUNT = register("mount", MountEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}

@@ -1,5 +1,6 @@
 package com.pipican.event;
 
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import com.pipican.Pipican;
 import com.pipican.effect.type.BonusEffect.Kind;
 import com.pipican.player.ClassEffectApplier;
@@ -113,6 +114,16 @@ public final class BonusEvents {
         REGEN_REMAINDER.put(player.getUUID(), total - whole);
         if (whole != 0) {
             food.tickTimer = Math.max(0, food.tickTimer + whole);
+        }
+    }
+
+    @SubscribeEvent
+    static void onVisibility(LivingEvent.LivingVisibilityEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            double mult = ClassEffectApplier.state(player).bonus(Kind.DETECTION_RANGE);
+            if (mult != 1) {
+                event.modifyVisibility(mult);
+            }
         }
     }
 

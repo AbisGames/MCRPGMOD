@@ -11,6 +11,9 @@ LEADING = [
     (r'(?:crossbow )?reload(?:ing)? speed', 'reload_speed'),
     (r'(?:bow )?draw speed', 'draw_speed'),
     (r'(?:natural )?(?:health )?regeneration|natural regen', 'natural_regen'),
+    (r'hunger(?: drain)?|hunger loss|food drain', 'hunger'),
+    (r'(?:mob )?detection range|detection range of mobs', 'detection_range'),
+    (r'skill training speed|skill training|mastery gain|skill xp', 'skill_training'),
 ]
 
 # "<potions...> last 20% longer/shorter"
@@ -26,6 +29,31 @@ WEAPON_SPEED = {'sword': '#pipican:weapons/swords', 'axe': '#pipican:weapons/axe
                 'spear': '#pipican:weapons/spears', 'trident': '#pipican:weapons/tridents'}
 
 
+MOUNT_ATTRS = {'speed': 'minecraft:movement_speed', 'movement speed': 'minecraft:movement_speed', 'jump': 'minecraft:jump_strength',
+               'jump strength': 'minecraft:jump_strength', 'jump height': 'minecraft:jump_strength', 'max health': 'minecraft:max_health',
+               'health': 'minecraft:max_health', 'armor': 'minecraft:armor', 'armour': 'minecraft:armor'}
+
+
+def _mount_or_attr(attr, amount, op, s, mount=True):
+    e = {'type': 'pipican:mount' if mount else 'pipican:attribute', 'attribute': attr, 'amount': round(amount, 6)}
+    if op != 'add_value':
+        e['operation'] = op
+    if s:
+        e['scaling'] = [{'source': src, 'per': round(per / (100 if op != 'add_value' else 1), 6)} for src, per in s]
+    return e
+
+
+def mount_flat(low, scal):
+    """Flat mount bonuses: "+2 mount max health", "mount +2 armor", "mount armor +1" (before "per 10 Horsemanship")."""
+    m = re.fullmatch(rf'\+?{N} mount (max health|health|armor|armour)|(?:your )?mount (?:gets )?\+{N} (max health|health|armor|armour)|mount (max health|armor|armour) \+{N}', low)
+    if not m:
+        return None
+    num = m.group(1) or m.group(3) or m.group(6)
+    what = m.group(2) or m.group(4) or m.group(5)
+    v, s = scal(float(num))
+    return [_mount_or_attr(MOUNT_ATTRS[what], v, 'add_value', s)]
+
+
 def _effect(kind, v, s):
     e = {'type': 'pipican:bonus', 'kind': kind, 'amount': round(v / 100, 6)}
     if s:
@@ -39,6 +67,16 @@ def leading(value, what, scal):
         if re.fullmatch(pat, what):
             v, s = scal(value)
             return [_effect(kind, v, s)]
+    m = re.fullmatch(r'(sprint speed|hunger from sprinting|sprinting hunger)', what)
+    if m:
+        v, s = scal(value)
+        inner = _effect('hunger', v, s) if 'hunger' in what else _mount_or_attr('minecraft:movement_speed', v / 100, 'add_multiplied_base', s, mount=False)
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sprinting'}, 'effects': [inner]}]
+    m = re.fullmatch(r'mount (speed|movement speed|jump|jump strength|jump height|max health|health|armor)', what)
+    if m:
+        v, s = scal(value)
+        attr = MOUNT_ATTRS[m.group(1)]
+        return [_mount_or_attr(attr, v / 100, 'add_multiplied_base', s)]
     m = re.fullmatch(r'(sword|axe|mace|spear|trident) attack speed', what)
     if m:
         v, s = scal(value)
@@ -51,6 +89,19 @@ def leading(value, what, scal):
 
 def special(low, scal):
     """Clauses that don't start with the number."""
+    mf = mount_flat(low, scal)
+    if mf:
+        return mf
+    m = re.fullmatch(rf'(?:your )?skills train {N}% (faster|slower)', low)
+    if m:
+        v, s = scal(float(m.group(1)) * (1 if m.group(2) == 'faster' else -1))
+        return [_effect('skill_training', v, s)]
+    m = re.fullmatch(r'immune to (lightning|fire|fall|drowning|freezing|explosion|explosive)(?: damage)?', low)
+    if m:
+        import effects as fx
+        tag = fx.DAMAGE_TAGS.get({'explosive': 'explosion'}.get(m.group(1), m.group(1)))
+        if tag:
+            return [{'type': 'pipican:damage_taken', 'damage_types': tag, 'multiplier': 0.0}]
     for pat, kind in POTIONS:
         m = re.fullmatch(rf'(?:{pat}) last {N}% (longer|shorter)', low)
         if m:
@@ -162,3 +213,60 @@ def fill_rules(note):
     for n, what in re.findall(rf'{N} per (hit taken|hit dealt|kill)', note):
         out.append(_on({'hit taken': 'hurt', 'hit dealt': 'hit', 'kill': 'kill'}[what], [_fill(n)]))
     return out, 'out of combat' in note
+
+
+# ---------------------------------------------------------------- short boosts after something happens
+
+AFTER = [
+    (r'after (?:you take damage|taking damage|being hit|you are hit|you get hit)|when you take damage|whenever you take damage', 'hurt'),
+    (r'after (?:hitting a mob|you hit a mob|hitting something|each hit|a hit)|when you hit a mob', 'hit'),
+    (r'after (?:a kill|killing a mob|you kill a mob|each kill)|when you kill a mob', 'kill'),
+    (r'after blocking(?: an attack| a hit)?(?: with a shield)?', 'block'),
+]
+
+
+def _boost(inner, seconds, ctx):
+    import effects as fx
+    eff, uns = fx.translate(inner, dict(ctx, implicit_per_point=False))
+    if not eff or uns:
+        return None
+    return {'type': 'pipican:boost', 'seconds': float(seconds), 'effects': eff}
+
+
+def boost(t, ctx):
+    """"+15% movement speed for 2s after you take damage", "after you take damage, +15% speed for 2s",
+    "whenever you spend Ward, gain +3 armor for 10s"."""
+    for pat, event in AFTER:
+        m = re.fullmatch(rf'(.+?) for {N}\s?s(?:econds?)? (?:{pat})', t) or re.fullmatch(rf'(?:{pat}),? (?:gain |get |you gain |you get )?(.+?) for {N}\s?s(?:econds?)?', t)
+        if m:
+            b = _boost(m.group(1), m.group(2), ctx)
+            if b:
+                return [_on(event, [b])]
+    rn = (ctx.get('resource_name') or '').lower()
+    if rn:
+        r = '(?:' + re.escape(rn) + ('|' + re.escape(rn.split()[-1]) if ' ' in rn else '') + ')'
+        m = re.fullmatch(rf'(?:whenever|when|every time|each time) you spend {r},? (?:gain |get |you gain |you get )?(.+?) for {N}\s?s(?:econds?)?', t)
+        if m:
+            b = _boost(m.group(1), m.group(2), ctx)
+            if b:
+                return [_on('spend', [b])]
+    return None
+
+
+def mount_subject(t):
+    """"your mount gets +4 armor and +10% speed": every part goes to the mount, or nothing applies.
+    Returns effects, 'unsupported', or None if the line isn't about the mount."""
+    m = re.fullmatch(r'(?:your )?mount (?:gets|has|gains) (.+)', t)
+    if not m:
+        return None
+    out = []
+    for part in re.split(r',\s*(?:and\s+)?|\s+and\s+', m.group(1)):
+        pm = re.fullmatch(rf'\+?{N}(%?) (speed|movement speed|jump|jump strength|jump height|max health|health|armor|armour)', part.strip())
+        if not pm:
+            return 'unsupported'
+        pct = pm.group(2) == '%'
+        if not pct and pm.group(3) not in ('max health', 'health', 'armor', 'armour'):
+            return 'unsupported'
+        out.append(_mount_or_attr(MOUNT_ATTRS[pm.group(3)], float(pm.group(1)) / (100 if pct else 1),
+                                  'add_multiplied_base' if pct else 'add_value', None))
+    return out

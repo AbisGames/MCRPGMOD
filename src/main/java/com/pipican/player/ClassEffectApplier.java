@@ -1,5 +1,6 @@
 package com.pipican.player;
 
+import com.pipican.ability.Boosts;
 import com.pipican.effect.type.BonusEffect;
 import com.pipican.Pipican;
 import com.pipican.ability.Ability;
@@ -195,6 +196,8 @@ public final class ClassEffectApplier {
                 ability.effects().forEach(e -> effects.add(Map.entry(e, 1)));
             }
         });
+        // Short boosts from reactions ("+15% speed for 2s after you take damage").
+        Boosts.effects(player).forEach(e -> effects.add(Map.entry(e, 1)));
         // Skill mastery: every reached tier's effects (tiers stack).
         ClassLookup.skills(access).entrySet().forEach(entry -> {
             Skill skill = entry.getValue();
@@ -278,7 +281,7 @@ public final class ClassEffectApplier {
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
                 Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
                 List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount,
-                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses));
+                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses), Map.copyOf(c.mount));
     }
 
     /**
@@ -362,6 +365,7 @@ public final class ClassEffectApplier {
         final Map<BonusEffect.Kind, Double> bonuses = new EnumMap<>(BonusEffect.Kind.class);
         final List<ReactionEffect> reactions = new ArrayList<>();
         final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> eidolon = new HashMap<>();
+        final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> mount = new HashMap<>();
         /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
         final Map<ClassCondition, Boolean> conditions = new IdentityHashMap<>();
         final Map<ResourceEffect.Target, Double> resourceFlat = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
@@ -455,6 +459,13 @@ public final class ClassEffectApplier {
         @Override
         public void addReaction(ReactionEffect reaction) {
             reactions.add(reaction);
+        }
+
+        @Override
+        public void addMountUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
+            if (amount != 0) {
+                mount.computeIfAbsent(attribute, a -> new HashMap<>()).merge(operation, amount, Double::sum);
+            }
         }
 
         @Override

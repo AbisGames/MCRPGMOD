@@ -76,16 +76,7 @@
     {
       "id": "savant_fast_learner",
       "name": "Fast Learner",
-      "description": {
-        "text": "skills train 15% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "skills train 15% faster",
       "type": "notable",
       "x": 473,
       "y": -1307,
@@ -93,7 +84,14 @@
         "savant_cross_discipline"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "skill_training",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "savant_omniscient",

@@ -1,5 +1,6 @@
 package com.pipican.player;
 
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.core.ClassLookup;
 import com.pipican.mastery.Skill;
 import com.pipican.mastery.SkillAction;
@@ -58,7 +59,7 @@ public final class MasteryService {
                 }
                 lastUse.put(entry.getKey(), now);
             }
-            double gain = uses * skill.gainPerUse();
+            double gain = uses * skill.gainPerUse() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.SKILL_TRAINING);
             if (skill.affinityScaled() && !action.item().isEmpty()) {
                 gain *= rpgClass.get().affinities().resolve(action.item()).tuning().mastery();
             }

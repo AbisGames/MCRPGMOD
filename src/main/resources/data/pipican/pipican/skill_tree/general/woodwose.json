@@ -46,21 +46,25 @@
     {
       "id": "woodwose_thorns",
       "name": "Thorns",
-      "description": {
-        "text": "mobs that melee you take 1 damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs that melee you take 1 damage",
       "type": "small",
       "x": 994,
       "y": 870,
       "links": [
         "woodwose_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 1.0
+            }
+          ]
+        }
       ]
     },
     {

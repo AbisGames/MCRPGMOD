@@ -87,6 +87,17 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "hunger",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.003
+        }
+      ]
     }
   ],
   "weakness": {

@@ -4,19 +4,17 @@
     {
       "id": "explorer_start",
       "name": "Explorer",
-      "description": {
-        "text": "-10% hunger drain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-10% hunger drain",
       "type": "start",
       "x": -1195,
-      "y": 365
+      "y": 365,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.1
+        }
+      ]
     },
     {
       "id": "explorer_trail_legs",

@@ -29,23 +29,34 @@
     {
       "id": "quick_reflexes",
       "name": "Quick Reflexes",
-      "description": {
-        "text": "after taking damage, +20% speed for 2s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "after taking damage, +20% speed for 2s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 2.0,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.2,
+                  "operation": "add_multiplied_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "reveal_weakness",

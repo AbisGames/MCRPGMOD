@@ -31,23 +31,34 @@
     {
       "id": "skirmish",
       "name": "Skirmish",
-      "description": {
-        "text": "+10% movement speed for 2s after hitting a mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% movement speed for 2s after hitting a mob",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 2.0,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.1,
+                  "operation": "add_multiplied_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "subterfuge",

@@ -13,17 +13,15 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+5% mount speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% mount speed",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "description": {
@@ -39,17 +37,15 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "+5% mount jump",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% mount jump",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:jump_strength",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
     },
     {
       "description": {
@@ -65,17 +61,15 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "+10% mount speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% mount speed",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -77,6 +77,19 @@
       "multiplier": 1.4
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "detection_range",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.004
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Infiltrators avoid notice - and avoid armor that clanks.",

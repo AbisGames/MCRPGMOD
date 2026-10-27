@@ -19,21 +19,19 @@
     {
       "id": "zealot_ascetic",
       "name": "Ascetic",
-      "description": {
-        "text": "-15% hunger drain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-15% hunger drain",
       "type": "small",
       "x": 1667,
       "y": -100,
       "links": [
         "zealot_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.15
+        }
       ]
     },
     {

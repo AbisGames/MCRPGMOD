@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **107** (of 107 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1223**, partly working: **13**, not yet: **1013**
+- Bonus phrases: **2249**. Fully working: **1262**, partly working: **14**, not yet: **973**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,10 +12,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 329 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 247 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 179 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 128 |
+| [Other mechanics](#other-mechanics) | 322 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 246 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 148 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 124 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 105 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 98 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 76 |
@@ -243,11 +243,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Veil: mobs 25% slower to notice you
   - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
 - **infiltrator**
-  - special stat per point: -0.4% mob detection range
   - passive: Vanish: breaking line of sight with a mob makes it forget you after 2s
   - special passive: Per 10 Subtlety, +3% Treacherous Strike
-  - general tree: Infiltrator: -5% detection range
-  - general tree: Grey Man: -10% detection range
   - general tree: Ambush: first round of combat: +20% damage and speed
   - general tree: Forgettable: mobs forget you 1s faster
   - special tree: Quiet: no footstep sounds
@@ -341,7 +338,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Alertness range +1 block per 5 Awareness
   - weakness: -1 armor and -4% movement speed for every heavy armor piece worn
   - general tree: Keen Eyes: +4 blocks Alertness range
-  - special tree: Quick Reflexes: after taking damage
   - special tree: Ghost Trail: mobs lose track of you 30% faster
 - **sentinel**
   - special stat per point: +0.5 blocks hostile-mob detection range
@@ -350,7 +346,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Sentinel: +4 blocks detection range
   - general tree: Eagle Eyes: +8 blocks glow range
   - general tree: Watchtower: Stand Guard +10% damage
-  - general tree: Post Holder: Stand Guard bonuses doubled
   - special tree: Stand Guard: Stand Guard triggers after 1s
   - special tree: Sentry: players within 8 blocks also see what glows for you
 - **shapeshifter**
@@ -378,7 +373,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Fortress Temple: outside it you lose all class passives
 - **tenebrist**
   - special passive: Detection reduction +0.3% per Umbra
-  - general tree: Tenebrist: -5% detection range
   - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
 - **thaumaturge**
   - special passive: Per 10 Entropy, bad chaos outcomes are 5% rarer
@@ -423,7 +417,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Library: +1 counted bookshelf
 - **woodwose**
   - special passive: Nature Bond heal speed +1% per Verdure
-  - general tree: Thorns: mobs that melee you take 1 damage
   - special tree: Nature's Resilience: absorption +2 more hearts
 - **zealot**
   - passive: After Zeal triggers
@@ -475,7 +468,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
 - **champion**
   - special stat per point: +0.3% damage and -0.2% damage taken while in Battle Stance
-  - passive: Battle Stance: while sneaking and not moving, +20% damage and mobs deal 20% less damage to you
   - special passive: Battle Stance bonuses +1% per 4 Resolve
   - special passive: Champion's Resolve cooldown -1% per Resolve point
   - general tree: Hold the Line: Battle Stance also gives knockback immunity
@@ -753,7 +745,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **assassin**
   - passive: your first hit on a mob that isn't targeting you deals +60% damage
   - passive: if that brings it below 20% health, it dies
-  - passive: Quick Reflexes: +15% movement speed for 2s after you take damage
   - passive: Manufacture Poison: 10% chance on melee hit to apply Poison I for 4s
   - weakness: -15% damage while standing in light level 12 or higher, and hostile mobs notice you from 20% farther away
 - **astromancer**
@@ -765,19 +756,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Bleed: critical sword hits cause bleeding - the mob takes 1 damage per second for 4s
   - passive: Swift Blade: holding a sword in your off-hand lets you hit with it too (off-hand swing every 2nd attack)
 - **cavalier**
-  - special stat per point: +1% mount speed
-  - passive: Master Rider: your mount gets +4 armor and +10% speed
   - passive: Devastating Charge: sprinting or riding at full speed into a mob adds +20% damage to the hit (+40% mounted)
   - passive: You never fall off when your mount is hit
-  - special passive: Mount armor +1 per 10 Horsemanship
   - special passive: Mounted damage +0.5% per Horsemanship
-  - general tree: Cavalier: +5% mount speed
-  - general tree: Barding: mount +2 armor
   - general tree: Lance Charge: spears deal +15% damage while mounted
   - special tree: Trample: your mount damages small mobs it runs into
-  - skill Riding: +5% mount speed
-  - skill Riding: +5% mount jump
-  - skill Riding: +10% mount speed
 - **champion**
   - passive: Champion's Resolve: once per 5 minutes, when you'd drop below 2 hearts, heal 6 HP and gain +20% damage for 5s
   - general tree: Last Stand: you take +10% damage while moving
@@ -828,8 +811,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: for 2s after a fully charged hit, you take 20% more damage
 - **explorer**
   - passive: Preternatural Senses: hostile mobs within 12 blocks glow while you sneak
-  - special passive: Hunger drain -0.3% per Wayfinding
-  - general tree: Explorer: -10% hunger drain
 - **fighter**
   - special tree: Fight with Two Weapons: holding a weapon in your off-hand: +10% attack speed
 - **geomancer**
@@ -858,8 +839,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Scrutiny: the mob you look at for 2s becomes scrutinised - it glows, you see its health, and you deal +15% damage to it
 - **jack_of_all_trades**
   - passive: Flexible Profession: every shared skill trains 25% faster for you
-  - special passive: Skill training speed +0.5% per Aptitude
-  - special tree: Flexible Profession: skills train 15% faster
 - **mage_knight**
   - general tree: Combat Casting: taking damage doesn't drain Warfire
 - **marauder**
@@ -889,34 +868,20 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Inferno, -10% Embers drain in lava
 - **ranger**
   - passive: Expert Guide: other players within 16 blocks get +5% movement speed while travelling outdoors
-  - skill Survival: -5% hunger drain
-  - skill Survival: -5% hunger drain
 - **rogue**
   - special passive: +0.2% chance per Cunning point to get one extra item when a mob drops loot
   - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
-  - special tree: Skirmish: +10% movement speed for 2s after hitting a mob
   - special tree: Subterfuge: mobs you hit while sneaking forget you 25% faster
   - special tree: Threats: hitting a mob from behind gives it Weakness I for 3s
-  - skill Stealth: -10% mob detection range while sneaking
-  - skill Stealth: -10% mob detection range while sneaking
-  - skill Stealth: -15% mob detection range while sneaking
 - **savant**
   - passive: Tradition Focus: pick two elemental focus schools when you choose the class - Fire, Water, Air, Earth, Storm, Shadow, Light (sun/celestial) or Life. Damage and effects of those elements are +20% (Fire = burning/fire charges, Water = drowned/underwater/trident, Air = wind charges/fall, Earth = explosions/blocks, Storm = lightning, Shadow = darkness/wither, Light = undead/smite, Life = healing)
-  - general tree: Fast Learner: skills train 15% faster
 - **scout**
   - passive: Forward Observer: +20% stealth (smaller mob detection range) when no other player is within 16 blocks
-  - general tree: Skirmisher: +10% bow damage while moving
   - general tree: Lookout: can't be hit by sneak-attack bonuses (you are never 'unaware')
   - general tree: Pathfinder: +15% movement speed and no hunger from sprinting, but -15% melee damage
-  - special tree: Quick Reflexes: +20% speed for 2s
-  - skill Athletics: +2% sprint speed
-  - skill Athletics: -5% hunger from sprinting
-  - skill Athletics: +2% sprint speed
-  - skill Athletics: -5% hunger from sprinting
-  - skill Athletics: +4% sprint speed
 - **sentinel**
   - passive: after standing still for 3s
-  - general tree: Post Holder: -15% damage while moving
+  - general tree: Post Holder: Stand Guard bonuses doubled, but -15% damage while moving
 - **shapeshifter**
   - weakness: while transformed you can't use weapons, bows, shields or items (only bare-handed attacks)
   - general tree: Feral Soul: forms drain 50% slower
@@ -929,7 +894,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **spellbinder**
   - general tree: Soulblade: you can't hold any other weapon in your main hand without -50% damage
 - **stormbringer**
-  - passive: immune to lightning
   - passive: Your hits have a 5% chance in thunderstorms to call down lightning on the target
   - special passive: Lightning chance +0.2% per Tempest
   - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
@@ -937,8 +901,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Storm Avatar: your lightning chance works in any rain
   - special tree: Chain Lightning: lightning arcs to 2 more mobs
   - special tree: Stormlord: you can't wear iron or netherite armor
-- **technomancer**
-  - special tree: Tesla Coil: mobs that hit you take 2 lightning damage
 - **templar**
   - special tree: Temple Guardian: Slowness becomes immobilise for 1s
 - **tenebrist**
@@ -951,7 +913,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Invocation: every 30s in combat, a holy pulse hits mobs within 4 blocks - Weakness I for 3s (Slowness too on undead)
 - **thief**
   - general tree: Scale Walls: you can climb any wall like a ladder while sneaking and holding jump
-  - special tree: Hide in Shadows: -30% mob detection range in light level 7 or lower
   - special tree: Keen Senses: chests with loot within 8 blocks sparkle while you sneak
 - **transmuter**
   - general tree: Rapid Shift: you can re-Optimize once per day without sleeping
@@ -974,14 +935,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: when a hit would bring you below 2 hearts
   - passive: immune to Slowness, Weakness and Nausea for 5s
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you
-  - general tree: Ascetic: -15% hunger drain
   - general tree: Fanatic: immune to Nausea and Darkness always
 
 ## Resource bar: filling, refills, spending
 
-- **abjurer**
-  - passive: Guarded Casting: whenever you spend Ward, gain +3 armor for 10s
-  - general tree: Sanctum: +20% regeneration while standing still
 - **aeromancer**
   - special tree: Lord of the Air: Flight costs 30% less Breath; -15% max health
   - skill Windcalling: +10% Breath regen
@@ -1014,8 +971,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **brute**
   - passive: You can carry on fighting: hunger drains 20% slower
 - **cavalier**
-  - special stat per point: +1% mount max health
-  - general tree: Warhorse: mount +6 max health
   - special tree: Master Rider: mount gets Regeneration I while you ride
   - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
   - skill Riding: +2 mount max health

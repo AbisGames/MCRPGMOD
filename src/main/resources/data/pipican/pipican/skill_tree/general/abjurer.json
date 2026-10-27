@@ -75,16 +75,7 @@
     {
       "id": "abjurer_sanctum",
       "name": "Sanctum",
-      "description": {
-        "text": "+20% regeneration while standing still",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% regeneration while standing still",
       "type": "notable",
       "x": -100,
       "y": -1387,
@@ -92,7 +83,22 @@
         "abjurer_suspicion"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:still"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": 0.2
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "abjurer_fortress_of_one",

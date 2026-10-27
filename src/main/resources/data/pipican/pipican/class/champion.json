@@ -64,6 +64,31 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.8
+        }
+      ]
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:knockback_resistance",
       "amount": 0.1

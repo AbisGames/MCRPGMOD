@@ -12,17 +12,14 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "-5% hunger drain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-5% hunger drain",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.05
+        }
+      ]
     },
     {
       "description": "+1 max health",
@@ -35,17 +32,14 @@
       ]
     },
     {
-      "description": {
-        "text": "-5% hunger drain",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-5% hunger drain",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.05
+        }
+      ]
     },
     {
       "description": "+1 max health",

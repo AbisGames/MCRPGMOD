@@ -267,6 +267,12 @@ def outcome(text, target):
     m = re.fullmatch(r'(?:heal|heals) you (?:for )?(\d+(?:\.\d+)?)(?: hp| health)?', t)
     if m:
         return [{'type': 'pipican:heal', 'target': 'self', 'amount': float(m.group(1))}]
+    m = re.fullmatch(r'(?:take|takes|suffer|suffers) (\d+(?:\.\d+)?) (magic |fire |lightning )?damage', t)
+    if m:
+        d = {'type': 'pipican:damage', 'target': target, 'amount': float(m.group(1))}
+        if m.group(2) == 'fire ':
+            d['fire_seconds'] = 3.0
+        return [d]
     m = re.fullmatch(r'(?:deal|deals) (\d+(?:\.\d+)?) (?:extra |bonus )?(magic |fire )?damage', t)
     if m:
         d = {'type': 'pipican:damage', 'target': target, 'amount': float(m.group(1))}
@@ -317,7 +323,7 @@ def reaction(low):
         if out:
             event, weapons = HIT_WORDS[m.group(1)]
             return [_reaction(event, 1.0, out, weapons)]
-    m = re.fullmatch(r'(?:mobs|enemies|attackers|anything) that (?:hit|hits|attack|attacks|strike|strikes) you (?:have (?:a )?(\d+(?:\.\d+)?)% chance to )?(.+)', t)
+    m = re.fullmatch(r'(?:mobs|enemies|attackers|anything) that (?:hit|hits|attack|attacks|strike|strikes|melee|melees) you (?:have (?:a )?(\d+(?:\.\d+)?)% chance to )?(.+)', t)
     if m:
         out = outcome(m.group(2), 'victim')
         if out:

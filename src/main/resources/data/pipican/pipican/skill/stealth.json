@@ -21,17 +21,23 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "-10% mob detection range while sneaking",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-10% mob detection range while sneaking",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.1
+            }
+          ]
+        }
+      ]
     },
     {
       "description": "+5% sneaking speed",
@@ -45,17 +51,23 @@
       ]
     },
     {
-      "description": {
-        "text": "-10% mob detection range while sneaking",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-10% mob detection range while sneaking",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.1
+            }
+          ]
+        }
+      ]
     },
     {
       "description": "+5% sneaking speed",
@@ -69,17 +81,23 @@
       ]
     },
     {
-      "description": {
-        "text": "-15% mob detection range while sneaking",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-15% mob detection range while sneaking",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.15
+            }
+          ]
+        }
+      ]
     }
   ]
 }

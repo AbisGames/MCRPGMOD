@@ -19,69 +19,102 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+2% sprint speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+2% sprint speed",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.02,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
-      "description": {
-        "text": "-5% hunger from sprinting",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-5% hunger from sprinting",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -0.05
+            }
+          ]
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+2% sprint speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+2% sprint speed",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.02,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
-      "description": {
-        "text": "-5% hunger from sprinting",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-5% hunger from sprinting",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -0.05
+            }
+          ]
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+4% sprint speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+4% sprint speed",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.04,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

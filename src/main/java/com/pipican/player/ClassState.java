@@ -49,10 +49,11 @@ public record ClassState(
         double dodgeChance,
         double meleeDodgeChance,
         Set<Holder<MobEffect>> immunities,
-        Map<BonusEffect.Kind, Double> bonuses) {
+        Map<BonusEffect.Kind, Double> bonuses,
+        Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> mountUpgrades) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}

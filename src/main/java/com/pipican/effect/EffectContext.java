@@ -66,6 +66,9 @@ public interface EffectContext {
     /** Changes an attribute of the player's eidolon. */
     void addEidolonUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);
 
+    /** Changes an attribute of whatever the player rides. */
+    void addMountUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);
+
     /** Spell points that refill on every sleep. */
     void addSpellPoints(int amount);
 

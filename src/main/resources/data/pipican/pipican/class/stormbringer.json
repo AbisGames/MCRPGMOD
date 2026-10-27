@@ -61,6 +61,11 @@
   },
   "passives": [
     {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_lightning",
+      "multiplier": 0.0
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:any_of",

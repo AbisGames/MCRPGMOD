@@ -1,5 +1,17 @@
 package com.pipican.gametest;
 
+import java.util.Optional;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.equine.Horse;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import com.pipican.condition.type.StillCondition;
+import com.pipican.effect.type.AttributeEffect;
+import com.pipican.ability.action.BoostAction;
+import com.pipican.ability.AbilityContext;
+import com.pipican.ability.Mounts;
+import com.pipican.ability.Movement;
+import com.pipican.ability.Boosts;
 import com.pipican.effect.type.ReactionEffect;
 import com.pipican.ability.Reactions;
 import com.pipican.ability.Combat;
@@ -314,6 +326,30 @@ public final class ClassSystemTests {
         helper.assertTrue(Combat.inCombat(player), "in combat after a hit");
         Ability mend = ClassLookup.abilities(player.level().registryAccess()).getValue(ability("mend"));
         assertNear(helper, 2.5, AbilityService.cost(player, mend), "abilities cost half");
+
+        // Timed boosts from reactions
+        double armor = player.getAttributeValue(Attributes.ARMOR);
+        new BoostAction(5, List.of(new AttributeEffect(Attributes.ARMOR, 3, AttributeModifier.Operation.ADD_VALUE, List.of())))
+                .run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
+        assertNear(helper, armor + 3, player.getAttributeValue(Attributes.ARMOR), "boost gives +3 armor");
+        Boosts.clear(player);
+        assertNear(helper, armor, player.getAttributeValue(Attributes.ARMOR), "boost removed");
+
+        // Standing still / moving
+        Movement.tick(player);
+        helper.assertTrue(new StillCondition(0).test(player), "a player that hasn't moved is still");
+        player.teleportTo(player.getX() + 2, player.getY(), player.getZ());
+        Movement.tick(player);
+        helper.assertTrue(!new StillCondition(0).test(player), "just moved");
+
+        // Mount upgrades
+        Horse horse = helper.spawn(EntityType.HORSE, new BlockPos(1, 2, 1));
+        helper.assertTrue(player.startRiding(horse, true, true), "mount the horse");
+        Mounts.tick(player);
+        assertNear(helper, 4, horse.getAttributeValue(Attributes.ARMOR), "mount gets +4 armor");
+        player.stopRiding();
+        Mounts.tick(player);
+        assertNear(helper, 0, horse.getAttributeValue(Attributes.ARMOR), "upgrade removed after dismounting");
         helper.succeed();
     }
 
