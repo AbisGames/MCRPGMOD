@@ -74,6 +74,7 @@ neoForge {
         gameTestServer {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'pipican.worldgenTestSeed', providers.gradleProperty('worldgenTestSeed').getOrElse('0')
         }
 
         data {

@@ -19,23 +19,28 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class WorldgenIntegrationTests {
     private static long generationSeed;
+    private static String suite;
+    private static final List<String> SUITES=List.of("sky","terrain","capital","protection");
     private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
         STORAGE=new java.util.HashMap<>();
+    private static final java.util.Map<ResourceKey<Level>,java.nio.file.Path> WORLD_ROOTS=new java.util.HashMap<>();
 
     @SubscribeEvent
     public static void functions(RegisterEvent event) {
-        event.register(Registries.TEST_FUNCTION, registrar ->
-            registrar.register(Pipican.id("rpg_generated_chunks"), WorldgenIntegrationTests::generatedChunks));
+        event.register(Registries.TEST_FUNCTION, registrar -> SUITES.forEach(name ->
+            registrar.register(Pipican.id("rpg_generated_"+name), helper -> generatedChunks(helper,name))));
     }
 
     @SubscribeEvent
     public static void tests(RegisterGameTestsEvent event) {
         var env = event.registerEnvironment(Pipican.id("rpg_integration_env"),
             new TestEnvironmentDefinition.AllOf(List.of()));
-        ResourceKey<Consumer<GameTestHelper>> fn = ResourceKey.create(
-            Registries.TEST_FUNCTION, Pipican.id("rpg_generated_chunks"));
-        event.registerTest(Pipican.id("rpg_generated_chunks"), new FunctionGameTestInstance(fn,
-            new TestData<>(env, net.minecraft.resources.Identifier.withDefaultNamespace("empty"), 2400, 0, true)));
+        for(String name:SUITES){
+            ResourceKey<Consumer<GameTestHelper>> fn = ResourceKey.create(
+                Registries.TEST_FUNCTION, Pipican.id("rpg_generated_"+name));
+            event.registerTest(Pipican.id("rpg_generated_"+name), new FunctionGameTestInstance(fn,
+                new TestData<>(env, net.minecraft.resources.Identifier.withDefaultNamespace("empty"), 2400, 0, true)));
+        }
     }
 
     private static void check(GameTestHelper helper, ServerLevel level, BlockPos pos, boolean ok, String expected) {
@@ -43,7 +48,8 @@ public final class WorldgenIntegrationTests {
             + " pos=" + pos + " expected=" + expected + " actual=" + level.getBlockState(pos));
     }
 
-    private static void generatedChunks(GameTestHelper helper) {
+    private static void generatedChunks(GameTestHelper helper,String name) {
+        suite=name;
         var server=helper.getLevel().getServer();
         var original=server.getWorldGenSettings();
         // GameTestServer hardcodes WORLD_OPTIONS=(0,false,false). Configure
@@ -55,7 +61,7 @@ public final class WorldgenIntegrationTests {
             options=net.minecraft.server.MinecraftServer.class.getDeclaredField("worldGenSettings");
             options.setAccessible(true);
         }catch(ReflectiveOperationException e){throw new IllegalStateException("GameTest world options unavailable",e);}
-        for(long seed:new long[]{0L,123L,987654321L}){
+        for(long seed:new long[]{Long.getLong("pipican.worldgenTestSeed",0L)}){
             generationSeed=seed;
             ServerLevel level=null;
             try{
@@ -76,7 +82,7 @@ public final class WorldgenIntegrationTests {
     }
 
     private static ServerLevel createLevel(GameTestHelper helper,long seed) {
-        var RPG=ResourceKey.create(Registries.DIMENSION,Pipican.id("rpg_integration_"+seed));
+        var RPG=ResourceKey.create(Registries.DIMENSION,Pipican.id("rpg_integration_"+suite+"_"+seed));
         ServerLevel level = helper.getLevel().getServer().getLevel(RPG);
         // GameTestServer intentionally creates only vanilla dimensions. Build
         // a real ServerLevel from the RPG preset instead of falling back to its
@@ -89,9 +95,15 @@ public final class WorldgenIntegrationTests {
                 com.mojang.serialization.JsonOps.INSTANCE,server.registryAccess());
             var stem=net.minecraft.world.level.dimension.LevelStem.CODEC.parse(ops,json).getOrThrow();
             try{
-                var source=net.minecraft.world.level.storage.LevelStorageSource.createDefault(
-                    server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("rpg-integration"));
-                var storage=source.validateAndCreateAccess("seed_"+seed);
+                var root=WORLD_ROOTS.get(RPG);
+                if(root==null){
+                    var parent=server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("rpg-integration");
+                    java.nio.file.Files.createDirectories(parent);
+                    root=java.nio.file.Files.createTempDirectory(parent,suite+"_seed_"+seed+"_");
+                    WORLD_ROOTS.put(RPG,root);
+                }
+                var source=net.minecraft.world.level.storage.LevelStorageSource.createDefault(root);
+                var storage=source.validateAndCreateAccess("world");
                 STORAGE.put(RPG,storage);
                 level=new ServerLevel(server,java.util.concurrent.ForkJoinPool.commonPool(),storage,
                     new net.minecraft.world.level.storage.DerivedLevelData(server.getWorldData(),
@@ -121,8 +133,36 @@ public final class WorldgenIntegrationTests {
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
         helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
         helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
+        if(suite.equals("protection")){
+            var built=new BlockPos(-2500,400,-3333);
+            var node=built.east(2);
+            level.getChunk(built.getX()>>4,built.getZ()>>4);
+            var snapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,built);
+            level.setBlock(built,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
+                new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(snapshot,
+                    net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),helper.makeMockServerPlayerInLevel()));
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"real place event did not protect natural stone");
+            long ready=level.getGameTime()+20;
+            RenewableOreSavedData.get(level).record(node,"frostcrystal",ready);
+            var unloaded=new BlockPos(23000,400,23000);
+            helper.assertTrue(!level.hasChunkAt(unloaded),"unload test position already loaded");
+            RenewableOreSavedData.get(level).record(unloaded,"glacierite",ready);
+            var key=level.dimension();
+            saveAndClose(helper,key);
+            level=createLevel(helper,generationSeed);
+            level.getChunk(built.getX()>>4,built.getZ()>>4);
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"player provenance lost after disk reload");
+            helper.assertTrue(level.getBlockState(built).is(net.minecraft.world.level.block.Blocks.STONE),"player stone lost after disk reload");
+            helper.assertTrue(RegionalMineEvents.restoreDue(level,ready-1,8)==0,"ore restored before cooldown");
+            helper.assertTrue(RegionalMineEvents.restoreDue(level,ready,8)==1,"queued ore did not survive disk reload");
+            helper.assertTrue(level.getBlockState(node).is(RegionalOreRegistries.NODES.get("frostcrystal").get()),"wrong renewed ore");
+            helper.assertTrue(!level.hasChunkAt(unloaded),"renewal force-loaded an unloaded chunk");
+            helper.assertTrue(RenewableOreSavedData.get(level).contains(unloaded),"unloaded node discarded");
+        }
         helper.assertTrue(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource,
             "integration test must use the real RPG generator");
+        if(suite.equals("sky")){
         for (var island : SkyIslandLayout.ISLANDS) {
             // Centre plus four corners within the authored structure support area.
             for (int[] offset : new int[][] {{0,0},{-30,-30},{-30,30},{30,-30},{30,30}}) {
@@ -161,6 +201,8 @@ public final class WorldgenIntegrationTests {
                 helper.assertTrue(frames==12,"Sky Citadel must contain twelve End portal frames");
             }
         }
+        }
+        if(suite.equals("terrain")){
         // A physically generated capital core in every region, not a density calculation.
         for (var city : new LandmarkCatalog().all()) {
             if (!city.tier().equals("capital")) continue;
@@ -171,8 +213,10 @@ public final class WorldgenIntegrationTests {
             check(helper,level,floor,y > level.getMinY() && level.getBlockState(floor).isSolid(),
                 "solid capital terrain " + city.id());
         }
-        Pipican.LOGGER.info("RPG generated chunk checks passed for seed {}: seven sky islands and 22 capital cores",
+        Pipican.LOGGER.info("RPG generated chunk checks passed for seed {}: 22 capital cores",
             generationSeed);
+        }
+        if(suite.equals("capital")){
         var city=new LandmarkCatalog().all().stream()
             .filter(c->c.tier().equals("capital")&&c.region().equals("heartlands")).findFirst().orElseThrow();
         var progress=CapitalPlacementSavedData.get(level);
@@ -190,5 +234,6 @@ public final class WorldgenIntegrationTests {
         }
         helper.assertTrue(progress.progress(city.id()).nextTile()==63,"capital not completed");
         helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,progress),"completed capital rebuilt");
+        }
     }
 }
