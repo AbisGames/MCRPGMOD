@@ -708,6 +708,86 @@ class Workshop(Build):
                     self.set(x,3,z,'prismarine')
                     self.set(x,4,z,'sea_lantern')
         self.acc['regional_cave_identity']=1
+    def cavern_upper_gallery(self,kind):
+        """Build a second, player-accessible dungeon/mine floor.
+
+        The original plan has a continuous roof at Y=14. This method carves
+        an atrium above its main encounter, constructs a bounded upper gallery,
+        and adds a protected climbing shaft so the whole feature is traversable.
+        It never overwrites the lower trial spawner, award chests or ore seams.
+        """
+        W,D=self.sx,self.sz
+        cx,cz=W//2,D//2
+        wall,floor,roof,post,wood=self.theme
+
+        # Empty above the original galleries; terminate the structure with a roof.
+        self.air(2,15,2,W-3,25,D-3)
+        self.box(1,26,1,W-2,26,D-2,roof)
+        for x in (1,W-2):
+            self.wall(x,1,x,D-2,15,25,wall)
+        for z in (1,D-2):
+            self.wall(1,z,W-2,z,15,25,wall)
+
+        # Retain the original 14th-level floor as a continuous upper walkway
+        # except for the open void above the battle/mining chamber.
+        self.air(cx-9,14,cz-9,cx+9,14,cz+9)
+        for z in range(cz-10,cz+11):
+            for x in (cx-10,cx+10):
+                self.set(x,15,z,'iron_bars')
+        for x in range(cx-10,cx+11):
+            for z in (cz-10,cz+10):
+                self.set(x,15,z,'iron_bars')
+
+        # Fully unobstructed two-block-wide access shaft and its anchor wall.
+        shaftx,shaftz=cx-17,cz
+        for y in range(1,20):
+            self.set(shaftx-1,y,shaftz,post)
+            self.set(shaftx,y,shaftz,'ladder[facing=east]')
+            self.set(shaftx+1,y,shaftz,'air')
+        self.air(shaftx,14,shaftz,shaftx+1,15,shaftz+1)
+
+        # Side balconies contain separate navigable rooms and route markers.
+        for x1,x2 in ((5,24),(W-25,W-6)):
+            for z1,z2 in ((8,27),(D-28,D-9)):
+                for x in (x1,x2):
+                    self.wall(x,z1,x,z2,15,22,wall)
+                for z in (z1,z2):
+                    self.wall(x1,z,x2,z,15,22,wall)
+                self.box(x1,23,z1,x2,23,z2,roof)
+                self.door((x1+x2)//2-2,15,z2 if z2<cz else z1,
+                          width=5,height=5)
+                self.set((x1+x2)//2,16,(z1+z2)//2,
+                         'cartography_table' if kind=='dungeon' else 'smithing_table')
+                self.set(x1+3,16,z1+3,'barrel')
+                self.set(x2-3,16,z2-3,'barrel')
+                self.light((x1+x2)//2,21,(z1+z2)//2)
+                self.acc['upper_rooms']+=1
+
+        # Each biome's feature uses a real ore block, never a fake metadata
+        # marker. Only mines receive these recoverable upper-gallery nodes.
+        if kind=='mine':
+            mineral=f'pipican:{ORE[self.region]}_ore'
+            for z in range(10,D-9,8):
+                for x in (2,W-3):
+                    self.set(x,19,z,mineral)
+                    self.set(x,18,z,post)
+                    self.acc['upper_ore_nodes']+=1
+            for z in range(12,D-11,7):
+                self.set(cx+16,15,z,'rail')
+                self.set(cx+17,15,z,'rail')
+            self.acc['mine_mezzanines']+=1
+        else:
+            # Viewing platforms, ritual torches and barred trial galleries.
+            for z in range(cz-8,cz+9,4):
+                for x in (cx-12,cx+12):
+                    self.set(x,16,z,'chiseled_stone_bricks')
+                    self.set(x,17,z,'soul_lantern')
+            for x in range(cx-7,cx+8,5):
+                for z in (cz-12,cz+12):
+                    self.set(x,16,z,'end_rod')
+            self.acc['upper_trial_galleries']+=1
+        self.acc['accessible_second_levels']+=1
+
     def cave(self,kind):
         # Underground plan with traversable three-aisle corridors, rooms and floors.
         wall,floor,roof,post,wood=self.theme
@@ -772,6 +852,7 @@ class Workshop(Build):
                 'required_player_range':14}
             self.acc['renewable_encounters']=1
         self.cultural_cave_identity(kind)
+        self.cavern_upper_gallery(kind)
         self.acc['main_chamber']=1
 
     def access_bridge(self, axis):
