@@ -46,20 +46,29 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/main/resources/data/pipican/
-          if ! git diff --cached --quiet; then
+          # Never rebase generated binary NBT files: two concurrent runs
+          # cannot resolve content conflicts. Re-apply the just-validated
+          # generator output onto a fresh copy of the newest branch head.
+          for attempt in 1 2 3 4; do
+            git fetch origin worldgen-and-ores
+            # Older generator jobs must not overwrite newer source changes.
+            if ! git diff --quiet HEAD origin/worldgen-and-ores --               tools/worldgen/build_full_structures.py tools/worldgen/legacy.py               src/main/resources/data/pipican/worldgen/region_map.json               src/main/resources/data/pipican/worldgen/settlements.json               src/main/resources/data/pipican/worldgen/structure_pools_manifest.json; then
+              echo "Generator source changed since this run; newer run owns publishing."
+              exit 0
+            fi
+            git reset --hard origin/worldgen-and-ores
+            cp -a tools/worldgen/output/data/. src/main/resources/data/
+            git add src/main/resources/data/pipican/
+            if git diff --cached --quiet; then
+              echo "All generated assets are already current."
+              exit 0
+            fi
             git commit -m "assets(worldgen): regenerate authored structures and pools [skip ci]"
-            # Other commits may land while 900+ large structures are generated.
-            # Replay the generated assets commit over the newest branch head.
-            for attempt in 1 2 3 4; do
-              git fetch origin worldgen-and-ores
-              git rebase origin/worldgen-and-ores
-              if git push origin HEAD:worldgen-and-ores; then
-                exit 0
-              fi
-              echo "Retrying concurrent branch update ($attempt/4)..."
-              sleep 3
-            done
-            echo "Unable to publish generated assets after four safe retries" >&2
-            exit 1
-          fi
+            if git push origin HEAD:worldgen-and-ores; then
+              exit 0
+            fi
+            echo "Branch moved during upload, retrying from current head ($attempt/4)"
+            sleep 3
+          done
+          echo "Unable to publish validated NBT assets after four retries" >&2
+          exit 1
