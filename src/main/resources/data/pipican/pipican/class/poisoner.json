@@ -110,17 +110,20 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Poisoners rely on toxins - in a straight fight they're weak.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Poisoners rely on toxins - in a straight fight they're weak.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "victim": {
+          "effects": [
+            "minecraft:poison",
+            "minecraft:wither"
+          ]
+        },
+        "multiplier": 0.75,
+        "except": true
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

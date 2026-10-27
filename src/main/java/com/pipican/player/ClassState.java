@@ -79,10 +79,10 @@ public record ClassState(
      * on the other side ({@code against}) and the victim's state.
      */
     public record DamageRule(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, Optional<HolderSet<EntityType<?>>> against,
-                             Optional<VictimState> victim, double multiplier) {
+                             Optional<VictimState> victim, double multiplier, boolean except) {
 
         public DamageRule(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
-            this(types, weapons, Optional.empty(), Optional.empty(), multiplier);
+            this(types, weapons, Optional.empty(), Optional.empty(), multiplier, false);
         }
 
         /**
@@ -99,10 +99,9 @@ public record ClassState(
                     return false;
                 }
             }
-            if (against.isPresent() && (other == null || !against.get().contains(other.getType().builtInRegistryHolder()))) {
-                return false;
-            }
-            return victim.isEmpty() || other != null && self != null && victim.get().test(source, self, other);
+            boolean hit = (against.isEmpty() || other != null && against.get().contains(other.getType().builtInRegistryHolder()))
+                    && (victim.isEmpty() || other != null && self != null && victim.get().test(source, self, other));
+            return except ? !hit : hit;
         }
     }
 

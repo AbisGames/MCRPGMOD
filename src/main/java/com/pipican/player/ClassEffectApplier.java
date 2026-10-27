@@ -494,7 +494,7 @@ public final class ClassEffectApplier {
 
         private ClassState.DamageRule scale(ClassState.DamageRule rule) {
             return strength == 1 ? rule : new ClassState.DamageRule(rule.types(), rule.weapons(), rule.against(), rule.victim(),
-                    1 + (rule.multiplier() - 1) * strength);
+                    1 + (rule.multiplier() - 1) * strength, rule.except());
         }
 
         @Override

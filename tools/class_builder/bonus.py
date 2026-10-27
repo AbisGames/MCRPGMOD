@@ -507,6 +507,12 @@ def misc(t, scal):
             {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:holding', 'items': '#pipican:weapons/melee'}, {'type': 'pipican:holding', 'items': '#pipican:weapons/ranged'}]},
             {'type': 'pipican:not', 'condition': {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}}]}
         return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf'(?:your )?(?:marked targets?|prey|challenged foes?)(?: within (your reach|{N} blocks))? deals? {N}% less damage(?: to you)?', t)
+    if m:
+        victim = {'marked': True}
+        if m.group(1):
+            victim['within'] = 4.5 if m.group(1) == 'your reach' else float(m.group(2))
+        return [{'type': 'pipican:damage_taken', 'victim': victim, 'multiplier': round(1 - float(m.group(3)) / 100, 6)}]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

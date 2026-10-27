@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1719**, partly working: **25**, not yet: **506**
+- Bonus phrases: **2250**. Fully working: **1725**, partly working: **25**, not yet: **500**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 169 |
+| [Other mechanics](#other-mechanics) | 168 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 128 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 76 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 71 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 50 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 32 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 45 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 32 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 31 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 19 |
 | [Immunities](#immunities) | 13 |
 | [Critical hits](#critical-hits) | 5 |
@@ -42,7 +42,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **arcanist**
   - special tree: Reclaim Arcana: Reclaim refunds go to 150%
 - **assassin**
-  - general tree: Death Mark: Assassinate threshold rises to 30% health
   - special tree: Quick Reflexes: Quick Reflexes speed boost lasts 2s longer
 - **avenger**
   - special tree: Hound: Speed boost lasts 2s longer
@@ -701,7 +700,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **artificer**
   - special tree: Copper Heart: copper golems near you move and work 25% faster
 - **assassin**
-  - general tree: Death Mark: -20% damage to mobs that are targeting you
+  - general tree: Death Mark: Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you
 - **avenger**
   - passive: Vow of Vengeance: the next mob to damage you or a player within 16 blocks becomes marked for 60s (one at a time)
   - passive: When your marked target moves away, you get Speed II for 2s
@@ -709,7 +708,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: -15% damage against anything that isn't your marked target while a mark is active
   - general tree: Blood Debt: marks last until the target dies
   - general tree: Blood Debt: you can never mark a new one until it does
-  - special tree: Frightening Glare: marked targets within your reach deal 15% less damage
 - **beastmaster**
   - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
   - weakness: when one of your tamed animals dies, you get Weakness I and Slowness I for 30s
@@ -719,8 +717,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: -20% damage against mobs with natural armor (iron golems, ravagers, wardens, the Wither) and with any weapon that isn't a sword
 - **brute**
   - general tree: Crusher: +10% damage against shields and armored mobs
-- **cleric**
-  - general tree: Crusader: +30% damage to undead, but -10% damage to everything else
 - **diplomat**
   - special stat per point: -0.3% villager trade prices
   - passive: Stay the Hand: 15% chance that a melee hit against you is cancelled and the attacker stops targeting you for 3s
@@ -738,7 +734,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: -15% damage against animals, illagers and other ordinary mobs
   - general tree: Holy Water: splash potions you throw deal +2 damage to undead
   - general tree: Banishing: unclean mobs you hit are knocked back 50% farther
-  - general tree: Inquisitor's Fire: +30% damage to unclean, but -30% to everything else
   - special tree: Purge the Unclean: unclean mobs you hit can't teleport for 5s (endermen, shulkers)
 - **gladiator**
   - passive: Finishing Blow: +15% critical chance against slowed, blinded or poisoned mobs
@@ -749,12 +744,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: Regeneration and Instant Health are 50% weaker on you, and villagers won't trade with you
 - **poisoner**
   - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
-  - weakness: -25% damage to mobs that aren't poisoned or withered
 - **ranger**
   - passive: the last mob you hit with an arrow becomes your prey for 60s
   - special passive: +0.5% Hunt Prey duration per Instinct point
   - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
-  - general tree: Apex Predator: +30% damage to prey, but -15% damage to everything else
   - special tree: Relentless Pursuit: when prey flees, you get Speed I for 3s
   - special tree: Master Hunter: you can mark prey in melee too and prey bonus +10%
   - special tree: Master Hunter: Hunt Prey ends instantly if you hit another mob
@@ -766,61 +759,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Fence: cancels the villager price penalty from your weakness
 - **woodwose**
   - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
-
-## Chance on hit / proc effects
-
-- **acrobat**
-  - special tree: Kip-up: no slowdown after being knocked back
-  - special tree: Mobility: your movement never triggers mob 'attack of opportunity' style knockback
-- **aeromancer**
-  - special stat per point: +1% wind charge knockback
-  - passive: +50% wind charge knockback and they don't hurt you
-- **arcanist**
-  - passive: 1-in-6 chance to get it all back
-  - special passive: +0.3% Reclaim chance per Arcana point
-  - special tree: Recycling: Reclaim chance +5%
-- **bard**
-  - special passive: Disarming Charm: per 10 Resonance, +3% chance a hostile mob you hit forgets you
-- **destroyer**
-  - special tree: Shockwave: shockwave knocks mobs back
-- **diviner**
-  - special tree: Ill Fortune: mobs within 8 blocks have 10% chance to miss everyone
-- **duelist**
-  - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
-- **fighter**
-  - special passive: +1% Weapon Mastery chance per 4 Discipline
-- **inquisitor**
-  - general tree: Witch-Finder: +25% damage to scrutinised, but -15% to everything else
-- **mage_knight**
-  - passive: Your weapon hits deal 10% of their damage as magic damage (ignores armor)
-  - special tree: Charged Blade: first escalating hit also knocks back
-- **miracle_worker**
-  - general tree: Laying of Hands: Worker of Miracles also cures Poison and Wither
-- **myrmidon**
-  - special passive: Knockback +0.05 blocks per Shieldcraft
-  - special tree: Forceful Shield: +2 knockback blocks
-- **necromancer**
-  - special passive: Command chance +0.3% per Deathgrip
-  - general tree: Grave Dust: +5% command chance
-- **poisoner**
-  - special stat per point: +1% poison damage and duration you apply
-  - passive: brewing poison potions is 50% faster
-- **technomancer**
-  - special stat per point: +0.5% chance a crafted redstone item is doubled
-- **thaumaturge**
-  - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
-  - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
-  - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
-- **thief**
-  - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
-  - special passive: Open Locks chance +0.5% per Finesse point
-- **traveler**
-  - special passive: Per 10 Displacement, Hasty Escape chance +5%
-  - special tree: Thunderclap: arrivals knock mobs back
-- **warlock**
-  - special stat per point: +0.5% chance to steal an incoming harmful effect
-- **witch**
-  - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
 
 ## Skill trigger approximated
 
@@ -886,6 +824,59 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - Spell Theft: "stealing effects with Steal Spell" -> pipican:kill
 - **witch**
   - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
+
+## Chance on hit / proc effects
+
+- **acrobat**
+  - special tree: Kip-up: no slowdown after being knocked back
+  - special tree: Mobility: your movement never triggers mob 'attack of opportunity' style knockback
+- **aeromancer**
+  - special stat per point: +1% wind charge knockback
+  - passive: +50% wind charge knockback and they don't hurt you
+- **arcanist**
+  - passive: 1-in-6 chance to get it all back
+  - special passive: +0.3% Reclaim chance per Arcana point
+  - special tree: Recycling: Reclaim chance +5%
+- **bard**
+  - special passive: Disarming Charm: per 10 Resonance, +3% chance a hostile mob you hit forgets you
+- **destroyer**
+  - special tree: Shockwave: shockwave knocks mobs back
+- **diviner**
+  - special tree: Ill Fortune: mobs within 8 blocks have 10% chance to miss everyone
+- **duelist**
+  - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
+- **fighter**
+  - special passive: +1% Weapon Mastery chance per 4 Discipline
+- **mage_knight**
+  - passive: Your weapon hits deal 10% of their damage as magic damage (ignores armor)
+  - special tree: Charged Blade: first escalating hit also knocks back
+- **miracle_worker**
+  - general tree: Laying of Hands: Worker of Miracles also cures Poison and Wither
+- **myrmidon**
+  - special passive: Knockback +0.05 blocks per Shieldcraft
+  - special tree: Forceful Shield: +2 knockback blocks
+- **necromancer**
+  - special passive: Command chance +0.3% per Deathgrip
+  - general tree: Grave Dust: +5% command chance
+- **poisoner**
+  - special stat per point: +1% poison damage and duration you apply
+  - passive: brewing poison potions is 50% faster
+- **technomancer**
+  - special stat per point: +0.5% chance a crafted redstone item is doubled
+- **thaumaturge**
+  - special stat per point: +0.5% to all random effects in your favour (chaos, crits, loot)
+  - general tree: Chaos Shield: 10% chance an incoming hit is redirected to a random nearby mob
+  - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
+- **thief**
+  - passive: Open Locks: the first time you open a naturally generated loot chest, 15% chance of one extra roll of loot
+  - special passive: Open Locks chance +0.5% per Finesse point
+- **traveler**
+  - special passive: Per 10 Displacement, Hasty Escape chance +5%
+  - special tree: Thunderclap: arrivals knock mobs back
+- **warlock**
+  - special stat per point: +0.5% chance to steal an incoming harmful effect
+- **witch**
+  - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
 
 ## Potions, XP, loot, trading, crafting, food
 

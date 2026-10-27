@@ -93,6 +93,7 @@ VICTIM_STATES = [
     (r'scrutinised|scrutinized', lambda m: {'marked': True}),
     (r'unarmou?red (?:mobs?|targets?|enemies)', lambda m: {'unarmored': True}),
     (r'(?:your )?challenged foes?|(?:the |your )?(?:challenged|scrutinised|scrutinized) (?:mobs?|foes?|targets?)', lambda m: {'marked': True}),
+    (r'(?:mobs|targets|enemies) (?:that are |who are )?targeting you', lambda m: {'targeting_you': True}),
     (r'(?:mobs|targets|enemies) within (\d+(?:\.\d+)?) blocks?(?: of you)?', lambda m: {'within': float(m.group(1))}),
     (r'(?:mobs|targets|enemies) (?:that are )?targeting (?:someone|somebody|anyone|something) else', lambda m: {'targeting_other': True}),
     (r'(?:mobs|targets|enemies) that glow for you|glowing (?:mobs|targets|enemies)', lambda m: {'effects': 'minecraft:glowing'}),

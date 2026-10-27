@@ -765,6 +765,25 @@ def whole_line(text, ctx):
         base = REACTIONS.get(ctx.get('class_id'), {}).get(name)
         if base and 'chance' in base and float(m.group(2)) / 100 > base['chance']:
             return [{'type': 'pipican:reaction_chance', 'name': name, 'amount': round(float(m.group(2)) / 100 - base['chance'], 6)}]
+    # "Crusader: +30% damage to undead, but -10% damage to everything else"
+    m = re.fullmatch(rf'(.+?),? but ([+-]{N})% (?:damage )?to everything else', low)
+    if m and (first := _rest(m.group(1), ctx)):
+        aimed = [e for e in first if e.get('type') == 'pipican:damage_dealt' and ('against' in e or 'victim' in e)]
+        if len(aimed) == 1:
+            rest = {k: v for k, v in aimed[0].items() if k not in ('multiplier', 'scaling')}
+            rest['multiplier'] = round(1 + float(m.group(2)) / 100, 6)
+            rest['except'] = True
+            return first + [rest]
+    # "-25% damage to mobs that aren't poisoned or withered"
+    m = re.fullmatch(rf'([+-]{N})% damage to mobs that aren\'?t (poisoned|withered|slowed|burning|bleeding)(?: or (poisoned|withered|slowed))?', low)
+    if m:
+        names = {'poisoned': 'minecraft:poison', 'withered': 'minecraft:wither', 'slowed': 'minecraft:slowness'}
+        if m.group(3) in ('burning', 'bleeding'):
+            victim = {'on_fire': True} if m.group(3) == 'burning' else {'bleeding': True}
+        else:
+            ids = [names[g] for g in (m.group(3), m.group(4)) if g]
+            victim = {'effects': ids if len(ids) > 1 else ids[0]}
+        return [{'type': 'pipican:damage_dealt', 'victim': victim, 'multiplier': round(1 + float(m.group(1)) / 100, 6), 'except': True}]
     # Stacking boosts: "Blade Dance: each hit gives +1% speed for 3s (stacks 10)",
     # "Rampage: consecutive kills within 5s add +5% damage (stacks 5)"
     m = re.fullmatch(rf'(?:each|every) (hit|melee hit|kill|crit|critical hit) gives (.+) for {N}s \(stacks {N}\)', low) or \

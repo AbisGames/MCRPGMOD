@@ -103,16 +103,7 @@
     {
       "id": "cleric_crusader",
       "name": "Crusader",
-      "description": {
-        "text": "+30% damage to undead, but -10% damage to everything else",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% damage to undead, but -10% damage to everything else",
       "type": "keystone",
       "x": 831,
       "y": -480,
@@ -121,7 +112,20 @@
         "cleric_holy_wrath"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 0.9,
+          "except": true
+        }
+      ]
     }
   ]
 }

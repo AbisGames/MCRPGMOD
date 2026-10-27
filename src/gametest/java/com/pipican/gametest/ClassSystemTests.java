@@ -542,6 +542,15 @@ public final class ClassSystemTests {
         player.removeEffect(MobEffects.WEAKNESS);
         caster.discard();
 
+        // "except": half (drowning) damage to everything that isn't a husk.
+        var husk = helper.spawn(EntityType.HUSK, new BlockPos(4, 2, 4));
+        var notHusk = helper.spawn(EntityType.PIG, new BlockPos(4, 2, 2));
+        var hit = level.damageSources().drown();
+        assertNear(helper, 1, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), hit, husk, player), "husks are excepted");
+        assertNear(helper, 0.5, ClassState.multiplier(ClassEffectApplier.state(player).damageDealt(), hit, notHusk, player), "everything else -50%");
+        husk.discard();
+        notHusk.discard();
+
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
                 com.pipican.condition.type.HoldingCondition.Hand.MAIN);

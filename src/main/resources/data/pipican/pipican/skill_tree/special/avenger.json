@@ -50,16 +50,7 @@
     {
       "id": "frightening_glare",
       "name": "Frightening Glare",
-      "description": {
-        "text": "marked targets within your reach deal 15% less damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "marked targets within your reach deal 15% less damage",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,17 @@
         "sworn"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "victim": {
+            "marked": true,
+            "within": 4.5
+          },
+          "multiplier": 0.85
+        }
+      ]
     },
     {
       "id": "avenger_s_wrath",

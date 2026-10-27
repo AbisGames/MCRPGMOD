@@ -100,16 +100,7 @@
     {
       "id": "inquisitor_witch_finder",
       "name": "Witch-Finder",
-      "description": {
-        "text": "+25% damage to scrutinised, but -15% to everything else",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% damage to scrutinised, but -15% to everything else",
       "type": "keystone",
       "x": 1295,
       "y": -674,
@@ -118,7 +109,24 @@
         "inquisitor_master_torturer"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 0.85,
+          "except": true
+        }
+      ]
     }
   ]
 }

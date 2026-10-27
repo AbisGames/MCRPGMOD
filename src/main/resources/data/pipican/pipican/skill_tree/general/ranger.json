@@ -106,16 +106,7 @@
     {
       "id": "ranger_apex",
       "name": "Apex Predator",
-      "description": {
-        "text": "+30% damage to prey, but -15% damage to everything else",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% damage to prey, but -15% damage to everything else",
       "type": "keystone",
       "x": -945,
       "y": 167,
@@ -124,7 +115,24 @@
         "ranger_stalker"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 0.85,
+          "except": true
+        }
+      ]
     }
   ]
 }
