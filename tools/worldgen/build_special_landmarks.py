@@ -142,7 +142,40 @@ def aether():
         b.set(x,45,z,'sea_lantern');b.set(x,46,z,'end_rod')
     return b
 
+def morvath_integrated():
+    """Rebuild the authored Morvath central keep with an integrated, unlit
+    Nether portal room in its western interior wing; never overlay a 64x64
+    room onto a completed city in the live world."""
+    b=Workshop('authored/landmarks/ashlands/morvath','ashlands',(112,72,112))
+    b.make('castle')
+    # Small enclosed sanctuary entirely within the original palace footprint.
+    x1,x2,z1,z2=24,42,43,63
+    wall='polished_blackstone_bricks'
+    b.box(x1,1,z1,x2,12,z2,wall,hollow=True)
+    b.air(x1+1,2,z1+1,x2-1,11,z2-1)
+    b.box(x1+1,1,z1+1,x2-1,1,z2-1,'polished_basalt')
+    b.box(x1,13,z1,x2,13,z2,'nether_bricks')
+    # Connection to the existing palace west gallery.
+    b.air(x2-1,2,51,x2+1,7,55)
+    # Complete but unlit portal (no portal blocks and no fire).
+    for x in range(28,39):
+        for y in range(2,14):
+            if x in (28,38) or y in (2,13):
+                b.set(x,y,51,'obsidian')
+            else:
+                b.set(x,y,51,'air')
+    for x,z in ((26,46),(40,46),(26,60),(40,60)):
+        b.set(x,2,z,'crying_obsidian')
+        b.set(x,3,z,'soul_lantern')
+    return b
+
+
 def main():
+    # The portal is part of the authored capital keep, not a second world
+    # structure which could overwrite the city's incremental placement.
+    keep=BASE/'structure/authored/landmarks/ashlands/morvath.nbt'
+    count,raw=dump_nbt(morvath_integrated(),keep)
+    print(f'{keep}: {count} blocks; {raw} uncompressed bytes')
     for name,build in [('pillager_blackspire',outpost()),('umbral_ancient_city',ancient()),
                        ('morvath_portal_chamber',portal()),('aetheris_sky_citadel',aether())]:
         path=BASE/'structure/special'/(name+'.nbt')
