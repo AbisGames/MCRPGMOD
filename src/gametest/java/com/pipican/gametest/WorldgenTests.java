@@ -24,7 +24,8 @@ public final class WorldgenTests {
         "worldgen_catalog", WorldgenTests::worldgenCatalog,
         "renewable_mine", WorldgenTests::renewableMine,
         "structure_nbt_load", WorldgenTests::structureNbtLoad,
-        "registries_loaded", WorldgenTests::registriesLoaded
+        "registries_loaded", WorldgenTests::registriesLoaded,
+        "nature_features_loaded", WorldgenTests::natureFeaturesLoaded
     );
     private WorldgenTests(){}
 
@@ -145,6 +146,35 @@ public final class WorldgenTests {
             pools++;
         }
         helper.assertTrue(pools==331,"expected 331 original structure pools");
+        helper.succeed();
+    }
+
+    /**
+     * The server must decode all 27 tree, flora and geological definitions.
+     * These checks use live datapack registries rather than JSON file paths.
+     */
+    private static void natureFeaturesLoaded(GameTestHelper helper) {
+        var access=helper.getLevel().registryAccess();
+        var configured=access.lookupOrThrow(Registries.CONFIGURED_FEATURE);
+        var placed=access.lookupOrThrow(Registries.PLACED_FEATURE);
+        var themes=WorldgenJson.read("biome_theme_catalog.json");
+        int count=0;
+        for(var element:themes.getAsJsonArray("biomes")) {
+            String id=element.getAsJsonObject().get("id").getAsString();
+            helper.assertTrue(RegionalNatureBlocks.PALETTES.containsKey(id),
+                "no decorative block palette for "+id);
+            for(String type:List.of("tree","bloom","outcrop")) {
+                var key=Pipican.id(id+"_"+type);
+                helper.assertTrue(configured.get(ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE,key)).isPresent(),"no feature "+key);
+                helper.assertTrue(placed.get(ResourceKey.create(
+                    Registries.PLACED_FEATURE,key)).isPresent(),"no placement "+key);
+                count++;
+            }
+        }
+        helper.assertTrue(count==81,"expected 81 placed biome feature types");
+        helper.assertTrue(RegionalNatureBlocks.PALETTES.size()==27,
+            "expected 27 biome decor palettes");
         helper.succeed();
     }
 
