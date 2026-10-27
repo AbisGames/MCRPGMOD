@@ -38,6 +38,48 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         return Map.copyOf(found);
     }
 
+    // Small, low-slope terraces are formed in new chunks before the city
+    // placement service runs. These avoid excavating terrain in loaded worlds.
+    private static final Map<String,List<LandmarkCatalog.Landmark>> SITES=loadSites();
+    private static Map<String,List<LandmarkCatalog.Landmark>> loadSites(){
+        Map<String,List<LandmarkCatalog.Landmark>> byRegion=new HashMap<>();
+        for(var site:new LandmarkCatalog().all())
+            byRegion.computeIfAbsent(site.region(),key->new ArrayList<>()).add(site);
+        return Map.copyOf(byRegion);
+    }
+    public static int terraceHeight(String region) {
+        return switch(region) {
+            case "whitecrown_icecap","northern_ice_sea" -> 114;
+            case "greyspine_mountains" -> 146;
+            case "jade_empire" -> 124;
+            case "ashlands","stormcoast","redrock_badlands" -> 108;
+            case "western_ocean","inner_sea","coral_isles" -> 82;
+            case "marshfen","lotus_delta" -> 88;
+            case "heartlands","riverlands" -> 96;
+            default -> 104;
+        };
+    }
+    private static double pad(int x,int z,int siteX,int siteZ,
+                              double inner,double outer) {
+        double distance=Math.hypot((double)x-siteX,(double)z-siteZ);
+        if(distance>=outer)return 0;
+        if(distance<=inner)return 1;
+        double t=(distance-inner)/(outer-inner);
+        return 1-(t*t*(3-2*t));
+    }
+    /** Pure terrain-slope correction; testable across arbitrary world seeds. */
+    public static double terraceCorrection(String region,int x,int y,int z) {
+        double influence=0;
+        for(var site:SITES.getOrDefault(region,List.of())){
+            double flat=site.tier().equals("capital")?340:105;
+            double outer=site.tier().equals("capital")?580:225;
+            influence=Math.max(influence,pad(x,z,site.x(),site.z(),flat,outer));
+        }
+        if(region.equals("redrock_badlands"))
+            influence=Math.max(influence,pad(x,z,3500,21300,88,190));
+        return (terraceHeight(region)-y)*0.45*influence;
+    }
+
     private static double bell(double v,double width) {
         double q=v/width;
         return Math.exp(-q*q);
@@ -149,10 +191,12 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
                 capitalFactor=Math.min(capitalFactor,smooth);
             }
         }
-        return strength*((target/130.0)*ridge+themedTerrain)*vertical*nearGround*blend*capitalFactor;
+        double terrace=terraceCorrection(r.id(),x,y,z);
+        return strength*(terrace+
+            ((target/130.0)*ridge+themedTerrain)*vertical*nearGround*blend*capitalFactor);
     }
-    @Override public double minValue(){return -4*strength;}
-    @Override public double maxValue(){return 20*strength;}
+    @Override public double minValue(){return -200*Math.abs(strength);}
+    @Override public double maxValue(){return 200*Math.abs(strength);}
     @Override public DensityFunction mapAll(DensityFunction.Visitor visitor){
         return visitor.apply(this);
     }

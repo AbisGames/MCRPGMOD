@@ -334,6 +334,15 @@ public final class WorldgenTests {
         helper.assertTrue(islands.size()==7,"expected one floating city and six villages");
         helper.assertTrue(islands.stream().filter(SkyIslandLayout.Island::citadel).count()==1,
             "Aetheris must have exactly one castle");
+        for(var city:new LandmarkCatalog().all()){
+            int elevation=RegionalElevation.terraceHeight(city.region());
+            helper.assertTrue(RegionalElevation.terraceCorrection(
+                city.region(),city.x(),elevation-8,city.z())>0,
+                "missing foundation support for "+city.id());
+            helper.assertTrue(RegionalElevation.terraceCorrection(
+                city.region(),city.x(),elevation+8,city.z())<0,
+                "foundation top is not being levelled for "+city.id());
+        }
         helper.assertTrue(SpecialLandmarkPlacementEvents.sites().size()==9,
             "three special regions plus six sky villages expected");
         for(var island:islands){
