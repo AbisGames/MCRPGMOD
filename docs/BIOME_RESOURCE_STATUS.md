@@ -1,14 +1,9 @@
-# Generated biome registry entries (incomplete world integration)
+# RPG Biome Datapack Status (updated)
 
-These 125 biome JSON definitions represent all 120 authored subregion IDs
-under pipican:<macro>/<subregion> and five original fantasy biomes.
+The original 120 authored subregion entries and 5 new exotic biome entries
+are registered and connected to `pipican:regional`. They inherit vanilla
+ecosystem features but additionally receive custom terrain strata, 27 tree
+styles, 27 undergrowth types and 120 differentiated vegetation distributions.
 
-**IMPORTANT**: They are registered datapack entries only. They are NOT
-included in a custom Overworld biome source yet. Their features, carvers
-and spawn tables are empty placeholders rather than working forests,
-caves and mobs. Do not select these biomes for a survival release without
-adding biome features, vanilla ore/cave preservation, terrain surface
-rules and a climate-backed biome source.
-
-Biome colors and climates are provisional. Biome registry files alone do
-not guarantee a 50,000 x 50,000 naturally generated world.
+See `docs/BIOME_IMPLEMENTATION.md` for the actual code and testing status.
+The old statement that all biome feature arrays are placeholders is obsolete.
