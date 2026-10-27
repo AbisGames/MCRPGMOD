@@ -11,16 +11,7 @@
     {
       "id": "recall",
       "name": "Recall",
-      "description": {
-        "text": "+2 Binding; unlocks Recall Weapon ability",
-        "extra": [
-          {
-            "text": " (partly not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 Binding; unlocks Recall Weapon ability",
       "type": "small",
       "x": 35,
       "y": 70,
@@ -33,6 +24,9 @@
           "stat": "pipican:spellbinder_binding",
           "amount": 2
         }
+      ],
+      "grants": [
+        "pipican:spellbinder/recall_weapon"
       ]
     },
     {
@@ -75,16 +69,7 @@
     {
       "id": "sacrifice",
       "name": "Sacrifice",
-      "description": {
-        "text": "unlocks Sacrifice ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Sacrifice ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -92,7 +77,10 @@
         "mend"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:spellbinder/sacrifice"
+      ]
     },
     {
       "id": "magic_weapon",

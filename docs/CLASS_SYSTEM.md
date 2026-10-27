@@ -302,13 +302,23 @@ Something the player presses a key to do. A player's abilities are the class's `
 | `requires` | none | A [condition](#conditions) that must hold to use it (e.g. holding a staff). |
 | `auto` | none | Starts by itself whenever this condition holds (and it's off cooldown and affordable). Auto abilities don't take a key. |
 | `end_when` | none | A running state/toggle stops early when this holds. |
+| `spend_all` | false | Spends the whole bar instead of `cost`; `empower` can scale with what was spent. |
+| `uses_per_rest` | 0 | > 0: only that many uses between sleeps (sleeping in a bed resets it). |
+| `pulse_ticks`, `pulse_actions` | 0, none | A state/toggle runs `pulse_actions` every `pulse_ticks`. |
+| `anchored` | false | Pulses stay where the ability was used instead of following the player. |
+
+If an action needs something that isn't there (no mob in the crosshair, no waypoint, no book), the use is
+**cancelled**: no cost, no cooldown, and the player is told why.
 
 Cooldowns and running states are saved on the player, so relogging doesn't reset them; running
 states end on death and when the class changes.
 
 **Actions.** Most take the target fields `target`, `radius` (=6), `range` (=16) and `cone` (degrees, =360):
 `self`, `allies` (you + players in radius), `players` (others in radius), `hostiles`, `mobs` (non-players in
-radius), `look` (the mob in your crosshair within range), `look_ally` (the player in your crosshair, else you).
+radius), `look` (the mob in your crosshair within range), `look_ally` (the player in your crosshair, else you),
+`victim` (in a `pipican:on` reaction: the mob hit/killed, or the attacker), `companions` (your summons, pets and
+eidolon). `entities` (`"#minecraft:undead"`, a list...) keeps only those kinds of mob. `look` with nothing in
+sight cancels the use unless `"required": false`.
 
 | Action | Fields | Does |
 |---|---|---|
@@ -325,6 +335,31 @@ radius), `look` (the mob in your crosshair within range), `look_ally` (the playe
 | `pipican:explode` | `power`, `fire` | An explosion on you that never hurts you or breaks blocks. |
 | `pipican:weather` | `seconds`, `thunder` | Starts rain or a storm. |
 | `pipican:resource` | `amount`, `percent` | Refills (or drains) your resource bar. |
+| `pipican:mark` | targets (=look), `seconds`, `multiplier`, `shared`, `next_hit`, `projectile_only`, `glow` | Your damage to marked mobs is multiplied (`shared`: everyone's; `next_hit`: used up by one hit). |
+| `pipican:empower` | targets (=self), `multiplier`, `bonus`, `bonus_per_spent`, `hits`, `seconds`, `against`, `effects` | "Your next hit…": bigger damage and/or potion effects. |
+| `pipican:imbue` | `hits`, `seconds` | Uses up the off-hand potion: your next hits apply it. |
+| `pipican:control` | targets (=look), `mode` (`flee`/`pacify`/`ally`), `seconds` | Frighten, charm, or turn mobs to your side. |
+| `pipican:decoy` | `seconds`, `radius` | A fake of you that hostile mobs attack instead. |
+| `pipican:negate_hit` | targets (=look_ally), `seconds`, `guard` | The next attack on them misses (`guard`: you take it instead). |
+| `pipican:teleport_to` | targets (=look_ally) | Teleports you beside the target. |
+| `pipican:recall` | – | Sneak + use saves a waypoint; use returns to it. |
+| `pipican:recall_item` | `items`, `radius` | Pulls back the nearest item you dropped or threw (e.g. your weapon, a trident). |
+| `pipican:locate` | `structures` (tag, optional) | Tells you the direction and distance to your bed / the nearest structure. |
+| `pipican:scry` | `seconds`, `range` | See through another player's eyes. |
+| `pipican:give` | `item`, `sneak_item`, `seconds` | A temporary item that vanishes after `seconds` or when you sleep. |
+| `pipican:steal` | `range` | Takes the held item (or an armor piece) of the mob you look at. |
+| `pipican:transmute` | `pairs`: `[ { "from", "to" } ]` | Turns the held stack into another item. |
+| `pipican:transfer_effects` | targets (=look) | Moves your harmful effects onto the target. |
+| `pipican:cast` | `spells` (ability ids) | Casts the spell whose name is on the first page of a book in your hand. |
+| `pipican:eidolon` | `item`, `count`, `rebuild_ticks` | Builds your eidolon (or calls it to you). |
+| `pipican:mount` | `range` | Rides (or leaves) your eidolon. |
+| `pipican:bond` | `range` | Bonds you with the player you look at: each heals half of what the other heals within 32 blocks. |
+| `pipican:optimize` | – | Offers the Optimization choice again. |
+
+**The eidolon** (`pipican:eidolon` entity) is a big iron construct with an owner: it follows you, fights what
+hurts you or what you hit, never attacks players, sits on sneak + right-click, is repaired with iron ingots, can
+be ridden (`pipican:mount`) and is upgraded by your class through `pipican:eidolon` effects. When it is destroyed
+the ability that built it goes on its `rebuild_ticks` cooldown.
 
 The `pipican:flight` effect gives creative-style flight while it counts — put it in a toggle's `effects`.
 
@@ -345,6 +380,10 @@ picked by `"type"`:
 | `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
 | `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
 | `pipican:flight` | – | Creative-style flight while it counts (usually in an ability toggle). Never touches creative/spectator players. |
+| `pipican:on` | `event` (`hit`/`melee_hit`/`ranged_hit`/`kill`/`hurt`/`block`), `chance`, `cooldown_ticks`, `weapons`, `victims`, `actions` | Runs [ability actions](#26-active-abilities--abilitynamejson) when it happens ("10% chance your hits set mobs on fire", "kills give Speed"). |
+| `pipican:eidolon` | `attribute`, `amount`, `operation`, `scaling` | Changes an attribute of your eidolon. |
+| `pipican:spell_points` | `amount` | Spell points that refill on every sleep and pay for abilities instead of the resource. |
+| `pipican:optimization` | `amount`, `extra_loss`, `scaling` | After each sleep, pick a stat to raise by `amount` and one to lower by `amount + extra_loss` (clickable chat). |
 
 ```json
 { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
@@ -381,6 +420,7 @@ second, and a player's bonuses are rebuilt only when an answer changes.
 | `pipican:nearby` | `entities` (`players` / `hostile_mobs`), `radius` (=8), `min` (=1), `max` | That many others are within the radius. `"max": 0` = alone. |
 | `pipican:effect` | `effects` (id / list / `#tag`) | The player has one of the potion effects. |
 | `pipican:ability_active` | `ability` | One of the player's ability states/toggles is running. |
+| `pipican:has_eidolon` | – | The player's eidolon exists. |
 | `pipican:not` | `condition` | The condition is false. |
 | `pipican:all_of`, `pipican:any_of` | `conditions` (list) | All / at least one are true. |
 
@@ -504,7 +544,8 @@ multiclass system can add classes without migrating saves. How it should work is
 | `/pipican trinkets` | everyone | Same as **G**. |
 | `/pipican ability use <ability>` | everyone | Same as pressing the ability's key. |
 | `/pipican ability force <players> <ability>` | admin | Uses any ability for free, ignoring cooldowns (for testing). |
-| `/pipican ability reset <players>` | admin | Clears ability cooldowns and running abilities. |
+| `/pipican ability reset <players>` | admin | Clears ability cooldowns, per-rest uses and running abilities. |
+| `/pipican optimize <raise> <lower>` | everyone | The Optimization choice (the chat buttons run it). |
 
 ---
 
@@ -528,7 +569,9 @@ com.pipican
 ├── effect/                   ClassEffect (interface), ClassEffectTypes (type registry),
 │   └── type/                 the built-in effect types
 ├── ability/                  Ability (JSON), AbilityService (use/tick), AbilitySlots (keys), Targets, Summons,
+│                             MobControl, Marks, Empowers, HitShields, Reactions, Optimize, Bonds, Scry,
 │   └── action/               AbilityAction + AbilityActionTypes: the built-in action types
+├── entity/                   Eidolon (the Engineer's construct), PipicanEntities
 ├── condition/                ClassCondition (interface), ConditionTypes (type registry), Bounds
 │   └── type/                 the built-in condition types (used by pipican:conditional)
 ├── player/

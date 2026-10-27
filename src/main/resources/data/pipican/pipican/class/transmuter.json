@@ -60,18 +60,26 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
-  "weakness": {
-    "description": {
-      "text": "Never quite the same twice.",
-      "extra": [
+  "passives": [
+    {
+      "type": "pipican:optimization",
+      "amount": 3,
+      "scaling": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "source": "special_stat",
+          "per": 0.05
         }
       ]
-    },
-    "effects": []
+    }
+  ],
+  "weakness": {
+    "description": "Never quite the same twice.",
+    "effects": [
+      {
+        "type": "pipican:optimization",
+        "extra_loss": 3
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

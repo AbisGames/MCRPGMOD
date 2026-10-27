@@ -1,0 +1,21 @@
+{
+  "name": "Intercept",
+  "description": "dash to an ally and take the next hit for them, 20 Guard",
+  "icon": "minecraft:shield",
+  "cost": 20,
+  "cooldown_ticks": 240,
+  "actions": [
+    {
+      "type": "pipican:teleport_to",
+      "target": "look_ally",
+      "range": 24
+    },
+    {
+      "type": "pipican:negate_hit",
+      "target": "look_ally",
+      "range": 24,
+      "seconds": 10,
+      "guard": true
+    }
+  ]
+}

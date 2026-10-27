@@ -123,5 +123,8 @@
     "pipican:amulet": 2,
     "pipican:ring": 1,
     "pipican:cloak": 1
-  }
+  },
+  "abilities": [
+    "pipican:witch/witch_fire"
+  ]
 }

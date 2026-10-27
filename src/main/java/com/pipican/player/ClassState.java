@@ -1,6 +1,7 @@
 package com.pipican.player;
 
 import com.pipican.condition.ClassCondition;
+import com.pipican.effect.type.ReactionEffect;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.stat.StatDefinition;
 import java.util.List;
@@ -15,6 +16,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -33,9 +35,14 @@ public record ClassState(
         double resourceMax,
         double resourceRegenPerTick,
         List<ConditionCheck> conditions,
-        boolean flight) {
+        boolean flight,
+        List<ReactionEffect> reactions,
+        Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> eidolonUpgrades,
+        int spellPoints,
+        double optimizationAmount) {
 
-    public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false);
+    public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
+            List.of(), Map.of(), 0, 0);
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}

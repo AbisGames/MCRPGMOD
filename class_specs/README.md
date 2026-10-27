@@ -68,7 +68,11 @@ hand into `tools/class_builder/abilities.py`, so tell Claude when you add or cha
 buff/debuff players and mobs around you or the one you look at, heal, cleanse, shield, damage (around you, in a
 cone in front of you, or the mob you look at), push, dash, blink, call lightning, summon temporary helpers
 (wolves, iron golems...), explode, start rain, refill the resource bar, fly (as a toggle), and give any bonus
-from the table above for a while (a timed state) or while toggled on. Abilities can need a situation
+from the table above for a while (a timed state) or while toggled on. They can also mark a mob, buff your
+next hit, frighten / charm / recruit mobs, leave a decoy, make the next hit on an ally miss, teleport to an
+ally / a saved waypoint / a log / through walls, find your bed or a village, see through a player's eyes,
+give temporary items, steal, transmute, cast spells written in a book, build and ride the Engineer's eidolon,
+bond with a player, and react to hits and kills ("for 30s, every mob you kill rises as a zombie"). Abilities can need a situation
 ("only in darkness", "while holding your staff"), and can start by themselves ("when Rage is above 75%").
 
 ## Not possible yet
@@ -76,8 +80,6 @@ from the table above for a while (a timed state) or while toggled on. Abilities 
 Fine to write these in section 12 ("Anything else"). Claude will leave them out and list them, until the system
 supports them.
 
-- Ability mechanics beyond the list above: marking a target, charming or controlling mobs, decoys, eidolons,
-  temples, grimoires, "your next hit does X", teleporting to a saved spot or between logs
 - Magic damage, healing power, health regen, crit chance as stats (Intelligence, Wisdom, Endurance and Luck
   give nothing yet)
 - Different stat growth per class (e.g. a mage getting more out of Intelligence)

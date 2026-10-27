@@ -59,7 +59,7 @@ public record DamageAction(Targets targets, double amount, Kind kind, double exe
             case MELEE -> sources.playerAttack(player);
             case FIRE -> sources.onFire();
         };
-        for (LivingEntity target : targets.select(player)) {
+        for (LivingEntity target : targets.select(ctx)) {
             if (target == player) {
                 continue;
             }

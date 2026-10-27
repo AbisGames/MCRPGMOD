@@ -1,0 +1,16 @@
+{
+  "name": "Conjure Horror",
+  "description": "summon a large monster - ravager-sized - for 20s, 60 Ether",
+  "icon": "minecraft:ravager_spawn_egg",
+  "cost": 60,
+  "cooldown_ticks": 1200,
+  "actions": [
+    {
+      "type": "pipican:summon",
+      "entity": "minecraft:ravager",
+      "count": 1,
+      "seconds": 20,
+      "ally": true
+    }
+  ]
+}

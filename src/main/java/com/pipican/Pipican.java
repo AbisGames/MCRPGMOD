@@ -2,6 +2,7 @@ package com.pipican;
 
 import com.mojang.logging.LogUtils;
 import com.pipican.core.PipicanConfig;
+import com.pipican.entity.PipicanEntities;
 import com.pipican.core.PipicanRegistries;
 import com.pipican.network.PipicanNetwork;
 import com.pipican.player.PipicanAttachments;
@@ -34,6 +35,8 @@ public final class Pipican {
     public Pipican(IEventBus modBus, ModContainer container) {
         PipicanAttachments.REGISTER.register(modBus);
         PipicanMenus.REGISTER.register(modBus);
+        PipicanEntities.REGISTER.register(modBus);
+        modBus.addListener(PipicanEntities::registerAttributes);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);

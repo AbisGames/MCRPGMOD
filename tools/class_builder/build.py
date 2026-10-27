@@ -199,16 +199,24 @@ def ability_json(name, description, d):
     j['icon'] = 'minecraft:' + d.get('icon', 'book')
     if d.get('cost'):
         j['cost'] = d['cost']
+    if d.get('spend_all'):
+        j['spend_all'] = True
     j['cooldown_ticks'] = int(round(d.get('cooldown', 10) * 20))
+    if d.get('rest'):
+        j['uses_per_rest'] = d['rest']
     if d.get('duration'):
         j['duration_ticks'] = int(round(d['duration'] * 20))
     if d.get('toggle'):
         j['toggle'] = True
         j['drain_per_second'] = d.get('drain', 0)
+    if d.get('pulse'):
+        j['pulse_ticks'] = d['pulse']
+    if d.get('anchored'):
+        j['anchored'] = True
     for k in ('requires', 'auto', 'end_when'):
         if d.get(k):
             j[k] = d[k]
-    for k in ('actions', 'end_actions', 'effects'):
+    for k in ('actions', 'end_actions', 'pulse_actions', 'effects'):
         if d.get(k):
             j[k] = d[k]
     return j
@@ -438,11 +446,22 @@ def main(spec_dir, res_dir, report_path):
 
         passives = []
         for p in c['passives']:
-            passives += tr(cid, 'passive', p, ctx)[0]
+            hand = next((v for (k_cid, k), v in ab.PASSIVE_EFFECTS.items() if k_cid == cid and p.startswith(k)), None)
+            if hand is not None:
+                passives += hand
+                counts['phrases'] += 1
+                counts['full'] += 1
+            else:
+                passives += tr(cid, 'passive', p, ctx)[0]
         special_passives = list(extra_special)
         for p in c['special_passives']:
             special_passives += tr(cid, 'special passive', p, ctx)[0]
-        weff, wuns = tr(cid, 'weakness', c['weakness']['does'], dict(ctx, weakness=True))
+        if cid in ab.WEAKNESS_EFFECTS:
+            weff, wuns = ab.WEAKNESS_EFFECTS[cid], []
+            counts['phrases'] += 1
+            counts['full'] += 1
+        else:
+            weff, wuns = tr(cid, 'weakness', c['weakness']['does'], dict(ctx, weakness=True))
 
         base_stats = {f'{NS}:{k}': v for k, v in c['stats'].items() if k != 'SPECIAL' and v}
         if c['stats'].get('SPECIAL'):
@@ -482,9 +501,13 @@ def main(spec_dir, res_dir, report_path):
 
         # --- abilities
         listed = spec_abilities(c)
+        for extra in ab.EXTRA.get(cid, []):
+            listed.setdefault(extra, '')
         ability_ids = {}
         for name, desc in listed.items():
             d = ab.A.get((cid, name))
+            if (cid, name) in ab.NOT_ABILITIES:
+                continue
             if d is None:
                 report['Abilities not in game yet'].append((cid, f'ability {name}', desc or 'unlocked by a tree node'))
                 continue
@@ -504,9 +527,16 @@ def main(spec_dir, res_dir, report_path):
                 eff, uns = ([], [])
                 grants = [ability_ids[m.group(1).strip().lower()] for m in UNLOCKS.finditer(n['gives'])
                           if m.group(1).strip().lower() in ability_ids]
+                hand = ab.NODE_EFFECTS.get((cid, n['id']))
+                if hand is not None:
+                    grants += [ability_ids[g.lower()] for g in hand[1] if g.lower() in ability_ids]
                 node_granted.update(grants)
                 # "unlocks X ability" is handled by grants; translate whatever else the node gives.
                 rest = UNLOCKS.sub('', n['gives']).strip(' ;,') if grants else n['gives']
+                if hand is not None:
+                    eff, uns, rest = list(hand[0]), [], ''
+                    counts['phrases'] += 1
+                    counts['full'] += 1
                 if rest:
                     eff, uns = tr(cid, f'{kind} tree: {n["name"]}', rest, dict(ctx, keystone=n['size'] == 'keystone'))
                 elif grants:

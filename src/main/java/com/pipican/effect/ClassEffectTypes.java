@@ -7,9 +7,13 @@ import com.pipican.Pipican;
 import com.pipican.effect.type.AttributeEffect;
 import com.pipican.effect.type.ConditionalEffect;
 import com.pipican.effect.type.DamageMultiplierEffect;
+import com.pipican.effect.type.EidolonEffect;
 import com.pipican.effect.type.FlightEffect;
 import com.pipican.effect.type.MobEffectEffect;
+import com.pipican.effect.type.OptimizationEffect;
+import com.pipican.effect.type.ReactionEffect;
 import com.pipican.effect.type.ResourceEffect;
+import com.pipican.effect.type.SpellPointsEffect;
 import com.pipican.effect.type.StatEffect;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,6 +47,10 @@ public final class ClassEffectTypes {
     public static final Type RESOURCE = register("resource", ResourceEffect.CODEC);
     public static final Type CONDITIONAL = register("conditional", ConditionalEffect.CODEC);
     public static final Type FLIGHT = register("flight", FlightEffect.CODEC);
+    public static final Type ON = register("on", ReactionEffect.CODEC);
+    public static final Type EIDOLON = register("eidolon", EidolonEffect.CODEC);
+    public static final Type SPELL_POINTS = register("spell_points", SpellPointsEffect.CODEC);
+    public static final Type OPTIMIZATION = register("optimization", OptimizationEffect.CODEC);
 
     private ClassEffectTypes() {}
 

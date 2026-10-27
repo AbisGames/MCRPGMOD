@@ -1,0 +1,16 @@
+{
+  "name": "Direct the Troops",
+  "description": "allies dash toward a point",
+  "icon": "minecraft:white_banner",
+  "cost": 20,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:dash",
+      "target": "allies",
+      "radius": 12,
+      "strength": 1.2,
+      "up": 0.2
+    }
+  ]
+}

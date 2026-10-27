@@ -1,0 +1,86 @@
+{
+  "name": "Transmute",
+  "description": "turn a stack of one material into a similar one - e.g. cobblestone to stone, 30 Alteration",
+  "icon": "minecraft:amethyst_shard",
+  "cost": 30,
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:transmute",
+      "pairs": [
+        {
+          "from": "minecraft:cobblestone",
+          "to": "minecraft:stone"
+        },
+        {
+          "from": "minecraft:stone",
+          "to": "minecraft:smooth_stone"
+        },
+        {
+          "from": "minecraft:sand",
+          "to": "minecraft:glass"
+        },
+        {
+          "from": "minecraft:gravel",
+          "to": "minecraft:flint"
+        },
+        {
+          "from": "minecraft:dirt",
+          "to": "minecraft:grass_block"
+        },
+        {
+          "from": "minecraft:cobbled_deepslate",
+          "to": "minecraft:deepslate"
+        },
+        {
+          "from": "minecraft:netherrack",
+          "to": "minecraft:nether_bricks"
+        },
+        {
+          "from": "minecraft:clay_ball",
+          "to": "minecraft:brick"
+        },
+        {
+          "from": "minecraft:raw_iron",
+          "to": "minecraft:iron_ingot"
+        },
+        {
+          "from": "minecraft:raw_copper",
+          "to": "minecraft:copper_ingot"
+        },
+        {
+          "from": "minecraft:raw_gold",
+          "to": "minecraft:gold_ingot"
+        },
+        {
+          "from": "minecraft:rotten_flesh",
+          "to": "minecraft:leather"
+        },
+        {
+          "from": "minecraft:oak_log",
+          "to": "minecraft:spruce_log"
+        },
+        {
+          "from": "minecraft:spruce_log",
+          "to": "minecraft:birch_log"
+        },
+        {
+          "from": "minecraft:birch_log",
+          "to": "minecraft:jungle_log"
+        },
+        {
+          "from": "minecraft:jungle_log",
+          "to": "minecraft:acacia_log"
+        },
+        {
+          "from": "minecraft:acacia_log",
+          "to": "minecraft:dark_oak_log"
+        },
+        {
+          "from": "minecraft:dark_oak_log",
+          "to": "minecraft:oak_log"
+        }
+      ]
+    }
+  ]
+}

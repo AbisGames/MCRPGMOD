@@ -1,0 +1,25 @@
+{
+  "name": "Witch Fire",
+  "description": "become invisible, steer a green fireball that burns mobs, 15 Witchery/s",
+  "icon": "minecraft:fire_charge",
+  "cooldown_ticks": 200,
+  "toggle": true,
+  "drain_per_second": 15,
+  "pulse_ticks": 20,
+  "pulse_actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 3,
+      "range": 16,
+      "required": false,
+      "fire_seconds": 3
+    }
+  ],
+  "effects": [
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:invisibility"
+    }
+  ]
+}

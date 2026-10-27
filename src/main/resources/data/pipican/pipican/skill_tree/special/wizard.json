@@ -92,16 +92,7 @@
     {
       "id": "spell_mastery",
       "name": "Spell Mastery",
-      "description": {
-        "text": "6 'spell points' per rest that pay for abilities instead of Aether; -10% Aether regen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "6 'spell points' per rest that pay for abilities instead of Aether; -10% Aether regen",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -110,7 +101,19 @@
         "second_tome"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:spell_points",
+          "amount": 6
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

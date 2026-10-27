@@ -109,5 +109,9 @@
     "pipican:amulet": 1,
     "pipican:ring": 1,
     "pipican:belt": 2
-  }
+  },
+  "abilities": [
+    "pipican:artificer/assemble",
+    "pipican:artificer/store_spell"
+  ]
 }

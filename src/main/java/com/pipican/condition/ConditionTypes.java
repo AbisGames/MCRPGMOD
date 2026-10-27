@@ -9,6 +9,7 @@ import com.pipican.condition.type.BiomeCondition;
 import com.pipican.condition.type.CompositeCondition;
 import com.pipican.condition.type.DimensionCondition;
 import com.pipican.condition.type.EffectCondition;
+import com.pipican.condition.type.HasEidolonCondition;
 import com.pipican.condition.type.HealthCondition;
 import com.pipican.condition.type.HoldingCondition;
 import com.pipican.condition.type.LightCondition;
@@ -48,6 +49,7 @@ public final class ConditionTypes {
     public static final Type EFFECT = register("effect", EffectCondition.CODEC);
     public static final Type STANDING_ON = register("standing_on", StandingOnCondition.CODEC);
     public static final Type ABILITY_ACTIVE = register("ability_active", AbilityActiveCondition.CODEC);
+    public static final Type HAS_EIDOLON = register("has_eidolon", HasEidolonCondition.CODEC);
     public static final Type NOT = register("not", NotCondition.CODEC);
     public static final Type ALL_OF = register("all_of", CompositeCondition.ALL_CODEC);
     public static final Type ANY_OF = register("any_of", CompositeCondition.ANY_CODEC);

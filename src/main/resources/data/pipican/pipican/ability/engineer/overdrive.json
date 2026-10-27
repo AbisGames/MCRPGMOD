@@ -1,0 +1,26 @@
+{
+  "name": "Overdrive",
+  "description": "eidolon +50% speed/damage for 10s, 40 Fuel",
+  "icon": "minecraft:redstone",
+  "cost": 40,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "companions",
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 10,
+          "amplifier": 1
+        },
+        {
+          "effect": "minecraft:strength",
+          "seconds": 10,
+          "amplifier": 1
+        }
+      ],
+      "radius": 32
+    }
+  ]
+}

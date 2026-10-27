@@ -47,7 +47,7 @@ public record EffectAction(Targets targets, List<Entry> effects) implements Abil
 
     @Override
     public void run(AbilityContext ctx) {
-        for (LivingEntity target : targets.select(ctx.player())) {
+        for (LivingEntity target : targets.select(ctx)) {
             for (Entry e : effects) {
                 target.addEffect(e.create(), ctx.player());
             }

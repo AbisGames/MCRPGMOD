@@ -78,6 +78,7 @@ public final class ClassSystemTests {
         TESTS.put("conditions_and_resource", ClassSystemTests::conditionsAndResource);
         TESTS.put("abilities", ClassSystemTests::abilities);
         TESTS.put("shipped_abilities", ClassSystemTests::shippedAbilities);
+        TESTS.put("ability_mechanics", ClassSystemTests::abilityMechanics);
     }
 
     private ClassSystemTests() {}
@@ -317,7 +318,7 @@ public final class ClassSystemTests {
         PlayerClassData data = ClassService.data(player);
         var access = helper.getLevel().registryAccess();
         assertNear(helper, 20, data.resource(), "resource starts full");
-        helper.assertTrue(AbilitySlots.slots(access, data).equals(List.of(ability("mend"), ability("bulwark"), ability("soar"))),
+        helper.assertTrue(AbilitySlots.slots(access, data).subList(0, 3).equals(List.of(ability("mend"), ability("bulwark"), ability("soar"))),
                 "auto abilities stay off the keys: " + AbilitySlots.slots(access, data));
 
         // Instant: cost and cooldown.
@@ -362,6 +363,81 @@ public final class ClassSystemTests {
         });
     }
 
+    /** Marks, next-hit buffs, hit shields, cancel + refund, per-rest uses, reactions, mob control, eidolon, Optimization. */
+    private static void abilityMechanics(GameTestHelper helper) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, ABILITY_TESTER, false, true).success(), "choose ability tester");
+        PlayerClassData data = ClassService.data(player);
+        var zombie = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 1, 1, 3);
+        zombie.setHealth(zombie.getMaxHealth());
+        player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 2, 0, 0);
+        var sources = helper.getLevel().damageSources();
+
+        // Cancel + refund: nothing in the crosshair within 4 blocks... after moving away.
+        player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 10, 0, 0);
+        double before = data.resource();
+        helper.assertTrue(!AbilityService.use(player, ability("needs_target")).success(), "no target -> cancelled");
+        assertNear(helper, before, data.resource(), "cancelled use is refunded");
+        helper.assertTrue(data.abilityReadyAt(ability("needs_target")) == 0, "cancelled use starts no cooldown");
+        player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 2, 0, 0);
+
+        // Mark (x2, next hit only) and empower (+5 next hit) stack on the next hit, then are used up.
+        helper.assertTrue(AbilityService.use(player, ability("brand")).success(), "brand");
+        helper.assertTrue(AbilityService.use(player, ability("smite")).success(), "smite");
+        float hp = zombie.getHealth();
+        // Magic damage ignores the zombie's armor, so the numbers stay exact.
+        zombie.hurtServer(helper.getLevel(), sources.indirectMagic(player, player), 2);
+        assertNear(helper, hp - (2 * 2 + 5), zombie.getHealth(), "marked + empowered hit");
+        hp = zombie.getHealth();
+        zombie.invulnerableTime = 0;
+        zombie.hurtServer(helper.getLevel(), sources.indirectMagic(player, player), 2);
+        assertNear(helper, hp - 2, zombie.getHealth(), "mark and empower used up");
+
+        // Hit shield: the next hit on the player misses.
+        player.setHealth(20);
+        helper.assertTrue(AbilityService.use(player, ability("guard")).success(), "guard");
+        player.hurtServer(helper.getLevel(), sources.generic(), 6);
+        assertNear(helper, 20, player.getHealth(), "guarded hit missed");
+
+        // Per-rest uses come back after sleeping.
+        helper.assertTrue(AbilityService.use(player, ability("rested")).success(), "rested");
+        helper.assertTrue(!AbilityService.use(player, ability("rested")).success(), "only once per rest");
+        AbilityService.onWake(player);
+        helper.assertTrue(AbilityService.use(player, ability("rested")).success(), "usable again after sleeping");
+
+        // Mob control: a pacified zombie can't target the player.
+        helper.assertTrue(AbilityService.use(player, ability("calm")).success(), "calm");
+        zombie.setTarget(player);
+        helper.assertTrue(zombie.getTarget() != player, "pacified mob doesn't target you");
+
+        // Reaction: a kill gives Speed.
+        zombie.hurtServer(helper.getLevel(), sources.playerAttack(player), 1000);
+        helper.assertTrue(player.hasEffect(net.minecraft.world.effect.MobEffects.SPEED), "on-kill reaction");
+
+        // Eidolon: built, owned, upgraded by the owner's class; calling it again doesn't build a second one.
+        helper.assertTrue(AbilityService.use(player, ability("build")).success(), "build eidolon");
+        var eidolon = com.pipican.entity.Eidolon.of(player).orElseThrow();
+        helper.assertTrue(eidolon.isOwnedBy(player), "eidolon owned");
+        helper.assertTrue(!AbilityService.use(player, ability("build")).success(), "second use calls it instead");
+        helper.assertTrue(!eidolon.canAttack(player), "eidolon never attacks players");
+
+        // Optimization: owed after waking, chat command applies it.
+        AbilityService.onWake(player);
+        var raise = ResourceKey.create(PipicanRegistries.STAT, Pipican.id("strength"));
+        var lower = ResourceKey.create(PipicanRegistries.STAT, Pipican.id("luck"));
+        helper.assertTrue(com.pipican.ability.Optimize.choose(player, raise, lower).success(), "optimize");
+        assertNear(helper, 3, ClassEffectApplier.state(player).stat(raise), "raised stat");
+        assertNear(helper, -3, ClassEffectApplier.state(player).stat(lower), "lowered stat");
+        helper.assertTrue(!com.pipican.ability.Optimize.choose(player, raise, lower).success(), "only once per sleep");
+
+        helper.runAfterDelay(45, () -> {
+            assertNear(helper, 2, eidolon.getAttribute(Attributes.ARMOR).getModifier(Pipican.id("eidolon/add_value")).amount(), "eidolon upgrade applied");
+            eidolon.discard();
+            helper.succeed();
+        });
+    }
+
     /** Every ability the mod ships runs without errors, with a zombie in front of the player to aim at. */
     private static void shippedAbilities(GameTestHelper helper) {
         var registry = ClassLookup.abilities(helper.getLevel().registryAccess());
@@ -385,10 +461,15 @@ public final class ClassSystemTests {
             helper.assertTrue(!deals || zombie.getHealth() < zombie.getMaxHealth(),
                     entry.getKey().identifier() + " should damage the zombie in front of the player");
             AbilityService.reset(player);
-            zombie.discard();
+            // Remove everything the ability spawned (eidolons, summons, decoys) so it can't get in the next one's way.
+            for (var e : helper.getLevel().getEntities((net.minecraft.world.entity.Entity) null, player.getBoundingBox().inflate(48),
+                    e -> !(e instanceof net.minecraft.world.entity.player.Player))) {
+                e.discard();
+            }
+            player.stopRiding();
             count++;
         }
-        helper.assertTrue(count == 63, "expected 63 shipped abilities, ran " + count);
+        helper.assertTrue(count == 107, "expected 107 shipped abilities, ran " + count);
         helper.succeed();
     }
 

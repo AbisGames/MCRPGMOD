@@ -50,16 +50,7 @@
     {
       "id": "alter_self",
       "name": "Alter Self",
-      "description": {
-        "text": "unlocks Alter Self ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Alter Self ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,21 +58,15 @@
         "transmute"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:transmuter/alter_self"
+      ]
     },
     {
       "id": "transmute_matter",
       "name": "Transmute Matter",
-      "description": {
-        "text": "unlocks Transmute ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Transmute ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +74,10 @@
         "alchemical_body"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:transmuter/transmute"
+      ]
     },
     {
       "id": "philosopher",

@@ -3,6 +3,7 @@ package com.pipican.ability;
 import com.pipican.condition.ClassCondition;
 import com.pipican.core.ClassLookup;
 import com.pipican.mastery.SkillAction;
+import com.pipican.player.ClassEffectApplier;
 import com.pipican.player.ClassService;
 import com.pipican.player.MasteryService;
 import com.pipican.player.PipicanAttachments;
@@ -11,21 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Using abilities, and ticking the ones that are running. Server side only; the ability keys send
  * a slot number and everything is validated here.
  *
- * <p>Cooldowns and running states are saved on the player ({@link PlayerClassData}) as game-time
- * stamps, so relogging doesn't reset them and the HUD can read them from the synced data.
+ * <p>Cooldowns, running states, per-rest uses and spell points are saved on the player
+ * ({@link PlayerClassData}), so relogging doesn't reset them and the HUD can read them.
  */
 public final class AbilityService {
+
+    /** Where anchored states were used (not saved: after a restart they pulse around the player). */
+    private static final Map<UUID, Map<ResourceKey<Ability>, Vec3>> ANCHORS = new ConcurrentHashMap<>();
 
     private AbilityService() {}
 
@@ -62,45 +69,74 @@ public final class AbilityService {
         if (now < readyAt) {
             return ClassService.Result.fail(Component.translatable("pipican.ability.cooldown", ability.name(), (readyAt - now + 19) / 20));
         }
+        if (ability.usesPerRest() > 0 && data.extras().restUses.getOrDefault(key, 0) >= ability.usesPerRest()) {
+            return ClassService.Result.fail(Component.translatable("pipican.ability.needs_rest", ability.name()));
+        }
         if (ability.requires().isPresent() && !ability.requires().get().test(player)) {
             return ClassService.Result.fail(Component.translatable("pipican.ability.cannot_use", ability.name()));
         }
-        if (ability.cost() > 0 && data.resource() < ability.cost()) {
+        boolean spellPoint = usesSpellPoint(player, ability);
+        if (!spellPoint && ability.cost() > 0 && data.resource() < ability.cost()) {
             return ClassService.Result.fail(Component.translatable("pipican.ability.no_resource", ability.name(), (int) Math.ceil(ability.cost())));
         }
-        activate(player, key, ability);
+        AbilityContext ctx = activate(player, key, ability, spellPoint);
+        if (ctx.isCancelled()) {
+            return ClassService.Result.fail(ctx.cancelReason());
+        }
         return ClassService.Result.ok(Component.translatable("pipican.ability.used", ability.name()));
     }
 
-    /**
-     * Admin/testing: uses an ability even if the player doesn't have it, ignoring cooldown, cost and
-     * {@code requires}. A running state is restarted.
-     */
-    public static void force(ServerPlayer player, ResourceKey<Ability> key) {
-        Ability ability = ClassLookup.abilities(player.level().registryAccess()).getValue(key);
-        if (ability == null) {
-            return;
-        }
-        ClassService.data(player).abilityActive().remove(key);
-        double resource = ClassService.data(player).resource();
-        activate(player, key, ability);
-        ClassService.data(player).setResource(resource);
+    /** Spell points (Wizard) pay for abilities that cost resource, while there are any left. */
+    private static boolean usesSpellPoint(ServerPlayer player, Ability ability) {
+        return ability.cost() > 0 && !ability.spendAll() && ClassEffectApplier.state(player).spellPoints() > 0
+                && ClassService.data(player).extras().spellPoints > 0;
     }
 
-    /** Admin: clears every cooldown and running state. */
+    /**
+     * Admin/testing: uses an ability even if the player doesn't have it, ignoring cooldown, cost,
+     * {@code requires} and per-rest limits. A running state is restarted. Returns the context (to see
+     * whether an action cancelled it).
+     */
+    public static AbilityContext force(ServerPlayer player, ResourceKey<Ability> key) {
+        Ability ability = ClassLookup.abilities(player.level().registryAccess()).getValue(key);
+        PlayerClassData data = ClassService.data(player);
+        data.abilityActive().remove(key);
+        double resource = data.resource();
+        data.setResource(Math.max(resource, ability.cost()));
+        AbilityContext ctx = activate(player, key, ability, false);
+        data.setResource(resource);
+        data.extras().restUses.remove(key);
+        return ctx;
+    }
+
+    /** Admin: clears every cooldown, per-rest use and running state. */
     public static void reset(ServerPlayer player) {
         ClassService.data(player).abilityCooldowns().clear();
+        ClassService.data(player).extras().restUses.clear();
         clearActive(player);
         player.syncData(PipicanAttachments.CLASS_DATA);
     }
 
-    private static void activate(ServerPlayer player, ResourceKey<Ability> key, Ability ability) {
+    private static AbilityContext activate(ServerPlayer player, ResourceKey<Ability> key, Ability ability, boolean spellPoint) {
         PlayerClassData data = ClassService.data(player);
         long now = player.level().getGameTime();
-        data.setResource(Math.max(0, data.resource() - ability.cost()));
-        AbilityContext ctx = new AbilityContext(player, key, ability);
+        double spent = spellPoint ? 0 : ability.spendAll() ? data.resource() : Math.min(ability.cost(), data.resource());
+        data.setResource(data.resource() - spent);
+        if (spellPoint) {
+            data.extras().spellPoints--;
+        }
+        AbilityContext ctx = AbilityContext.of(player, key, spent);
         for (AbilityAction action : ability.actions()) {
             action.run(ctx);
+            if (ctx.isCancelled()) {
+                // Nothing happened (no target, no waypoint...): refund and don't start a cooldown.
+                data.setResource(Math.min(data.resourceMax(), data.resource() + spent));
+                if (spellPoint) {
+                    data.extras().spellPoints++;
+                }
+                player.syncData(PipicanAttachments.CLASS_DATA);
+                return ctx;
+            }
         }
         if (ability.toggle()) {
             data.abilityActive().put(key, Long.MAX_VALUE);
@@ -110,18 +146,29 @@ public final class AbilityService {
             }
             data.abilityCooldowns().put(key, now + ability.cooldownTicks());
         }
+        if (ability.timing().anchored()) {
+            ANCHORS.computeIfAbsent(player.getUUID(), k -> new ConcurrentHashMap<>()).put(key, player.position());
+        }
+        if (ability.usesPerRest() > 0) {
+            data.extras().restUses.merge(key, 1, Integer::sum);
+        }
         player.level().playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 0.6f, 1.3f);
         MasteryService.onAction(player, new SkillAction.AbilityUsed(key.identifier(), player.getMainHandItem()));
         // Refresh so "while active" effects and ability_active conditions take effect; also syncs.
         ClassService.changed(player);
+        return ctx;
     }
 
     private static void stop(ServerPlayer player, ResourceKey<Ability> key, Ability ability) {
         PlayerClassData data = ClassService.data(player);
         data.abilityActive().remove(key);
-        AbilityContext ctx = new AbilityContext(player, key, ability);
+        AbilityContext ctx = new AbilityContext(player, Optional.of(key), anchor(player, key), Optional.empty(), 0);
         for (AbilityAction action : ability.endActions()) {
             action.run(ctx);
+        }
+        var anchors = ANCHORS.get(player.getUUID());
+        if (anchors != null) {
+            anchors.remove(key);
         }
         if (ability.toggle()) {
             data.abilityCooldowns().put(key, player.level().getGameTime() + ability.cooldownTicks());
@@ -129,16 +176,38 @@ public final class AbilityService {
         ClassService.changed(player);
     }
 
+    private static Vec3 anchor(ServerPlayer player, ResourceKey<Ability> key) {
+        var anchors = ANCHORS.get(player.getUUID());
+        Vec3 at = anchors == null ? null : anchors.get(key);
+        return at != null ? at : player.position();
+    }
+
     /** Ends every running state without its end actions (death, class change). */
     public static void clearActive(ServerPlayer player) {
         PlayerClassData data = ClassService.data(player);
+        ANCHORS.remove(player.getUUID());
         if (!data.abilityActive().isEmpty()) {
             data.abilityActive().clear();
             ClassService.changed(player);
         }
     }
 
-    /** Every tick: drains toggles, ends expired states, starts {@code auto} abilities (every 10 ticks). */
+    /** After sleeping: per-rest uses come back, spell points refill, temporary items vanish, Optimization is chosen again. */
+    public static void onWake(ServerPlayer player) {
+        PlayerClassData data = ClassService.data(player);
+        if (!data.hasClass()) {
+            return;
+        }
+        data.extras().restUses.clear();
+        data.extras().spellPoints = ClassEffectApplier.state(player).spellPoints();
+        TemporaryItems.removeAll(player);
+        if (ClassEffectApplier.state(player).optimizationAmount() > 0) {
+            Optimize.prompt(player);
+        }
+        ClassService.changed(player);
+    }
+
+    /** Every tick: drains toggles, pulses, ends expired states, starts {@code auto} abilities (every 10 ticks). */
     public static void tick(ServerPlayer player) {
         PlayerClassData data = ClassService.data(player);
         if (!data.hasClass()) {
@@ -147,7 +216,7 @@ public final class AbilityService {
         var registry = ClassLookup.abilities(player.level().registryAccess());
         long now = player.level().getGameTime();
         List<ResourceKey<Ability>> ending = new ArrayList<>();
-        for (Map.Entry<ResourceKey<Ability>, Long> e : data.abilityActive().entrySet()) {
+        for (Map.Entry<ResourceKey<Ability>, Long> e : List.copyOf(data.abilityActive().entrySet())) {
             Ability ability = registry.getValue(e.getKey());
             if (ability == null) {
                 ending.add(e.getKey());
@@ -161,6 +230,13 @@ public final class AbilityService {
                 }
                 if (player.tickCount % 10 == 0) {
                     player.syncData(PipicanAttachments.CLASS_DATA);
+                }
+            }
+            int pulse = ability.timing().pulseTicks();
+            if (pulse > 0 && now % pulse == 0) {
+                AbilityContext ctx = new AbilityContext(player, Optional.of(e.getKey()), anchor(player, e.getKey()), Optional.empty(), 0);
+                for (AbilityAction action : ability.pulseActions()) {
+                    action.run(ctx);
                 }
             }
             if (now >= e.getValue() || player.tickCount % 10 == 0 && ability.endWhen().map(c -> c.test(player)).orElse(false)) {
@@ -181,9 +257,12 @@ public final class AbilityService {
                 Optional<ClassCondition> auto = ability.auto();
                 if (auto.isPresent() && !data.abilityActive().containsKey(key) && now >= data.abilityReadyAt(key)
                         && data.resource() >= ability.cost() && auto.get().test(player)) {
-                    activate(player, key, ability);
+                    activate(player, key, ability, false);
                 }
             }
+        }
+        if (player.tickCount % 40 == 0) {
+            TemporaryItems.removeExpired(player);
         }
     }
 }

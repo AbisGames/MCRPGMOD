@@ -1,6 +1,7 @@
 package com.pipican.command;
 
 import com.pipican.ability.AbilityService;
+import com.pipican.ability.Optimize;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -69,6 +70,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
  *   /pipican mastery list [player]
  *   /pipican stat raise &lt;stat&gt;                   costs one stat point (earned with kill XP)
  *   /pipican ability use &lt;ability&gt;               same as pressing its key (keys Z X C V use slots 1-4)
+ *   /pipican optimize &lt;raise&gt; &lt;lower&gt;            Transmuter's Optimization choice (the chat buttons run this)
  *   /pipican trinkets
  * </pre>
  * Stat raising is a stand-in until the character screen exists.
@@ -165,6 +167,11 @@ public final class PipicanCommands {
                                 })))
                         .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
                                 .executes(c -> forEach(c, ClassService::resetStats)))))
+                .then(Commands.literal("optimize").then(Commands.argument("raise", ResourceKeyArgument.key(PipicanRegistries.STAT))
+                        .then(Commands.argument("lower", ResourceKeyArgument.key(PipicanRegistries.STAT))
+                                .executes(c -> report(c.getSource(), Optimize.choose(c.getSource().getPlayerOrException(),
+                                        ResourceKeyArgument.getRegistryKey(c, "raise", PipicanRegistries.STAT, UNKNOWN_STAT),
+                                        ResourceKeyArgument.getRegistryKey(c, "lower", PipicanRegistries.STAT, UNKNOWN_STAT)))))))
                 .then(Commands.literal("ability")
                         .then(Commands.literal("use").then(Commands.argument("ability", ResourceKeyArgument.key(PipicanRegistries.ABILITY))
                                 .executes(c -> report(c.getSource(), AbilityService.use(c.getSource().getPlayerOrException(),

@@ -119,5 +119,9 @@
     "pipican:amulet": 2,
     "pipican:ring": 1,
     "pipican:cloak": 1
-  }
+  },
+  "abilities": [
+    "pipican:cleric/turn_undead",
+    "pipican:cleric/holy_strike"
+  ]
 }

@@ -1,0 +1,23 @@
+{
+  "name": "Raise Dead",
+  "description": "a mob you kill rises as a servant zombie/skeleton, 40 Necrosis",
+  "icon": "minecraft:zombie_head",
+  "cost": 40,
+  "cooldown_ticks": 900,
+  "duration_ticks": 600,
+  "effects": [
+    {
+      "type": "pipican:on",
+      "event": "kill",
+      "actions": [
+        {
+          "type": "pipican:summon",
+          "entity": "minecraft:zombie",
+          "count": 1,
+          "seconds": 30,
+          "ally": true
+        }
+      ]
+    }
+  ]
+}

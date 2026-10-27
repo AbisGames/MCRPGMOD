@@ -1,0 +1,17 @@
+{
+  "name": "Holy Strike",
+  "description": "empower next hit, +1d6-style bonus vs undead",
+  "icon": "minecraft:golden_sword",
+  "cost": 15,
+  "cooldown_ticks": 160,
+  "actions": [
+    {
+      "type": "pipican:empower",
+      "target": "self",
+      "multiplier": 1.25,
+      "bonus": 3.5,
+      "seconds": 10,
+      "against": "#minecraft:undead"
+    }
+  ]
+}

@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
 
 /**
  * Temporary helpers from {@code pipican:summon}. They are removed (no drops) when their time runs out,
@@ -17,13 +16,13 @@ public final class Summons {
 
     public static final String TAG = "pipican_summon";
 
-    private record Entry(Mob mob, UUID owner, long endsAt) {}
+    private record Entry(Entity mob, UUID owner, long endsAt) {}
 
     private static final Map<UUID, Entry> ACTIVE = new ConcurrentHashMap<>();
 
     private Summons() {}
 
-    public static void track(Mob mob, ServerPlayer owner, long ticks) {
+    public static void track(Entity mob, ServerPlayer owner, long ticks) {
         mob.addTag(TAG);
         ACTIVE.put(mob.getUUID(), new Entry(mob, owner.getUUID(), owner.level().getGameTime() + ticks));
     }
@@ -38,6 +37,11 @@ public final class Summons {
                 it.remove();
             }
         }
+    }
+
+    public static boolean isSummonOf(Entity entity, ServerPlayer player) {
+        Entry e = ACTIVE.get(entity.getUUID());
+        return e != null && e.owner().equals(player.getUUID());
     }
 
     /** A tagged summon that loads but isn't tracked (e.g. after a restart) is left over: remove it. */

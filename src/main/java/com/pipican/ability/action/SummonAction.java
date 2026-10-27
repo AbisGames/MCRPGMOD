@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.pipican.ability.AbilityAction;
 import com.pipican.ability.AbilityActionTypes;
 import com.pipican.ability.AbilityContext;
+import com.pipican.ability.MobControl;
 import com.pipican.ability.Summons;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -17,16 +18,18 @@ import net.minecraft.world.entity.animal.golem.IronGolem;
 /**
  * {@code pipican:summon} - spawns temporary helpers next to the user. Tameable animals (wolves, cats)
  * are tamed to the user and iron golems count as player-made, so both fight for them. Summons vanish
- * after {@code seconds} and drop nothing.
+ * after {@code seconds} and drop nothing. With {@code ally: true} any mob (even a ravager) fights for the
+ * user instead: it attacks hostile mobs near them and never targets players.
  *
  * <pre>{@code { "type": "pipican:summon", "entity": "minecraft:wolf", "count": 2, "seconds": 30 } }</pre>
  */
-public record SummonAction(EntityType<?> entity, int count, double seconds) implements AbilityAction {
+public record SummonAction(EntityType<?> entity, int count, double seconds, boolean ally) implements AbilityAction {
 
     public static final MapCodec<SummonAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter(SummonAction::entity),
             Codec.intRange(1, 16).optionalFieldOf("count", 1).forGetter(SummonAction::count),
-            Codec.doubleRange(1, 3600).optionalFieldOf("seconds", 30.0).forGetter(SummonAction::seconds)
+            Codec.doubleRange(1, 3600).optionalFieldOf("seconds", 30.0).forGetter(SummonAction::seconds),
+            Codec.BOOL.optionalFieldOf("ally", false).forGetter(SummonAction::ally)
     ).apply(i, SummonAction::new));
 
     @Override
@@ -43,7 +46,8 @@ public record SummonAction(EntityType<?> entity, int count, double seconds) impl
                 continue;
             }
             double angle = Math.PI * 2 * n / count;
-            mob.snapTo(player.getX() + Math.cos(angle) * 1.5, player.getY(), player.getZ() + Math.sin(angle) * 1.5, player.getYRot(), 0);
+            var at = ctx.origin();
+            mob.snapTo(at.x + Math.cos(angle) * 1.5, at.y, at.z + Math.sin(angle) * 1.5, player.getYRot(), 0);
             if (mob instanceof TamableAnimal pet) {
                 pet.tame(player);
             }
@@ -53,6 +57,9 @@ public record SummonAction(EntityType<?> entity, int count, double seconds) impl
             mob.setPersistenceRequired();
             ctx.level().addFreshEntity(mob);
             Summons.track(mob, player, (long) (seconds * 20));
+            if (ally) {
+                MobControl.control(mob, player, MobControl.Mode.ALLY, (long) (seconds * 20));
+            }
         }
     }
 }

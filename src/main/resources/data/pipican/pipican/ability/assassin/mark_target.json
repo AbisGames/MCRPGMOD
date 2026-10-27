@@ -1,0 +1,16 @@
+{
+  "name": "Mark Target",
+  "description": "Killer's Eye: mark a mob you're hidden from; +30% damage to it for 60s, 15 Shadow",
+  "icon": "minecraft:crossbow",
+  "cost": 15,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:mark",
+      "target": "look",
+      "range": 32,
+      "seconds": 60,
+      "multiplier": 1.3
+    }
+  ]
+}

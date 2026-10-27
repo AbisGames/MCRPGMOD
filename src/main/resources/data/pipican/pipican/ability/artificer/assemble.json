@@ -1,0 +1,15 @@
+{
+  "name": "Assemble",
+  "description": "spend Spare Parts to make a temporary weapon/armor piece that vanishes when you sleep",
+  "icon": "minecraft:iron_sword",
+  "cost": 20,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:give",
+      "item": "minecraft:iron_sword",
+      "sneak_item": "minecraft:iron_chestplate",
+      "seconds": 600
+    }
+  ]
+}

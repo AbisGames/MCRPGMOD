@@ -1,0 +1,14 @@
+{
+  "name": "Recall Weapon",
+  "description": "teleport your bound weapon back to your hand, 10 Charge",
+  "icon": "minecraft:trident",
+  "cost": 10,
+  "cooldown_ticks": 60,
+  "actions": [
+    {
+      "type": "pipican:recall_item",
+      "items": "#pipican:weapons/melee",
+      "radius": 64
+    }
+  ]
+}

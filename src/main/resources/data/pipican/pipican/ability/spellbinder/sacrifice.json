@@ -1,0 +1,15 @@
+{
+  "name": "Sacrifice",
+  "description": "spend all Charge: next hit deals +1 damage per 3 Charge",
+  "icon": "minecraft:redstone_block",
+  "spend_all": true,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:empower",
+      "target": "self",
+      "bonus_per_spent": 0.3333,
+      "seconds": 15
+    }
+  ]
+}

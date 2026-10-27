@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -45,8 +48,52 @@ public final class PlayerClassData {
             Codec.DOUBLE.optionalFieldOf("resource_max", 0.0).forGetter(d -> d.resourceMax),
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.SKILL), Codec.DOUBLE).optionalFieldOf("mastery", Map.of()).forGetter(d -> d.mastery),
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.LONG).optionalFieldOf("ability_cooldowns", Map.of()).forGetter(d -> d.abilityCooldowns),
-            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.LONG).optionalFieldOf("ability_active", Map.of()).forGetter(d -> d.abilityActive)
+            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.LONG).optionalFieldOf("ability_active", Map.of()).forGetter(d -> d.abilityActive),
+            Extras.MAP_CODEC.forGetter(d -> d.extras)
     ).apply(i, PlayerClassData::new));
+
+    /**
+     * Rarely used class mechanics (grouped only because a codec takes at most 16 fields):
+     * Recall's waypoint, abilities used since the last sleep, spell points, the Lasting Bond partner
+     * and the Optimization choice.
+     */
+    public static final class Extras {
+        static final MapCodec<Extras> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+                GlobalPos.CODEC.optionalFieldOf("waypoint").forGetter(e -> e.waypoint),
+                Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.ABILITY), Codec.INT).optionalFieldOf("rest_uses", Map.of()).forGetter(e -> e.restUses),
+                Codec.INT.optionalFieldOf("spell_points", 0).forGetter(e -> e.spellPoints),
+                UUIDUtil.CODEC.optionalFieldOf("bond").forGetter(e -> e.bond),
+                Optimization.CODEC.optionalFieldOf("optimization").forGetter(e -> e.optimization)
+        ).apply(i, Extras::new));
+
+        public Optional<GlobalPos> waypoint;
+        public final Map<ResourceKey<Ability>, Integer> restUses;
+        public int spellPoints;
+        public Optional<UUID> bond;
+        public Optional<Optimization> optimization;
+
+        Extras(Optional<GlobalPos> waypoint, Map<ResourceKey<Ability>, Integer> restUses, int spellPoints, Optional<UUID> bond,
+               Optional<Optimization> optimization) {
+            this.waypoint = waypoint;
+            this.restUses = new HashMap<>(restUses);
+            this.spellPoints = spellPoints;
+            this.bond = bond;
+            this.optimization = optimization;
+        }
+
+        Extras() {
+            this(Optional.empty(), Map.of(), 0, Optional.empty(), Optional.empty());
+        }
+    }
+
+    /** Transmuter's Optimization: one stat raised, one lowered, until the next sleep. {@code pending}: a choice is owed. */
+    public record Optimization(Optional<ResourceKey<StatDefinition>> raise, Optional<ResourceKey<StatDefinition>> lower, boolean pending) {
+        public static final Codec<Optimization> CODEC = RecordCodecBuilder.create(i -> i.group(
+                ResourceKey.codec(PipicanRegistries.STAT).optionalFieldOf("raise").forGetter(Optimization::raise),
+                ResourceKey.codec(PipicanRegistries.STAT).optionalFieldOf("lower").forGetter(Optimization::lower),
+                Codec.BOOL.optionalFieldOf("pending", false).forGetter(Optimization::pending)
+        ).apply(i, Optimization::new));
+    }
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerClassData> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(MAP_CODEC.codec());
 
@@ -67,18 +114,19 @@ public final class PlayerClassData {
     private final Map<ResourceKey<Ability>, Long> abilityCooldowns;
     /** Running ability states and the game time they end ({@link Long#MAX_VALUE} for toggles). */
     private final Map<ResourceKey<Ability>, Long> abilityActive;
+    private final Extras extras;
     /** Not saved: set when mastery changed but the client hasn't been told yet (synced in batches). */
     private boolean masteryDirty;
 
     public PlayerClassData() {
-        this(Optional.empty(), Map.of(), Map.of(), 0L, Map.of(), 0, 0, Map.of(), Map.of(), Map.of());
+        this(Optional.empty(), Map.of(), Map.of(), 0L, Map.of(), 0, 0, Map.of(), Map.of(), Map.of(), new Extras());
     }
 
     private PlayerClassData(Optional<ResourceKey<RpgClass>> activeClass, Map<ResourceKey<RpgClass>, ClassProgress> progress,
                             Map<ResourceKey<StatDefinition>, Integer> boughtStats, long statXp,
                             Map<ResourceKey<TrinketSlotType>, List<ItemStack>> trinkets, double resource, double resourceMax,
                             Map<ResourceKey<Skill>, Double> mastery, Map<ResourceKey<Ability>, Long> abilityCooldowns,
-                            Map<ResourceKey<Ability>, Long> abilityActive) {
+                            Map<ResourceKey<Ability>, Long> abilityActive, Extras extras) {
         this.activeClass = activeClass;
         this.progress = new HashMap<>(progress);
         this.boughtStats = new HashMap<>(boughtStats);
@@ -90,6 +138,7 @@ public final class PlayerClassData {
         this.mastery = new HashMap<>(mastery);
         this.abilityCooldowns = new HashMap<>(abilityCooldowns);
         this.abilityActive = new HashMap<>(abilityActive);
+        this.extras = extras;
     }
 
     public Optional<ResourceKey<RpgClass>> activeClass() {
@@ -189,6 +238,11 @@ public final class PlayerClassData {
     /** Mutable: running ability -> end game time. Mutate through AbilityService. */
     public Map<ResourceKey<Ability>, Long> abilityActive() {
         return abilityActive;
+    }
+
+    /** Waypoint, rest uses, spell points, bond, Optimization. Mutate through the services. */
+    public Extras extras() {
+        return extras;
     }
 
     boolean masteryDirty() {

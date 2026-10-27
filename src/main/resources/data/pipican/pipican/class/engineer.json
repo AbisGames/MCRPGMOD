@@ -74,18 +74,62 @@
       "multiplier": 1.1
     }
   ],
-  "weakness": {
-    "description": {
-      "text": "Without the machine, an engineer is a nerd with a crossbow.",
-      "extra": [
+  "special_passives": [
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:attack_damage",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "source": "special_stat",
+          "per": 0.01
         }
       ]
     },
-    "effects": []
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:max_health",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.05,
+      "operation": "add_multiplied_base"
+    }
+  ],
+  "weakness": {
+    "description": "Without the machine, an engineer is a nerd with a crossbow.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:has_eidolon"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:armor",
+            "amount": -2.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",
@@ -114,5 +158,8 @@
     "pipican:cloak": 1,
     "pipican:belt": 1,
     "pipican:charm": 1
-  }
+  },
+  "abilities": [
+    "pipican:engineer/build_eidolon"
+  ]
 }

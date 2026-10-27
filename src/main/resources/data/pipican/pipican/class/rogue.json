@@ -129,6 +129,7 @@
     "pipican:ring": 2
   },
   "abilities": [
-    "pipican:rogue/nimble_recovery"
+    "pipican:rogue/nimble_recovery",
+    "pipican:rogue/subterfuge"
   ]
 }

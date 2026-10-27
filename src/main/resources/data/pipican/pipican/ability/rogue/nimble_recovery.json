@@ -2,7 +2,8 @@
   "name": "Nimble Recovery",
   "description": "heal + short dash, once per rest",
   "icon": "minecraft:rabbit_foot",
-  "cooldown_ticks": 6000,
+  "cooldown_ticks": 200,
+  "uses_per_rest": 1,
   "actions": [
     {
       "type": "pipican:heal",

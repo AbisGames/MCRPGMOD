@@ -128,5 +128,8 @@
     "pipican:ring": 1,
     "pipican:cloak": 1,
     "pipican:charm": 1
-  }
+  },
+  "abilities": [
+    "pipican:diviner/scry"
+  ]
 }

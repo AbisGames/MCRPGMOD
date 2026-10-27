@@ -1,0 +1,11 @@
+{
+  "name": "Build",
+  "cooldown_ticks": 0,
+  "actions": [
+    {
+      "type": "pipican:eidolon",
+      "count": 0,
+      "rebuild_ticks": 100
+    }
+  ]
+}

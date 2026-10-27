@@ -94,16 +94,7 @@
     {
       "id": "conjure_horror",
       "name": "Conjure Horror",
-      "description": {
-        "text": "unlocks Conjure Horror ability; -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Conjure Horror ability; -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -112,7 +103,18 @@
         "steady_gate"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:conjurer/conjure_horror"
+      ]
     }
   ]
 }

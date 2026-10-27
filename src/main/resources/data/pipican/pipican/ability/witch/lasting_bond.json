@@ -1,0 +1,12 @@
+{
+  "name": "Lasting Bond",
+  "description": "see keystone",
+  "icon": "minecraft:lead",
+  "cooldown_ticks": 1200,
+  "actions": [
+    {
+      "type": "pipican:bond",
+      "range": 16
+    }
+  ]
+}

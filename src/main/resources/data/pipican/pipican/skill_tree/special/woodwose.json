@@ -66,16 +66,7 @@
     {
       "id": "nature_bond",
       "name": "Nature Bond",
-      "description": {
-        "text": "unlocks Treeform ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Treeform ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -83,7 +74,10 @@
         "oak_hide"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:woodwose/treeform"
+      ]
     },
     {
       "id": "green_man",

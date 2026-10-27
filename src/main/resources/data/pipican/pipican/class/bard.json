@@ -113,5 +113,8 @@
     "pipican:ring": 2,
     "pipican:belt": 1,
     "pipican:charm": 1
-  }
+  },
+  "abilities": [
+    "pipican:bard/charm"
+  ]
 }

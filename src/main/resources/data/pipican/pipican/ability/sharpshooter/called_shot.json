@@ -1,0 +1,18 @@
+{
+  "name": "Called Shot",
+  "description": "mark a target; next arrow deals triple damage, 25 Focus",
+  "icon": "minecraft:spectral_arrow",
+  "cost": 25,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:mark",
+      "target": "look",
+      "range": 64,
+      "seconds": 30,
+      "multiplier": 3.0,
+      "next_hit": true,
+      "projectile_only": true
+    }
+  ]
+}

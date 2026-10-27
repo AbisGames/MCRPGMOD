@@ -1,0 +1,13 @@
+{
+  "name": "Pickpocket",
+  "description": "steal one item from a mob's hand/armor, 20 Nerve",
+  "icon": "minecraft:bundle",
+  "cost": 20,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:steal",
+      "range": 4
+    }
+  ]
+}

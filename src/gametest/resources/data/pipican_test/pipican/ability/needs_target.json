@@ -1,0 +1,18 @@
+{
+  "name": "Needs Target",
+  "cost": 5,
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "look",
+      "range": 4,
+      "effects": [
+        {
+          "effect": "minecraft:glowing",
+          "seconds": 5
+        }
+      ]
+    }
+  ]
+}

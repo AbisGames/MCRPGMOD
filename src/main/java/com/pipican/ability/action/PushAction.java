@@ -30,7 +30,7 @@ public record PushAction(Targets targets, double strength) implements AbilityAct
     @Override
     public void run(AbilityContext ctx) {
         Vec3 from = ctx.player().position();
-        for (LivingEntity target : targets.select(ctx.player())) {
+        for (LivingEntity target : targets.select(ctx)) {
             if (target == ctx.player()) {
                 continue;
             }

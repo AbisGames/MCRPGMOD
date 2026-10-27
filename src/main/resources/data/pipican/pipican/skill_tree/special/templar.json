@@ -72,16 +72,7 @@
     {
       "id": "portable_shrine",
       "name": "Portable Shrine",
-      "description": {
-        "text": "unlocks Consecrate Ground ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Consecrate Ground ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "wide_sanctum"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:templar/consecrate_ground"
+      ]
     },
     {
       "id": "living_temple",

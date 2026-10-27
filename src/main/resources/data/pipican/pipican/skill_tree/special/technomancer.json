@@ -50,16 +50,7 @@
     {
       "id": "animate_object",
       "name": "Animate Object",
-      "description": {
-        "text": "unlocks Animate Object ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Animate Object ability",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,10 @@
         "wiring"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "grants": [
+        "pipican:technomancer/animate_object"
+      ]
     },
     {
       "id": "tesla_coil",

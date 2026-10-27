@@ -2,8 +2,17 @@ package com.pipican.event;
 
 import com.pipican.Pipican;
 import com.pipican.ability.AbilityService;
+import com.pipican.ability.Bonds;
+import com.pipican.ability.Empowers;
+import com.pipican.ability.HitShields;
+import com.pipican.ability.Marks;
+import com.pipican.ability.MobControl;
+import com.pipican.ability.Optimize;
+import com.pipican.ability.Reactions;
+import com.pipican.ability.Scry;
 import com.pipican.ability.Summons;
 import com.pipican.core.PipicanConfig;
+import com.pipican.effect.type.ReactionEffect;
 import com.pipican.player.ClassEffectApplier;
 import com.pipican.player.ClassService;
 import com.pipican.player.ClassState;
@@ -14,6 +23,7 @@ import java.util.Optional;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gamerules.GameRules;
@@ -21,10 +31,15 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
@@ -53,6 +68,8 @@ public final class ClassEvents {
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             ClassEffectApplier.forget(player);
+            Reactions.forget(player);
+            Empowers.forget(player);
         }
     }
 
@@ -112,6 +129,16 @@ public final class ClassEvents {
     /** Applies damage_taken / damage_dealt effects and weapon affinity. */
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        // Twist Fate / Intercept: the next hit misses, or lands on the guard instead.
+        if (!event.getEntity().level().isClientSide()) {
+            var shield = HitShields.take(event.getEntity());
+            if (shield.isPresent()) {
+                event.setCanceled(true);
+                shield.get().guard().map(id -> event.getEntity().level().getServer().getPlayerList().getPlayer(id))
+                        .ifPresent(guard -> guard.hurtServer(guard.level(), event.getSource(), event.getAmount()));
+                return;
+            }
+        }
         float amount = event.getAmount();
         if (event.getEntity() instanceof ServerPlayer victim) {
             amount *= (float) ClassState.multiplier(ClassEffectApplier.state(victim).damageTaken(), event.getSource());
@@ -123,6 +150,9 @@ public final class ClassEvents {
             if (weapon != null && !weapon.isEmpty() && state.rpgClass().isPresent()) {
                 amount *= (float) state.rpgClass().get().affinities().resolve(weapon).tuning().damage();
             }
+            // Ability marks on the target and "your next hit" buffs.
+            amount *= (float) Marks.multiplier(attacker, event.getEntity(), event.getSource());
+            amount = Empowers.apply(attacker, event.getEntity(), amount);
         }
         if (amount != event.getAmount()) {
             event.setAmount(amount);
@@ -138,9 +168,15 @@ public final class ClassEvents {
             long xp = Math.round(event.getEntity().getMaxHealth() * PipicanConfig.killXpPerMaxHealth());
             ClassService.addXp(killer, xp);
         }
-        // Running ability states end on death.
+        if (event.getSource().getEntity() instanceof ServerPlayer killer) {
+            Reactions.fire(killer, event.getEntity(), event.getSource().getWeaponItem(), ReactionEffect.Event.KILL);
+        }
+        Marks.forget(event.getEntity());
+        // Running ability states end on death; so does Optimization.
         if (event.getEntity() instanceof ServerPlayer player) {
             AbilityService.clearActive(player);
+            Empowers.forget(player);
+            Optimize.onDeath(player);
         }
         // Trinkets drop on death like the rest of the inventory, unless keepInventory is on.
         if (event.getEntity() instanceof ServerPlayer player && !player.level().getGameRules().get(GameRules.KEEP_INVENTORY)) {
@@ -184,6 +220,8 @@ public final class ClassEvents {
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
         Summons.tick(event.getServer());
+        MobControl.tick(event.getServer());
+        Scry.tick(event.getServer());
     }
 
     /** Summons left over from before a restart are not loaded back in. */
@@ -191,6 +229,53 @@ public final class ClassEvents {
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide() && Summons.isLeftover(event.getEntity())) {
             event.setCanceled(true);
+        }
+    }
+
+    // ------------------------------------------------------------------ ability reactions & control
+
+    /** {@code pipican:on} reactions for hits dealt and taken (after armor, when the hit really landed). */
+    @SubscribeEvent
+    public static void onDamagePost(LivingDamageEvent.Post event) {
+        if (event.getInflictedDamage() <= 0) {
+            return;
+        }
+        if (event.getSource().getEntity() instanceof ServerPlayer attacker && event.getEntity() != attacker) {
+            Reactions.onHit(attacker, event.getEntity(), event.getSource());
+        }
+        if (event.getEntity() instanceof ServerPlayer victim) {
+            LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
+            Reactions.fire(victim, attacker, event.getSource().getWeaponItem(), ReactionEffect.Event.HURT);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onShieldBlock(LivingShieldBlockEvent event) {
+        if (event.getBlocked() && event.getEntity() instanceof ServerPlayer player) {
+            LivingEntity attacker = event.getDamageSource().getEntity() instanceof LivingEntity l ? l : null;
+            Reactions.fire(player, attacker, player.getUseItem(), ReactionEffect.Event.BLOCK);
+        }
+    }
+
+    /** Charmed, frightened and allied mobs may not pick some targets. */
+    @SubscribeEvent
+    public static void onChangeTarget(LivingChangeTargetEvent event) {
+        if (!MobControl.mayTarget(event.getEntity(), event.getNewAboutToBeSetTarget())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onHeal(LivingHealEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            Bonds.onHeal(player, event.getAmount());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWake(PlayerWakeUpEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && !event.wakeImmediately()) {
+            AbilityService.onWake(player);
         }
     }
 }

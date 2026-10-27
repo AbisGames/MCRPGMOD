@@ -1,6 +1,7 @@
 package com.pipican.effect;
 
 import com.pipican.condition.ClassCondition;
+import com.pipican.effect.type.ReactionEffect;
 import com.pipican.effect.type.ResourceEffect;
 import com.pipican.stat.StatDefinition;
 import java.util.Optional;
@@ -44,6 +45,15 @@ public interface EffectContext {
 
     /** Changes the resource bar's max or regen; {@code operation} is add_value or add_multiplied_base. */
     void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation);
+
+    /** Registers a {@code pipican:on} reaction for this player. */
+    void addReaction(ReactionEffect reaction);
+
+    /** Changes an attribute of the player's eidolon. */
+    void addEidolonUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation);
+
+    /** Spell points that refill on every sleep. */
+    void addSpellPoints(int amount);
 
     /** Lets the player fly (creative-style) while this effect counts. */
     void grantFlight();

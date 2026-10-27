@@ -1,0 +1,14 @@
+{
+  "name": "Decoy",
+  "description": "spawn a fake you that mobs target for 6s, 25 Mirage",
+  "icon": "minecraft:armor_stand",
+  "cost": 25,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:decoy",
+      "seconds": 6,
+      "radius": 16
+    }
+  ]
+}

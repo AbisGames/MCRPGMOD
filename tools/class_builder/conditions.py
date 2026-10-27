@@ -129,6 +129,7 @@ def _atoms(ctx):
         (r'wearing any medium or heavy armor', lambda m: {'type': 'pipican:any_of', 'conditions': [
             {'type': 'pipican:wearing', 'items': ARMOR_TAGS['medium']}, {'type': 'pipican:wearing', 'items': ARMOR_TAGS['heavy']}]}, OTHER),
         (r'(?:not wearing (?:any )?armor|wearing no armor|without armor|unarmored)', lambda m: {'type': 'pipican:wearing', 'items': '#pipican:armor/any', 'min': 0, 'max': 0}, OTHER),
+        (r'your eidolon is destroyed|without your eidolon|your eidolon is dead', lambda m: not_({'type': 'pipican:has_eidolon'}), OTHER),
         # people & mobs around
         (r'no other players? (?:is |are )?within (\d+) blocks', lambda m: {'type': 'pipican:nearby', 'entities': 'players', 'radius': float(m.group(1)), 'min': 0, 'max': 0}, OTHER),
         (r'(?:another|other|an allied) players? (?:is |are )?within (\d+) blocks|(?:with )?an ally within (\d+) blocks|(?:near|close to) (?:another player|an ally|allies)',

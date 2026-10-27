@@ -1,0 +1,16 @@
+{
+  "name": "Compel",
+  "description": "mob obeys you for 10s, 40 Allure",
+  "icon": "minecraft:lead",
+  "cost": 40,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "look",
+      "mode": "ally",
+      "seconds": 10,
+      "range": 16
+    }
+  ]
+}

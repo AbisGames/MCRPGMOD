@@ -214,6 +214,9 @@ def _one(clause, ctx):
     if sc is not None:
         source, every = sc
         low = rest
+    eid = _eidolon(low, ctx)
+    if eid is not None:
+        return eid
     res = _resource(low, ctx)
     if res is not None:
         target, value, pct = res
@@ -324,6 +327,38 @@ def _one(clause, ctx):
         v, s = scal(value)
         return [_attr_effect(attr, kind, v, s)]
     return None
+
+
+EIDOLON_ATTRS = {'max health': ('minecraft:max_health', 'flat'), 'health': ('minecraft:max_health', 'flat'), 'armor': ('minecraft:armor', 'flat'),
+                 'damage': ('minecraft:attack_damage', 'pct_base'), 'movement speed': ('minecraft:movement_speed', 'pct_base'),
+                 'speed': ('minecraft:movement_speed', 'pct_base'), 'armor toughness': ('minecraft:armor_toughness', 'flat')}
+
+
+def _eidolon(low, ctx):
+    """"eidolon +10 max health", "+1% eidolon damage and max health" -> pipican:eidolon effects, or None."""
+    m = re.match(r'^eidolon ' + NUM + r'(%?) (.+)$', low) or re.match(r'^' + NUM + r'(%?) eidolon (.+)$', low)
+    if not m:
+        return None
+    value, pct = _num(m.group(1)), m.group(2) == '%'
+    out = []
+    for part in re.split(r'\s+and\s+', m.group(3)):
+        spec = EIDOLON_ATTRS.get(part.strip())
+        if spec is None:
+            return None
+        attribute, kind = spec
+        if pct and kind == 'flat':
+            kind = 'pct_base'
+        if not pct and kind != 'flat':
+            return None
+        amount = value / 100 if pct else value
+        e = {'type': 'pipican:eidolon', 'attribute': attribute, 'amount': round(amount, 6)}
+        if kind == 'pct_base':
+            e['operation'] = 'add_multiplied_base'
+        if ctx.get('implicit_per_point'):
+            e['amount'] = 0.0
+            e['scaling'] = [{'source': 'special_stat', 'per': round(amount, 6)}]
+        out.append(e)
+    return out
 
 
 def _resource(low, ctx):

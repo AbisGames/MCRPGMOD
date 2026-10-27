@@ -140,5 +140,8 @@
     "pipican:amulet": 2,
     "pipican:ring": 1,
     "pipican:cloak": 1
-  }
+  },
+  "abilities": [
+    "pipican:warlock/return_to_sender"
+  ]
 }

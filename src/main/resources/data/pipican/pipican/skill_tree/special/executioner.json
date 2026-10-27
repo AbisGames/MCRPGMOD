@@ -72,16 +72,7 @@
     {
       "id": "death_sentence",
       "name": "Death Sentence",
-      "description": {
-        "text": "unlocks Sentence ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Sentence ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "steady"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:executioner/sentence"
+      ]
     },
     {
       "id": "inevitable",

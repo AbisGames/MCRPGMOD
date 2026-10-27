@@ -1,0 +1,12 @@
+{
+  "name": "Alter Self",
+  "description": "re-Optimize instantly, 50 Alteration",
+  "icon": "minecraft:experience_bottle",
+  "cost": 50,
+  "cooldown_ticks": 1200,
+  "actions": [
+    {
+      "type": "pipican:optimize"
+    }
+  ]
+}

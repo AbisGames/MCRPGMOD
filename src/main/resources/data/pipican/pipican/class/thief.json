@@ -121,6 +121,7 @@
     "pipican:cloak": 1
   },
   "abilities": [
+    "pipican:thief/pickpocket",
     "pipican:thief/escape"
   ]
 }

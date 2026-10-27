@@ -88,16 +88,7 @@
     {
       "id": "lasting_bond",
       "name": "Lasting Bond",
-      "description": {
-        "text": "bond with one player: you each heal 50% of what the other heals while within 32 blocks; Guidance range -2",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bond with one player: you each heal 50% of what the other heals while within 32 blocks; Guidance range -2",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -106,7 +97,10 @@
         "brewmistress"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "grants": [
+        "pipican:witch/lasting_bond"
+      ]
     }
   ]
 }

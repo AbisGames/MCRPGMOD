@@ -1,0 +1,12 @@
+{
+  "name": "Cockpit",
+  "description": "climb into your eidolon and pilot it, book level 10",
+  "icon": "minecraft:saddle",
+  "cooldown_ticks": 40,
+  "actions": [
+    {
+      "type": "pipican:mount",
+      "range": 6
+    }
+  ]
+}

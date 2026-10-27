@@ -1,0 +1,16 @@
+{
+  "name": "Subterfuge",
+  "description": "charm a mob into ignoring you, 10 Guile",
+  "icon": "minecraft:leather",
+  "cost": 10,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "look",
+      "mode": "pacify",
+      "seconds": 10,
+      "range": 16
+    }
+  ]
+}

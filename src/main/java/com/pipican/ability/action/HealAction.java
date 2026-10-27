@@ -29,7 +29,7 @@ public record HealAction(Targets targets, double amount, double percent) impleme
 
     @Override
     public void run(AbilityContext ctx) {
-        for (LivingEntity target : targets.select(ctx.player())) {
+        for (LivingEntity target : targets.select(ctx)) {
             target.heal((float) (amount + percent * target.getMaxHealth()));
         }
     }

@@ -1,0 +1,12 @@
+{
+  "name": "Find the Way",
+  "description": "points toward your bed/spawn, 10 Quarry",
+  "icon": "minecraft:compass",
+  "cost": 10,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:locate"
+    }
+  ]
+}

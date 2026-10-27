@@ -72,16 +72,7 @@
     {
       "id": "twist_of_fate",
       "name": "Twist of Fate",
-      "description": {
-        "text": "unlocks Twist Fate ability",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Twist Fate ability",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -89,7 +80,10 @@
         "omens"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "grants": [
+        "pipican:diviner/twist_fate"
+      ]
     },
     {
       "id": "oracle_of_ages",

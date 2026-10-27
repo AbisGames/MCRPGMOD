@@ -23,7 +23,14 @@
     "pipican_test:mend",
     "pipican_test:bulwark",
     "pipican_test:soar",
-    "pipican_test:last_stand"
+    "pipican_test:last_stand",
+    "pipican_test:brand",
+    "pipican_test:smite",
+    "pipican_test:guard",
+    "pipican_test:rested",
+    "pipican_test:needs_target",
+    "pipican_test:calm",
+    "pipican_test:build"
   ],
   "passives": [
     {
@@ -39,6 +46,31 @@
           "amount": 1
         }
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "kill",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:speed",
+              "seconds": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:optimization",
+      "amount": 3
+    },
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:armor",
+      "amount": 2
     }
   ]
 }

@@ -35,7 +35,7 @@ public record CleanseAction(Targets targets, Optional<HolderSet<MobEffect>> effe
 
     @Override
     public void run(AbilityContext ctx) {
-        for (LivingEntity target : targets.select(ctx.player())) {
+        for (LivingEntity target : targets.select(ctx)) {
             for (Holder<MobEffect> effect : new ArrayList<>(target.getActiveEffectsMap().keySet())) {
                 boolean match = effects.map(set -> set.contains(effect)).orElse(effect.value().getCategory() == MobEffectCategory.HARMFUL);
                 // The class system's own permanent effects (weaknesses) are not removable.

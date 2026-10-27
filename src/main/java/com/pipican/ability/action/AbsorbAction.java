@@ -33,7 +33,7 @@ public record AbsorbAction(Targets targets, double amount, double seconds) imple
     @Override
     public void run(AbilityContext ctx) {
         int amplifier = (int) Math.ceil(amount / 4.0) - 1;
-        for (LivingEntity target : targets.select(ctx.player())) {
+        for (LivingEntity target : targets.select(ctx)) {
             target.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, (int) (seconds * 20), amplifier), ctx.player());
         }
     }

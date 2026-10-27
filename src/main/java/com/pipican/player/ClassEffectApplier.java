@@ -6,6 +6,9 @@ import com.pipican.condition.ClassCondition;
 import com.pipican.core.ClassLookup;
 import com.pipican.effect.ClassEffect;
 import com.pipican.effect.EffectContext;
+import com.pipican.effect.Scaling;
+import com.pipican.effect.type.OptimizationEffect;
+import com.pipican.effect.type.ReactionEffect;
 import com.pipican.effect.type.ResourceEffect;
 import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.Affinity;
@@ -205,6 +208,24 @@ public final class ClassEffectApplier {
             e.getKey().collectStats(c);
         }
 
+        // Optimization (Transmuter): one stat up, one down, sized by stats counted so far.
+        double optimization = 0;
+        double extraLoss = 0;
+        for (Map.Entry<ClassEffect, Integer> e : effects) {
+            if (e.getKey() instanceof OptimizationEffect o) {
+                optimization += Scaling.evaluate(o.amount(), o.scaling(), c) * e.getValue();
+                extraLoss += o.extraLoss() * e.getValue();
+            }
+        }
+        double optimizationAmount = Math.floor(optimization);
+        if (optimizationAmount > 0) {
+            double loss = optimizationAmount + extraLoss;
+            data.extras().optimization.ifPresent(o -> {
+                o.raise().ifPresent(stat -> c.addStat(stat, optimizationAmount));
+                o.lower().ifPresent(stat -> c.addStat(stat, -loss));
+            });
+        }
+
         // Pass 2: everything else.
         c.addAttribute(Attributes.MAX_HEALTH, rpgClass.baseHealth() - VANILLA_BASE_HEALTH, AttributeModifier.Operation.ADD_VALUE);
         c.stats.forEach((statKey, points) -> {
@@ -248,7 +269,8 @@ public final class ClassEffectApplier {
         List<ClassState.ConditionCheck> checks = new ArrayList<>();
         c.conditions.forEach((condition, result) -> checks.add(new ClassState.ConditionCheck(condition, result)));
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
-                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight);
+                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
+                List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount);
     }
 
     /**
@@ -324,6 +346,9 @@ public final class ClassEffectApplier {
         private final ServerPlayer player;
         int rank = 1;
         boolean flight;
+        int spellPoints;
+        final List<ReactionEffect> reactions = new ArrayList<>();
+        final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> eidolon = new HashMap<>();
         /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
         final Map<ClassCondition, Boolean> conditions = new IdentityHashMap<>();
         final Map<ResourceEffect.Target, Double> resourceFlat = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
@@ -388,6 +413,23 @@ public final class ClassEffectApplier {
         public void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation) {
             // add_multiplied_total is treated like add_multiplied_base: there is only one resource "base".
             (operation == AttributeModifier.Operation.ADD_VALUE ? resourceFlat : resourcePercent).merge(target, amount, Double::sum);
+        }
+
+        @Override
+        public void addReaction(ReactionEffect reaction) {
+            reactions.add(reaction);
+        }
+
+        @Override
+        public void addEidolonUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
+            if (amount != 0) {
+                eidolon.computeIfAbsent(attribute, a -> new HashMap<>()).merge(operation, amount, Double::sum);
+            }
+        }
+
+        @Override
+        public void addSpellPoints(int amount) {
+            spellPoints += amount;
         }
 
         @Override
