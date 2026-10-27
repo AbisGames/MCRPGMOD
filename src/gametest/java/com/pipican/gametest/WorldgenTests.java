@@ -87,6 +87,20 @@ public final class WorldgenTests {
         }
         helper.assertTrue(RegionalOreRegistries.NODES.size()==27,"missing registered ore nodes");
         helper.assertTrue(RegionalOreRegistries.MATERIALS.size()==27,"missing registered ore items");
+        // Each configured mine must load as a binary structure and map to
+        // precisely one regional ore. Asset-level NBT palette contents are
+        // verified separately in validate_biome_mines.py.
+        for(var ore:RegionalOreCatalog.ORES){
+            helper.assertTrue(RegionalOreCatalog.forRegion(ore.region()).size()==1,
+                "ambiguous mine resource for "+ore.region());
+            helper.assertTrue(RegionalOreRegistries.NODES.containsKey(ore.id()),
+                "missing regional mining block "+ore.id());
+            helper.assertTrue(RegionalOreRegistries.MATERIALS.containsKey(ore.id()),
+                "missing regional mining item "+ore.id());
+            helper.assertTrue(helper.getLevel().getStructureManager()
+                .get(Pipican.id("regional/"+ore.region()+"/mine")).isPresent(),
+                "unloadable regional mine NBT: "+ore.region());
+        }
         helper.assertTrue(RegionalOreRegistries.BOSS_CORES.size()==27,"missing regional boss cores");
         helper.succeed();
     }
