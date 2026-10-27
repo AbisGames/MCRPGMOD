@@ -274,7 +274,7 @@ class Workshop(Build):
         self.set(cx,24,cz+2,'end_rod')
         for x in (28,W-29):
             for z in (42,60,78):
-                self.set(x,23,z,'armor_stand')
+                self.set(x,23,z,'grindstone')
                 self.set(x+2,23,z,'smithing_table')
                 self.set(x+2,24,z,'lantern')
         self.acc['reliquary_rooms']+=1
