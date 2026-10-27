@@ -259,8 +259,10 @@ class Workshop(Build):
         # Two opposing protected ladder shafts with 1x1 landings.
         for xx,zz in ((x1+3,z1+3),(x2-3,z2-3)):
             for yy in range(1,44):
+                # North-facing ladders require a solid support block to the south.
+                # Clearing this position made upper palace floors inaccessible.
+                self.set(xx,yy,zz+1,post)
                 self.set(xx,yy,zz,'ladder[facing=north]')
-                self.set(xx,yy,zz+1,'air')
             self.acc['vertical_connections']+=1
         # Concentric courtyard pools, archery platform, palace gardens.
         for xx in range(15,W-15,7):
