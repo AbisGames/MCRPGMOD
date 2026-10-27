@@ -23,30 +23,24 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+5% potion duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+5% potion duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": {
@@ -62,30 +56,24 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "+5% potion duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+10% potion duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.1
+        }
+      ]
     }
   ]
 }

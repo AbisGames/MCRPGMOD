@@ -29,23 +29,21 @@
     {
       "id": "speed_loader",
       "name": "Speed Loader",
-      "description": {
-        "text": "+20% reload speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% reload speed",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "id": "deadeye_shot",

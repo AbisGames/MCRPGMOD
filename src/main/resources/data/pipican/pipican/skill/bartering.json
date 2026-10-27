@@ -18,17 +18,14 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "-2% trade prices",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-2% trade prices",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.02
+        }
+      ]
     },
     {
       "description": {
@@ -44,17 +41,14 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "-3% trade prices",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-3% trade prices",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.03
+        }
+      ]
     },
     {
       "description": {
@@ -70,17 +64,14 @@
       "effects": []
     },
     {
-      "description": {
-        "text": "-5% trade prices",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-5% trade prices",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
+      ]
     }
   ]
 }

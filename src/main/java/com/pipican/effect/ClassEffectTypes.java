@@ -5,6 +5,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.pipican.Pipican;
 import com.pipican.effect.type.AttributeEffect;
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.effect.type.ConditionalEffect;
 import com.pipican.effect.type.CriticalEffect;
 import com.pipican.effect.type.DamageMultiplierEffect;
@@ -57,6 +58,7 @@ public final class ClassEffectTypes {
     public static final Type CRITICAL = register("critical", CriticalEffect.CODEC);
     public static final Type DODGE = register("dodge", DodgeEffect.CODEC);
     public static final Type IMMUNE = register("immune", ImmuneEffect.CODEC);
+    public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}
 

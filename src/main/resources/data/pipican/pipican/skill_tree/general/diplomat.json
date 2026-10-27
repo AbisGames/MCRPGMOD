@@ -4,38 +4,34 @@
     {
       "id": "diplomat_start",
       "name": "Diplomat",
-      "description": {
-        "text": "-5% trade prices",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-5% trade prices",
       "type": "start",
       "x": -163,
-      "y": 1239
+      "y": 1239,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
+      ]
     },
     {
       "id": "diplomat_charming",
       "name": "Charming",
-      "description": {
-        "text": "-5% trade prices",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-5% trade prices",
       "type": "small",
       "x": -145,
       "y": 1312,
       "links": [
         "diplomat_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
       ]
     },
     {

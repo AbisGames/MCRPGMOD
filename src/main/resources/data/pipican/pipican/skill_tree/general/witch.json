@@ -4,38 +4,34 @@
     {
       "id": "witch_start",
       "name": "Witch",
-      "description": {
-        "text": "+5% potion duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% potion duration",
       "type": "start",
       "x": 375,
-      "y": -650
+      "y": -650,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "id": "witch_hedge",
       "name": "Hedge Lore",
-      "description": {
-        "text": "+8% potion duration",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8% potion duration",
       "type": "small",
       "x": 386,
       "y": -724,
       "links": [
         "witch_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.08
+        }
       ]
     },
     {
@@ -61,16 +57,7 @@
     {
       "id": "witch_hex",
       "name": "Hex",
-      "description": {
-        "text": "harmful potion effects you apply last 20% longer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "harmful potion effects you apply last 20% longer",
       "type": "notable",
       "x": 421,
       "y": -785,
@@ -78,7 +65,14 @@
         "witch_hedge"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "applied_harmful_duration",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "id": "witch_coven",

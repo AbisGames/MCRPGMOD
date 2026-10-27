@@ -4,19 +4,17 @@
     {
       "id": "arcanist_start",
       "name": "Arcanist",
-      "description": {
-        "text": "+5% experience gained",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% experience gained",
       "type": "start",
       "x": 70,
-      "y": -1598
+      "y": -1598,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "id": "arcanist_theory",
@@ -39,21 +37,19 @@
     {
       "id": "arcanist_practice",
       "name": "Practice",
-      "description": {
-        "text": "+10% experience gained",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% experience gained",
       "type": "small",
       "x": 100,
       "y": -1667,
       "links": [
         "arcanist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.1
+        }
       ]
     },
     {

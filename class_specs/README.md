@@ -46,6 +46,7 @@ Write these in plain words ("+2 armor", "+10% sword damage", "takes 50% more fir
 | **Crits & dodging** | "+15% critical damage", "+5% crit chance with swords", "8% chance to dodge melee attacks" |
 | **Immunities** | "immune to poison", "immune to wither and hunger" |
 | **Chance on hit / kill** | "10% chance on hit to set mobs on fire", "kills give Speed I for 5s", "when hit, 20% chance to slow the attacker" |
+| **XP, potions, hunger, trading, bows** | "+10% experience", "+10% potion duration", "harmful potions last 30% shorter", "potion effects you apply last 30% longer", "you get hungry 30% faster", "-5% trade prices", "+15% crossbow reload speed", "+20% bow draw speed", "+10% sword attack speed" |
 | **Grows with something** | "+0.25 armor per special-stat point", "+0.1 attack damage per class level", "+1% damage per 5 strength" |
 
 **Situations** you can use: wet / in water / underwater / in lava / in rain / in thunderstorms, at night / in daylight,

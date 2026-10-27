@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **107** (of 107 named in the specs)
-- Bonus phrases: **2249**. Fully working: **1151**, partly working: **16**, not yet: **1082**
+- Bonus phrases: **2249**. Fully working: **1210**, partly working: **13**, not yet: **1026**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,17 +12,17 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 332 |
+| [Other mechanics](#other-mechanics) | 330 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 247 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 179 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 141 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 105 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 98 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 77 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 69 |
-| [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 24 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 76 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 31 |
 | [Immunities](#immunities) | 20 |
 | [Critical hits](#critical-hits) | 9 |
+| [Per-weapon attack speed, reload, draw speed](#per-weapon-attack-speed-reload-draw-speed) | 5 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 4 |
 
 ## Other mechanics
@@ -90,7 +90,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **chronomancer**
   - special passive: +0.2% Precognition per Tempo point
   - special passive: Per 10 Tempo, harmful effects on you last 3% shorter
-  - weakness: you get hungry 30% faster
   - general tree: Foresight: +5% Precognition
   - general tree: Stretch: your Speed effects last 30% longer
   - special tree: Haste: Quickening speed lasts 2s longer
@@ -204,7 +203,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Death or Glory: +25% damage, but you can't use shields
   - special tree: Low Blow: Dirty Fighting can also apply Weakness
 - **gunslinger**
-  - special stat per point: +0.5% firearm damage
   - passive: +20% firearm damage
   - passive: +15% accuracy
   - special passive: Per 10 Trigger Finger, +1 shot per cylinder
@@ -1545,8 +1543,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Blood Debt: marks last until the target dies
   - general tree: Blood Debt: you can never mark a new one until it does
   - special tree: Frightening Glare: marked targets within your reach deal 15% less damage
-- **bard**
-  - general tree: Silver Tongue: -5% villager prices
 - **beastmaster**
   - special stat per point: +1% damage and +1% max health for your tamed animals
   - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
@@ -1640,16 +1636,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **abjurer**
   - passive: Warded: mobs deal 10% less damage to you and your potion debuffs last 20% shorter
-- **arcanist**
-  - general tree: Arcanist: +5% experience gained
-  - general tree: Practice: +10% experience gained
 - **artificer**
   - special tree: Store Spell: potions you brew can be loaded into crafted gear (see section 12)
   - skill Smithing: -5% anvil cost
   - skill Smithing: -5% anvil cost
-- **bard**
-  - passive: Esoteric Knowledge: +20% experience from all sources
-  - general tree: Bard: +5% experience gained
 - **beastmaster**
   - passive: Tamed wolves, cats, horses and parrots get +4 max health and +10% damage
   - special tree: Shared Spell: potion effects you drink also apply to your nearest tamed animal
@@ -1660,115 +1650,39 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Logistics: allies near you lose hunger 15% slower
 - **diplomat**
   - special passive: Per 10 Rapport, wandering traders offer 1 extra trade
-  - general tree: Diplomat: -5% trade prices
-  - general tree: Charming: -5% trade prices
-  - skill Bartering: -2% trade prices
-  - skill Bartering: -3% trade prices
   - skill Bartering: +5% piglin barter quality
-  - skill Bartering: -5% trade prices
 - **diviner**
   - general tree: Read the Signs: loot chests show their contents' rarity colour
 - **fighter**
   - general tree: Living Weapon: -30% magic damage and potion strength
-- **healer**
-  - general tree: Physician: your potions last 20% longer
-- **hexer**
-  - passive: Harmful splash potions you throw last 25% longer
 - **illusionist**
   - passive: Invisibility potions last twice as long on you
 - **inquisitor**
   - general tree: Master Torturer: scrutinised mobs drop +1 loot
-- **jack_of_all_trades**
-  - general tree: Quick Study: +10% experience
-- **mage_knight**
-  - weakness: -10% potion duration
 - **magician**
-  - passive: Thrown splash/lingering potions last 15% longer
-  - general tree: Scholar: +10% experience gained
-  - general tree: Arcane Mind: +5% potion duration
-  - skill Alchemy: +5% potion duration
-  - skill Alchemy: +5% potion duration
   - skill Alchemy: brewing is 10% faster
-  - skill Alchemy: +5% potion duration
-  - skill Alchemy: +10% potion duration
 - **myrmidon**
   - special passive: Per 10 Shieldcraft, +1 armor with shield
 - **poisoner**
   - general tree: Tipped Arrows: crafting tipped arrows gives double
 - **runesmith**
   - special tree: Dwarfen Mastery: anvil costs halved for you; -10% movement speed
-- **savant**
-  - special stat per point: +0.5% potion duration
-  - passive: +20% experience gained
-  - special passive: Per 10 Breadth, +5% experience
-  - general tree: Savant: +5% experience
-  - general tree: Bookish: +10% experience
-  - special tree: Encyclopedic: +10% potion duration
 - **sorcerer**
   - general tree: Far Reach: +15% projectile speed for thrown potions and fire charges
-  - special tree: Lasting Spell: potion effects you apply last 30% longer
 - **thief**
   - passive: Pick Pockets: +1 Looting level on all kills
   - passive: the first time you open a naturally generated loot chest
-- **transmuter**
-  - passive: Potions you drink last 20% longer
-  - special passive: Potion duration +0.5% per Flux
-  - general tree: Iron Gut: harmful potions last 30% shorter
-  - general tree: Perfected: +2 to every stat, but potions last 30% shorter
-  - special tree: Alchemical Body: +10% potion duration
 - **witch**
   - special stat per point: +1% duration of potions you brew and drink
   - passive: You take no damage from witch potions thrown by witches
   - passive: Potions you brew last 20% longer
   - passive: Your Instant Health/Damage splash potions are 15% stronger
   - special passive: Guidance range +1 block per 10 Craft
-  - general tree: Witch: +5% potion duration
-  - general tree: Hedge Lore: +8% potion duration
   - general tree: Familiar: tamed cats near you give +1 armor
-  - general tree: Hex: harmful potion effects you apply last 20% longer
   - special tree: Brewmistress: brewing takes 25% less time
   - skill Herbalism: eating berries/crops restores +1 hunger
-- **wizard**
-  - passive: +15% experience from all sources
-  - general tree: Wizard: +5% experience gained
-  - general tree: Annotations: +10% experience gained
 - **woodwose**
   - general tree: Overgrowth: crops grow 25% faster near you
-
-## Per-weapon attack speed, reload, draw speed
-
-- **artificer**
-  - passive: +10% crossbow reload speed
-  - general tree: Gears: +8% crossbow reload speed
-  - general tree: Overclock: +20% attack speed and reload speed
-  - skill Crossbowmanship: +5% reload speed
-  - skill Crossbowmanship: +5% reload speed
-- **blade**
-  - special stat per point: +0.5% sword attack speed
-  - passive: +10% sword attack speed
-  - general tree: Quick Cuts: +6% sword attack speed
-  - special tree: Swift Blade: +10% sword attack speed
-- **conqueror**
-  - general tree: Drillmaster: allies near you +2% attack speed
-- **fighter**
-  - general tree: Living Weapon: +15% weapon damage and attack speed
-  - special tree: Swift Reload: +25% crossbow reload speed
-  - special tree: Swift Shot: +20% bow draw speed
-- **gunslinger**
-  - special stat per point: +0.5% reload speed
-  - passive: Speed Loader: reloading is 40% faster
-  - special tree: Speed Loader: +20% reload speed
-  - skill Gunplay: +5% reload speed
-  - skill Gunplay: +5% reload speed
-- **sharpshooter**
-  - special tree: Quick Nock: +15% draw speed
-- **technomancer**
-  - passive: +10% crossbow damage and reload speed
-  - general tree: Spring-Loaded: +15% crossbow reload speed
-- **warrior**
-  - skill Archery: +5% draw speed
-  - skill Archery: +5% draw speed
-  - skill Swordsmanship: +5% sword attack speed
 
 ## Immunities
 
@@ -1829,6 +1743,19 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Firearm critical chance +0.3% per Trigger Finger
 - **jack_of_all_trades**
   - passive: Aptitude: once every 60s, your next hit is a guaranteed critical with +20% damage
+
+## Per-weapon attack speed, reload, draw speed
+
+- **artificer**
+  - general tree: Overclock: +20% attack speed and reload speed
+- **conqueror**
+  - general tree: Drillmaster: allies near you +2% attack speed
+- **fighter**
+  - general tree: Living Weapon: +15% weapon damage and attack speed
+- **gunslinger**
+  - special stat per point: +0.5% firearm damage and +0.5% reload speed
+- **technomancer**
+  - passive: +10% crossbow damage and reload speed
 
 ## Resource bar that fills from use (only the drain works)
 

@@ -63,6 +63,11 @@
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.85
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "applied_duration",
+      "amount": 0.15
     }
   ],
   "special_passives": [

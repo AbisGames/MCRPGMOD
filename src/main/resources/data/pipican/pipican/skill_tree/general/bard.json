@@ -4,19 +4,17 @@
     {
       "id": "bard_start",
       "name": "Bard",
-      "description": {
-        "text": "+5% experience gained",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% experience gained",
       "type": "start",
       "x": 563,
-      "y": -1116
+      "y": -1116,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "id": "bard_rousing_verse",
@@ -41,21 +39,19 @@
     {
       "id": "bard_silver_tongue",
       "name": "Silver Tongue",
-      "description": {
-        "text": "-5% villager prices",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "-5% villager prices",
       "type": "small",
       "x": 619,
       "y": -1166,
       "links": [
         "bard_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
       ]
     },
     {

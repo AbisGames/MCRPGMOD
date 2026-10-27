@@ -1,0 +1,14 @@
+{
+  "name": "Bonus Tester",
+  "description": "Test-only class for pipican:bonus, dodge and immunity effects.",
+  "selectable": false,
+  "base_stats": {},
+  "passives": [
+    { "type": "pipican:bonus", "kind": "experience", "amount": 0.5 },
+    { "type": "pipican:bonus", "kind": "harmful_duration", "amount": -0.5 },
+    { "type": "pipican:bonus", "kind": "potion_duration", "amount": 0.25 },
+    { "type": "pipican:bonus", "kind": "potion_duration", "amount": -0.25 },
+    { "type": "pipican:dodge", "chance": 0.1 },
+    { "type": "pipican:immune", "effects": [ "minecraft:nausea" ] }
+  ]
+}

@@ -67,6 +67,13 @@
     "starting_skill_points": 2,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "reload_speed",
+      "amount": 0.1
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Metal and magic attract the storm.",

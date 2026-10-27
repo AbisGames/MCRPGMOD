@@ -36,21 +36,19 @@
     {
       "id": "jack_of_all_trades_quick_study",
       "name": "Quick Study",
-      "description": {
-        "text": "+10% experience",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% experience",
       "type": "small",
       "x": -388,
       "y": 1624,
       "links": [
         "jack_of_all_trades_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.1
+        }
       ]
     },
     {

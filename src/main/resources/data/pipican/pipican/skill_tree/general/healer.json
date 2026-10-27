@@ -41,21 +41,19 @@
     {
       "id": "healer_physician",
       "name": "Physician",
-      "description": {
-        "text": "your potions last 20% longer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your potions last 20% longer",
       "type": "small",
       "x": 1320,
       "y": -26,
       "links": [
         "healer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.2
+        }
       ]
     },
     {

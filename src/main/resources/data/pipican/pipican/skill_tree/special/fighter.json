@@ -113,16 +113,7 @@
     {
       "id": "swift_reload",
       "name": "Swift Reload",
-      "description": {
-        "text": "+25% crossbow reload speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% crossbow reload speed",
       "type": "notable",
       "x": -140,
       "y": 70,
@@ -130,21 +121,19 @@
         "start"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.25
+        }
+      ]
     },
     {
       "id": "swift_shot",
       "name": "Swift Shot",
-      "description": {
-        "text": "+20% bow draw speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% bow draw speed",
       "type": "notable",
       "x": -210,
       "y": 70,
@@ -152,7 +141,14 @@
         "start"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "draw_speed",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "id": "weapon_mastery",

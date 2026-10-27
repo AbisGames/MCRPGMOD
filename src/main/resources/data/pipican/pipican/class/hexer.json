@@ -68,6 +68,13 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "applied_harmful_duration",
+      "amount": 0.25
+    }
+  ],
   "weakness": {
     "description": {
       "text": "Curses rebound on their maker.",

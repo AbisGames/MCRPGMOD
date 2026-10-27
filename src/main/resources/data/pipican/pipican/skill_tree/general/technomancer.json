@@ -57,16 +57,7 @@
     {
       "id": "technomancer_spring_loaded",
       "name": "Spring-Loaded",
-      "description": {
-        "text": "+15% crossbow reload speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% crossbow reload speed",
       "type": "notable",
       "x": -691,
       "y": -1597,
@@ -74,7 +65,14 @@
         "technomancer_capacitor"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "technomancer_gyro_stabilizer",

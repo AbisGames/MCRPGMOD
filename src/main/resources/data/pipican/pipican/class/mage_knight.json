@@ -82,22 +82,18 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Splitting focus between spell and steel.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Splitting focus between spell and steel.",
     "effects": [
       {
         "type": "pipican:attribute",
         "attribute": "minecraft:max_health",
         "amount": -0.1,
         "operation": "add_multiplied_base"
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "potion_duration",
+        "amount": -0.1
       }
     ]
   },

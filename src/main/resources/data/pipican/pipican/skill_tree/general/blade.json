@@ -19,21 +19,29 @@
     {
       "id": "blade_quick_cuts",
       "name": "Quick Cuts",
-      "description": {
-        "text": "+6% sword attack speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+6% sword attack speed",
       "type": "small",
       "x": -533,
       "y": 1208,
       "links": [
         "blade_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/swords"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:attack_speed",
+              "amount": 0.06,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
       ]
     },
     {

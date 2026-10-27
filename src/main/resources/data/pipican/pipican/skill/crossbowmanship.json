@@ -28,17 +28,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% reload speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% reload speed",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "+3% crossbow damage",
@@ -51,17 +48,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% reload speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% reload speed",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "+6% crossbow damage",

@@ -70,6 +70,24 @@
           "per": 0.05
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "potion_duration",
+      "amount": 0.2
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "potion_duration",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

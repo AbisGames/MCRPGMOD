@@ -1,5 +1,8 @@
 package com.pipican.gametest;
 
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.Pipican;
 import com.pipican.ability.Ability;
 import com.pipican.ability.AbilityService;
@@ -57,6 +60,7 @@ public final class ClassSystemTests {
     private static final ResourceKey<RpgClass> TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "tester"));
     private static final ResourceKey<RpgClass> CONDITION_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "condition_tester"));
     private static final ResourceKey<RpgClass> ABILITY_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "ability_tester"));
+    private static final ResourceKey<RpgClass> BONUS_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "bonus_tester"));
     private static final ResourceKey<StatDefinition> MIGHT = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "might"));
     private static final ResourceKey<StatDefinition> FOCUS = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "focus"));
     private static final ResourceKey<Skill> BLADE = ResourceKey.create(PipicanRegistries.SKILL, Identifier.fromNamespaceAndPath("pipican_test", "blade"));
@@ -79,6 +83,7 @@ public final class ClassSystemTests {
         TESTS.put("abilities", ClassSystemTests::abilities);
         TESTS.put("shipped_abilities", ClassSystemTests::shippedAbilities);
         TESTS.put("ability_mechanics", ClassSystemTests::abilityMechanics);
+        TESTS.put("bonuses", ClassSystemTests::bonuses);
     }
 
     private ClassSystemTests() {}
@@ -277,6 +282,28 @@ public final class ClassSystemTests {
     }
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
+    /** pipican:bonus (XP, potion durations), dodge and immunities. */
+    private static void bonuses(GameTestHelper helper) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, BONUS_TESTER, false, true).success(), "choose bonus tester");
+        ClassState state = ClassEffectApplier.state(player);
+        assertNear(helper, 0.1, state.dodgeChance(), "dodge chance");
+        assertNear(helper, 1, state.bonus(BonusEffect.Kind.POTION_DURATION), "amounts of one kind add up");
+
+        int before = player.totalExperience;
+        player.giveExperiencePoints(10);
+        player.giveExperiencePoints(1);
+        helper.assertTrue(player.totalExperience - before == 16, "+50% XP with remainders carried: " + (player.totalExperience - before));
+
+        player.addEffect(new MobEffectInstance(MobEffects.POISON, 200));
+        helper.assertTrue(player.getEffect(MobEffects.POISON).getDuration() == 100, "harmful effects last half as long");
+        player.addEffect(new MobEffectInstance(MobEffects.SPEED, 200));
+        helper.assertTrue(player.getEffect(MobEffects.SPEED).getDuration() == 200, "beneficial effects unchanged");
+        helper.assertTrue(!player.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 200)), "immune to nausea");
+        helper.succeed();
+    }
+
     private static void conditionsAndResource(GameTestHelper helper) {
         @SuppressWarnings("removal")
         ServerPlayer player = helper.makeMockServerPlayerInLevel();

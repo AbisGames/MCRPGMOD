@@ -59,17 +59,14 @@
     "starting_special_skill_points": 1
   },
   "weakness": {
-    "description": {
-      "text": "Time takes its toll on those who bend it.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Time takes its toll on those who bend it.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "hunger",
+        "amount": 0.3
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

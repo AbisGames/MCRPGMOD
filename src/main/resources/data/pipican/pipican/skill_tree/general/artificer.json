@@ -39,21 +39,19 @@
     {
       "id": "artificer_gears",
       "name": "Gears",
-      "description": {
-        "text": "+8% crossbow reload speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8% crossbow reload speed",
       "type": "small",
       "x": -386,
       "y": -724,
       "links": [
         "artificer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.08
+        }
       ]
     },
     {

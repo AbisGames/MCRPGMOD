@@ -94,16 +94,7 @@
     {
       "id": "transmuter_iron_gut",
       "name": "Iron Gut",
-      "description": {
-        "text": "harmful potions last 30% shorter",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "harmful potions last 30% shorter",
       "type": "notable",
       "x": 640,
       "y": -1618,
@@ -111,7 +102,14 @@
         "transmuter_malleable"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "harmful_duration",
+          "amount": -0.3
+        }
+      ]
     },
     {
       "id": "transmuter_rapid_shift",
@@ -138,16 +136,7 @@
     {
       "id": "transmuter_perfected",
       "name": "Perfected",
-      "description": {
-        "text": "+2 to every stat, but potions last 30% shorter",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 to every stat, but potions last 30% shorter",
       "type": "keystone",
       "x": 693,
       "y": -1672,
@@ -156,7 +145,54 @@
         "transmuter_rapid_shift"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": -0.3
+        }
+      ]
     }
   ]
 }

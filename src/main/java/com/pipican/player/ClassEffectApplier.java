@@ -1,5 +1,6 @@
 package com.pipican.player;
 
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.Pipican;
 import com.pipican.ability.Ability;
 import com.pipican.condition.ClassCondition;
@@ -277,7 +278,7 @@ public final class ClassEffectApplier {
         return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
                 Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
                 List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount,
-                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities));
+                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses));
     }
 
     /**
@@ -358,6 +359,7 @@ public final class ClassEffectApplier {
         double meleeDodge;
         final List<ClassState.Critical> criticals = new ArrayList<>();
         final Set<Holder<MobEffect>> immunities = new HashSet<>();
+        final Map<BonusEffect.Kind, Double> bonuses = new EnumMap<>(BonusEffect.Kind.class);
         final List<ReactionEffect> reactions = new ArrayList<>();
         final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> eidolon = new HashMap<>();
         /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
@@ -432,6 +434,11 @@ public final class ClassEffectApplier {
             } else {
                 dodge += chance;
             }
+        }
+
+        @Override
+        public void addBonus(BonusEffect.Kind kind, double amount) {
+            bonuses.merge(kind, amount, Double::sum);
         }
 
         @Override

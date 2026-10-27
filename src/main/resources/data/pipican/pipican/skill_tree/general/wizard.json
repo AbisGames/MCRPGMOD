@@ -4,19 +4,17 @@
     {
       "id": "wizard_start",
       "name": "Wizard",
-      "description": {
-        "text": "+5% experience gained",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% experience gained",
       "type": "start",
       "x": 130,
-      "y": -739
+      "y": -739,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "id": "wizard_study",
@@ -39,21 +37,19 @@
     {
       "id": "wizard_annotations",
       "name": "Annotations",
-      "description": {
-        "text": "+10% experience gained",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% experience gained",
       "type": "small",
       "x": 169,
       "y": -803,
       "links": [
         "wizard_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.1
+        }
       ]
     },
     {

@@ -2,6 +2,7 @@ package com.pipican.player;
 
 import com.pipican.condition.ClassCondition;
 import com.pipican.effect.VictimState;
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.effect.type.ReactionEffect;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.stat.StatDefinition;
@@ -47,10 +48,11 @@ public record ClassState(
         List<Critical> criticals,
         double dodgeChance,
         double meleeDodgeChance,
-        Set<Holder<MobEffect>> immunities) {
+        Set<Holder<MobEffect>> immunities,
+        Map<BonusEffect.Kind, Double> bonuses) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -89,6 +91,11 @@ public record ClassState(
 
     /** Critical-hit bonuses: crit damage (0.1 = +10%) and a chance to crit, for all weapons or only some. */
     public record Critical(double damage, double chance, Optional<HolderSet<Item>> weapons) {}
+
+    /** The multiplier for a bonus kind: 1 + the summed amounts, never below 0. */
+    public double bonus(BonusEffect.Kind kind) {
+        return Math.max(0, 1 + bonuses.getOrDefault(kind, 0.0));
+    }
 
     public double stat(ResourceKey<StatDefinition> stat) {
         return stats.getOrDefault(stat, 0.0);

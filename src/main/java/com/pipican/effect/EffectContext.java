@@ -1,6 +1,7 @@
 package com.pipican.effect;
 
 import com.pipican.condition.ClassCondition;
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.effect.type.ReactionEffect;
 import com.pipican.player.ClassState;
 import com.pipican.effect.type.ResourceEffect;
@@ -49,6 +50,9 @@ public interface EffectContext {
 
     /** A chance to completely avoid incoming hits (only melee hits if {@code meleeOnly}). */
     void addDodge(double chance, boolean meleeOnly);
+
+    /** A {@code pipican:bonus} percentage (0.1 = +10%); amounts of one kind add up. */
+    void addBonus(BonusEffect.Kind kind, double amount);
 
     /** Potion effects that can't be applied to the player. */
     void addImmunity(HolderSet<MobEffect> effects);

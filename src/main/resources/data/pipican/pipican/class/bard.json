@@ -62,6 +62,13 @@
     "starting_skill_points": 3,
     "starting_special_skill_points": 1
   },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "experience",
+      "amount": 0.2
+    }
+  ],
   "weakness": {
     "description": {
       "text": "A bard's power is in an audience. Alone, the song falls flat.",

@@ -5,6 +5,7 @@ ctx: {'special_name': 'Grit', 'special_id': 'pipican:warrior_grit', 'implicit_pe
 """
 import re
 
+import bonus
 import combat
 import conditions as cond
 
@@ -254,6 +255,10 @@ def _one(clause, ctx):
     for special in (combat.critical(whole, ctx, scal), combat.dodge(whole, ctx, scal)):
         if special is not None:
             return special
+    if pct:
+        bn = bonus.leading(value, what, scal)
+        if bn is not None:
+            return bn
     vs = combat.against(what, ctx, value, pct, scal)
     if vs is not None:
         return vs
@@ -394,6 +399,9 @@ def _special_forms(low, ctx, scal=lambda v: (v, None)):
     for special in (combat.immune(low), combat.taken_from(low), combat.critical(low, ctx, scal)):
         if special is not None:
             return special
+    bn = bonus.special(low, scal)
+    if bn is not None:
+        return bn
     m = re.match(r'^mobs deal (\d+(?:\.\d+)?)% (more|less) damage to you$', low)
     if m:
         return [_dmg_effect(True, _num(m.group(1)) * (1 if m.group(2) == 'more' else -1))]
