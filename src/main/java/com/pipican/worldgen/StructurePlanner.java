@@ -20,14 +20,16 @@ public final class StructurePlanner {
         int radius=spacing/3;
         int x=cx+(int)Math.floorMod(v,2L*radius+1)-radius;
         int z=cz+(int)Math.floorMod(v>>>16,2L*radius+1)-radius;
-        if(CapitalStructureExclusion.contains(x,z,350))return Optional.empty();
+        int halfWidth=type==Type.OUTPOST?32:40;
+        if(!canPlaceFootprint(x-halfWidth,z-halfWidth,
+                x+halfWidth,z+halfWidth,100))return Optional.empty();
         return WorldLayout.regionAt(seed,x,z)
             .map(r->new Candidate(type,x,z,r.id()));
     }
     /** Must be checked against each candidate's complete footprint, not its centre alone. */
     public static boolean canPlaceFootprint(int minX,int minZ,int maxX,int maxZ,int margin) {
         if(minX>maxX||minZ>maxZ)throw new IllegalArgumentException("Invalid footprint");
-        return !CapitalStructureExclusion.intersects(minX,minZ,maxX,maxZ,margin);
+        return !WorldStructureReservations.intersects(minX,minZ,maxX,maxZ,margin);
     }
     public static boolean collides(int x1,int z1,int radius1,int x2,int z2,int radius2){
         long dx=(long)x1-x2,dz=(long)z1-z2,lim=(long)radius1+radius2;
