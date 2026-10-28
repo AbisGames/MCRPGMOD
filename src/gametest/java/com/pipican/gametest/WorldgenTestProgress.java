@@ -4,7 +4,18 @@ import com.pipican.Pipican;
 import java.util.concurrent.atomic.AtomicLong;
 
 /** Wall-clock diagnostics: synchronous chunk work cannot advance GameTest ticks. */
-final class WorldgenTestProgress {
+@net.neoforged.fml.common.EventBusSubscriber(modid=Pipican.MOD_ID)
+public final class WorldgenTestProgress {
+    private static Thread globalWatch;
+    @net.neoforged.bus.api.SubscribeEvent
+    public static void started(net.neoforged.neoforge.event.server.ServerStartedEvent event){
+        if(event.getServer() instanceof net.minecraft.gametest.framework.GameTestServer)
+            globalWatch=watch(Thread.currentThread(),"GameTest server");
+    }
+    @net.neoforged.bus.api.SubscribeEvent
+    public static void stopping(net.neoforged.neoforge.event.server.ServerStoppingEvent event){
+        if(globalWatch!=null){globalWatch.interrupt();globalWatch=null;}
+    }
     private static final AtomicLong LAST=new AtomicLong();
     private static volatile String phase="starting";
     private WorldgenTestProgress(){}

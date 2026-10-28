@@ -43,8 +43,10 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         // Original positions precede foundation extension and are template-local.
         int floor=origin.getY()+original.stream().mapToInt(b->b.pos().getY()).min().orElse(0);
         var outside=world(origin,settings,40,-1);
-        int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE_WG,outside.getX(),outside.getZ());
+        int surface=level.getHeight(level instanceof net.minecraft.server.level.ServerLevel?
+            Heightmap.Types.WORLD_SURFACE:Heightmap.Types.WORLD_SURFACE_WG,outside.getX(),outside.getZ());
         while(surface>level.getMinY()+1&&foliage(level.getBlockState(new BlockPos(outside.getX(),surface-1,outside.getZ()))))surface--;
+        Pipican.LOGGER.debug("Native expedition access origin {} floor {} outside {} surface {} bounds {}",origin,floor,outside,surface,bounds);
         if(Math.abs(surface-(floor+1))<=4)return processed;
         int bottom=Math.max(level.getMinY()+1,Math.min(surface,floor+1));
         int top=Math.min(level.getMaxY()-3,Math.max(surface,floor+1));
@@ -66,7 +68,10 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
             var pos=entry.getKey();
             if(bounds!=null&&!bounds.isInside(pos))continue;
             var state=level.getBlockState(pos);
-            if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!CapitalPlacementEvents.isNatural(state)))return processed;
+            if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!CapitalPlacementEvents.isNatural(state))){
+                Pipican.LOGGER.debug("Expedition access deferred at {} by {} protected {}",pos,state,protection.contains(pos));
+                return processed;
+            }
         }
         var result=new ArrayList<>(processed);
         for(var entry:edits.entrySet())if(bounds==null||bounds.isInside(entry.getKey()))

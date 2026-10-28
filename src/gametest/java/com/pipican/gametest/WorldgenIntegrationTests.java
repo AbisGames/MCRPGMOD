@@ -59,8 +59,7 @@ public final class WorldgenIntegrationTests {
 
     private static void generatedChunks(GameTestHelper helper,String name) {
         suite=name;
-        var progressWatch=WorldgenTestProgress.watch(Thread.currentThread(),name);
-        try{
+        WorldgenTestProgress.touch("starting suite "+name);
         var server=helper.getLevel().getServer();
         var original=server.getWorldGenSettings();
         // GameTestServer hardcodes WORLD_OPTIONS=(0,false,false). Configure
@@ -90,7 +89,7 @@ public final class WorldgenIntegrationTests {
             }
         }
         helper.succeed();
-        }finally{progressWatch.interrupt();}
+        WorldgenTestProgress.touch("finished suite "+name+"; waiting for remaining GameTests");
     }
 
     private static ServerLevel createLevel(GameTestHelper helper,long seed) {

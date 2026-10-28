@@ -48,6 +48,16 @@ final class ExpeditionAccessTests {
                     enqueue(level,entry,pos.below(),queue,seen);
                 }
             }
+            var shaft=entry.relative(outward);
+            int count=0,lowest=Integer.MAX_VALUE,highest=Integer.MIN_VALUE;
+            for(int y=level.getMinY();y<level.getMaxY();y++){
+                var pos=new BlockPos(shaft.getX(),y,shaft.getZ());
+                if(level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.LADDER)){
+                    count++;lowest=Math.min(lowest,y);highest=Math.max(highest,y);
+                }
+            }
+            com.pipican.Pipican.LOGGER.warn("Unreachable expedition entry {} outward {} visited {} ladder column {} count {} lowest {} highest {} entry block {} head {}",
+                entry,outward,seen.size(),shaft,count,lowest,highest,level.getBlockState(shaft),level.getBlockState(shaft.above()));
         }
         return false;
     }
