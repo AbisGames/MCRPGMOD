@@ -123,6 +123,21 @@ public final class WorldgenIntegrationTests {
         var server=helper.getLevel().getServer();
         var level=server.getLevel(key);
         if(level==null)return;
+        var closingThread=Thread.currentThread();
+        var phase=new java.util.concurrent.atomic.AtomicReference<String>("draining chunks");
+        var watchdog=Thread.ofPlatform().daemon().name("worldgen-close-watchdog").start(()->{
+            try{
+                for(int elapsed=30;elapsed<=180;elapsed+=30){
+                    Thread.sleep(30000);
+                    Pipican.LOGGER.error("Test world close stalled {}s dimension {} phase {} server stack {}",
+                        elapsed,key,phase.get(),java.util.Arrays.toString(closingThread.getStackTrace()));
+                }
+                // This is an isolated disposable GameTest JVM. Enforce the
+                // close deadline even if a native join ignores interruption.
+                // A nonzero exit preserves failure, with diagnostics in CI.
+                Runtime.getRuntime().halt(3);
+            }catch(InterruptedException completed){}
+        });
         try{
             // Mirror MinecraftServer.stopServer: closing region storage while
             // generation/unload tasks still own chunks leaks worlds and can
@@ -133,17 +148,22 @@ public final class WorldgenIntegrationTests {
                 source.deactivateTicketsOnClosing();
                 source.tick(()->true,false);
                 for(int i=0;i<128&&source.pollTask();i++){}
+                server.runAllTasks();
                 if(System.nanoTime()>deadline)throw new IllegalStateException(
                     "Timed out draining test-world chunks: "+key+" "+source.gatherStats());
                 Thread.sleep(1);
             }
+            phase.set("saving level");
             level.save(null,true,false);
             server.forgeGetWorldMap().remove(key);
             server.markWorldsDirty();
+            phase.set("closing level");
             level.close();
+            phase.set("releasing storage");
             var storage=STORAGE.remove(key);
             if(storage!=null)storage.close();
         }catch(Exception e){throw new IllegalStateException("Saving temporary RPG integration world "+key,e);}
+        finally{watchdog.interrupt();}
     }
 
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
