@@ -20,7 +20,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public final class WorldgenIntegrationTests {
     private static long generationSeed;
     private static String suite;
-    private static final List<String> SUITES=List.of("sky","terrain","capital","settlements","villages","protection","unique","expeditions");
+    private static final List<String> SUITES=List.of("sky","terrain","terrain_probe","capital","settlements","villages","protection","unique","expeditions");
     private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
         STORAGE=new java.util.HashMap<>();
     private static final java.util.Map<ResourceKey<Level>,java.nio.file.Path> WORLD_ROOTS=new java.util.HashMap<>();
@@ -172,6 +172,36 @@ public final class WorldgenIntegrationTests {
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
         helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
         helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
+        if(suite.equals("terrain_probe")){
+            String target=System.getProperty("pipican.worldgenTarget","");
+            var points=switch(target){
+                case "hallvard" -> new int[][]{{-3929,-12705},{-3937,-12713},{-3667,-12667}};
+                case "skelvik" -> new int[][]{{8921,-21095},{8897,-21095},{9167,-20833}};
+                case "bogmere" -> new int[][]{{-12543,2630}};
+                default -> throw new IllegalArgumentException("Unknown terrain probe: "+target);
+            };
+            var city=new LandmarkCatalog().all().stream().filter(c->c.id().equals(target)).findFirst().orElseThrow();
+            var generator=level.getChunkSource().getGenerator();
+            var randomState=level.getChunkSource().randomState();
+            int centre=generator.getBaseHeight(city.x(),city.z(),net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,randomState);
+            var failures=new java.util.ArrayList<String>();
+            for(var point:points){
+                int x=point[0],z=point[1];level.getChunk(x>>4,z>>4);
+                int raw=generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,randomState);
+                int actual=level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,x,z);
+                var context=new net.minecraft.world.level.levelgen.DensityFunction.SinglePointContext(x,raw-1,z);
+                String region=WorldLayout.regionAt(0L,x,z).orElseThrow().id();
+                double interpolated=generator instanceof net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator noise?
+                    noise.getInterpolatedNoiseValue(randomState,context):Double.NaN;
+                Pipican.LOGGER.info("Terrain probe seed {} city {} point {},{} centre {} raw {} actual {} region {} correction {} regional {} final {} interpolated {} block {} biome {}",
+                    generationSeed,target,x,z,centre,raw,actual,region,
+                    RegionalElevation.terraceCorrection(region,x,raw-1,z),new RegionalElevation(1).compute(context),
+                    randomState.router().finalDensity().compute(context),interpolated,
+                    level.getBlockState(new BlockPos(x,raw-1,z)),level.getBiome(new BlockPos(x,raw-1,z)).unwrapKey());
+                if(raw>centre+24||raw<centre-12)failures.add(x+","+z+" raw="+raw+" centre="+centre);
+            }
+            helper.assertTrue(failures.isEmpty(),"terrain probe failed seed="+generationSeed+" city="+target+" "+failures);
+        }
         if(suite.equals("settlements"))AuthoredSettlementTests.verify(helper,level,generationSeed,
             ()->createLevel(helper,generationSeed),key->saveAndClose(helper,key));
         if(suite.equals("expeditions")||suite.equals("villages"))RegionalExpeditionTests.verify(helper,level,generationSeed,suite.equals("villages"),

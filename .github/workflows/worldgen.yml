@@ -9,6 +9,10 @@ on:
         description: Verify Hallvard, Skelvik and Bogmere before the full matrix
         type: boolean
         default: true
+      probe_terrain:
+        description: Diagnose the three terrain regressions without assembling a whole capital
+        type: boolean
+        default: false
   push:
     branches: [worldgen-and-ores]
   pull_request:
@@ -60,7 +64,7 @@ jobs:
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
-          suite: capital
+          suite: ${{ inputs.probe_terrain && 'terrain_probe' || 'capital' }}
           seed: ${{ matrix.seed }}
           target: ${{ matrix.capital }}
       - name: Focused native regional settlement regression
