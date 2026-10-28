@@ -3,6 +3,12 @@ concurrency:
   group: pipican-worldgen-validation-${{ github.ref }}
   cancel-in-progress: true
 on:
+  workflow_dispatch:
+    inputs:
+      focused_only:
+        description: Verify Hallvard, Skelvik and Bogmere before the full matrix
+        type: boolean
+        default: true
   push:
     branches: [worldgen-and-ores]
   pull_request:
@@ -49,14 +55,6 @@ jobs:
       - name: Verify packaged structure templates
         id: packaged
         run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
-      - name: Focused native regional settlement regression
-        id: focused
-        timeout-minutes: 20
-        uses: ./.github/actions/worldgen-suite
-        with:
-          suite: villages
-          seed: ${{ matrix.seed }}
-          target: ${{ matrix.region }}
       - name: Focused capital terrain regression
         if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 15
@@ -65,57 +63,66 @@ jobs:
           suite: capital
           seed: ${{ matrix.seed }}
           target: ${{ matrix.capital }}
+      - name: Focused native regional settlement regression
+        id: focused
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
+        timeout-minutes: 20
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: villages
+          seed: ${{ matrix.seed }}
+          target: ${{ matrix.region }}
       - name: Generated sky islands and End portal
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
           suite: sky
           seed: ${{ matrix.seed }}
       - name: Player protection and ore disk reload
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 10
         uses: ./.github/actions/worldgen-suite
         with:
           suite: protection
           seed: ${{ matrix.seed }}
       - name: Unique landmark placement
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
           suite: unique
           seed: ${{ matrix.seed }}
       - name: All regional capital terrain
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
           suite: terrain
           seed: ${{ matrix.seed }}
       - name: All authored settlements and disk reload
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 25
         uses: ./.github/actions/worldgen-suite
         with:
           suite: settlements
           seed: ${{ matrix.seed }}
       - name: Regional native villages and outposts
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 30
         uses: ./.github/actions/worldgen-suite
         with:
           suite: villages
           seed: ${{ matrix.seed }}
       - name: All regional mine and dungeon fixtures
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 45
         uses: ./.github/actions/worldgen-suite
         with:
           suite: expeditions
           seed: ${{ matrix.seed }}
       - name: All capital assemblies and road connectivity
-        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' && !(github.event_name == 'workflow_dispatch' && inputs.focused_only) }}
         timeout-minutes: 60
         uses: ./.github/actions/worldgen-suite
         with:
@@ -136,7 +143,7 @@ jobs:
         if: matrix.seed == 0
         uses: actions/upload-artifact@v4
         with:
-          name: pipican-rpg-singleplayer-${{ github.sha }}
+          name: pipican-rpg-${{ github.event_name == 'workflow_dispatch' && inputs.focused_only && 'focused' || 'full' }}-${{ github.sha }}
           path: build/libs/*.jar
           if-no-files-found: error
           retention-days: 30

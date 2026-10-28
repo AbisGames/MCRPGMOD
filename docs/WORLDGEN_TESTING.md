@@ -20,9 +20,15 @@ For a focused regression while debugging:
 .\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=expeditions -PworldgenTarget=heartlands
 ```
 
-CI runs focused regional settlement regressions first, followed by the full matrix in
+CI runs focused capital regressions first, followed by regional settlements and the full matrix in
 separate Java processes per integration suite, retaining each suite's logs. A
 focused pass cannot make the workflow green without the full integration run.
+
+The manually dispatched workflow has a `focused_only` input. Its default `true`
+runs the three previously failing capital/seed pairs only: Hallvard/0,
+Skelvik/123 and Bogmere/987654321. This is an explicit verification checkpoint;
+it does not establish full worldgen completion. Dispatch with `focused_only=false`
+to run the complete matrix. Push and pull-request runs retain the full matrix.
 
 The GameTest run has a 4 GB maximum heap. CI runs the three seeds as independent
 jobs and retains logs and build reports even when a test fails. The generated
