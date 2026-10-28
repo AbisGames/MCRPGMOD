@@ -12,6 +12,7 @@ import com.pipican.worldgen.RegionalNatureTab;
 import com.pipican.worldgen.WorldgenCodecs;
 import com.pipican.worldgen.RegionalDensityCodecs;
 import com.pipican.worldgen.CapitalChunkLoader;
+import com.pipican.worldgen.ExpeditionFoundationProcessor;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -46,6 +47,7 @@ public final class Pipican {
         WorldgenCodecs.register(modBus);
         RegionalDensityCodecs.register(modBus);
         CapitalChunkLoader.register(modBus);
+        ExpeditionFoundationProcessor.register(modBus);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);

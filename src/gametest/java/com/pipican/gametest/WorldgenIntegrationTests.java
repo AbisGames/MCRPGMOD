@@ -148,7 +148,10 @@ public final class WorldgenIntegrationTests {
                 source.deactivateTicketsOnClosing();
                 source.tick(()->true,false);
                 for(int i=0;i<128&&source.pollTask();i++){}
-                server.runAllTasks();
+                // Native server shutdown also pumps its main event loop;
+                // chunk-only polling can leave server callbacks pending.
+                long pumpUntil=System.nanoTime()+1000000L;
+                server.managedBlock(()->System.nanoTime()>=pumpUntil);
                 if(System.nanoTime()>deadline)throw new IllegalStateException(
                     "Timed out draining test-world chunks: "+key+" "+source.gatherStats());
                 Thread.sleep(1);

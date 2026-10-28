@@ -999,7 +999,9 @@ def add_pool(pool_id,structure_id):
     savejson(Path('worldgen/template_pool')/(pool_id+'.json'),{
         'fallback':'minecraft:empty','elements':[{'weight':1,'element':{
           'element_type':'minecraft:single_pool_element','location':'pipican:'+structure_id,
-          'processors':{'processors':[]},'projection':'rigid'}}]})
+          'processors':{'processors':([{'processor_type':'pipican:expedition_foundation'}]
+              if pool_id.startswith('regional/') and pool_id.rsplit('/',1)[-1] in ('mine','dungeon') else [])},
+          'projection':'rigid'}}]})
 
 def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
     # Underground structures keep their cave elevation. Aerial expeditions
