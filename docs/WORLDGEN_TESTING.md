@@ -19,7 +19,7 @@ For a focused regression while debugging:
 .\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=capital -PworldgenTarget=aldermere
 ```
 
-CI runs focused capital regressions first, followed by the full matrix in
+CI runs focused regional mine and dungeon regressions first, followed by the full matrix in
 separate Java processes per integration suite, retaining each suite's logs. A
 focused pass cannot make the workflow green without the full integration run.
 

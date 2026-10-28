@@ -32,18 +32,44 @@ jobs:
       - name: Compile NeoForge with generated structures
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: Verify final packaged structure templates
+        id: packaged
         run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
-      - name: Boot singleplayer-capable GameTest server and validate registry load
-        run: |
-          status=0
-          for suite in sky protection unique terrain expeditions capital; do
-            if ! ./gradlew runGameTestServer --no-daemon -PworldgenSuite="$suite"; then
-              status=1
-            fi
-            mkdir -p "build/worldgen-logs/$suite"
-            cp -a run/logs/. "build/worldgen-logs/$suite/"
-          done
-          exit "$status"
+      - name: Generated sky islands and End portal
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: sky
+      - name: Player protection and ore disk reload
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 10
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: protection
+      - name: Unique landmark placement
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: unique
+      - name: All regional capital terrain
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: terrain
+      - name: All regional mine and dungeon fixtures
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 45
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: expeditions
+      - name: All capital assemblies and road connectivity
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 60
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: capital
       - name: Preserve generated-asset test diagnostics
         if: always()
         uses: actions/upload-artifact@v4

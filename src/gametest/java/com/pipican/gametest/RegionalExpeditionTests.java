@@ -25,8 +25,12 @@ final class RegionalExpeditionTests {
         ServerLevel level=initial;
         var failures=new ArrayList<String>();
         int shard=seed==123L?1:seed==987654321L?2:0;
-        for(int oreIndex=shard;oreIndex<RegionalOreCatalog.ORES.size();oreIndex+=3){
+        String target=System.getProperty("pipican.worldgenTarget","");
+        helper.assertTrue(target.isEmpty()||RegionalOreCatalog.ORES.stream().anyMatch(o->o.region().equals(target)),
+            "unknown target expedition region: "+target);
+        for(int oreIndex=target.isEmpty()?shard:0;oreIndex<RegionalOreCatalog.ORES.size();oreIndex+=target.isEmpty()?3:1){
         var ore=RegionalOreCatalog.ORES.get(oreIndex);
+        if(!target.isEmpty()&&!ore.region().equals(target))continue;
         for(String kind:List.of("mine","dungeon")){
             String id="regional/"+ore.region()+"/"+kind;
             String diagnostic="dimension="+level.dimension().identifier();
@@ -103,11 +107,15 @@ final class RegionalExpeditionTests {
                     helper.assertTrue(RegionalMineEvents.restoreDue(level,queued.restoreAt()-1,8)==0,"premature ore renewal: "+id);
                     helper.assertTrue(RegionalMineEvents.restoreDue(level,queued.restoreAt(),8)==1,"ore did not renew: "+id);
                     level.setBlock(node,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);
-                    var snapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,node);
-                    level.setBlock(node,RegionalOreRegistries.NODES.get(ore.id()).get().defaultBlockState(),3);
-                    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
-                        new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(snapshot,
-                            net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),player));
+                    var stack=new net.minecraft.world.item.ItemStack(RegionalOreRegistries.NODES.get(ore.id()).get());
+                    player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+                    var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(node),
+                        net.minecraft.core.Direction.UP,node,false);
+                    var context=new net.minecraft.world.item.context.UseOnContext(level,player,
+                        net.minecraft.world.InteractionHand.MAIN_HAND,stack,hit){};
+                    stack.useOn(context);
+                    helper.assertTrue(level.getBlockState(node).is(RegionalOreRegistries.NODES.get(ore.id()).get()),
+                        "real BlockItem placement failed inside mine: "+id);
                     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
                         new net.neoforged.neoforge.event.level.block.BreakBlockEvent(level,node,level.getBlockState(node),player));
                     helper.assertTrue(!data.contains(node),"player-placed ore exploited a real native mine: "+id);

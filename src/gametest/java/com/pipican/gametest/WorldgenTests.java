@@ -341,6 +341,8 @@ public final class WorldgenTests {
         var empty=net.minecraft.world.item.ItemStack.EMPTY;
         for(var ore:RegionalOreCatalog.ORES){
             var state=RegionalOreRegistries.NODES.get(ore.id()).get().defaultBlockState();
+            helper.assertTrue(state.getBlock().asItem() instanceof net.minecraft.world.item.BlockItem,
+                "ore block item was not registered: "+ore.id());
             helper.assertTrue(pickaxe.isCorrectToolForDrops(state),"pickaxe cannot harvest "+ore.id());
             helper.assertTrue(!empty.isCorrectToolForDrops(state),"bare hand can harvest "+ore.id());
             var drops=net.minecraft.world.level.block.Block.getDrops(state,level,pos,null,null,pickaxe);
