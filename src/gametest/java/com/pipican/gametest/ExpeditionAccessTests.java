@@ -22,7 +22,9 @@ final class ExpeditionAccessTests {
             var entry=new BlockPos(40,1,1).rotate(rotation).offset(origin);
             var outward=rotation.rotate(Direction.NORTH);
             for(int cx=Math.floorDiv(entry.getX()-18,16);cx<=Math.floorDiv(entry.getX()+18,16);cx++)
-                for(int cz=Math.floorDiv(entry.getZ()-18,16);cz<=Math.floorDiv(entry.getZ()+18,16);cz++)level.getChunk(cx,cz);
+                for(int cz=Math.floorDiv(entry.getZ()-18,16);cz<=Math.floorDiv(entry.getZ()+18,16);cz++){
+                    WorldgenTestProgress.touch("entrance neighborhood chunk "+cx+","+cz);level.getChunk(cx,cz);
+                }
             var queue=new ArrayDeque<BlockPos>();
             var seen=new HashSet<BlockPos>();
             for(int x=36;x<=44;x++){

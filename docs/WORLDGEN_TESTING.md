@@ -211,3 +211,10 @@ other. The access fix must pass the server regression before being called verifi
 actual test level: protected air, inventories and artificial blocks must reject
 the local shaft plan without a world mutation. Appended edits must stay within
 the decoration box, and empty data-marker processing must remain empty.
+
+Synchronous fixture work has a wall-clock progress watchdog. After two minutes
+without a fixture/chunk checkpoint it records server and worker stacks; after
+five minutes without progress it terminates only the disposable GameTest JVM
+with exit code 4. Each capital tile, native structure chunk and world-close
+checkpoint refreshes progress. This turns a stalled fixture into diagnosable
+failure, without bypassing assertions or treating the suite as successful.

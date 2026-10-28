@@ -47,6 +47,11 @@ public final class WorldgenIntegrationTests {
         }
     }
 
+    private static net.minecraft.world.level.chunk.LevelChunk chunk(ServerLevel level,int x,int z){
+        WorldgenTestProgress.touch(suite+" chunk "+x+","+z);
+        return level.getChunk(x,z);
+    }
+
     private static void check(GameTestHelper helper, ServerLevel level, BlockPos pos, boolean ok, String expected) {
         helper.assertTrue(ok, "seed=" + generationSeed + " dimension=" + level.dimension().identifier()
             + " pos=" + pos + " expected=" + expected + " actual=" + level.getBlockState(pos));
@@ -54,6 +59,8 @@ public final class WorldgenIntegrationTests {
 
     private static void generatedChunks(GameTestHelper helper,String name) {
         suite=name;
+        var progressWatch=WorldgenTestProgress.watch(Thread.currentThread(),name);
+        try{
         var server=helper.getLevel().getServer();
         var original=server.getWorldGenSettings();
         // GameTestServer hardcodes WORLD_OPTIONS=(0,false,false). Configure
@@ -83,6 +90,7 @@ public final class WorldgenIntegrationTests {
             }
         }
         helper.succeed();
+        }finally{progressWatch.interrupt();}
     }
 
     private static ServerLevel createLevel(GameTestHelper helper,long seed) {
@@ -121,6 +129,7 @@ public final class WorldgenIntegrationTests {
     }
 
     private static void saveAndClose(GameTestHelper helper,ResourceKey<Level> key){
+        WorldgenTestProgress.touch("closing "+key.identifier());
         var server=helper.getLevel().getServer();
         var level=server.getLevel(key);
         if(level==null)return;
@@ -187,7 +196,7 @@ public final class WorldgenIntegrationTests {
             int centre=generator.getBaseHeight(city.x(),city.z(),net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,randomState);
             var failures=new java.util.ArrayList<String>();
             for(var point:points){
-                int x=point[0],z=point[1];level.getChunk(x>>4,z>>4);
+                int x=point[0],z=point[1];chunk(level,x>>4,z>>4);
                 int raw=generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,randomState);
                 int actual=level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,x,z);
                 var context=new net.minecraft.world.level.levelgen.DensityFunction.SinglePointContext(x,raw-1,z);
@@ -214,7 +223,7 @@ public final class WorldgenIntegrationTests {
                 var size=template.getSize();
                 int minX=site.x()-size.getX()/2,minZ=site.z()-size.getZ()/2;
                 for(int cx=Math.floorDiv(minX,16);cx<=Math.floorDiv(minX+size.getX()-1,16);cx++)
-                    for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)level.getChunk(cx,cz);
+                    for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)chunk(level,cx,cz);
                 helper.assertTrue(SpecialLandmarkPlacementEvents.tryPlace(level,site),
                     "seed="+generationSeed+" unique landmark placement failed: "+site.id());
                 if(site.id().equals("umbral_city")){
@@ -226,7 +235,7 @@ public final class WorldgenIntegrationTests {
         if(suite.equals("protection")){
             var built=new BlockPos(-2500,400,-3333);
             var node=built.east(2);
-            level.getChunk(built.getX()>>4,built.getZ()>>4);
+            chunk(level,built.getX()>>4,built.getZ()>>4);
             var snapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,built);
             level.setBlock(built,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
             net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
@@ -250,12 +259,12 @@ public final class WorldgenIntegrationTests {
             long ready=level.getGameTime()+20;
             RenewableOreSavedData.get(level).record(node,"frostcrystal",ready);
             var unloaded=new BlockPos(23000,400,23000);
-            level.getChunk(unloaded.getX()>>4,unloaded.getZ()>>4);
+            chunk(level,unloaded.getX()>>4,unloaded.getZ()>>4);
             RenewableOreSavedData.get(level).record(unloaded,"glacierite",ready);
             var key=level.dimension();
             saveAndClose(helper,key);
             level=createLevel(helper,generationSeed);
-            level.getChunk(built.getX()>>4,built.getZ()>>4);
+            chunk(level,built.getX()>>4,built.getZ()>>4);
             helper.assertTrue(!level.hasChunkAt(unloaded),"distant queued node remained loaded after reopening the world");
             helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"player provenance lost after disk reload");
             helper.assertTrue(PlayerWorldgenProtection.get(level).contains(pushed.east()),"piston provenance lost after disk reload");
@@ -279,7 +288,7 @@ public final class WorldgenIntegrationTests {
             int ground=level.getChunkSource().getGenerator().getBaseHeight(city.x(),city.z(),
                 net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,level.getChunkSource().randomState());
             var cityBuild=new BlockPos(city.x()+1,ground+4,city.z()+1);
-            level.getChunk(cityBuild.getX()>>4,cityBuild.getZ()>>4);
+            chunk(level,cityBuild.getX()>>4,cityBuild.getZ()>>4);
             var citySnapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,cityBuild);
             level.setBlock(cityBuild,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
             net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
@@ -299,7 +308,7 @@ public final class WorldgenIntegrationTests {
             // Centre plus four corners within the authored structure support area.
             for (int[] offset : new int[][] {{0,0},{-30,-30},{-30,30},{30,-30},{30,30}}) {
                 var floor = new BlockPos(island.x()+offset[0], 318, island.z()+offset[1]);
-                level.getChunk(floor.getX() >> 4, floor.getZ() >> 4);
+                chunk(level,floor.getX() >> 4, floor.getZ() >> 4);
                 check(helper,level,floor,level.getBlockState(floor).isSolid(), "solid island support " + island.id());
                 var clearance = floor.above(4);
                 check(helper,level,clearance,level.getBlockState(clearance).isAir(), "clear building space " + island.id());
@@ -313,7 +322,7 @@ public final class WorldgenIntegrationTests {
             int minX=site.x()-size.getX()/2,minZ=site.z()-size.getZ()/2;
             for(int cx=Math.floorDiv(minX,16);cx<=Math.floorDiv(minX+size.getX()-1,16);cx++)
                 for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)
-                    level.getChunk(cx,cz);
+                    chunk(level,cx,cz);
             helper.assertTrue(SpecialLandmarkPlacementEvents.tryPlace(level,site),
                 "seed="+generationSeed+" failed sky structure placement: "+site.id());
             if(site.id().equals("aetheris_citadel")){
@@ -355,7 +364,7 @@ public final class WorldgenIntegrationTests {
         // A physically generated capital core in every region, not a density calculation.
         for (var city : new LandmarkCatalog().all()) {
             if (!city.tier().equals("capital")) continue;
-            level.getChunk(city.x() >> 4,city.z() >> 4);
+            chunk(level,city.x() >> 4,city.z() >> 4);
             int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR,
                 city.x(),city.z()) - 1;
             var floor = new BlockPos(city.x(),y,city.z());
@@ -399,6 +408,7 @@ public final class WorldgenIntegrationTests {
     private static void verifyCapital(GameTestHelper helper,ServerLevel level,LandmarkCatalog.Landmark city){
         var progress=CapitalPlacementSavedData.get(level);
         for(int i=0;i<63;i++){
+            WorldgenTestProgress.touch("capital "+city.id()+" tile "+i);
             var preparation=CapitalChunkLoader.prepare(level,city,progress);
             int before=progress.progress(city.id())==null?0:progress.progress(city.id()).nextTile();
             helper.assertTrue(before==i,"chunk preparation advanced placement progress");

@@ -33,6 +33,7 @@ final class RegionalExpeditionTests {
         if(!target.isEmpty()&&!ore.region().equals(target))continue;
         for(String kind:villages?List.of("village"):List.of("mine","dungeon")){
             String id=villages?settlementId(ore.region()):"regional/"+ore.region()+"/"+kind;
+            WorldgenTestProgress.touch("native "+id+" selecting start");
             String diagnostic="dimension="+level.dimension().identifier();
             try{
                 var selected=level.registryAccess().lookupOrThrow(Registries.STRUCTURE)
@@ -74,7 +75,9 @@ final class RegionalExpeditionTests {
                 var box=net.minecraft.world.level.levelgen.structure.StructurePiece.createBoundingBox(start.getPieces().stream());
                 diagnostic+=" bounds="+box;
                 for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
-                    for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++)level.getChunk(cx,cz);
+                    for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++){
+                        WorldgenTestProgress.touch("native "+id+" chunk "+cx+","+cz);level.getChunk(cx,cz);
+                    }
                 for(int x:new int[]{box.minX()+4,(box.minX()+box.maxX())/2,box.maxX()-4})
                     for(int z:new int[]{box.minZ()+4,(box.minZ()+box.maxZ())/2,box.maxZ()-4}){
                         var support=new BlockPos(x,box.minY()-1,z);
@@ -129,6 +132,7 @@ final class RegionalExpeditionTests {
                     helper.assertTrue(spawners==1&&chests==3,"native dungeon blocks missing: "+id+
                         " spawners="+spawners+" chests="+chests);
                 }else helper.assertTrue(furniture>0,"native regional settlement has no placed furniture: "+id);
+                WorldgenTestProgress.touch("native "+id+" checking entrance");
                 if(!villages)helper.assertTrue(ExpeditionAccessTests.reachesOutside(level,start),
                     "no walk/swim/climb route from native expedition doorway to open terrain: "+id);
                 Pipican.LOGGER.info("Verified native chunk decoration seed {} structure {} bounds {}",seed,id,box);

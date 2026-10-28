@@ -23,6 +23,7 @@ final class AuthoredSettlementTests {
         int shard=seed==123L?1:seed==987654321L?2:0;
         for(int index=shard;index<sites.size();index+=3){
             var site=sites.get(index);
+            WorldgenTestProgress.touch("authored settlement "+site.id());
             try{
                 var template=level.getServer().getStructureManager().get(Pipican.id("authored/"+site.assetPool())).orElseThrow();
                 var size=template.getSize();
