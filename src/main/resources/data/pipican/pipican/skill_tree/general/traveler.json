@@ -77,16 +77,7 @@
     {
       "id": "traveler_steady_arrival",
       "name": "Steady Arrival",
-      "description": {
-        "text": "no Nausea after teleporting",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "no Nausea after teleporting",
       "type": "notable",
       "x": 48,
       "y": 1740,
@@ -94,7 +85,13 @@
         "traveler_fleetfoot"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:nausea"
+        }
+      ]
     },
     {
       "id": "traveler_planeswalker",

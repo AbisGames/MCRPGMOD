@@ -76,6 +76,18 @@
         "minecraft:blindness",
         "minecraft:bad_omen"
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "victims": "minecraft:zombie_villager",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:cure"
+        }
+      ],
+      "name": "exorcism"
     }
   ],
   "special_passives": [

@@ -71,7 +71,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** Like {@code attacked}, but only a melee hit (not arrows or spells); {@code pipican:shrug} cancels it. */
         ATTACKED_MELEE("attacked_melee"),
         /** You right-clicked a mob or player (the victim); {@code weapons} limits it to what you hold (air = empty hand). */
-        INTERACT("interact");
+        INTERACT("interact"),
+        /** An explosion you caused hurt a mob (the victim). */
+        EXPLOSION_HIT("explosion_hit");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

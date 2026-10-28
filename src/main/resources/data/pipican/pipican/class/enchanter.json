@@ -99,6 +99,17 @@
           "per": 0.005
         }
       ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "pacify",
+      "seconds": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

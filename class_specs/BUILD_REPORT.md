@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1799**, partly working: **24**, not yet: **427**
+- Bonus phrases: **2250**. Fully working: **1809**, partly working: **24**, not yet: **417**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,11 +12,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 137 |
+| [Other mechanics](#other-mechanics) | 130 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 119 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 67 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 63 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 40 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 37 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 27 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 11 |
@@ -41,8 +41,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Reclaim Arcana: Reclaim refunds go to 150%
 - **avenger**
   - special tree: Hound: Speed boost lasts 2s longer
-- **bard**
-  - special tree: Disarming Charm: charmed mobs also get Weakness I
 - **beastmaster**
   - passive: Taming always succeeds on the first try
 - **berserker**
@@ -70,7 +68,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Shockwave radius +1 per 20 Ruin
   - special passive: Shockwave damage +0.1 per Ruin point
   - weakness: take 1 damage
-  - general tree: Shrapnel: explosions you cause give Slowness I
   - general tree: Bigger Booms: your TNT has +25% radius
   - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
 - **dreadnaught**
@@ -83,10 +80,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
   - general tree: Bind: challenged foe gets Slowness I
   - general tree: Lone Wolf: Duel bonuses doubled
-- **enchanter**
-  - special passive: Charm duration +0.1s per Glamour
-  - general tree: Puppeteer: charmed mobs attack other hostile mobs
-  - special tree: Lasting Charm: charms last 3s longer
 - **engineer**
   - general tree: Iron Titan: it moves 20% slower
 - **executioner**
@@ -126,7 +119,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Vanish: breaking line of sight with a mob makes it forget you after 2s
   - general tree: Ambush: first round of combat: +20% damage and speed
   - general tree: Forgettable: mobs forget you 1s faster
-  - special tree: Quiet: no footstep sounds
 - **inquisitor**
   - passive: Dreadful Threat: scrutinised mobs within 6 blocks get Weakness I
   - special passive: Scrutiny bonus +0.5% per point
@@ -204,8 +196,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Escape Artist: cobwebs don't slow you
 - **transmuter**
   - special stat per point: +0.2 to every stat per 10 points (rounded down)
-- **traveler**
-  - general tree: Steady Arrival: no Nausea after teleporting
 - **warlock**
   - passive: you gain 10 Stolen Power instead
   - general tree: Oathbreaker: you can no longer benefit from beacons
@@ -648,11 +638,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Per 10 Finesse, +5% attack speed against the foe
   - special tree: Lunge: +1 block reach against challenged foe
 - **exorcist**
-  - passive: Exorcism: hitting a zombie villager has 10% chance to cure it instantly
   - weakness: -15% damage against animals, illagers and other ordinary mobs
   - general tree: Holy Water: splash potions you throw deal +2 damage to undead
-  - general tree: Banishing: unclean mobs you hit are knocked back 50% farther
-  - special tree: Purge the Unclean: unclean mobs you hit can't teleport for 5s (endermen, shulkers)
 - **illusionist**
   - special stat per point: +0.3% chance attacks against you hit an illusion instead
 - **necromancer**

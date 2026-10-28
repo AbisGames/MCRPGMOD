@@ -83,16 +83,7 @@
     {
       "id": "enchanter_puppeteer",
       "name": "Puppeteer",
-      "description": {
-        "text": "charmed mobs attack other hostile mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "charmed mobs attack other hostile mobs",
       "type": "notable",
       "x": 894,
       "y": -1493,
@@ -100,7 +91,21 @@
         "enchanter_spellwright"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "pacify",
+          "actions": [
+            {
+              "type": "pipican:control",
+              "target": "victim",
+              "mode": "ally",
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "enchanter_mind_thief",

@@ -29,23 +29,21 @@
     {
       "id": "quiet",
       "name": "Quiet",
-      "description": {
-        "text": "no footstep sounds",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "no footstep sounds",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quiet_steps",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "treacherous_strike",

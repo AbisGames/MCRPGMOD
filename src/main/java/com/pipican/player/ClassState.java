@@ -154,12 +154,15 @@ public record ClassState(
     }
 
     /** {@code pipican:ability_mod} totals for one ability. */
-    public record AbilityMod(double cooldownSeconds, double cost, double drain, double duration, double radius, int uses, double strength) {
-        public static final AbilityMod NONE = new AbilityMod(0, 0, 0, 0, 0, 0, 0);
+    public record AbilityMod(double cooldownSeconds, double cost, double drain, double duration, double radius, int uses, double strength,
+                             double seconds, List<com.pipican.ability.AbilityAction> actions) {
+        public static final AbilityMod NONE = new AbilityMod(0, 0, 0, 0, 0, 0, 0, 0, List.of());
 
         public AbilityMod plus(AbilityMod o) {
+            List<com.pipican.ability.AbilityAction> all = new java.util.ArrayList<>(actions);
+            all.addAll(o.actions);
             return new AbilityMod(cooldownSeconds + o.cooldownSeconds, cost + o.cost, drain + o.drain, duration + o.duration, radius + o.radius,
-                    uses + o.uses, strength + o.strength);
+                    uses + o.uses, strength + o.strength, seconds + o.seconds, List.copyOf(all));
         }
     }
 

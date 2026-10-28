@@ -57,16 +57,7 @@
     {
       "id": "exorcist_banishing",
       "name": "Banishing",
-      "description": {
-        "text": "unclean mobs you hit are knocked back 50% farther",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unclean mobs you hit are knocked back 50% farther",
       "type": "notable",
       "x": 1453,
       "y": -958,
@@ -74,7 +65,21 @@
         "exorcist_holy_water"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "melee_hit",
+          "victims": "#pipican:mobs/unclean",
+          "actions": [
+            {
+              "type": "pipican:push",
+              "target": "victim",
+              "strength": 0.5
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "exorcist_iron_will",

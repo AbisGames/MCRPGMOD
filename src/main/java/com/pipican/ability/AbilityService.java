@@ -1,5 +1,7 @@
 package com.pipican.ability;
 
+import com.pipican.player.ClassState;
+
 import net.minecraft.world.item.ItemStack;
 import com.pipican.event.MasteryEvents;
 import com.pipican.effect.type.ReactionEffect;
@@ -148,8 +150,10 @@ public final class AbilityService {
         if (spellPoint) {
             data.extras().spellPoints--;
         }
-        AbilityContext ctx = AbilityContext.of(player, key, spent);
-        for (AbilityAction action : ability.actions()) {
+        var upgrade = ClassEffectApplier.state(player).abilityMod(key);
+        AbilityContext ctx = AbilityContext.of(player, key, spent)
+                .withMod(new ClassState.ReactionMod(upgrade.seconds(), 0, 0, 0, List.of(), 0));
+        for (AbilityAction action : java.util.stream.Stream.concat(ability.actions().stream(), upgrade.actions().stream()).toList()) {
             action.run(ctx);
             if (ctx.isCancelled()) {
                 // Nothing happened (no target, no waypoint...): refund and don't start a cooldown.

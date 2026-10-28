@@ -565,6 +565,10 @@ def misc(t, scal):
     m = re.fullmatch(rf'shields recover from axe-disable {N}% faster(?: and block 100% of melee damage from the front)?', t)
     if m:
         return [_effect('shield_disable', -float(m.group(1)), None)]
+    if re.fullmatch(r'no footstep sounds|your footsteps make no sound', t):
+        return [_effect('quiet_steps', 100, None)]
+    if re.fullmatch(r'no nausea after teleporting', t):
+        return [{'type': 'pipican:immune', 'effects': 'minecraft:nausea'}]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

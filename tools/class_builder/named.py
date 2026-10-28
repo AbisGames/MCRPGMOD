@@ -188,6 +188,7 @@ def reaction_mods(t, ctx):
         return None
     names = '|'.join(sorted((re.escape(n) for n in reactions), key=len, reverse=True))
     per = rf'(?: per (?:{N} )?([a-z]+(?: (?!points?\b)[a-z]+)?)(?: points?)?)?'
+    original_t = t
     # "Resolve trigger heals 10 HP instead": a name's last word stands for it when no other name ends that way.
     last = {}
     for n in reactions:
@@ -217,6 +218,18 @@ def reaction_mods(t, ctx):
             return None
         return mod(name, **{field: 0.0, 'scaling': [{'source': src, 'per': round(value / float(n or 1), 6)}]})
 
+    # Charm upgrades find the class's charm reaction by what it does ("Subtle Charm" pacifies the mob it hits).
+    charm = [(r.get('name') or n, r) for n, r in reactions.items()
+             if any(a.get('type') == 'pipican:control' and a.get('mode') == 'pacify' for a in r.get('actions', []))]
+    if len(charm) == 1:
+        cname, creact = charm[0]
+        m = re.fullmatch(rf'charms? (?:last|lasts) {N}s longer', original_t) or re.fullmatch(rf'charm duration \+{N}s' + per, original_t)
+        if m:
+            n_, stat = (m.group(2), m.group(3)) if m.lastindex and m.lastindex >= 3 else (None, None)
+            return scaled(cname, 'seconds', float(m.group(1)), n_, stat)
+        if re.fullmatch(r'charmed mobs attack other hostile mobs', original_t):
+            secs = [a.get('seconds', 10) for a in creact['actions'] if a.get('type') == 'pipican:control']
+            return mod(cname, actions=[{'type': 'pipican:control', 'target': 'victim', 'mode': 'ally', 'seconds': float(secs[0])}])
     # strength upgrades: "Guarded Casting armor +1 per 20 Warding", "+5% Trickery damage", "Escalating Violence +0.5% per Battle Arcana"
     def base_value(r):
         for a in r.get('actions', []):
@@ -345,6 +358,35 @@ def ability_mods(t, ctx):
             e[field] = round(value / div, 6) if field != 'uses' else int(value)
         return [e]
 
+    import abilities as ab
+    defs = {name.lower(): d for (owner, name), d in ab.A.items() if owner == ctx.get('class_id')}
+
+    def first_targets(name):
+        for a in defs.get(name, {}).get('actions', []):
+            if a.get('target') in ('look', 'hostiles', 'mobs', 'victim'):
+                return {k: a[k] for k in ('target', 'radius', 'range', 'cone') if k in a}
+        return None
+    # "charmed mobs also get Weakness I" (the Charm ability), "mobs hit by Dirge also get ..."
+    for n in abilities:
+        m = re.fullmatch(rf'(?:{re.escape(n)}e?d mobs|mobs hit by (?:your )?{re.escape(n)}) also get (.+)', t)
+        if m:
+            import combat
+            out = combat.outcome('give ' + m.group(1), 'victim')
+            tg = first_targets(n)
+            if out and tg and out[0].get('type') == 'pipican:effect':
+                out[0].update(tg)
+                return [{'type': 'pipican:ability_mod', 'ability': abilities[n], 'actions': out}]
+        # "charms last 3s longer", "Charm duration +0.1s per Glamour"
+        m = re.fullmatch(rf'{re.escape(n)}s? (?:last|lasts) {N}s longer', t) or \
+            re.fullmatch(rf'{re.escape(n)} duration \+{N}s(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t)
+        if m:
+            if m.lastindex and m.lastindex >= 3 and m.group(3):
+                src = _stat_source(m.group(3), ctx)
+                if not src:
+                    return None
+                return [{'type': 'pipican:ability_mod', 'ability': abilities[n], 'seconds': 0.0,
+                         'scaling': [{'source': src, 'per': round(float(m.group(1)) / float(m.group(2) or 1), 6)}]}]
+            return [{'type': 'pipican:ability_mod', 'ability': abilities[n], 'seconds': float(m.group(1))}]
     m = re.fullmatch(rf'({names}) lasts (twice|three times) as long', t)
     if m:
         # Timed states last longer; toggles drain slower (whichever the ability is).
@@ -1047,6 +1089,33 @@ def whole_line(text, ctx):
     m = re.fullmatch(rf"{N}% chance to reroll a '?glancing'? \(non-critical\) hit into a critical hit", low)
     if m:
         return [{'type': 'pipican:critical', 'chance': round(float(m.group(1)) / 100, 6)}]
+    # Exorcism: "hitting a zombie villager has 10% chance to cure it instantly"
+    m = re.fullmatch(rf'hitting a zombie villager has (?:a )?{N}% chance to cure it(?: instantly)?', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'hit', 'victims': 'minecraft:zombie_villager', 'chance': round(float(m.group(1)) / 100, 6),
+                 'actions': [{'type': 'pipican:cure'}]}]
+    # Purge the Unclean: "unclean mobs you hit can't teleport for 5s (endermen, shulkers)"
+    m = re.fullmatch(rf"(.+?) you hit can'?t teleport for {N}s(?: \(.*\))?", low)
+    if m:
+        import combat
+        group = combat.mobs(m.group(1))
+        if group:
+            return [{'type': 'pipican:on', 'event': 'hit', 'victims': group, 'actions': [{'type': 'pipican:pin', 'seconds': float(m.group(2))}]}]
+    # Banishing: "unclean mobs you hit are knocked back 50% farther"
+    m = re.fullmatch(rf'(.+?) you hit are knocked back {N}% farther', low)
+    if m:
+        import combat
+        group = combat.mobs(m.group(1))
+        if group:
+            return [{'type': 'pipican:on', 'event': 'melee_hit', 'victims': group,
+                     'actions': [{'type': 'pipican:push', 'target': 'victim', 'strength': round(float(m.group(2)) / 100, 2)}]}]
+    # Shrapnel: "explosions you cause give Slowness I"
+    m = re.fullmatch(r'explosions you cause (give .+)', low)
+    if m:
+        import combat
+        out = combat.outcome(m.group(1), 'victim')
+        if out:
+            return [{'type': 'pipican:on', 'event': 'explosion_hit', 'actions': out}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

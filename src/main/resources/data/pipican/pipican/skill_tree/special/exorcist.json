@@ -44,16 +44,7 @@
     {
       "id": "purge_the_unclean",
       "name": "Purge the Unclean",
-      "description": {
-        "text": "unclean mobs you hit can't teleport for 5s (endermen, shulkers)",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unclean mobs you hit can't teleport for 5s (endermen, shulkers)",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -61,7 +52,20 @@
         "rite"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "victims": "#pipican:mobs/unclean",
+          "actions": [
+            {
+              "type": "pipican:pin",
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "will_of_iron",

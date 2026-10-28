@@ -259,6 +259,7 @@ public final class ProjectileAndEffectEvents {
                 && event.getEntity() != player) {
             MasteryEvents.did(player, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.EXPLOSION_HIT, ItemStack.EMPTY,
                     java.util.Optional.empty(), java.util.Optional.of(event.getEntity()), event.getInflictedDamage()));
+            com.pipican.ability.Reactions.fire(player, event.getEntity(), ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.EXPLOSION_HIT);
         }
     }
 
@@ -312,6 +313,22 @@ public final class ProjectileAndEffectEvents {
         if (event.getSource().getDirectEntity() instanceof AbstractArrow arrow && arrow.getPersistentData().getBooleanOr(DEADLY, false)
                 && arrow.getOwner() instanceof ServerPlayer player) {
             com.pipican.player.MasteryService.onAction(player, new com.pipican.mastery.SkillAction.Reacted("deadly aim"));
+        }
+    }
+
+    @SubscribeEvent
+    static void onTeleport(net.neoforged.neoforge.event.entity.EntityTeleportEvent event) {
+        if (com.pipican.ability.action.PinAction.pinned(event.getEntity())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    static void onSound(net.neoforged.neoforge.event.PlayLevelSoundEvent.AtEntity event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getSound() != null
+                && event.getSound().value().location().getPath().endsWith(".step")
+                && ClassEffectApplier.state(player).chance(Kind.QUIET_STEPS) > 0) {
+            event.setCanceled(true);
         }
     }
 

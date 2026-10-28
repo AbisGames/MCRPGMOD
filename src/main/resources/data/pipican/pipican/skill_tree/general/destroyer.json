@@ -55,16 +55,7 @@
     {
       "id": "destroyer_shrapnel",
       "name": "Shrapnel",
-      "description": {
-        "text": "explosions you cause give Slowness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "explosions you cause give Slowness I",
       "type": "notable",
       "x": -477,
       "y": -1674,
@@ -72,7 +63,25 @@
         "destroyer_volatile"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "explosion_hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "destroyer_bigger_booms",
