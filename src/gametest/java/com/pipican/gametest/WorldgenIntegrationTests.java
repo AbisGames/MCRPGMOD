@@ -161,6 +161,20 @@ public final class WorldgenIntegrationTests {
                 new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(snapshot,
                     net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),helper.makeMockServerPlayerInLevel()));
             helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"real place event did not protect natural stone");
+            var piston=built.west(4);
+            var pushed=piston.east();
+            level.setBlock(piston,net.minecraft.world.level.block.Blocks.PISTON.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.piston.PistonBaseBlock.FACING,net.minecraft.core.Direction.EAST),3);
+            level.setBlock(pushed,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.level.PistonEvent.Pre(
+                level,piston,net.minecraft.core.Direction.EAST,
+                net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType.EXTEND));
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(pushed.east()),"piston destination lost player provenance");
+            var fluid=built.south(3);
+            level.setBlock(fluid,net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(),3);
+            level.gameEvent(net.minecraft.world.level.gameevent.GameEvent.FLUID_PLACE,fluid,
+                net.minecraft.world.level.gameevent.GameEvent.Context.of(helper.makeMockServerPlayerInLevel()));
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(fluid),"successful fluid placement was not protected");
             long ready=level.getGameTime()+20;
             RenewableOreSavedData.get(level).record(node,"frostcrystal",ready);
             var unloaded=new BlockPos(23000,400,23000);
@@ -172,6 +186,8 @@ public final class WorldgenIntegrationTests {
             level.getChunk(built.getX()>>4,built.getZ()>>4);
             helper.assertTrue(!level.hasChunkAt(unloaded),"distant queued node remained loaded after reopening the world");
             helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"player provenance lost after disk reload");
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(pushed.east()),"piston provenance lost after disk reload");
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(fluid),"fluid-source provenance lost after disk reload");
             helper.assertTrue(level.getBlockState(built).is(net.minecraft.world.level.block.Blocks.STONE),"player stone lost after disk reload");
             helper.assertTrue(RegionalMineEvents.restoreDue(level,ready-1,8)==0,"ore restored before cooldown");
             helper.assertTrue(RegionalMineEvents.restoreDue(level,ready,8)==1,"queued ore did not survive disk reload");

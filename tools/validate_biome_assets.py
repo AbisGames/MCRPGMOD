@@ -96,7 +96,9 @@ for castle in capitals:
 # These features place inventories or block entities independently of native
 # structure reservations and can permanently block deferred authored cities.
 competing={"minecraft:amethyst_geode","minecraft:monster_room","minecraft:monster_room_deep",
-           "minecraft:sculk_vein","minecraft:sculk_patch_deep_dark"}
+           "minecraft:sculk_vein","minecraft:sculk_patch_deep_dark","minecraft:desert_well",
+           "minecraft:fossil_lower","minecraft:fossil_upper","minecraft:lake_lava_surface",
+           "minecraft:lake_lava_underground","minecraft:spring_lava","minecraft:spring_water"}
 reserved=list((DATA/"worldgen/biome/protected").glob("*.json"))
 reserved += [DATA/f"worldgen/biome/{site}_sanctuary.json" for site in ("umbral","redrock","aetheris")]
 for path in reserved:

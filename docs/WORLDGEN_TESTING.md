@@ -71,14 +71,15 @@ outer terrain access and detailed interior navigation need separate checks.
 ## Safety and limits
 
 Placement checks retain block-entity and obstruction protection. New player
-placements, multi-block placements and ordinary excavation are recorded in
+placements, multi-block placements, piston movement, fluid sources and ordinary excavation are recorded in
 per-dimension saved data. Natural mining nodes remain eligible for renewal;
 player-placed ore does not. Protected player positions deliberately defer
 authored placement instead of being overwritten.
 
 Old saves do not contain historical provenance for natural-looking blocks
-placed before this tracking existed. Piston movement and fluid provenance are
-not covered by the current placement-history tests. The protection system
+placed before this tracking existed. Piston provenance is checked using the
+native resolver/event; full redstone timing and derived fluid-flow provenance are not covered
+by the current placement-history tests. The protection system
 must not be described as a complete historical reconstruction of user edits.
 
 Static catalogue validation and JAR/NBT checks are separate from runtime

@@ -1,4 +1,7 @@
 name: Worldgen validation
+concurrency:
+  group: pipican-worldgen-validation-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches: [worldgen-and-ores]
