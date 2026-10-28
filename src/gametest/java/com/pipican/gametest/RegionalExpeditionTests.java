@@ -129,6 +129,8 @@ final class RegionalExpeditionTests {
                     helper.assertTrue(spawners==1&&chests==3,"native dungeon blocks missing: "+id+
                         " spawners="+spawners+" chests="+chests);
                 }else helper.assertTrue(furniture>0,"native regional settlement has no placed furniture: "+id);
+                if(!villages)helper.assertTrue(ExpeditionAccessTests.reachesOutside(level,start),
+                    "no walk/swim/climb route from native expedition doorway to open terrain: "+id);
                 Pipican.LOGGER.info("Verified native chunk decoration seed {} structure {} bounds {}",seed,id,box);
             }catch(RuntimeException error){
                 failures.add(id+" "+diagnostic+": "+error.getMessage());

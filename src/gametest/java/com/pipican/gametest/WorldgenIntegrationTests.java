@@ -38,6 +38,7 @@ public final class WorldgenIntegrationTests {
         var env = event.registerEnvironment(Pipican.id("rpg_integration_env"),
             new TestEnvironmentDefinition.AllOf(List.of()));
         for(String name:SUITES){
+            if(name.equals("terrain_probe")&&selected.equals("all"))continue;
             if(!selected.equals("all")&&!selected.equals(name))continue;
             ResourceKey<Consumer<GameTestHelper>> fn = ResourceKey.create(
                 Registries.TEST_FUNCTION, Pipican.id("rpg_generated_"+name));

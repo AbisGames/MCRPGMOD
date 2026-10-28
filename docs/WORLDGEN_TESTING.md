@@ -106,8 +106,9 @@ representative coverage, not exhaustive placement of every subbiome variant.
 
 **These fixtures deliberately force the selected valid start for coverage.**
 They do not measure natural weighted structure-set frequency or prove that
-every naturally selected placement has an accessible entrance. Distribution,
-outer terrain access and detailed interior navigation need separate checks.
+every naturally selected placement has an accessible entrance. Selected mine
+and dungeon fixtures include the local entrance-access check below; broader
+distribution and detailed interior navigation need separate checks.
 
 ## Safety and limits
 
@@ -156,3 +157,11 @@ regional elevation ends above Y=430 and vanilla terrain ends below that.
 Aquifers remain enabled. This changes new terrain, not already generated
 chunks. Verify the three focused capital assemblies after the diagnostic probe;
 a green probe alone does not prove full assembly or worldgen completion.
+
+The expedition fixture additionally searches actual placed blocks from the
+rotated nine-block front doorway to terrain at least eight blocks outside,
+with two-block clearance and an open-sky breathing position. It permits
+one-block walking steps, water swimming and climbable blocks, rejects lava,
+and bounds the local search to 100,000 visited positions. It can conservatively
+reject a long winding cave exit outside that local search volume. It is an
+entrance-access check, not a full interior navigation or distribution test.
