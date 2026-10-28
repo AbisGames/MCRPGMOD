@@ -19,21 +19,19 @@
     {
       "id": "exorcist_holy_water",
       "name": "Holy Water",
-      "description": {
-        "text": "splash potions you throw deal +2 damage to undead",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "splash potions you throw deal +2 damage to undead",
       "type": "small",
       "x": 1394,
       "y": -920,
       "links": [
         "exorcist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "splash_undead",
+          "amount": 2.0
+        }
       ]
     },
     {

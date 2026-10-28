@@ -72,6 +72,11 @@
       "amount": 1.0
     },
     {
+      "type": "pipican:bonus",
+      "kind": "open_locks",
+      "amount": 0.15
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#minecraft:is_explosion",
       "multiplier": 0.5
@@ -101,6 +106,17 @@
         {
           "source": "special_stat",
           "per": 0.002
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "open_locks",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
         }
       ]
     }

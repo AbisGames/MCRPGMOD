@@ -53,16 +53,7 @@
     {
       "id": "beastmaster_pack_tactics",
       "name": "Pack Tactics",
-      "description": {
-        "text": "+10% damage to mobs your animals are attacking",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage to mobs your animals are attacking",
       "type": "notable",
       "x": 1302,
       "y": 488,
@@ -70,7 +61,16 @@
         "beastmaster_alpha"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "pet_target": true
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "beastmaster_loyal_beasts",

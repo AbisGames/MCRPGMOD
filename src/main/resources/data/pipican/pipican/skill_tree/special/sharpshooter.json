@@ -48,16 +48,7 @@
     {
       "id": "perfect_shot",
       "name": "Perfect Shot",
-      "description": {
-        "text": "armor ignore 35%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "armor ignore 35%",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -65,7 +56,14 @@
         "calm"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "ranged_armor_pierce",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "called_shot",

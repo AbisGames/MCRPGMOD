@@ -12,19 +12,23 @@ import java.util.List;
 /**
  * {@code pipican:summon_mod} - your summons ({@code pipican:summon}) get {@code damage} / {@code health} more
  * (0.1 = +10%), last {@code seconds} longer and come {@code count} more at a time. Adds up over effects.
+ * Mobs you take over as servants ({@code pipican:control} in {@code ally} mode) get the same damage and health;
+ * their cap ({@code max} on the control) rises by {@code cap} and is multiplied by 1 + {@code cap_multiplier}.
  *
  * <pre>{@code { "type": "pipican:summon_mod", "damage": 0.1, "seconds": 10 } }</pre>
- * {@code hearts} adds flat max health (in hearts). {@code scaling} applies to {@code damage} and {@code health}.
+ * {@code hearts} adds flat max health (in hearts). {@code scaling} applies to whichever of {@code damage}, {@code health} and {@code cap} the effect sets.
  */
-public record SummonModEffect(double damage, double health, double seconds, int count, List<Scaling> scaling, double hearts) implements ClassEffect {
+public record SummonModEffect(java.util.Optional<Double> damage, java.util.Optional<Double> health, double seconds, int count, List<Scaling> scaling, double hearts, java.util.Optional<Double> cap, double capMultiplier) implements ClassEffect {
 
     public static final MapCodec<SummonModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            Codec.DOUBLE.optionalFieldOf("damage", 0.0).forGetter(SummonModEffect::damage),
-            Codec.DOUBLE.optionalFieldOf("health", 0.0).forGetter(SummonModEffect::health),
+            Codec.DOUBLE.optionalFieldOf("damage").forGetter(SummonModEffect::damage),
+            Codec.DOUBLE.optionalFieldOf("health").forGetter(SummonModEffect::health),
             Codec.DOUBLE.optionalFieldOf("seconds", 0.0).forGetter(SummonModEffect::seconds),
             Codec.intRange(0, 16).optionalFieldOf("count", 0).forGetter(SummonModEffect::count),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(SummonModEffect::scaling),
-            Codec.DOUBLE.optionalFieldOf("hearts", 0.0).forGetter(SummonModEffect::hearts)
+            Codec.DOUBLE.optionalFieldOf("hearts", 0.0).forGetter(SummonModEffect::hearts),
+            Codec.DOUBLE.optionalFieldOf("cap").forGetter(SummonModEffect::cap),
+            Codec.DOUBLE.optionalFieldOf("cap_multiplier", 0.0).forGetter(SummonModEffect::capMultiplier)
     ).apply(i, SummonModEffect::new));
 
     @Override
@@ -34,6 +38,7 @@ public record SummonModEffect(double damage, double health, double seconds, int 
 
     @Override
     public void apply(EffectContext ctx) {
-        ctx.addSummonMod(Scaling.evaluate(damage, scaling, ctx), Scaling.evaluate(health, scaling, ctx), seconds, count, hearts);
+        ctx.addSummonMod(Scaling.evaluate(damage, scaling, ctx), Scaling.evaluate(health, scaling, ctx), seconds, count, hearts,
+                Scaling.evaluate(cap, scaling, ctx), capMultiplier);
     }
 }

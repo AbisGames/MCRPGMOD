@@ -597,6 +597,43 @@ public final class ClassSystemTests {
         helper.assertTrue(FavoredWeapon.holding(player), "swords are favored");
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_AXE));
         helper.assertTrue(!FavoredWeapon.holding(player), "an axe isn't");
+
+        // Servants: an ally control with max 1 takes the first mob only.
+        var command = com.pipican.ability.action.ControlAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"target\": \"victim\", \"mode\": \"ally\", \"seconds\": 30, \"max\": 1}")).getOrThrow();
+        Zombie servant = helper.spawn(EntityType.ZOMBIE, new BlockPos(5, 2, 5));
+        Zombie spare = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 5));
+        command.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.of(servant), 0));
+        command.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.of(spare), 0));
+        helper.assertTrue(com.pipican.ability.MobControl.isAllyOf(servant, player), "first mob serves");
+        helper.assertTrue(!com.pipican.ability.MobControl.isAllyOf(spare, player), "cap of one servant");
+
+        // Victim states: armored (armor or a raised shield), pet_target (one of your tamed animals attacks it).
+        var shielded = com.pipican.effect.VictimState.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"armored\": true}")).getOrThrow();
+        var hunted = com.pipican.effect.VictimState.CODEC.parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"pet_target\": true}")).getOrThrow();
+        helper.assertTrue(!shielded.test(player, spare), "bare zombie isn't armored");
+        spare.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+        helper.assertTrue(shielded.test(player, spare), "zombie in a chestplate is");
+        helper.assertTrue(!hunted.test(player, spare), "no pet on it yet");
+        var hunter = helper.spawn(EntityType.WOLF, new BlockPos(6, 2, 6));
+        hunter.tame(player);
+        hunter.setTarget(spare);
+        helper.assertTrue(hunted.test(player, spare), "your wolf is attacking it");
+
+        // Nearby pets of one kind: a stray cat doesn't count, your own does.
+        var nearCat = com.pipican.condition.type.NearbyCondition.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"entities\": \"pets\", \"entity\": \"minecraft:cat\", \"radius\": 8}")).getOrThrow();
+        var cat = helper.spawn(EntityType.CAT, new BlockPos(1, 2, 1));
+        cat.snapTo(player.getX(), player.getY(), player.getZ(), 0, 0);
+        helper.assertTrue(!nearCat.test(player), "stray cat");
+        cat.tame(player);
+        helper.assertTrue(nearCat.test(player), "your cat");
+        helper.assertTrue(!com.pipican.condition.type.NearbyCondition.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"entities\": \"pets\", \"entity\": \"minecraft:parrot\"}")).getOrThrow().test(player), "no parrot");
+        cat.discard();
+        hunter.discard();
         helper.succeed();
     }
 
@@ -645,7 +682,7 @@ public final class ClassSystemTests {
         helper.assertTrue(!Bleeds.isBleeding(zombie), "normal hits don't bleed");
         Bleeds.onHit(player, zombie, bleed, true);
         helper.assertTrue(Bleeds.isBleeding(zombie), "crits make mobs bleed");
-        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false, false, false).test(player, zombie), "bleeding victim state");
+        helper.assertTrue(new VictimState(Optional.empty(), false, false, false, false, true, false, false, Optional.empty(), Optional.empty(), false, false, false, false, false, false).test(player, zombie), "bleeding victim state");
         zombie.discard();
 
         // Skill triggers: pipican:any of filtered / did triggers
@@ -904,7 +941,9 @@ public final class ClassSystemTests {
             }
             boolean deals = entry.getValue().actions().stream().anyMatch(a -> a instanceof com.pipican.ability.action.DamageAction d && d.amount() > 0);
             helper.assertTrue(!deals || zombie.getHealth() < zombie.getMaxHealth(),
-                    entry.getKey().identifier() + " should damage the zombie in front of the player");
+                    entry.getKey().identifier() + " should damage the zombie in front of the player (zombie " + zombie.getHealth() + "/" + zombie.getMaxHealth()
+                            + " at " + zombie.position() + ", baby " + zombie.isBaby() + ", armor " + zombie.getArmorValue() + ", player at " + player.position()
+                            + ", vehicle " + zombie.getVehicle() + ", passengers " + zombie.getPassengers() + ")");
             AbilityService.reset(player);
             // Remove everything the ability spawned (eidolons, summons, decoys) so it can't get in the next one's way.
             // (Only what appeared during this ability: other tests' mobs nearby are left alone.)

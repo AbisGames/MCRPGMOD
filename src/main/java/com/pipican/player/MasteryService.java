@@ -72,6 +72,10 @@ public final class MasteryService {
         PlayerClassData data = ClassService.data(player);
         double before = data.mastery(key);
         double after = Math.max(0, before + amount);
+        if (amount > 0 && ClassEffectApplier.state(player).chance(BonusEffect.Kind.NO_TOP_TIER) > 0) {
+            // "You can never reach Tier V": mastery stops just short of the last threshold.
+            after = Math.min(after, Math.max(before, skill.thresholds().get(Skill.TIERS - 1) - 0.01));
+        }
         data.allMastery().put(key, after);
         int oldTier = skill.tierFor(before);
         int newTier = skill.tierFor(after);

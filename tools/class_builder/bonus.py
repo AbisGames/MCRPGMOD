@@ -316,7 +316,7 @@ SWORDS = '#pipican:weapons/swords'
 CHANCE_NAMES = {'ignite': 'ignite', 'fire': 'ignite', 'burn': 'ignite', 'poison': 'poison', 'wither': 'wither',
                 'blindness': 'blindness', 'blind': 'blindness', 'charm': 'pacify', 'lightning': 'lightning',
                 'slow': 'slowness', 'slowness': 'slowness', 'weakness': 'weakness', 'nausea': 'nausea', 'zeal': 'zeal', 'curse': 'curse', 'decoy': 'decoy', 'seize chaos': 'seize chaos',
-                'dirty fighting': 'dirty fighting'}
+                'dirty fighting': 'dirty fighting', 'command': 'command'}
 
 
 def _bleed(**kw):

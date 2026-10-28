@@ -123,17 +123,29 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Stone sinks and cracks in the cold and the water.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Stone sinks and cracks in the cold and the water.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "swimming"
+        },
+        "effects": [
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:movement_speed",
+            "amount": -0.25,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_freezing",
+        "multiplier": 1.25
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

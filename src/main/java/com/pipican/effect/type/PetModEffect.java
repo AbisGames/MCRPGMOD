@@ -15,16 +15,16 @@ import java.util.List;
  * more damage (-0.15 = 15% less). Adds up over effects; health and armor only apply within 32 blocks of you.
  *
  * <pre>{@code { "type": "pipican:pet_mod", "damage": 0.05, "armor": 1 } }</pre>
- * {@code scaling} applies to every amount.
+ * {@code scaling} applies to every amount the effect sets.
  */
-public record PetModEffect(double damage, double health, double hearts, double armor, double damageTaken, List<Scaling> scaling) implements ClassEffect {
+public record PetModEffect(java.util.Optional<Double> damage, java.util.Optional<Double> health, java.util.Optional<Double> hearts, java.util.Optional<Double> armor, java.util.Optional<Double> damageTaken, List<Scaling> scaling) implements ClassEffect {
 
     public static final MapCodec<PetModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            Codec.DOUBLE.optionalFieldOf("damage", 0.0).forGetter(PetModEffect::damage),
-            Codec.DOUBLE.optionalFieldOf("health", 0.0).forGetter(PetModEffect::health),
-            Codec.DOUBLE.optionalFieldOf("hearts", 0.0).forGetter(PetModEffect::hearts),
-            Codec.DOUBLE.optionalFieldOf("armor", 0.0).forGetter(PetModEffect::armor),
-            Codec.DOUBLE.optionalFieldOf("damage_taken", 0.0).forGetter(PetModEffect::damageTaken),
+            Codec.DOUBLE.optionalFieldOf("damage").forGetter(PetModEffect::damage),
+            Codec.DOUBLE.optionalFieldOf("health").forGetter(PetModEffect::health),
+            Codec.DOUBLE.optionalFieldOf("hearts").forGetter(PetModEffect::hearts),
+            Codec.DOUBLE.optionalFieldOf("armor").forGetter(PetModEffect::armor),
+            Codec.DOUBLE.optionalFieldOf("damage_taken").forGetter(PetModEffect::damageTaken),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(PetModEffect::scaling)
     ).apply(i, PetModEffect::new));
 

@@ -75,16 +75,7 @@
     {
       "id": "brute_crusher",
       "name": "Crusher",
-      "description": {
-        "text": "+10% damage against shields and armored mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage against shields and armored mobs",
       "type": "notable",
       "x": -1120,
       "y": 824,
@@ -92,7 +83,16 @@
         "brute_heavy_hands"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "armored": true
+          },
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "brute_juggernaut",

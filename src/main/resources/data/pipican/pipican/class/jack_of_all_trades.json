@@ -68,6 +68,11 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "skill_training",
+      "amount": 0.25
+    },
+    {
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 1
@@ -224,17 +229,14 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Master of none.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Master of none.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "no_top_tier",
+        "amount": 1.0
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

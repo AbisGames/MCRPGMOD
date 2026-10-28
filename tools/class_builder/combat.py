@@ -221,6 +221,7 @@ def dodge(low, ctx, scal_fn):
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance to (?:completely )?(?:avoid|dodge) (?:a |an )?(melee )?(?:hit|attack)s?', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance (?:a|an|any) (melee )?(?:hit|attack) against you misses', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance to parry (melee )?(?:hits|attacks)', low) or \
+        re.fullmatch(r'\+?(\d+(?:\.\d+)?)% chance attacks against you hit an illusion instead()', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (?:miss chance|precognition)()', low) or \
         re.fullmatch(r'(?:miss chance|precognition) \+?(\d+(?:\.\d+)?)%()', low) or \
         re.fullmatch(r'\+?(\d+(?:\.\d+)?)% (parry) chance', low) or re.fullmatch(r'(?:parry chance) \+?(\d+(?:\.\d+)?)%()', low) or \

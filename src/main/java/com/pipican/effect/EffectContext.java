@@ -89,7 +89,7 @@ public interface EffectContext {
     void addAuraMod(String name, double radius, double strength, boolean includeSelf, List<ClassEffect> effects);
 
     /** Upgrades for the player's summons. */
-    void addSummonMod(double damage, double health, double seconds, int count, double hearts);
+    void addSummonMod(double damage, double health, double seconds, int count, double hearts, double cap, double capMultiplier);
 
     /** Upgrades for the player's tamed animals. */
     void addPetMod(com.pipican.player.ClassState.PetMods mods);

@@ -20,10 +20,12 @@ import net.minecraft.world.entity.player.Player;
  * What a damage bonus requires of the mob being hit ({@code "victim"} on {@code pipican:damage_dealt}):
  * <pre>{@code "victim": { "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true, "marked": true, "on_fire": true, "bleeding": true, "charged_hit": true } }</pre>
  * Every field is optional; all given ones must hold. {@code health} is health / max health (0-1);
- * {@code marked} means marked by the attacker's {@code pipican:mark} abilities.
+ * {@code marked} means marked by the attacker's {@code pipican:mark} abilities; {@code armored} means the mob wears
+ * armor, holds up a shield or has natural armor of 4 or more (iron golems, the Wither - not zombies' 2); {@code pet_target} means one of the attacker's tamed animals is attacking it.
  */
 public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolean notTargetingYou, boolean marked, boolean onFire, boolean bleeding, boolean chargedHit, boolean unarmored,
-                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit, boolean fromBehind, boolean targetingYou) {
+                          Optional<HolderSet<MobEffect>> effects, Optional<Double> within, boolean targetingOther, boolean upperHit, boolean fromBehind, boolean targetingYou,
+                          boolean armored, boolean petTarget) {
 
     public static final Codec<VictimState> CODEC = RecordCodecBuilder.create(i -> i.group(
             Bounds.MAP_CODEC.codec().optionalFieldOf("health").forGetter(VictimState::health),
@@ -39,7 +41,9 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             Codec.BOOL.optionalFieldOf("targeting_other", false).forGetter(VictimState::targetingOther),
             Codec.BOOL.optionalFieldOf("upper_hit", false).forGetter(VictimState::upperHit),
             Codec.BOOL.optionalFieldOf("from_behind", false).forGetter(VictimState::fromBehind),
-            Codec.BOOL.optionalFieldOf("targeting_you", false).forGetter(VictimState::targetingYou)
+            Codec.BOOL.optionalFieldOf("targeting_you", false).forGetter(VictimState::targetingYou),
+            Codec.BOOL.optionalFieldOf("armored", false).forGetter(VictimState::armored),
+            Codec.BOOL.optionalFieldOf("pet_target", false).forGetter(VictimState::petTarget)
     ).apply(i, VictimState::new));
 
     /**
@@ -62,6 +66,19 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
         net.minecraft.world.phys.Vec3 facing = net.minecraft.world.phys.Vec3.directionFromRotation(0, victim.getYHeadRot());
         net.minecraft.world.phys.Vec3 to = attacker.position().subtract(victim.position()).multiply(1, 0, 1);
         return to.lengthSqr() > 1.0e-4 && facing.dot(to.normalize()) < 0;
+    }
+
+    private static boolean isArmored(LivingEntity victim) {
+        if (victim.isBlocking()) {
+            return true;
+        }
+        for (net.minecraft.world.entity.EquipmentSlot slot : net.minecraft.world.entity.EquipmentSlot.values()) {
+            if (slot.isArmor() && !victim.getItemBySlot(slot).isEmpty()) {
+                return true;
+            }
+        }
+        var armor = victim.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR);
+        return armor != null && armor.getBaseValue() >= 4;
     }
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
@@ -93,6 +110,13 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
             return false;
         }
         if (fromBehind && !behind(attacker, victim)) {
+            return false;
+        }
+        if (armored && !isArmored(victim)) {
+            return false;
+        }
+        if (petTarget && victim.level().getEntitiesOfClass(Mob.class, victim.getBoundingBox().inflate(32),
+                m -> m.getTarget() == victim && com.pipican.ability.Pets.owner(m) == attacker).isEmpty()) {
             return false;
         }
         if (unarmored && victim.getArmorValue() > 0) {

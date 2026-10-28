@@ -62,6 +62,11 @@
   "passives": [
     {
       "type": "pipican:bonus",
+      "kind": "resource_refund",
+      "amount": 0.166667
+    },
+    {
+      "type": "pipican:bonus",
       "kind": "enchant_levels",
       "amount": 1.0
     },
@@ -97,6 +102,17 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "resource_refund",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
         }
       ]
     }

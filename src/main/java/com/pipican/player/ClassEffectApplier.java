@@ -322,7 +322,7 @@ public final class ClassEffectApplier {
                         c.bleedWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.bleedWeapons)))),
                 Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge), List.copyOf(c.executes), List.copyOf(c.auras),
                 c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
-                new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount, c.summonHearts),
+                new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount, c.summonHearts, c.summonCap, c.summonCapMultiplier),
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
                         c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods),
                 new ClassState.Shield(c.shieldAbsorb * Math.max(0, 1 + c.shieldEfficiency)),
@@ -443,6 +443,8 @@ public final class ClassEffectApplier {
         double summonSeconds;
         int summonCount;
         double summonHearts;
+        double summonCap;
+        double summonCapMultiplier;
         ClassState.PetMods petMods = ClassState.PetMods.NONE;
         final Map<Holder<MobEffect>, ClassState.AppliedRule> appliedRules = new java.util.HashMap<>();
         final Map<Holder<MobEffect>, Double> effectDurations = new java.util.HashMap<>();
@@ -521,7 +523,9 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addSummonMod(double damage, double health, double seconds, int count, double hearts) {
+        public void addSummonMod(double damage, double health, double seconds, int count, double hearts, double cap, double capMultiplier) {
+            summonCap += cap;
+            summonCapMultiplier += capMultiplier;
             summonHearts += hearts;
             summonDamage += damage;
             summonHealth += health;

@@ -117,17 +117,35 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "When the beast suffers, so do you.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "When the beast suffers, so do you.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "pet_death",
+        "actions": [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:weakness",
+                "seconds": 30.0
+              }
+            ]
+          },
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:slowness",
+                "seconds": 30.0
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

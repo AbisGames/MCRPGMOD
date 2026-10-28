@@ -47,6 +47,33 @@ public final class MobControl {
         mob.setTarget(decoy);
     }
 
+    private static final net.minecraft.resources.Identifier SERVANT = com.pipican.Pipican.id("servant");
+
+    /** How many mobs fight for {@code player} right now (ally controls and ally summons). */
+    public static int allies(Player player) {
+        long now = player.level().getGameTime();
+        return (int) CONTROLLED.values().stream().filter(c -> c.mode() == Mode.ALLY && c.owner().equals(player.getUUID())
+                && c.endsAt() > now && c.mob().isAlive()).count();
+    }
+
+    /** Summon upgrades for a mob taken over as a servant; removed when control ends. */
+    public static void boostServant(Mob mob, double damage, double health) {
+        servantModifier(mob, net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, damage);
+        servantModifier(mob, net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, health);
+    }
+
+    private static void servantModifier(Mob mob, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute, double amount) {
+        var instance = mob.getAttribute(attribute);
+        if (instance == null) {
+            return;
+        }
+        instance.removeModifier(SERVANT);
+        if (amount != 0) {
+            instance.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(SERVANT, amount,
+                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        }
+    }
+
     public static boolean isAllyOf(LivingEntity entity, Player player) {
         Control c = CONTROLLED.get(entity.getUUID());
         return c != null && c.mode() == Mode.ALLY && c.owner().equals(player.getUUID());
@@ -85,6 +112,10 @@ public final class MobControl {
                     || c.mode() == Mode.TAUNT && (c.decoy() == null || c.decoy().isRemoved())) {
                 if (c.mode() == Mode.ALLY || c.mode() == Mode.TAUNT) {
                     mob.setTarget(null);
+                }
+                boostServant(mob, 0, 0);
+                if (mob.getHealth() > mob.getMaxHealth()) {
+                    mob.setHealth(mob.getMaxHealth());
                 }
                 it.remove();
                 continue;

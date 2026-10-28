@@ -64,16 +64,7 @@
     {
       "id": "brewmistress",
       "name": "Brewmistress",
-      "description": {
-        "text": "brewing takes 25% less time",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "brewing takes 25% less time",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -81,7 +72,14 @@
         "green_flame"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "brew_speed",
+          "amount": 0.333333
+        }
+      ]
     },
     {
       "id": "lasting_bond",

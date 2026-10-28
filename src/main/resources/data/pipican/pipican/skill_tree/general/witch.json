@@ -37,21 +37,30 @@
     {
       "id": "witch_familiar",
       "name": "Familiar",
-      "description": {
-        "text": "tamed cats near you give +1 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "tamed cats near you give +1 armor",
       "type": "small",
       "x": 434,
       "y": -696,
       "links": [
         "witch_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:nearby",
+            "entities": "pets",
+            "entity": "minecraft:cat",
+            "radius": 8.0
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
       ]
     },
     {

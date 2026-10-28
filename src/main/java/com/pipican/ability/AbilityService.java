@@ -165,6 +165,10 @@ public final class AbilityService {
                 return ctx;
             }
         }
+        ClassState refundState = ClassEffectApplier.state(player);
+        if (spent > 0 && player.getRandom().nextDouble() < refundState.chance(com.pipican.effect.type.BonusEffect.Kind.RESOURCE_REFUND)) {
+            data.setResource(Math.min(data.resourceMax(), data.resource() + spent * refundState.bonus(com.pipican.effect.type.BonusEffect.Kind.REFUND_BONUS)));
+        }
         if (ability.toggle()) {
             data.abilityActive().put(key, Long.MAX_VALUE);
         } else {

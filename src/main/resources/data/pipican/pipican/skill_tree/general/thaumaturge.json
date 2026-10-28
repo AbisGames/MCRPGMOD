@@ -77,16 +77,7 @@
     {
       "id": "thaumaturge_chaos_shield",
       "name": "Chaos Shield",
-      "description": {
-        "text": "10% chance an incoming hit is redirected to a random nearby mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "10% chance an incoming hit is redirected to a random nearby mob",
       "type": "notable",
       "x": 94,
       "y": -1387,
@@ -94,7 +85,14 @@
         "thaumaturge_wild_magic"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "redirect_hit",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "thaumaturge_agent_of_chaos",

@@ -20,24 +20,24 @@ import java.util.List;
  * theirs.
  *
  * <pre>{@code { "type": "pipican:reaction_mod", "name": "guarded casting", "seconds": 5 } }</pre>
- * {@code scaling} applies to every amount. Mods with the same name add up.
+ * {@code scaling} applies to every amount the effect sets. Mods with the same name add up.
  */
-public record ReactionModEffect(String name, double seconds, double radius, double heal, double damage, List<AbilityAction> actions,
-                                List<Scaling> scaling, double strength,
+public record ReactionModEffect(String name, java.util.Optional<Double> seconds, java.util.Optional<Double> radius, java.util.Optional<Double> heal, java.util.Optional<Double> damage, List<AbilityAction> actions,
+                                List<Scaling> scaling, java.util.Optional<Double> strength,
                                 java.util.Map<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, Integer> amplify,
-                                double cooldown, int hits) implements ClassEffect {
+                                java.util.Optional<Double> cooldown, int hits) implements ClassEffect {
 
     public static final MapCodec<ReactionModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.STRING.fieldOf("name").forGetter(ReactionModEffect::name),
-            Codec.DOUBLE.optionalFieldOf("seconds", 0.0).forGetter(ReactionModEffect::seconds),
-            Codec.DOUBLE.optionalFieldOf("radius", 0.0).forGetter(ReactionModEffect::radius),
-            Codec.DOUBLE.optionalFieldOf("heal", 0.0).forGetter(ReactionModEffect::heal),
-            Codec.DOUBLE.optionalFieldOf("damage", 0.0).forGetter(ReactionModEffect::damage),
+            Codec.DOUBLE.optionalFieldOf("seconds").forGetter(ReactionModEffect::seconds),
+            Codec.DOUBLE.optionalFieldOf("radius").forGetter(ReactionModEffect::radius),
+            Codec.DOUBLE.optionalFieldOf("heal").forGetter(ReactionModEffect::heal),
+            Codec.DOUBLE.optionalFieldOf("damage").forGetter(ReactionModEffect::damage),
             Codec.lazyInitialized(() -> AbilityAction.CODEC).listOf().optionalFieldOf("actions", List.of()).forGetter(ReactionModEffect::actions),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(ReactionModEffect::scaling),
-            Codec.DOUBLE.optionalFieldOf("strength", 0.0).forGetter(ReactionModEffect::strength),
+            Codec.DOUBLE.optionalFieldOf("strength").forGetter(ReactionModEffect::strength),
             Codec.unboundedMap(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("amplify", java.util.Map.of()).forGetter(ReactionModEffect::amplify),
-            Codec.DOUBLE.optionalFieldOf("cooldown", 0.0).forGetter(ReactionModEffect::cooldown),
+            Codec.DOUBLE.optionalFieldOf("cooldown").forGetter(ReactionModEffect::cooldown),
             Codec.intRange(-100, 100).optionalFieldOf("hits", 0).forGetter(ReactionModEffect::hits)
     ).apply(i, ReactionModEffect::new));
 

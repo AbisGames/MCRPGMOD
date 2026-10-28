@@ -24,6 +24,11 @@ public record Scaling(String source, double per) {
 
     public static final Codec<List<Scaling>> LIST_CODEC = CODEC.listOf();
 
+    /** An amount the effect may leave out: a missing one stays 0 and isn't scaled. */
+    public static double evaluate(java.util.Optional<Double> base, List<Scaling> scaling, EffectContext ctx) {
+        return base.map(b -> evaluate(b, scaling, ctx)).orElse(0.0);
+    }
+
     /** {@code base} plus every scaling term evaluated against {@code ctx}. */
     public static double evaluate(double base, List<Scaling> scaling, EffectContext ctx) {
         double value = base;

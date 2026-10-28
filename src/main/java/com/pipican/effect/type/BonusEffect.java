@@ -76,6 +76,17 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code no_phantoms}: any amount above 0 = phantoms never spawn for you</li>
  *   <li>{@code extra_enchant}: a <i>chance</i> that enchanting at a table adds one more enchantment</li>
  *   <li>{@code magic_portion}: the share of your melee hits' damage dealt again as magic damage (ignores armor)</li>
+ *   <li>{@code splash_undead}: <i>damage</i> your splash and lingering potions deal to undead within 4 blocks of where they break</li>
+ *   <li>{@code thrown_speed}: how fast your thrown potions and fire charges fly</li>
+ *   <li>{@code max_wolves}: above 0 = you can't tame a wolf while this many (rounded) of yours are alive and loaded</li>
+ *   <li>{@code open_locks}: a <i>chance</i> that opening a loot chest no one has opened yet adds one extra roll of its loot</li>
+ *   <li>{@code redirect_hit}: a <i>chance</i> that a mob's hit on you lands on a random other mob within 6 blocks instead</li>
+ *   <li>{@code ill_fortune}: a <i>chance</i> that a hostile mob within 8 blocks of you misses whoever it attacks</li>
+ *   <li>{@code brew_speed}: how much faster brewing stands you last opened brew (0.25 = +25%)</li>
+ *   <li>{@code no_top_tier}: any amount above 0 = your skills stop just short of their last tier</li>
+ *   <li>{@code resource_refund}: a <i>chance</i> that what an ability cost comes straight back;
+ *       {@code refund_bonus}: how much more that refund gives (0.5 = 150%), up to your bar's maximum</li>
+ *   <li>{@code share_drink}: any amount above 0 = effects from potions you drink also go to your nearest tamed animal within 16 blocks</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -92,7 +103,9 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         BONE_MEAL, BREEDING_SPEED, ARROW_PIERCE, PEARL_RANGE, MIN_MELEE_DAMAGE, NO_SLEEP,
         PEARL_COOLDOWN, SPELL_WARD, NO_TRADE, FIRST_TRADE_DISCOUNT, SELF_BLAST_IMMUNE,
         BREWED_DURATION, CROP_GROWTH, MARKED_LOOT, SHIELD_DISABLE, QUIET_STEPS,
-        CRAFTED_DURABILITY, SUN_BURN, NO_BEACON, NO_PHANTOMS, EXTRA_ENCHANT, MAGIC_PORTION;
+        CRAFTED_DURABILITY, SUN_BURN, NO_BEACON, NO_PHANTOMS, EXTRA_ENCHANT, MAGIC_PORTION,
+        SPLASH_UNDEAD, THROWN_SPEED, MAX_WOLVES, OPEN_LOCKS, REDIRECT_HIT, ILL_FORTUNE, BREW_SPEED, NO_TOP_TIER,
+        RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -125,8 +125,8 @@ public record ClassState(
     }
 
     /** {@code pipican:summon_mod} totals. */
-    public record SummonMods(double damage, double health, double seconds, int count, double hearts) {
-        public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0);
+    public record SummonMods(double damage, double health, double seconds, int count, double hearts, double cap, double capMultiplier) {
+        public static final SummonMods NONE = new SummonMods(0, 0, 0, 0, 0, 0, 0);
     }
 
     /** A {@code pipican:craft_bonus}. */

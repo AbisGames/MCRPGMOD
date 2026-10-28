@@ -64,16 +64,7 @@
     {
       "id": "shared_spell",
       "name": "Shared Spell",
-      "description": {
-        "text": "potion effects you drink also apply to your nearest tamed animal",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "potion effects you drink also apply to your nearest tamed animal",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -81,7 +72,14 @@
         "kinship"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "share_drink",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "call_of_the_wild",
@@ -102,16 +100,7 @@
     {
       "id": "primal_power",
       "name": "Primal Power",
-      "description": {
-        "text": "tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -120,7 +109,19 @@
         "call_of_the_wild"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "armor": 1.0,
+          "damage": 0.1
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "max_wolves",
+          "amount": 3.0
+        }
+      ]
     }
   ]
 }

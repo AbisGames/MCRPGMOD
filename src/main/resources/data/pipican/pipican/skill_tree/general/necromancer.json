@@ -18,21 +18,19 @@
     {
       "id": "necromancer_grave_dust",
       "name": "Grave Dust",
-      "description": {
-        "text": "+5% command chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% command chance",
       "type": "small",
       "x": 634,
       "y": 1158,
       "links": [
         "necromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "command",
+          "amount": 0.05
+        }
       ]
     },
     {

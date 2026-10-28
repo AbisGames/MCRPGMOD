@@ -133,17 +133,35 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Knives are poor against armor and size.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Knives are poor against armor and size.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "against": [
+          "minecraft:iron_golem",
+          "minecraft:ravager",
+          "minecraft:warden",
+          "minecraft:wither"
+        ],
+        "multiplier": 0.8
+      },
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:holding",
+            "items": "#minecraft:swords"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

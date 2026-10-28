@@ -55,16 +55,7 @@
     {
       "id": "sorcerer_far",
       "name": "Far Reach",
-      "description": {
-        "text": "+15% projectile speed for thrown potions and fire charges",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% projectile speed for thrown potions and fire charges",
       "type": "notable",
       "x": -182,
       "y": -872,
@@ -72,7 +63,14 @@
         "sorcerer_surge"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "thrown_speed",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "sorcerer_empowered",

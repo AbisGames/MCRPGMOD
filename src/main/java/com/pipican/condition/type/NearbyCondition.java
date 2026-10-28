@@ -17,12 +17,14 @@ import net.minecraft.world.entity.player.Player;
  * Both bounds inclusive; the player never counts themselves.
  *
  * <pre>{@code { "type": "pipican:nearby", "entities": "players", "radius": 16, "max": 0 } }   alone</pre>
- * Defaults: {@code radius} 8, {@code min} 1, no {@code max}.
+ * Defaults: {@code radius} 8, {@code min} 1, no {@code max}. {@code pets} counts the player's own tamed animals;
+ * {@code entity} narrows any kind to one entity type (e.g. {@code "minecraft:cat"}).
  */
-public record NearbyCondition(Kind entities, double radius, int min, Optional<Integer> max) implements ClassCondition {
+public record NearbyCondition(Kind entities, double radius, int min, Optional<Integer> max,
+                              Optional<net.minecraft.world.entity.EntityType<?>> entity) implements ClassCondition {
 
     public enum Kind implements StringRepresentable {
-        PLAYERS("players"), HOSTILE_MOBS("hostile_mobs");
+        PLAYERS("players"), HOSTILE_MOBS("hostile_mobs"), PETS("pets");
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
         private final String name;
@@ -41,7 +43,8 @@ public record NearbyCondition(Kind entities, double radius, int min, Optional<In
             Kind.CODEC.fieldOf("entities").forGetter(NearbyCondition::entities),
             Codec.doubleRange(0.5, 64).optionalFieldOf("radius", 8.0).forGetter(NearbyCondition::radius),
             Codec.intRange(0, 1000).optionalFieldOf("min", 1).forGetter(NearbyCondition::min),
-            Codec.intRange(0, 1000).optionalFieldOf("max").forGetter(NearbyCondition::max)
+            Codec.intRange(0, 1000).optionalFieldOf("max").forGetter(NearbyCondition::max),
+            net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.byNameCodec().optionalFieldOf("entity").forGetter(NearbyCondition::entity)
     ).apply(i, NearbyCondition::new));
 
     @Override
@@ -55,7 +58,13 @@ public record NearbyCondition(Kind entities, double radius, int min, Optional<In
         double r2 = radius * radius;
         int count = player.level().getEntitiesOfClass(LivingEntity.class, box, e -> e != player && e.isAlive()
                 && e.distanceToSqr(player) <= r2
-                && (entities == Kind.PLAYERS ? e instanceof Player p && !p.isSpectator() : e instanceof Enemy)).size();
+                && (entity.isEmpty() || e.getType() == entity.get())
+                && switch (entities) {
+                    case PLAYERS -> e instanceof Player p && !p.isSpectator();
+                    case HOSTILE_MOBS -> e instanceof Enemy;
+                    case PETS -> e instanceof net.minecraft.world.entity.OwnableEntity o && o.getOwnerReference() != null
+                            && o.getOwnerReference().getUUID().equals(player.getUUID());
+                }).size();
         return count >= min && (max.isEmpty() || count <= max.get());
     }
 }

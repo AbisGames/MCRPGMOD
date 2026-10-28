@@ -65,6 +65,25 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.2,
+      "name": "command",
+      "victims": "#pipican:mobs/group_zombies_skeletons",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "actions": [
+        {
+          "type": "pipican:control",
+          "target": "victim",
+          "mode": "ally",
+          "seconds": 60.0,
+          "max": 2
+        }
+      ]
+    },
+    {
       "type": "pipican:immune",
       "effects": [
         "minecraft:poison",
@@ -81,6 +100,40 @@
       "type": "pipican:ignored_by",
       "mobs": "#minecraft:undead",
       "unless_attacked": true
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:summon_mod",
+      "damage": 0.0,
+      "health": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "command",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:summon_mod",
+      "cap": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
     }
   ],
   "weakness": {

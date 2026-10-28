@@ -123,6 +123,30 @@
           "per": 0.1
         }
       ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.0,
+      "name": "forget",
+      "actions": [
+        {
+          "type": "pipican:control",
+          "target": "victim",
+          "mode": "pacify",
+          "seconds": 5.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "forget",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
     }
   ],
   "weakness": {

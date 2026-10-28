@@ -878,7 +878,7 @@ def summons(t, scal):
         if s:
             e['scaling'] = [{'source': src, 'per': round(per / 100, 6)} for src, per in s]
         return [e]
-    m = re.fullmatch(rf'\+?{N}% damage and health for your {who}', t)
+    m = re.fullmatch(rf'\+?{N}% damage and health for (?:your {who}|undead you command)', t)
     if m:
         v, s = scal(float(m.group(1)))
         e = {'type': 'pipican:summon_mod', 'damage': round(v / 100, 6), 'health': round(v / 100, 6)}
@@ -1087,6 +1087,161 @@ CURSE_KINDS = [
 ]
 
 
+
+def world(low, ctx):
+    """Single-mechanic lines with their own game hooks: pets, brewing, loot chests, mob misses, servants, refunds.
+    `low` is lowercase with the label stripped. -> effects or None."""
+    import combat
+    sp = (ctx.get('special_name') or '').lower()
+    cid = ctx.get('class_id')
+    pct = lambda v: round(float(v) / 100, 6)
+
+    def bonus_kind(kind, amount, per=None):
+        e = {'type': 'pipican:bonus', 'kind': kind, 'amount': 0.0 if per else amount}
+        if per:
+            e['scaling'] = [{'source': 'special_stat', 'per': per}]
+        return [e]
+
+    # "tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves": every part must translate.
+    if ';' in low:
+        parts = [p.strip() for p in low.split(';') if p.strip()]
+        own = [world(p, ctx) for p in parts]
+        if any(own):
+            out = []
+            for p, o in zip(parts, own):
+                o = o or pets(p, lambda v: (v, None)) or _rest(p, ctx)
+                if not o:
+                    return None
+                out += o
+            return out
+    m = re.fullmatch(rf'\+{N}% chance per ([a-z]+) point to get one extra item when a mob drops loot', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('extra_loot', 0.0, pct(m.group(1)))
+    m = re.fullmatch(rf'you can have at most {N} tamed wolves', low)
+    if m:
+        return bonus_kind('max_wolves', float(m.group(1)))
+    # Warlord: "Attack Command gives Strength II" - the reaction's effect one level higher.
+    eff = '|'.join(sorted((re.escape(k) for k in combat.EFFECT_NAMES), key=len, reverse=True))
+    m = re.fullmatch(rf"([a-z' ]+?) gives ({eff}) (ii|iii|iv)", low)
+    if m and m.group(1) in REACTIONS.get(cid, {}):
+        return [{'type': 'pipican:reaction_mod', 'name': m.group(1),
+                 'amplify': {'minecraft:' + combat.EFFECT_NAMES[m.group(2)]: combat.ROMAN[m.group(3)]}}]
+    m = re.fullmatch(rf'tamed (cats|wolves|parrots) near you give \+{N} armou?r', low)
+    if m:
+        inner = _rest(f'+{m.group(2)} armor', ctx)
+        if inner:
+            kind = {'cats': 'minecraft:cat', 'wolves': 'minecraft:wolf', 'parrots': 'minecraft:parrot'}[m.group(1)]
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:nearby', 'entities': 'pets', 'entity': kind, 'radius': 8.0}, 'effects': inner}]
+    m = re.fullmatch(rf'splash potions you throw deal \+{N} damage to undead', low)
+    if m:
+        return bonus_kind('splash_undead', float(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% projectile speed for thrown potions and fire charges', low)
+    if m:
+        return bonus_kind('thrown_speed', pct(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% damage to mobs your (?:animals|pets|tamed animals) are attacking', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'victim': {'pet_target': True}, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
+    m = re.fullmatch(rf'\+{N}% damage against shields and armou?red mobs', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'victim': {'armored': True}, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
+    m = re.fullmatch(rf'the first time you open a naturally generated loot chest, {N}% chance of one extra roll of loot', low)
+    if m:
+        return bonus_kind('open_locks', pct(m.group(1)))
+    m = re.fullmatch(rf'open locks chance \+{N}%(?: per ([a-z]+) points?)?', low)
+    if m and (not m.group(2) or m.group(2) == sp):
+        return bonus_kind('open_locks', pct(m.group(1)), pct(m.group(1)) if m.group(2) else None)
+    m = re.fullmatch(rf'{N}% chance an incoming hit is redirected to a random nearby mob', low)
+    if m:
+        return bonus_kind('redirect_hit', pct(m.group(1)))
+    m = re.fullmatch(rf'mobs within 8 blocks have {N}% chance to miss everyone', low)
+    if m:
+        return bonus_kind('ill_fortune', pct(m.group(1)))
+    # brewing: "takes 25% less time" = a third faster
+    m = re.fullmatch(rf'brewing takes {N}% less time', low)
+    if m and float(m.group(1)) < 100:
+        return bonus_kind('brew_speed', round(1 / (1 - float(m.group(1)) / 100) - 1, 6))
+    m = re.fullmatch(rf'brewing is {N}% faster', low)
+    if m:
+        return bonus_kind('brew_speed', pct(m.group(1)))
+    if re.fullmatch(r'you can never reach tier v in any skill(?: \(max tier iv\))?', low):
+        return bonus_kind('no_top_tier', 1.0)
+    m = re.fullmatch(rf'every shared skill trains {N}% faster for you', low)
+    if m:
+        return bonus_kind('skill_training', pct(m.group(1)))
+    m = re.fullmatch(rf'potion effects you drink also apply to your nearest tamed animal', low)
+    if m:
+        return bonus_kind('share_drink', 1.0)
+    # Reclaim Arcana: a chance that what an ability cost comes back.
+    m = re.fullmatch(rf'whenever you spend [a-z ]+, 1-in-(\d+) chance to get it all back', low)
+    if m:
+        return bonus_kind('resource_refund', round(1 / float(m.group(1)), 6))
+    m = re.fullmatch(rf'\+{N}% reclaim chance(?: per ([a-z]+) points?)?|reclaim chance \+{N}%()', low)
+    if m and (not m.group(2) or m.group(2) == sp):
+        v = pct(m.group(1) or m.group(3))
+        return bonus_kind('resource_refund', v, v if m.group(2) else None)
+    m = re.fullmatch(rf'reclaim refunds go to {N}%', low)
+    if m and float(m.group(1)) > 100:
+        return bonus_kind('refund_bonus', round(float(m.group(1)) / 100 - 1, 6))
+    # Command Undead: hit mobs become servants (ally control with a cap).
+    m = re.fullmatch(rf"hitting (?:a )?(zombie or skeleton|zombie|skeleton|undead mob) that isn'?t targeting you has a {N}% chance to make it your servant for {N}s(?: \(max {N}\))?", low)
+    if m:
+        victims = combat.mobs({'zombie or skeleton': 'zombies and skeletons', 'zombie': 'zombies', 'skeleton': 'skeletons',
+                               'undead mob': 'undead'}[m.group(1)])
+        if not victims:
+            return None
+        control = {'type': 'pipican:control', 'target': 'victim', 'mode': 'ally', 'seconds': float(m.group(3))}
+        if m.group(4):
+            control['max'] = int(float(m.group(4)))
+        r = {'type': 'pipican:on', 'event': 'hit', 'chance': pct(m.group(2)), 'name': 'command', 'victims': victims,
+             'victim': {'not_targeting_you': True}, 'actions': [control]}
+        REACTIONS.setdefault(cid, {}).setdefault('command undead', r)
+        return [r]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N} servants?', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:summon_mod', 'cap': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / float(m.group(1)), 6)}]}]
+    if re.fullmatch(r'double servant cap', low):
+        return [{'type': 'pipican:summon_mod', 'cap_multiplier': 1.0}]
+    # Disarming Charm: "per 10 Resonance, +3% chance a hostile mob you hit forgets you" (it stops targeting you for a while).
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N}% chance a (?:hostile )?mob you hit forgets you', low)
+    if m and m.group(2) == sp:
+        r = {'type': 'pipican:on', 'event': 'hit', 'chance': 0.0, 'name': 'forget',
+             'actions': [{'type': 'pipican:control', 'target': 'victim', 'mode': 'pacify', 'seconds': 5.0}]}
+        return [r, {'type': 'pipican:reaction_chance', 'name': 'forget',
+                    'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / 100 / float(m.group(1)), 6)}]}]
+    # Blade: "-20% damage against mobs with natural armor (iron golems, ravagers, wardens, the Wither) and with any weapon that isn't a sword"
+    m = re.fullmatch(rf"-{N}% damage against mobs with natural armou?r \(iron golems, ravagers, wardens, the wither\) and with any weapon that isn'?t a sword", low)
+    if m:
+        k = round(1 - float(m.group(1)) / 100, 6)
+        return [{'type': 'pipican:damage_dealt', 'against': ['minecraft:iron_golem', 'minecraft:ravager', 'minecraft:warden', 'minecraft:wither'], 'multiplier': k},
+                {'type': 'pipican:conditional', 'when': {'type': 'pipican:not', 'condition': {'type': 'pipican:holding', 'items': '#minecraft:swords'}},
+                 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': k}]}]
+    # Exorcist: everything that isn't unclean (undead, nether mobs, illager magic...).
+    m = re.fullmatch(rf'-{N}% damage against animals, illagers and other ordinary mobs', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'against': '#pipican:mobs/unclean', 'except': True, 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]
+    # Geomancer: "-25% movement speed while swimming and takes 25% more freezing damage"
+    m = re.fullmatch(rf'(-{N}% movement speed while swimming) and takes {N}% more (\w+) damage', low)
+    if m:
+        a, b = _rest(m.group(1), ctx), _rest(f'+{m.group(3)}% {m.group(4)} damage taken', ctx)
+        if a and b:
+            return a + b
+    # Beastmaster: "when one of your tamed animals dies, you get Weakness I and Slowness I for 30s"
+    m = re.fullmatch(rf'when one of your tamed animals dies, you get (.+?) for {N}s', low)
+    if m:
+        actions = []
+        for part in re.split(r'\s+and\s+|,\s*', m.group(1)):
+            out = combat.outcome(f'get {part} for {m.group(2)}s', 'self')
+            if not out:
+                return None
+            actions += out
+        return [{'type': 'pipican:on', 'event': 'pet_death', 'actions': actions}]
+    # Perfect Shot (sharpshooter): the node raises the passive's arrow armor ignore from 20% to the new number.
+    m = re.fullmatch(rf'armor ignore {N}%', low)
+    if m and (ctx.get('node_name') or '').lower() == 'perfect shot' and float(m.group(1)) > 20:
+        return bonus_kind('ranged_armor_pierce', pct(float(m.group(1)) - 20))
+    return None
+
+
 def whole_line(text, ctx):
     """Lines whose brackets or quotes carry the meaning, matched before notes are dropped. -> effects or None."""
     import combat
@@ -1097,6 +1252,9 @@ def whole_line(text, ctx):
         return am
     t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)
     low = t.lower()
+    w = world(low, ctx)
+    if w:
+        return w
     # "immune to Nausea, and Blindness/Darkness last half as long": the ", and" ends the immunity list.
     m = re.fullmatch(r'(immune to [a-z ]+), and (.+)', low)
     if m and not re.search(r'\bbut\b', low):

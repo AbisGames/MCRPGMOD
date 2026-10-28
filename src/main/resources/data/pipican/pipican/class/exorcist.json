@@ -109,17 +109,15 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Exorcists are trained against the unclean - not ordinary beasts.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Exorcists are trained against the unclean - not ordinary beasts.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "against": "#pipican:mobs/unclean",
+        "except": true,
+        "multiplier": 0.85
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

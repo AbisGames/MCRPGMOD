@@ -44,17 +44,14 @@
       ]
     },
     {
-      "description": {
-        "text": "brewing is 10% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "brewing is 10% faster",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "brew_speed",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "description": "+5% potion duration",

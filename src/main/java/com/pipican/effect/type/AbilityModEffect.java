@@ -21,24 +21,24 @@ import net.minecraft.resources.ResourceKey;
  * controls last {@code seconds} longer, and {@code actions} run after its own ("charmed mobs also get Weakness I").
  *
  * <pre>{@code { "type": "pipican:ability_mod", "ability": "pipican:miracle_worker/stigmata", "duration": 1 } }</pre>
- * {@code scaling} applies to every amount. Mods for the same ability add up.
+ * {@code scaling} applies to every amount the effect sets. Mods for the same ability add up.
  */
-public record AbilityModEffect(ResourceKey<Ability> ability, double cooldownSeconds, double cost, double drain, double duration,
-                               double radius, int uses, double strength, List<Scaling> scaling, double seconds,
+public record AbilityModEffect(ResourceKey<Ability> ability, java.util.Optional<Double> cooldownSeconds, java.util.Optional<Double> cost, java.util.Optional<Double> drain, java.util.Optional<Double> duration,
+                               java.util.Optional<Double> radius, int uses, java.util.Optional<Double> strength, List<Scaling> scaling, java.util.Optional<Double> seconds,
                                List<com.pipican.ability.AbilityAction> actions,
                                java.util.Map<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, Integer> amplify) implements ClassEffect {
 
     public static final MapCodec<AbilityModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             ResourceKey.codec(PipicanRegistries.ABILITY).fieldOf("ability").forGetter(AbilityModEffect::ability),
-            Codec.DOUBLE.optionalFieldOf("cooldown_seconds", 0.0).forGetter(AbilityModEffect::cooldownSeconds),
-            Codec.DOUBLE.optionalFieldOf("cost", 0.0).forGetter(AbilityModEffect::cost),
-            Codec.DOUBLE.optionalFieldOf("drain", 0.0).forGetter(AbilityModEffect::drain),
-            Codec.DOUBLE.optionalFieldOf("duration", 0.0).forGetter(AbilityModEffect::duration),
-            Codec.DOUBLE.optionalFieldOf("radius", 0.0).forGetter(AbilityModEffect::radius),
+            Codec.DOUBLE.optionalFieldOf("cooldown_seconds").forGetter(AbilityModEffect::cooldownSeconds),
+            Codec.DOUBLE.optionalFieldOf("cost").forGetter(AbilityModEffect::cost),
+            Codec.DOUBLE.optionalFieldOf("drain").forGetter(AbilityModEffect::drain),
+            Codec.DOUBLE.optionalFieldOf("duration").forGetter(AbilityModEffect::duration),
+            Codec.DOUBLE.optionalFieldOf("radius").forGetter(AbilityModEffect::radius),
             Codec.intRange(0, 100).optionalFieldOf("uses", 0).forGetter(AbilityModEffect::uses),
-            Codec.DOUBLE.optionalFieldOf("strength", 0.0).forGetter(AbilityModEffect::strength),
+            Codec.DOUBLE.optionalFieldOf("strength").forGetter(AbilityModEffect::strength),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(AbilityModEffect::scaling),
-            Codec.DOUBLE.optionalFieldOf("seconds", 0.0).forGetter(AbilityModEffect::seconds),
+            Codec.DOUBLE.optionalFieldOf("seconds").forGetter(AbilityModEffect::seconds),
             Codec.lazyInitialized(() -> com.pipican.ability.AbilityAction.CODEC).listOf().optionalFieldOf("actions", List.of()).forGetter(AbilityModEffect::actions),
             Codec.unboundedMap(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("amplify", java.util.Map.of()).forGetter(AbilityModEffect::amplify)
     ).apply(i, AbilityModEffect::new));

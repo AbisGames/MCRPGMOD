@@ -79,7 +79,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** One of your summons or tamed animals hurt a mob (the victim). */
         PET_HIT("pet_hit"),
         /** You used bone meal on a plant. */
-        BONE_MEAL("bone_meal");
+        BONE_MEAL("bone_meal"),
+        /** One of your tamed animals died (the victim). */
+        PET_DEATH("pet_death");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;
