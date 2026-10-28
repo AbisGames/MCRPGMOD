@@ -22,15 +22,17 @@ jobs:
           distribution: temurin
           java-version: '25'
       - name: Generate actual authored NBT assets
-        run: |
-          python3 tools/worldgen/build_full_structures.py
-          python3 tools/worldgen/build_special_landmarks.py
+        run: python3 tools/worldgen/build_full_structures.py
       - name: Validate full authored structure graph and NBT data
         run: python3 tools/worldgen/validate_full_structures.py
+      - name: Integrate validated special landmarks and Morvath portal room
+        run: python3 tools/worldgen/build_special_landmarks.py
       - name: Install the generated structures into mod resources
         run: cp -a tools/worldgen/output/data/. src/main/resources/data/
       - name: Compile NeoForge with generated structures
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
+      - name: Verify final packaged structure templates
+        run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
       - name: Boot singleplayer-capable GameTest server and validate registry load
         run: ./gradlew runGameTestServer --no-daemon
       - name: Publish generated structure pack

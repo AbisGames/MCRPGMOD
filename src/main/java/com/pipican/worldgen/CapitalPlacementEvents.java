@@ -172,6 +172,7 @@ public final class CapitalPlacementEvents {
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
             if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return false;
             int top=terrainSurface(level,x,z);
+            if(top>foundationY+12||top<foundationY-12)top=rawSurface(level,x,z);
             if(top>foundationY+12 || top<foundationY-12){
                 Pipican.LOGGER.warn("Capital terrain mismatch at {},{}: surface {}, foundation {}",x,z,top,foundationY);
                 return false;
@@ -206,13 +207,18 @@ public final class CapitalPlacementEvents {
         return y;
     }
 
+    static int rawSurface(ServerLevel level,int x,int z){
+        return level.getChunkSource().getGenerator().getBaseHeight(x,z,
+            Heightmap.Types.OCEAN_FLOOR_WG,level,level.getChunkSource().randomState());
+    }
+
     private static int foundationHeight(ServerLevel level,int x,int z){
         // One decorative boulder at the anchor must not lift an entire city.
         // The median samples the real, terrain-generated flat pad.
         int[] samples=new int[25];
         int i=0;
         for(int dx=-24;dx<=24;dx+=12)
-            for(int dz=-24;dz<=24;dz+=12)samples[i++]=terrainSurface(level,x+dx,z+dz);
+            for(int dz=-24;dz<=24;dz+=12)samples[i++]=rawSurface(level,x+dx,z+dz);
         Arrays.sort(samples);
         return samples[samples.length/2];
     }
@@ -276,6 +282,7 @@ public final class CapitalPlacementEvents {
             || state.is(Blocks.GLOW_LICHEN) || state.is(Blocks.VINE)
             || state.is(Blocks.SNOW_BLOCK) || state.is(Blocks.GRAVEL)
             || state.is(Blocks.CLAY) || state.is(Blocks.WATER)
+            || state.is(Blocks.RAW_IRON_BLOCK) || state.is(Blocks.RAW_COPPER_BLOCK)
             || state.is(Blocks.LAVA);
     }
 

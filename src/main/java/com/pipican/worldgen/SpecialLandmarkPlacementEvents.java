@@ -69,7 +69,7 @@ public final class SpecialLandmarkPlacementEvents {
             Identifier.parse("pipican:"+site.template()));
         if(template.isEmpty())return false;
         int terrainY=site.elevation()==-1
-            ?CapitalPlacementEvents.terrainSurface(level,site.x(),site.z())
+            ?CapitalPlacementEvents.rawSurface(level,site.x(),site.z())
             :0;
         int y=resolveY(site,terrainY);
         var size=template.get().getSize();
@@ -96,6 +96,7 @@ public final class SpecialLandmarkPlacementEvents {
             for(int z=box.minZ();z<=box.maxZ();z++){
                 if(site.elevation()==-1){
                     int surface=CapitalPlacementEvents.terrainSurface(level,x,z);
+                    if(Math.abs(surface-y)>8)surface=CapitalPlacementEvents.rawSurface(level,x,z);
                     if(Math.abs(surface-y)>8)return false;
                 }
                 for(int yy=box.minY();yy<=box.maxY();yy++){

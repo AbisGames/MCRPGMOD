@@ -162,7 +162,8 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         // Greyspine peaks where the matching Aetheris biome is selected.
         // This branch is kept separate from the surface mountain lift so
         // underground caves remain untouched and gaps stay beneath islands.
-        if(r.id().equals("greyspine_mountains") && y>=280 && y<=370) {
+        if(r.id().equals("greyspine_mountains") && y>=280 && y<=370
+                && !CapitalStructureExclusion.contains(x,z,0)) {
             double skyRegion=WorldLayout.fractal(0x6A09E667F3BCC909L,x,z,2600);
             if(skyRegion>0.38) {
                 double strengthFactor=Math.min(1.4,Math.max(0,(skyRegion-0.38)/0.25));

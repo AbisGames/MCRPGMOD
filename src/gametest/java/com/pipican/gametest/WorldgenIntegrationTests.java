@@ -250,9 +250,32 @@ public final class WorldgenIntegrationTests {
             generationSeed);
         }
         if(suite.equals("capital")){
-        String target=generationSeed==123L?"morvath":generationSeed==987654321L?"sylvaran":"aldermere";
-        var city=new LandmarkCatalog().all().stream()
-            .filter(c->c.tier().equals("capital")&&c.id().equals(target)).findFirst().orElseThrow();
+            var cities=new LandmarkCatalog().all().stream().filter(c->c.tier().equals("capital")).toList();
+            int shard=generationSeed==123L?1:generationSeed==987654321L?2:0;
+            var failures=new java.util.ArrayList<String>();
+            for(int i=shard;i<cities.size();i+=3){
+                var city=cities.get(i);
+                try{
+                    verifyCapital(helper,level,city);
+                    Pipican.LOGGER.info("Verified 63 placed capital pieces, foundations and disk reload: {} seed {}",city.id(),generationSeed);
+                }catch(RuntimeException error){
+                    failures.add(city.id()+": "+error.getMessage());
+                    Pipican.LOGGER.error("Capital integration failure {} seed {}",city.id(),generationSeed,error);
+                }finally{
+                    var layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
+                    for(String collection:List.of("relative_positions","connectors"))
+                        for(var row:layout.getAsJsonArray(collection))
+                            level.getServer().getStructureManager().remove(net.minecraft.resources.Identifier.parse(
+                                row.getAsJsonObject().get("template").getAsString()));
+                    saveAndClose(helper,level.dimension());
+                    level=createLevel(helper,generationSeed);
+                }
+            }
+            helper.assertTrue(failures.isEmpty(),"seed="+generationSeed+" capital failures: "+failures);
+        }
+    }
+
+    private static void verifyCapital(GameTestHelper helper,ServerLevel level,LandmarkCatalog.Landmark city){
         var progress=CapitalPlacementSavedData.get(level);
         for(int i=0;i<63;i++){
             helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
@@ -293,6 +316,5 @@ public final class WorldgenIntegrationTests {
                         check(helper,level,pos,level.getBlockState(pos).isSolid(),"supported capital foundation "+city.id());
                     }
             }
-        }
     }
 }
