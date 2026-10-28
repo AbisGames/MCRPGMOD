@@ -141,3 +141,18 @@ detail. Visual terrain quality, full interior navigation and client FPS require
 a Minecraft client inspection. The synchronous fixture's mass chunk generation
 is not a client performance benchmark; production capital ticks prepare chunks
 asynchronously using expiring loading tickets.
+
+## Capital aquifer regression
+
+The 2026-10-28 terrain probe reproduced Hallvard seed 0 at (-3929,-12705)
+and Skelvik seed 123 at (8921,-21095). Their noise densities were respectively
+-11.18 and -19.39, but the generated columns still contained stone at Y=129
+and Y=158. Final-density terracing alone does not constrain aquifer barrier
+stone: the aquifer was using the unchanged vanilla preliminary surface.
+
+The RPG preliminary surface now includes the same regional elevation density.
+Its search starts at Y=432 to include regional mountains and floating islands;
+regional elevation ends above Y=430 and vanilla terrain ends below that.
+Aquifers remain enabled. This changes new terrain, not already generated
+chunks. Verify the three focused capital assemblies after the diagnostic probe;
+a green probe alone does not prove full assembly or worldgen completion.
