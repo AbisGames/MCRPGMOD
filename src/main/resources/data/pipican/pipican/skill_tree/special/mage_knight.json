@@ -95,16 +95,7 @@
     {
       "id": "war_wizard",
       "name": "War Wizard",
-      "description": {
-        "text": "Escalating Violence also gives Speed I; -10% max Warfire",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Escalating Violence also gives Speed I; -10% max Warfire",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -113,7 +104,31 @@
         "spellguard"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "escalating violence",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:speed",
+                  "seconds": 15.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -31,6 +31,12 @@ public final class Strikes {
         striking = true;
         try {
             cleave(player, target, damage, state.cleave(), level);
+            // Magic portion: a share of the hit again as magic (ignores armor).
+            double portion = state.chance(BonusEffect.Kind.MAGIC_PORTION);
+            if (portion > 0 && damage > 0 && target.isAlive()) {
+                target.invulnerableTime = 0;
+                target.hurtServer(level, level.damageSources().indirectMagic(player, player), (float) (damage * portion));
+            }
             offhand(player, target, state, level);
         } finally {
             striking = false;

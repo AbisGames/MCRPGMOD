@@ -32,17 +32,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% durability on crafted tools",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% durability on crafted tools",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "crafted_durability",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "-5% anvil cost",
@@ -55,17 +52,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% durability on crafted tools",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% durability on crafted tools",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "crafted_durability",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "anvils never break when you use them",

@@ -144,11 +144,16 @@ public record ClassState(
 
     /** {@code pipican:reaction_mod} totals for one reaction name. */
     public record ReactionMod(double seconds, double radius, double heal, double damage, List<com.pipican.ability.AbilityAction> actions, double strength,
-                              Map<Holder<MobEffect>, Integer> amplify) {
-        public static final ReactionMod NONE = new ReactionMod(0, 0, 0, 0, List.of(), 0, Map.of());
+                              Map<Holder<MobEffect>, Integer> amplify, double cooldown, int hits) {
+        public static final ReactionMod NONE = new ReactionMod(0, 0, 0, 0, List.of(), 0, Map.of(), 0, 0);
 
         public ReactionMod(double seconds, double radius, double heal, double damage, List<com.pipican.ability.AbilityAction> actions, double strength) {
-            this(seconds, radius, heal, damage, actions, strength, Map.of());
+            this(seconds, radius, heal, damage, actions, strength, Map.of(), 0, 0);
+        }
+
+        public ReactionMod(double seconds, double radius, double heal, double damage, List<com.pipican.ability.AbilityAction> actions, double strength,
+                           Map<Holder<MobEffect>, Integer> amplify) {
+            this(seconds, radius, heal, damage, actions, strength, amplify, 0, 0);
         }
 
         private static Map<Holder<MobEffect>, Integer> maxOf(Map<Holder<MobEffect>, Integer> a, Map<Holder<MobEffect>, Integer> b) {
@@ -161,7 +166,7 @@ public record ClassState(
             List<com.pipican.ability.AbilityAction> all = new java.util.ArrayList<>(actions);
             all.addAll(o.actions);
             return new ReactionMod(seconds + o.seconds, radius + o.radius, heal + o.heal, damage + o.damage, List.copyOf(all), strength + o.strength,
-                    maxOf(amplify, o.amplify));
+                    maxOf(amplify, o.amplify), cooldown + o.cooldown, hits + o.hits);
         }
     }
 

@@ -78,7 +78,7 @@
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:resource",
-        "min": 1.0
+        "min": 0.999
       },
       "effects": [
         {

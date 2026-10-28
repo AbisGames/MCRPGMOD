@@ -75,7 +75,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** An explosion you caused hurt a mob (the victim). */
         EXPLOSION_HIT("explosion_hit"),
         /** One of your executes killed a mob (the victim; area actions centre on it). */
-        EXECUTE("execute");
+        EXECUTE("execute"),
+        /** One of your summons or tamed animals hurt a mob (the victim). */
+        PET_HIT("pet_hit"),
+        /** You used bone meal on a plant. */
+        BONE_MEAL("bone_meal");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

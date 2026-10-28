@@ -37,21 +37,19 @@
     {
       "id": "hexer_lingering_hate",
       "name": "Lingering Hate",
-      "description": {
-        "text": "curses last 3s longer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "curses last 3s longer",
       "type": "small",
       "x": 780,
       "y": -1066,
       "links": [
         "hexer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "curse",
+          "seconds": 3.0
+        }
       ]
     },
     {

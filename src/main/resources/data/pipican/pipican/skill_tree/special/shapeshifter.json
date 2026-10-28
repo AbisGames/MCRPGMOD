@@ -29,23 +29,41 @@
     {
       "id": "quick_change",
       "name": "Quick Change",
-      "description": {
-        "text": "no cooldown between forms",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "no cooldown between forms",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/wolf_form",
+          "cooldown_seconds": -3600.0
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/bear_form",
+          "cooldown_seconds": -3600.0
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/cat_form",
+          "cooldown_seconds": -3600.0
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/fish_form",
+          "cooldown_seconds": -3600.0
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/bird_form",
+          "cooldown_seconds": -3600.0
+        }
+      ]
     },
     {
       "id": "bird_form",

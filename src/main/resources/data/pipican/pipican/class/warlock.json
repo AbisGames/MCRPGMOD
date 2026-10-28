@@ -102,6 +102,17 @@
   ],
   "special_passives": [
     {
+      "type": "pipican:reaction_mod",
+      "name": "vanish",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:resource",

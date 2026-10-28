@@ -83,6 +83,12 @@ public final class ProjectileAndEffectEvents {
 
     @SubscribeEvent
     static void onApplicable(MobEffectEvent.Applicable event) {
+        // Oathbreaker: beacon effects (ambient, with no one behind them) don't reach you.
+        if (event.getEntity() instanceof ServerPlayer p && event.getEffectInstance().isAmbient() && event.getEffectSource() == null
+                && ClassEffectApplier.state(p).chance(Kind.NO_BEACON) > 0) {
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            return;
+        }
         if (!(event.getEntity() instanceof ServerPlayer player) || event.getEffectInstance().getEffect().value().isBeneficial()) {
             return;
         }
@@ -201,6 +207,7 @@ public final class ProjectileAndEffectEvents {
                 || !event.isValidBonemealTarget()) {
             return;
         }
+        com.pipican.ability.Reactions.fire(player, null, event.getStack(), com.pipican.effect.type.ReactionEffect.Event.BONE_MEAL);
         double chance = ClassEffectApplier.state(player).chance(Kind.BONE_MEAL);
         if (chance > 0 && player.getRandom().nextDouble() < chance
                 && event.getState().getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock plant

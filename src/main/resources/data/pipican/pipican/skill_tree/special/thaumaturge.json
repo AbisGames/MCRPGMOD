@@ -86,16 +86,7 @@
     {
       "id": "lord_of_misrule",
       "name": "Lord of Misrule",
-      "description": {
-        "text": "you're immune to your own chaos backfires; -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you're immune to your own chaos backfires; -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -104,7 +95,20 @@
         "pandemonium"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "self_blast_immune",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

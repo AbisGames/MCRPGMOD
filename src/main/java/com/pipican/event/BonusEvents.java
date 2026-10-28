@@ -360,6 +360,20 @@ public final class BonusEvents {
         if (levels > 0) {
             player.giveExperienceLevels(levels);
         }
+        // Persistent Enchantment: a chance of one more enchantment that fits the item.
+        double extra = state.chance(Kind.EXTRA_ENCHANT);
+        if (extra > 0 && player.getRandom().nextDouble() < extra) {
+            ItemStack item = event.getEnchantedItem();
+            var current = item.getEnchantments();
+            var options = player.level().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).listElements()
+                    .filter(e -> e.value().canEnchant(item) && current.getLevel(e) == 0
+                            && current.keySet().stream().allMatch(have -> net.minecraft.world.item.enchantment.Enchantment.areCompatible(have, e)))
+                    .toList();
+            if (!options.isEmpty()) {
+                var pick = options.get(player.getRandom().nextInt(options.size()));
+                item.enchant(pick, 1 + player.getRandom().nextInt(pick.value().getMaxLevel()));
+            }
+        }
         // Fired before the lapis is taken: topping the stack up makes the enchant cost that much less.
         if (lapis > 0 && player.containerMenu instanceof net.minecraft.world.inventory.EnchantmentMenu menu) {
             ItemStack currency = menu.getSlot(1).getItem();

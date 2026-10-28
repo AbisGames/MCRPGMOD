@@ -27,21 +27,19 @@
     {
       "id": "spellbinder_rune_edge",
       "name": "Rune Edge",
-      "description": {
-        "text": "+5% magic damage portion",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% magic damage portion",
       "type": "small",
       "x": -724,
       "y": -386,
       "links": [
         "spellbinder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.05
+        }
       ]
     },
     {

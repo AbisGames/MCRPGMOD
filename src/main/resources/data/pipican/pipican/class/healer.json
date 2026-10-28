@@ -114,6 +114,17 @@
           "per": 0.01
         }
       ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:healer/mass_heal",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

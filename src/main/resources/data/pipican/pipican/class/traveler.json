@@ -124,6 +124,17 @@
       ]
     },
     {
+      "type": "pipican:reaction_mod",
+      "name": "hasty escape",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
       "type": "pipican:reaction_chance",
       "name": "hasty escape",
       "amount": 0.0,

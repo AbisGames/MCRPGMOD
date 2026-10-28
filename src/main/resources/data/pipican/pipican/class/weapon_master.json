@@ -153,17 +153,42 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Devotion to one weapon means neglect of the rest.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Devotion to one weapon means neglect of the rest.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/melee"
+                },
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/ranged"
+                }
+              ]
+            },
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:holding_favored"
+              }
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

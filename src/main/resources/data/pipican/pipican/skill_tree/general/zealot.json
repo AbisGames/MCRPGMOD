@@ -102,16 +102,7 @@
     {
       "id": "zealot_martyrdom",
       "name": "Martyrdom",
-      "description": {
-        "text": "Zeal chance doubled, but you never naturally regenerate above half health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Zeal chance doubled, but you never naturally regenerate above half health",
       "type": "keystone",
       "x": 1808,
       "y": -79,
@@ -120,7 +111,28 @@
         "zealot_fanatic"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "zeal",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:health",
+            "min": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": -1.0
+            }
+          ]
+        }
+      ]
     }
   ]
 }

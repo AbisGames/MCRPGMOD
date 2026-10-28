@@ -99,6 +99,25 @@
       ]
     },
     {
+      "type": "pipican:on",
+      "event": "bone_meal",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:absorption",
+              "seconds": 30.0,
+              "amplifier": 0
+            }
+          ]
+        }
+      ],
+      "cooldown_ticks": 1200,
+      "name": "nature's resilience"
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:all_of",
@@ -163,6 +182,17 @@
               "per": 0.005
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "nature bond",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
         }
       ]
     }

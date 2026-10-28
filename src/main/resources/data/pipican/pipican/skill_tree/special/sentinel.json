@@ -50,16 +50,7 @@
     {
       "id": "stand_guard",
       "name": "Stand Guard",
-      "description": {
-        "text": "Stand Guard triggers after 1s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Stand Guard triggers after 1s",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,39 @@
         "keen"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:still",
+                "seconds": 1.0
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:still",
+                  "seconds": 3.0
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "sentry",
@@ -94,16 +117,7 @@
     {
       "id": "unsleeping",
       "name": "Unsleeping",
-      "description": {
-        "text": "you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -112,7 +126,20 @@
         "sentry"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "no_phantoms",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

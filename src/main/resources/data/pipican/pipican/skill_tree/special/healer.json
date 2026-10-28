@@ -29,23 +29,21 @@
     {
       "id": "wide_mend",
       "name": "Wide Mend",
-      "description": {
-        "text": "+3 blocks healing range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+3 blocks healing range",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:healer/mass_heal",
+          "radius": 3.0
+        }
+      ]
     },
     {
       "id": "empowered_healing",

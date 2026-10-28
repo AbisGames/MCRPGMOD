@@ -39,7 +39,7 @@ public record MarkAction(Targets targets, double seconds, double multiplier, boo
 
     @Override
     public void run(AbilityContext ctx) {
-        long ticks = (long) (seconds * 20);
+        long ticks = (long) ((seconds + ctx.mod().seconds()) * 20);
         for (LivingEntity target : targets.select(ctx)) {
             if (target == ctx.player()) {
                 continue;

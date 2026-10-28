@@ -69,16 +69,7 @@
     {
       "id": "vanishing_escape",
       "name": "Vanishing Escape",
-      "description": {
-        "text": "Vanish also teleports you up to 6 blocks away from the attacker",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Vanish also teleports you up to 6 blocks away from the attacker",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -86,7 +77,19 @@
         "elude"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "vanish",
+          "actions": [
+            {
+              "type": "pipican:blink",
+              "distance": 6.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "spell_thief_mastery",

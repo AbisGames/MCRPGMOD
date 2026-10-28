@@ -106,16 +106,7 @@
     {
       "id": "necromancer_lichdom",
       "name": "Lichdom",
-      "description": {
-        "text": "+1 servant and +20% servant damage, but sunlight burns you like a zombie",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 servant and +20% servant damage, but sunlight burns you like a zombie",
       "type": "keystone",
       "x": 674,
       "y": 1295,
@@ -124,7 +115,22 @@
         "necromancer_lich_touch"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "count": 1
+        },
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "sun_burn",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

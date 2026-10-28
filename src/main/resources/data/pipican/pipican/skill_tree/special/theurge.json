@@ -84,16 +84,7 @@
     {
       "id": "saint_of_the_new_god",
       "name": "Saint of the New God",
-      "description": {
-        "text": "Invocation also heals players within its radius by 2; -15% Divinity regen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Invocation also heals players within its radius by 2; -15% Divinity regen",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -102,7 +93,27 @@
         "holy_word"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "allies",
+              "radius": 4.0,
+              "amount": 2.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

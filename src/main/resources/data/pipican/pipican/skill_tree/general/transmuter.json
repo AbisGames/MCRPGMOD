@@ -54,21 +54,18 @@
     {
       "id": "transmuter_malleable",
       "name": "Malleable",
-      "description": {
-        "text": "+2 Optimization amount",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 Optimization amount",
       "type": "small",
       "x": 614,
       "y": -1553,
       "links": [
         "transmuter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:optimization",
+          "amount": 2.0
+        }
       ]
     },
     {

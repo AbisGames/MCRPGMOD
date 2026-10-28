@@ -18,21 +18,19 @@
     {
       "id": "mage_knight_arcane_steel",
       "name": "Arcane Steel",
-      "description": {
-        "text": "+5% magic portion",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% magic portion",
       "type": "small",
       "x": -1140,
       "y": -666,
       "links": [
         "mage_knight_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.05
+        }
       ]
     },
     {

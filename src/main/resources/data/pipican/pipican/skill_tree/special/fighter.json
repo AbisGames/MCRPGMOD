@@ -60,21 +60,30 @@
     {
       "id": "powerful_attack",
       "name": "Powerful Attack",
-      "description": {
-        "text": "axes/maces: fully charged hits +15% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "axes/maces: fully charged hits +15% damage",
       "type": "small",
       "x": 70,
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/axes_maces"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "victim": {
+                "charged_hit": true
+              },
+              "multiplier": 1.15
+            }
+          ]
+        }
       ]
     },
     {

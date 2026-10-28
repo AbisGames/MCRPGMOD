@@ -83,7 +83,9 @@ public final class Reactions {
                     continue;
                 }
                 if (r.cooldownTicks() > 0) {
-                    cooldowns.put(r, now + r.cooldownTicks());
+                    double faster = r.name().map(n -> state.reactionMods().getOrDefault(n.toLowerCase(java.util.Locale.ROOT), ClassState.ReactionMod.NONE).cooldown())
+                            .orElse(0.0);
+                    cooldowns.put(r, now + Math.max(1, Math.round(r.cooldownTicks() * Math.max(0, 1 + faster))));
                 }
                 if (uses > 0) {
                     USED.get(player.getUUID()).merge(r, 1, Integer::sum);

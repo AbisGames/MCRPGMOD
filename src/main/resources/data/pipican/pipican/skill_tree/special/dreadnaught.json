@@ -48,16 +48,7 @@
     {
       "id": "weapon_resistance",
       "name": "Weapon Resistance",
-      "description": {
-        "text": "+10% more weapon resistance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% more weapon resistance",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -65,7 +56,19 @@
         "heavy_plate"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.9
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 0.9
+        }
+      ]
     },
     {
       "id": "unbreakable",

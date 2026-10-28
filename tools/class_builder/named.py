@@ -259,6 +259,66 @@ def reaction_mods(t, ctx):
             or any(e.get('effect') == 'minecraft:speed' for e in a.get('effects', [])) for a in r.get('actions', []))]
         if len(speedy) == 1:
             return mod(speedy[0], seconds=float(m.group(1)))
+    # cooldowns: "Champion's Resolve cooldown -1% per Resolve point", "Trickery recharges twice as fast", "Pulse: Invocation every 20s"
+    m = re.fullmatch(rf'({names}) cooldown ([+-]{N})%' + per, original_t)
+    if m:
+        return scaled(m.group(1), 'cooldown', float(m.group(2)) / 100, m.group(4), m.group(5))
+    m = re.fullmatch(rf'({names}) recharges (twice|three times) as fast', original_t)
+    if m:
+        return mod(m.group(1), cooldown=-0.5 if m.group(2) == 'twice' else round(-2 / 3, 6))
+    m = re.fullmatch(rf'({names}) every {N}s', original_t)
+    if m and reactions[m.group(1)].get('cooldown_ticks'):
+        base = reactions[m.group(1)]['cooldown_ticks'] / 20
+        if float(m.group(2)) < base:
+            return mod(m.group(1), cooldown=round(float(m.group(2)) / base - 1, 6))
+    m = re.fullmatch(rf'({names}) heal speed \+{N}%' + per, original_t)
+    if m and reactions[m.group(1)].get('cooldown_ticks'):
+        return scaled(m.group(1), 'cooldown', -float(m.group(2)) / 100, m.group(3), m.group(4))
+    # empowered hits: "Per 10 Battle Arcana, +1 escalating hit" ("+1 escalating hit per 10 battle arcana")
+    m = re.fullmatch(rf'\+{N} ([a-z]+) hits?' + per, original_t)
+    if m:
+        hosts = [(r.get('name') or n) for n, r in reactions.items() if n.split()[0].startswith(m.group(2)[:6])
+                 and any(a.get('type') == 'pipican:empower' for a in r.get('actions', []))]
+        if len(hosts) == 1 and not m.group(4):
+            return mod(hosts[0], hits=int(float(m.group(1))))
+    # blink distance: "Per 10 Phantasm, blink distance +1", "+1 blink distance", "Blink distance +0.1 per Displacement"
+    m = re.fullmatch(rf'blink distance \+{N}' + per, original_t) or re.fullmatch(rf'\+{N} blink distance()()', original_t)
+    if m:
+        blinkers = [(r.get('name') or n) for n, r in reactions.items() if any(a.get('type') == 'pipican:blink' for a in r.get('actions', []))]
+        if len(blinkers) == 1:
+            return scaled(blinkers[0], 'radius', float(m.group(1)), m.group(2), m.group(3))
+    # "Blur: after a decoy, you're invisible for 1s"
+    m = re.fullmatch(rf"after an? ({names}), you'?re invisible for {N}s", original_t)
+    if m:
+        return mod(m.group(1), actions=[{'type': 'pipican:effect', 'target': 'self', 'effects': [{'effect': 'minecraft:invisibility', 'seconds': float(m.group(2))}]}])
+    # "Vanish also teleports you up to 6 blocks away from the attacker"
+    m = re.fullmatch(rf'({names}) also teleports you up to {N} blocks away(?: from the attacker)?', original_t)
+    if m:
+        return mod(m.group(1), actions=[{'type': 'pipican:blink', 'distance': float(m.group(2))}])
+    # "Invocation also heals players within its radius by 2"
+    m = re.fullmatch(rf'({names}) also heals players within its radius by {N}', original_t)
+    if m:
+        tg = _first_targets(reactions[m.group(1)])
+        if tg and 'radius' in tg:
+            return mod(m.group(1), actions=[{'type': 'pipican:heal', 'target': 'allies', 'radius': tg['radius'], 'amount': float(m.group(2))}])
+    # "Invocation stuns frightened (weakened) mobs for 1s"
+    m = re.fullmatch(rf'({names}) stuns (?:frightened |weakened |frightened \(weakened\) )?mobs for {N}s', original_t)
+    if m:
+        tg = _first_targets(reactions[m.group(1)])
+        if tg:
+            a = {'type': 'pipican:effect', 'effects': [{'effect': 'minecraft:slowness', 'seconds': float(m.group(2)), 'amplifier': 9}]}
+            a.update(tg)
+            if 'weaken' in original_t or 'frighten' in original_t:
+                a['state'] = {'effects': 'minecraft:weakness'}
+            return mod(m.group(1), actions=[a])
+    # "Escalating Violence also gives Speed I" when the reaction has no area: it's for you, as long as the reaction lasts
+    m = re.fullmatch(rf'({names}) also gives (.+)', original_t)
+    if m and _first_targets(reactions[m.group(1)]) is None:
+        import combat
+        secs = [a.get('seconds') for a in reactions[m.group(1)].get('actions', []) if a.get('seconds')]
+        out = combat.outcome('gain ' + m.group(2) + (f' for {secs[0]:g}s' if secs and ' for ' not in m.group(2) else ''), 'self')
+        if out:
+            return mod(m.group(1), actions=out)
     amp = _amplify(names, t)
     if amp:
         return mod(amp[0], amplify=amp[1])
@@ -546,6 +606,62 @@ def segment(t, ctx):
         inner = _rest(rest, ctx) or (_rest('you ' + rest, ctx) if rest.startswith('lose ') else None)
         if inner:
             return [{'type': 'pipican:aura', 'radius': 8.0, 'effects': inner, 'include_self': False}]
+    cursing = REACTION_NAMES.get(ctx.get('class_id'), set())
+    if 'curse' in cursing:
+        m = re.fullmatch(rf'curses last {N}s longer(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t)
+        if m:
+            e = {'type': 'pipican:reaction_mod', 'name': 'curse', 'seconds': float(m.group(1))}
+            if m.group(3):
+                src = _stat_source(m.group(3), ctx)
+                if not src:
+                    return None
+                e['seconds'] = 0.0
+                e['scaling'] = [{'source': src, 'per': round(float(m.group(1)) / float(m.group(2) or 1), 6)}]
+            return [e]
+        m = re.fullmatch(rf'pain curse deals {N} per second', t)
+        if m and float(m.group(1)) > 2:
+            return [{'type': 'pipican:reaction_mod', 'name': 'curse', 'damage': float(m.group(1)) - 2}]
+    # minions: "mobs hit by your minions get Weakness I for 3s", "minions also apply Slowness"
+    m = re.fullmatch(r'mobs hit by your (?:minions|summons|servants|pets) get (.+)', t) or re.fullmatch(r'(?:minions|summons|servants) also apply (.+)', t)
+    if m:
+        import combat
+        out = combat.outcome('give ' + m.group(1), 'victim')
+        if out:
+            return [{'type': 'pipican:on', 'event': 'pet_hit', 'actions': out}]
+    # "Horde Master: +2 minions at a time, but each is 30% weaker" ("each is 30% weaker" alone)
+    m = re.fullmatch(rf'each is {N}% weaker', t)
+    if m:
+        k = -float(m.group(1)) / 100
+        return [{'type': 'pipican:summon_mod', 'damage': k, 'health': k}]
+    # "Stand Guard triggers after 1s": the named stillness starts sooner (only the gap is added, no double bonus)
+    m = re.fullmatch(rf'([a-z\' ]+?) triggers after {N}s', t)
+    if m and m.group(1) in NAMED.get(ctx.get('class_id'), {}):
+        when, inner = NAMED[ctx['class_id']][m.group(1)]
+        if when.get('type') == 'pipican:still' and float(m.group(2)) < when.get('seconds', 0):
+            early = {'type': 'pipican:all_of', 'conditions': [{'type': 'pipican:still', 'seconds': float(m.group(2))},
+                                                              {'type': 'pipican:not', 'condition': when}]}
+            return [{'type': 'pipican:conditional', 'when': early, 'effects': inner}]
+    # "Quick Change: no cooldown between forms"
+    if re.fullmatch(r'no cooldown between forms', t):
+        forms = [w['ability'] for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+        if forms:
+            return [{'type': 'pipican:ability_mod', 'ability': f, 'cooldown_seconds': -3600.0} for f in forms]
+    # healing range: "+3 blocks healing range", "+1 block healing range per 10 Vitality Flow"
+    m = re.fullmatch(rf'\+{N} blocks? healing range(?: per (?:{N} )?([a-z]+(?: [a-z]+)?)(?: points?)?)?', t)
+    if m:
+        import abilities as ab
+        healers = [(n, d) for (owner, n), d in ab.A.items() if owner == ctx.get('class_id')
+                   and any(a.get('type') == 'pipican:heal' and a.get('radius') for a in d.get('actions', []))]
+        if len(healers) == 1:
+            aid = f"pipican:{ctx['class_id']}/" + re.sub(r'[^a-z0-9]+', '_', healers[0][0].lower().replace("'", '')).strip('_')
+            e = {'type': 'pipican:ability_mod', 'ability': aid, 'radius': float(m.group(1))}
+            if m.group(3):
+                src = _stat_source(m.group(3), ctx)
+                if not src:
+                    return None
+                e['radius'] = 0.0
+                e['scaling'] = [{'source': src, 'per': round(float(m.group(1)) / float(m.group(2) or 1), 6)}]
+            return [e]
     am = ability_mods(t, ctx) or reaction_mods(t, ctx) or glows(t, ctx) or static_mods(t, ctx)
     if am:
         return am
@@ -1172,6 +1288,57 @@ def whole_line(text, ctx):
             r = {'type': 'pipican:on', 'event': 'execute', 'name': 'execute aftermath', 'actions': out}
             REACTIONS.setdefault(ctx.get('class_id'), {}).setdefault('execute aftermath', r)
             return [r]
+    # "Phantom Strike: first hit after a blink deals +25%"
+    m = re.fullmatch(rf'(?:your )?first hit after a (?:blink|teleport) deals \+{N}%(?: damage)?', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'teleport', 'actions': [{'type': 'pipican:empower', 'target': 'self',
+                 'multiplier': round(1 + float(m.group(1)) / 100, 6), 'hits': 1, 'seconds': 10.0}]}]
+    # "Nature's Resilience: bone-mealing a plant gives you +2 absorption hearts for 30s (60s cooldown)"
+    m = re.fullmatch(rf'bone-mealing a plant gives you \+{N} absorption hearts for {N}s(?: \({N}s cooldown\))?', low)
+    if m:
+        level = max(0, int(float(m.group(1)) / 2) - 1)
+        r = {'type': 'pipican:on', 'event': 'bone_meal', 'actions': [{'type': 'pipican:effect', 'target': 'self',
+             'effects': [{'effect': 'minecraft:absorption', 'seconds': float(m.group(2)), 'amplifier': level}]}]}
+        if m.group(3):
+            r['cooldown_ticks'] = int(float(m.group(3)) * 20)
+        return [r]
+    # kill reactions on a kind of victim: "killing a marked target heals you 25%", "killing a bleeding mob refills 20 X",
+    # "cursed mobs that die explode in a small Instant Damage cloud", "after a stealth kill, you are invisible for 3s",
+    # "poison spreads to mobs within 2 blocks on death"
+    m = re.fullmatch(rf'killing a marked target heals you {N}%', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'victim': {'marked': True},
+                 'actions': [{'type': 'pipican:heal', 'target': 'self', 'percent': round(float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf'killing a bleeding mob refills {N} [a-z ]+', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'victim': {'bleeding': True}, 'actions': [{'type': 'pipican:resource', 'amount': float(m.group(1))}]}]
+    m = re.fullmatch(r'cursed mobs that die explode in a small instant damage cloud', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'victim': {'marked': True},
+                 'actions': [{'type': 'pipican:cloud', 'effect': 'minecraft:instant_damage', 'radius': 2.0}]}]
+    m = re.fullmatch(rf"after a stealth kill, you(?:'re| are) invisible for {N}s", low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'victim': {'not_targeting_you': True},
+                 'actions': [{'type': 'pipican:effect', 'target': 'self', 'effects': [{'effect': 'minecraft:invisibility', 'seconds': float(m.group(1))}]}]}]
+    m = re.fullmatch(rf'poison spreads to mobs within {N} blocks on death', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'kill', 'victim': {'effects': 'minecraft:poison'},
+                 'actions': [{'type': 'pipican:effect', 'target': 'hostiles', 'radius': float(m.group(1)), 'effects': [{'effect': 'minecraft:poison', 'seconds': 5.0}]}]}]
+    # "Hotter: burning mobs take +1 damage per second" (near you)
+    m = re.fullmatch(rf'burning mobs take \+{N} damage per second', low)
+    if m:
+        return [{'type': 'pipican:on', 'event': 'second', 'actions': [{'type': 'pipican:damage', 'target': 'hostiles', 'radius': 16.0,
+                 'amount': float(m.group(1)), 'state': {'on_fire': True}}]}]
+    # weapon-group prefixes: "Powerful Attack: axes/maces: fully charged hits +15% damage"
+    m = re.fullmatch(r'(swords|axes|maces|axes/maces|spears/tridents|spears|tridents|bows|crossbows): (.+)', low)
+    if m:
+        tag = {'swords': '#pipican:weapons/swords', 'axes': '#pipican:weapons/axes', 'maces': '#pipican:weapons/maces',
+               'axes/maces': '#pipican:weapons/axes_maces', 'spears': '#pipican:weapons/spears', 'tridents': '#pipican:weapons/tridents',
+               'bows': '#pipican:weapons/bows', 'crossbows': '#pipican:weapons/crossbows'}.get(m.group(1))
+        rest = re.sub(rf'^fully charged hits \+{N}% damage$', lambda mm: f'fully charged hits deal +{mm.group(1)}%', m.group(2))
+        inner = _rest(rest, ctx)
+        if tag and inner:
+            return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:holding', 'items': tag}, 'effects': inner}]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

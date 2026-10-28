@@ -80,16 +80,7 @@
     {
       "id": "philosopher",
       "name": "Philosopher",
-      "description": {
-        "text": "Optimization amount doubled; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Optimization amount doubled; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -98,7 +89,19 @@
         "transmute_matter"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:optimization",
+          "amount": 3.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

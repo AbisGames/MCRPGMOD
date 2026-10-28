@@ -191,6 +191,17 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "champion's resolve",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
     }
   ],
   "weakness": {

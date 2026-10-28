@@ -53,6 +53,40 @@ public final class CraftAndFarmEvents {
     }
 
     @SubscribeEvent
+    static void onCraftedDurability(PlayerEvent.ItemCraftedEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && event.getCrafting().isDamageableItem()) {
+            double more = ClassEffectApplier.state(player).chance(Kind.CRAFTED_DURABILITY);
+            if (more > 0) {
+                ItemStack stack = event.getCrafting();
+                stack.set(DataComponents.MAX_DAMAGE, (int) Math.round(stack.getMaxDamage() * (1 + more)));
+            }
+        }
+    }
+
+    /** Your summons' and tamed animals' hits: pipican:on "pet_hit" reactions of the owner. */
+    @SubscribeEvent
+    static void onPetHit(net.neoforged.neoforge.event.entity.living.LivingDamageEvent.Post event) {
+        var attacker = event.getSource().getEntity();
+        if (attacker == null || event.getEntity() instanceof net.minecraft.world.entity.player.Player) {
+            return;
+        }
+        ServerPlayer owner = com.pipican.ability.Pets.owner(attacker);
+        if (owner == null) {
+            owner = com.pipican.ability.Summons.ownerOf(attacker).orElse(null);
+        }
+        if (owner != null && owner != attacker) {
+            com.pipican.ability.Reactions.fire(owner, event.getEntity(), ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.PET_HIT);
+        }
+    }
+
+    @SubscribeEvent
+    static void onPhantoms(net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.NO_PHANTOMS) > 0) {
+            event.setPhantomsToSpawn(0);
+        }
+    }
+
+    @SubscribeEvent
     static void onBrewed(PlayerBrewedPotionEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
@@ -95,6 +129,12 @@ public final class CraftAndFarmEvents {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
+        // Sun burn: like a zombie, in daylight under the open sky without a helmet.
+        if (player.tickCount % 20 == 0 && state.chance(Kind.SUN_BURN) > 0 && player.level().isBrightOutside() && !player.isInWaterOrRain()
+                && player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD).isEmpty()
+                && player.level().canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ()))) {
+            player.igniteForSeconds(8);
+        }
         // Shields: replace the disable cooldown the moment it appears.
         double disable = state.bonus(Kind.SHIELD_DISABLE);
         if (disable != 1) {

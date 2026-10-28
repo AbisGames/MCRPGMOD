@@ -576,6 +576,70 @@ def misc(t, scal):
     m = re.fullmatch(rf'your ({eff}) is ({eff}) (ii|iii|iv)', t)
     if m and m.group(1) == m.group(2):
         return _applied(m.group(1), min_amplifier=LEVELS[m.group(3)])
+    m = re.fullmatch(rf'\+{N}% durability on crafted (?:tools|tools and weapons|gear)', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        return [_effect('crafted_durability', v, sc)]
+    if re.fullmatch(r'sunlight burns you like a zombie', t):
+        return [_effect('sun_burn', 100, None)]
+    if re.fullmatch(r'you can no longer benefit from beacons', t):
+        return [_effect('no_beacon', 100, None)]
+    if re.fullmatch(r'you never need sleep to skip phantoms(?: \(no phantoms spawn for you\))?|no phantoms spawn for you', t):
+        return [_effect('no_phantoms', 100, None)]
+    m = re.fullmatch(rf'(?:enchanting at a table gives a )?\+?{N}% (?:extra-enchantment chance|chance of an extra enchantment on the item)', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        return [_effect('extra_enchant', v, sc)]
+    m = re.fullmatch(rf'enchanting at a table gives a {N}% chance of an extra enchantment on the item', t)
+    if m:
+        return [_effect('extra_enchant', float(m.group(1)), None)]
+    m = re.fullmatch(rf'(?:your )?weapon hits deal {N}% of their damage as magic damage(?: \(ignores armor\))?', t)
+    if m:
+        return [_effect('magic_portion', float(m.group(1)), None)]
+    m = re.fullmatch(rf'\+{N}% (?:magic portion|magic damage portion)', t)
+    if m:
+        return [_effect('magic_portion', float(m.group(1)), None)]
+    m = re.fullmatch(rf'-?{N} enchanting cost', t)
+    if m:
+        return [_effect('enchant_levels', float(m.group(1)) * 100, None)]
+    m = re.fullmatch(rf'(?:\+{N}% (?:more )?weapon resistance|weapon resistance \+{N}%)', t)
+    if m:
+        v, sc = scal(float(m.group(1) or m.group(2)))
+        out = []
+        for tag in ('#pipican:is_melee', '#minecraft:is_projectile'):
+            e = {'type': 'pipican:damage_taken', 'damage_types': tag, 'multiplier': round(1 - v / 100, 6)}
+            if sc:
+                e['scaling'] = [{'source': src, 'per': round(-per / 100, 6)} for src, per in sc]
+            out.append(e)
+        return out
+    m = re.fullmatch(rf'\+{N}% optimization amount|optimization amount \+{N}|\+{N} optimization amount', t)
+    if m:
+        v, sc = scal(float(m.group(1) or m.group(2) or m.group(3)))
+        e = {'type': 'pipican:optimization', 'amount': round(v, 6)}
+        if sc:
+            e['amount'] = 0.0
+            e['scaling'] = [{'source': src, 'per': round(per, 6)} for src, per in sc]
+        return [e]
+    if re.fullmatch(r'optimization amount doubled', t):
+        return [{'type': 'pipican:optimization', 'amount': 3.0}]
+    m = re.fullmatch(rf'detection reduction \+{N}%', t)
+    if m:
+        v, sc = scal(-float(m.group(1)))
+        return [_effect('detection_range', v, sc)]
+    m = re.fullmatch(rf"-{N}% damage with every weapon type that isn'?t your favou?red one", t)
+    if m:
+        when = {'type': 'pipican:all_of', 'conditions': [
+            {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:holding', 'items': '#pipican:weapons/melee'}, {'type': 'pipican:holding', 'items': '#pipican:weapons/ranged'}]},
+            {'type': 'pipican:not', 'condition': {'type': 'pipican:holding_favored'}}]}
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(r'(?:servants|minions|summons) never expire(?: until killed)?', t)
+    if m:
+        return [{'type': 'pipican:summon_mod', 'seconds': 86400.0}]
+    m = re.fullmatch(rf"you never naturally regenerate above half health", t)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:health', 'min': 0.5}, 'effects': [_effect('natural_regen', -100, None)]}]
+    if re.fullmatch(r"(?:you'?re |you are )?immune to your own chaos backfires", t):
+        return [_effect('self_blast_immune', 100, None)]
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits

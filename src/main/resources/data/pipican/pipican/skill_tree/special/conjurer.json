@@ -29,23 +29,32 @@
     {
       "id": "fearsome",
       "name": "Fearsome",
-      "description": {
-        "text": "minions also apply Slowness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "minions also apply Slowness",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "pet_hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "powerful_monsters",

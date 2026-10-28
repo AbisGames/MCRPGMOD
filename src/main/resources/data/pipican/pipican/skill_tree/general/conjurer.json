@@ -90,16 +90,7 @@
     {
       "id": "conjurer_horde_master",
       "name": "Horde Master",
-      "description": {
-        "text": "+2 minions at a time, but each is 30% weaker",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 minions at a time, but each is 30% weaker",
       "type": "keystone",
       "x": -889,
       "y": -1158,
@@ -108,7 +99,18 @@
         "conjurer_swarm"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "count": 2
+        },
+        {
+          "type": "pipican:summon_mod",
+          "damage": -0.3,
+          "health": -0.3
+        }
+      ]
     }
   ]
 }

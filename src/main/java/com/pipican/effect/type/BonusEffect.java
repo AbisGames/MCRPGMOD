@@ -70,6 +70,12 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code marked_loot}: <i>extra drops</i> from mobs you've marked (scrutinised, challenged...) when you kill them</li>
  *   <li>{@code shield_disable}: how long your shield stays disabled after an axe hit (-1 = never disabled)</li>
  *   <li>{@code quiet_steps}: any amount above 0 = other players and mobs don't hear your footsteps</li>
+ *   <li>{@code crafted_durability}: tools and weapons you craft get this much more durability (0.05 = +5%)</li>
+ *   <li>{@code sun_burn}: any amount above 0 = you catch fire in daylight under the open sky without a helmet, like a zombie</li>
+ *   <li>{@code no_beacon}: any amount above 0 = beacon (ambient) effects don't reach you</li>
+ *   <li>{@code no_phantoms}: any amount above 0 = phantoms never spawn for you</li>
+ *   <li>{@code extra_enchant}: a <i>chance</i> that enchanting at a table adds one more enchantment</li>
+ *   <li>{@code magic_portion}: the share of your melee hits' damage dealt again as magic damage (ignores armor)</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -85,7 +91,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         LOOTING, DRUNK_POTION_DURATION,
         BONE_MEAL, BREEDING_SPEED, ARROW_PIERCE, PEARL_RANGE, MIN_MELEE_DAMAGE, NO_SLEEP,
         PEARL_COOLDOWN, SPELL_WARD, NO_TRADE, FIRST_TRADE_DISCOUNT, SELF_BLAST_IMMUNE,
-        BREWED_DURATION, CROP_GROWTH, MARKED_LOOT, SHIELD_DISABLE, QUIET_STEPS;
+        BREWED_DURATION, CROP_GROWTH, MARKED_LOOT, SHIELD_DISABLE, QUIET_STEPS,
+        CRAFTED_DURABILITY, SUN_BURN, NO_BEACON, NO_PHANTOMS, EXTRA_ENCHANT, MAGIC_PORTION;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

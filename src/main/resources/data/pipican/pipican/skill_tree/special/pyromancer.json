@@ -29,23 +29,31 @@
     {
       "id": "hotter",
       "name": "Hotter",
-      "description": {
-        "text": "burning mobs take +1 damage per second",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "burning mobs take +1 damage per second",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "hostiles",
+              "radius": 16.0,
+              "amount": 1.0,
+              "state": {
+                "on_fire": true
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "immolating_flames",

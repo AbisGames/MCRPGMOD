@@ -49,7 +49,7 @@ public record EmpowerAction(Targets targets, double multiplier, double bonus, do
         for (LivingEntity target : targets.select(ctx)) {
             if (target instanceof Player p) {
                 Empowers.add(p, (long) ((seconds + ctx.mod().seconds()) * 20), 1 + (multiplier - 1) * (1 + ctx.mod().strength()),
-                        bonus + bonusPerSpent * ctx.spent(), Empowers.instances(effects), against, hits);
+                        bonus + bonusPerSpent * ctx.spent(), Empowers.instances(effects), against, Math.max(1, hits + ctx.mod().hits()));
             }
         }
     }

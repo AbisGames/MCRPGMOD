@@ -69,6 +69,7 @@ def _atoms(ctx):
         (r'(?:at )?full health', lambda m: {'type': 'pipican:health', 'min': 1.0}, OTHER),
         # resource bar
         (rf'{rn} is (?:above|over) {num}', lambda m: {'type': 'pipican:resource', 'min': _frac(m.group(1))}, OTHER),
+        (rf'{rn} is full', lambda m: {'type': 'pipican:resource', 'min': 0.999}, OTHER),
         (rf'{rn} is (?:below|under) {num}', lambda m: {'type': 'pipican:resource', 'max': _frac(m.group(1))}, OTHER),
         (rf'(?:below|under) {num} {rn}', lambda m: {'type': 'pipican:resource', 'max': _frac(m.group(1))}, OTHER),
         (rf'you have (?:over|more than) {num} {rn}', lambda m: {'type': 'pipican:resource', 'min': _frac(m.group(1))}, OTHER),

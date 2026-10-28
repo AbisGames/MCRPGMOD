@@ -37,36 +37,25 @@
     {
       "id": "illusionist_smoke_and_mirrors",
       "name": "Smoke and Mirrors",
-      "description": {
-        "text": "+1 blink distance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 blink distance",
       "type": "small",
       "x": 874,
       "y": 1423,
       "links": [
         "illusionist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "decoy",
+          "radius": 1.0
+        }
       ]
     },
     {
       "id": "illusionist_phantom_strike",
       "name": "Phantom Strike",
-      "description": {
-        "text": "first hit after a blink deals +25%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "first hit after a blink deals +25%",
       "type": "notable",
       "x": 958,
       "y": 1453,
@@ -74,7 +63,22 @@
         "illusionist_mirror_image"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "teleport",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.25,
+              "hits": 1,
+              "seconds": 10.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "illusionist_veil",

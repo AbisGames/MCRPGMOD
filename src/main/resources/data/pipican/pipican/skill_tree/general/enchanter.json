@@ -37,21 +37,19 @@
     {
       "id": "enchanter_spellwright",
       "name": "Spellwright",
-      "description": {
-        "text": "+10% extra-enchantment chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% extra-enchantment chance",
       "type": "small",
       "x": 859,
       "y": -1433,
       "links": [
         "enchanter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_enchant",
+          "amount": 0.1
+        }
       ]
     },
     {

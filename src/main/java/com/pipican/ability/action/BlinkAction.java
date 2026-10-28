@@ -44,6 +44,9 @@ public record BlinkAction(double distance, boolean throughWalls, Optional<Holder
     @Override
     public void run(AbilityContext ctx) {
         ServerPlayer player = ctx.player();
+        // Upgrades ("+1 blink distance") come as a reaction upgrade's radius or an ability upgrade's radius.
+        double distance = this.distance + ctx.mod().radius()
+                + ctx.ability().map(k -> com.pipican.player.ClassEffectApplier.state(player).abilityMod(k).radius()).orElse(0.0);
         Vec3 look = player.getLookAngle();
         HitResult hit = player.pick(distance, 1.0f, false);
         if (requireBlocks.isPresent()) {

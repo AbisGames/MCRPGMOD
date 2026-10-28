@@ -55,16 +55,7 @@
     {
       "id": "theurge_pulse",
       "name": "Pulse",
-      "description": {
-        "text": "Invocation every 20s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Invocation every 20s",
       "type": "notable",
       "x": 1597,
       "y": -691,
@@ -72,7 +63,14 @@
         "theurge_prayerful"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "cooldown": -0.333333
+        }
+      ]
     },
     {
       "id": "theurge_divine_aegis",
@@ -97,16 +95,7 @@
     {
       "id": "theurge_chosen",
       "name": "Chosen",
-      "description": {
-        "text": "Invocation stuns frightened (weakened) mobs for 1s, but -20% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Invocation stuns frightened (weakened) mobs for 1s, but -20% max health",
       "type": "keystone",
       "x": 1672,
       "y": -693,
@@ -115,7 +104,36 @@
         "theurge_divine_aegis"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 1.0,
+                  "amplifier": 9
+                }
+              ],
+              "target": "hostiles",
+              "radius": 4.0,
+              "state": {
+                "effects": "minecraft:weakness"
+              }
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

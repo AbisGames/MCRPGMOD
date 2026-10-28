@@ -30,7 +30,7 @@ public record DotAction(Targets targets, double damage, double seconds) implemen
     public void run(AbilityContext ctx) {
         for (var target : targets.select(ctx)) {
             if (target != ctx.player()) {
-                Bleeds.wound(ctx.player(), target, damage, seconds, 1);
+                Bleeds.wound(ctx.player(), target, damage + ctx.mod().damage(), seconds + ctx.mod().seconds(), 1);
             }
         }
     }

@@ -119,16 +119,7 @@
     {
       "id": "rogue_cunning",
       "name": "Rogue Cunning",
-      "description": {
-        "text": "Trickery recharges twice as fast; -10% max Guile",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Trickery recharges twice as fast; -10% max Guile",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -137,7 +128,20 @@
         "threats"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "trickery",
+          "cooldown": -0.5
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }
