@@ -197,6 +197,13 @@ public final class WorldgenTests {
         helper.assertTrue(dimensionRegistry.get(ResourceKey.create(Registries.DIMENSION_TYPE,
             Pipican.id("rpg_overworld"))).isPresent(),"missing 576-high dimension");
 
+        for(var biome:biomeRegistry.listElements().toList()){
+            if(!biome.key().identifier().getNamespace().equals(Pipican.MOD_ID))continue;
+            for(var category:net.minecraft.world.entity.MobCategory.values())
+                for(var spawn:biome.value().getMobSettings().getMobs(category).unwrap())
+                    helper.assertTrue(spawn.value().type().getCategory()==category,
+                        "wrong spawn category in "+biome.key().identifier()+": "+spawn.value().type()+" in "+category);
+        }
         int sampled=0;
         var regionMap=WorldgenJson.read("region_map.json");
         for(var region:regionMap.getAsJsonArray("macro_regions")){

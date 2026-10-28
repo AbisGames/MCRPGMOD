@@ -225,3 +225,8 @@ they never load saved-data files. An unavailable cache rejects the shaft plan.
 Temporary integration levels explicitly perform the same initialization before
 requesting generated chunks. Existing saved provenance is still serialized in
 the original format and disk-reload assertions remain enabled.
+
+Server logs exposed 13 Pipican biomes with ocelots incorrectly assigned to the
+monster category. Their entries now use the registered creature category,
+preserving spawn weights and pack sizes. The registry test checks every
+Pipican spawn entry against its EntityType category to prevent this regression.
