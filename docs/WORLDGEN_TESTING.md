@@ -165,3 +165,22 @@ one-block walking steps, water swimming and climbable blocks, rejects lava,
 and bounds the local search to 100,000 visited positions. It can conservatively
 reject a long winding cave exit outside that local search volume. It is an
 entrance-access check, not a full interior navigation or distribution test.
+
+## Verified checkpoint ? 2026-10-28
+
+Worldgen is **partially verified**. Commit `27d93f8` passed the actual NeoForge
+server focused regression in the personal repository:
+[run 40731587424](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40731587424).
+
+| Seed | Capital | Result |
+| --- | --- | --- |
+| 0 | Hallvard | 63 pieces, foundations, road connectivity, disk reload; all 18 required tests passed |
+| 123 | Skelvik | 63 pieces, foundations, road connectivity, disk reload; all 18 required tests passed |
+| 987654321 | Bogmere | 63 pieces, foundations, road connectivity, disk reload; all 18 required tests passed |
+
+The earlier failing density probe is retained in
+[run 40730694226](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40730694226).
+No excavation bound was increased for the aquifer fix. These successes do not
+verify every capital, settlement, expedition entrance or sky island. Those
+require the full matrix, including the entrance test added in `0fe0e10`.
+Boss framework, Morvath, rituals, rare ores and upgrades remain subsequent phases.
