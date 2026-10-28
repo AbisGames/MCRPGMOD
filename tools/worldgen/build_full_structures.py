@@ -1001,7 +1001,9 @@ def add_pool(pool_id,structure_id):
           'element_type':'minecraft:single_pool_element','location':'pipican:'+structure_id,
           'processors':{'processors':([{'processor_type':'pipican:expedition_foundation'}]
               if pool_id.startswith('settlements/') or (pool_id.startswith('regional/')
-                  and pool_id.rsplit('/',1)[-1] in ('mine','dungeon','village')) else [])},
+                  and pool_id.rsplit('/',1)[-1] in ('mine','dungeon','village')) else [])
+              + ([{'processor_type':'pipican:expedition_access'}] if pool_id.startswith('regional/')
+                  and pool_id.rsplit('/',1)[-1] in ('mine','dungeon') else [])},
           'projection':'rigid'}}]})
 
 def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):

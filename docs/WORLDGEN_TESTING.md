@@ -184,3 +184,25 @@ No excavation bound was increased for the aquifer fix. These successes do not
 verify every capital, settlement, expedition entrance or sky island. Those
 require the full matrix, including the entrance test added in `0fe0e10`.
 Boss framework, Morvath, rituals, rare ores and upgrades remain subsequent phases.
+
+## Deep expedition access
+
+Focused entrance run
+[40733574565](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40733574565)
+passed Heartlands seed 0 and Shimmering Reefs seed 987654321, but reproduced
+inaccessible Umbral Chasm mine and dungeon entrances at seed 123. Both deep
+structures were at floor Y=-21 without a route to open terrain.
+
+`ExpeditionAccessProcessor` adds a front-boundary ladder and supporting casing
+when the outside terrain differs from doorway height by more than four blocks.
+It connects that height to the actual outside surface, including underwater
+and elevated terrain, using only the template's X/Z footprint and the current
+chunk decoration box. It checks player provenance, non-natural blocks and block
+entities before returning local edits. State rotation is left to native template
+placement. Flat, already reachable entrances remain unchanged. This processor
+is attached only to the 54 mine/dungeon pools, never the village pools.
+
+Changes affect newly generated expeditions. Existing structures do not acquire
+a shaft retroactively. The focused access workflow runs three representative
+regions separately from the full worldgen workflow; neither scope replaces the
+other. The access fix must pass the server regression before being called verified.

@@ -60,7 +60,8 @@ final class ExpeditionAccessTests {
             &&(level.getBlockState(pos.below()).isSolid()||climbable(level,pos)||climbable(level,pos.below()));
     }
     private static boolean climbable(ServerLevel level,BlockPos pos){
-        return level.getBlockState(pos).is(BlockTags.CLIMBABLE)||level.getFluidState(pos).is(FluidTags.WATER);
+        var state=level.getBlockState(pos);
+        return (state.is(BlockTags.CLIMBABLE)&&state.canSurvive(level,pos))||level.getFluidState(pos).is(FluidTags.WATER);
     }
     private static boolean clear(ServerLevel level,BlockPos pos){
         var state=level.getBlockState(pos);

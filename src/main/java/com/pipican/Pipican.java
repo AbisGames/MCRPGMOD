@@ -48,6 +48,7 @@ public final class Pipican {
         RegionalDensityCodecs.register(modBus);
         CapitalChunkLoader.register(modBus);
         ExpeditionFoundationProcessor.register(modBus);
+        com.pipican.worldgen.ExpeditionAccessProcessor.register(modBus);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);

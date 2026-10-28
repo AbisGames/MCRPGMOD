@@ -10,6 +10,9 @@
           "processors": [
             {
               "processor_type": "pipican:expedition_foundation"
+            },
+            {
+              "processor_type": "pipican:expedition_access"
             }
           ]
         },

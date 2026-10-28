@@ -60,5 +60,10 @@ for path in native_pools:
     for element in pool["elements"]:
         processors=element["element"]["processors"]["processors"]
         assert any(p.get("processor_type")=="pipican:expedition_foundation" for p in processors),f"Missing native settlement foundation: {path}"
+for path in (DATA/"worldgen/template_pool/regional").glob("*/*.json"):
+    if path.stem not in ("mine","dungeon"):continue
+    for element in json.loads(path.read_text())["elements"]:
+        processors=element["element"]["processors"]["processors"]
+        assert any(p.get("processor_type")=="pipican:expedition_access" for p in processors),f"Missing expedition access processor: {path}"
 print("PASS: 27 biome-specific mines have their own ore, matching loot and renewal structure tags")
 print(f"PASS: 54 expedition pools and {len(native_pools)} regional settlement pools have native foundations")
