@@ -20,13 +20,14 @@ For a focused regression while debugging:
 .\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=expeditions -PworldgenTarget=heartlands
 ```
 
-CI runs focused regional mine and dungeon regressions first, followed by the full matrix in
+CI runs focused regional settlement regressions first, followed by the full matrix in
 separate Java processes per integration suite, retaining each suite's logs. A
 focused pass cannot make the workflow green without the full integration run.
 
 The GameTest run has a 4 GB maximum heap. CI runs the three seeds as independent
 jobs and retains logs and build reports even when a test fails. The generated
-structure workflow also rebuilds the authored assets before running the tests.
+structure workflow also rebuilds the authored assets before running all three
+seeds. Publishing generated assets waits for every seed job to pass.
 
 ## Actual world generation
 
@@ -52,6 +53,8 @@ The integration suites assert:
   search from the keep approach to the 25 district entrances.
 - The complete, initially unlit Nether portal in Morvath's central keep.
 - Actual Blackspire and underground Umbral City placement.
+- All other 48 authored sites across the three seeds, including actual storage
+  placement, foundations and completion/block persistence after disk reload.
 - Player placement provenance and pending ore renewal across disk save/reload,
   including a previously loaded, then unloaded queued chunk.
 
@@ -78,6 +81,18 @@ decorative storage chests are excluded from the reward count. Foundation
 samples use actual piece bounds, excluding the terrain-adaptation padding
 added by StructureStart to its overall bounding box.
 
+Native expedition pools use `ExpeditionFoundationProcessor` to extend solid
+bottom-floor blocks through air and fluid down to existing support. Its writes
+stay within the chunk decoration box. It stops at existing non-replaceable
+blocks and block entities. Noise adaptation alone did not support every column
+under these large templates on uneven terrain and ocean floors.
+
+The `villages` suite covers one native regional settlement per region (27 in
+total), preferring a village and falling back to another regional settlement
+where no village is authored. The five exotic village types are included.
+These fixtures inspect real placed furniture and foundations. They are
+representative coverage, not exhaustive placement of every subbiome variant.
+
 **These fixtures deliberately force the selected valid start for coverage.**
 They do not measure natural weighted structure-set frequency or prove that
 every naturally selected placement has an accessible entrance. Distribution,
@@ -90,6 +105,13 @@ placements, multi-block placements, piston movement, fluid sources and ordinary 
 per-dimension saved data. Natural mining nodes remain eligible for renewal;
 player-placed ore does not. Protected player positions deliberately defer
 authored placement instead of being overwritten.
+
+Authored terrain grading separates a maximum 24-block natural cut from a
+12-block foundation fill. The complete grading volume is checked before any
+block changes, including headroom above short road pieces. Player provenance,
+inventories and non-natural obstructions still defer placement. Grading keeps
+the already-saved city elevation, so partially assembled cities stay aligned;
+an invalid/empty template restores the cleared natural blocks on failure.
 
 Old saves do not contain historical provenance for natural-looking blocks
 placed before this tracking existed. Piston provenance is checked using the

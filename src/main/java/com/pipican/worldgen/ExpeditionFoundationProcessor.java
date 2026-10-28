@@ -35,14 +35,16 @@ public final class ExpeditionFoundationProcessor extends StructureProcessor {
         var bounds=settings.getBoundingBox();
         var result=new ArrayList<>(processed);
         for(var block:processed){
-            if(block.pos().getY()!=floor||!block.state().isSolid()
+            if(block.pos().getY()!=floor||!block.state().isSolid()||block.state().hasBlockEntity()
                     ||(bounds!=null&&!bounds.isInside(block.pos())))continue;
             for(int y=floor-1;y>=level.getMinY();y--){
                 var pos=new BlockPos(block.pos().getX(),y,block.pos().getZ());
                 if(bounds!=null&&!bounds.isInside(pos))break;
                 var current=level.getBlockState(pos);
-                if(current.hasBlockEntity()||(!current.isAir()&&current.getFluidState().isEmpty()
-                        &&!current.canBeReplaced()))break;
+                boolean fillable=current.isAir()||current.canBeReplaced()
+                    ||current.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock
+                    ||current.is(net.minecraft.world.level.block.Blocks.BUBBLE_COLUMN);
+                if(current.hasBlockEntity()||!fillable)break;
                 result.add(new StructureTemplate.StructureBlockInfo(pos,block.state(),null));
             }
         }

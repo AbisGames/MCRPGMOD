@@ -33,6 +33,8 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class CapitalPlacementEvents {
     private static final int BUILD_TICK_INTERVAL=40;
+    private static final int MAX_NATURAL_CUT=24;
+    private static final int MAX_FOUNDATION_FILL=12;
     private static final long PLAYER_TRIGGER_RADIUS_SQUARED=150L*150L;
     private static final List<LandmarkCatalog.Landmark> LANDMARKS =
         new LandmarkCatalog().all();
@@ -139,18 +141,28 @@ public final class CapitalPlacementEvents {
         BlockPos origin=new BlockPos(ox,foundationY,oz);
         StructurePlaceSettings options=new StructurePlaceSettings().setIgnoreEntities(true);
         BoundingBox bounds=piece.getBoundingBox(options,origin);
+        // Low road templates also need headroom when grading a natural hill.
+        // Preflight the entire volume that may be cleared, including player
+        // edits above a short connector's own four-block template bounds.
+        BoundingBox clearance=new BoundingBox(bounds.minX(),bounds.minY(),bounds.minZ(),
+            bounds.maxX(),Math.max(bounds.maxY(),foundationY+MAX_NATURAL_CUT),bounds.maxZ());
         // A city's outer districts extend beyond the player's loaded view.
         // Waiting for those chunks forever also blocks all later districts.
         // Generate only the current piece; protection is checked before writing.
         for(int cx=Math.floorDiv(bounds.minX(),16);cx<=Math.floorDiv(bounds.maxX(),16);cx++)
             for(int cz=Math.floorDiv(bounds.minZ(),16);cz<=Math.floorDiv(bounds.maxZ(),16);cz++)
                 level.getChunk(cx,cz);
-        if(!safeFootprint(level,bounds,foundationY)) {
+        var graded=inspectFootprint(level,clearance,foundationY);
+        if(graded==null) {
             Pipican.LOGGER.warn("Unsafe terrain or obstruction at tile {} of {}; placement deferred",index,city.id());
             return false;
         }
         if(!safeFoundation(level,bounds,foundationY))return false;
+        for(var block:graded)level.setBlock(block.position(),Blocks.AIR.defaultBlockState(),2);
         if(!piece.placeInWorld(level,origin,origin,options,level.getRandom(),2)){
+            // Vanilla returns false before writing an empty/invalid template.
+            // Restore the natural terrain if such a datapack template is used.
+            for(var block:graded)level.setBlock(block.position(),block.state(),2);
             Pipican.LOGGER.warn("Failed to place tile {} of {}",index,city.id());
             return false;
         }
@@ -158,7 +170,7 @@ public final class CapitalPlacementEvents {
         BlockState support=palette==null?Blocks.STONE.defaultBlockState():palette.strata().get().defaultBlockState();
         for(int x=bounds.minX();x<=bounds.maxX();x++)
             for(int z=bounds.minZ();z<=bounds.maxZ();z++)
-                for(int y=foundationY-1;y>=foundationY-12;y--){
+                for(int y=foundationY-1;y>=foundationY-MAX_FOUNDATION_FILL;y--){
                     var p=new BlockPos(x,y,z);
                     if(level.getBlockState(p).isSolid())break;
                     level.setBlock(p,support,2);
@@ -175,33 +187,39 @@ public final class CapitalPlacementEvents {
             Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;
     }
-    // Full voxel check; do not mutate the world before a placement succeeds.
+    // Full voxel preflight; collect the grading plan without changing blocks.
     // Foundation volume is checked separately before either phase writes.
-    private static boolean safeFootprint(ServerLevel level,BoundingBox box,int foundationY) {
-        if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return false;
+    private static List<TerrainBlock> inspectFootprint(ServerLevel level,BoundingBox box,int foundationY) {
+        if(box.minY()<level.getMinY() || box.maxY()>=level.getMaxY())return null;
         var protection=PlayerWorldgenProtection.get(level);
         for(int x=box.minX();x<=box.maxX();x+=8)for(int z=box.minZ();z<=box.maxZ();z+=8){
-            if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return false;
+            if(!level.hasChunkAt(new BlockPos(x,foundationY,z)))return null;
             int top=terrainSurface(level,x,z);
-            if(top>foundationY+12||top<foundationY-12)top=rawSurface(level,x,z);
-            if(top>foundationY+12 || top<foundationY-12){
+            if(top>foundationY+MAX_NATURAL_CUT||top<foundationY-MAX_FOUNDATION_FILL)top=rawSurface(level,x,z);
+            if(top>foundationY+MAX_NATURAL_CUT || top<foundationY-MAX_FOUNDATION_FILL){
                 Pipican.LOGGER.warn("Capital terrain mismatch at {},{}: surface {}, foundation {}",x,z,top,foundationY);
-                return false;
+                return null;
             }
         }
+        var removed=new ArrayList<TerrainBlock>();
         for(int x=box.minX();x<=box.maxX();x++)
             for(int z=box.minZ();z<=box.maxZ();z++)
                 for(int y=box.minY();y<=box.maxY();y++) {
                     BlockPos position=new BlockPos(x,y,z);
-                    if(protection.contains(position))return false;
+                    if(protection.contains(position))return null;
                     BlockState state=level.getBlockState(position);
                     if(state.hasBlockEntity() || (!state.isAir() && !isNatural(state))){
                         Pipican.LOGGER.warn("Capital placement obstructed at {} by {}",position,state);
-                        return false;
+                        return null;
                     }
+                    if(y>foundationY&&!state.isAir())removed.add(new TerrainBlock(position,state));
                 }
-        return true;
+        return removed;
     }
+
+    // The preflight collects this plan without changing the world. Bounded
+    // natural excavation grades courtyards and roads to the saved elevation.
+    private record TerrainBlock(BlockPos position,BlockState state){}
 
     static int terrainSurface(ServerLevel level,int x,int z){
         int y=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
@@ -239,7 +257,7 @@ public final class CapitalPlacementEvents {
         for(int x=box.minX();x<=box.maxX();x++)
             for(int z=box.minZ();z<=box.maxZ();z++){
                 boolean supported=false;
-                for(int y=foundationY-1;y>=Math.max(level.getMinY(),foundationY-12);y--){
+                for(int y=foundationY-1;y>=Math.max(level.getMinY(),foundationY-MAX_FOUNDATION_FILL);y--){
                     var pos=new BlockPos(x,y,z);
                     var state=level.getBlockState(pos);
                     if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!isNatural(state))){
@@ -319,7 +337,7 @@ public final class CapitalPlacementEvents {
             || state.is(Blocks.BROWN_MUSHROOM_BLOCK) || state.is(Blocks.RED_MUSHROOM_BLOCK)
             || state.is(Blocks.MUSHROOM_STEM)
             || state.is(Blocks.SNOW_BLOCK) || state.is(Blocks.GRAVEL)
-            || state.is(Blocks.CLAY) || state.is(Blocks.WATER)
+            || state.is(Blocks.CLAY) || state.is(Blocks.WATER) || state.is(Blocks.BUBBLE_COLUMN)
             || state.is(Blocks.RAW_IRON_BLOCK) || state.is(Blocks.RAW_COPPER_BLOCK)
             || state.is(Blocks.MAGMA_BLOCK) || state.is(Blocks.ICE)
             || state.is(Blocks.PACKED_ICE) || state.is(Blocks.BLUE_ICE)

@@ -7,7 +7,11 @@
         "element_type": "minecraft:single_pool_element",
         "location": "pipican:authored/settlements/spice_coast/port_city_coast/hamlet",
         "processors": {
-          "processors": []
+          "processors": [
+            {
+              "processor_type": "pipican:expedition_foundation"
+            }
+          ]
         },
         "projection": "rigid"
       }

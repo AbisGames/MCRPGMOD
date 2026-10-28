@@ -7,7 +7,11 @@
         "element_type": "minecraft:single_pool_element",
         "location": "pipican:authored/settlements/whitecrown_icecap/frozen_crevasse_maze/outpost",
         "processors": {
-          "processors": []
+          "processors": [
+            {
+              "processor_type": "pipican:expedition_foundation"
+            }
+          ]
         },
         "projection": "rigid"
       }

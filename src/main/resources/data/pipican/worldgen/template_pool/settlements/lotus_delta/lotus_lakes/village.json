@@ -7,7 +7,11 @@
         "element_type": "minecraft:single_pool_element",
         "location": "pipican:authored/settlements/lotus_delta/lotus_lakes/village",
         "processors": {
-          "processors": []
+          "processors": [
+            {
+              "processor_type": "pipican:expedition_foundation"
+            }
+          ]
         },
         "projection": "rigid"
       }

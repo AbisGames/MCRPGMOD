@@ -34,6 +34,11 @@ registered=set(json.loads(TAGS.read_text())["values"])
 ore_ids=set(EXPECTED.values())
 pickaxe=set(json.loads((ROOT/"src/main/resources/data/minecraft/tags/block/mineable/pickaxe.json").read_text())["values"])
 for region,ore in EXPECTED.items():
+    for kind in ("mine","dungeon"):
+        pool=json.loads((DATA/f"worldgen/template_pool/regional/{region}/{kind}.json").read_text())
+        for element in pool["elements"]:
+            processors=element["element"]["processors"]["processors"]
+            assert any(p.get("processor_type")=="pipican:expedition_foundation" for p in processors),f"Missing native foundation: {region}/{kind}"
     assert f"pipican:{ore}_ore" in pickaxe,f"Ore cannot be mined with a pickaxe: {ore}"
     mine=MINES/region/"mine.nbt"
     assert mine.exists(),f"Missing NBT mine: {region}"
@@ -48,4 +53,12 @@ for region,ore in EXPECTED.items():
     entries=[e for p in loot["pools"] for e in p["entries"]]
     assert any(e.get("name")==f"pipican:{ore}" for e in entries),f"Wrong ore drop {ore}"
 assert len(registered)==len(EXPECTED),f"Expected exactly 27 renewal-enabled mines, found {len(registered)}"
+native_pools=list((DATA/"worldgen/template_pool/settlements").rglob("*.json"))
+native_pools.extend((DATA/"worldgen/template_pool/regional").glob("*/village.json"))
+for path in native_pools:
+    pool=json.loads(path.read_text())
+    for element in pool["elements"]:
+        processors=element["element"]["processors"]["processors"]
+        assert any(p.get("processor_type")=="pipican:expedition_foundation" for p in processors),f"Missing native settlement foundation: {path}"
 print("PASS: 27 biome-specific mines have their own ore, matching loot and renewal structure tags")
+print(f"PASS: 54 expedition pools and {len(native_pools)} regional settlement pools have native foundations")

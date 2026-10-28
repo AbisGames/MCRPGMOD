@@ -7,7 +7,11 @@
         "element_type": "minecraft:single_pool_element",
         "location": "pipican:authored/settlements/khagan_steppe/rolling_steppe_hills/village",
         "processors": {
-          "processors": []
+          "processors": [
+            {
+              "processor_type": "pipican:expedition_foundation"
+            }
+          ]
         },
         "projection": "rigid"
       }

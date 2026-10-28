@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
  * not claim to measure the natural structure-set frequency.
  */
 final class RegionalExpeditionTests {
-    static void verify(GameTestHelper helper,ServerLevel initial,long seed,
+    static void verify(GameTestHelper helper,ServerLevel initial,long seed,boolean villages,
             Supplier<ServerLevel> reopen,Consumer<ResourceKey<Level>> close){
         ServerLevel level=initial;
         var failures=new ArrayList<String>();
@@ -31,8 +31,8 @@ final class RegionalExpeditionTests {
         for(int oreIndex=target.isEmpty()?shard:0;oreIndex<RegionalOreCatalog.ORES.size();oreIndex+=target.isEmpty()?3:1){
         var ore=RegionalOreCatalog.ORES.get(oreIndex);
         if(!target.isEmpty()&&!ore.region().equals(target))continue;
-        for(String kind:List.of("mine","dungeon")){
-            String id="regional/"+ore.region()+"/"+kind;
+        for(String kind:villages?List.of("village"):List.of("mine","dungeon")){
+            String id=villages?settlementId(ore.region()):"regional/"+ore.region()+"/"+kind;
             String diagnostic="dimension="+level.dimension().identifier();
             try{
                 var selected=level.registryAccess().lookupOrThrow(Registries.STRUCTURE)
@@ -82,7 +82,7 @@ final class RegionalExpeditionTests {
                             "unsupported native expedition "+id+" at "+support+" actual="+level.getBlockState(support));
                     }
                 BlockPos node=null;
-                int spawners=0,chests=0;
+                int spawners=0,chests=0,furniture=0;
                 var regionalBlocks=new HashMap<net.minecraft.world.level.block.Block,String>();
                 RegionalOreRegistries.NODES.forEach((name,block)->regionalBlocks.put(block.get(),name));
                 for(int x=box.minX();x<=box.maxX();x++)for(int z=box.minZ();z<=box.maxZ();z++)
@@ -95,6 +95,7 @@ final class RegionalExpeditionTests {
                             if(node==null)node=pos;
                         }
                         if(state.is(net.minecraft.world.level.block.Blocks.TRIAL_SPAWNER))spawners++;
+                        if(state.is(net.minecraft.tags.BlockTags.BEDS)||state.is(net.minecraft.world.level.block.Blocks.CHEST))furniture++;
                         if(state.is(net.minecraft.world.level.block.Blocks.CHEST)
                                 &&level.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity chest
                                 &&chest.getLootTable()!=null
@@ -124,10 +125,10 @@ final class RegionalExpeditionTests {
                     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
                         new net.neoforged.neoforge.event.level.block.BreakBlockEvent(level,node,level.getBlockState(node),player));
                     helper.assertTrue(!data.contains(node),"player-placed ore exploited a real native mine: "+id);
-                }else{
+                }else if(kind.equals("dungeon")){
                     helper.assertTrue(spawners==1&&chests==3,"native dungeon blocks missing: "+id+
                         " spawners="+spawners+" chests="+chests);
-                }
+                }else helper.assertTrue(furniture>0,"native regional settlement has no placed furniture: "+id);
                 Pipican.LOGGER.info("Verified native chunk decoration seed {} structure {} bounds {}",seed,id,box);
             }catch(RuntimeException error){
                 failures.add(id+" "+diagnostic+": "+error.getMessage());
@@ -140,5 +141,17 @@ final class RegionalExpeditionTests {
         }
         }
         helper.assertTrue(failures.isEmpty(),"seed="+seed+" expedition failures: "+failures);
+    }
+
+    private static String settlementId(String region){
+        if(WorldLayout.EXTRA_BIOMES.stream().anyMatch(e->e.id().equals(region)))return "regional/"+region+"/village";
+        var candidates=new ArrayList<com.google.gson.JsonObject>();
+        for(var entry:WorldgenJson.read("structure_pools_manifest.json").getAsJsonArray("pools")){
+            var row=entry.getAsJsonObject();
+            if(row.get("region").getAsString().equals(region)&&row.get("used_by").getAsString().equals("procedural"))candidates.add(row);
+        }
+        var selected=candidates.stream().filter(e->e.get("tier").getAsString().equals("village"))
+            .findFirst().orElseGet(()->candidates.stream().findFirst().orElseThrow());
+        return "authored/"+selected.get("pool").getAsString();
     }
 }

@@ -20,7 +20,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public final class WorldgenIntegrationTests {
     private static long generationSeed;
     private static String suite;
-    private static final List<String> SUITES=List.of("sky","terrain","capital","protection","unique","expeditions");
+    private static final List<String> SUITES=List.of("sky","terrain","capital","settlements","villages","protection","unique","expeditions");
     private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
         STORAGE=new java.util.HashMap<>();
     private static final java.util.Map<ResourceKey<Level>,java.nio.file.Path> WORLD_ROOTS=new java.util.HashMap<>();
@@ -172,7 +172,9 @@ public final class WorldgenIntegrationTests {
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
         helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
         helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
-        if(suite.equals("expeditions"))RegionalExpeditionTests.verify(helper,level,generationSeed,
+        if(suite.equals("settlements"))AuthoredSettlementTests.verify(helper,level,generationSeed,
+            ()->createLevel(helper,generationSeed),key->saveAndClose(helper,key));
+        if(suite.equals("expeditions")||suite.equals("villages"))RegionalExpeditionTests.verify(helper,level,generationSeed,suite.equals("villages"),
             ()->createLevel(helper,generationSeed),key->saveAndClose(helper,key));
         if(suite.equals("unique")){
             for(var site:SpecialLandmarkPlacementEvents.sites()){
@@ -242,6 +244,22 @@ public final class WorldgenIntegrationTests {
             helper.assertTrue(level.getChunkSource().getChunkNow(pending.x(),pending.z())==null,
                 "renewal synchronously completed pending chunk generation");
             level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,pending,0);
+            var city=new LandmarkCatalog().all().stream().filter(s->s.tier().equals("capital")).findFirst().orElseThrow();
+            int ground=level.getChunkSource().getGenerator().getBaseHeight(city.x(),city.z(),
+                net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,level.getChunkSource().randomState());
+            var cityBuild=new BlockPos(city.x()+1,ground+4,city.z()+1);
+            level.getChunk(cityBuild.getX()>>4,cityBuild.getZ()>>4);
+            var citySnapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,cityBuild);
+            level.setBlock(cityBuild,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
+                new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(citySnapshot,
+                    net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),helper.makeMockServerPlayerInLevel()));
+            var cityProgress=CapitalPlacementSavedData.get(level);
+            helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,cityProgress),
+                "deferred capital overwrote a player-placed natural stone block");
+            helper.assertTrue(cityProgress.progress(city.id())==null,"obstructed capital advanced its progress");
+            helper.assertTrue(level.getBlockState(cityBuild).is(net.minecraft.world.level.block.Blocks.STONE),
+                "player build was changed by rejected capital placement");
         }
         helper.assertTrue(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource,
             "integration test must use the real RPG generator");
