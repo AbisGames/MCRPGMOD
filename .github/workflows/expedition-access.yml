@@ -1,6 +1,11 @@
 name: Focused expedition access
 on:
   workflow_dispatch:
+    inputs:
+      all_regions:
+        description: Verify all 54 mine and dungeon types across three seed shards
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -34,17 +39,17 @@ jobs:
       - name: Compile and package
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: Surface underground and underwater entrance regressions
-        timeout-minutes: 20
+        timeout-minutes: 45
         uses: ./.github/actions/worldgen-suite
         with:
           suite: expeditions
           seed: ${{ matrix.seed }}
-          target: ${{ matrix.region }}
+          target: ${{ !inputs.all_regions && matrix.region || '' }}
       - name: Preserve diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: expedition-access-${{ github.sha }}-${{ matrix.region }}
+          name: expedition-access-${{ inputs.all_regions && 'all' || 'focused' }}-${{ github.sha }}-seed-${{ matrix.seed }}
           path: |
             run/logs/
             build/worldgen-logs/
