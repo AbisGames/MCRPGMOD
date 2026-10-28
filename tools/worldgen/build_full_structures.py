@@ -1026,6 +1026,14 @@ def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
 def generate():
     OUT.mkdir(parents=True,exist_ok=True)
     SPAWN_BY_REGION.clear()
+    # A repeat build starts with the same pre-integration catalogue as a
+    # clean CI checkout. The special builder installs these four files later.
+    for name in ('aetheris_sky_citadel','pillager_blackspire','umbral_ancient_city','morvath_portal_chamber'):
+        previous=BASE/'structure/special'/(name+'.nbt')
+        if previous.is_file():
+            if not previous.resolve().is_relative_to(OUT.resolve()):
+                raise ValueError('Special output escaped the generated asset directory')
+            previous.unlink()
     # Purge former per-template spread sets: all procedural structures in
     # a region must share one native random-spread grid to prevent collisions.
     set_dir=BASE/'worldgen/structure_set'
@@ -1151,11 +1159,11 @@ def generate():
             'counts':dict(count),'block_placements':sum(x['blocks'] for x in catalog),
             'limitations':[
               'Buildings are procedural furnished shells and districts, not hand-sculpted bespoke architecture.',
-              'Capital assembly functions are manual until a region-coordinate placement service exists.',
-              'Dungeons contain vanilla chest blocks but boss logic and loot attribution are not implemented.',
-              'Mine nodes need cooldown/restoration behavior wired into server SavedData.',
-              'Some jigsaw pools are manifest only; their direct structure entries may not be automatically placed.',
-              'A Minecraft 26.1.2 singleplayer load test has not been run on these generated outputs.']}
+              'Asset generation alone does not verify near-player assembly or native chunk placement.',
+              'Dungeons use vanilla trial spawners and loot tables; bespoke NPC/boss implementation is outside this generator.',
+              'Ore renewal and player-build protection are server systems and require separate runtime tests.',
+              'Controlled native-start fixtures do not measure natural weighted structure frequency.',
+              'Visual quality, complete interior navigation and client FPS require Minecraft client inspection.']}
     (OUT/'BUILD_REPORT.json').write_text(json.dumps(report,indent=2))
     print(json.dumps(report,indent=2))
 

@@ -29,6 +29,11 @@ jobs and retains logs and build reports even when a test fails. The generated
 structure workflow also rebuilds the authored assets before running all three
 seeds. Publishing generated assets waits for every seed job to pass.
 
+The asset sequence is full generation, full-catalogue validation, then special
+landmark integration. Repeating full generation clears only the four known
+special NBT outputs from the generated directory before recreating the base
+catalogue; it never removes templates from source resources or Minecraft saves.
+
 ## Actual world generation
 
 `WorldgenIntegrationTests` creates real RPG `ServerLevel` instances using the

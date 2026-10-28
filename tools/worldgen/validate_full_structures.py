@@ -129,7 +129,7 @@ def main():
     assert len(POOLS)==331 and len(SITES)==70 and len(REGIONS)==22
     assert len(catalog)==len(all_nbt), (len(catalog),len(all_nbt))
     expected={r['pool'] for r in POOLS}
-    have={str(p.relative_to(BASE/'worldgen/template_pool'))[:-5] for p in (BASE/'worldgen/template_pool').rglob('*.json')}
+    have={p.relative_to(BASE/'worldgen/template_pool').as_posix()[:-5] for p in (BASE/'worldgen/template_pool').rglob('*.json')}
     assert expected<=have, list(expected-have)[:10]
     total=0
     for entry in catalog:
