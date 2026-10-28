@@ -35,6 +35,15 @@ jobs:
         run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
       - name: Boot singleplayer-capable GameTest server and validate registry load
         run: ./gradlew runGameTestServer --no-daemon
+      - name: Preserve generated-asset test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: structure-asset-diagnostics-${{ github.sha }}
+          path: |
+            run/logs/
+            build/reports/
+          if-no-files-found: warn
       - name: Publish generated structure pack
         uses: actions/upload-artifact@v4
         with:

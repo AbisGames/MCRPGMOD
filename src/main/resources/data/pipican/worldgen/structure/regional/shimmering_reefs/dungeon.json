@@ -3,12 +3,13 @@
   "biomes": "pipican:shimmering_reefs",
   "step": "underground_structures",
   "spawn_overrides": {},
-  "terrain_adaptation": "none",
+  "terrain_adaptation": "beard_thin",
   "size": 1,
   "start_height": {
-    "absolute": 43
+    "absolute": 0
   },
   "max_distance_from_center": 96,
   "start_pool": "pipican:regional/shimmering_reefs/dungeon",
-  "use_expansion_hack": false
+  "use_expansion_hack": false,
+  "project_start_to_heightmap": "OCEAN_FLOOR_WG"
 }

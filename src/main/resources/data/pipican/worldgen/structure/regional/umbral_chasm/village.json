@@ -3,7 +3,7 @@
   "biomes": "pipican:umbral_chasm",
   "step": "underground_structures",
   "spawn_overrides": {},
-  "terrain_adaptation": "none",
+  "terrain_adaptation": "beard_thin",
   "size": 1,
   "start_height": {
     "absolute": -20

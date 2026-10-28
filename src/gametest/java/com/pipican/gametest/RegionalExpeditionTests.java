@@ -29,6 +29,7 @@ final class RegionalExpeditionTests {
         var ore=RegionalOreCatalog.ORES.get(oreIndex);
         for(String kind:List.of("mine","dungeon")){
             String id="regional/"+ore.region()+"/"+kind;
+            String diagnostic="dimension="+level.dimension().identifier();
             try{
                 var selected=level.registryAccess().lookupOrThrow(Registries.STRUCTURE)
                     .get(ResourceKey.create(Registries.STRUCTURE,Pipican.id(id))).orElseThrow();
@@ -42,7 +43,9 @@ final class RegionalExpeditionTests {
                 for(int x=region.minX()+512;x<region.maxX()-512;x+=512)
                     for(int z=region.minZ()+512;z<region.maxZ()-512;z+=512){
                         if(WorldStructureReservations.intersects(x-112,z-112,x+112,z+112,100))continue;
-                        int y=definition.has("project_start_to_heightmap")?100:fixedY;
+                        int y=ore.region().equals("aetheris_expanse")?319:
+                            ore.region().equals("shimmering_reefs")?43:
+                            definition.has("project_start_to_heightmap")?100:fixedY;
                         var biome=level.getChunkSource().getGenerator().getBiomeSource().getNoiseBiome(
                             x>>2,y>>2,z>>2,level.getChunkSource().randomState().sampler());
                         if(!selected.value().biomes().contains(biome))continue;
@@ -63,8 +66,15 @@ final class RegionalExpeditionTests {
                     }
                 helper.assertTrue(start!=null,"seed="+seed+" no valid themed native start for "+id);
                 var box=start.getBoundingBox();
+                diagnostic+=" bounds="+box;
                 for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
                     for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++)level.getChunk(cx,cz);
+                for(int x:new int[]{box.minX()+4,(box.minX()+box.maxX())/2,box.maxX()-4})
+                    for(int z:new int[]{box.minZ()+4,(box.minZ()+box.maxZ())/2,box.maxZ()-4}){
+                        var support=new BlockPos(x,box.minY()-1,z);
+                        helper.assertTrue(level.getBlockState(support).isSolid(),
+                            "unsupported native expedition "+id+" at "+support+" actual="+level.getBlockState(support));
+                    }
                 BlockPos node=null;
                 int spawners=0,chests=0;
                 var regionalBlocks=new HashMap<net.minecraft.world.level.block.Block,String>();
@@ -107,8 +117,8 @@ final class RegionalExpeditionTests {
                 }
                 Pipican.LOGGER.info("Verified native chunk decoration seed {} structure {} bounds {}",seed,id,box);
             }catch(RuntimeException error){
-                failures.add(id+": "+error.getMessage());
-                Pipican.LOGGER.error("Native expedition integration failure seed {} structure {}",seed,id,error);
+                failures.add(id+" "+diagnostic+": "+error.getMessage());
+                Pipican.LOGGER.error("Native expedition integration failure seed {} structure {} {}",seed,id,diagnostic,error);
             }finally{
                 close.accept(level.dimension());
                 level.getServer().getStructureManager().remove(Pipican.id(id));

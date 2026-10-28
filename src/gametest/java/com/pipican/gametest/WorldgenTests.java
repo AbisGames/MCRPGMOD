@@ -234,13 +234,11 @@ public final class WorldgenTests {
             }
         }
         helper.assertTrue(structures==54,"expected 54 regional structures");
-        // Sky, underground, and reef jigsaws must not inherit the
-        // surface heightmap; they have exact world-coordinate elevations.
+        // Cave sites keep their underground elevation; aerial and reef sites
+        // instead require a real island surface or ocean-floor foundation.
         for(var spec:List.of(
-                Map.entry("aetheris_expanse",319),
                 Map.entry("umbral_chasm",-20),
-                Map.entry("verdant_depths",-12),
-                Map.entry("shimmering_reefs",43))){
+                Map.entry("verdant_depths",-12))){
             for(String kind:List.of("castle","dungeon","mine","village")){
                 var def=WorldgenJson.read("structure/regional/"+spec.getKey()+"/"+kind+".json");
                 helper.assertTrue(!def.has("project_start_to_heightmap"),
@@ -250,6 +248,15 @@ public final class WorldgenTests {
                     "incorrect fixed-Y exotic structure "+spec.getKey()+"/"+kind);
             }
         }
+        for(var spec:List.of(Map.entry("aetheris_expanse","WORLD_SURFACE_WG"),
+                Map.entry("shimmering_reefs","OCEAN_FLOOR_WG")))
+            for(String kind:List.of("castle","dungeon","mine","village")){
+                var def=WorldgenJson.read("structure/regional/"+spec.getKey()+"/"+kind+".json");
+                helper.assertTrue(def.get("project_start_to_heightmap").getAsString().equals(spec.getValue()),
+                    "exotic expedition must anchor to real terrain: "+spec.getKey()+"/"+kind);
+                helper.assertTrue(def.getAsJsonObject("start_height").get("absolute").getAsInt()==0,
+                    "terrain projection added an arbitrary vertical offset");
+            }
 
         for(var ore:RegionalOreCatalog.ORES){
             var key=ResourceKey.create(Registries.STRUCTURE_SET,
