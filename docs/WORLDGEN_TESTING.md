@@ -17,6 +17,7 @@ For a focused regression while debugging:
 
 ```powershell
 .\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=capital -PworldgenTarget=aldermere
+.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=expeditions -PworldgenTarget=heartlands
 ```
 
 CI runs focused regional mine and dungeon regressions first, followed by the full matrix in
@@ -68,10 +69,14 @@ a protochunk before references and decoration, then generates real full
 chunks. This exercises native structure pieces, terrain generation and actual
 placed blocks, rather than merely decoding NBT or calculating coordinates.
 
-Mine checks inspect regional ore blocks, reject foreign regional ores and post
-real server break/place events. They test the configured cooldown, renewal and
+Mine checks inspect regional ore blocks, reject foreign regional ores, post
+server break events and place the actual ore BlockItem through item-use logic.
+They test the configured cooldown, renewal and
 the player-placed-ore exploit inside a registered generated mine. Dungeon
-checks inspect the placed trial spawner and three chests.
+checks inspect the placed trial spawner and three regional reward loot tables;
+decorative storage chests are excluded from the reward count. Foundation
+samples use actual piece bounds, excluding the terrain-adaptation padding
+added by StructureStart to its overall bounding box.
 
 **These fixtures deliberately force the selected valid start for coverage.**
 They do not measure natural weighted structure-set frequency or prove that

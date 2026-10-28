@@ -69,7 +69,9 @@ final class RegionalExpeditionTests {
                         break search;
                     }
                 helper.assertTrue(start!=null,"seed="+seed+" no valid themed native start for "+id);
-                var box=start.getBoundingBox();
+                // StructureStart adds terrain-adaptation padding (12 blocks)
+                // around its pieces. That mask is not the building's floor.
+                var box=net.minecraft.world.level.levelgen.structure.StructurePiece.createBoundingBox(start.getPieces().stream());
                 diagnostic+=" bounds="+box;
                 for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
                     for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++)level.getChunk(cx,cz);
@@ -93,7 +95,10 @@ final class RegionalExpeditionTests {
                             if(node==null)node=pos;
                         }
                         if(state.is(net.minecraft.world.level.block.Blocks.TRIAL_SPAWNER))spawners++;
-                        if(state.is(net.minecraft.world.level.block.Blocks.CHEST))chests++;
+                        if(state.is(net.minecraft.world.level.block.Blocks.CHEST)
+                                &&level.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity chest
+                                &&chest.getLootTable()!=null
+                                &&chest.getLootTable().identifier().equals(Pipican.id("chests/"+ore.region()+"_dungeon")))chests++;
                     }
                 if(kind.equals("mine")){
                     helper.assertTrue(node!=null,"native mine decoration produced no ore: "+id);

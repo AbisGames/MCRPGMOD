@@ -44,6 +44,7 @@ jobs:
       - name: Compile and package NeoForge mod
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: Verify packaged structure templates
+        id: packaged
         run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
       - name: Focused regional mine and dungeon regression
         id: focused
@@ -54,42 +55,42 @@ jobs:
           seed: ${{ matrix.seed }}
           target: ${{ matrix.region }}
       - name: Generated sky islands and End portal
-        if: ${{ !cancelled() && steps.focused.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
           suite: sky
           seed: ${{ matrix.seed }}
       - name: Player protection and ore disk reload
-        if: ${{ !cancelled() && steps.focused.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 10
         uses: ./.github/actions/worldgen-suite
         with:
           suite: protection
           seed: ${{ matrix.seed }}
       - name: Unique landmark placement
-        if: ${{ !cancelled() && steps.focused.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
           suite: unique
           seed: ${{ matrix.seed }}
       - name: All regional capital terrain
-        if: ${{ !cancelled() && steps.focused.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 15
         uses: ./.github/actions/worldgen-suite
         with:
           suite: terrain
           seed: ${{ matrix.seed }}
       - name: All regional mine and dungeon fixtures
-        if: ${{ !cancelled() && steps.focused.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 45
         uses: ./.github/actions/worldgen-suite
         with:
           suite: expeditions
           seed: ${{ matrix.seed }}
       - name: All capital assemblies and road connectivity
-        if: ${{ !cancelled() && steps.focused.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
         timeout-minutes: 60
         uses: ./.github/actions/worldgen-suite
         with:
