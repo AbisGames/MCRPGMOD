@@ -1,15 +1,21 @@
-name: Focused expedition access
+name: Native regional validation
+run-name: "${{ inputs.all_regions && 'All' || 'Focused' }} ${{ inputs.suite || 'expeditions' }} validation"
 on:
   workflow_dispatch:
     inputs:
+      suite:
+        description: Native structures to validate
+        type: choice
+        options: [expeditions, villages]
+        default: expeditions
       all_regions:
-        description: Verify all 54 mine and dungeon types across three seed shards
+        description: Verify every region across three seed shards
         type: boolean
         default: false
 permissions:
   contents: read
 concurrency:
-  group: pipican-expedition-access-${{ github.ref }}
+  group: pipican-expedition-access-${{ github.ref }}-${{ inputs.suite || 'expeditions' }}
   cancel-in-progress: true
 jobs:
   access:
@@ -42,18 +48,25 @@ jobs:
           cp tools/worldgen/output/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
       - name: Compile and package
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
-      - name: Surface underground and underwater entrance regressions
+      - name: Native surface underground and underwater regressions
         timeout-minutes: 45
         uses: ./.github/actions/worldgen-suite
         with:
-          suite: expeditions
+          suite: ${{ inputs.suite || 'expeditions' }}
           seed: ${{ matrix.seed }}
           target: ${{ !inputs.all_regions && matrix.region || '' }}
+      - name: Player provenance and ore disk reload regression
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: protection
+          seed: ${{ matrix.seed }}
       - name: Preserve diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: expedition-access-${{ inputs.all_regions && 'all' || 'focused' }}-${{ github.sha }}-seed-${{ matrix.seed }}
+          name: native-${{ inputs.suite || 'expeditions' }}-${{ inputs.all_regions && 'all' || 'focused' }}-${{ github.sha }}-seed-${{ matrix.seed }}
           path: |
             run/logs/
             build/worldgen-logs/
