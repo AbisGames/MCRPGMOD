@@ -26,8 +26,9 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
  * spawning all 22 gigantic cities on the first world tick.
  *
  * <p>This is a singleplayer-oriented integration fallback, NOT a native
- * chunk-generation structure feature. Placement can load neighbouring chunks
- * and the monumental terrain still needs an art-directed adaptation pass.
+ * chunk-generation structure feature. Expiring tickets prepare neighbouring
+ * chunks before a production tick writes one tile. Monumental terrain still
+ * needs an art-directed adaptation pass.
  */
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class CapitalPlacementEvents {
@@ -76,7 +77,12 @@ public final class CapitalPlacementEvents {
                     CapitalPlacementSavedData.Progress done=progress.progress(city.id());
                     int total=city.tier().equals("capital")?63:1;
                     if(done!=null&&done.nextTile()>=total)continue;
-                    if(buildOneTile(level,city,progress)) {
+                    var preparation=CapitalChunkLoader.prepare(level,city,progress);
+                    if(!preparation.ready())continue;
+                    boolean completed;
+                    try{completed=buildOneTile(level,city,progress);}
+                    finally{preparation.release(level);}
+                    if(completed) {
                         placed=true;
                         break;
                     }
@@ -160,6 +166,10 @@ public final class CapitalPlacementEvents {
         progress.advance(city.id(),index+1,foundationY);
         if(capital&&centreFirst&&index==0)
             progress.advance(orderMarker,1,foundationY);
+        // These authored pieces are placed directly and never referenced by
+        // native StructureStarts. Keeping every decoded city in the global
+        // template cache retains tens of millions of BlockInfo objects.
+        manager.remove(id);
         if((capital&&index==62)||(!capital&&index==0))
             Pipican.LOGGER.info("Completed RPG landmark {} ({} pieces)",city.id(),capital?63:1);
         return true;

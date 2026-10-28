@@ -100,7 +100,9 @@ competing={"minecraft:amethyst_geode","minecraft:monster_room","minecraft:monste
 reserved=list((DATA/"worldgen/biome/protected").glob("*.json"))
 reserved += [DATA/f"worldgen/biome/{site}_sanctuary.json" for site in ("umbral","redrock","aetheris")]
 for path in reserved:
-    features=json.loads(path.read_text())["features"]
+    reserved_biome=json.loads(path.read_text())
+    assert not reserved_biome["carvers"],f"Carvers undermine reserved foundations: {path}"
+    features=reserved_biome["features"]
     assert not competing.intersection(item for step in features for item in step),path
 
 print("PASS: 27 palettes; 135 custom block textures; 81 configured features;")

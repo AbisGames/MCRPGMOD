@@ -73,6 +73,7 @@ neoForge {
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             type = "gameTestServer"
+            jvmArgument '-Xmx4G'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
             systemProperty 'pipican.worldgenTestSeed', providers.gradleProperty('worldgenTestSeed').getOrElse('0')
         }

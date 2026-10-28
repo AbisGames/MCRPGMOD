@@ -164,12 +164,13 @@ public final class WorldgenIntegrationTests {
             long ready=level.getGameTime()+20;
             RenewableOreSavedData.get(level).record(node,"frostcrystal",ready);
             var unloaded=new BlockPos(23000,400,23000);
-            helper.assertTrue(!level.hasChunkAt(unloaded),"unload test position already loaded");
+            level.getChunk(unloaded.getX()>>4,unloaded.getZ()>>4);
             RenewableOreSavedData.get(level).record(unloaded,"glacierite",ready);
             var key=level.dimension();
             saveAndClose(helper,key);
             level=createLevel(helper,generationSeed);
             level.getChunk(built.getX()>>4,built.getZ()>>4);
+            helper.assertTrue(!level.hasChunkAt(unloaded),"distant queued node remained loaded after reopening the world");
             helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"player provenance lost after disk reload");
             helper.assertTrue(level.getBlockState(built).is(net.minecraft.world.level.block.Blocks.STONE),"player stone lost after disk reload");
             helper.assertTrue(RegionalMineEvents.restoreDue(level,ready-1,8)==0,"ore restored before cooldown");
@@ -280,8 +281,15 @@ public final class WorldgenIntegrationTests {
     private static void verifyCapital(GameTestHelper helper,ServerLevel level,LandmarkCatalog.Landmark city){
         var progress=CapitalPlacementSavedData.get(level);
         for(int i=0;i<63;i++){
-            helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
-                "seed="+generationSeed+" capital="+city.id()+" tile="+i+" placement deferred");
+            var preparation=CapitalChunkLoader.prepare(level,city,progress);
+            int before=progress.progress(city.id())==null?0:progress.progress(city.id()).nextTile();
+            helper.assertTrue(before==i,"chunk preparation advanced placement progress");
+            // Synchronously finish the fixture's chunks; production ticks wait
+            // for preparation.ready() and never block on generation.
+            try{
+                helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
+                    "seed="+generationSeed+" capital="+city.id()+" tile="+i+" placement deferred");
+            }finally{preparation.release(level);}
             if(i==10){
                 var key=level.dimension();
                 saveAndClose(helper,key);
@@ -318,5 +326,48 @@ public final class WorldgenIntegrationTests {
                         check(helper,level,pos,level.getBlockState(pos).isSolid(),"supported capital foundation "+city.id());
                     }
             }
+        verifyRoadConnectivity(helper,level,city,progress.progress(city.id()).foundationY(),layout);
+    }
+
+    private static boolean walkable(ServerLevel level,BlockPos feet){
+        var floor=feet.below();
+        return level.getBlockState(floor).isCollisionShapeFullBlock(level,floor)
+            &&level.getBlockState(feet).getCollisionShape(level,feet).isEmpty()
+            &&level.getBlockState(feet.above()).getCollisionShape(level,feet.above()).isEmpty();
+    }
+
+    private static void verifyRoadConnectivity(GameTestHelper helper,ServerLevel level,
+            LandmarkCatalog.Landmark city,int base,com.google.gson.JsonObject layout){
+        var targets=new java.util.HashSet<BlockPos>();
+        for(var element:layout.getAsJsonArray("relative_positions")){
+            var row=element.getAsJsonObject();
+            var size=row.getAsJsonArray("size");
+            int x=city.x()-46+row.get("x").getAsInt()+size.get(0).getAsInt()/2;
+            int z=city.z()-46+row.get("z").getAsInt()+2;
+            BlockPos target=new BlockPos(x,base+1,z);
+            helper.assertTrue(walkable(level,target),"blocked district entrance "+city.id()+" "+target);
+            targets.add(target);
+        }
+        var start=new BlockPos(city.x()+10,base+1,city.z()-44);
+        helper.assertTrue(walkable(level,start),"blocked central keep approach "+city.id());
+        var queue=new java.util.ArrayDeque<BlockPos>();
+        var visited=new it.unimi.dsi.fastutil.longs.LongOpenHashSet();
+        queue.add(start);visited.add(start.asLong());
+        while(!queue.isEmpty()&&!targets.isEmpty()){
+            var pos=queue.removeFirst();
+            targets.remove(pos);
+            for(var direction:List.of(net.minecraft.core.Direction.NORTH,net.minecraft.core.Direction.SOUTH,
+                    net.minecraft.core.Direction.EAST,net.minecraft.core.Direction.WEST)){
+                var adjacent=pos.relative(direction);
+                if(Math.abs(adjacent.getX()-city.x())>274||Math.abs(adjacent.getZ()-city.z())>274)continue;
+                for(int dy=1;dy>=-2;dy--){
+                    var next=adjacent.above(dy);
+                    if(next.getY()<base-2||next.getY()>base+3||!walkable(level,next))continue;
+                    if(visited.add(next.asLong()))queue.add(next);
+                    break;
+                }
+            }
+        }
+        helper.assertTrue(targets.isEmpty(),"disconnected capital district entrances "+city.id()+": "+targets);
     }
 }
