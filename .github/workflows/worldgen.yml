@@ -46,6 +46,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
+          cache: gradle
+          cache-dependency-path: |
+            **/*.gradle*
+            **/gradle-wrapper.properties
       - name: Validate source catalogs
         run: python3 tools/validate_worldgen.py && python3 tools/validate_biome_assets.py && python3 tools/worldgen/validate_biome_mines.py
       - name: Generate special landmark NBT models

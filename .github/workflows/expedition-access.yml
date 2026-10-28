@@ -30,6 +30,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
+          cache: gradle
+          cache-dependency-path: |
+            **/*.gradle*
+            **/gradle-wrapper.properties
       - name: Generate required special models
         run: |
           python3 tools/worldgen/build_special_landmarks.py
