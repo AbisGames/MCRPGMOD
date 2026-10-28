@@ -20,17 +20,18 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 /** Dedicated-server tests for the registered worldgen catalogs and renewable sites. */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class WorldgenTests {
-    private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
-        "worldgen_catalog", WorldgenTests::worldgenCatalog,
-        "capital_protection", WorldgenTests::capitalProtection,
-        "renewable_mine", WorldgenTests::renewableMine,
-        "structure_nbt_load", WorldgenTests::structureNbtLoad,
-        "registries_loaded", WorldgenTests::registriesLoaded,
-        "nature_features_loaded", WorldgenTests::natureFeaturesLoaded,
-        "ore_restoration", WorldgenTests::oreRestoration,
-        "sky_island_geometry", WorldgenTests::skyIslandGeometry,
-        "vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion,
-        "regional_ore_harvest", WorldgenTests::regionalOreHarvest
+    private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.ofEntries(
+        Map.entry("worldgen_catalog", WorldgenTests::worldgenCatalog),
+        Map.entry("capital_protection", WorldgenTests::capitalProtection),
+        Map.entry("renewable_mine", WorldgenTests::renewableMine),
+        Map.entry("structure_nbt_load", WorldgenTests::structureNbtLoad),
+        Map.entry("registries_loaded", WorldgenTests::registriesLoaded),
+        Map.entry("nature_features_loaded", WorldgenTests::natureFeaturesLoaded),
+        Map.entry("ore_restoration", WorldgenTests::oreRestoration),
+        Map.entry("sky_island_geometry", WorldgenTests::skyIslandGeometry),
+        Map.entry("vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion),
+        Map.entry("regional_ore_harvest", WorldgenTests::regionalOreHarvest),
+        Map.entry("expedition_access_safety", ExpeditionProcessorTests::verify)
     );
     private WorldgenTests(){}
 

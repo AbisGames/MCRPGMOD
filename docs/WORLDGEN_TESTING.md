@@ -206,3 +206,8 @@ Changes affect newly generated expeditions. Existing structures do not acquire
 a shaft retroactively. The focused access workflow runs three representative
 regions separately from the full worldgen workflow; neither scope replaces the
 other. The access fix must pass the server regression before being called verified.
+
+`expedition_access_safety` separately exercises the edit-plan preflight in an
+actual test level: protected air, inventories and artificial blocks must reject
+the local shaft plan without a world mutation. Appended edits must stay within
+the decoration box, and empty data-marker processing must remain empty.
