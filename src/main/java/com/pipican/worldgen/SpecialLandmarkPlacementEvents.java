@@ -69,7 +69,7 @@ public final class SpecialLandmarkPlacementEvents {
             Identifier.parse("pipican:"+site.template()));
         if(template.isEmpty())return false;
         int terrainY=site.elevation()==-1
-            ?level.getHeight(Heightmap.Types.WORLD_SURFACE,site.x(),site.z())
+            ?CapitalPlacementEvents.terrainSurface(level,site.x(),site.z())
             :0;
         int y=resolveY(site,terrainY);
         var size=template.get().getSize();
@@ -93,38 +93,18 @@ public final class SpecialLandmarkPlacementEvents {
                 if(!level.hasChunkAt(new BlockPos(cx*16,y,cz*16)))return false;
         var protection=PlayerWorldgenProtection.get(level);
         for(int x=box.minX();x<=box.maxX();x++)
-            for(int z=box.minZ();z<=box.maxZ();z++)
-                for(int yy=box.minY();yy<=box.maxY();yy++)
-                    if(protection.contains(new BlockPos(x,yy,z)))return false;
-        for(int x=box.minX();x<=box.maxX();x++)
             for(int z=box.minZ();z<=box.maxZ();z++){
-                if(site.elevation()>=0){
-                    for(int yy=box.minY();yy<=box.maxY();yy++){
-                        var p=new BlockPos(x,yy,z);
-                        var existing=level.getBlockState(p);
-                        if(existing.hasBlockEntity() || 
-                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing))){
-                            Pipican.LOGGER.warn("Special placement {} obstructed at {} by {}",site.id(),p,existing);
-                            return false;
-                        }
-                    }
-                } else if(site.elevation()==-1){
-                    int surface=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
+                if(site.elevation()==-1){
+                    int surface=CapitalPlacementEvents.terrainSurface(level,x,z);
                     if(Math.abs(surface-y)>8)return false;
-                    for(int yy=y;yy<=box.maxY();yy++){
-                        var existing=level.getBlockState(new BlockPos(x,yy,z));
-                        if(existing.hasBlockEntity() ||
-                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
-                            return false;
-                    }
-                } else {
-                    // Underground city: do not replace existing inventories.
-                    for(int yy=box.minY();yy<=box.maxY();yy++){
-                        var p=new BlockPos(x,yy,z);
-                        var existing=level.getBlockState(p);
-                        if(existing.hasBlockEntity() ||
-                           (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing)))
-                            return false;
+                }
+                for(int yy=box.minY();yy<=box.maxY();yy++){
+                    var p=new BlockPos(x,yy,z);
+                    var existing=level.getBlockState(p);
+                    if(protection.contains(p)||existing.hasBlockEntity() ||
+                       (!existing.isAir() && !CapitalPlacementEvents.isNatural(existing))){
+                        Pipican.LOGGER.warn("Special placement {} obstructed at {} by {}",site.id(),p,existing);
+                        return false;
                     }
                 }
             }

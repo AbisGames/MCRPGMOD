@@ -20,7 +20,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public final class WorldgenIntegrationTests {
     private static long generationSeed;
     private static String suite;
-    private static final List<String> SUITES=List.of("sky","terrain","capital","protection");
+    private static final List<String> SUITES=List.of("sky","terrain","capital","protection","unique");
     private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
         STORAGE=new java.util.HashMap<>();
     private static final java.util.Map<ResourceKey<Level>,java.nio.file.Path> WORLD_ROOTS=new java.util.HashMap<>();
@@ -133,6 +133,22 @@ public final class WorldgenIntegrationTests {
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
         helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
         helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
+        if(suite.equals("unique")){
+            for(var site:SpecialLandmarkPlacementEvents.sites()){
+                if(site.id().startsWith("aetheris_"))continue;
+                var template=level.getServer().getStructureManager().get(Pipican.id(site.template())).orElseThrow();
+                var size=template.getSize();
+                int minX=site.x()-size.getX()/2,minZ=site.z()-size.getZ()/2;
+                for(int cx=Math.floorDiv(minX,16);cx<=Math.floorDiv(minX+size.getX()-1,16);cx++)
+                    for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)level.getChunk(cx,cz);
+                helper.assertTrue(SpecialLandmarkPlacementEvents.tryPlace(level,site),
+                    "seed="+generationSeed+" unique landmark placement failed: "+site.id());
+                if(site.id().equals("umbral_city")){
+                    helper.assertTrue(site.elevation()<0&&site.elevation()+size.getY()<64,
+                        "Umbral city escaped its underground elevation");
+                }
+            }
+        }
         if(suite.equals("protection")){
             var built=new BlockPos(-2500,400,-3333);
             var node=built.east(2);

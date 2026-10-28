@@ -93,6 +93,16 @@ for castle in capitals:
     assert castle["subregion"] in {x["id"] for x in region_lookup[castle["region"]]["subregions"]}
     assert castle["placement"]=="fixed"
 
+# These features place inventories or block entities independently of native
+# structure reservations and can permanently block deferred authored cities.
+competing={"minecraft:amethyst_geode","minecraft:monster_room","minecraft:monster_room_deep",
+           "minecraft:sculk_vein","minecraft:sculk_patch_deep_dark"}
+reserved=list((DATA/"worldgen/biome/protected").glob("*.json"))
+reserved += [DATA/f"worldgen/biome/{site}_sanctuary.json" for site in ("umbral","redrock","aetheris")]
+for path in reserved:
+    features=json.loads(path.read_text())["features"]
+    assert not competing.intersection(item for step in features for item in step),path
+
 print("PASS: 27 palettes; 135 custom block textures; 81 configured features;")
 print("      148 biome definitions (including 23 protected); 120 undergrowth sets;")
 print("      22 protected capital subregions; geology rules.")

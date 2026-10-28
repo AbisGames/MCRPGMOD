@@ -18,8 +18,8 @@ REGIONS=json.loads((ASSETS/'region_map.json').read_text())['macro_regions']
 
 # Lightweight parser: only inspect the root structure tags, then sanity-check
 # lists and coordinate payload sizes without building an entire NBT tree.
-def inspect_nbt(file):
-    data=gzip.decompress(file.read_bytes())
+def inspect_nbt(file, payload=None):
+    data=gzip.decompress(file.read_bytes() if payload is None else payload)
     offset=0
     def take(n):
         nonlocal offset

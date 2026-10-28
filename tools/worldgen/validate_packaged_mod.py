@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 from zipfile import ZipFile
+from validate_full_structures import inspect_nbt
 
 ROOT = Path(__file__).resolve().parents[2]
 parser = argparse.ArgumentParser(description=__doc__)
@@ -28,4 +29,6 @@ with ZipFile(args.jar) as jar:
     assert not any("gametest/WorldgenIntegrationTests" in name for name in names), "Test harness shipped in mod JAR"
     corrupt = jar.testzip()
     assert corrupt is None, f"Corrupt JAR entry: {corrupt}"
+    for name in expected:
+        inspect_nbt(Path(name),jar.read(name))
 print(f"PASS: actual mod JAR contains {len(expected)} expected structure templates, including all 22 capital assemblies and special landmarks")

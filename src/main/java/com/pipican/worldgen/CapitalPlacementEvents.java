@@ -101,7 +101,7 @@ public final class CapitalPlacementEvents {
         // globally fixed sea-level or arbitrary Y constant.
         level.getChunk(Math.floorDiv(city.x(),16),Math.floorDiv(city.z(),16));
         int foundationY=state==null?
-            Math.min(terrainSurface(level,city.x(),city.z()),
+            Math.min(foundationHeight(level,city.x(),city.z()),
                 level.getMaxY()-75) : state.foundationY();
         JsonObject tile;
         String location;
@@ -191,7 +191,7 @@ public final class CapitalPlacementEvents {
         return true;
     }
 
-    private static int terrainSurface(ServerLevel level,int x,int z){
+    static int terrainSurface(ServerLevel level,int x,int z){
         int y=level.getHeight(Heightmap.Types.WORLD_SURFACE,x,z);
         while(y>level.getMinY()){
             var state=level.getBlockState(new BlockPos(x,y-1,z));
@@ -204,6 +204,17 @@ public final class CapitalPlacementEvents {
             y--;
         }
         return y;
+    }
+
+    private static int foundationHeight(ServerLevel level,int x,int z){
+        // One decorative boulder at the anchor must not lift an entire city.
+        // The median samples the real, terrain-generated flat pad.
+        int[] samples=new int[25];
+        int i=0;
+        for(int dx=-24;dx<=24;dx+=12)
+            for(int dz=-24;dz<=24;dz+=12)samples[i++]=terrainSurface(level,x+dx,z+dz);
+        Arrays.sort(samples);
+        return samples[samples.length/2];
     }
 
     private static boolean safeFoundation(ServerLevel level,BoundingBox box,int foundationY){
@@ -220,7 +231,11 @@ public final class CapitalPlacementEvents {
                     }
                     if(state.isSolid()){supported=true;break;}
                 }
-                if(!supported)return false;
+                if(!supported){
+                    Pipican.LOGGER.warn("Capital lacks foundation support at {},{} below {} (terrain {})",
+                        x,z,foundationY,terrainSurface(level,x,z));
+                    return false;
+                }
             }
         return true;
     }
@@ -243,6 +258,14 @@ public final class CapitalPlacementEvents {
         if(state.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock)return true;
         if(NaturalPalette.BLOCKS.contains(state.getBlock()))return true;
         return state.is(net.minecraft.tags.BlockTags.DIRT)
+            || state.is(net.minecraft.tags.BlockTags.COAL_ORES)
+            || state.is(net.minecraft.tags.BlockTags.IRON_ORES)
+            || state.is(net.minecraft.tags.BlockTags.COPPER_ORES)
+            || state.is(net.minecraft.tags.BlockTags.GOLD_ORES)
+            || state.is(net.minecraft.tags.BlockTags.REDSTONE_ORES)
+            || state.is(net.minecraft.tags.BlockTags.LAPIS_ORES)
+            || state.is(net.minecraft.tags.BlockTags.DIAMOND_ORES)
+            || state.is(net.minecraft.tags.BlockTags.EMERALD_ORES)
             || state.is(net.minecraft.tags.BlockTags.SAND)
             || state.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD)
             || state.is(net.minecraft.tags.BlockTags.LEAVES)
@@ -250,6 +273,7 @@ public final class CapitalPlacementEvents {
             || state.is(net.minecraft.tags.BlockTags.FLOWERS)
             || state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.SHORT_GRASS)
             || state.is(Blocks.TALL_GRASS) || state.is(Blocks.SNOW)
+            || state.is(Blocks.GLOW_LICHEN) || state.is(Blocks.VINE)
             || state.is(Blocks.SNOW_BLOCK) || state.is(Blocks.GRAVEL)
             || state.is(Blocks.CLAY) || state.is(Blocks.WATER)
             || state.is(Blocks.LAVA);

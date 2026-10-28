@@ -166,6 +166,10 @@ public final class WorldgenTests {
                 helper.assertTrue(special.get().getSize().getX()>=64,
                     "special landmark unexpectedly small: "+id);
         }
+        for(String id:List.of("ashlands_fort","elderwood_sanctum","frost_tomb",
+                "greyspine_mine","heartlands_keep","sunscorch_ruin"))
+            helper.assertTrue(helper.getLevel().getStructureManager().get(Pipican.id(id)).isPresent(),
+                "legacy NBT must be compressed and loadable: "+id);
         helper.succeed();
     }
 
