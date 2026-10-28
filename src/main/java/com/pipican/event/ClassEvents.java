@@ -450,6 +450,7 @@ public final class ClassEvents {
                     && victim.level() instanceof ServerLevel level) {
                 victim.hurtServer(level, level.damageSources().source(DamageTypes.GENERIC_KILL, attacker), Float.MAX_VALUE);
                 MasteryEvents.did(attacker, new SkillAction.Did(SkillAction.Did.Kind.EXECUTE, attacker.getMainHandItem(), Optional.empty(), Optional.of(victim), 0));
+                Reactions.fire(attacker, victim, attacker.getMainHandItem(), ReactionEffect.Event.EXECUTE);
                 return;
             }
         }

@@ -20,21 +20,19 @@
     {
       "id": "aeromancer_updraft",
       "name": "Updraft",
-      "description": {
-        "text": "+1 jump height",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 jump height",
       "type": "small",
       "x": -504,
       "y": -1220,
       "links": [
         "aeromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:jump_strength",
+          "amount": 0.15
+        }
       ]
     },
     {

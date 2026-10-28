@@ -152,7 +152,7 @@ public final class AbilityService {
         }
         var upgrade = ClassEffectApplier.state(player).abilityMod(key);
         AbilityContext ctx = AbilityContext.of(player, key, spent)
-                .withMod(new ClassState.ReactionMod(upgrade.seconds(), 0, 0, 0, List.of(), 0));
+                .withMod(new ClassState.ReactionMod(upgrade.seconds(), 0, 0, 0, List.of(), 0, upgrade.amplify()));
         for (AbilityAction action : java.util.stream.Stream.concat(ability.actions().stream(), upgrade.actions().stream()).toList()) {
             action.run(ctx);
             if (ctx.isCancelled()) {

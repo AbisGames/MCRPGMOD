@@ -83,16 +83,7 @@
     {
       "id": "apocalyptist_plague_bearer",
       "name": "Plague Bearer",
-      "description": {
-        "text": "your Wither is Wither II",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your Wither is Wither II",
       "type": "notable",
       "x": 824,
       "y": 1120,
@@ -100,7 +91,14 @@
         "apocalyptist_blighted"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:wither",
+          "min_amplifier": 1
+        }
+      ]
     },
     {
       "id": "apocalyptist_end_of_days",

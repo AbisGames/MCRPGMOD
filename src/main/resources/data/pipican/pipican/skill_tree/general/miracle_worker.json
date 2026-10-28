@@ -57,16 +57,7 @@
     {
       "id": "miracle_worker_holy_presence",
       "name": "Holy Presence",
-      "description": {
-        "text": "Stigmata Slowness becomes Slowness II",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Stigmata Slowness becomes Slowness II",
       "type": "notable",
       "x": 1363,
       "y": -276,
@@ -74,7 +65,16 @@
         "miracle_worker_blessed_body"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:miracle_worker/stigmata",
+          "amplify": {
+            "minecraft:slowness": 1
+          }
+        }
+      ]
     },
     {
       "id": "miracle_worker_laying_of_hands",

@@ -72,16 +72,7 @@
     {
       "id": "executioner_terrifying",
       "name": "Terrifying",
-      "description": {
-        "text": "Weakness after kill becomes Weakness II",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Weakness after kill becomes Weakness II",
       "type": "notable",
       "x": -894,
       "y": 1493,
@@ -89,7 +80,16 @@
         "executioner_black_hood"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "execute aftermath",
+          "amplify": {
+            "minecraft:weakness": 1
+          }
+        }
+      ]
     },
     {
       "id": "executioner_headsman_s_axe",

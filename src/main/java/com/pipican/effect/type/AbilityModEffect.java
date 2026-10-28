@@ -25,7 +25,8 @@ import net.minecraft.resources.ResourceKey;
  */
 public record AbilityModEffect(ResourceKey<Ability> ability, double cooldownSeconds, double cost, double drain, double duration,
                                double radius, int uses, double strength, List<Scaling> scaling, double seconds,
-                               List<com.pipican.ability.AbilityAction> actions) implements ClassEffect {
+                               List<com.pipican.ability.AbilityAction> actions,
+                               java.util.Map<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, Integer> amplify) implements ClassEffect {
 
     public static final MapCodec<AbilityModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             ResourceKey.codec(PipicanRegistries.ABILITY).fieldOf("ability").forGetter(AbilityModEffect::ability),
@@ -38,7 +39,8 @@ public record AbilityModEffect(ResourceKey<Ability> ability, double cooldownSeco
             Codec.DOUBLE.optionalFieldOf("strength", 0.0).forGetter(AbilityModEffect::strength),
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(AbilityModEffect::scaling),
             Codec.DOUBLE.optionalFieldOf("seconds", 0.0).forGetter(AbilityModEffect::seconds),
-            Codec.lazyInitialized(() -> com.pipican.ability.AbilityAction.CODEC).listOf().optionalFieldOf("actions", List.of()).forGetter(AbilityModEffect::actions)
+            Codec.lazyInitialized(() -> com.pipican.ability.AbilityAction.CODEC).listOf().optionalFieldOf("actions", List.of()).forGetter(AbilityModEffect::actions),
+            Codec.unboundedMap(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("amplify", java.util.Map.of()).forGetter(AbilityModEffect::amplify)
     ).apply(i, AbilityModEffect::new));
 
     @Override
@@ -50,6 +52,6 @@ public record AbilityModEffect(ResourceKey<Ability> ability, double cooldownSeco
     public void apply(EffectContext ctx) {
         ctx.addAbilityMod(ability, new ClassState.AbilityMod(Scaling.evaluate(cooldownSeconds, scaling, ctx), Scaling.evaluate(cost, scaling, ctx),
                 Scaling.evaluate(drain, scaling, ctx), Scaling.evaluate(duration, scaling, ctx), Scaling.evaluate(radius, scaling, ctx), uses,
-                Scaling.evaluate(strength, scaling, ctx), Scaling.evaluate(seconds, scaling, ctx), actions));
+                Scaling.evaluate(strength, scaling, ctx), Scaling.evaluate(seconds, scaling, ctx), actions, amplify));
     }
 }

@@ -92,6 +92,30 @@
       "amount": 0.3
     }
   ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_given",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_received",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    }
+  ],
   "weakness": {
     "description": "Healers commit to mending, never to harming.",
     "effects": [

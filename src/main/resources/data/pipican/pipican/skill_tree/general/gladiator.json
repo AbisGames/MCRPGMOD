@@ -85,16 +85,7 @@
     {
       "id": "gladiator_hamstring",
       "name": "Hamstring",
-      "description": {
-        "text": "Dirty Fighting slow is Slowness II",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Dirty Fighting slow is Slowness II",
       "type": "notable",
       "x": -1246,
       "y": 617,
@@ -102,7 +93,16 @@
         "gladiator_net_and_trident"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "dirty fighting",
+          "amplify": {
+            "minecraft:slowness": 1
+          }
+        }
+      ]
     },
     {
       "id": "gladiator_death_or_glory",

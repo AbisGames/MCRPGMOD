@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1809**, partly working: **24**, not yet: **417**
+- Bonus phrases: **2250**. Fully working: **1823**, partly working: **24**, not yet: **403**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,8 +12,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 130 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 119 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 118 |
+| [Other mechanics](#other-mechanics) | 117 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 67 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 63 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 37 |
@@ -23,198 +23,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Immunities](#immunities) | 11 |
 | [Critical hits](#critical-hits) | 3 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
-
-## Other mechanics
-
-- **abjurer**
-  - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
-- **acrobat**
-  - special passive: Jump height +0.05 blocks per 10 Poise
-  - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
-- **aeromancer**
-  - special passive: Per 20 Gale, +1 extra jump block height
-  - general tree: Updraft: +1 jump height
-  - special tree: Gust: wind charges you throw deal +2 damage
-- **apocalyptist**
-  - general tree: Plague Bearer: your Wither is Wither II
-- **arcanist**
-  - special tree: Reclaim Arcana: Reclaim refunds go to 150%
-- **avenger**
-  - special tree: Hound: Speed boost lasts 2s longer
-- **beastmaster**
-  - passive: Taming always succeeds on the first try
-- **berserker**
-  - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
-  - special tree: Reckless Strike: fatigue lasts twice as long
-- **chronomancer**
-  - special passive: Per 10 Tempo, harmful effects on you last 3% shorter
-- **cleric**
-  - special passive: Empowered Symbol: +1% healing done and received per 2 Conviction
-  - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
-- **conqueror**
-  - special stat per point: +0.5% damage for players near you
-  - special passive: Leadership bonus +0.5% per Command point
-- **death_dealer**
-  - special tree: Bloodsoaked: full Bloodshed gives +15% damage
-- **defender**
-  - general tree: Taunt: mobs within 6 blocks prefer to target you
-  - special tree: Retributive Strike: retribution bonus +20%
-  - special tree: Aegis Eternal: you take 25% of the damage nearby allies take instead of them; -10% movement speed
-- **dervish**
-  - passive: Two Weapon Mastery: hitting the same mob with both hands in a row deals +20% on the second hit
-  - weakness: shields count as forbidden and -25% damage with bows and crossbows
-  - special tree: Two Weapon Mastery: combo bonus +15%
-- **destroyer**
-  - special passive: Shockwave radius +1 per 20 Ruin
-  - special passive: Shockwave damage +0.1 per Ruin point
-  - weakness: take 1 damage
-  - general tree: Bigger Booms: your TNT has +25% radius
-  - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
-- **dreadnaught**
-  - passive: heavy armor gives +1 armor per piece
-  - passive: no movement penalty
-  - passive: take 20% less damage from weapons and projectiles
-- **druid**
-  - passive: no slowdown from powder snow, soul sand, cobwebs or honey
-- **duelist**
-  - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
-  - general tree: Bind: challenged foe gets Slowness I
-  - general tree: Lone Wolf: Duel bonuses doubled
-- **engineer**
-  - general tree: Iron Titan: it moves 20% slower
-- **executioner**
-  - general tree: Terrifying: Weakness after kill becomes Weakness II
-  - special tree: Steady: exposure after charged hits lasts 1s
-- **exorcist**
-  - special passive: Purge bonus +0.5% per Purity
-- **explorer**
-  - general tree: Cartographer: maps you make explore 25% faster
-- **fighter**
-  - special tree: Haft Attack: spears/tridents: every 3rd hit strikes twice
-  - special tree: Powerful Attack: axes/maces: fully charged hits +15% damage
-- **gladiator**
-  - general tree: Hamstring: Dirty Fighting slow is Slowness II
-  - special tree: Low Blow: Dirty Fighting can also apply Weakness
-- **gunslinger**
-  - passive: +15% accuracy
-  - special passive: Per 10 Trigger Finger, +1 shot per cylinder
-  - weakness: every shot alerts hostile mobs within 24 blocks
-  - general tree: Quick Draw: first shot after swapping to a gun deals +25%
-  - general tree: Steady Hand: +5% accuracy
-  - general tree: Fan the Hammer: +15% fire rate
-  - special tree: Ricochet: bullets bounce to a second mob within 4 blocks for 50%
-- **healer**
-  - special stat per point: +1% healing you give and receive
-  - special passive: Far Healing tick -1% interval per Vitality Flow
-  - special passive: Per 10 Vitality Flow, +1 block healing range
-  - special tree: Wide Mend: +3 blocks healing range
-- **hexer**
-  - special tree: Lethargy: Lethargy also stops jumping
-- **hydromancer**
-  - passive: take 20% less damage from weapons and projectiles
-- **illusionist**
-  - passive: Convincing Illusions: mobs that lose sight of you forget you 50% faster
-  - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
-- **infiltrator**
-  - passive: Vanish: breaking line of sight with a mob makes it forget you after 2s
-  - general tree: Ambush: first round of combat: +20% damage and speed
-  - general tree: Forgettable: mobs forget you 1s faster
-- **inquisitor**
-  - passive: Dreadful Threat: scrutinised mobs within 6 blocks get Weakness I
-  - special passive: Scrutiny bonus +0.5% per point
-  - special passive: Per 10 Scrutiny, scrutinise 1s faster
-  - special tree: Dreadful Threat: Weakness II
-  - special tree: Inquisitor's Judgment: +10% judgment damage
-  - special tree: Expose: scrutinised mobs take +10% damage from everyone
-- **jack_of_all_trades**
-  - passive: no gear is worse than neutral for you
-  - special tree: Prodigy: Prodigy picks the stat you most recently used
-- **mage_knight**
-  - special passive: Per 10 Battle Arcana, +1 escalating hit
-  - general tree: Arcane Steel: +5% magic portion
-- **magician**
-  - skill Enchanting: +1 bookshelf counted around your table
-- **marauder**
-  - special tree: Glorious Death: once per day
-- **miracle_worker**
-  - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
-  - general tree: Holy Presence: Stigmata Slowness becomes Slowness II
-  - general tree: Saint Among Us: miracles cost half
-  - general tree: Saint Among Us: max health penalty is 3 per use
-  - special tree: Booming Voice: Tongues messages carry server-wide
-- **myrmidon**
-  - special stat per point: +0.5% shield bash damage
-  - general tree: Boss Strike: shield bash +2 damage
-  - general tree: Turtle: blocking also stops arrows from the sides
-  - special tree: Aspis: players within 3 blocks behind you are protected from projectiles; -10% damage
-- **paladin**
-  - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
-- **priest**
-  - skill Mace Training: +10% fall-smash damage
-- **pyromancer**
-  - passive: fire charges you throw deal +50% damage
-  - passive: Fire you start burns 50% longer
-  - general tree: Wildfire: burning mobs spread fire to adjacent mobs
-  - general tree: Living Flame: +30% fire damage, but you take 25% more damage from water, snow and ice mobs
-  - special tree: Hotter: burning mobs take +1 damage per second
-- **ranger**
-  - passive: you deal +15% damage to it and it glows for you
-- **savant**
-  - special passive: Focus bonus +0.5% per Breadth
-  - special tree: Second Focus: focus bonus +10%
-  - special tree: Generalist: non-focus schools get +10%
-- **scout**
-  - general tree: Keen Eyes: +4 blocks Alertness range
-  - special tree: Ghost Trail: mobs lose track of you 30% faster
-- **sentinel**
-  - special stat per point: +0.5 blocks hostile-mob detection range
-  - general tree: Sentinel: +4 blocks detection range
-  - special tree: Stand Guard: Stand Guard triggers after 1s
-  - special tree: Sentry: players within 8 blocks also see what glows for you
-- **sorcerer**
-  - special passive: Sorcerous Outburst explosion damage +0.5 per Potency point
-  - general tree: Living Bomb: Outbursts deal double damage
-  - general tree: Living Bomb: you take 25% of the outburst damage yourself
-  - special tree: Enlarged Spell: Outburst radius +1 block
-- **spellbinder**
-  - general tree: Rune Edge: +5% magic damage portion
-- **stormbringer**
-  - general tree: Storm Avatar: you take 25% more fire damage
-  - special tree: Stormlord: Powered by Storm lasts 3 minutes
-- **technomancer**
-  - passive: Redstone you place powers 2 blocks farther
-- **templar**
-  - general tree: Fortress Temple: outside it you lose all class passives
-- **tenebrist**
-  - special passive: Detection reduction +0.3% per Umbra
-  - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
-- **thaumaturge**
-  - special passive: Per 10 Entropy, bad chaos outcomes are 5% rarer
-  - general tree: Probability Bend: bad outcomes 20% rarer
-  - special tree: Pandemonium: chaos outcomes can hit 2 mobs
-- **thief**
-  - special tree: Escape Artist: cobwebs don't slow you
-- **transmuter**
-  - special stat per point: +0.2 to every stat per 10 points (rounded down)
-- **warlock**
-  - passive: you gain 10 Stolen Power instead
-  - general tree: Oathbreaker: you can no longer benefit from beacons
-  - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
-  - special tree: Vanishing Escape: Vanish also teleports you up to 6 blocks away from the attacker
-- **warrior**
-  - special tree: Combat Expertise: every 4th hit on the same mob deals +25% damage
-- **witch**
-  - weakness: takes 25% more fire damage and burns for 50% longer
-- **wizard**
-  - general tree: Library: +1 counted bookshelf
-- **woodwose**
-  - special passive: Nature Bond heal speed +1% per Verdure
-  - special tree: Nature's Resilience: absorption +2 more hearts
-- **zealot**
-  - special passive: Per 10 Fervor, Divine Might +5%
-  - special tree: Iron Conviction: post-Zeal immunity lasts 3s longer
-  - special tree: Divine Might: +10% more Divine Might damage
-  - special tree: Violent Madness: Violent Madness no longer targets players
 
 ## Active abilities (named abilities, cooldowns, auras, summons)
 
@@ -269,8 +77,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Eidolon armor +1 per 10 Engineering
   - general tree: Iron Titan: eidolon becomes Size 2
   - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **executioner**
-  - passive: After an Execute kill, mobs within 6 blocks get Weakness I for 3s
 - **fighter**
   - weakness: -25% potion effect duration on you, and enchanting costs +1 level
 - **hexer**
@@ -382,6 +188,183 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **woodwose**
   - passive: Nature's Resilience: bone-mealing a plant gives you +2 absorption hearts for 30s (60s cooldown)
   - general tree: Deep Roots: +20% knockback resistance on grass
+
+## Other mechanics
+
+- **abjurer**
+  - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
+- **acrobat**
+  - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
+- **aeromancer**
+  - special tree: Gust: wind charges you throw deal +2 damage
+- **arcanist**
+  - special tree: Reclaim Arcana: Reclaim refunds go to 150%
+- **avenger**
+  - special tree: Hound: Speed boost lasts 2s longer
+- **beastmaster**
+  - passive: Taming always succeeds on the first try
+- **berserker**
+  - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
+  - special tree: Reckless Strike: fatigue lasts twice as long
+- **cleric**
+  - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
+- **conqueror**
+  - special stat per point: +0.5% damage for players near you
+  - special passive: Leadership bonus +0.5% per Command point
+- **death_dealer**
+  - special tree: Bloodsoaked: full Bloodshed gives +15% damage
+- **defender**
+  - general tree: Taunt: mobs within 6 blocks prefer to target you
+  - special tree: Retributive Strike: retribution bonus +20%
+  - special tree: Aegis Eternal: you take 25% of the damage nearby allies take instead of them; -10% movement speed
+- **dervish**
+  - passive: Two Weapon Mastery: hitting the same mob with both hands in a row deals +20% on the second hit
+  - weakness: shields count as forbidden and -25% damage with bows and crossbows
+  - special tree: Two Weapon Mastery: combo bonus +15%
+- **destroyer**
+  - special passive: Shockwave radius +1 per 20 Ruin
+  - special passive: Shockwave damage +0.1 per Ruin point
+  - weakness: take 1 damage
+  - general tree: Bigger Booms: your TNT has +25% radius
+  - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
+- **dreadnaught**
+  - passive: heavy armor gives +1 armor per piece
+  - passive: no movement penalty
+  - passive: take 20% less damage from weapons and projectiles
+- **druid**
+  - passive: no slowdown from powder snow, soul sand, cobwebs or honey
+- **duelist**
+  - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
+  - general tree: Bind: challenged foe gets Slowness I
+  - general tree: Lone Wolf: Duel bonuses doubled
+- **engineer**
+  - general tree: Iron Titan: it moves 20% slower
+- **executioner**
+  - special tree: Steady: exposure after charged hits lasts 1s
+- **exorcist**
+  - special passive: Purge bonus +0.5% per Purity
+- **explorer**
+  - general tree: Cartographer: maps you make explore 25% faster
+- **fighter**
+  - special tree: Haft Attack: spears/tridents: every 3rd hit strikes twice
+  - special tree: Powerful Attack: axes/maces: fully charged hits +15% damage
+- **gladiator**
+  - special tree: Low Blow: Dirty Fighting can also apply Weakness
+- **gunslinger**
+  - passive: +15% accuracy
+  - special passive: Per 10 Trigger Finger, +1 shot per cylinder
+  - weakness: every shot alerts hostile mobs within 24 blocks
+  - general tree: Quick Draw: first shot after swapping to a gun deals +25%
+  - general tree: Steady Hand: +5% accuracy
+  - general tree: Fan the Hammer: +15% fire rate
+  - special tree: Ricochet: bullets bounce to a second mob within 4 blocks for 50%
+- **healer**
+  - special passive: Far Healing tick -1% interval per Vitality Flow
+  - special passive: Per 10 Vitality Flow, +1 block healing range
+  - special tree: Wide Mend: +3 blocks healing range
+- **hexer**
+  - special tree: Lethargy: Lethargy also stops jumping
+- **hydromancer**
+  - passive: take 20% less damage from weapons and projectiles
+- **illusionist**
+  - passive: Convincing Illusions: mobs that lose sight of you forget you 50% faster
+  - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
+- **infiltrator**
+  - passive: Vanish: breaking line of sight with a mob makes it forget you after 2s
+  - general tree: Ambush: first round of combat: +20% damage and speed
+  - general tree: Forgettable: mobs forget you 1s faster
+- **inquisitor**
+  - passive: Dreadful Threat: scrutinised mobs within 6 blocks get Weakness I
+  - special passive: Scrutiny bonus +0.5% per point
+  - special passive: Per 10 Scrutiny, scrutinise 1s faster
+  - special tree: Inquisitor's Judgment: +10% judgment damage
+  - special tree: Expose: scrutinised mobs take +10% damage from everyone
+- **jack_of_all_trades**
+  - passive: no gear is worse than neutral for you
+  - special tree: Prodigy: Prodigy picks the stat you most recently used
+- **mage_knight**
+  - special passive: Per 10 Battle Arcana, +1 escalating hit
+  - general tree: Arcane Steel: +5% magic portion
+- **magician**
+  - skill Enchanting: +1 bookshelf counted around your table
+- **marauder**
+  - special tree: Glorious Death: once per day
+- **miracle_worker**
+  - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
+  - general tree: Saint Among Us: miracles cost half
+  - general tree: Saint Among Us: max health penalty is 3 per use
+  - special tree: Booming Voice: Tongues messages carry server-wide
+- **myrmidon**
+  - special stat per point: +0.5% shield bash damage
+  - general tree: Boss Strike: shield bash +2 damage
+  - general tree: Turtle: blocking also stops arrows from the sides
+  - special tree: Aspis: players within 3 blocks behind you are protected from projectiles; -10% damage
+- **paladin**
+  - general tree: Beacon of Hope: other players within 8 blocks get +2 armor, but you get -10% movement speed
+- **priest**
+  - skill Mace Training: +10% fall-smash damage
+- **pyromancer**
+  - passive: fire charges you throw deal +50% damage
+  - passive: Fire you start burns 50% longer
+  - general tree: Wildfire: burning mobs spread fire to adjacent mobs
+  - general tree: Living Flame: +30% fire damage, but you take 25% more damage from water, snow and ice mobs
+  - special tree: Hotter: burning mobs take +1 damage per second
+- **ranger**
+  - passive: you deal +15% damage to it and it glows for you
+- **savant**
+  - special passive: Focus bonus +0.5% per Breadth
+  - special tree: Second Focus: focus bonus +10%
+  - special tree: Generalist: non-focus schools get +10%
+- **scout**
+  - special tree: Ghost Trail: mobs lose track of you 30% faster
+- **sentinel**
+  - special stat per point: +0.5 blocks hostile-mob detection range
+  - general tree: Sentinel: +4 blocks detection range
+  - special tree: Stand Guard: Stand Guard triggers after 1s
+  - special tree: Sentry: players within 8 blocks also see what glows for you
+- **sorcerer**
+  - special passive: Sorcerous Outburst explosion damage +0.5 per Potency point
+  - general tree: Living Bomb: Outbursts deal double damage
+  - general tree: Living Bomb: you take 25% of the outburst damage yourself
+  - special tree: Enlarged Spell: Outburst radius +1 block
+- **spellbinder**
+  - general tree: Rune Edge: +5% magic damage portion
+- **stormbringer**
+  - general tree: Storm Avatar: you take 25% more fire damage
+  - special tree: Stormlord: Powered by Storm lasts 3 minutes
+- **technomancer**
+  - passive: Redstone you place powers 2 blocks farther
+- **templar**
+  - general tree: Fortress Temple: outside it you lose all class passives
+- **tenebrist**
+  - special passive: Detection reduction +0.3% per Umbra
+  - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
+- **thaumaturge**
+  - special passive: Per 10 Entropy, bad chaos outcomes are 5% rarer
+  - general tree: Probability Bend: bad outcomes 20% rarer
+  - special tree: Pandemonium: chaos outcomes can hit 2 mobs
+- **thief**
+  - special tree: Escape Artist: cobwebs don't slow you
+- **transmuter**
+  - special stat per point: +0.2 to every stat per 10 points (rounded down)
+- **warlock**
+  - passive: you gain 10 Stolen Power instead
+  - general tree: Oathbreaker: you can no longer benefit from beacons
+  - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
+  - special tree: Vanishing Escape: Vanish also teleports you up to 6 blocks away from the attacker
+- **warrior**
+  - special tree: Combat Expertise: every 4th hit on the same mob deals +25% damage
+- **witch**
+  - weakness: takes 25% more fire damage and burns for 50% longer
+- **wizard**
+  - general tree: Library: +1 counted bookshelf
+- **woodwose**
+  - special passive: Nature Bond heal speed +1% per Verdure
+  - special tree: Nature's Resilience: absorption +2 more hearts
+- **zealot**
+  - special passive: Per 10 Fervor, Divine Might +5%
+  - special tree: Divine Might: +10% more Divine Might damage
+  - special tree: Violent Madness: Violent Madness no longer targets players
 
 ## Resource bar: filling, refills, spending
 

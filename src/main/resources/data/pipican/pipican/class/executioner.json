@@ -73,6 +73,24 @@
     {
       "type": "pipican:critical",
       "damage": 0.25
+    },
+    {
+      "type": "pipican:on",
+      "event": "execute",
+      "name": "execute aftermath",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "effects": [
+            {
+              "effect": "minecraft:weakness",
+              "seconds": 3.0
+            }
+          ],
+          "radius": 6.0
+        }
+      ]
     }
   ],
   "special_passives": [

@@ -180,6 +180,20 @@ def static_mods(t, ctx):
     return out
 
 
+LEVEL_WORDS = {'ii': 1, 'iii': 2, 'iv': 3}
+
+
+def _amplify(names, t):
+    """"Dirty Fighting slow is Slowness II", "Stigmata Slowness becomes Slowness II", "Dreadful Threat Weakness II"
+    -> (name, {effect id: level}) or None."""
+    import combat
+    effs = '|'.join(sorted((re.escape(k) for k in combat.EFFECT_NAMES), key=len, reverse=True))
+    m = re.fullmatch(rf'({names}) (?:[a-z]+ (?:is|becomes) )?({effs}) (ii|iii|iv)', t)
+    if m:
+        return m.group(1), {'minecraft:' + combat.EFFECT_NAMES[m.group(2)]: LEVEL_WORDS[m.group(3)]}
+    return None
+
+
 def reaction_mods(t, ctx):
     """Upgrades to a named reaction -> pipican:reaction_mod ("Guarded Casting lasts 5s longer")."""
     import combat
@@ -230,6 +244,34 @@ def reaction_mods(t, ctx):
         if re.fullmatch(r'charmed mobs attack other hostile mobs', original_t):
             secs = [a.get('seconds', 10) for a in creact['actions'] if a.get('type') == 'pipican:control']
             return mod(cname, actions=[{'type': 'pipican:control', 'target': 'victim', 'mode': 'ally', 'seconds': float(secs[0])}])
+    # "post-Zeal immunity lasts 3s longer", "+4 blocks Alertness range"
+    m = re.fullmatch(rf'post-({names})(?: [a-z]+)? lasts \+?{N}s longer', original_t)
+    if m:
+        return mod(m.group(1), seconds=float(m.group(2)))
+    m = re.fullmatch(rf'\+{N} blocks? ({names}) (?:range|radius)', original_t)
+    if m:
+        return mod(m.group(2), radius=float(m.group(1)))
+    # "Speed boost lasts 2s longer": the class's one reaction that boosts speed
+    m = re.fullmatch(rf'speed boost lasts \+?{N}s longer', original_t)
+    if m:
+        speedy = [(r.get('name') or n) for n, r in reactions.items() if any(
+            a.get('type') == 'pipican:boost' and any(e.get('attribute') == 'minecraft:movement_speed' for e in a.get('effects', []))
+            or any(e.get('effect') == 'minecraft:speed' for e in a.get('effects', [])) for a in r.get('actions', []))]
+        if len(speedy) == 1:
+            return mod(speedy[0], seconds=float(m.group(1)))
+    amp = _amplify(names, t)
+    if amp:
+        return mod(amp[0], amplify=amp[1])
+    import combat
+    effs = '|'.join(sorted((re.escape(k) for k in combat.EFFECT_NAMES), key=len, reverse=True))
+    m = re.fullmatch(rf'({effs}) after (?:a )?(kill|hit|crit) becomes ({effs}) (ii|iii|iv)', original_t)
+    if m:
+        want = 'minecraft:' + combat.EFFECT_NAMES[m.group(1)]
+        event = {'kill': 'kill', 'hit': 'hit', 'crit': 'crit'}[m.group(2)]
+        hits = [(r.get('name') or n) for n, r in reactions.items() if (r.get('event') == event or event == 'kill' and r.get('event') == 'execute') and
+                any(e.get('effect') == want for a in r.get('actions', []) for e in a.get('effects', []))]
+        if len(hits) == 1:
+            return mod(hits[0], amplify={'minecraft:' + combat.EFFECT_NAMES[m.group(3)]: LEVEL_WORDS[m.group(4)]})
     # strength upgrades: "Guarded Casting armor +1 per 20 Warding", "+5% Trickery damage", "Escalating Violence +0.5% per Battle Arcana"
     def base_value(r):
         for a in r.get('actions', []):
@@ -387,6 +429,9 @@ def ability_mods(t, ctx):
                 return [{'type': 'pipican:ability_mod', 'ability': abilities[n], 'seconds': 0.0,
                          'scaling': [{'source': src, 'per': round(float(m.group(1)) / float(m.group(2) or 1), 6)}]}]
             return [{'type': 'pipican:ability_mod', 'ability': abilities[n], 'seconds': float(m.group(1))}]
+    amp = _amplify(names, t)
+    if amp:
+        return [{'type': 'pipican:ability_mod', 'ability': abilities[amp[0]], 'amplify': amp[1]}]
     m = re.fullmatch(rf'({names}) lasts (twice|three times) as long', t)
     if m:
         # Timed states last longer; toggles drain slower (whichever the ability is).
@@ -506,8 +551,9 @@ def segment(t, ctx):
         return am
     # A tree node named after what it upgrades ("Worker of Miracles: heal amount 10") leaves the name out of its text.
     node = (ctx.get('node_name') or '').lower()
-    if node and not t.startswith(node) and (node in REACTIONS.get(ctx.get('class_id'), {}) or node in STATIC.get(ctx.get('class_id'), {})):
-        am = reaction_mods(f'{node} {t}', ctx) or static_mods(f'{node} {t}', ctx)
+    abil = {n for n, (w, _) in NAMED.get(ctx.get('class_id'), {}).items() if w.get('type') == 'pipican:ability_active'}
+    if node and not t.startswith(node) and (node in REACTIONS.get(ctx.get('class_id'), {}) or node in STATIC.get(ctx.get('class_id'), {}) or node in abil):
+        am = reaction_mods(f'{node} {t}', ctx) or static_mods(f'{node} {t}', ctx) or ability_mods(f'{node} {t}', ctx)
         if am:
             return am
     named = NAMED.get(ctx.get('class_id'), {})
@@ -1116,6 +1162,16 @@ def whole_line(text, ctx):
         out = combat.outcome(m.group(1), 'victim')
         if out:
             return [{'type': 'pipican:on', 'event': 'explosion_hit', 'actions': out}]
+    # "After an Execute kill, mobs within 6 blocks get Weakness I for 3s"
+    m = re.fullmatch(rf'after an execute kill, (?:hostile )?mobs within {N} blocks get (.+)', low)
+    if m:
+        import combat
+        out = combat.outcome('give ' + m.group(2), 'victim')
+        if out and out[0].get('type') == 'pipican:effect':
+            out[0].update({'target': 'hostiles', 'radius': float(m.group(1))})
+            r = {'type': 'pipican:on', 'event': 'execute', 'name': 'execute aftermath', 'actions': out}
+            REACTIONS.setdefault(ctx.get('class_id'), {}).setdefault('execute aftermath', r)
+            return [r]
     # Driven: "10% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead"
     m = re.fullmatch(rf'{N}% chance that a hit that would leave you under 2 hearts leaves you at 2 hearts instead', low)
     if m:

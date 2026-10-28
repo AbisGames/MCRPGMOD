@@ -77,7 +77,6 @@ ATTRS = {
     'attack speed': ('minecraft:attack_speed', 'pct_base'),
     'mining speed': ('minecraft:block_break_speed', 'pct_base'),
     'jump height': ('minecraft:jump_strength', 'pct_base'),
-    'jump strength': ('minecraft:jump_strength', 'pct_base'),
     'knockback resistance': ('minecraft:knockback_resistance', 'pct_flat'),
     'knockback': ('minecraft:attack_knockback', 'pct_base'),
     'melee knockback': ('minecraft:attack_knockback', 'pct_base'),
@@ -649,6 +648,8 @@ def _translate_line(text, ctx):
     # (Chance lines keep their leading "per": the scaled-reaction rule reads them that way.)
     if m and ',' not in m.group(4) and ';' not in m.group(4) and not (m.group(1) and re.search(r'\bchance (?:your|on|that your|to|for your)\b', m.group(4), re.I)):
         text = f'{m.group(1)}{m.group(4)} per {m.group(2) or ""}{m.group(3)}'
+    text = re.sub(r'^((?:[A-Z][\w\' -]{1,30}:\s+)?)(?:jump height \+(\d+(?:\.\d+)?) blocks?|\+(\d+(?:\.\d+)?) (?:extra )?jump (?:block )?height)\b',
+                  lambda m: f'{m.group(1)}+{float(m.group(2) or m.group(3)) * 0.15:g} jump strength', text, flags=re.I)
     # "while Rage is above 75%: A, B, but C": a leading condition with a colon covers everything after it.
     m = re.match(r'^(?:[A-Z][\w\' -]{1,30}:\s+)?((?:while|when|whenever|as long as)\s+[^:]+?):\s+(.+)$', text.strip())
     if m:
@@ -659,7 +660,7 @@ def _translate_line(text, ctx):
                 return [], [original.strip()]
             return [{'type': 'pipican:conditional', 'when': when, 'effects': inner}], []
     # "+1 armor while standing on stone per 10 Bedrock" / "... piece, per 20 Ingenuity": scaling goes before the condition.
-    m = re.match(r'^(.+?)\s+((?:while|when|in|on|at|with)\s.+?),?\s+(per \d+ [A-Za-z][\w\' -]*?(?: points?)?)$', text.strip())
+    m = re.match(r'^(.+?)\s+((?:while|when|in|on(?! you\b)|at|with)\s.+?),?\s+(per \d+ [A-Za-z][\w\' -]*?(?: points?)?)$', text.strip())
     if m and ';' not in text and not re.search(r'\bbut\b', text):
         text = f'{m.group(1)} {m.group(3)} {m.group(2)}'
     # Segments ("A in water, but B on dry land"; "A while wet; B") each get their own condition.

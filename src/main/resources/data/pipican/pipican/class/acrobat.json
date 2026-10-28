@@ -94,6 +94,17 @@
           "per": 0.005
         }
       ]
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:jump_strength",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.00075
+        }
+      ]
     }
   ],
   "weakness": {

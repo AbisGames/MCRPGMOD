@@ -525,6 +525,7 @@ public final class ClassSystemTests {
         helper.assertTrue(player.getEffect(MobEffects.NIGHT_VISION) != null && player.getEffect(MobEffects.NIGHT_VISION).getDuration() == 100,
                 "upgraded duration 5s: " + player.getEffect(MobEffects.NIGHT_VISION));
         helper.assertTrue(player.hasEffect(MobEffects.WATER_BREATHING), "upgrade's extra action ran");
+        helper.assertTrue(player.getEffect(MobEffects.NIGHT_VISION).getAmplifier() == 1, "upgrade raised the effect to level II");
 
         // Skill triggers: named reactions and the new actions.
         var reacted = new com.pipican.mastery.SkillAction.Reacted("Trickery");

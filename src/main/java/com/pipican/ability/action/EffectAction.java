@@ -50,7 +50,8 @@ public record EffectAction(Targets targets, List<Entry> effects) implements Abil
         for (LivingEntity target : targets.select(ctx)) {
             for (Entry e : effects) {
                 double seconds = e.seconds() + ctx.mod().seconds();
-                target.addEffect(new net.minecraft.world.effect.MobEffectInstance(e.effect(), (int) Math.round(Math.max(0.05, seconds) * 20), e.amplifier()), ctx.player());
+                int amplifier = Math.max(e.amplifier(), ctx.mod().amplify().getOrDefault(e.effect(), 0));
+                target.addEffect(new net.minecraft.world.effect.MobEffectInstance(e.effect(), (int) Math.round(Math.max(0.05, seconds) * 20), amplifier), ctx.player());
             }
         }
     }

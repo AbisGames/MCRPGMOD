@@ -73,7 +73,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You right-clicked a mob or player (the victim); {@code weapons} limits it to what you hold (air = empty hand). */
         INTERACT("interact"),
         /** An explosion you caused hurt a mob (the victim). */
-        EXPLOSION_HIT("explosion_hit");
+        EXPLOSION_HIT("explosion_hit"),
+        /** One of your executes killed a mob (the victim; area actions centre on it). */
+        EXECUTE("execute");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

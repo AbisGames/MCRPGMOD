@@ -569,6 +569,13 @@ def misc(t, scal):
         return [_effect('quiet_steps', 100, None)]
     if re.fullmatch(r'no nausea after teleporting', t):
         return [{'type': 'pipican:immune', 'effects': 'minecraft:nausea'}]
+    m = re.fullmatch(rf'\+{N}% healing (?:you give and receive|done and received|given and received)', t)
+    if m:
+        v, sc = scal(float(m.group(1)))
+        return [_effect('healing_given', v, sc), _effect('healing_received', v, sc)]
+    m = re.fullmatch(rf'your ({eff}) is ({eff}) (ii|iii|iv)', t)
+    if m and m.group(1) == m.group(2):
+        return _applied(m.group(1), min_amplifier=LEVELS[m.group(3)])
     if re.fullmatch(r'anvils never break when you use them', t):
         return [_effect('anvil_safe', 100, None)]
     # sprint hits
