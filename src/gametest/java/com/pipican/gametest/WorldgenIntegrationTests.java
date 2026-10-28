@@ -33,9 +33,12 @@ public final class WorldgenIntegrationTests {
 
     @SubscribeEvent
     public static void tests(RegisterGameTestsEvent event) {
+        String selected=System.getProperty("pipican.worldgenSuite","all");
+        if(!selected.equals("all")&&!SUITES.contains(selected))throw new IllegalArgumentException("Unknown worldgen suite: "+selected);
         var env = event.registerEnvironment(Pipican.id("rpg_integration_env"),
             new TestEnvironmentDefinition.AllOf(List.of()));
         for(String name:SUITES){
+            if(!selected.equals("all")&&!selected.equals(name))continue;
             ResourceKey<Consumer<GameTestHelper>> fn = ResourceKey.create(
                 Registries.TEST_FUNCTION, Pipican.id("rpg_generated_"+name));
             event.registerTest(Pipican.id("rpg_generated_"+name), new FunctionGameTestInstance(fn,
@@ -121,6 +124,19 @@ public final class WorldgenIntegrationTests {
         var level=server.getLevel(key);
         if(level==null)return;
         try{
+            // Mirror MinecraftServer.stopServer: closing region storage while
+            // generation/unload tasks still own chunks leaks worlds and can
+            // fail their futures with "Parent chunk missing".
+            var source=level.getChunkSource();
+            long deadline=System.nanoTime()+java.util.concurrent.TimeUnit.SECONDS.toNanos(120);
+            while(source.chunkMap.hasWork()){
+                source.deactivateTicketsOnClosing();
+                source.tick(()->true,false);
+                for(int i=0;i<128&&source.pollTask();i++){}
+                if(System.nanoTime()>deadline)throw new IllegalStateException(
+                    "Timed out draining test-world chunks: "+key+" "+source.gatherStats());
+                Thread.sleep(1);
+            }
             level.save(null,true,false);
             server.forgeGetWorldMap().remove(key);
             server.markWorldsDirty();
@@ -194,6 +210,15 @@ public final class WorldgenIntegrationTests {
             helper.assertTrue(level.getBlockState(node).is(RegionalOreRegistries.NODES.get("frostcrystal").get()),"wrong renewed ore");
             helper.assertTrue(!level.hasChunkAt(unloaded),"renewal force-loaded an unloaded chunk");
             helper.assertTrue(RenewableOreSavedData.get(level).contains(unloaded),"unloaded node discarded");
+            var pending=new net.minecraft.world.level.ChunkPos(unloaded.getX()>>4,unloaded.getZ()>>4);
+            level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,pending,0);
+            helper.assertTrue(level.getChunkSource().getChunkNow(pending.x(),pending.z())==null,
+                "pending-load regression requires an unfinished full chunk");
+            helper.assertTrue(RegionalMineEvents.restoreDue(level,ready,8)==0,
+                "renewal waited for and restored a pending-load chunk");
+            helper.assertTrue(level.getChunkSource().getChunkNow(pending.x(),pending.z())==null,
+                "renewal synchronously completed pending chunk generation");
+            level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,pending,0);
         }
         helper.assertTrue(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource,
             "integration test must use the real RPG generator");
@@ -271,8 +296,13 @@ public final class WorldgenIntegrationTests {
         if(suite.equals("capital")){
             var cities=new LandmarkCatalog().all().stream().filter(c->c.tier().equals("capital")).toList();
             int shard=generationSeed==123L?1:generationSeed==987654321L?2:0;
+            String target=System.getProperty("pipican.worldgenTarget","");
+            if(!target.isEmpty()){
+                cities=cities.stream().filter(c->c.id().equals(target)).toList();
+                helper.assertTrue(!cities.isEmpty(),"unknown target capital: "+target);
+            }
             var failures=new java.util.ArrayList<String>();
-            for(int i=shard;i<cities.size();i+=3){
+            for(int i=target.isEmpty()?shard:0;i<cities.size();i+=target.isEmpty()?3:1){
                 var city=cities.get(i);
                 try{
                     verifyCapital(helper,level,city);

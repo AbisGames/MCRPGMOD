@@ -66,9 +66,11 @@ public final class RegionalMineEvents {
     public static int restoreDue(ServerLevel level,long now,int limit) {
         RenewableOreSavedData data=RenewableOreSavedData.get(level);
         int restored=0;
-        for(RenewableOreSavedData.Node node:data.due(now,limit,n->
-                    level.hasChunkAt(BlockPos.of(n.position()))
-                    && level.getBlockState(BlockPos.of(n.position())).isAir())){
+        for(RenewableOreSavedData.Node node:data.due(now,limit,n->{
+                    var position=BlockPos.of(n.position());
+                    return level.getChunkSource().getChunkNow(position.getX()>>4,position.getZ()>>4)!=null
+                        &&level.getBlockState(position).isAir();
+                })){
             BlockPos position=BlockPos.of(node.position());
             if(PlayerWorldgenProtection.get(level).contains(position)){
                 data.remove(node.position());

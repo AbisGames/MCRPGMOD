@@ -71,7 +71,9 @@ class Workshop(Build):
     def path(self,x1,z1,x2,z2,base=0):
         xlo,xhi=sorted((x1,x2));zlo,zhi=sorted((z1,z2))
         for x in range(xlo,xhi+1):
-            for z in range(zlo,zhi+1):self.set(x,base,z,self.theme[1])
+            for z in range(zlo,zhi+1):
+                self.set(x,base,z,self.theme[1])
+                self.air(x,base+1,z,x,base+3,z)
     def column(self,x,z,y0,y1,kind=None):
         self.box(x,y0,z,x,y1,z,kind or self.theme[3])
     def window(self,x,y,z,along='z'):
@@ -681,7 +683,8 @@ class Workshop(Build):
         if category in ('garden','temple'):
             for xx in range(cx-8,cx+9):
                 for zz in range(cz-8,cz+9):
-                    if abs(xx-cx)==8 or abs(zz-cz)==8:self.set(xx,1,zz,'oak_leaves')
+                    if (abs(xx-cx)==8 or abs(zz-cz)==8) and abs(xx-cx)>3 and abs(zz-cz)>3:
+                        self.set(xx,1,zz,'oak_leaves')
             self.furniture(cx,1,cz,'altar');self.acc['gardens']+=1
         elif category=='harbor':
             for x in range(cx-13,cx+14):

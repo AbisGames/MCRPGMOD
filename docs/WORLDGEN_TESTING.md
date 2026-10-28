@@ -13,6 +13,16 @@ python tools/worldgen/validate_packaged_mod.py build/libs/pipican-0.1.0.jar
 .\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=987654321
 ```
 
+For a focused regression while debugging:
+
+```powershell
+.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=capital -PworldgenTarget=aldermere
+```
+
+CI runs focused capital regressions first, followed by the full matrix in
+separate Java processes per integration suite, retaining each suite's logs. A
+focused pass cannot make the workflow green without the full integration run.
+
 The GameTest run has a 4 GB maximum heap. CI runs the three seeds as independent
 jobs and retains logs and build reports even when a test fails. The generated
 structure workflow also rebuilds the authored assets before running the tests.

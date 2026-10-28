@@ -163,6 +163,7 @@ public final class CapitalPlacementEvents {
                     if(level.getBlockState(p).isSolid())break;
                     level.setBlock(p,support,2);
                 }
+        if(capital)clearWalkways(level,piece,origin,tile.get("kind").getAsString());
         progress.advance(city.id(),index+1,foundationY);
         if(capital&&centreFirst&&index==0)
             progress.advance(orderMarker,1,foundationY);
@@ -256,6 +257,27 @@ public final class CapitalPlacementEvents {
         return true;
     }
 
+    private static void clearWalkways(ServerLevel level,StructureTemplate piece,BlockPos origin,String kind){
+        int width=piece.getSize().getX(),depth=piece.getSize().getZ();
+        var protection=PlayerWorldgenProtection.get(level);
+        for(int x=0;x<width;x++)for(int z=0;z<depth;z++){
+            boolean path;
+            if(kind.equals("central_keep"))
+                path=((z<3||z>=depth-3)&&x>=42&&x<=60)
+                    ||((x<3||x>=width-3)&&z>=42&&z<=60);
+            else if(kind.equals("walkway_eastwest"))path=z>0&&z<depth-1;
+            else if(kind.equals("walkway_northsouth"))path=x>0&&x<width-1;
+            else path=Math.abs(x-width/2)<=3||Math.abs(z-depth/2)<=3;
+            if(!path)continue;
+            for(int y=1;y<=3;y++){
+                var pos=origin.offset(x,y,z);
+                var state=level.getBlockState(pos);
+                if(!protection.contains(pos)&&!state.hasBlockEntity()&&!state.isAir()&&isNatural(state))
+                    level.setBlock(pos,Blocks.AIR.defaultBlockState(),2);
+            }
+        }
+    }
+
     private static final class NaturalPalette {
         static final Set<net.minecraft.world.level.block.Block> BLOCKS=load();
         private static Set<net.minecraft.world.level.block.Block> load(){
@@ -299,6 +321,8 @@ public final class CapitalPlacementEvents {
             || state.is(Blocks.SNOW_BLOCK) || state.is(Blocks.GRAVEL)
             || state.is(Blocks.CLAY) || state.is(Blocks.WATER)
             || state.is(Blocks.RAW_IRON_BLOCK) || state.is(Blocks.RAW_COPPER_BLOCK)
+            || state.is(Blocks.MAGMA_BLOCK) || state.is(Blocks.ICE)
+            || state.is(Blocks.PACKED_ICE) || state.is(Blocks.BLUE_ICE)
             || state.is(Blocks.LAVA);
     }
 
