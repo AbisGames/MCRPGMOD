@@ -15,6 +15,7 @@ final class ExpeditionProcessorTests {
     private ExpeditionProcessorTests(){}
     static void verify(GameTestHelper helper){
         var level=helper.getLevel();
+        PlayerWorldgenProtection.get(level);
         var processor=StructureProcessorType.SINGLE_CODEC.parse(JsonOps.INSTANCE,
             JsonParser.parseString("{\"processor_type\":\"pipican:expedition_access\"}")).getOrThrow();
         var origin=helper.absolutePos(new BlockPos(-40,25,0));

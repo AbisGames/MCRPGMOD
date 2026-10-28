@@ -218,3 +218,10 @@ five minutes without progress it terminates only the disposable GameTest JVM
 with exit code 4. Each capital tile, native structure chunk and world-close
 checkpoint refreshes progress. This turns a stalled fixture into diagnosable
 failure, without bypassing assertions or treating the suite as successful.
+
+Player provenance is initialized on server level load and cached by level
+identity. Native access workers read that cache and a concurrent position set;
+they never load saved-data files. An unavailable cache rejects the shaft plan.
+Temporary integration levels explicitly perform the same initialization before
+requesting generated chunks. Existing saved provenance is still serialized in
+the original format and disk-reload assertions remain enabled.

@@ -59,7 +59,8 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
             edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),climbing);
         }
         for(int y=top+1;y<=top+2;y++)edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),Blocks.AIR.defaultBlockState());
-        var protection=PlayerWorldgenProtection.get(level.getLevel());
+        var protection=PlayerWorldgenProtection.cached(level.getLevel());
+        if(protection==null)return processed; // Fail closed until server-thread initialization.
         // Preflight the entire local plan before returning any replacement.
         for(var entry:edits.entrySet()){
             var pos=entry.getKey();

@@ -121,6 +121,7 @@ public final class WorldgenIntegrationTests {
                     new net.minecraft.world.level.storage.DerivedLevelData(server.getWorldData(),
                         server.getWorldData().overworldData()),RPG,stem,false,
                     net.minecraft.world.level.biome.BiomeManager.obfuscateSeed(seed),List.of(),false);
+                PlayerWorldgenProtection.get(level); // Match server LevelEvent.Load before worker generation.
                 server.forgeGetWorldMap().put(RPG,level);
                 server.markWorldsDirty();
             }catch(Exception e){throw new IllegalStateException("Unable to open temporary RPG test world for seed "+seed,e);}
