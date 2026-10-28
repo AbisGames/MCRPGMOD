@@ -20,7 +20,7 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 public final class WorldgenIntegrationTests {
     private static long generationSeed;
     private static String suite;
-    private static final List<String> SUITES=List.of("sky","terrain","capital","protection","unique");
+    private static final List<String> SUITES=List.of("sky","terrain","capital","protection","unique","expeditions");
     private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
         STORAGE=new java.util.HashMap<>();
     private static final java.util.Map<ResourceKey<Level>,java.nio.file.Path> WORLD_ROOTS=new java.util.HashMap<>();
@@ -133,6 +133,8 @@ public final class WorldgenIntegrationTests {
     private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
         helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
         helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
+        if(suite.equals("expeditions"))RegionalExpeditionTests.verify(helper,level,generationSeed,
+            ()->createLevel(helper,generationSeed),key->saveAndClose(helper,key));
         if(suite.equals("unique")){
             for(var site:SpecialLandmarkPlacementEvents.sites()){
                 if(site.id().startsWith("aetheris_"))continue;

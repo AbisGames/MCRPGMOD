@@ -37,7 +37,7 @@ jobs:
       - name: Verify packaged structure templates
         run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
       - name: NeoForge GameTest server smoke test
-        timeout-minutes: 30
+        timeout-minutes: 60
         run: ./gradlew runGameTestServer --no-daemon -PworldgenTestSeed=${{ matrix.seed }}
       - name: Preserve test diagnostics
         if: always()
