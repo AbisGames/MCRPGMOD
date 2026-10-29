@@ -90,16 +90,7 @@
     {
       "id": "two_weapon_mastery",
       "name": "Two Weapon Mastery",
-      "description": {
-        "text": "combo bonus +15%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "combo bonus +15%",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -107,7 +98,14 @@
         "counter"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "offhand_combo",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "whirling_death",

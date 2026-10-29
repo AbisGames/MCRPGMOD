@@ -40,21 +40,20 @@
     {
       "id": "haft_attack",
       "name": "Haft Attack",
-      "description": {
-        "text": "spears/tridents: every 3rd hit strikes twice",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "spears/tridents: every 3rd hit strikes twice",
       "type": "small",
       "x": 140,
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:nth_hit",
+          "every": 3,
+          "strike_twice": true,
+          "weapons": "#pipican:weapons/polearms"
+        }
       ]
     },
     {

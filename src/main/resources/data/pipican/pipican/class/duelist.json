@@ -58,6 +58,25 @@
   },
   "passives": [
     {
+      "type": "pipican:quarry",
+      "name": "challenge",
+      "pick": "first_hit",
+      "seconds": 30.0,
+      "glow": true,
+      "others_damage": 0.2
+    },
+    {
+      "type": "pipican:on",
+      "event": "quarry_miss",
+      "name": "riposte",
+      "actions": [
+        {
+          "type": "pipican:counter",
+          "target": "victim"
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_dealt",
       "victim": {
         "marked": true
@@ -76,6 +95,28 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "quarry_hurt",
+      "name": "riposte",
+      "chance": 0.0,
+      "actions": [
+        {
+          "type": "pipican:counter",
+          "target": "victim"
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "riposte",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
         }
       ]
     }

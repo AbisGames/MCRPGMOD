@@ -69,10 +69,12 @@ public record ClassState(
         Map<String, ReactionMod> reactionMods,
         Shield shield,
         DeadlyAim deadlyAim,
-        List<CraftBonus> craftBonuses) {
+        List<CraftBonus> craftBonuses,
+        Map<String, Quarry> quarries,
+        List<NthHit> nthHits) {
 
     public static final ClassState EMPTY = new ClassState(Optional.empty(), Map.of(), List.of(), List.of(), Map.of(), Set.of(), 0, 0, List.of(), false,
-            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of(), Shield.NONE, DeadlyAim.NONE, List.of());
+            List.of(), Map.of(), 0, 0, List.of(), 0, 0, Set.of(), Map.of(), Map.of(), Bleed.NONE, Map.of(), 0, List.of(), List.of(), Scrutiny.NONE, false, SummonMods.NONE, Cleave.NONE, PetMods.NONE, Map.of(), Map.of(), List.of(), Map.of(), Map.of(), Shield.NONE, DeadlyAim.NONE, List.of(), Map.of(), List.of());
 
     /** A condition the state depends on, and what it answered when the state was computed. */
     public record ConditionCheck(ClassCondition condition, boolean result) {}
@@ -123,6 +125,32 @@ public record ClassState(
     public record Cleave(double fraction, double radius, int maxTargets, boolean chargedOnly, Optional<HolderSet<Item>> weapons) {
         public static final Cleave NONE = new Cleave(0, 0, 0, false, Optional.empty());
     }
+
+    /** A {@code pipican:quarry} with its {@code pipican:quarry_mod} upgrades folded in. */
+    public record Quarry(com.pipican.effect.type.QuarryEffect.Pick pick, double seconds, boolean replace, boolean glow, double multiplier,
+                         double othersDamage, Map<Holder<MobEffect>, Integer> effects, boolean forever, boolean melee, boolean endOnOtherHit,
+                         double untouched) {
+        public Quarry with(QuarryMod m) {
+            Map<Holder<MobEffect>, Integer> all = new java.util.HashMap<>(effects);
+            m.effects().forEach((k, v) -> all.merge(k, v, Math::max));
+            return new Quarry(pick, seconds * Math.max(0, 1 + m.duration()), replace, glow, multiplier + m.multiplier(), othersDamage, Map.copyOf(all),
+                    forever || m.forever(), melee || m.melee(), endOnOtherHit || m.endOnOtherHit(), untouched + m.untouched());
+        }
+    }
+
+    /** A {@code pipican:quarry_mod}. */
+    public record QuarryMod(double duration, double multiplier, double untouched, boolean forever, boolean melee, boolean endOnOtherHit,
+                            Map<Holder<MobEffect>, Integer> effects) {
+        public QuarryMod plus(QuarryMod o) {
+            Map<Holder<MobEffect>, Integer> all = new java.util.HashMap<>(effects);
+            o.effects.forEach((k, v) -> all.merge(k, v, Math::max));
+            return new QuarryMod(duration + o.duration, multiplier + o.multiplier, untouched + o.untouched, forever || o.forever,
+                    melee || o.melee, endOnOtherHit || o.endOnOtherHit, Map.copyOf(all));
+        }
+    }
+
+    /** A {@code pipican:nth_hit}. */
+    public record NthHit(int every, boolean sameTarget, double multiplier, boolean strikeTwice, Optional<HolderSet<net.minecraft.world.item.Item>> weapons) {}
 
     /** {@code pipican:summon_mod} totals. */
     public record SummonMods(double damage, double health, double seconds, int count, double hearts, double cap, double capMultiplier) {

@@ -66,6 +66,16 @@ public final class Marks {
         return mult;
     }
 
+    /** Removes {@code owner}'s marks from {@code target}. */
+    public static void remove(LivingEntity target, Player owner) {
+        List<Mark> list = MARKS.get(target.getUUID());
+        if (list != null) {
+            synchronized (list) {
+                list.removeIf(m -> m.owner().equals(owner.getUUID()));
+            }
+        }
+    }
+
     public static void forget(LivingEntity entity) {
         MARKS.remove(entity.getUUID());
     }

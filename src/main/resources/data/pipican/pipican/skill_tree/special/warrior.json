@@ -47,16 +47,7 @@
     {
       "id": "expertise",
       "name": "Combat Expertise",
-      "description": {
-        "text": "every 4th hit on the same mob deals +25% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "every 4th hit on the same mob deals +25% damage",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -65,7 +56,15 @@
         "forceful"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:nth_hit",
+          "every": 4,
+          "same_target": true,
+          "multiplier": 1.25
+        }
+      ]
     },
     {
       "id": "grit_heart",

@@ -189,6 +189,9 @@ public final class ClassEvents {
                 if (chance > 0 && victim.getRandom().nextDouble() < chance) {
                     victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
                     MasteryEvents.did(victim, SkillAction.Did.Kind.DODGE);
+                    if (com.pipican.ability.Quarries.isQuarryOf(source, victim)) {
+                        Reactions.fire(victim, source, ItemStack.EMPTY, ReactionEffect.Event.QUARRY_MISS);
+                    }
                     event.setCanceled(true);
                     return;
                 }
@@ -212,7 +215,12 @@ public final class ClassEvents {
             }
             // Ability marks on the target and "your next hit" buffs.
             amount *= (float) Marks.multiplier(attacker, event.getEntity(), event.getSource());
+            amount *= (float) com.pipican.ability.Quarries.multiplier(attacker, event.getEntity());
+            amount *= (float) com.pipican.ability.Strikes.nthHit(attacker, event.getEntity(), event.getSource());
             amount = Empowers.apply(attacker, event.getEntity(), amount);
+        }
+        if (source != null && !(source instanceof Player) && event.getEntity().level().getServer() != null) {
+            amount *= (float) com.pipican.ability.Quarries.othersMultiplier(source, event.getEntity(), event.getEntity().level().getServer());
         }
         if (amount != event.getAmount()) {
             event.setAmount(amount);
@@ -317,6 +325,9 @@ public final class ClassEvents {
         MobControl.tick(event.getServer());
         Scry.tick(event.getServer());
         Bleeds.tick(event.getServer());
+        if (event.getServer().getTickCount() % 20 == 0) {
+            com.pipican.ability.Quarries.tick(event.getServer());
+        }
     }
 
     /** Summons left over from before a restart are not loaded back in. */
@@ -355,6 +366,7 @@ public final class ClassEvents {
                 Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);
             }
             execute(attacker, event.getEntity());
+            com.pipican.ability.Quarries.onHit(attacker, event.getEntity(), event.getSource().getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile, swing);
             if (event.getSource().is(net.minecraft.tags.DamageTypeTags.WITCH_RESISTANT_TO)) {
                 Reactions.fire(attacker, event.getEntity(), event.getSource().getWeaponItem(), ReactionEffect.Event.MAGIC_HIT);
             }
@@ -369,6 +381,11 @@ public final class ClassEvents {
             LivingEntity attacker = event.getSource().getEntity() instanceof LivingEntity l ? l : null;
             if (attacker != null) {
                 Combat.mark(victim);
+                boolean quarry = com.pipican.ability.Quarries.isQuarryOf(attacker, victim);
+                com.pipican.ability.Quarries.onPlayerHurt(victim, attacker);
+                if (quarry) {
+                    Reactions.fire(victim, attacker, ItemStack.EMPTY, ReactionEffect.Event.QUARRY_HURT);
+                }
             }
             Reactions.fire(victim, attacker, event.getSource().getWeaponItem(), ReactionEffect.Event.HURT);
             for (ServerPlayer other : nearbyPlayers(victim, victim)) {
@@ -391,6 +408,9 @@ public final class ClassEvents {
         if (event.getBlocked() && event.getEntity() instanceof ServerPlayer player) {
             LivingEntity attacker = event.getDamageSource().getEntity() instanceof LivingEntity l ? l : null;
             Reactions.fire(player, attacker, player.getUseItem(), ReactionEffect.Event.BLOCK);
+            if (attacker != null && com.pipican.ability.Quarries.isQuarryOf(attacker, player)) {
+                Reactions.fire(player, attacker, player.getUseItem(), ReactionEffect.Event.QUARRY_MISS);
+            }
         }
     }
 

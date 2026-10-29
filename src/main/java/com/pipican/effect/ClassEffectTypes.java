@@ -89,6 +89,9 @@ public final class ClassEffectTypes {
     public static final Type DEADLY_AIM = register("deadly_aim", com.pipican.effect.type.DeadlyAimEffect.CODEC);
     public static final Type CRAFT_BONUS = register("craft_bonus", com.pipican.effect.type.CraftBonusEffect.CODEC);
     public static final Type CLEAVE = register("cleave", CleaveEffect.CODEC);
+    public static final Type QUARRY = register("quarry", com.pipican.effect.type.QuarryEffect.CODEC);
+    public static final Type QUARRY_MOD = register("quarry_mod", com.pipican.effect.type.QuarryModEffect.CODEC);
+    public static final Type NTH_HIT = register("nth_hit", com.pipican.effect.type.NthHitEffect.CODEC);
     public static final Type BONUS = register("bonus", BonusEffect.CODEC);
 
     private ClassEffectTypes() {}

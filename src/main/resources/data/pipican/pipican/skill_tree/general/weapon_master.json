@@ -98,16 +98,7 @@
     {
       "id": "weapon_master_signature_move",
       "name": "Signature Move",
-      "description": {
-        "text": "every 5th hit with favored weapon is a crit",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "every 5th hit with favored weapon is a crit",
       "type": "notable",
       "x": -1264,
       "y": -579,
@@ -115,7 +106,22 @@
         "weapon_master_guard"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:nth_hit",
+              "every": 5,
+              "multiplier": 1.5
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "weapon_master_one_true_weapon",

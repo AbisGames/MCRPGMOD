@@ -98,6 +98,7 @@ import net.minecraft.util.StringRepresentable;
  *       {@code wind_charge_damage}: <i>damage</i> added to direct hits of your wind charges</li>
  *   <li>{@code distance_damage}: extra projectile damage per full 16 blocks between you and the target (0.1 = +10%)</li>
  *   <li>{@code triage}: how much more your heals heal other players below 30% health (1 = twice as much)</li>
+ *   <li>{@code offhand_combo}: how much more your off-hand swing deals right after a main-hand hit on the same mob</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -118,7 +119,7 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         SPLASH_UNDEAD, THROWN_SPEED, MAX_WOLVES, OPEN_LOCKS, REDIRECT_HIT, ILL_FORTUNE, BREW_SPEED, NO_TOP_TIER,
         RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK,
         FREE_ABILITY_EVERY, WEATHER_WARNING, GLORIOUS_DEATH, GUARD_ALLIES, PROJECTILE_WARD, EXECUTE_LOOTING, SURE_TAME,
-        FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE;
+        FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

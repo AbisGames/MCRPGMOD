@@ -58,16 +58,7 @@
     {
       "id": "duelist_bind",
       "name": "Bind",
-      "description": {
-        "text": "challenged foe gets Slowness I",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "challenged foe gets Slowness I",
       "type": "notable",
       "x": -1350,
       "y": -333,
@@ -75,7 +66,16 @@
         "duelist_en_garde"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:quarry_mod",
+          "name": "challenge",
+          "effects": {
+            "minecraft:slowness": 0
+          }
+        }
+      ]
     },
     {
       "id": "duelist_parry",

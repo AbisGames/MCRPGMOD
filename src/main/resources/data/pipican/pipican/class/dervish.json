@@ -92,6 +92,11 @@
           "melee_only": true
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "offhand_combo",
+      "amount": 0.2
     }
   ],
   "special_passives": [

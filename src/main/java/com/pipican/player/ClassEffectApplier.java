@@ -326,7 +326,8 @@ public final class ClassEffectApplier {
                 new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
                         c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods),
                 new ClassState.Shield(c.shieldAbsorb * Math.max(0, 1 + c.shieldEfficiency)),
-                new ClassState.DeadlyAim(c.aimOn, c.aimHold, c.aimDamage, c.aimCrit), List.copyOf(c.craftBonuses));
+                new ClassState.DeadlyAim(c.aimOn, c.aimHold, c.aimDamage, c.aimCrit), List.copyOf(c.craftBonuses),
+                c.quarries(), List.copyOf(c.nthHits));
     }
 
     /**
@@ -453,6 +454,30 @@ public final class ClassEffectApplier {
         final Map<String, ClassState.ReactionMod> reactionMods = new java.util.HashMap<>();
         double shieldAbsorb;
         final List<ClassState.CraftBonus> craftBonuses = new ArrayList<>();
+        final Map<String, ClassState.Quarry> quarryBases = new HashMap<>();
+        final Map<String, ClassState.QuarryMod> quarryMods = new HashMap<>();
+        final List<ClassState.NthHit> nthHits = new ArrayList<>();
+
+        Map<String, ClassState.Quarry> quarries() {
+            Map<String, ClassState.Quarry> out = new HashMap<>();
+            quarryBases.forEach((name, q) -> out.put(name, quarryMods.containsKey(name) ? q.with(quarryMods.get(name)) : q));
+            return Map.copyOf(out);
+        }
+
+        @Override
+        public void addQuarry(String name, ClassState.Quarry quarry) {
+            quarryBases.putIfAbsent(name, quarry);
+        }
+
+        @Override
+        public void addQuarryMod(String name, ClassState.QuarryMod mod) {
+            quarryMods.merge(name, mod, ClassState.QuarryMod::plus);
+        }
+
+        @Override
+        public void addNthHit(ClassState.NthHit hit) {
+            nthHits.add(hit);
+        }
         double shieldEfficiency;
         boolean aimOn;
         double aimHold;

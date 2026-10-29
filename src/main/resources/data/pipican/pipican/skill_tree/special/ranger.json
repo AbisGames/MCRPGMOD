@@ -105,16 +105,7 @@
     {
       "id": "master_hunter",
       "name": "Master Hunter",
-      "description": {
-        "text": "you can mark prey in melee too and prey bonus +10%; Hunt Prey ends instantly if you hit another mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can mark prey in melee too and prey bonus +10%; Hunt Prey ends instantly if you hit another mob",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -123,7 +114,16 @@
         "relentless"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:quarry_mod",
+          "name": "hunt prey",
+          "melee": true,
+          "multiplier": 0.1,
+          "end_on_other_hit": true
+        }
+      ]
     }
   ]
 }

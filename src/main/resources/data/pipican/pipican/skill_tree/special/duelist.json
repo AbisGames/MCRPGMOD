@@ -50,16 +50,7 @@
     {
       "id": "riposte",
       "name": "Riposte",
-      "description": {
-        "text": "riposte hits are always critical",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "riposte hits are always critical",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,14 @@
         "salute"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "riposte",
+          "strength": 0.5
+        }
+      ]
     },
     {
       "id": "duel_mastery",
@@ -94,16 +92,7 @@
     {
       "id": "flawless",
       "name": "Flawless",
-      "description": {
-        "text": "while the foe hasn't hit you, +25% damage; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "while the foe hasn't hit you, +25% damage; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -112,7 +101,20 @@
         "duel_mastery"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:quarry_mod",
+          "name": "challenge",
+          "untouched": 0.25
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

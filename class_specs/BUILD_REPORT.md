@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1938**, partly working: **21**, not yet: **291**
+- Bonus phrases: **2250**. Fully working: **1955**, partly working: **21**, not yet: **274**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,16 +12,16 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 91 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 86 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 53 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 43 |
+| [Other mechanics](#other-mechanics) | 85 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 85 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 51 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 42 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 28 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 16 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 20 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 15 |
 | [Immunities](#immunities) | 9 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 6 |
-| [Critical hits](#critical-hits) | 3 |
+| [Critical hits](#critical-hits) | 2 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 
 ## Other mechanics
@@ -42,9 +42,7 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **defender**
   - general tree: Taunt: mobs within 6 blocks prefer to target you
 - **dervish**
-  - passive: Two Weapon Mastery: hitting the same mob with both hands in a row deals +20% on the second hit
   - weakness: shields count as forbidden and -25% damage with bows and crossbows
-  - special tree: Two Weapon Mastery: combo bonus +15%
 - **destroyer**
   - special passive: Shockwave radius +1 per 20 Ruin
   - special passive: Shockwave damage +0.1 per Ruin point
@@ -59,7 +57,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: no slowdown from powder snow, soul sand, cobwebs or honey
 - **duelist**
   - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
-  - general tree: Bind: challenged foe gets Slowness I
   - general tree: Lone Wolf: Duel bonuses doubled
 - **engineer**
   - general tree: Iron Titan: it moves 20% slower
@@ -67,8 +64,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Steady: exposure after charged hits lasts 1s
 - **explorer**
   - general tree: Cartographer: maps you make explore 25% faster
-- **fighter**
-  - special tree: Haft Attack: spears/tridents: every 3rd hit strikes twice
 - **gladiator**
   - special tree: Low Blow: Dirty Fighting can also apply Weakness
 - **gunslinger**
@@ -119,8 +114,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **pyromancer**
   - passive: Fire you start burns 50% longer
   - general tree: Wildfire: burning mobs spread fire to adjacent mobs
-- **ranger**
-  - passive: you deal +15% damage to it and it glows for you
 - **savant**
   - special passive: Focus bonus +0.5% per Breadth
   - special tree: Second Focus: focus bonus +10%
@@ -155,8 +148,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **warlock**
   - passive: you gain 10 Stolen Power instead
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
-- **warrior**
-  - special tree: Combat Expertise: every 4th hit on the same mob deals +25% damage
 - **witch**
   - weakness: takes 25% more fire damage and burns for 50% longer
 - **woodwose**
@@ -283,7 +274,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Filch: +5% Steal Spell chance
   - general tree: Oathbreaker: Steal Spell chance doubles, but you can no longer benefit from beacons
 - **weapon_master**
-  - general tree: Signature Move: every 5th hit with favored weapon is a crit
   - general tree: One True Weapon: +30% favored damage, but other weapons are forbidden-tier
   - special tree: Swift Change: you can change favored weapon once per day without sleeping
 - **wizard**
@@ -318,8 +308,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **dreadnaught**
   - passive: while wearing 4 heavy pieces
 - **duelist**
-  - passive: Challenge: the first mob you hit becomes your challenged foe for 30s; it deals 20% less damage to anyone but you
-  - passive: Riposte: when your challenged foe attacks you and misses or is blocked, you counterattack instantly
   - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
@@ -400,8 +388,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
 - **druid**
   - special passive: +1% regeneration per 2 Wildness while standing on grass, dirt, sand or leaves
-- **duelist**
-  - special tree: Flawless: while the foe hasn't hit you, +25% damage; -10% max health
 - **enchanter**
   - special tree: Puppet Master: you can keep one charmed mob as a pet until you sleep; -15% max health
 - **gladiator**
@@ -527,12 +513,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **assassin**
   - general tree: Death Mark: Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you
 - **avenger**
-  - passive: Vow of Vengeance: the next mob to damage you or a player within 16 blocks becomes marked for 60s (one at a time)
   - passive: When your marked target moves away, you get Speed II for 2s
   - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
-  - weakness: -15% damage against anything that isn't your marked target while a mark is active
-  - general tree: Blood Debt: marks last until the target dies
-  - general tree: Blood Debt: you can never mark a new one until it does
 - **beastmaster**
   - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
 - **diplomat**
@@ -547,12 +529,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **poisoner**
   - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
 - **ranger**
-  - passive: the last mob you hit with an arrow becomes your prey for 60s
-  - special passive: +0.5% Hunt Prey duration per Instinct point
   - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
   - special tree: Relentless Pursuit: when prey flees, you get Speed I for 3s
-  - special tree: Master Hunter: you can mark prey in melee too and prey bonus +10%
-  - special tree: Master Hunter: Hunt Prey ends instantly if you hit another mob
 - **runesmith**
   - weakness: -15% damage with unmarked weapons per unmarked armor piece
   - weakness: -1 armor per unmarked armor piece
@@ -572,8 +550,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: +50% wind charge knockback and they don't hurt you
 - **destroyer**
   - special tree: Shockwave: shockwave knocks mobs back
-- **duelist**
-  - special passive: Riposte chance on any hit from the foe: +0.3% per Finesse
 - **mage_knight**
   - special tree: Charged Blade: first escalating hit also knocks back
 - **myrmidon**
@@ -631,8 +607,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **dervish**
   - special tree: Counter: a successful parry makes your next hit a crit
-- **duelist**
-  - special tree: Riposte: riposte hits are always critical
 - **jack_of_all_trades**
   - passive: Aptitude: once every 60s, your next hit is a guaranteed critical with +20% damage
 

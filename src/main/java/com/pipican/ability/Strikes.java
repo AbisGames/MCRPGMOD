@@ -21,7 +21,45 @@ public final class Strikes {
     /** True while extra strikes are being dealt, so they don't trigger more extra strikes. */
     private static boolean striking;
 
+    private static final Map<UUID, int[]> NTH = new ConcurrentHashMap<>();
+    private static final Map<UUID, LivingEntity> LAST_TARGET = new ConcurrentHashMap<>();
+    private static final java.util.Set<UUID> STRIKE_AGAIN = ConcurrentHashMap.newKeySet();
+
     private Strikes() {}
+
+    /**
+     * {@code pipican:nth_hit}: counts the player's melee swings and returns the damage multiplier for this one
+     * (and queues the second strike). Extra strikes don't count.
+     */
+    public static double nthHit(ServerPlayer player, LivingEntity target, net.minecraft.world.damagesource.DamageSource source) {
+        if (striking || source.getDirectEntity() != player || !source.is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)) {
+            return 1;
+        }
+        var hits = ClassEffectApplier.state(player).nthHits();
+        if (hits.isEmpty()) {
+            return 1;
+        }
+        int[] counts = NTH.compute(player.getUUID(), (k, v) -> v == null || v.length != hits.size() ? new int[hits.size()] : v);
+        LivingEntity last = LAST_TARGET.put(player.getUUID(), target);
+        double mult = 1;
+        for (int i = 0; i < hits.size(); i++) {
+            ClassState.NthHit h = hits.get(i);
+            if (h.weapons().isPresent() && !player.getMainHandItem().is(h.weapons().get())) {
+                continue;
+            }
+            if (h.sameTarget() && last != target) {
+                counts[i] = 0;
+            }
+            if (++counts[i] >= h.every()) {
+                counts[i] = 0;
+                mult *= h.multiplier();
+                if (h.strikeTwice()) {
+                    STRIKE_AGAIN.add(player.getUUID());
+                }
+            }
+        }
+        return mult;
+    }
 
     public static void after(ServerPlayer player, LivingEntity target, float damage) {
         if (striking || !(player.level() instanceof ServerLevel level)) {
@@ -30,6 +68,10 @@ public final class Strikes {
         ClassState state = ClassEffectApplier.state(player);
         striking = true;
         try {
+            if (STRIKE_AGAIN.remove(player.getUUID()) && target.isAlive() && damage > 0) {
+                target.invulnerableTime = 0;
+                target.hurtServer(level, level.damageSources().playerAttack(player), damage);
+            }
             cleave(player, target, damage, state.cleave(), level);
             // Magic portion: a share of the hit again as magic (ignores armor).
             double portion = state.chance(BonusEffect.Kind.MAGIC_PORTION);
@@ -83,7 +125,8 @@ public final class Strikes {
             }
         });
         target.invulnerableTime = 0;
-        target.hurtServer(level, level.damageSources().playerAttack(player), (float) attack[0]);
+        // Two Weapon Mastery: the off-hand follow-up on the same mob hits harder.
+        target.hurtServer(level, level.damageSources().playerAttack(player), (float) (attack[0] * state.bonus(BonusEffect.Kind.OFFHAND_COMBO)));
         player.swing(net.minecraft.world.InteractionHand.OFF_HAND, true);
     }
 }

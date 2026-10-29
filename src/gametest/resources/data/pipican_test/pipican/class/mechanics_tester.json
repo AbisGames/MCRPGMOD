@@ -4,61 +4,212 @@
   "selectable": false,
   "base_stats": {},
   "passives": [
-    { "type": "pipican:craft_bonus", "items": "minecraft:ladder", "chance": 1 },
-    { "type": "pipican:on", "event": "interact", "victims": "minecraft:sheep", "weapons": "minecraft:shears",
-      "actions": [ { "type": "pipican:effect", "target": "victim", "effects": [ { "effect": "minecraft:glowing", "seconds": 5 } ] } ] },
-    { "type": "pipican:on", "event": "lightning", "name": "test bolt",
-      "actions": [ { "type": "pipican:boost", "seconds": 5, "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 2 } ] } ] },
-    { "type": "pipican:reaction_mod", "name": "test bolt", "strength": 0.5 },
-    { "type": "pipican:on", "event": "attacked_melee", "name": "test hand", "actions": [ { "type": "pipican:shrug" } ] },
-    { "type": "pipican:damage_dealt", "damage_types": "#minecraft:is_drowning", "against": "minecraft:husk", "multiplier": 0.5, "except": true },
-    { "type": "pipican:bonus", "kind": "spell_ward", "amount": 1 },
+    {
+      "type": "pipican:craft_bonus",
+      "items": "minecraft:ladder",
+      "chance": 1
+    },
+    {
+      "type": "pipican:on",
+      "event": "interact",
+      "victims": "minecraft:sheep",
+      "weapons": "minecraft:shears",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:glowing",
+              "seconds": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "lightning",
+      "name": "test bolt",
+      "actions": [
+        {
+          "type": "pipican:boost",
+          "seconds": 5,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "test bolt",
+      "strength": 0.5
+    },
+    {
+      "type": "pipican:on",
+      "event": "attacked_melee",
+      "name": "test hand",
+      "actions": [
+        {
+          "type": "pipican:shrug"
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#minecraft:is_drowning",
+      "against": "minecraft:husk",
+      "multiplier": 0.5,
+      "except": true
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "spell_ward",
+      "amount": 1
+    },
     {
       "type": "pipican:on",
       "event": "instrument",
       "name": "test horn",
-      "actions": [ { "type": "pipican:effect", "target": "self", "effects": [ { "effect": "minecraft:night_vision", "seconds": 2 } ] } ]
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:night_vision",
+              "seconds": 2
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "pipican:reaction_mod",
       "name": "Test Horn",
       "seconds": 3,
-      "amplify": { "minecraft:night_vision": 1 },
-      "actions": [ { "type": "pipican:effect", "target": "self", "effects": [ { "effect": "minecraft:water_breathing", "seconds": 2 } ] } ]
+      "amplify": {
+        "minecraft:night_vision": 1
+      },
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:water_breathing",
+              "seconds": 2
+            }
+          ]
+        }
+      ]
     },
-    { "type": "pipican:ability_mod", "ability": "pipican_test:mend", "cooldown_seconds": -1, "cost": -0.5 },
-    { "type": "pipican:bonus", "kind": "min_melee_damage", "amount": 4 },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican_test:mend",
+      "cooldown_seconds": -1,
+      "cost": -0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "min_melee_damage",
+      "amount": 4
+    },
     {
       "type": "pipican:on",
       "event": "eat",
       "weapons": "minecraft:cooked_beef",
-      "actions": [ { "type": "pipican:effect", "target": "self", "effects": [ { "effect": "minecraft:dolphins_grace", "seconds": 5 } ] } ]
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:dolphins_grace",
+              "seconds": 5
+            }
+          ]
+        }
+      ]
     },
-    { "type": "pipican:bonus", "kind": "anvil_cost", "amount": -0.5 },
-    { "type": "pipican:bonus", "kind": "anvil_levels", "amount": 1 },
-    { "type": "pipican:bonus", "kind": "drunk_potion_duration", "amount": 1 },
-    { "type": "pipican:effect_duration", "effects": "minecraft:luck", "multiplier": 2 },
-    { "type": "pipican:ignored_by", "mobs": "#minecraft:skeletons", "unless_attacked": true },
+    {
+      "type": "pipican:bonus",
+      "kind": "anvil_cost",
+      "amount": -0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "anvil_levels",
+      "amount": 1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "drunk_potion_duration",
+      "amount": 1
+    },
+    {
+      "type": "pipican:effect_duration",
+      "effects": "minecraft:luck",
+      "multiplier": 2
+    },
+    {
+      "type": "pipican:ignored_by",
+      "mobs": "#minecraft:skeletons",
+      "unless_attacked": true
+    },
     {
       "type": "pipican:on",
       "event": "hit",
-      "victim": { "from_behind": true },
-      "actions": [ { "type": "pipican:effect", "target": "victim", "effects": [ { "effect": "minecraft:unluck", "seconds": 5 } ] } ]
+      "victim": {
+        "from_behind": true
+      },
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:unluck",
+              "seconds": 5
+            }
+          ]
+        }
+      ]
     },
     {
       "type": "pipican:on",
       "event": "kill",
-      "actions": [ { "type": "pipican:experience", "amount": 3 } ]
+      "actions": [
+        {
+          "type": "pipican:experience",
+          "amount": 3
+        }
+      ]
     },
     {
       "type": "pipican:applied_effect",
       "effect": "minecraft:poison",
       "seconds": 2,
       "min_amplifier": 1,
-      "also": { "minecraft:slowness": 0 }
+      "also": {
+        "minecraft:slowness": 0
+      }
     },
-    { "type": "pipican:bonus", "kind": "food_safe", "amount": 1 },
-    { "type": "pipican:bonus", "kind": "armor_pierce", "amount": 1 },
+    {
+      "type": "pipican:bonus",
+      "kind": "food_safe",
+      "amount": 1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "armor_pierce",
+      "amount": 1
+    },
     {
       "type": "pipican:pet_mod",
       "armor": 2,
@@ -66,7 +217,10 @@
     },
     {
       "type": "pipican:damage_dealt",
-      "victim": { "effects": "minecraft:glowing", "within": 6 },
+      "victim": {
+        "effects": "minecraft:glowing",
+        "within": 6
+      },
       "multiplier": 2
     },
     {
@@ -182,6 +336,14 @@
       "type": "pipican:cleave",
       "fraction": 0.5,
       "radius": 3
+    },
+    {
+      "type": "pipican:quarry",
+      "name": "test prey",
+      "pick": "arrow_hit",
+      "seconds": 60,
+      "replace": true,
+      "multiplier": 1.5
     }
   ]
 }

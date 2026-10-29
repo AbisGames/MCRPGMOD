@@ -89,7 +89,11 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** Another player within 16 blocks took damage (the victim is whoever hurt them, if anyone). */
         ALLY_HURT("ally_hurt"),
         /** Your magic damage hurt a mob. */
-        MAGIC_HIT("magic_hit");
+        MAGIC_HIT("magic_hit"),
+        /** Your quarry (challenged foe...) attacked you and missed: you dodged or blocked it (the victim is the quarry). */
+        QUARRY_MISS("quarry_miss"),
+        /** Your quarry hurt you (the victim is the quarry). */
+        QUARRY_HURT("quarry_hurt");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

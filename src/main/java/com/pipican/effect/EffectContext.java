@@ -100,6 +100,15 @@ public interface EffectContext {
     /** {@code effect} lasts {@code multiplier} times as long on the player. */
     void addEffectDuration(Holder<MobEffect> effect, double multiplier);
 
+    /** A chosen-target rule ({@code pipican:quarry}). */
+    void addQuarry(String name, com.pipican.player.ClassState.Quarry quarry);
+
+    /** An upgrade to the quarry called {@code name}. */
+    void addQuarryMod(String name, com.pipican.player.ClassState.QuarryMod mod);
+
+    /** An every-Nth-hit bonus. */
+    void addNthHit(com.pipican.player.ClassState.NthHit hit);
+
     /** Crafting {@code items} may give a second batch. */
     void addCraftBonus(HolderSet<Item> items, double chance);
 

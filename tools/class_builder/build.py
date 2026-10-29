@@ -411,6 +411,7 @@ def main(spec_dir, res_dir, report_path):
     write(f'{NS}/tags/item/weapons/metal.json', {'values': [f'minecraft:{m}_{w}' for m in ('iron', 'diamond', 'netherite')
                                                             for w in ('sword', 'axe', 'pickaxe', 'shovel', 'hoe', 'spear')]})
     write(f'{NS}/tags/item/weapons/axes_maces.json', {'values': ['#pipican:weapons/axes', '#pipican:weapons/maces']})
+    write(f'{NS}/tags/item/weapons/polearms.json', {'values': ['#pipican:weapons/spears', '#pipican:weapons/tridents']})
     write(f'{NS}/tags/item/weapons/staff.json', {'values': ['minecraft:blaze_rod', 'minecraft:stick']})
     write(f'{NS}/tags/item/food/cooked_meat.json', {'values': ['minecraft:cooked_beef', 'minecraft:cooked_porkchop', 'minecraft:cooked_mutton',
                                                            'minecraft:cooked_chicken', 'minecraft:cooked_rabbit']})

@@ -651,6 +651,18 @@ public final class ClassSystemTests {
         player.setRespawnPosition(new ServerPlayer.RespawnConfig(net.minecraft.world.level.storage.LevelData.RespawnData.of(level.dimension(),
                 player.blockPosition().offset(20, 0, 0), 0, 0), true), false);
         helper.assertTrue(home.test(player), "20 blocks from the bed");
+
+        // Quarry: an arrow hit makes the mob your prey - marked by you and taking +50% from you; melee doesn't pick.
+        Zombie prey = helper.spawn(EntityType.ZOMBIE, new BlockPos(7, 2, 7));
+        com.pipican.ability.Quarries.onHit(player, prey, false, true);
+        helper.assertTrue(!com.pipican.ability.Quarries.has(player, "test prey"), "a melee hit doesn't pick prey");
+        com.pipican.ability.Quarries.onHit(player, prey, true, false);
+        helper.assertTrue(com.pipican.ability.Quarries.has(player, "test prey"), "an arrow hit does");
+        helper.assertTrue(com.pipican.ability.Marks.isMarkedBy(prey, player), "prey counts as marked");
+        assertNear(helper, 1.5, com.pipican.ability.Quarries.multiplier(player, prey), "prey takes +50%");
+        assertNear(helper, 1, com.pipican.ability.Quarries.multiplier(player, spare), "other mobs don't");
+        com.pipican.ability.Quarries.onHit(player, spare, true, false);
+        helper.assertTrue(!com.pipican.ability.Marks.isMarkedBy(prey, player) && com.pipican.ability.Marks.isMarkedBy(spare, player), "new prey replaces the old");
         helper.succeed();
     }
 

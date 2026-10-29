@@ -1192,6 +1192,69 @@ def world(low, ctx):
     m = re.fullmatch(rf'the magic damage portion of your hits rises to {N}%', low)
     if m and cid == 'spellbinder' and float(m.group(1)) > 15:
         return [{'type': 'pipican:conditional', 'when': bound, 'effects': bonus_kind('magic_portion', pct(float(m.group(1)) - 15))}]
+    eff = '|'.join(sorted((re.escape(k) for k in combat.EFFECT_NAMES), key=len, reverse=True))
+    # Chosen targets (pipican:quarry): Vow of Vengeance, Hunt Prey, Challenge, and their upgrades.
+    m = re.fullmatch(rf'the next mob to damage you or a player within 16 blocks becomes marked for {N}s(?: \(one at a time\))?', low)
+    if m:
+        return [{'type': 'pipican:quarry', 'name': 'vow of vengeance', 'pick': 'hurt_by', 'seconds': float(m.group(1)), 'glow': True}]
+    m = re.fullmatch(rf"-{N}% damage against anything that isn'?t your marked target while a mark is active", low)
+    if m and cid == 'avenger':
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:quarry', 'name': 'vow of vengeance'},
+                 'effects': [{'type': 'pipican:damage_dealt', 'victim': {'marked': True}, 'except': True, 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]}]
+    if cid == 'avenger' and re.fullmatch(r'marks last until the target dies, but you can never mark a new one until it does', low):
+        # One vow at a time is already the rule; it now only ends when the mob dies.
+        return [{'type': 'pipican:quarry_mod', 'name': 'vow of vengeance', 'forever': True}]
+    m = re.fullmatch(rf'the last mob you hit with an arrow becomes your prey for {N}s; you deal \+{N}% damage to it and it glows for you', low)
+    if m:
+        return [{'type': 'pipican:quarry', 'name': 'hunt prey', 'pick': 'arrow_hit', 'seconds': float(m.group(1)), 'replace': True, 'glow': True,
+                 'multiplier': round(1 + float(m.group(2)) / 100, 6)}]
+    m = re.fullmatch(rf'\+{N}% hunt prey duration per ([a-z]+) points?', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:quarry_mod', 'name': 'hunt prey', 'duration': 0.0, 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}]
+    m = re.fullmatch(rf'you can mark prey in melee too and prey bonus \+{N}%; hunt prey ends instantly if you hit another mob', low)
+    if m:
+        return [{'type': 'pipican:quarry_mod', 'name': 'hunt prey', 'melee': True, 'multiplier': pct(m.group(1)), 'end_on_other_hit': True}]
+    m = re.fullmatch(rf'the first mob you hit becomes your challenged foe for {N}s; it deals {N}% less damage to anyone but you', low)
+    if m:
+        return [{'type': 'pipican:quarry', 'name': 'challenge', 'pick': 'first_hit', 'seconds': float(m.group(1)), 'glow': True,
+                 'others_damage': pct(m.group(2))}]
+    if cid == 'duelist' and re.fullmatch(r'when your challenged foe attacks you and misses or is blocked, you counterattack instantly', low):
+        r = {'type': 'pipican:on', 'event': 'quarry_miss', 'name': 'riposte', 'actions': [{'type': 'pipican:counter', 'target': 'victim'}]}
+        REACTIONS.setdefault(cid, {}).setdefault('riposte', r)
+        return [r]
+    m = re.fullmatch(rf'riposte chance on any hit from the foe: \+{N}% per ([a-z]+)', low)
+    if m and cid == 'duelist' and m.group(2) == sp:
+        return [{'type': 'pipican:on', 'event': 'quarry_hurt', 'name': 'riposte', 'chance': 0.0, 'actions': [{'type': 'pipican:counter', 'target': 'victim'}]},
+                {'type': 'pipican:reaction_chance', 'name': 'riposte', 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}]
+    if cid == 'duelist' and re.fullmatch(r'riposte hits are always critical', low):
+        return [{'type': 'pipican:reaction_mod', 'name': 'riposte', 'strength': 0.5}]
+    m = re.fullmatch(rf'challenged foe gets ({eff}) (i|ii|iii)', low)
+    if m:
+        return [{'type': 'pipican:quarry_mod', 'name': 'challenge', 'effects': {'minecraft:' + combat.EFFECT_NAMES[m.group(1)]: combat.ROMAN[m.group(2)]}}]
+    m = re.fullmatch(rf"while the foe hasn'?t hit you, \+{N}% damage", low)
+    if m and cid == 'duelist':
+        return [{'type': 'pipican:quarry_mod', 'name': 'challenge', 'untouched': pct(m.group(1))}]
+    # Hit counters
+    m = re.fullmatch(rf'every (\d+)(?:st|nd|rd|th) hit on the same mob deals \+{N}% damage', low)
+    if m:
+        return [{'type': 'pipican:nth_hit', 'every': int(m.group(1)), 'same_target': True, 'multiplier': round(1 + float(m.group(2)) / 100, 6)}]
+    m = re.fullmatch(r'(?:(spears/tridents|spears|tridents): )?every (\d+)(?:st|nd|rd|th) hit strikes twice', low)
+    if m:
+        e = {'type': 'pipican:nth_hit', 'every': int(m.group(2)), 'strike_twice': True}
+        if m.group(1):
+            e['weapons'] = {'spears/tridents': '#pipican:weapons/polearms', 'spears': '#pipican:weapons/spears', 'tridents': '#pipican:weapons/tridents'}[m.group(1)]
+        return [e]
+    m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) hit (?:while holding your|with your|with) favou?red weapon is a crit', low)
+    if m:
+        # A crit is +50%, like vanilla's.
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:holding_favored'},
+                 'effects': [{'type': 'pipican:nth_hit', 'every': int(m.group(1)), 'multiplier': 1.5}]}]
+    m = re.fullmatch(rf'hitting the same mob with both hands in a row deals \+{N}% on the second hit', low)
+    if m:
+        return bonus_kind('offhand_combo', pct(m.group(1)))
+    m = re.fullmatch(rf'combo bonus \+{N}%', low)
+    if m and cid == 'dervish':
+        return bonus_kind('offhand_combo', pct(m.group(1)))
     # "tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves": every part must translate.
     if ';' in low:
         parts = [p.strip() for p in low.split(';') if p.strip()]

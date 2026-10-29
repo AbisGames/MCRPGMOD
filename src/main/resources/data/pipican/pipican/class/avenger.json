@@ -61,6 +61,13 @@
   },
   "passives": [
     {
+      "type": "pipican:quarry",
+      "name": "vow of vengeance",
+      "pick": "hurt_by",
+      "seconds": 60.0,
+      "glow": true
+    },
+    {
       "type": "pipican:damage_dealt",
       "victim": {
         "marked": true
@@ -137,17 +144,26 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Avengers can't let go. Nothing else matters until the debt is paid.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Avengers can't let go. Nothing else matters until the debt is paid.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:quarry",
+          "name": "vow of vengeance"
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "victim": {
+              "marked": true
+            },
+            "except": true,
+            "multiplier": 0.85
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",
