@@ -48,16 +48,7 @@
     {
       "id": "retributive_strike",
       "name": "Retributive Strike",
-      "description": {
-        "text": "retribution bonus +20%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "retribution bonus +20%",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -65,7 +56,14 @@
         "stand_fast"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "retributive strike",
+          "strength": 0.666667
+        }
+      ]
     },
     {
       "id": "bodyguard",
@@ -86,16 +84,7 @@
     {
       "id": "aegis_eternal",
       "name": "Aegis Eternal",
-      "description": {
-        "text": "you take 25% of the damage nearby allies take instead of them; -10% movement speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you take 25% of the damage nearby allies take instead of them; -10% movement speed",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -104,7 +93,20 @@
         "bodyguard"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "guard_allies",
+          "amount": 0.25
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

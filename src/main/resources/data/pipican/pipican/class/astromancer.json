@@ -65,6 +65,21 @@
       "type": "pipican:damage_dealt",
       "against": "#pipican:mobs/group_undead_mobs_that_burn_in_daylight",
       "multiplier": 1.2
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sees_sky"
+      },
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 1.0,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ],
   "special_passives": [

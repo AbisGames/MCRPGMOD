@@ -76,16 +76,7 @@
     {
       "id": "sharpshooter_long_shot",
       "name": "Long Shot",
-      "description": {
-        "text": "+10% damage per 16 blocks of distance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% damage per 16 blocks of distance",
       "type": "notable",
       "x": -1390,
       "y": -3,
@@ -93,7 +84,14 @@
         "sharpshooter_piercing"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "distance_damage",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "sharpshooter_eagle_eye",

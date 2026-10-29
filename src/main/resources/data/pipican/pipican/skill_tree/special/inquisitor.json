@@ -50,16 +50,7 @@
     {
       "id": "inquisitor_s_judgment",
       "name": "Inquisitor's Judgment",
-      "description": {
-        "text": "+10% judgment damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% judgment damage",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +58,14 @@
         "cold_eyes"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_illagers_witches_nether_mobs",
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "id": "expose",

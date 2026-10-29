@@ -55,16 +55,7 @@
     {
       "id": "healer_triage",
       "name": "Triage",
-      "description": {
-        "text": "players below 30% health heal twice as fast from you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players below 30% health heal twice as fast from you",
       "type": "notable",
       "x": 1388,
       "y": -84,
@@ -72,7 +63,14 @@
         "healer_gentle_hands"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "triage",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "healer_purify",

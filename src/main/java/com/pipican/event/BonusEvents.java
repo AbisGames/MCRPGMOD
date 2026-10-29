@@ -307,14 +307,28 @@ public final class BonusEvents {
     /** The player whose kill is generating loot right now (between the death and the drops events). */
     private static @org.jspecify.annotations.Nullable ServerPlayer looter;
 
+    private static net.minecraft.world.entity.@org.jspecify.annotations.Nullable LivingEntity looted;
+
+    /** Looting levels the player adds to this kill: {@code looting}, plus {@code execute_looting} for an executed mob. */
+    private static double extraLooting(ServerPlayer player, net.minecraft.world.entity.@org.jspecify.annotations.Nullable LivingEntity victim) {
+        ClassState state = ClassEffectApplier.state(player);
+        double extra = state.chance(Kind.LOOTING);
+        if (victim != null && victim.getPersistentData().getBooleanOr(ClassEvents.EXECUTED, false)) {
+            extra += state.chance(Kind.EXECUTE_LOOTING);
+        }
+        return extra;
+    }
+
     @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
     static void onDeathForLoot(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
-        looter = !event.isCanceled() && event.getSource().getEntity() instanceof ServerPlayer p && ClassEffectApplier.state(p).chance(Kind.LOOTING) >= 1 ? p : null;
+        looter = !event.isCanceled() && event.getSource().getEntity() instanceof ServerPlayer p && extraLooting(p, event.getEntity()) >= 1 ? p : null;
+        looted = event.getEntity();
     }
 
     @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGHEST)
     static void onDropsForLoot(LivingDropsEvent event) {
         looter = null;
+        looted = null;
     }
 
     @SubscribeEvent
@@ -329,7 +343,7 @@ public final class BonusEvents {
             return;
         }
         event.getHolder(net.minecraft.world.item.enchantment.Enchantments.LOOTING).ifPresent(looting -> {
-            int extra = (int) Math.floor(ClassEffectApplier.state(player).chance(Kind.LOOTING) + 1e-9);
+            int extra = (int) Math.floor(extraLooting(player, looted) + 1e-9);
             event.getEnchantments().set(looting, event.getEnchantments().getLevel(looting) + extra);
         });
     }

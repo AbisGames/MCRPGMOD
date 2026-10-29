@@ -142,10 +142,15 @@ public final class AbilityService {
         player.syncData(PipicanAttachments.CLASS_DATA);
     }
 
+    /** Abilities used since login, for {@code free_ability_every}. */
+    private static final Map<java.util.UUID, Integer> USES = new ConcurrentHashMap<>();
+
     private static AbilityContext activate(ServerPlayer player, ResourceKey<Ability> key, Ability ability, boolean spellPoint) {
         PlayerClassData data = ClassService.data(player);
         long now = player.level().getGameTime();
-        double spent = spellPoint ? 0 : ability.spendAll() ? data.resource() : Math.min(cost(player, ability), data.resource());
+        int every = (int) Math.round(ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.FREE_ABILITY_EVERY));
+        boolean free = every > 1 && (USES.getOrDefault(player.getUUID(), 0) + 1) % every == 0;
+        double spent = spellPoint || free ? 0 : ability.spendAll() ? data.resource() : Math.min(cost(player, ability), data.resource());
         data.setResource(data.resource() - spent);
         if (spellPoint) {
             data.extras().spellPoints--;
@@ -165,6 +170,7 @@ public final class AbilityService {
                 return ctx;
             }
         }
+        USES.merge(player.getUUID(), 1, Integer::sum);
         ClassState refundState = ClassEffectApplier.state(player);
         if (spent > 0 && player.getRandom().nextDouble() < refundState.chance(com.pipican.effect.type.BonusEffect.Kind.RESOURCE_REFUND)) {
             data.setResource(Math.min(data.resourceMax(), data.resource() + spent * refundState.bonus(com.pipican.effect.type.BonusEffect.Kind.REFUND_BONUS)));

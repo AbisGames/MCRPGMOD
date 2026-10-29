@@ -11,16 +11,7 @@
     {
       "id": "weather_eye",
       "name": "Weather Eye",
-      "description": {
-        "text": "+2 Wildness; you get a warning message 30s before rain/thunder starts",
-        "extra": [
-          {
-            "text": " (partly not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 Wildness; you get a warning message 30s before rain/thunder starts",
       "type": "small",
       "x": 35,
       "y": 70,
@@ -32,6 +23,11 @@
           "type": "pipican:stat",
           "stat": "pipican:druid_wildness",
           "amount": 2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "weather_warning",
+          "amount": 1.0
         }
       ]
     },

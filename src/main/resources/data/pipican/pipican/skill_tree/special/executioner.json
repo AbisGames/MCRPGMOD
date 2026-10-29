@@ -85,16 +85,7 @@
     {
       "id": "inevitable",
       "name": "Inevitable",
-      "description": {
-        "text": "executed mobs drop +1 Looting; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "executed mobs drop +1 Looting; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -103,7 +94,20 @@
         "death_sentence"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "execute_looting",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

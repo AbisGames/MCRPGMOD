@@ -634,6 +634,23 @@ public final class ClassSystemTests {
                 com.google.gson.JsonParser.parseString("{\"entities\": \"pets\", \"entity\": \"minecraft:parrot\"}")).getOrThrow().test(player), "no parrot");
         cat.discard();
         hunter.discard();
+
+        // Mark strength upgrades: a +30% mark at +100% strength gives +60%.
+        var mark = com.pipican.ability.action.MarkAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"target\": \"victim\", \"multiplier\": 1.3, \"next_hit\": true, \"glow\": false}")).getOrThrow();
+        mark.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.of(spare), 0)
+                .withMod(new ClassState.ReactionMod(0, 0, 0, 0, java.util.List.of(), 1.0)));
+        assertNear(helper, 1.6, com.pipican.ability.Marks.multiplier(player, spare, level.damageSources().playerAttack(player)), "stronger mark");
+        assertNear(helper, 1, com.pipican.ability.Marks.multiplier(player, spare, level.damageSources().playerAttack(player)), "next-hit mark used up");
+
+        // Near home: within 64 blocks of the respawn point.
+        var home = new com.pipican.condition.type.StateCondition(com.pipican.condition.type.StateCondition.State.NEAR_HOME);
+        player.setRespawnPosition(new ServerPlayer.RespawnConfig(net.minecraft.world.level.storage.LevelData.RespawnData.of(level.dimension(),
+                player.blockPosition().offset(200, 0, 0), 0, 0), true), false);
+        helper.assertTrue(!home.test(player), "200 blocks from the bed");
+        player.setRespawnPosition(new ServerPlayer.RespawnConfig(net.minecraft.world.level.storage.LevelData.RespawnData.of(level.dimension(),
+                player.blockPosition().offset(20, 0, 0), 0, 0), true), false);
+        helper.assertTrue(home.test(player), "20 blocks from the bed");
         helper.succeed();
     }
 

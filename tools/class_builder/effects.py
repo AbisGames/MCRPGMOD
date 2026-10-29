@@ -596,6 +596,16 @@ def _translate_line(text, ctx):
     # "your fire damage to mobs is +15%", "+20% weapon and magic damage"
     text = re.sub(lab + r'your (\w+ )?damage(?: to mobs)? is ([+-]\d+(?:\.\d+)?%)$', r'\1\3 \2damage', text, flags=re.I)
     text = re.sub(lab + r'([+-]\d+(?:\.\d+)?%) (weapon|melee|ranged|magic|fire) and (weapon|melee|ranged|magic|fire) damage\b', r'\1\2 \3 damage, \2 \4 damage', text, flags=re.I)
+    # "+15% bow and crossbow damage", "+10% unarmed and +10% axe damage", "unarmed and pickaxe hits +20% damage"
+    wpn = r'(bow|crossbow|axe|mace|sword|spear|trident|unarmed|pickaxe|dagger)'
+    text = re.sub(lab + rf'([+-]\d+(?:\.\d+)?%) {wpn} and {wpn} damage\b', r'\1\2 \3 damage; \2 \4 damage', text, flags=re.I)
+    text = re.sub(lab + rf'([+-]\d+(?:\.\d+)?%) {wpn} and ([+-]\d+(?:\.\d+)?%) {wpn} damage\b', r'\1\2 \3 damage; \4 \5 damage', text, flags=re.I)
+    text = re.sub(lab + rf'{wpn} and {wpn} hits ([+-]\d+(?:\.\d+)?%) damage\b', r'\1\4 \2 damage; \4 \3 damage', text, flags=re.I)
+    text = re.sub(r'([+-]\d+(?:\.\d+)?%) unarmed damage\b', r'\1 damage while unarmed', text, flags=re.I)
+    # "your max health -10%", "you take 10% more (fire) damage", "you take 25% more damage from X"
+    text = re.sub(r'\byour max health ([+-]\d+(?:\.\d+)?%)', r'\1 max health', text, flags=re.I)
+    text = re.sub(r'\byou take (\d+(?:\.\d+)?)% more damage from\b', r'take \1% more damage from', text, flags=re.I)
+    text = re.sub(r'\byou take (\d+(?:\.\d+)?)% more ((?:fire|magic|fall|freezing|explosion|projectile) )?damage\b(?! from)', r'+\1% \2damage taken', text, flags=re.I)
     # "in human form you deal -20% damage" -> "-20% damage in human form"
     text = re.sub(r'\bin (human|any animal|animal|any) form,? you deal ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\2 damage in \1 form', text, flags=re.I)
     text = _bulk(text)
@@ -703,6 +713,11 @@ def _segment(seg, ctx):
         any(re.search(r'\b(?:for every|for each|per)\b', u, re.I) for u in unsupported)
     if unsupported and effects and (first_failed or qualified):
         return [], [seg]
+    if unsupported and not effects:
+        # Whole-line phrases ("killing a marked target heals you 25%") also work as one segment of a longer line.
+        whole = named.whole_line(seg, ctx)
+        if whole:
+            return whole, []
     return effects, unsupported
 
 

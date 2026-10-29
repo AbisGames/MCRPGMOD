@@ -68,13 +68,13 @@
     },
     {
       "type": "pipican:damage_dealt",
-      "multiplier": 1.15,
-      "weapons": "#pipican:weapons/axes"
+      "weapons": "#pipican:weapons/axes",
+      "multiplier": 1.15
     },
     {
       "type": "pipican:damage_dealt",
-      "multiplier": 1.15,
-      "weapons": "#pipican:weapons/maces"
+      "weapons": "#pipican:weapons/maces",
+      "multiplier": 1.15
     },
     {
       "type": "pipican:cleave",

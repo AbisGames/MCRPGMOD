@@ -149,6 +149,8 @@ def _atoms(ctx):
         (r'holding a weapon in your off-hand', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'off'}, OTHER),
         (r'with (?:your )?staff(?: of magic)?|holding a staff', lambda m: {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}, OTHER),
         (r'(?:while )?standing on solid ground|on solid ground', lambda m: state('on_ground'), OTHER),
+        (r'(?:while )?(?:inside|in) (?:a )?villages?', lambda m: state('in_village'), PLACE),
+        (r'(?:while )?within 64 blocks of your (?:bed/spawn point|bed or spawn point|spawn point|home)', lambda m: state('near_home'), PLACE),
         (r'(?:while )?(?:holding|with) a trident', lambda m: {'type': 'pipican:holding', 'items': '#pipican:weapons/tridents'}, OTHER),
         (r'(?:while )?wearing any copper armor(?: piece)?', lambda m: {'type': 'pipican:wearing', 'items': [
             'minecraft:copper_helmet', 'minecraft:copper_chestplate', 'minecraft:copper_leggings', 'minecraft:copper_boots']}, OTHER),
@@ -231,7 +233,7 @@ TRAILING = re.compile(
     r'in light level\b|below half health\b|below \d+% health\b|above half health\b|at full health\b|'
     r'with (?:your |the |a |any )?(?:bound weapon|sigil(?:-marked)? weapons?|staff|weapon that isn\'t your bound weapon)\b|with \d sigil\b|'
     r'with no book\b|while (?:a )?book\b|holding a weapon in your off-hand\b|'
-    r'on land\b|with shield\b|'
+    r'on land\b|with shield\b|inside villages?\b|within 64 blocks of your (?:bed|spawn|home)|'
     r'while unarmed\b|with your fists\b|bare-handed\b|'
     r'in combat\b|out of combat\b|inside your temple\b|in your temple\b|when more than \d+ blocks\b|'
     r'outside (?:of )?forests?\b|on solid ground\b|without an icon\b|while holding\b|while travelling\b|while wearing\b|while not\b|'

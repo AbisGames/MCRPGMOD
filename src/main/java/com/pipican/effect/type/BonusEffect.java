@@ -87,6 +87,17 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code resource_refund}: a <i>chance</i> that what an ability cost comes straight back;
  *       {@code refund_bonus}: how much more that refund gives (0.5 = 150%), up to your bar's maximum</li>
  *   <li>{@code share_drink}: any amount above 0 = effects from potions you drink also go to your nearest tamed animal within 16 blocks</li>
+ *   <li>{@code free_ability_every}: <i>a count</i> - every that-many-th ability you use costs nothing (3 = every third)</li>
+ *   <li>{@code weather_warning}: any amount above 0 = a chat message 30s before rain or a thunderstorm starts</li>
+ *   <li>{@code glorious_death}: any amount above 0 = once per day, a killing blow leaves you at 1 HP for 5s, then you die</li>
+ *   <li>{@code guard_allies}: the share of the damage other players within 8 blocks take that you take instead</li>
+ *   <li>{@code projectile_ward}: any amount above 0 = projectiles flying at your front don't hurt players within 3 blocks behind you</li>
+ *   <li>{@code execute_looting}: <i>Looting levels</i> added when a mob you execute dies</li>
+ *   <li>{@code sure_tame}: any amount above 0 = wolves, cats and parrots are tamed by the first bone, fish or seeds</li>
+ *   <li>{@code fire_charge_damage}: how much damage fire charges / fireballs you own deal;
+ *       {@code wind_charge_damage}: <i>damage</i> added to direct hits of your wind charges</li>
+ *   <li>{@code distance_damage}: extra projectile damage per full 16 blocks between you and the target (0.1 = +10%)</li>
+ *   <li>{@code triage}: how much more your heals heal other players below 30% health (1 = twice as much)</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -105,7 +116,9 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         BREWED_DURATION, CROP_GROWTH, MARKED_LOOT, SHIELD_DISABLE, QUIET_STEPS,
         CRAFTED_DURABILITY, SUN_BURN, NO_BEACON, NO_PHANTOMS, EXTRA_ENCHANT, MAGIC_PORTION,
         SPLASH_UNDEAD, THROWN_SPEED, MAX_WOLVES, OPEN_LOCKS, REDIRECT_HIT, ILL_FORTUNE, BREW_SPEED, NO_TOP_TIER,
-        RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK;
+        RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK,
+        FREE_ABILITY_EVERY, WEATHER_WARNING, GLORIOUS_DEATH, GUARD_ALLIES, PROJECTILE_WARD, EXECUTE_LOOTING, SURE_TAME,
+        FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

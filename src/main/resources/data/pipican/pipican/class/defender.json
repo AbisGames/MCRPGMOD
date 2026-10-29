@@ -73,6 +73,24 @@
     },
     {
       "type": "pipican:on",
+      "event": "mob_hits_ally",
+      "name": "retributive strike",
+      "victim": {
+        "within": 3.0
+      },
+      "actions": [
+        {
+          "type": "pipican:mark",
+          "target": "victim",
+          "multiplier": 1.3,
+          "next_hit": true,
+          "seconds": 10.0,
+          "glow": false
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
       "event": "melee_hit",
       "actions": [
         {

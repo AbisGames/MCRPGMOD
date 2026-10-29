@@ -37,6 +37,7 @@ import com.pipican.player.ClassState;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.RpgClass;
+import java.util.List;
 import java.util.Optional;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -354,6 +355,12 @@ public final class ClassEvents {
                 Bleeds.onHit(attacker, event.getEntity(), ClassEffectApplier.state(attacker).bleed(), crit);
             }
             execute(attacker, event.getEntity());
+            if (event.getSource().is(net.minecraft.tags.DamageTypeTags.WITCH_RESISTANT_TO)) {
+                Reactions.fire(attacker, event.getEntity(), event.getSource().getWeaponItem(), ReactionEffect.Event.MAGIC_HIT);
+            }
+            for (ServerPlayer other : nearbyPlayers(event.getEntity(), attacker)) {
+                Reactions.fire(other, event.getEntity(), ItemStack.EMPTY, ReactionEffect.Event.ALLY_HITS_MOB);
+            }
             if (swing) {
                 Strikes.after(attacker, event.getEntity(), event.getInflictedDamage());
             }
@@ -364,7 +371,19 @@ public final class ClassEvents {
                 Combat.mark(victim);
             }
             Reactions.fire(victim, attacker, event.getSource().getWeaponItem(), ReactionEffect.Event.HURT);
+            for (ServerPlayer other : nearbyPlayers(victim, victim)) {
+                if (attacker instanceof net.minecraft.world.entity.Mob) {
+                    Reactions.fire(other, attacker, ItemStack.EMPTY, ReactionEffect.Event.MOB_HITS_ALLY);
+                }
+                Reactions.fire(other, attacker, ItemStack.EMPTY, ReactionEffect.Event.ALLY_HURT);
+            }
         }
+    }
+
+    /** Players within 16 blocks of {@code center}, other than {@code except}. */
+    private static List<ServerPlayer> nearbyPlayers(LivingEntity center, LivingEntity except) {
+        return center.level().getEntitiesOfClass(ServerPlayer.class, center.getBoundingBox().inflate(16),
+                p -> p != except && p.isAlive() && !p.isSpectator() && p.distanceToSqr(center) <= 256);
     }
 
     @SubscribeEvent
@@ -439,6 +458,9 @@ public final class ClassEvents {
         }
     }
 
+    /** Set on mobs killed by {@code pipican:execute} (for {@code execute_looting}). */
+    public static final String EXECUTED = "pipican_executed";
+
     /** {@code pipican:execute}: the hit left the mob low enough to finish it. */
     private static void execute(ServerPlayer attacker, LivingEntity victim) {
         if (!victim.isAlive() || victim instanceof Player || victim.getType().builtInRegistryHolder().is(Tags.EntityTypes.BOSSES) || victim.getMaxHealth() <= 0) {
@@ -448,6 +470,7 @@ public final class ClassEvents {
         for (ClassState.Execute e : ClassEffectApplier.state(attacker).executes()) {
             if (fraction < e.threshold() && (e.victims().isEmpty() || e.victims().get().contains(victim.getType().builtInRegistryHolder()))
                     && victim.level() instanceof ServerLevel level) {
+                victim.getPersistentData().putBoolean(EXECUTED, true);
                 victim.hurtServer(level, level.damageSources().source(DamageTypes.GENERIC_KILL, attacker), Float.MAX_VALUE);
                 MasteryEvents.did(attacker, new SkillAction.Did(SkillAction.Did.Kind.EXECUTE, attacker.getMainHandItem(), Optional.empty(), Optional.of(victim), 0));
                 Reactions.fire(attacker, victim, attacker.getMainHandItem(), ReactionEffect.Event.EXECUTE);

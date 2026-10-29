@@ -109,21 +109,27 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Druids shun forged iron and the stink of cities.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Druids shun forged iron and the stink of cities.",
     "effects": [
       {
         "type": "pipican:damage_dealt",
         "weapons": "#pipican:weapons/metal",
         "multiplier": 0.8
+      },
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "in_village"
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.25,
+            "operation": "add_multiplied_base"
+          }
+        ]
       }
     ]
   },

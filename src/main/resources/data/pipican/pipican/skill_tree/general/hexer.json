@@ -97,16 +97,7 @@
     {
       "id": "hexer_doom_hex",
       "name": "Doom Hex",
-      "description": {
-        "text": "cursed mobs that die explode in a small Instant Damage cloud, but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "cursed mobs that die explode in a small Instant Damage cloud, but -15% max health",
       "type": "keystone",
       "x": 837,
       "y": -1196,
@@ -115,7 +106,29 @@
         "hexer_hex_ward"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "marked": true
+          },
+          "actions": [
+            {
+              "type": "pipican:cloud",
+              "effect": "minecraft:instant_damage",
+              "radius": 2.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -42,7 +42,11 @@ public record StateCondition(State state) implements ClassCondition {
         /** A thunderstorm, and rain is falling on the player. */
         THUNDERING("thundering"),
         /** Nothing but transparent blocks above the player's head. "Underground" is {@code not} this. */
-        SEES_SKY("sees_sky");
+        SEES_SKY("sees_sky"),
+        /** Inside a village (near villagers' beds and workstations). */
+        IN_VILLAGE("in_village"),
+        /** Within 64 blocks of your respawn point (bed / anchor, else world spawn). */
+        NEAR_HOME("near_home");
 
         public static final Codec<State> CODEC = StringRepresentable.fromEnum(State::values);
         private final String name;
@@ -66,6 +70,12 @@ public record StateCondition(State state) implements ClassCondition {
         return ConditionTypes.STATE;
     }
 
+    private static boolean nearHome(ServerPlayer player) {
+        var config = player.getRespawnConfig();
+        var home = config != null ? config.respawnData() : player.level().getRespawnData();
+        return home.dimension() == player.level().dimension() && home.pos().distSqr(player.blockPosition()) <= 64 * 64;
+    }
+
     @Override
     public boolean test(ServerPlayer player) {
         var level = player.level();
@@ -87,6 +97,8 @@ public record StateCondition(State state) implements ClassCondition {
             case RAINING -> level.isRainingAt(player.blockPosition());
             case THUNDERING -> level.isThundering() && level.isRainingAt(player.blockPosition());
             case SEES_SKY -> level.canSeeSky(BlockPos.containing(player.getEyePosition()));
+            case IN_VILLAGE -> level instanceof net.minecraft.server.level.ServerLevel sl && sl.isVillage(player.blockPosition());
+            case NEAR_HOME -> nearHome(player);
         };
     }
 }

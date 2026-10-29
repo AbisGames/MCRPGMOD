@@ -97,16 +97,7 @@
     {
       "id": "red_mist",
       "name": "Red Mist",
-      "description": {
-        "text": "killing a bleeding mob refills 20 Bloodletting; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "killing a bleeding mob refills 20 Bloodletting; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -115,7 +106,28 @@
         "swift_blade"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "bleeding": true
+          },
+          "actions": [
+            {
+              "type": "pipican:resource",
+              "amount": 20.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -223,4 +223,139 @@ public final class WorldBonusEvents {
             return false;
         });
     }
+
+    /** Players in their Glorious Death window: when it ends. */
+    private static final Map<UUID, Long> GLORIOUS = new ConcurrentHashMap<>();
+    private static final String GLORIOUS_DAY = "pipican_glorious_day";
+    private static boolean sharing;
+
+    /** {@code glorious_death}: once per day the killing blow leaves you at 1 HP for 5s; then you die. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
+    static void onPlayerDeath(LivingDeathEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || ClassEffectApplier.state(player).chance(Kind.GLORIOUS_DEATH) <= 0
+                || event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+        long now = player.level().getGameTime();
+        Long ends = GLORIOUS.get(player.getUUID());
+        long day = player.level().getOverworldClockTime() / 24000;
+        if (ends == null && player.getPersistentData().getLongOr(GLORIOUS_DAY, -1) == day) {
+            return;
+        }
+        if (ends == null) {
+            GLORIOUS.put(player.getUUID(), now + 100);
+            player.getPersistentData().putLong(GLORIOUS_DAY, day);
+            player.sendOverlayMessage(Component.translatable("pipican.glorious_death"));
+        }
+        event.setCanceled(true);
+        player.setHealth(1);
+    }
+
+    @SubscribeEvent
+    static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        Long ends = GLORIOUS.get(player.getUUID());
+        if (ends != null && level.getGameTime() >= ends) {
+            GLORIOUS.remove(player.getUUID());
+            player.hurtServer(level, level.damageSources().genericKill(), Float.MAX_VALUE);
+        }
+        if (player.tickCount % 20 == 0 && ClassEffectApplier.state(player).chance(Kind.WEATHER_WARNING) > 0 && level.canHaveWeather()) {
+            var weather = level.getWeatherData();
+            if (weather.getClearWeatherTime() <= 0 && level.getGameRules().get(net.minecraft.world.level.gamerules.GameRules.ADVANCE_WEATHER)) {
+                // The timers count down by one a tick; warn once, when 30s (600 ticks) are left.
+                if (!weather.isRaining() && weather.getRainTime() > 580 && weather.getRainTime() <= 600) {
+                    player.sendSystemMessage(Component.translatable("pipican.weather_warning.rain"));
+                }
+                if (!weather.isThundering() && weather.getThunderTime() > 580 && weather.getThunderTime() <= 600
+                        && (weather.isRaining() || weather.getRainTime() < weather.getThunderTime())) {
+                    player.sendSystemMessage(Component.translatable("pipican.weather_warning.thunder"));
+                }
+            }
+        }
+    }
+
+    /** Guard allies, projectile cover, fire / wind charge damage and long-range shots. */
+    @SubscribeEvent
+    static void onIncoming(LivingIncomingDamageEvent event) {
+        LivingEntity victim = event.getEntity();
+        if (!(victim.level() instanceof ServerLevel level)) {
+            return;
+        }
+        var source = event.getSource();
+        if (source.getEntity() instanceof ServerPlayer owner && source.getDirectEntity() != owner && source.getDirectEntity() != null) {
+            var state = ClassEffectApplier.state(owner);
+            if (source.getDirectEntity() instanceof Fireball) {
+                event.setAmount((float) (event.getAmount() * state.bonus(Kind.FIRE_CHARGE_DAMAGE)));
+            }
+            if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.WindCharge) {
+                event.setAmount((float) (event.getAmount() + state.chance(Kind.WIND_CHARGE_DAMAGE)));
+            }
+            if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile && state.chance(Kind.DISTANCE_DAMAGE) > 0) {
+                int steps = (int) (owner.distanceTo(victim) / 16);
+                event.setAmount((float) (event.getAmount() * (1 + state.chance(Kind.DISTANCE_DAMAGE) * steps)));
+            }
+        }
+        if (!(victim instanceof ServerPlayer player) || source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+        if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile projectile) {
+            Vec3 flying = projectile.getDeltaMovement().multiply(1, 0, 1);
+            for (ServerPlayer guard : level.getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(3),
+                    g -> g != player && g.isAlive() && g.distanceToSqr(player) <= 9 && ClassEffectApplier.state(g).chance(Kind.PROJECTILE_WARD) > 0)) {
+                Vec3 facing = Vec3.directionFromRotation(0, guard.getYRot());
+                Vec3 behind = player.position().subtract(guard.position()).multiply(1, 0, 1);
+                if (flying.lengthSqr() > 1.0e-4 && facing.dot(flying) < 0 && facing.dot(behind) < 0) {
+                    event.setCanceled(true);
+                    return;
+                }
+            }
+        }
+        if (sharing || event.getAmount() <= 0) {
+            return;
+        }
+        for (ServerPlayer guard : level.getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(8),
+                g -> g != player && g.isAlive() && g.distanceToSqr(player) <= 64)) {
+            double share = Math.min(1, ClassEffectApplier.state(guard).chance(Kind.GUARD_ALLIES));
+            if (share > 0) {
+                float taken = (float) (event.getAmount() * share);
+                event.setAmount(event.getAmount() - taken);
+                sharing = true;
+                try {
+                    guard.hurtServer(level, level.damageSources().generic(), taken);
+                } finally {
+                    sharing = false;
+                }
+                return;
+            }
+        }
+    }
+
+    /** {@code sure_tame}: the first bone, fish or seeds tames the animal. */
+    @SubscribeEvent
+    static void onTameAttempt(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getTarget() instanceof net.minecraft.world.entity.TamableAnimal animal)
+                || animal.isTame() || ClassEffectApplier.state(player).chance(Kind.SURE_TAME) <= 0) {
+            return;
+        }
+        ItemStack stack = event.getItemStack();
+        boolean food = animal instanceof net.minecraft.world.entity.animal.wolf.Wolf wolf ? stack.is(net.minecraft.world.item.Items.BONE) && !wolf.isAngry()
+                : animal instanceof net.minecraft.world.entity.animal.feline.Cat ? stack.is(net.minecraft.tags.ItemTags.CAT_FOOD)
+                : animal instanceof net.minecraft.world.entity.animal.parrot.Parrot && stack.is(net.minecraft.tags.ItemTags.PARROT_FOOD);
+        if (!food) {
+            return;
+        }
+        event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        stack.consume(1, player);
+        if (net.neoforged.neoforge.event.EventHooks.onAnimalTame(animal, player)) {
+            return;
+        }
+        animal.tame(player);
+        animal.getNavigation().stop();
+        animal.setTarget(null);
+        animal.setOrderedToSit(true);
+        animal.level().broadcastEntityEvent(animal, (byte) 7);
+    }
 }

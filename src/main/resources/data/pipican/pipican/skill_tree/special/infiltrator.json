@@ -86,16 +86,7 @@
     {
       "id": "ghost_agent",
       "name": "Ghost Agent",
-      "description": {
-        "text": "after a stealth kill, you are invisible for 3s; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "after a stealth kill, you are invisible for 3s; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -104,7 +95,34 @@
         "vanish"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:invisibility",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

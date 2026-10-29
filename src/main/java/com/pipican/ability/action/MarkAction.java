@@ -44,7 +44,9 @@ public record MarkAction(Targets targets, double seconds, double multiplier, boo
             if (target == ctx.player()) {
                 continue;
             }
-            Marks.add(target, ctx.player(), ticks, multiplier, shared, nextHit, projectileOnly);
+            // Reaction / ability strength upgrades make the mark's bonus bigger ("retribution bonus +20%").
+            double boosted = 1 + (multiplier - 1) * (1 + ctx.mod().strength());
+            Marks.add(target, ctx.player(), ticks, boosted, shared, nextHit, projectileOnly);
             if (glow) {
                 target.addEffect(new MobEffectInstance(MobEffects.GLOWING, (int) ticks, 0, false, false), ctx.player());
             }

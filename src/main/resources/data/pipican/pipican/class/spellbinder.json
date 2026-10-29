@@ -86,6 +86,20 @@
           "amount": -0.5
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.15
+        }
+      ]
     }
   ],
   "special_passives": [

@@ -113,16 +113,7 @@
     {
       "id": "glorious_death",
       "name": "Glorious Death",
-      "description": {
-        "text": "when you'd die, you keep fighting for 5s at 1 HP, then die; once per day",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "when you'd die, you keep fighting for 5s at 1 HP, then die; once per day",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -131,7 +122,14 @@
         "warcry"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "glorious_death",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

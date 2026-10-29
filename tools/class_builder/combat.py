@@ -10,6 +10,8 @@ NUM = r'([+-]?\d+(?:\.\d+)?)'
 # Mob groups: spec words -> entity ids / tags. Several groups in one phrase become one generated tag.
 MOB_GROUPS = {
     'undead': ['#minecraft:undead'], 'undead mobs': ['#minecraft:undead'],
+    'water, snow and ice mobs': ['minecraft:drowned', 'minecraft:guardian', 'minecraft:elder_guardian', 'minecraft:stray', 'minecraft:snow_golem',
+                                 'minecraft:polar_bear', 'minecraft:squid', 'minecraft:glow_squid', 'minecraft:axolotl', 'minecraft:dolphin'],
     'nether mobs': ['#pipican:mobs/nether'], 'unclean mobs': ['#pipican:mobs/unclean'], 'unclean': ['#pipican:mobs/unclean'],
     'animals': ['#pipican:mobs/animals'], 'beasts': ['#pipican:mobs/animals'], 'animals and beasts': ['#pipican:mobs/animals'],
     'illagers': ['#minecraft:illager'], 'raiders': ['#minecraft:raiders'], 'arthropods': ['#minecraft:arthropod'],

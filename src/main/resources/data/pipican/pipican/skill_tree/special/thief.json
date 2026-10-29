@@ -107,16 +107,7 @@
     {
       "id": "opportunist",
       "name": "Opportunist",
-      "description": {
-        "text": "when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "when a mob within 3 blocks takes damage from another player, your next hit on it is a guaranteed critical; -10% max Nerve",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -125,7 +116,33 @@
         "dodge"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "ally_hits_mob",
+          "name": "opportunist",
+          "victim": {
+            "within": 3.0
+          },
+          "actions": [
+            {
+              "type": "pipican:mark",
+              "target": "victim",
+              "multiplier": 1.5,
+              "next_hit": true,
+              "seconds": 10.0,
+              "glow": false
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

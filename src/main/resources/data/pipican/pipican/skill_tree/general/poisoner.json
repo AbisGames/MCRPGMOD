@@ -99,16 +99,7 @@
     {
       "id": "poisoner_plague_doctor",
       "name": "Plague Doctor",
-      "description": {
-        "text": "poison spreads to mobs within 2 blocks on death, but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "poison spreads to mobs within 2 blocks on death, but -15% max health",
       "type": "keystone",
       "x": -837,
       "y": 1196,
@@ -117,7 +108,35 @@
         "poisoner_neurotoxin"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "effects": "minecraft:poison"
+          },
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 2.0,
+              "effects": [
+                {
+                  "effect": "minecraft:poison",
+                  "seconds": 5.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

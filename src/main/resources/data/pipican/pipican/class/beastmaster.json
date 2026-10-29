@@ -91,6 +91,11 @@
       "type": "pipican:damage_dealt",
       "weapons": "#pipican:weapons/axes",
       "multiplier": 1.1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "sure_tame",
+      "amount": 1.0
     }
   ],
   "special_passives": [

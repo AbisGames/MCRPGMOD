@@ -95,16 +95,7 @@
     {
       "id": "unending_vendetta",
       "name": "Unending Vendetta",
-      "description": {
-        "text": "killing a marked target heals you 25%; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "killing a marked target heals you 25%; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -113,7 +104,29 @@
         "avenger_s_wrath"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "marked": true
+          },
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "percent": 0.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -64,6 +64,21 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "hit",
+      "name": "battlefield leadership",
+      "actions": [
+        {
+          "type": "pipican:mark",
+          "target": "victim",
+          "multiplier": 1.1,
+          "shared": true,
+          "seconds": 4.0,
+          "glow": false
+        }
+      ]
+    },
+    {
       "type": "pipican:aura",
       "radius": 10.0,
       "effects": [
@@ -116,6 +131,17 @@
     }
   ],
   "special_passives": [
+    {
+      "type": "pipican:reaction_mod",
+      "name": "battlefield leadership",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    },
     {
       "type": "pipican:aura_mod",
       "name": "",

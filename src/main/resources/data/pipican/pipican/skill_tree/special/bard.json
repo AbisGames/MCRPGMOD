@@ -98,16 +98,7 @@
     {
       "id": "legend",
       "name": "Legend",
-      "description": {
-        "text": "everyone in your Song gets Regeneration I; your max health -10%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "everyone in your Song gets Regeneration I; your max health -10%",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -116,7 +107,25 @@
         "dirge"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:regeneration"
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

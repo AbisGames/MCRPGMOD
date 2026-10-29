@@ -81,7 +81,15 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** You used bone meal on a plant. */
         BONE_MEAL("bone_meal"),
         /** One of your tamed animals died (the victim). */
-        PET_DEATH("pet_death");
+        PET_DEATH("pet_death"),
+        /** A mob hit another player near you (the victim is the mob). */
+        MOB_HITS_ALLY("mob_hits_ally"),
+        /** Another player hurt a mob near you (the victim is the mob). */
+        ALLY_HITS_MOB("ally_hits_mob"),
+        /** Another player within 16 blocks took damage (the victim is whoever hurt them, if anyone). */
+        ALLY_HURT("ally_hurt"),
+        /** Your magic damage hurt a mob. */
+        MAGIC_HIT("magic_hit");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

@@ -82,37 +82,37 @@
     },
     {
       "type": "pipican:damage_dealt",
-      "multiplier": 1.15,
-      "weapons": "#pipican:weapons/bows"
+      "weapons": "#pipican:weapons/bows",
+      "multiplier": 1.15
     },
     {
       "type": "pipican:damage_dealt",
-      "multiplier": 1.15,
-      "weapons": "#pipican:weapons/crossbows"
+      "weapons": "#pipican:weapons/crossbows",
+      "multiplier": 1.15
     }
   ],
   "special_passives": [
     {
       "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/bows",
       "multiplier": 1.0,
       "scaling": [
         {
           "source": "special_stat",
           "per": 0.006
         }
-      ],
-      "weapons": "#pipican:weapons/bows"
+      ]
     },
     {
       "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/crossbows",
       "multiplier": 1.0,
       "scaling": [
         {
           "source": "special_stat",
           "per": 0.006
         }
-      ],
-      "weapons": "#pipican:weapons/crossbows"
+      ]
     },
     {
       "type": "pipican:deadly_aim",

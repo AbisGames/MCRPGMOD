@@ -93,6 +93,11 @@
         }
       ],
       "name": "ignite"
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "fire_charge_damage",
+      "amount": 0.5
     }
   ],
   "special_passives": [

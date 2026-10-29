@@ -92,16 +92,7 @@
     {
       "id": "magic_weapon",
       "name": "Magic Weapon",
-      "description": {
-        "text": "the magic damage portion of your hits rises to 35%; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "the magic damage portion of your hits rises to 35%; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -110,7 +101,29 @@
         "sacrifice"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "magic_portion",
+              "amount": 0.2
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

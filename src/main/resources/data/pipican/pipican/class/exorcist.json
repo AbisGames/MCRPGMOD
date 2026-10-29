@@ -103,6 +103,17 @@
       ]
     },
     {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms_endermen_the_wither",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_taken",
       "against": "#pipican:mobs/unclean",
       "multiplier": 0.97

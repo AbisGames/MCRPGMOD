@@ -99,16 +99,7 @@
     {
       "id": "priest_martyr",
       "name": "Martyr",
-      "description": {
-        "text": "Prayer aura also gives allies +5% damage reduction, but you take 10% more damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Prayer aura also gives allies +5% damage reduction, but you take 10% more damage",
       "type": "keystone",
       "x": 510,
       "y": 0,
@@ -116,7 +107,23 @@
         "priest_sanctified"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.95
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.1
+        }
+      ]
     }
   ]
 }

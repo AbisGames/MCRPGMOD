@@ -88,16 +88,7 @@
     {
       "id": "archmage_s_insight",
       "name": "Archmage's Insight",
-      "description": {
-        "text": "every 3rd ability is free; -10% Flux regen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "every 3rd ability is free; -10% Flux regen",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -106,7 +97,20 @@
         "reclaim_arcana"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "free_ability_every",
+          "amount": 3.0
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -95,16 +95,7 @@
     {
       "id": "aspis",
       "name": "Aspis",
-      "description": {
-        "text": "players within 3 blocks behind you are protected from projectiles; -10% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players within 3 blocks behind you are protected from projectiles; -10% damage",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -113,7 +104,18 @@
         "shield_mastery"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "projectile_ward",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.9
+        }
+      ]
     }
   ]
 }

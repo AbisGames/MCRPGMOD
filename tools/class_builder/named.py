@@ -155,6 +155,13 @@ def static_mods(t, ctx):
     statics = STATIC.get(ctx.get('class_id'), {})
     if not statics:
         return None
+    # "Purge bonus" names "Purge the Unclean": a label's first or last word works when no other label shares it.
+    aliases = {}
+    for n in statics:
+        for w in {n.split()[0], n.split()[-1]}:
+            if len(w) > 3 and w not in statics:
+                aliases[w] = None if w in aliases else n
+    statics = dict(statics, **{w: statics[n] for w, n in aliases.items() if n})
     names = '|'.join(sorted((re.escape(n) for n in statics), key=len, reverse=True))
     m = re.fullmatch(rf'\+{N}% (?:more )?({names})(?: damage| bonus)?(?: per (?:{N} )?([a-z]+)(?: points?)?)?', t) or \
         re.fullmatch(rf'({names})(?: damage| bonus)? \+{N}%(?: per (?:{N} )?([a-z]+)(?: points?)?)?()', t)
@@ -1102,6 +1109,89 @@ def world(low, ctx):
             e['scaling'] = [{'source': 'special_stat', 'per': per}]
         return [e]
 
+    rn = (ctx.get('resource_name') or '').lower()
+    if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
+        return bonus_kind('glorious_death', 1.0)
+    m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
+    if m:
+        return bonus_kind('free_ability_every', float(m.group(1)))
+    if re.fullmatch(r'you get a warning message 30s before rain/thunder starts', low):
+        return bonus_kind('weather_warning', 1.0)
+    m = re.fullmatch(rf'you take {N}% of the damage nearby allies take instead of them', low)
+    if m:
+        return bonus_kind('guard_allies', pct(m.group(1)))
+    if re.fullmatch(r'players within 3 blocks behind you are protected from projectiles', low):
+        return bonus_kind('projectile_ward', 1.0)
+    m = re.fullmatch(rf'executed mobs drop \+{N} looting', low)
+    if m:
+        return bonus_kind('execute_looting', float(m.group(1)))
+    if re.fullmatch(r'taming always succeeds on the first try', low):
+        return bonus_kind('sure_tame', 1.0)
+    m = re.fullmatch(rf'fire charges you throw deal \+{N}% damage', low)
+    if m:
+        return bonus_kind('fire_charge_damage', pct(m.group(1)))
+    m = re.fullmatch(rf'wind charges you throw deal \+{N} damage', low)
+    if m:
+        return bonus_kind('wind_charge_damage', float(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% damage per 16 blocks of distance', low)
+    if m:
+        return bonus_kind('distance_damage', pct(m.group(1)))
+    if re.fullmatch(r'players below 30% health heal twice as fast from you', low):
+        return bonus_kind('triage', 1.0)
+    # Reactions to what happens around you: "when a mob within 3 blocks hits another player, your next hit on it deals +30%"
+    m = re.fullmatch(rf'when a mob within {N} blocks (hits another player|takes damage from another player), your next hit on it (?:deals \+{N}%|is a guaranteed critical)', low)
+    if m:
+        event = 'mob_hits_ally' if m.group(2).startswith('hits') else 'ally_hits_mob'
+        # A guaranteed critical is +50%, like a vanilla crit.
+        mult = 1 + float(m.group(3)) / 100 if m.group(3) else 1.5
+        name = (ctx.get('node_name') or ('retributive strike' if event == 'mob_hits_ally' else 'opportunist')).lower()
+        r = {'type': 'pipican:on', 'event': event, 'name': name, 'victim': {'within': float(m.group(1))},
+             'actions': [{'type': 'pipican:mark', 'target': 'victim', 'multiplier': round(mult, 6), 'next_hit': True, 'seconds': 10.0, 'glow': False}]}
+        REACTIONS.setdefault(cid, {}).setdefault(name, r)
+        return [r]
+    m = re.fullmatch(rf'when you hit a mob, players within {N} blocks deal \+{N}% damage to it for {N}s', low)
+    if m:
+        r = {'type': 'pipican:on', 'event': 'hit', 'name': 'battlefield leadership',
+             'actions': [{'type': 'pipican:mark', 'target': 'victim', 'multiplier': round(1 + float(m.group(2)) / 100, 6), 'shared': True,
+                          'seconds': float(m.group(3)), 'glow': False}]}
+        REACTIONS.setdefault(cid, {}).setdefault('battlefield leadership', r)
+        return [r]
+    # "Leadership bonus +0.5% per Command point", "retribution bonus +20%": a mark reaction's bonus grows (in points).
+    m = re.fullmatch(rf'([a-z]+) bonus \+{N}%(?: per ([a-z]+) points?)?', low)
+    if m and (not m.group(3) or m.group(3) in (sp, 'point')):
+        node = (ctx.get('node_name') or '').lower()
+        for name, r in REACTIONS.get(cid, {}).items():
+            words = name.split()
+            if not (m.group(1) in (name, words[0], words[-1]) or name == node):
+                continue
+            marks = [a for a in r.get('actions', []) if a.get('type') == 'pipican:mark' and a.get('multiplier', 1.3) > 1]
+            if not marks:
+                continue
+            k = float(m.group(2)) / 100 / (marks[0].get('multiplier', 1.3) - 1)
+            e = {'type': 'pipican:reaction_mod', 'name': r.get('name', name), 'strength': 0.0 if m.group(3) else round(k, 6)}
+            if m.group(3):
+                e['scaling'] = [{'source': 'special_stat', 'per': round(k, 6)}]
+            return [e]
+    # Avenger: "Retribution fills by 3 every time you or a nearby ally takes damage"
+    m = re.fullmatch(rf'([a-z ]+) fills by {N} every time you or a nearby ally takes damage', low)
+    if m and m.group(1) == rn:
+        act = [{'type': 'pipican:resource', 'amount': float(m.group(2))}]
+        return [{'type': 'pipican:on', 'event': 'hurt', 'actions': act}, {'type': 'pipican:on', 'event': 'ally_hurt', 'actions': act}]
+    m = re.fullmatch(rf'every magic hit you land adds {N} ([a-z ]+)', low)
+    if m and m.group(2) == rn:
+        return [{'type': 'pipican:on', 'event': 'magic_hit', 'actions': [{'type': 'pipican:resource', 'amount': float(m.group(1))}]}]
+    # Astromancer: under the open sky, by night or by day.
+    m = re.fullmatch(r'([a-z ]+) regenerates twice as fast under the open night sky and in daylight', low)
+    if m and m.group(1) == rn and (inner := _rest(f'+100% {ctx.get("resource_name")} regen', ctx)):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sees_sky'}, 'effects': inner}]
+    # Spellbinder: the bound weapon's magic portion (and Magic Weapon raising it from 15% to 35%).
+    bound = {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}
+    m = re.fullmatch(rf'your bound weapon counts as a magic focus: its hits deal {N}% of their damage as magic damage(?: \(ignores armou?r\))?', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': bound, 'effects': bonus_kind('magic_portion', pct(m.group(1)))}]
+    m = re.fullmatch(rf'the magic damage portion of your hits rises to {N}%', low)
+    if m and cid == 'spellbinder' and float(m.group(1)) > 15:
+        return [{'type': 'pipican:conditional', 'when': bound, 'effects': bonus_kind('magic_portion', pct(float(m.group(1)) - 15))}]
     # "tamed animals +1 armor and +10% damage; you can have at most 3 tamed wolves": every part must translate.
     if ';' in low:
         parts = [p.strip() for p in low.split(';') if p.strip()]
