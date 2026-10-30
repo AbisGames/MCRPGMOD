@@ -351,5 +351,7 @@
   "blacksmith.pipican.tier.legendary": "Legendary",
   "blacksmith.pipican.tier.mythic": "Mythic",
   "item.pipican.frostbound_colossus_sigil": "Frostbound Sigil",
-  "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy"
+  "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy",
+  "item.pipican.skollvar_winterfang_sigil": "Winterfang Sigil",
+  "item.pipican.skollvar_winterfang_trophy": "Sköllvar Trophy"
 }

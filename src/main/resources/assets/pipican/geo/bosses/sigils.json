@@ -10,5 +10,11 @@
     "boss": "frostbound_colossus",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:skollvar_winterfang_sigil",
+    "boss": "skollvar_winterfang",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

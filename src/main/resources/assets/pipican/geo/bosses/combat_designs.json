@@ -172,12 +172,11 @@
   {
     "id": "skollvar_winterfang",
     "region": "pinewall_taiga",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 650,
     "damage": 13,
     "sigil": {
-      "planned_item_id": "pipican:skollvar_winterfang_sigil",
       "regional_material": "pipican:wintersteel",
       "regional_count": 5,
       "dungeon_material": "pipican:pinewall_taiga_boss_core",
@@ -185,38 +184,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:bone",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:skollvar_winterfang_sigil"
     },
     "abilities": [
       {
         "id": "scent_charge",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A paw-marked straight charge locks direction before launching.",
         "counterplay": "Cross the paw trail or punish the stopped wolf from the flank.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:skollvar_winterfang/scent_charge"
+        "animation": "native:skollvar/scent_charge"
       },
       {
         "id": "pack_mirages",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Decoy wolves telegraph alternating pounces.",
         "counterplay": "Identify the solid shadow and leave its landing marker.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:skollvar_winterfang/pack_mirages"
+        "animation": "native:skollvar/pack_mirages"
       },
       {
         "id": "silent_prowl",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "The wolf circles toward the last observed player footprint.",
         "counterplay": "Move away from the marked footprint before the final bite.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:skollvar_winterfang/silent_prowl"
+        "animation": "native:skollvar/silent_prowl"
       }
     ],
     "phase_two": {
@@ -227,7 +227,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:wintersteel",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:skollvar_winterfang_trophy",
       "planned_trophy_name": "Skollvar Winterfang Trophy",
       "xp": 162
     },
@@ -235,16 +235,16 @@
       "geometry": "geometry.pipican.skollvar_winterfang",
       "file": "geo/bosses/skollvar_winterfang.geo.json",
       "animation_mapping": {
-        "idle": "planned:skollvar_winterfang/idle",
-        "walk": "planned:skollvar_winterfang/walk",
-        "basic_attack": "planned:skollvar_winterfang/basic_attack",
-        "hurt": "planned:skollvar_winterfang/hurt",
-        "phase_transition": "planned:skollvar_winterfang/phase_transition",
-        "summoning": "planned:skollvar_winterfang/summoning",
-        "death": "planned:skollvar_winterfang/death",
-        "scent_charge": "planned:skollvar_winterfang/scent_charge",
-        "pack_mirages": "planned:skollvar_winterfang/pack_mirages",
-        "silent_prowl": "planned:skollvar_winterfang/silent_prowl"
+        "idle": "native:skollvar/idle",
+        "walk": "native:skollvar/walk",
+        "basic_attack": "native:skollvar/basic_attack",
+        "hurt": "native:skollvar/hurt",
+        "phase_transition": "native:skollvar/phase_transition",
+        "summoning": "native:skollvar/summoning",
+        "death": "native:skollvar/death",
+        "scent_charge": "native:skollvar/scent_charge",
+        "pack_mirages": "native:skollvar/pack_mirages",
+        "silent_prowl": "native:skollvar/silent_prowl"
       }
     },
     "arena": {

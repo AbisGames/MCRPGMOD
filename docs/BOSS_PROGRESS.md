@@ -6,7 +6,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | frostbound_colossus | complete | prototype | partial | partial | complete | complete | complete | complete | passed | pending |
 | nhalkorr_leviathan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
-| skollvar_winterfang | planned | prototype | planned | planned | partial | partial | planned | planned | partial | pending |
+| skollvar_winterfang | partial | prototype | partial | partial | partial | partial | complete | complete | partial | pending |
 | hrothgar_drowned_jarl | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | valthor_stormbringer | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | tengri_champion | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -34,4 +34,6 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 
 Frostbound now has a registered entity, unique attributes, independent attacks and phase persistence, craftable sigil, Whitecrown biome gate, transactional altar spawn, boss bar, once-only trophy/Frostcrystal rewards and real server GameTest coverage for attack warning, reload, recipe, summon and drops. Texture/animation states compile against the preserved geometry, but in-client clipping/animation QA remains pending; therefore its visual columns remain partial.
 
-Sköllvar currently has a separate combat controller for locked scent charges, alternating marked pack pounces and attacks on the last observed footprint. GameTests verify charge avoidance, pounce markers, footprint counterplay and the phase-two third-charge feint. Entity registration, movement wiring, assets, summoning, rewards and client QA remain pending.
+Sköllvar has a separate combat controller for locked scent charges, alternating marked pack pounces and attacks on the last observed footprint. GameTests verify charge avoidance, pounce markers, footprint counterplay and the phase-two third-charge feint.
+
+Update: Sköllvar now has a registered wolf entity, its own attributes and movement, persisted phase/summoning state, client renderer, two phase textures, a survival sigil recipe, Pinewall biome altar route and one-time Wintersteel/trophy rewards. Actual altar summoning and loot pass GameTest. In-entity AI/save-reload and client visual QA still need focused coverage.

@@ -49,5 +49,7 @@
   "blacksmith.pipican.tier.legendary": "Efsanevi",
   "blacksmith.pipican.tier.mythic": "Mitik",
   "item.pipican.frostbound_colossus_sigil": "Buzbağlı Mühür",
-  "item.pipican.frostbound_colossus_trophy": "Buzbağlı Dev Kupası"
+  "item.pipican.frostbound_colossus_trophy": "Buzbağlı Dev Kupası",
+  "item.pipican.skollvar_winterfang_sigil": "Kışdişi Mührü",
+  "item.pipican.skollvar_winterfang_trophy": "Sköllvar Kupası"
 }

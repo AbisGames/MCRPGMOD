@@ -40,7 +40,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==2,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==3,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -57,6 +57,9 @@ public final class BossTests {
         var frost=BossDesigns.require("frostbound_colossus");
         helper.assertTrue(frost.functional() && frost.sigil().registered() && frost.loot().trophyItem().equals("pipican:frostbound_colossus_trophy"),
             "Frostbound implemented design is missing registered sigil/reward metadata");
+        var skoll=BossDesigns.require("skollvar_winterfang");
+        helper.assertTrue(skoll.functional() && skoll.sigil().registered() && skoll.loot().trophyItem().equals("pipican:skollvar_winterfang_trophy"),
+            "Skollvar implemented design is missing sigil/reward metadata");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -145,6 +148,17 @@ public final class BossTests {
             helper.assertTrue(iceDrops.stream().anyMatch(item->item.getItem().is(BossContent.FROSTBOUND_TROPHY.get()))
                 && iceDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
                 "Frostbound one-time regional rewards missing");
+            var pine=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("pinewall_taiga/wolf_hollows")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),pine).left().isPresent(),"Skollvar biome fixture failed");
+            owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.item.ItemStack(BossContent.SKOLLVAR_SIGIL.get()));
+            helper.assertTrue(state.useItemOn(owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND),level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS
+                && owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty(),"Skollvar altar summon failed or retained the sigil");
+            var wolf=level.getEntitiesOfClass(SkollvarEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            wolf.hurtServer(level,wolf.damageSources().genericKill(),10000);
+            var wolfDrops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(wolfDrops.stream().anyMatch(item->item.getItem().is(BossContent.SKOLLVAR_TROPHY.get()))
+                && wolfDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("wintersteel").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Skollvar trophy or regional materials missing");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
@@ -214,6 +228,7 @@ public final class BossTests {
         var level=helper.getLevel();
         boss.snapTo(origin.getX(),origin.getY(),origin.getZ());
         front.setHealth(20); front.invulnerableTime=0;
+        dodge.setHealth(20); dodge.invulnerableTime=0;
         front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
         var frost=new FrostboundCombat(boss);
         helper.assertTrue(frost.begin(FrostboundCombat.FISSURE,front),"fissure failed to start");
@@ -244,6 +259,7 @@ public final class BossTests {
         restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
         for(int i=0;i<19;i++) restored.tick(level);
         helper.assertTrue(dodge.getHealth()==20,"second lance row hit before warning");
+        dodge.invulnerableTime=0;
         restored.tick(level);
         helper.assertTrue(dodge.getHealth()<20,"second lance row failed after reload");
         output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); restored.save(output);
