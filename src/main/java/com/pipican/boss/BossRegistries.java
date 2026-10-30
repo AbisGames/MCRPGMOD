@@ -49,6 +49,10 @@ public final class BossRegistries {
         "vermillion_blood_monarch",()->EntityType.Builder.<VermillionEntity>of(VermillionEntity::new,MobCategory.MONSTER)
             .sized(1.8f,3.8f).fireImmune().clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("vermillion_blood_monarch"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<LongweiEntity>> LONGWEI=ENTITIES.register(
+        "longwei_jade_dragon",()->EntityType.Builder.<LongweiEntity>of(LongweiEntity::new,MobCategory.MONSTER)
+            .sized(3.0f,2.6f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("longwei_jade_dragon"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -61,5 +65,6 @@ public final class BossRegistries {
         event.put(NOCTHAR.get(),NoctharEntity.attributes().build());
         event.put(AETHERION.get(),AetherionEntity.attributes().build());
         event.put(VERMILLION.get(),VermillionEntity.attributes().build());
+        event.put(LONGWEI.get(),LongweiEntity.attributes().build());
     }
 }

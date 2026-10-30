@@ -52,5 +52,11 @@
     "boss": "vermillion_blood_monarch",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:longwei_jade_dragon_sigil",
+    "boss": "longwei_jade_dragon",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

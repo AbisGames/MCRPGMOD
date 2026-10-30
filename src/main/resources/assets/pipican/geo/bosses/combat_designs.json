@@ -854,7 +854,7 @@
   {
     "id": "longwei_jade_dragon",
     "region": "jade_empire",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1100,
     "damage": 18,
@@ -867,38 +867,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:green_dye",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:longwei_jade_dragon_sigil"
     },
     "abilities": [
       {
         "id": "jade_ribbon",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A serpentine breath path tracks briefly then freezes its route.",
         "counterplay": "Cross behind the frozen ribbon before it ignites.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:longwei_jade_dragon/jade_ribbon"
+        "animation": "longwei_jade_dragon/jade_ribbon"
       },
       {
         "id": "spiral_descent",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A dive follows a descending spiral with a central refuge.",
         "counterplay": "Use the center or an announced opening in the spiral.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:longwei_jade_dragon/spiral_descent"
+        "animation": "longwei_jade_dragon/spiral_descent"
       },
       {
         "id": "five_orbits",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Five jade orbs pulse in a visible color sequence.",
         "counterplay": "Move between the next-pulsing orbs; no class-specific action is required.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:longwei_jade_dragon/five_orbits"
+        "animation": "longwei_jade_dragon/five_orbits"
       }
     ],
     "phase_two": {
@@ -909,7 +910,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:jade_essence",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:longwei_jade_dragon_trophy",
       "planned_trophy_name": "Longwei Jade Dragon Trophy",
       "xp": 275
     },
@@ -917,16 +918,16 @@
       "geometry": "geometry.pipican.longwei_jade_dragon",
       "file": "geo/bosses/longwei_jade_dragon.geo.json",
       "animation_mapping": {
-        "idle": "planned:longwei_jade_dragon/idle",
-        "walk": "planned:longwei_jade_dragon/walk",
-        "basic_attack": "planned:longwei_jade_dragon/basic_attack",
-        "hurt": "planned:longwei_jade_dragon/hurt",
-        "phase_transition": "planned:longwei_jade_dragon/phase_transition",
-        "summoning": "planned:longwei_jade_dragon/summoning",
-        "death": "planned:longwei_jade_dragon/death",
-        "jade_ribbon": "planned:longwei_jade_dragon/jade_ribbon",
-        "spiral_descent": "planned:longwei_jade_dragon/spiral_descent",
-        "five_orbits": "planned:longwei_jade_dragon/five_orbits"
+        "idle": "longwei_jade_dragon/idle",
+        "walk": "longwei_jade_dragon/walk",
+        "basic_attack": "longwei_jade_dragon/basic_attack",
+        "hurt": "longwei_jade_dragon/hurt",
+        "phase_transition": "longwei_jade_dragon/phase_transition",
+        "summoning": "longwei_jade_dragon/summoning",
+        "death": "longwei_jade_dragon/death",
+        "jade_ribbon": "longwei_jade_dragon/jade_ribbon",
+        "spiral_descent": "longwei_jade_dragon/spiral_descent",
+        "five_orbits": "longwei_jade_dragon/five_orbits"
       }
     },
     "arena": {

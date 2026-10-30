@@ -14,7 +14,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | eldaroth_treant | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | fallen_king | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | durmagon_runic_titan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
-| longwei_jade_dragon | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| longwei_jade_dragon | implemented | preserved source geometry + segmented native renderer | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | morgatha_swamp_queen | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | aurelios_sunken_emperor | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | morvath_ashen_king | complete | prototype | complete | complete | complete | complete | complete | complete | passed | sampled |
@@ -51,3 +51,6 @@ Aetherion now uses a true flying move controller and 3D path navigation, rises d
 
 
 Vermillion now has independent vessel tethers, three staggered blade orbit heights with a marked center refuge, and three limited spectral court channels that can be interrupted at their source. The phase-two vessel break exposes the monarch to increased incoming damage for a saved 80-tick window. Crimson Wilds biome gating, sigil recipe (Bloodstone + Crimson core + ritual core + Nether Wart), one-time trophy/Bloodstone rewards, and deterministic 25% Bloodcrystal are tested. All 38 required GameTests pass, including attack telegraphs/counterplay, exposure persistence, altar rejection/summoning and rewards. Client appearance QA remains pending.
+
+
+Longwei now has a segmented jade-dragon renderer and independent serpentine breath, refuge-gap spiral descent and five sequential orb pulses. Phase two adds a separately saved and warned spiral follow-up after the breath. The Jade Empire altar route, exact green-dye recipe, unique trophy and guaranteed Jade Essence rewards pass alongside combat warning/counterplay and reload checks. The complete server suite passes 39/39 tests; the packaged JAR validator confirms retained source geometries, boss/altar classes, textures, models and exact sigil recipes. Client visual QA remains pending because the available Prism profiles do not match Minecraft 26.1.2.

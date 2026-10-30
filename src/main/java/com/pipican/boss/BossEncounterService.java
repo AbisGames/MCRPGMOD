@@ -22,7 +22,8 @@ public final class BossEncounterService {
         "kragmor_canyon_warlord",new Binding(BossCatalog.require("kragmor_canyon_warlord"),BossRegistries.KRAGMOR::get),
         "nocthar_void_sovereign",new Binding(BossCatalog.require("nocthar_void_sovereign"),BossRegistries.NOCTHAR::get),
         "aetherion_sky_guardian",new Binding(BossCatalog.require("aetherion_sky_guardian"),BossRegistries.AETHERION::get),
-        "vermillion_blood_monarch",new Binding(BossCatalog.require("vermillion_blood_monarch"),BossRegistries.VERMILLION::get));
+        "vermillion_blood_monarch",new Binding(BossCatalog.require("vermillion_blood_monarch"),BossRegistries.VERMILLION::get),
+        "longwei_jade_dragon",new Binding(BossCatalog.require("longwei_jade_dragon"),BossRegistries.LONGWEI::get));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());
