@@ -82,16 +82,7 @@
     {
       "id": "green_man",
       "name": "Green Man",
-      "description": {
-        "text": "passive animals follow you and hostile spiders ignore you; -10% max health outside forests",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "passive animals follow you and hostile spiders ignore you; -10% max health outside forests",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -100,7 +91,45 @@
         "nature_bond"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "animals_follow",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:ignored_by",
+          "mobs": [
+            "minecraft:spider",
+            "minecraft:cave_spider"
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              },
+              {
+                "type": "pipican:biome",
+                "biomes": "#minecraft:is_forest"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": -0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -122,17 +122,19 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Word gets around about thieves.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Word gets around about thieves.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "trade_price",
+        "amount": 0.2
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "golem_chest",
+        "amount": 1.0
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

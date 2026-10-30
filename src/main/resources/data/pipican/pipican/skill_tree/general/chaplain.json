@@ -62,16 +62,7 @@
     {
       "id": "chaplain_field_medic",
       "name": "Field Medic",
-      "description": {
-        "text": "Succor cooldown -20s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Succor cooldown -20s",
       "type": "notable",
       "x": 1086,
       "y": -868,
@@ -79,7 +70,14 @@
         "chaplain_psalm"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "succor",
+          "cooldown": -0.333333
+        }
+      ]
     },
     {
       "id": "chaplain_litany",

@@ -108,17 +108,31 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Acrobats rely on space and speed. Trapped, they flounder.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Acrobats rely on space and speed. Trapped, they flounder.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:effect",
+              "effects": "minecraft:slowness"
+            },
+            {
+              "type": "pipican:state",
+              "state": "narrow"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_taken",
+            "multiplier": 1.25
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

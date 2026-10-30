@@ -1348,6 +1348,100 @@ def world(low, ctx):
     # Tongues: chat already reaches every player on the server.
     if re.fullmatch(r"your chat messages can be read by all players within 1000 blocks when you start them with '!'|tongues messages carry server-wide", low):
         return []
+    # Healer: Far Healing pulses heal players near you while the bar is above a share.
+    m = re.fullmatch(rf'other players within {N} blocks regenerate {N} hp every {N}s while you have over {N}% ([a-z ]+)(?: \(drains {N} per heal\))?', low)
+    if m and m.group(5) == rn:
+        actions = [{'type': 'pipican:heal', 'target': 'players', 'radius': float(m.group(1)), 'amount': float(m.group(2)), 'require_target': True}]
+        if m.group(6):
+            actions.append({'type': 'pipican:resource', 'amount': -float(m.group(6))})
+        r = {'type': 'pipican:on', 'event': 'second', 'name': 'far healing', 'cooldown_ticks': int(float(m.group(3)) * 20), 'actions': actions}
+        REACTIONS.setdefault(cid, {}).setdefault('far healing', r)
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:resource', 'min': pct(m.group(4))}, 'effects': [r]}]
+    m = re.fullmatch(rf'far healing tick -{N}% interval per ([a-z ]+)', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:reaction_mod', 'name': 'far healing', 'cooldown': 0.0, 'scaling': [{'source': 'special_stat', 'per': -pct(m.group(1))}]}]
+    # Chaplain: Succor - crouch still next to a player low on health.
+    m = re.fullmatch(rf'crouching next to a downed-ish player \(below {N} hp\) for {N}s heals them {N} hp \({N}s cooldown\)', low)
+    if m:
+        r = {'type': 'pipican:on', 'event': 'second', 'name': 'succor', 'cooldown_ticks': int(float(m.group(4)) * 20),
+             'actions': [{'type': 'pipican:heal', 'target': 'players', 'radius': 2.5, 'state': {'health': {'max': round(float(m.group(1)) / 20, 6)}},
+                          'amount': float(m.group(3)), 'require_target': True}]}
+        REACTIONS.setdefault(cid, {}).setdefault('succor', r)
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [
+            {'type': 'pipican:state', 'state': 'sneaking'}, {'type': 'pipican:still', 'seconds': float(m.group(2))}]}, 'effects': [r]}]
+    if cid == 'chaplain':
+        m = re.fullmatch(rf'succor heal \+{N} per {N} ([a-z]+)', low)
+        if m and m.group(3) == sp:
+            return [{'type': 'pipican:reaction_mod', 'name': 'succor', 'heal': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(1)) / float(m.group(2)), 6)}]}]
+        m = re.fullmatch(rf'succor cooldown -{N}s', low)
+        if m and REACTIONS.get(cid, {}).get('succor', {}).get('cooldown_ticks'):
+            return [{'type': 'pipican:reaction_mod', 'name': 'succor', 'cooldown': round(-float(m.group(1)) * 20 / REACTIONS[cid]['succor']['cooldown_ticks'], 6)}]
+        m = re.fullmatch(r'succor also removes poison and wither', low)
+        if m:
+            return [{'type': 'pipican:reaction_mod', 'name': 'succor', 'actions': [{'type': 'pipican:cleanse', 'target': 'players', 'radius': 2.5,
+                     'effects': ['minecraft:poison', 'minecraft:wither']}]}]
+    # Crowds: "-5% damage and -1 armor for each hostile mob beyond the first within 6 blocks"
+    m = re.fullmatch(rf'-{N}% damage and -{N} armou?r for each hostile mob beyond the first within 6 blocks', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'multiplier': 1.0, 'scaling': [{'source': 'extra_hostiles', 'per': -pct(m.group(1))}]},
+                {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': 0.0, 'scaling': [{'source': 'extra_hostiles', 'per': -float(m.group(2))}]}]
+    # Acrobat: "+25% damage taken while Slowed or standing in a 1-block-wide space"
+    m = re.fullmatch(rf'\+{N}% damage taken while slowed or standing in a 1-block-wide space', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:any_of', 'conditions': [
+            {'type': 'pipican:effect', 'effects': 'minecraft:slowness'}, {'type': 'pipican:state', 'state': 'narrow'}]},
+            'effects': [{'type': 'pipican:damage_taken', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf'first round of combat: \+{N}% damage(?: and speed)?', low)
+    if m:
+        k = pct(m.group(1))
+        eff = [{'type': 'pipican:damage_dealt', 'multiplier': round(1 + k, 6)}]
+        if 'speed' in low:
+            eff.append({'type': 'pipican:attribute', 'attribute': 'minecraft:movement_speed', 'amount': k, 'operation': 'add_multiplied_base'})
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'combat_start'}, 'effects': eff}]
+    # Killing the innocent: villagers, iron golems, tamed animals.
+    m = re.fullmatch(rf'killing (?:a villager, iron golem or tamed animal|villagers, golems or tamed animals) (empties|locks) ([a-z ]+?)(?: regen)?(?: and gives (.+?))?(?: for {N} minutes)?', low)
+    if m and m.group(2) == rn:
+        if m.group(1) == 'empties':
+            actions = [{'type': 'pipican:resource', 'percent': -1.0}]
+            if m.group(3):
+                out = combat.outcome(f'get {m.group(3)} for {float(m.group(4) or 1) * 60:g}s', 'self')
+                if not out:
+                    return None
+                actions += out
+        else:
+            regen = _rest(f'-100% {ctx.get("resource_name")} regen', ctx)
+            if not regen or not m.group(4):
+                return None
+            actions = [{'type': 'pipican:boost', 'seconds': float(m.group(4)) * 60, 'effects': regen}]
+        return [{'type': 'pipican:on', 'event': 'kill_innocent', 'actions': actions}]
+    # Village behaviour
+    m = re.fullmatch(rf"villager trades cost {N}% more and hero of the village doesn'?t apply to you", low)
+    if m:
+        return [bonus_kind('trade_price', pct(m.group(1)))[0], {'type': 'pipican:immune', 'effects': ['minecraft:hero_of_the_village']}]
+    m = re.fullmatch(rf'villager trades cost {N}% more, and iron golems turn hostile if they see you open a chest inside a village', low)
+    if m:
+        return [bonus_kind('trade_price', pct(m.group(1)))[0], bonus_kind('golem_chest', 1.0)[0]]
+    if cid == 'thief' and re.fullmatch(r'cancels the villager price penalty from your weakness', low):
+        return bonus_kind('trade_price', -0.2)
+    m = re.fullmatch(r'villagers refuse to trade with you, animals flee from you(?:, and (.+))?', low)
+    if m:
+        out = [bonus_kind('no_trade', 1.0)[0], bonus_kind('animals_flee', 1.0)[0]]
+        if m.group(1):
+            rest = _rest(m.group(1), ctx)
+            if not rest:
+                return None
+            out += rest
+        return out
+    m = re.fullmatch(rf'-{N}% potion effect duration on you, and enchanting costs \+{N} levels?', low)
+    if m:
+        return [bonus_kind('potion_duration', -pct(m.group(1)))[0], bonus_kind('enchant_levels', -float(m.group(2)))[0]]
+    m = re.fullmatch(r'passive animals follow you and hostile spiders ignore you', low)
+    if m:
+        return [bonus_kind('animals_follow', 1.0)[0], {'type': 'pipican:ignored_by', 'mobs': ['minecraft:spider', 'minecraft:cave_spider']}]
+    m = re.fullmatch(rf'takes {N}% more fire damage and burns for {N}% longer', low)
+    if m:
+        return [{'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_fire', 'multiplier': round(1 + float(m.group(1)) / 100, 6)},
+                bonus_kind('burn_longer', pct(m.group(2)))[0]]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

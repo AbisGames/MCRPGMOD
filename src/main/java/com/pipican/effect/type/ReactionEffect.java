@@ -99,7 +99,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** Your resource bar just became full. */
         RESOURCE_FULL("resource_full"),
         /** Your quarry (marked target, prey...) is moving away from you (the victim is the quarry). */
-        QUARRY_FLEE("quarry_flee");
+        QUARRY_FLEE("quarry_flee"),
+        /** You killed a villager, an iron golem or someone's tamed animal (the victim). */
+        KILL_INNOCENT("kill_innocent");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

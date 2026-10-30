@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2022**, partly working: **17**, not yet: **211**
+- Bonus phrases: **2250**. Fully working: **2041**, partly working: **16**, not yet: **193**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,13 +12,13 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 63 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 56 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 48 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 34 |
+| [Other mechanics](#other-mechanics) | 59 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 49 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 47 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 30 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 14 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 12 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 11 |
 | [Immunities](#immunities) | 8 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 6 |
 | [Critical hits](#critical-hits) | 2 |
@@ -46,7 +46,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **druid**
   - passive: no slowdown from powder snow, soul sand, cobwebs or honey
 - **duelist**
-  - weakness: -5% damage and -1 armor for each hostile mob beyond the first within 6 blocks
   - general tree: Lone Wolf: Duel bonuses doubled
 - **engineer**
   - general tree: Iron Titan: it moves 20% slower
@@ -64,8 +63,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Steady Hand: +5% accuracy
   - general tree: Fan the Hammer: +15% fire rate
   - special tree: Ricochet: bullets bounce to a second mob within 4 blocks for 50%
-- **healer**
-  - special passive: Far Healing tick -1% interval per Vitality Flow
 - **hexer**
   - special tree: Lethargy: Lethargy also stops jumping
 - **illusionist**
@@ -74,7 +71,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
 - **infiltrator**
   - passive: Vanish: breaking line of sight with a mob makes it forget you after 2s
-  - general tree: Ambush: first round of combat: +20% damage and speed
   - general tree: Forgettable: mobs forget you 1s faster
 - **inquisitor**
   - special passive: Scrutiny bonus +0.5% per point
@@ -123,8 +119,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special stat per point: +0.2 to every stat per 10 points (rounded down)
 - **warlock**
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
-- **witch**
-  - weakness: takes 25% more fire damage and burns for 50% longer
 - **zealot**
   - special tree: Violent Madness: Violent Madness no longer targets players
 
@@ -140,13 +134,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **champion**
   - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
 - **chaplain**
-  - passive: Succor: crouching next to a downed-ish player (below 4 HP) for 3s heals them 6 HP (60s cooldown)
-  - special passive: Succor heal +1 per 10 Sermon
   - weakness: Battle Chant switches off for 10s whenever you take more than 6 damage in one hit
   - general tree: Steady Voice: Battle Chant no longer stops from big hits below 10 damage
-  - general tree: Field Medic: Succor cooldown -20s
   - special tree: Emboldening Chant: +5% more damage in chant
-  - special tree: Succor: Succor also removes Poison and Wither
 - **chronomancer**
   - special tree: Precognition: unlocks Insight: after you dodge, your next hit is a guaranteed crit
 - **cleric**
@@ -161,8 +151,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Eidolon armor +1 per 10 Engineering
   - general tree: Iron Titan: eidolon becomes Size 2
   - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **fighter**
-  - weakness: -25% potion effect duration on you, and enchanting costs +1 level
 - **hexer**
   - general tree: Withering Gaze: Pain curse also gives Weakness
   - special tree: Desire: Desire-cursed mobs fight other mobs
@@ -183,8 +171,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **magus**
   - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
   - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
-- **paladin**
-  - weakness: killing a villager, iron golem or tamed animal empties Smite and gives Weakness I for 5 minutes
 - **runesmith**
   - general tree: Runelord: sigil bonuses doubled
 - **savant**
@@ -201,7 +187,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
 - **templar**
   - passive: When a hostile mob enters your temple, you get Speed II for 2s
-  - special passive: Per 10 Sanctum, temple armor bonus +1
   - general tree: Fortress Temple: temple bonuses doubled
   - special tree: Living Temple: your temple follows you
   - special tree: Living Temple: -15% temple bonuses
@@ -222,7 +207,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: landing from any fall can't break your legs below 2 hearts
   - passive: You can walk through other players and pass by mobs without being pushed
   - passive: No slowdown from soul sand, honey, cobwebs or when swimming
-  - weakness: +25% damage taken while Slowed or standing in a 1-block-wide space
   - general tree: Wall Run: sprinting into a wall lets you run up it for 2 blocks
 - **aeromancer**
   - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
@@ -318,14 +302,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **gunslinger**
   - special tree: Last Gunslinger: 6th shot in a cylinder always crits; -10% max health
 - **healer**
-  - passive: Far Healing: other players within 10 blocks regenerate 1 HP every 4s while you have over 25% Lifeblood (drains 1 per heal)
   - special tree: Resurrection: once per day, a player who dies near you is saved at 4 HP; -20% max Lifeblood
 - **hexer**
   - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
 - **infiltrator**
   - general tree: No One: Faceless works within 2 blocks, but -20% max health
 - **inquisitor**
-  - weakness: villager trades cost 15% more and Hero of the Village doesn't apply to you
   - special tree: Grand Inquisitor: scrutinise 2 mobs at once; -10% max health
 - **jack_of_all_trades**
   - special tree: Uncommon Ability: Aptitude crit triggers every 30s; -10% max Knack
@@ -352,10 +334,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Sacred Ground: players in your temple regenerate 20% faster
 - **tenebrist**
   - special tree: Void-Touched: Shadow Form works in any light; -15% max health
-- **theurge**
-  - weakness: killing villagers, golems or tamed animals locks Divinity regen for 10 minutes
-- **thief**
-  - weakness: villager trades cost 20% more, and iron golems turn hostile if they see you open a chest inside a village
 - **warlock**
   - special tree: Spell Thief Mastery: Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health
 - **witch**
@@ -422,35 +400,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **witch**
   - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
 
-## Bonus against a kind of mob / marked target
-
-- **apocalyptist**
-  - weakness: villagers refuse to trade with you, animals flee from you
-- **artificer**
-  - special tree: Copper Heart: copper golems near you move and work 25% faster
-- **assassin**
-  - general tree: Death Mark: Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you
-- **avenger**
-  - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
-- **beastmaster**
-  - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
-- **diplomat**
-  - passive: illagers are 30% slower to notice you
-  - skill Bartering: +1 villager restock
-- **druid**
-  - special passive: Passive animals within 16 blocks never flee from you
-  - special passive: per 20 Wildness, +1 heart to animals you tame
-- **poisoner**
-  - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
-- **ranger**
-  - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
-- **runesmith**
-  - general tree: Runelord: unmarked gear is forbidden-tier
-- **thief**
-  - general tree: Fence: cancels the villager price penalty from your weakness
-- **woodwose**
-  - special tree: Green Man: passive animals follow you and hostile spiders ignore you; -10% max health outside forests
-
 ## Chance on hit / proc effects
 
 - **acrobat**
@@ -472,6 +421,29 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Agent of Chaos: Seize Chaos chance doubled, but outcomes are fully random
 - **witch**
   - special passive: +1% chance per 2 Craft to brew one extra potion per brewing cycle
+
+## Bonus against a kind of mob / marked target
+
+- **artificer**
+  - special tree: Copper Heart: copper golems near you move and work 25% faster
+- **assassin**
+  - general tree: Death Mark: Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you
+- **avenger**
+  - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
+- **beastmaster**
+  - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
+- **diplomat**
+  - passive: illagers are 30% slower to notice you
+  - skill Bartering: +1 villager restock
+- **druid**
+  - special passive: Passive animals within 16 blocks never flee from you
+  - special passive: per 20 Wildness, +1 heart to animals you tame
+- **poisoner**
+  - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
+- **ranger**
+  - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
+- **runesmith**
+  - general tree: Runelord: unmarked gear is forbidden-tier
 
 ## Immunities
 

@@ -78,16 +78,7 @@
     {
       "id": "thief_fence",
       "name": "Fence",
-      "description": {
-        "text": "cancels the villager price penalty from your weakness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "cancels the villager price penalty from your weakness",
       "type": "notable",
       "x": -182,
       "y": 872,
@@ -95,7 +86,14 @@
         "thief_sticky"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.2
+        }
+      ]
     },
     {
       "id": "thief_master",

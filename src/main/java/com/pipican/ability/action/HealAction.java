@@ -14,14 +14,16 @@ import net.minecraft.world.entity.LivingEntity;
 /**
  * {@code pipican:heal} - heals the targets by {@code amount} HP plus {@code percent} of their max health.
  *
+ * With {@code require_target}, finding no one to heal fizzles (a reaction's cooldown isn't used).
  * <pre>{@code { "type": "pipican:heal", "target": "allies", "radius": 8, "amount": 6 } }</pre>
  */
-public record HealAction(Targets targets, double amount, double percent) implements AbilityAction {
+public record HealAction(Targets targets, double amount, double percent, boolean requireTarget) implements AbilityAction {
 
     public static final MapCodec<HealAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Targets.mapCodec(Targets.Kind.SELF).forGetter(HealAction::targets),
             Codec.doubleRange(0, 10_000).optionalFieldOf("amount", 0.0).forGetter(HealAction::amount),
-            Codec.doubleRange(0, 1).optionalFieldOf("percent", 0.0).forGetter(HealAction::percent)
+            Codec.doubleRange(0, 1).optionalFieldOf("percent", 0.0).forGetter(HealAction::percent),
+            Codec.BOOL.optionalFieldOf("require_target", false).forGetter(HealAction::requireTarget)
     ).apply(i, HealAction::new));
 
     @Override
@@ -31,7 +33,13 @@ public record HealAction(Targets targets, double amount, double percent) impleme
 
     @Override
     public void run(AbilityContext ctx) {
-        for (LivingEntity target : targets.select(ctx)) {
+        var selected = targets.select(ctx);
+        if (requireTarget && selected.isEmpty()) {
+            // "Heals a downed player": with no one there, nothing happens and a reaction keeps its cooldown.
+            ctx.fizzle();
+            return;
+        }
+        for (LivingEntity target : selected) {
             double given = ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.HEALING_GIVEN);
             if (target != ctx.player() && target instanceof net.minecraft.world.entity.player.Player && target.getHealth() < target.getMaxHealth() * 0.3) {
                 given *= 1 + ClassEffectApplier.state(ctx.player()).chance(BonusEffect.Kind.TRIAGE);

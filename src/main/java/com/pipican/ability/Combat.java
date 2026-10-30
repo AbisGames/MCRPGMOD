@@ -13,8 +13,19 @@ public final class Combat {
 
     private Combat() {}
 
+    private static final Map<UUID, Long> START = new ConcurrentHashMap<>();
+
     public static void mark(ServerPlayer player) {
+        if (!inCombat(player)) {
+            START.put(player.getUUID(), player.level().getGameTime());
+        }
         LAST.put(player.getUUID(), player.level().getGameTime());
+    }
+
+    /** Ticks since this fight started, or -1 when out of combat. */
+    public static long fightTicks(ServerPlayer player) {
+        Long start = START.get(player.getUUID());
+        return inCombat(player) && start != null ? player.level().getGameTime() - start : -1;
     }
 
     public static boolean inCombat(ServerPlayer player) {

@@ -681,6 +681,13 @@ public final class ClassSystemTests {
         gadget.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
         helper.assertTrue(com.pipican.ability.Empowers.count(player, 1.37, 0) == 1, "one gadget charge stored: " + com.pipican.ability.Empowers.count(player, 1.37, 0));
         com.pipican.ability.Empowers.forget(player);
+
+        // A heal that needs someone to heal fizzles when no one is there (a reaction then keeps its cooldown).
+        var succor = com.pipican.ability.action.HealAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"target\": \"players\", \"radius\": 0.5, \"amount\": 6, \"require_target\": true}")).getOrThrow();
+        var lonely = new AbilityContext(player, Optional.empty(), player.position().add(0, 50, 0), Optional.empty(), 0);
+        succor.run(lonely);
+        helper.assertTrue(lonely.fizzled(), "no one to heal: fizzled");
         helper.succeed();
     }
 

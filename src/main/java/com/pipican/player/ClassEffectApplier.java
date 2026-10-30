@@ -672,6 +672,14 @@ public final class ClassEffectApplier {
                 case "special_stat" -> rpgClass.specialStat().map(s -> stats.getOrDefault(s.stat(), 0.0)).orElse(0.0);
                 case "sigil_armor" -> com.pipican.ability.SpecialItems.sigilArmor(player);
                 case "unmarked_armor" -> com.pipican.ability.SpecialItems.unmarkedArmor(player);
+                case "extra_hostiles" -> {
+                    // Hostile mobs within 6 blocks beyond the first; rebuilt when the count changes.
+                    double value = Math.max(0, player.level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
+                            player.getBoundingBox().inflate(6), e -> e instanceof net.minecraft.world.entity.monster.Enemy && e.isAlive()
+                                    && e.distanceToSqr(player) <= 36).size() - 1);
+                    conditions.put(new SourceCheck(source, value), true);
+                    yield value;
+                }
                 case "heavy_armor" -> com.pipican.ability.SpecialItems.heavyArmor(player);
                 case "missing_hearts", "missing_health_percent" -> {
                     double value = healthSource(player, source);

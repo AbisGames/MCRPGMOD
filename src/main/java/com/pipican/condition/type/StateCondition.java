@@ -48,7 +48,11 @@ public record StateCondition(State state) implements ClassCondition {
         /** Within 64 blocks of your respawn point (bed / anchor, else world spawn). */
         NEAR_HOME("near_home"),
         /** You have a live mark (curse, scrutiny, vow...) on some mob. */
-        MARKING("marking");
+        MARKING("marking"),
+        /** The first 6 seconds of a fight ("first round of combat"). */
+        COMBAT_START("combat_start"),
+        /** Standing in a 1-block-wide space: solid blocks on both sides along one axis. */
+        NARROW("narrow");
 
         public static final Codec<State> CODEC = StringRepresentable.fromEnum(State::values);
         private final String name;
@@ -70,6 +74,13 @@ public record StateCondition(State state) implements ClassCondition {
     @Override
     public ConditionTypes.Type type() {
         return ConditionTypes.STATE;
+    }
+
+    private static boolean narrow(ServerPlayer player) {
+        BlockPos feet = player.blockPosition();
+        var level = player.level();
+        java.util.function.Predicate<BlockPos> solid = p -> level.getBlockState(p).isCollisionShapeFullBlock(level, p);
+        return solid.test(feet.east()) && solid.test(feet.west()) || solid.test(feet.north()) && solid.test(feet.south());
     }
 
     private static boolean nearHome(ServerPlayer player) {
@@ -102,6 +113,11 @@ public record StateCondition(State state) implements ClassCondition {
             case IN_VILLAGE -> level instanceof net.minecraft.server.level.ServerLevel sl && sl.isVillage(player.blockPosition());
             case NEAR_HOME -> nearHome(player);
             case MARKING -> com.pipican.ability.Marks.hasAny(player);
+            case COMBAT_START -> {
+                long t = com.pipican.ability.Combat.fightTicks(player);
+                yield t >= 0 && t < 120;
+            }
+            case NARROW -> narrow(player);
         };
     }
 }

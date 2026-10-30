@@ -83,6 +83,17 @@ public final class AbilityContext {
         }
     }
 
+    private boolean fizzled;
+
+    /** Nothing happened (no one to heal...): a reaction that fizzles keeps its cooldown ready. */
+    public void fizzle() {
+        fizzled = true;
+    }
+
+    public boolean fizzled() {
+        return fizzled;
+    }
+
     public boolean isCancelled() {
         return cancelled != null;
     }

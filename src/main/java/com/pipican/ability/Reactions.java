@@ -104,6 +104,13 @@ public final class Reactions {
                         cancelled = true;
                         break;
                     }
+                    if (ctx.fizzled()) {
+                        break;
+                    }
+                }
+                if (ctx.fizzled()) {
+                    cooldowns.remove(r);
+                    continue;
                 }
                 r.name().ifPresent(n -> com.pipican.player.MasteryService.onAction(player, new com.pipican.mastery.SkillAction.Reacted(n)));
             }

@@ -114,6 +114,10 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code unmarked_forbidden}: any amount above 0 = weapons and armor that aren't sigil-marked are forbidden-tier for you</li>
  *   <li>{@code staff_only}: any amount above 0 = weapons other than a staff are at best clumsy for you</li>
  *   <li>{@code favored_only}: any amount above 0 = weapons that aren't your favored kind are forbidden-tier for you</li>
+ *   <li>{@code golem_chest}: any amount above 0 = iron golems that see you open a chest in a village turn on you</li>
+ *   <li>{@code animals_flee} / {@code animals_follow}: any amount above 0 = passive animals within 10 blocks run from you /
+ *       follow you</li>
+ *   <li>{@code burn_longer}: how much longer fire lasts on you once you catch it (0.5 = +50%)</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -137,7 +141,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO,
         SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION, EXPLODE_SELF_SHARE,
         EMPOWER_CHARGES, WILDFIRE, TAUNT_RADIUS, QUARRY_PURSUIT, QUARRY_ATTACK_SPEED, QUARRY_REACH,
-        UNMARKED_FORBIDDEN, STAFF_ONLY, FAVORED_ONLY;
+        UNMARKED_FORBIDDEN, STAFF_ONLY, FAVORED_ONLY,
+        GOLEM_CHEST, ANIMALS_FLEE, ANIMALS_FOLLOW, BURN_LONGER;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -144,17 +144,27 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "A theurge's power is borrowed - and the lender is watching.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A theurge's power is borrowed - and the lender is watching.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "kill_innocent",
+        "actions": [
+          {
+            "type": "pipican:boost",
+            "seconds": 600.0,
+            "effects": [
+              {
+                "type": "pipican:resource",
+                "target": "regen",
+                "amount": -1.0,
+                "operation": "add_multiplied_base"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

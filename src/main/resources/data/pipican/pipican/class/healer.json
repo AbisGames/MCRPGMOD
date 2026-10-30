@@ -68,6 +68,34 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.25
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "name": "far healing",
+          "cooldown_ticks": 80,
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "players",
+              "radius": 10.0,
+              "amount": 1.0,
+              "require_target": true
+            },
+            {
+              "type": "pipican:resource",
+              "amount": -1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:immune",
       "effects": [
         "minecraft:poison",
@@ -112,6 +140,17 @@
         {
           "source": "special_stat",
           "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "far healing",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
         }
       ]
     },

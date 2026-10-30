@@ -56,16 +56,7 @@
     {
       "id": "infiltrator_ambush",
       "name": "Ambush",
-      "description": {
-        "text": "first round of combat: +20% damage and speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "first round of combat: +20% damage and speed",
       "type": "notable",
       "x": 403,
       "y": 1693,
@@ -73,7 +64,28 @@
         "infiltrator_grey_man"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "combat_start"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "infiltrator_forgettable",

@@ -250,6 +250,11 @@ public final class ClassEvents {
         }
         if (event.getSource().getEntity() instanceof ServerPlayer killer) {
             Reactions.fire(killer, event.getEntity(), event.getSource().getWeaponItem(), ReactionEffect.Event.KILL);
+            var dead = event.getEntity();
+            if (dead instanceof net.minecraft.world.entity.npc.villager.AbstractVillager || dead instanceof net.minecraft.world.entity.animal.golem.IronGolem
+                    || dead instanceof net.minecraft.world.entity.OwnableEntity o && o.getOwnerReference() != null) {
+                Reactions.fire(killer, dead, event.getSource().getWeaponItem(), ReactionEffect.Event.KILL_INNOCENT);
+            }
         }
         Marks.forget(event.getEntity());
         // Running ability states end on death; so does Optimization.

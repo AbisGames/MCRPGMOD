@@ -120,17 +120,29 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "A paladin's power flows from an oath, and oaths can break.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A paladin's power flows from an oath, and oaths can break.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "kill_innocent",
+        "actions": [
+          {
+            "type": "pipican:resource",
+            "percent": -1.0
+          },
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:weakness",
+                "seconds": 300.0
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

@@ -228,6 +228,7 @@ public final class WorldBonusEvents {
     private static final Map<UUID, Long> GLORIOUS = new ConcurrentHashMap<>();
     private static final String GLORIOUS_DAY = "pipican_glorious_day";
     private static boolean sharing;
+    private static final Map<UUID, Integer> FIRE = new ConcurrentHashMap<>();
     /** Players whose resource bar is full (to fire resource_full once per filling). */
     private static final java.util.Set<UUID> FULL = ConcurrentHashMap.newKeySet();
 
@@ -264,6 +265,16 @@ public final class WorldBonusEvents {
         if (player.tickCount % 20 == 0) {
             taunt(player, level);
             wildfire(player, level);
+            animals(player, level);
+        }
+        // Burn longer: a fresh fire on you lasts longer.
+        double burn = ClassEffectApplier.state(player).chance(Kind.BURN_LONGER);
+        int fire = player.getRemainingFireTicks();
+        Integer before = FIRE.put(player.getUUID(), fire);
+        if (burn > 0 && before != null && fire > before + 1) {
+            int longer = before + (int) Math.round((fire - before) * (1 + burn));
+            player.setRemainingFireTicks(longer);
+            FIRE.put(player.getUUID(), longer);
         }
         // Resource bar filled up: "when Strain reaches max".
         var data = com.pipican.player.ClassService.data(player);
@@ -450,6 +461,40 @@ public final class WorldBonusEvents {
                     e -> e != burning && !e.isOnFire() && !(e instanceof Player) && Pets.owner(e) != player && !com.pipican.ability.Summons.isSummonOf(e, player))) {
                 next.igniteForSeconds(4);
             }
+        }
+    }
+
+    /** {@code animals_flee} / {@code animals_follow}: passive animals near you run off or trail after you. */
+    private static void animals(ServerPlayer player, ServerLevel level) {
+        var state = ClassEffectApplier.state(player);
+        boolean flee = state.chance(Kind.ANIMALS_FLEE) > 0;
+        boolean follow = state.chance(Kind.ANIMALS_FOLLOW) > 0;
+        if (!flee && !follow) {
+            return;
+        }
+        for (var animal : level.getEntitiesOfClass(net.minecraft.world.entity.animal.Animal.class, player.getBoundingBox().inflate(10),
+                a -> !(a instanceof OwnableEntity o && o.getOwnerReference() != null) && a.distanceToSqr(player) <= 100)) {
+            if (flee) {
+                com.pipican.ability.MobControl.control(animal, player, com.pipican.ability.MobControl.Mode.FLEE, 40);
+            } else if (animal.distanceToSqr(player) > 9) {
+                animal.getNavigation().moveTo(player, 1.0);
+            }
+        }
+    }
+
+    /** {@code golem_chest}: opening a chest inside a village where an iron golem can see you. */
+    @SubscribeEvent
+    static void onChestOpen(PlayerInteractEvent.RightClickBlock event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getLevel() instanceof ServerLevel level)
+                || ClassEffectApplier.state(player).chance(Kind.GOLEM_CHEST) <= 0 || !level.isVillage(event.getPos())
+                || !(level.getBlockEntity(event.getPos()) instanceof net.minecraft.world.level.block.entity.ChestBlockEntity)) {
+            return;
+        }
+        for (var golem : level.getEntitiesOfClass(net.minecraft.world.entity.animal.golem.IronGolem.class, player.getBoundingBox().inflate(16),
+                g -> !g.isPlayerCreated() && g.hasLineOfSight(player))) {
+            golem.setPersistentAngerTarget(net.minecraft.world.entity.EntityReference.of(player));
+            golem.startPersistentAngerTimer();
+            golem.setTarget(player);
         }
     }
 }

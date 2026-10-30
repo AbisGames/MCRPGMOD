@@ -133,17 +133,30 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Duelists fight one enemy at a time. Crowds overwhelm them.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Duelists fight one enemy at a time. Crowds overwhelm them.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 1.0,
+        "scaling": [
+          {
+            "source": "extra_hostiles",
+            "per": -0.05
+          }
+        ]
+      },
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:armor",
+        "amount": 0.0,
+        "scaling": [
+          {
+            "source": "extra_hostiles",
+            "per": -1.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

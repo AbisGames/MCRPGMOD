@@ -108,17 +108,20 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "The Inquisition is feared, not loved.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "The Inquisition is feared, not loved.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "trade_price",
+        "amount": 0.15
+      },
+      {
+        "type": "pipican:immune",
+        "effects": [
+          "minecraft:hero_of_the_village"
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

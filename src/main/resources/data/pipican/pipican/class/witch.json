@@ -126,17 +126,19 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Old stories end with a witch on a pyre.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Old stories end with a witch on a pyre.",
+    "effects": [
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_fire",
+        "multiplier": 1.25
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "burn_longer",
+        "amount": 0.5
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

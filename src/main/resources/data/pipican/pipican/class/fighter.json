@@ -124,17 +124,19 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "A Fighter's whole life is the weapon. Nothing else gets practice.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A Fighter's whole life is the weapon. Nothing else gets practice.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "potion_duration",
+        "amount": -0.25
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "enchant_levels",
+        "amount": -1.0
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

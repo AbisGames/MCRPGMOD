@@ -164,17 +164,18 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Corruption marks you. The living recoil.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Corruption marks you. The living recoil.",
     "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "no_trade",
+        "amount": 1.0
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "animals_flee",
+        "amount": 1.0
+      },
       {
         "type": "pipican:bonus",
         "kind": "healing_received",

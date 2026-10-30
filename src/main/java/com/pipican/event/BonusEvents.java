@@ -371,8 +371,9 @@ public final class BonusEvents {
         ClassState state = ClassEffectApplier.state(player);
         int levels = (int) Math.floor(state.chance(Kind.ENCHANT_LEVELS) + 1e-9);
         int lapis = (int) Math.floor(state.chance(Kind.ENCHANT_LAPIS) + 1e-9);
-        if (levels > 0) {
-            player.giveExperienceLevels(levels);
+        if (levels != 0) {
+            // Negative: enchanting costs that many more levels (never below 0).
+            player.giveExperienceLevels(Math.max(levels, -player.experienceLevel));
         }
         // Persistent Enchantment: a chance of one more enchantment that fits the item.
         double extra = state.chance(Kind.EXTRA_ENCHANT);

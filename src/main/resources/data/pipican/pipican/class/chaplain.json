@@ -83,6 +83,44 @@
       "name": "Battle Chant"
     },
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still",
+            "seconds": 3.0
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "name": "succor",
+          "cooldown_ticks": 1200,
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "players",
+              "radius": 2.5,
+              "state": {
+                "health": {
+                  "max": 0.2
+                }
+              },
+              "amount": 6.0,
+              "require_target": true
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:aura_mod",
       "name": "chant",
       "effects": [
@@ -115,6 +153,17 @@
     {
       "type": "pipican:aura_mod",
       "name": "chant",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "succor",
+      "heal": 0.0,
       "scaling": [
         {
           "source": "special_stat",
