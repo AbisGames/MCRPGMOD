@@ -46,7 +46,9 @@ public record StateCondition(State state) implements ClassCondition {
         /** Inside a village (near villagers' beds and workstations). */
         IN_VILLAGE("in_village"),
         /** Within 64 blocks of your respawn point (bed / anchor, else world spawn). */
-        NEAR_HOME("near_home");
+        NEAR_HOME("near_home"),
+        /** You have a live mark (curse, scrutiny, vow...) on some mob. */
+        MARKING("marking");
 
         public static final Codec<State> CODEC = StringRepresentable.fromEnum(State::values);
         private final String name;
@@ -99,6 +101,7 @@ public record StateCondition(State state) implements ClassCondition {
             case SEES_SKY -> level.canSeeSky(BlockPos.containing(player.getEyePosition()));
             case IN_VILLAGE -> level instanceof net.minecraft.server.level.ServerLevel sl && sl.isVillage(player.blockPosition());
             case NEAR_HOME -> nearHome(player);
+            case MARKING -> com.pipican.ability.Marks.hasAny(player);
         };
     }
 }

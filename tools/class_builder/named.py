@@ -1176,6 +1176,63 @@ def world(low, ctx):
         m = re.fullmatch(rf"(?:divine )?ecstasy bonuses \+{N}%, but you can'?t leave it early and it drains {N}% faster", low)
         if m:
             return [{'type': 'pipican:ability_mod', 'ability': ewhen['ability'], 'strength': pct(m.group(1)), 'drain': pct(m.group(2)), 'locked': True}]
+    # Sorcerer: Strain detonates when full (Sorcerous Outburst) and its upgrades.
+    m = re.fullmatch(rf'when ([a-z ]+) reaches max it detonates: an explosion around you \(power {N} \+ 1 per {N} ([a-z]+)\) that damages everything nearby except you, breaks no blocks, and resets ([a-z ]+) to 0\. allies are not safe', low)
+    if m and m.group(1) == rn and m.group(5) == rn and m.group(4) == sp:
+        r = {'type': 'pipican:on', 'event': 'resource_full', 'name': 'sorcerous outburst',
+             'actions': [{'type': 'pipican:explode', 'power': float(m.group(2))}, {'type': 'pipican:resource', 'percent': -1.0}]}
+        REACTIONS.setdefault(cid, {}).setdefault('sorcerous outburst', r)
+        return [r, {'type': 'pipican:reaction_mod', 'name': 'sorcerous outburst', 'radius': 0.0,
+                    'scaling': [{'source': 'special_stat', 'per': round(1 / float(m.group(3)), 6)}]}]
+    if cid == 'sorcerer':
+        m = re.fullmatch(rf'sorcerous outburst explosion damage \+{N} per ([a-z]+) points?', low)
+        if m and m.group(2) == sp:
+            return [{'type': 'pipican:reaction_mod', 'name': 'sorcerous outburst', 'damage': 0.0, 'scaling': [{'source': 'special_stat', 'per': float(m.group(1))}]}]
+        m = re.fullmatch(rf'outburst radius \+{N} blocks?', low)
+        if m:
+            # Explosion power and radius grow together (radius is about twice the power).
+            return [{'type': 'pipican:reaction_mod', 'name': 'sorcerous outburst', 'radius': round(float(m.group(1)) / 2, 6)}]
+        m = re.fullmatch(rf'outbursts deal double damage, but you take {N}% of the outburst damage yourself', low)
+        if m:
+            return [{'type': 'pipican:reaction_mod', 'name': 'sorcerous outburst', 'strength': 1.0}, bonus_kind('explode_self_share', pct(m.group(1)))[0]]
+    # Destroyer: the spend shockwave ("destruction released") and the backlash.
+    if cid == 'destroyer':
+        m = re.fullmatch(rf'shockwave radius \+{N} per {N} ([a-z]+)', low)
+        if m and m.group(3) == sp:
+            return [{'type': 'pipican:reaction_mod', 'name': 'destruction released', 'radius': 0.0,
+                     'scaling': [{'source': 'special_stat', 'per': round(float(m.group(1)) / float(m.group(2)), 6)}]}]
+        m = re.fullmatch(rf'shockwave damage \+{N} per ([a-z]+) points?', low)
+        if m and m.group(2) == sp:
+            return [{'type': 'pipican:reaction_mod', 'name': 'destruction released', 'damage': 0.0, 'scaling': [{'source': 'special_stat', 'per': float(m.group(1))}]}]
+        if re.fullmatch(r'shockwave knocks mobs back', low):
+            return [{'type': 'pipican:reaction_mod', 'name': 'destruction released',
+                     'actions': [{'type': 'pipican:push', 'target': 'hostiles', 'radius': 3.0, 'strength': 0.6}]}]
+        m = re.fullmatch(rf'every time you spend ([a-z ]+), take {N} damage', low)
+        if m and m.group(1) == rn:
+            return [{'type': 'pipican:on', 'event': 'spend', 'name': 'backlash', 'actions': [{'type': 'pipican:hurt_self', 'amount': float(m.group(2))}]}]
+        m = re.fullmatch(r'no self-damage when spending ([a-z ]+)', low)
+        if m and m.group(1) == rn:
+            return [{'type': 'pipican:reaction_mod', 'name': 'backlash', 'damage': -1000.0}]
+    # Traveler Thunderclap: the arrival slow also knocks mobs back.
+    if re.fullmatch(r'arrivals knock mobs back', low) and 'spatial disturbance' in REACTIONS.get(cid, {}):
+        push = dict(_first_targets(REACTIONS[cid]['spatial disturbance']) or {'target': 'hostiles', 'radius': 4.0}, type='pipican:push', strength=0.6)
+        return [{'type': 'pipican:reaction_mod', 'name': 'spatial disturbance', 'actions': [push]}]
+    # Hexer: "while a curse you placed is active, you take 10% more damage"
+    m = re.fullmatch(r'while a curse you placed is active, (.+)', low)
+    if m and (inner := _rest(m.group(1), ctx)):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'marking'}, 'effects': inner}]
+    # Gladiator: "Bloodlust only fills while another player is within 32 blocks"
+    m = re.fullmatch(rf'([a-z ]+) only fills while another player is within {N} blocks', low)
+    if m and m.group(1) == rn and (inner := _rest(f'-100% {ctx.get("resource_name")} regen', ctx)):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:nearby', 'entities': 'players', 'radius': float(m.group(2)), 'min': 0, 'max': 0},
+                 'effects': inner}]
+    # Conjurer Steady Gate: the periodic minion comes every N seconds.
+    m = re.fullmatch(rf'minion spawn every {N}s', low)
+    if m:
+        for name, r in REACTIONS.get(cid, {}).items():
+            if r.get('cooldown_ticks') and any(a.get('type') == 'pipican:summon' for a in r.get('actions', [])):
+                return [{'type': 'pipican:reaction_mod', 'name': r.get('name', name),
+                         'cooldown': round(float(m.group(1)) * 20 / r['cooldown_ticks'] - 1, 6)}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

@@ -163,17 +163,27 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Arena-born, a gladiator plays to the crowd - and loses when no one's watching.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Arena-born, a gladiator plays to the crowd - and loses when no one's watching.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 32.0,
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

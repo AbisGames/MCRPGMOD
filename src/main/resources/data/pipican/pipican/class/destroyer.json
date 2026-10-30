@@ -112,20 +112,45 @@
           "per": 0.015
         }
       ]
-    }
-  ],
-  "weakness": {
-    "description": {
-      "text": "Destruction tears at the caster too.",
-      "extra": [
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "destruction released",
+      "radius": 0.0,
+      "scaling": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "source": "special_stat",
+          "per": 0.05
         }
       ]
     },
-    "effects": []
+    {
+      "type": "pipican:reaction_mod",
+      "name": "destruction released",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Destruction tears at the caster too.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "spend",
+        "name": "backlash",
+        "actions": [
+          {
+            "type": "pipican:hurt_self",
+            "amount": 1.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

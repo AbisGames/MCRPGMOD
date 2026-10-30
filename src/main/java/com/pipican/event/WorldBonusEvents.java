@@ -228,6 +228,8 @@ public final class WorldBonusEvents {
     private static final Map<UUID, Long> GLORIOUS = new ConcurrentHashMap<>();
     private static final String GLORIOUS_DAY = "pipican_glorious_day";
     private static boolean sharing;
+    /** Players whose resource bar is full (to fire resource_full once per filling). */
+    private static final java.util.Set<UUID> FULL = ConcurrentHashMap.newKeySet();
 
     /** {@code glorious_death}: once per day the killing blow leaves you at 1 HP for 5s; then you die. */
     @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
@@ -255,6 +257,14 @@ public final class WorldBonusEvents {
     static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
             return;
+        }
+        // Resource bar filled up: "when Strain reaches max".
+        var data = com.pipican.player.ClassService.data(player);
+        boolean full = data.resourceMax() > 0 && data.resource() >= data.resourceMax() - 1.0e-6;
+        if (full && FULL.add(player.getUUID())) {
+            Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.RESOURCE_FULL);
+        } else if (!full) {
+            FULL.remove(player.getUUID());
         }
         Long ends = GLORIOUS.get(player.getUUID());
         if (ends != null && level.getGameTime() >= ends) {

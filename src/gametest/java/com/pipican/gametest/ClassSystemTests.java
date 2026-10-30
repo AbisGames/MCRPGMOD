@@ -673,6 +673,7 @@ public final class ClassSystemTests {
         var haste = player.getEffect(MobEffects.HASTE);
         helper.assertTrue(haste != null && haste.getDuration() == 100, "half as long: " + (haste == null ? "none" : haste.getDuration()));
         player.removeEffect(MobEffects.HASTE);
+
         helper.succeed();
     }
 

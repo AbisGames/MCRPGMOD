@@ -11,21 +11,19 @@
     {
       "id": "enlarged",
       "name": "Enlarged Spell",
-      "description": {
-        "text": "Outburst radius +1 block",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Outburst radius +1 block",
       "type": "small",
       "x": 35,
       "y": 70,
       "links": [
         "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "sorcerous outburst",
+          "radius": 1.0
+        }
       ]
     },
     {

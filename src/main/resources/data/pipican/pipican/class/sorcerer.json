@@ -89,6 +89,17 @@
       ]
     },
     {
+      "type": "pipican:reaction_mod",
+      "name": "sorcerous outburst",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.5
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:resource",
@@ -110,17 +121,35 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Bottled power always wants out.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Bottled power always wants out.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "resource_full",
+        "name": "sorcerous outburst",
+        "actions": [
+          {
+            "type": "pipican:explode",
+            "power": 2.0
+          },
+          {
+            "type": "pipican:resource",
+            "percent": -1.0
+          }
+        ]
+      },
+      {
+        "type": "pipican:reaction_mod",
+        "name": "sorcerous outburst",
+        "radius": 0.0,
+        "scaling": [
+          {
+            "source": "special_stat",
+            "per": 0.04
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

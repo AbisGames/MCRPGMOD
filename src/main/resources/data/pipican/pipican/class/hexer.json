@@ -166,17 +166,22 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Curses rebound on their maker.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Curses rebound on their maker.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "marking"
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_taken",
+            "multiplier": 1.1
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

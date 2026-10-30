@@ -66,6 +66,19 @@ public final class Marks {
         return mult;
     }
 
+    /** True if {@code owner} has a live mark on any mob (a curse you placed is active). */
+    public static boolean hasAny(Player owner) {
+        long now = owner.level().getGameTime();
+        for (List<Mark> list : MARKS.values()) {
+            synchronized (list) {
+                if (list.stream().anyMatch(m -> m.owner().equals(owner.getUUID()) && m.endsAt() > now)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /** Removes {@code owner}'s marks from {@code target}. */
     public static void remove(LivingEntity target, Player owner) {
         List<Mark> list = MARKS.get(target.getUUID());

@@ -95,7 +95,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** Your quarry hurt you (the victim is the quarry). */
         QUARRY_HURT("quarry_hurt"),
         /** {@code spell_ward} cancelled a harmful effect or magic attack aimed at you. */
-        WARD("ward");
+        WARD("ward"),
+        /** Your resource bar just became full. */
+        RESOURCE_FULL("resource_full");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

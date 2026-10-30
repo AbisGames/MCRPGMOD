@@ -104,6 +104,7 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code keep_hotbar_weapon}: any amount above 0 = the item in hotbar slot 1 stays with you when you die</li>
  *   <li>{@code grindstone_xp}: how much more experience disenchanting at a grindstone gives (0.1 = +10%)</li>
  *   <li>{@code keep_optimization}: any amount above 0 = Optimization isn't lost when you die</li>
+ *   <li>{@code explode_self_share}: the share of the damage your own {@code pipican:explode} blasts deal that you take too</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -125,7 +126,7 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK,
         FREE_ABILITY_EVERY, WEATHER_WARNING, GLORIOUS_DEATH, GUARD_ALLIES, PROJECTILE_WARD, EXECUTE_LOOTING, SURE_TAME,
         FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO,
-        SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION;
+        SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION, EXPLODE_SELF_SHARE;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

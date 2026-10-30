@@ -96,16 +96,7 @@
     {
       "id": "sorcerer_living_bomb",
       "name": "Living Bomb",
-      "description": {
-        "text": "Outbursts deal double damage, but you take 25% of the outburst damage yourself",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Outbursts deal double damage, but you take 25% of the outburst damage yourself",
       "type": "keystone",
       "x": -167,
       "y": -945,
@@ -113,7 +104,19 @@
         "sorcerer_empowered"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "sorcerous outburst",
+          "strength": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "explode_self_share",
+          "amount": 0.25
+        }
+      ]
     }
   ]
 }

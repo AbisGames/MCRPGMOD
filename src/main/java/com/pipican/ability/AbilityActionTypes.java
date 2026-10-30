@@ -76,6 +76,7 @@ public final class AbilityActionTypes {
     public static final Type CURE = register("cure", com.pipican.ability.action.CureAction.CODEC);
     public static final Type PIN = register("pin", com.pipican.ability.action.PinAction.CODEC);
     public static final Type COUNTER = register("counter", com.pipican.ability.action.CounterAction.CODEC);
+    public static final Type HURT_SELF = register("hurt_self", com.pipican.ability.action.HurtSelfAction.CODEC);
     public static final Type SUMMON = register("summon", SummonAction.CODEC);
     public static final Type ABSORB = register("absorb", AbsorbAction.CODEC);
     public static final Type EXPLODE = register("explode", ExplodeAction.CODEC);
