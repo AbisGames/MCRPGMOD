@@ -80,16 +80,7 @@
     {
       "id": "puppet_master",
       "name": "Puppet Master",
-      "description": {
-        "text": "you can keep one charmed mob as a pet until you sleep; -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can keep one charmed mob as a pet until you sleep; -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -98,7 +89,20 @@
         "compel"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "puppet",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

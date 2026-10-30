@@ -85,6 +85,11 @@
       "type": "pipican:bonus",
       "kind": "forget_delay_max",
       "amount": 2.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "hide_nameplate",
+      "amount": 1.0
     }
   ],
   "special_passives": [

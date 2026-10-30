@@ -74,6 +74,19 @@ public final class MobControl {
         }
     }
 
+    /** True if {@code player} has charmed (pacified) {@code entity}. */
+    public static boolean isPacifiedBy(LivingEntity entity, Player player) {
+        Control c = CONTROLLED.get(entity.getUUID());
+        return c != null && c.mode() == Mode.PACIFY && c.owner().equals(player.getUUID());
+    }
+
+    /** Ends control of {@code mob}. */
+    public static void release(Mob mob) {
+        if (CONTROLLED.remove(mob.getUUID()) != null) {
+            mob.setTarget(null);
+        }
+    }
+
     public static boolean isAllyOf(LivingEntity entity, Player player) {
         Control c = CONTROLLED.get(entity.getUUID());
         return c != null && c.mode() == Mode.ALLY && c.owner().equals(player.getUUID());

@@ -176,6 +176,9 @@ import net.minecraft.util.StringRepresentable;
  *   <li>Movement (any amount above 0): {@code no_cobweb} / {@code no_powder_snow} - they don't slow you; {@code double_jump} -
  *       jump again in mid-air (once per 5s); {@code wall_run} - sprinting into a wall runs up it 2 blocks; {@code wall_climb} -
  *       sneak and hold jump to climb walls; {@code glide} - hold jump while falling to glide</li>
+ *   <li>{@code hide_nameplate}: any amount above 0 = other players don't see your name while you sneak or are invisible</li>
+ *   <li>{@code icon_shield}: any amount above 0 = a shield with a banner pattern in the off-hand counts as your Icon of Faith</li>
+ *   <li>{@code puppet}: any amount above 0 = the first mob you charm becomes your ally until you sleep (one at a time)</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -214,7 +217,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         EMIT_LIGHT, STAFF_RETURN, BOOK_HOTBAR, PEARL_CARRY, MOUNT_RETURN, SWEEP_EXECUTE,
         ACCURACY, SHOT_ALERT, QUICK_DRAW, CYLINDER, LAST_SHOT_CRIT, RICOCHET,
         THRESHOLD_DROP, TEMPLE_ALARM, STANCE_WALK, CHAOS_DOUBLE,
-        NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE;
+        NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE,
+        HIDE_NAMEPLATE, ICON_SHIELD, PUPPET;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

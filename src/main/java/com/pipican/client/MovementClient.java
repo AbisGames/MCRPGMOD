@@ -18,6 +18,14 @@ final class MovementClient {
 
     private MovementClient() {}
 
+    /** Hide Your Name: other players' names stay hidden while they sneak or are invisible. */
+    static void onNameTag(net.neoforged.neoforge.client.event.RenderNameTagEvent.CanRender event) {
+        if (event.getEntity() instanceof net.minecraft.world.entity.player.Player other && other != Minecraft.getInstance().player
+                && other.getData(PipicanAttachments.MOVE_FLAGS).has("hide_nameplate") && (other.isCrouching() || other.isInvisible())) {
+            event.setCanRender(net.minecraft.util.TriState.FALSE);
+        }
+    }
+
     static void onPlayerTick(PlayerTickEvent.Pre event) {
         if (!(event.getEntity() instanceof LocalPlayer player) || player != Minecraft.getInstance().player) {
             return;

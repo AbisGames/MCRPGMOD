@@ -43,6 +43,7 @@ public final class PipicanClient {
         modBus.addListener(PipicanClient::registerRenderers);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onClientTick);
         NeoForge.EVENT_BUS.addListener(MovementClient::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(MovementClient::onNameTag);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onTooltip);
         NeoForge.EVENT_BUS.addListener(PipicanClient::addInventoryButton);
     }

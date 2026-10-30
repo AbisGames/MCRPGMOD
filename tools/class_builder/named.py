@@ -1961,6 +1961,32 @@ def world(low, ctx):
         return [bonus_kind('glide', 1.0)[0], {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': -float(m.group(1))}]
     if re.fullmatch(r'you can climb any wall like a ladder while sneaking and holding jump', low):
         return bonus_kind('wall_climb', 1.0)
+    # --- Bulk 46
+    if re.fullmatch(r'your nameplate is hidden from other players while sneaking or invisible', low):
+        return bonus_kind('hide_nameplate', 1.0)
+    if re.fullmatch(r'desire-cursed mobs fight other mobs', low) and 'curse' in REACTION_NAMES.get(cid, set()):
+        # Desire is the curse that charms the mob; charmed ones turn on other mobs.
+        return [{'type': 'pipican:reaction_mod', 'name': 'curse', 'actions': [{'type': 'pipican:control', 'target': 'victim', 'mode': 'charmed_ally', 'seconds': 8.0}]}]
+    if re.fullmatch(r'icon of faith also accepts any shield with a banner pattern', low):
+        return bonus_kind('icon_shield', 1.0)
+    m = re.fullmatch(rf'guarded casting also gives \+{N} armou?r to players within {N} blocks', low)
+    if m and 'guarded casting' in REACTIONS.get(cid, {}):
+        secs = next((a.get('seconds') for a in REACTIONS[cid]['guarded casting'].get('actions', []) if a.get('type') == 'pipican:boost'), 10.0)
+        return [{'type': 'pipican:reaction_mod', 'name': 'guarded casting', 'actions': [{'type': 'pipican:boost', 'seconds': secs, 'others': float(m.group(2)),
+                 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': float(m.group(1))}]}]}]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? staff hits give ({eff}) (i|ii) for {N}s', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:special_stat', 'min': float(m.group(1))}, 'effects': [
+            {'type': 'pipican:on', 'event': 'melee_hit', 'weapons': '#pipican:weapons/staff', 'actions': [{'type': 'pipican:effect', 'target': 'victim',
+             'effects': [{'effect': 'minecraft:' + combat.EFFECT_NAMES[m.group(3)], 'seconds': float(m.group(5)), 'amplifier': combat.ROMAN[m.group(4)]}]}]}]}]
+    if re.fullmatch(r'lost staffs can be remade at a crafting table(?: \(blaze rod \+ amethyst shard\))?', low):
+        return []  # any blaze rod or stick is a staff
+    if re.fullmatch(r'you can keep one charmed mob as a pet until you sleep', low):
+        return bonus_kind('puppet', 1.0)
+    m = re.fullmatch(rf'\+{N}% damage for players near you', low)
+    if m and ctx.get('implicit_per_point'):
+        return [{'type': 'pipican:aura', 'radius': 8.0, 'include_self': False, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': 1.0,
+                 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}]}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

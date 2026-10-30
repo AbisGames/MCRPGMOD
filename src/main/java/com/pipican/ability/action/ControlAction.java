@@ -25,7 +25,9 @@ import net.minecraft.world.entity.Mob;
 public record ControlAction(Targets targets, Mode mode, double seconds, int max) implements AbilityAction {
 
     public enum Mode implements StringRepresentable {
-        FLEE("flee", MobControl.Mode.FLEE), PACIFY("pacify", MobControl.Mode.PACIFY), ALLY("ally", MobControl.Mode.ALLY);
+        FLEE("flee", MobControl.Mode.FLEE), PACIFY("pacify", MobControl.Mode.PACIFY), ALLY("ally", MobControl.Mode.ALLY),
+        /** Mobs the user has charmed (pacified) turn into allies ("Desire-cursed mobs fight other mobs"); others are left alone. */
+        CHARMED_ALLY("charmed_ally", MobControl.Mode.ALLY);
 
         public static final Codec<Mode> CODEC = StringRepresentable.fromEnum(Mode::values);
         private final String name;
@@ -58,6 +60,9 @@ public record ControlAction(Targets targets, Mode mode, double seconds, int max)
     public void run(AbilityContext ctx) {
         for (LivingEntity target : targets.select(ctx)) {
             if (target instanceof Mob mob) {
+                if (mode == Mode.CHARMED_ALLY && !MobControl.isPacifiedBy(mob, ctx.player())) {
+                    continue;
+                }
                 if (max > 0 && mode == Mode.ALLY) {
                     var mods = com.pipican.player.ClassEffectApplier.state(ctx.player()).summonMods();
                     if (MobControl.isAllyOf(mob, ctx.player()) || MobControl.allies(ctx.player()) >= Math.floor((max + mods.cap()) * (1 + mods.capMultiplier()))) {
@@ -66,6 +71,11 @@ public record ControlAction(Targets targets, Mode mode, double seconds, int max)
                     MobControl.boostServant(mob, mods.damage(), mods.health());
                 }
                 MobControl.control(mob, ctx.player(), mode.mode, (long) (Math.max(0.5, seconds + ctx.mod().seconds()) * 20));
+                // Puppet Master: the first charmed mob stays as an ally until the user sleeps.
+                if (mode == Mode.PACIFY && com.pipican.player.ClassEffectApplier.state(ctx.player()).chance(com.pipican.effect.type.BonusEffect.Kind.PUPPET) > 0
+                        && com.pipican.ability.Puppets.take(ctx.player(), mob)) {
+                    MobControl.control(mob, ctx.player(), MobControl.Mode.ALLY, 24000L * 7);
+                }
                 if (mode != Mode.FLEE) {
                     com.pipican.event.MasteryEvents.did(ctx.player(), new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.CHARM,
                             net.minecraft.world.item.ItemStack.EMPTY, java.util.Optional.empty(), java.util.Optional.of(mob), 0));

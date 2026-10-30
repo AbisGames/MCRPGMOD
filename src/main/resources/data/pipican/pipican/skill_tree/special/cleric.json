@@ -29,23 +29,21 @@
     {
       "id": "blessed_symbol",
       "name": "Blessed Symbol",
-      "description": {
-        "text": "Icon of Faith also accepts any shield with a banner pattern",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Icon of Faith also accepts any shield with a banner pattern",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "icon_shield",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "empowered_symbol",

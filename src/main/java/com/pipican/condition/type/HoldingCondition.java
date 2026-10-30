@@ -50,6 +50,14 @@ public record HoldingCondition(HolderSet<Item> items, Hand hand) implements Clas
     public boolean test(ServerPlayer player) {
         boolean main = player.getMainHandItem().is(items);
         boolean off = player.getOffhandItem().is(items);
+        // Blessed Symbol: a shield with a banner pattern counts as an Icon of Faith (the icon list holds a totem).
+        if (!off && hand == Hand.OFF && items.contains(net.minecraft.world.item.Items.TOTEM_OF_UNDYING.builtInRegistryHolder())
+                && player.getOffhandItem().is(net.minecraft.world.item.Items.SHIELD)
+                && !player.getOffhandItem().getOrDefault(net.minecraft.core.component.DataComponents.BANNER_PATTERNS,
+                        net.minecraft.world.level.block.entity.BannerPatternLayers.EMPTY).layers().isEmpty()
+                && com.pipican.player.ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.ICON_SHIELD) > 0) {
+            off = true;
+        }
         // Second Tome: a book anywhere in the hotbar counts as one in the off-hand.
         if (!off && hand == Hand.OFF
                 && com.pipican.player.ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.BOOK_HOTBAR) > 0

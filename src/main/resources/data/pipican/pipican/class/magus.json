@@ -135,6 +135,33 @@
           "per": 0.01
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:special_stat",
+        "min": 10.0
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "melee_hit",
+          "weapons": "#pipican:weapons/staff",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 1.0,
+                  "amplifier": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "weakness": {

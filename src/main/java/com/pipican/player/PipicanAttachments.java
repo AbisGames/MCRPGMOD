@@ -18,10 +18,10 @@ public final class PipicanAttachments {
                     .sync((holder, to) -> holder == to, PlayerClassData.STREAM_CODEC)
                     .build());
 
-    /** Movement abilities the client applies itself (double jump, glide...), from the class state. Not saved. */
+    /** Movement and look flags the client applies itself (double jump, glide, hidden name...), from the class state. Not saved; sent to everyone. */
     public static final Supplier<AttachmentType<MoveFlags>> MOVE_FLAGS = REGISTER.register("move_flags", () ->
             AttachmentType.builder(() -> MoveFlags.NONE)
-                    .sync((holder, to) -> holder == to, MoveFlags.STREAM_CODEC)
+                    .sync((holder, to) -> true, MoveFlags.STREAM_CODEC)
                     .build());
 
     /** The movement flags: names of {@code BonusEffect.Kind}s the client acts on. */

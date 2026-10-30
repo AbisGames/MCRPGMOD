@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2188**, partly working: **3**, not yet: **59**
+- Bonus phrases: **2250**. Fully working: **2196**, partly working: **3**, not yet: **51**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,10 +13,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 21 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 13 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 10 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 9 |
+| [Other mechanics](#other-mechanics) | 18 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 10 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 9 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 8 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
 | [Immunities](#immunities) | 5 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 3 |
@@ -82,12 +82,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Other mechanics
 
-- **abjurer**
-  - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
-- **cleric**
-  - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
-- **conqueror**
-  - special stat per point: +0.5% damage for players near you
 - **destroyer**
   - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
 - **duelist**
@@ -133,11 +127,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
 - **engineer**
   - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **hexer**
-  - special tree: Desire: Desire-cursed mobs fight other mobs
-- **magus**
-  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
-  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
 - **runesmith**
   - general tree: Runelord: sigil bonuses doubled
 - **shapeshifter**
@@ -155,8 +144,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
 - **diviner**
   - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
-- **enchanter**
-  - special tree: Puppet Master: you can keep one charmed mob as a pet until you sleep; -15% max health
 - **hexer**
   - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
 - **inquisitor**
@@ -184,8 +171,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
 - **hydromancer**
   - general tree: Riptide: tridents with Riptide work without rain while Current is above half
-- **infiltrator**
-  - passive: Your nameplate is hidden from other players while sneaking or invisible
 - **stormbringer**
   - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
 - **templar**
