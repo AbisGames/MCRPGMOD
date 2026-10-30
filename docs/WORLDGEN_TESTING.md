@@ -230,3 +230,19 @@ Server logs exposed 13 Pipican biomes with ocelots incorrectly assigned to the
 monster category. Their entries now use the registered creature category,
 preserving spawn weights and pack sizes. The registry test checks every
 Pipican spawn entry against its EntityType category to prevent this regression.
+
+## Completed broad-run evidence reviewed 2026-10-30
+
+[Run 40733045807](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40733045807)
+completed at `28c3f5c`. All 22 capital assemblies and all 48 authored settlements
+passed their three distributed seed shards, including disk reloads. All three
+seed jobs passed sky/End portal, player-protection/ore reload, unique landmark
+and capital-core terrain steps. This remains a partial worldgen checkpoint:
+expedition entrances failed, one village shard failed, and one focused village
+step timed out. The newer provenance/access implementation requires its own
+regressions; these broad results do not verify later code automatically.
+
+The native fixture close trace identified a queued POI callback waiting on
+SectionStorage while draining server tasks. Test closure now always drains both
+chunk work and queued server callbacks to a short quiescent interval before
+closing a temporary world's storage. Save/reload assertions remain unchanged.

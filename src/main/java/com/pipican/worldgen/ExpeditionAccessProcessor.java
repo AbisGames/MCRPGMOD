@@ -46,7 +46,8 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         int surface=level.getHeight(level instanceof net.minecraft.server.level.ServerLevel?
             Heightmap.Types.WORLD_SURFACE:Heightmap.Types.WORLD_SURFACE_WG,outside.getX(),outside.getZ());
         while(surface>level.getMinY()+1&&foliage(level.getBlockState(new BlockPos(outside.getX(),surface-1,outside.getZ()))))surface--;
-        Pipican.LOGGER.debug("Native expedition access origin {} floor {} outside {} surface {} bounds {}",origin,floor,outside,surface,bounds);
+        if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))
+            Pipican.LOGGER.info("Native expedition access origin {} floor {} outside {} surface {} bounds {}",origin,floor,outside,surface,bounds);
         if(Math.abs(surface-(floor+1))<=4)return processed;
         int bottom=Math.max(level.getMinY()+1,Math.min(surface,floor+1));
         int top=Math.min(level.getMaxY()-3,Math.max(surface,floor+1));
@@ -62,14 +63,18 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         }
         for(int y=top+1;y<=top+2;y++)edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),Blocks.AIR.defaultBlockState());
         var protection=PlayerWorldgenProtection.cached(level.getLevel());
-        if(protection==null)return processed; // Fail closed until server-thread initialization.
+        if(protection==null){
+            if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))Pipican.LOGGER.info("Native access skipped: provenance cache unavailable");
+            return processed; // Fail closed until server-thread initialization.
+        }
         // Preflight the entire local plan before returning any replacement.
         for(var entry:edits.entrySet()){
             var pos=entry.getKey();
             if(bounds!=null&&!bounds.isInside(pos))continue;
             var state=level.getBlockState(pos);
             if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!CapitalPlacementEvents.isNatural(state))){
-                Pipican.LOGGER.debug("Expedition access deferred at {} by {} protected {}",pos,state,protection.contains(pos));
+                if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))
+                    Pipican.LOGGER.info("Expedition access deferred at {} by {} protected {}",pos,state,protection.contains(pos));
                 return processed;
             }
         }

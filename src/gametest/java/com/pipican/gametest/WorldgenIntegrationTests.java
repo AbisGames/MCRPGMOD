@@ -154,7 +154,8 @@ public final class WorldgenIntegrationTests {
             // fail their futures with "Parent chunk missing".
             var source=level.getChunkSource();
             long deadline=System.nanoTime()+java.util.concurrent.TimeUnit.SECONDS.toNanos(120);
-            while(source.chunkMap.hasWork()){
+            long quietSince=-1;
+            while(true){
                 source.deactivateTicketsOnClosing();
                 source.tick(()->true,false);
                 for(int i=0;i<128&&source.pollTask();i++){}
@@ -162,7 +163,13 @@ public final class WorldgenIntegrationTests {
                 // chunk-only polling can leave server callbacks pending.
                 long pumpUntil=System.nanoTime()+1000000L;
                 server.managedBlock(()->System.nanoTime()>=pumpUntil);
-                if(System.nanoTime()>deadline)throw new IllegalStateException(
+                // POI callbacks are server tasks, independent of chunkMap work.
+                // Drain them while this level's POI storage is still open.
+                long now=System.nanoTime();
+                if(source.chunkMap.hasWork()||server.getPendingTasksCount()>0)quietSince=-1;
+                else if(quietSince<0)quietSince=now;
+                else if(now-quietSince>=java.util.concurrent.TimeUnit.MILLISECONDS.toNanos(100))break;
+                if(now>deadline)throw new IllegalStateException(
                     "Timed out draining test-world chunks: "+key+" "+source.gatherStats());
                 Thread.sleep(1);
             }
