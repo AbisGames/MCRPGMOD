@@ -40,5 +40,11 @@
     "boss": "nocthar_void_sovereign",
     "min_y": -64,
     "max_y": -1
+  },
+  {
+    "item": "pipican:aetherion_sky_guardian_sigil",
+    "boss": "aetherion_sky_guardian",
+    "min_y": 251,
+    "max_y": 448
   }
 ]

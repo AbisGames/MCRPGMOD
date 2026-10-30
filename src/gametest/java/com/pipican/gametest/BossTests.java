@@ -30,7 +30,8 @@ public final class BossTests {
         Map.entry("ritual_recipes",BossTests::ritualRecipes),
         Map.entry("ritual_interaction_and_loot",BossTests::ritualInteraction),
         Map.entry("boss_design_catalog",BossTests::designCatalog),
-        Map.entry("nocthar_deep_encounter",BossTests::noctharDeepEncounter));
+        Map.entry("nocthar_deep_encounter",BossTests::noctharDeepEncounter),
+        Map.entry("aetherion_high_encounter",BossTests::aetherionHighEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -41,7 +42,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==7,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==8,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -73,6 +74,10 @@ public final class BossTests {
         var nocthar=BossDesigns.require("nocthar_void_sovereign");
         helper.assertTrue(nocthar.functional() && nocthar.sigil().registered() && nocthar.sigil().maxY()==-1 && nocthar.loot().rare().orElseThrow().chance()==0.2,
             "Nocthar implemented design is missing deep-biome/rare-reward metadata");
+        var aetherion=BossDesigns.require("aetherion_sky_guardian");
+        helper.assertTrue(aetherion.functional() && aetherion.sigil().registered() && aetherion.sigil().minY()==251
+            && aetherion.loot().trophyItem().equals("pipican:aetherion_sky_guardian_trophy") && aetherion.loot().rare().orElseThrow().chance()==0.25,
+            "Aetherion flight/high-altitude/unique-loot metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -85,7 +90,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -102,6 +107,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("umbral_chasm").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.ENDER_PEARL));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("aetheris_expanse").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.FEATHER));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -247,8 +255,8 @@ public final class BossTests {
             rejectSpawnAt=null;
             helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),
                 "valid deep altar summon failed or did not consume one sigil");
-            var boss=level.getEntitiesOfClass(NoctharEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
-            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("nocthar_void_sovereign"),"Nocthar encounter type was not persisted");
+            var boss=level.getEntitiesOfClass(NoctharEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Nocthar summon reported success without a live boss entity"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow(()->new IllegalStateException("Nocthar encounter reservation missing after summon")).type().equals("nocthar_void_sovereign"),"Nocthar encounter type was not persisted");
             var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());boss.saveWithoutId(saved);
             var replay=BossRegistries.NOCTHAR.get().create(level,EntitySpawnReason.LOAD);replay.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));
             boss.hurtServer(level,boss.damageSources().genericKill(),10000);
@@ -261,6 +269,43 @@ public final class BossTests {
             drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
             helper.assertTrue(drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
                 "reloaded defeated Nocthar duplicated rewards");
+            helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void aetherionHighEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(1536,330,1536));var arena=altar.north(6);
+        helper.assertTrue(altar.getY()>=251&&altar.getY()<=443,"Aetherion test altar is outside the valid high-altitude band");
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.DEEPSLATE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());
+        var sigil=new net.minecraft.world.item.ItemStack(BossContent.AETHERION_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);
+        var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,
+                "Aetherion altar consumed a sigil outside the Aetheris biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("aetheris_sanctuary")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Aetherion biome fixture failed");
+            helper.assertTrue(BossEncounterService.matchesBiome(level,altar,"aetherion_sky_guardian")&&BossEncounterService.matchesBiome(level,altar.above(),"aetherion_sky_guardian"),
+                "Aetherion sanctuary biome route was rejected at high altitude");
+            rejectSpawnAt=arena;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL
+                &&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Aetherion spawn consumed sigil or leaked its reservation");
+            rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),
+                "valid high-altitude Aetherion summon failed");
+            var boss=level.getEntitiesOfClass(AetherionEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            helper.assertTrue(boss.isNoGravity()&&boss.getNavigation() instanceof net.minecraft.world.entity.ai.navigation.FlyingPathNavigation
+                &&BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("aetherion_sky_guardian"),"Aetherion did not spawn with flight navigation and a saved encounter binding");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);
+            var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.AETHERION_TROPHY.get()))
+                &&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Aetherion guaranteed trophy/skycrystal rewards missing");
+            long rare=drops.stream().filter(item->item.getItem().is(com.pipican.resource.RareResources.MATERIALS.get("celestium").get())).mapToInt(item->item.getItem().getCount()).sum();
+            helper.assertTrue(rare==(Math.floorMod(boss.getUUID().hashCode(),4)==0?1:0),"Aetherion Celestium 25-percent encounter roll differed");
             helper.succeed();
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
@@ -514,6 +559,28 @@ public final class BossTests {
         nocthar.setHealth(nocthar.getMaxHealth()/2);nocthar.tickCombat(level);helper.assertTrue(nocthar.phase()==2,"Nocthar phase two did not latch");
         output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());nocthar.saveWithoutId(output);var noctharReload=BossRegistries.NOCTHAR.get().create(level,EntitySpawnReason.LOAD);
         noctharReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));helper.assertTrue(noctharReload.phase()==2,"Nocthar phase or spatial state was lost on reload");
+
+        var aetherion=BossRegistries.AETHERION.get().create(level,EntitySpawnReason.COMMAND);aetherion.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+7,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+7,origin.getY(),origin.getZ());
+        var updraft=new AetherionCombat(aetherion);helper.assertTrue(updraft.begin(AetherionCombat.UPDRAFT,front),"Aetherion updraft path failed to start");front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        for(int i=0;i<39;i++)updraft.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Aetherion sweep struck before its warning");updraft.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&dodge.getDeltaMovement().y>0,"Aetherion low sweep or lift counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+5.5,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()-2.75,origin.getY(),origin.getZ()-2.75);
+        var feathers=new AetherionCombat(aetherion);helper.assertTrue(feathers.begin(AetherionCombat.FEATHERS,front),"Aetherion feather constellation failed to start");
+        for(int i=0;i<49;i++)feathers.tick(level);helper.assertTrue(dodge.getHealth()==20,"Aetherion feathers struck before their link warning");feathers.tick(level);
+        helper.assertTrue(front.getHealth()==20&&dodge.getHealth()<20,"Aetherion interruptible node or connected feather lane failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+2,origin.getY(),origin.getZ());
+        var dive=new AetherionCombat(aetherion);helper.assertTrue(dive.begin(AetherionCombat.DIVE,front),"Aetherion sky dive failed to start");
+        for(int i=0;i<59;i++)dive.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Aetherion dive landed before its locked shadow warning");dive.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Aetherion marked dive circle or sidestep failed");
+        front.snapTo(origin.getX()+14,origin.getY(),origin.getZ());for(int i=0;i<17;i++)dive.tick(level);
+        helper.assertTrue(dodge.getHealth()==20,"Aetherion wake ignored its second warning");dive.tick(level);
+        helper.assertTrue(dodge.getHealth()<20,"Aetherion trailing wake failed to resolve at the marked lane");
+        aetherion.setHealth(aetherion.getMaxHealth()/2);aetherion.tickCombat(level);helper.assertTrue(aetherion.phase()==2,"Aetherion phase two failed to latch");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());aetherion.saveWithoutId(output);
+        var aetherionReload=BossRegistries.AETHERION.get().create(level,EntitySpawnReason.LOAD);aetherionReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        helper.assertTrue(aetherionReload.phase()==2&&aetherionReload.isNoGravity()&&aetherionReload.getNavigation() instanceof net.minecraft.world.entity.ai.navigation.FlyingPathNavigation,
+            "Aetherion phase/3D navigation did not survive entity reload");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

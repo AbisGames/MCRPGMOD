@@ -1879,7 +1879,7 @@
   {
     "id": "aetherion_sky_guardian",
     "region": "aetheris_expanse",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1200,
     "damage": 18,
@@ -1892,38 +1892,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:feather",
       "min_y": 251,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:aetherion_sky_guardian_sigil"
     },
     "abilities": [
       {
         "id": "updraft_paths",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Visible air paths offer lift before a low sweeping beam.",
         "counterplay": "Enter a safe updraft or move behind the announced sweep.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:aetherion_sky_guardian/updraft_paths"
+        "animation": "aetherion_sky_guardian/updraft_paths"
       },
       {
         "id": "feather_constellation",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Feathers form a constellation then launch along drawn connections.",
         "counterplay": "Stand outside connections or interrupt a lit feather node.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:aetherion_sky_guardian/feather_constellation"
+        "animation": "aetherion_sky_guardian/feather_constellation"
       },
       {
         "id": "sky_dive",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A descending guardian shadow fixes its landing and wake.",
         "counterplay": "Leave the shadow and cross behind the trailing wake.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:aetherion_sky_guardian/sky_dive"
+        "animation": "aetherion_sky_guardian/sky_dive"
       }
     ],
     "phase_two": {
@@ -1934,7 +1935,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:skycrystal",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:aetherion_sky_guardian_trophy",
       "planned_trophy_name": "Aetherion Sky Guardian Trophy",
       "xp": 300,
       "rare_drop": {
@@ -1946,16 +1947,16 @@
       "geometry": "geometry.pipican.aetherion_sky_guardian",
       "file": "geo/bosses/aetherion_sky_guardian.geo.json",
       "animation_mapping": {
-        "idle": "planned:aetherion_sky_guardian/idle",
-        "walk": "planned:aetherion_sky_guardian/walk",
-        "basic_attack": "planned:aetherion_sky_guardian/basic_attack",
-        "hurt": "planned:aetherion_sky_guardian/hurt",
-        "phase_transition": "planned:aetherion_sky_guardian/phase_transition",
-        "summoning": "planned:aetherion_sky_guardian/summoning",
-        "death": "planned:aetherion_sky_guardian/death",
-        "updraft_paths": "planned:aetherion_sky_guardian/updraft_paths",
-        "feather_constellation": "planned:aetherion_sky_guardian/feather_constellation",
-        "sky_dive": "planned:aetherion_sky_guardian/sky_dive"
+        "idle": "aetherion_sky_guardian/idle",
+        "walk": "aetherion_sky_guardian/walk",
+        "basic_attack": "aetherion_sky_guardian/basic_attack",
+        "hurt": "aetherion_sky_guardian/hurt",
+        "phase_transition": "aetherion_sky_guardian/phase_transition",
+        "summoning": "aetherion_sky_guardian/summoning",
+        "death": "aetherion_sky_guardian/death",
+        "updraft_paths": "aetherion_sky_guardian/updraft_paths",
+        "feather_constellation": "aetherion_sky_guardian/feather_constellation",
+        "sky_dive": "aetherion_sky_guardian/sky_dive"
       }
     },
     "arena": {

@@ -41,6 +41,10 @@ public final class BossRegistries {
         "nocthar_void_sovereign",()->EntityType.Builder.<NoctharEntity>of(NoctharEntity::new,MobCategory.MONSTER)
             .sized(2.2f,3.6f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("nocthar_void_sovereign"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<AetherionEntity>> AETHERION=ENTITIES.register(
+        "aetherion_sky_guardian",()->EntityType.Builder.<AetherionEntity>of(AetherionEntity::new,MobCategory.MONSTER)
+            .sized(2.0f,3.6f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("aetherion_sky_guardian"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -51,5 +55,6 @@ public final class BossRegistries {
         event.put(FALLEN_KING.get(),FallenKingEntity.attributes().build());
         event.put(KRAGMOR.get(),KragmorEntity.attributes().build());
         event.put(NOCTHAR.get(),NoctharEntity.attributes().build());
+        event.put(AETHERION.get(),AetherionEntity.attributes().build());
     }
 }

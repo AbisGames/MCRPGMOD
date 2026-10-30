@@ -364,5 +364,8 @@
   "entity.pipican.kragmor_canyon_warlord": "Kragmor, Canyon Warlord",
   "item.pipican.nocthar_void_sovereign_sigil": "Nocthar Sigil",
   "item.pipican.nocthar_void_sovereign_trophy": "Void Sovereign Fragment",
-  "entity.pipican.nocthar_void_sovereign": "Nocthar, Void Sovereign"
+  "entity.pipican.nocthar_void_sovereign": "Nocthar, Void Sovereign",
+  "item.pipican.aetherion_sky_guardian_sigil": "Aetherion Sigil",
+  "item.pipican.aetherion_sky_guardian_trophy": "Aetherion Skyheart",
+  "entity.pipican.aetherion_sky_guardian": "Aetherion, Sky Guardian"
 }
