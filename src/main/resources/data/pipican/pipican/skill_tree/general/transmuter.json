@@ -71,21 +71,19 @@
     {
       "id": "transmuter_stable_form",
       "name": "Stable Form",
-      "description": {
-        "text": "Optimization no longer resets on death",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Optimization no longer resets on death",
       "type": "small",
       "x": 664,
       "y": -1532,
       "links": [
         "transmuter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "keep_optimization",
+          "amount": 1.0
+        }
       ]
     },
     {

@@ -48,16 +48,7 @@
     {
       "id": "divine_might",
       "name": "Divine Might",
-      "description": {
-        "text": "+10% more Divine Might damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% more Divine Might damage",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -65,7 +56,14 @@
         "burning_faith"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "zeal",
+          "strength": 0.5
+        }
+      ]
     },
     {
       "id": "violent_madness",

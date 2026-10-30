@@ -74,6 +74,11 @@
       ]
     },
     {
+      "type": "pipican:bonus",
+      "kind": "keep_hotbar_weapon",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:item_rule",

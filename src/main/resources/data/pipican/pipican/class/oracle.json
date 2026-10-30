@@ -172,6 +172,7 @@
           {
             "type": "pipican:on",
             "event": "end",
+            "name": "divine ecstasy after-effects",
             "actions": [
               {
                 "type": "pipican:effect",

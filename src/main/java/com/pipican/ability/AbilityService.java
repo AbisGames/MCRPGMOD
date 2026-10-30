@@ -65,6 +65,9 @@ public final class AbilityService {
         Ability ability = ClassLookup.abilities(access).getValue(key);
         if (data.abilityActive().containsKey(key)) {
             if (ability.toggle()) {
+                if (ClassEffectApplier.state(player).abilityMod(key).locked()) {
+                    return ClassService.Result.fail(Component.translatable("pipican.ability.locked", ability.name()));
+                }
                 stop(player, key, ability);
                 return ClassService.Result.ok(Component.translatable("pipican.ability.stopped", ability.name()));
             }

@@ -257,7 +257,9 @@ public final class ClassEvents {
             AbilityService.clearActive(player);
             Boosts.clear(player);
             Empowers.forget(player);
-            Optimize.onDeath(player);
+            if (ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.KEEP_OPTIMIZATION) <= 0) {
+                Optimize.onDeath(player);
+            }
         }
         // Trinkets drop on death like the rest of the inventory, unless keepInventory is on.
         if (event.getEntity() instanceof ServerPlayer player && !player.level().getGameRules().get(GameRules.KEEP_INVENTORY)) {

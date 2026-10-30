@@ -23,6 +23,14 @@ public final class Scrutiny {
     /** Every 5 ticks. */
     public static void tick(ServerPlayer player) {
         ClassState.Scrutiny s = ClassEffectApplier.state(player).scrutiny();
+        // Dreadful Threat: scrutinised mobs near you are weakened.
+        double weaken = ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.SCRUTINY_WEAKNESS);
+        if (weaken > 0 && s.seconds() > 0) {
+            for (LivingEntity near : player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(weaken),
+                    e -> e != player && !(e instanceof Player) && e.distanceToSqr(player) <= weaken * weaken && Marks.isMarkedBy(e, player))) {
+                near.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 0, false, true), player);
+            }
+        }
         if (s.seconds() <= 0) {
             LOOKING.remove(player.getUUID());
             return;
@@ -41,6 +49,11 @@ public final class Scrutiny {
         if (now - look.since >= Math.max(0, s.lookSeconds()) * 20 && !Marks.isMarkedBy(target, player)) {
             long ticks = Math.round(s.seconds() * 20);
             Marks.add(target, player, ticks, 1.0, false, false, false);
+            double expose = ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.SCRUTINY_EXPOSE);
+            if (expose > 0) {
+                // Expose: everyone's hits on it are stronger (a shared mark).
+                Marks.add(target, player, ticks, 1 + expose, true, false, false);
+            }
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, (int) ticks, 0, false, false), player);
         }
     }

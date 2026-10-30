@@ -93,7 +93,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** Your quarry (challenged foe...) attacked you and missed: you dodged or blocked it (the victim is the quarry). */
         QUARRY_MISS("quarry_miss"),
         /** Your quarry hurt you (the victim is the quarry). */
-        QUARRY_HURT("quarry_hurt");
+        QUARRY_HURT("quarry_hurt"),
+        /** {@code spell_ward} cancelled a harmful effect or magic attack aimed at you. */
+        WARD("ward");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

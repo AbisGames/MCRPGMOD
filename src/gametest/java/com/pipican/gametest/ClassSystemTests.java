@@ -663,6 +663,16 @@ public final class ClassSystemTests {
         assertNear(helper, 1, com.pipican.ability.Quarries.multiplier(player, spare), "other mobs don't");
         com.pipican.ability.Quarries.onHit(player, spare, true, false);
         helper.assertTrue(!com.pipican.ability.Marks.isMarkedBy(prey, player) && com.pipican.ability.Marks.isMarkedBy(spare, player), "new prey replaces the old");
+
+        // Reaction duration upgrades: "after-effects last half as long" turns a 10s effect into 5s.
+        var effect = com.pipican.ability.action.EffectAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"target\": \"self\", \"effects\": [{\"effect\": \"minecraft:haste\", \"seconds\": 10}]}")).getOrThrow();
+        player.removeEffect(MobEffects.HASTE);
+        effect.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0)
+                .withMod(new ClassState.ReactionMod(0, 0, 0, 0, java.util.List.of(), 0, java.util.Map.of(), 0, 0, -0.5)));
+        var haste = player.getEffect(MobEffects.HASTE);
+        helper.assertTrue(haste != null && haste.getDuration() == 100, "half as long: " + (haste == null ? "none" : haste.getDuration()));
+        player.removeEffect(MobEffects.HASTE);
         helper.succeed();
     }
 

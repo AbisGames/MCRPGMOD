@@ -16,7 +16,8 @@ import java.util.List;
  * boosts and controls last {@code seconds} longer, their areas get {@code radius} blocks wider, their heals heal
  * {@code heal} more and their damage deals {@code damage} more, their boosts and empowered hits are {@code strength}
  * stronger (0.5 = +50% of the bonus), {@code amplify} (effect -> level, 1 = II) raises the level of effects they give,
- * {@code cooldown} changes their cooldown (-0.5 = half), {@code hits} adds empowered hits, and {@code actions} run after
+ * {@code cooldown} changes their cooldown (-0.5 = half), {@code hits} adds empowered hits, {@code duration} scales how long
+ * their effects last (-0.5 = half as long), and {@code actions} run after
  * theirs.
  *
  * <pre>{@code { "type": "pipican:reaction_mod", "name": "guarded casting", "seconds": 5 } }</pre>
@@ -25,7 +26,7 @@ import java.util.List;
 public record ReactionModEffect(String name, java.util.Optional<Double> seconds, java.util.Optional<Double> radius, java.util.Optional<Double> heal, java.util.Optional<Double> damage, List<AbilityAction> actions,
                                 List<Scaling> scaling, java.util.Optional<Double> strength,
                                 java.util.Map<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, Integer> amplify,
-                                java.util.Optional<Double> cooldown, int hits) implements ClassEffect {
+                                java.util.Optional<Double> cooldown, int hits, java.util.Optional<Double> duration) implements ClassEffect {
 
     public static final MapCodec<ReactionModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.STRING.fieldOf("name").forGetter(ReactionModEffect::name),
@@ -38,7 +39,8 @@ public record ReactionModEffect(String name, java.util.Optional<Double> seconds,
             Codec.DOUBLE.optionalFieldOf("strength").forGetter(ReactionModEffect::strength),
             Codec.unboundedMap(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("amplify", java.util.Map.of()).forGetter(ReactionModEffect::amplify),
             Codec.DOUBLE.optionalFieldOf("cooldown").forGetter(ReactionModEffect::cooldown),
-            Codec.intRange(-100, 100).optionalFieldOf("hits", 0).forGetter(ReactionModEffect::hits)
+            Codec.intRange(-100, 100).optionalFieldOf("hits", 0).forGetter(ReactionModEffect::hits),
+            Codec.DOUBLE.optionalFieldOf("duration").forGetter(ReactionModEffect::duration)
     ).apply(i, ReactionModEffect::new));
 
     @Override
@@ -50,6 +52,7 @@ public record ReactionModEffect(String name, java.util.Optional<Double> seconds,
     public void apply(EffectContext ctx) {
         ctx.addReactionMod(name.toLowerCase(java.util.Locale.ROOT), new ClassState.ReactionMod(Scaling.evaluate(seconds, scaling, ctx),
                 Scaling.evaluate(radius, scaling, ctx), Scaling.evaluate(heal, scaling, ctx), Scaling.evaluate(damage, scaling, ctx), actions,
-                Scaling.evaluate(strength, scaling, ctx), amplify, Scaling.evaluate(cooldown, scaling, ctx), hits));
+                Scaling.evaluate(strength, scaling, ctx), amplify, Scaling.evaluate(cooldown, scaling, ctx), hits,
+                Scaling.evaluate(duration, scaling, ctx)));
     }
 }

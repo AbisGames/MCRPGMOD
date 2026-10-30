@@ -358,4 +358,55 @@ public final class WorldBonusEvents {
         animal.setOrderedToSit(true);
         animal.level().broadcastEntityEvent(animal, (byte) 7);
     }
+
+    /** Hotbar slot 1 items kept through death ({@code keep_hotbar_weapon}), until the player respawns. */
+    private static final Map<UUID, ItemStack> KEPT = new ConcurrentHashMap<>();
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
+    static void onDeathKeep(LivingDeathEvent event) {
+        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer player)
+                || player.level().getGameRules().get(net.minecraft.world.level.gamerules.GameRules.KEEP_INVENTORY)
+                || ClassEffectApplier.state(player).chance(Kind.KEEP_HOTBAR_WEAPON) <= 0) {
+            return;
+        }
+        ItemStack kept = player.getInventory().getItem(0);
+        if (!kept.isEmpty()) {
+            KEPT.put(player.getUUID(), kept.copy());
+            player.getInventory().setItem(0, ItemStack.EMPTY);
+        }
+    }
+
+    @SubscribeEvent
+    static void onRespawnKeep(net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone event) {
+        ItemStack kept = event.isWasDeath() ? KEPT.remove(event.getOriginal().getUUID()) : null;
+        if (kept != null && !event.getEntity().getInventory().add(0, kept)) {
+            event.getEntity().getInventory().add(kept);
+        }
+    }
+
+    /** {@code grindstone_xp}: extra experience for disenchanting, from the enchantments removed. */
+    @SubscribeEvent
+    static void onGrindstone(net.neoforged.neoforge.event.GrindstoneEvent.OnTakeItem event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player)) {
+            return;
+        }
+        double bonus = ClassEffectApplier.state(player).chance(Kind.GRINDSTONE_XP);
+        if (bonus <= 0) {
+            return;
+        }
+        int[] base = {0};
+        for (ItemStack stack : List.of(event.getTopItem(), event.getBottomItem())) {
+            net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().forEach(e -> {
+                if (!e.getKey().is(net.minecraft.tags.EnchantmentTags.CURSE)) {
+                    base[0] += e.getKey().value().getMinCost(e.getIntValue());
+                }
+            });
+        }
+        // Vanilla gives between half and all of that; the bonus is on the average, rounded at random.
+        double extra = base[0] * 0.75 * bonus;
+        int orbs = (int) extra + (player.getRandom().nextDouble() < extra - (int) extra ? 1 : 0);
+        if (orbs > 0) {
+            net.minecraft.world.entity.ExperienceOrb.award((ServerLevel) player.level(), player.position(), orbs);
+        }
+    }
 }

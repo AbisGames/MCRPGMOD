@@ -73,6 +73,11 @@
       "multiplier": 1.15
     },
     {
+      "type": "pipican:bonus",
+      "kind": "scrutiny_weakness",
+      "amount": 6.0
+    },
+    {
       "type": "pipican:damage_dealt",
       "against": "#pipican:mobs/group_illagers_witches_nether_mobs",
       "multiplier": 1.15
@@ -89,6 +94,15 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:scrutiny",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.1
         }
       ]
     }

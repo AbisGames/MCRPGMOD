@@ -59,9 +59,15 @@ def atoms(ctx):
         any_form = forms[0] if len(forms) == 1 else {'type': 'pipican:any_of', 'conditions': forms}
         out.append((r'(?:while )?(?:in any (?:animal )?form|transformed|in an animal form)', lambda m, w=any_form: w, 'other'))
         out.append((r'(?:while )?in human form', lambda m, w=any_form: {'type': 'pipican:not', 'condition': w}, 'other'))
-    for name, (when, _) in sorted(NAMED.get(ctx.get('class_id'), {}).items(), key=lambda kv: -len(kv[0])):
+    named = NAMED.get(ctx.get('class_id'), {})
+    for name, (when, _) in sorted(named.items(), key=lambda kv: -len(kv[0])):
         pat = rf'(?:while |when |in |during )(?:in )?(?:your )?{re.escape(name)}(?: is active| is on)?'
         out.append((pat, lambda m, w=when: w, 'other'))
+    # "in Ecstasy" for Divine Ecstasy: a state's last word, when no other state ends with it.
+    for name, (when, _) in named.items():
+        last = name.split()[-1]
+        if ' ' in name and len(last) > 3 and last not in named and sum(n.split()[-1] == last for n in named) == 1:
+            out.append((rf'(?:while |in |during )(?:in )?{re.escape(last)}', lambda m, w=when: w, 'other'))
     return out
 
 
@@ -1110,6 +1116,66 @@ def world(low, ctx):
         return [e]
 
     rn = (ctx.get('resource_name') or '').lower()
+    eff = '|'.join(sorted((re.escape(k) for k in combat.EFFECT_NAMES), key=len, reverse=True))
+    import conditions as cond
+    # Steal Spell: a warded spell refills the bar; chance upgrades.
+    m = re.fullmatch(rf'you gain {N} ([a-z ]+) instead', low)
+    if m and m.group(2) == rn:
+        return [{'type': 'pipican:on', 'event': 'ward', 'actions': [{'type': 'pipican:resource', 'amount': float(m.group(1))}]}]
+    m = re.fullmatch(rf'\+{N}% steal spell chance', low) or re.fullmatch(rf'\+{N}% chance to steal an incoming harmful effect', low)
+    if m:
+        if ctx.get('implicit_per_point'):
+            return bonus_kind('spell_ward', 0.0, pct(m.group(1)))
+        return bonus_kind('spell_ward', pct(m.group(1)))
+    if cid == 'warlock' and re.fullmatch(r'steal spell chance doubles', low):
+        # Doubles the base 15% (per-point and upgrade chances aren't doubled).
+        return bonus_kind('spell_ward', 0.15)
+    # "in water, take 20% less damage from weapons and projectiles" (+ "Watery Form reduction +0.2% per Tide")
+    m = re.fullmatch(rf'(in water|while wearing 4 heavy pieces), take {N}% less damage from weapons and projectiles', low)
+    if m and (when := cond.parse(m.group(1), ctx)):
+        k = round(1 - float(m.group(2)) / 100, 6)
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [
+            {'type': 'pipican:damage_taken', 'damage_types': '#pipican:is_melee', 'multiplier': k},
+            {'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_projectile', 'multiplier': k}]}]
+    m = re.fullmatch(rf'watery form reduction \+{N}% per ([a-z]+)', low)
+    if m and m.group(2) == sp and (when := cond.parse('in water', ctx)):
+        sc = [{'source': 'special_stat', 'per': round(-float(m.group(1)) / 100, 6)}]
+        return [{'type': 'pipican:conditional', 'when': when, 'effects': [
+            {'type': 'pipican:damage_taken', 'damage_types': '#pipican:is_melee', 'multiplier': 1.0, 'scaling': sc},
+            {'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_projectile', 'multiplier': 1.0, 'scaling': sc}]}]
+    # Inquisitor scrutiny
+    m = re.fullmatch(rf'scrutinised mobs within {N} blocks get weakness i', low)
+    if m:
+        return bonus_kind('scrutiny_weakness', float(m.group(1)))
+    m = re.fullmatch(rf'scrutinised mobs take \+{N}% damage from everyone', low)
+    if m:
+        return bonus_kind('scrutiny_expose', pct(m.group(1)))
+    m = re.fullmatch(rf'scrutinise {N}s faster per {N} ([a-z]+)', low)
+    if m and m.group(3) == sp:
+        return [{'type': 'pipican:scrutiny', 'scaling': [{'source': 'special_stat', 'per': round(-float(m.group(1)) / float(m.group(2)), 6)}]}]
+    m = re.fullmatch(rf'grindstone disenchanting gives \+{N}% more xp per (?:{N} )?([a-z]+)', low)
+    if m and m.group(3) == sp:
+        return bonus_kind('grindstone_xp', 0.0, round(float(m.group(1)) / 100 / float(m.group(2) or 1), 6))
+    if re.fullmatch(r'optimization no longer resets on death', low):
+        return bonus_kind('keep_optimization', 1.0)
+    if re.fullmatch(r'(?:it|your bound weapon|bound weapon) never drops on death', low):
+        return bonus_kind('keep_hotbar_weapon', 1.0)
+    # Oracle: Ecstasy upgrades
+    ecstasy = next(((n, w) for n, (w, _) in NAMED.get(cid, {}).items() if n.endswith('ecstasy') and w.get('type') == 'pipican:ability_active'), None)
+    if ecstasy:
+        ename, ewhen = ecstasy
+        m = re.fullmatch(r'the after-effects of (?:divine )?ecstasy last half as long', low)
+        if m and f'{ename} after-effects' in REACTIONS.get(cid, {}):
+            return [{'type': 'pipican:reaction_mod', 'name': f'{ename} after-effects', 'duration': -0.5}]
+        m = re.fullmatch(rf'(?:divine )?ecstasy also gives ({eff}) (i|ii); after-effects add ({eff}) {N}s', low)
+        if m and f'{ename} after-effects' in REACTIONS.get(cid, {}):
+            return [{'type': 'pipican:conditional', 'when': ewhen, 'effects': [{'type': 'pipican:mob_effect',
+                     'effect': 'minecraft:' + combat.EFFECT_NAMES[m.group(1)], 'amplifier': combat.ROMAN[m.group(2)]}]},
+                    {'type': 'pipican:reaction_mod', 'name': f'{ename} after-effects', 'actions': [{'type': 'pipican:effect', 'target': 'self',
+                     'effects': [{'effect': 'minecraft:' + combat.EFFECT_NAMES[m.group(3)], 'seconds': float(m.group(4))}]}]}]
+        m = re.fullmatch(rf"(?:divine )?ecstasy bonuses \+{N}%, but you can'?t leave it early and it drains {N}% faster", low)
+        if m:
+            return [{'type': 'pipican:ability_mod', 'ability': ewhen['ability'], 'strength': pct(m.group(1)), 'drain': pct(m.group(2)), 'locked': True}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
@@ -1156,22 +1222,48 @@ def world(low, ctx):
                           'seconds': float(m.group(3)), 'glow': False}]}
         REACTIONS.setdefault(cid, {}).setdefault('battlefield leadership', r)
         return [r]
-    # "Leadership bonus +0.5% per Command point", "retribution bonus +20%": a mark reaction's bonus grows (in points).
-    m = re.fullmatch(rf'([a-z]+) bonus \+{N}%(?: per ([a-z]+) points?)?', low)
-    if m and (not m.group(3) or m.group(3) in (sp, 'point')):
-        node = (ctx.get('node_name') or '').lower()
-        for name, r in REACTIONS.get(cid, {}).items():
-            words = name.split()
-            if not (m.group(1) in (name, words[0], words[-1]) or name == node):
-                continue
-            marks = [a for a in r.get('actions', []) if a.get('type') == 'pipican:mark' and a.get('multiplier', 1.3) > 1]
-            if not marks:
-                continue
-            k = float(m.group(2)) / 100 / (marks[0].get('multiplier', 1.3) - 1)
-            e = {'type': 'pipican:reaction_mod', 'name': r.get('name', name), 'strength': 0.0 if m.group(3) else round(k, 6)}
-            if m.group(3):
-                e['scaling'] = [{'source': 'special_stat', 'per': round(k, 6)}]
-            return [e]
+    # "Leadership bonus +0.5% per Command point", "retribution bonus +20%", "+10% more Divine Might damage",
+    # "Smite bonus damage +1% per 2 Sanctity": a reaction's mark / empower / damage boost grows by that many points.
+    def reaction_base(r):
+        for a in r.get('actions', []) + EXTRA.get(cid, {}).get(r.get('name', ''), []):
+            if a.get('type') in ('pipican:mark', 'pipican:empower') and a.get('multiplier', 1.3) > 1:
+                return a.get('multiplier', 1.3) - 1
+            if a.get('type') == 'pipican:boost':
+                for e in a.get('effects', []):
+                    if e.get('type') == 'pipican:damage_dealt' and e.get('multiplier', 1) > 1:
+                        return e['multiplier'] - 1
+        return None
+    names = {}
+    for name, r in REACTIONS.get(cid, {}).items():
+        for alias in {name, name.split()[0], name.split()[-1]}:
+            names.setdefault(alias, (r.get('name', name), r))
+    for label, rname in {('zealot', 'divine might'): 'zeal'}.items():
+        if label[0] == cid and rname in REACTIONS.get(cid, {}):
+            names[label[1]] = (rname, REACTIONS[cid][rname])
+    node = (ctx.get('node_name') or '').lower()
+    if node in REACTIONS.get(cid, {}):
+        names.setdefault(node, (REACTIONS[cid][node].get('name', node), REACTIONS[cid][node]))
+    alias = '|'.join(sorted((re.escape(n) for n in names if len(n) > 3), key=len, reverse=True))
+    if alias:
+        V = r'(?P<v>\d+(?:\.\d+)?)'
+        P = r'(?: per (?:(?P<n>\d+(?:\.\d+)?) )?(?P<s>[a-z]+)(?: points?)?)?'
+        m = re.fullmatch(rf'\+{V}% more (?P<w>{alias}) damage', low) or \
+            re.fullmatch(rf'(?P<w>{alias}) bonus(?: damage)? \+{V}%{P}', low) or \
+            re.fullmatch(rf'(?P<w>{alias}) \+{V}%{P}', low) or \
+            re.fullmatch(rf'per (?P<n>\d+(?:\.\d+)?) (?P<s>[a-z]+),? (?P<w>{alias}) \+{V}%', low) or \
+            re.fullmatch(rf'(?P<w>[a-z]+) bonus \+{V}%', low)
+        if m:
+            d = m.groupdict()
+            word, value, n, stat = d['w'], d['v'], d.get('n'), d.get('s')
+        if m and (word in names or (word not in names and node in names)):
+            rname, r = names.get(word) or names[node]
+            base = reaction_base(r)
+            if base and (not stat or stat in (sp, 'point')):
+                k = float(value) / 100 / base
+                e = {'type': 'pipican:reaction_mod', 'name': rname, 'strength': 0.0 if stat else round(k, 6)}
+                if stat:
+                    e['scaling'] = [{'source': 'special_stat', 'per': round(k / float(n or 1), 6)}]
+                return [e]
     # Avenger: "Retribution fills by 3 every time you or a nearby ally takes damage"
     m = re.fullmatch(rf'([a-z ]+) fills by {N} every time you or a nearby ally takes damage', low)
     if m and m.group(1) == rn:
@@ -1992,8 +2084,9 @@ def mechanics(t, ctx):
         if m:
             entries = _effects_list(m.group(1))
             if entries:
-                return [{'type': 'pipican:conditional', 'when': when,
-                         'effects': [{'type': 'pipican:on', 'event': 'end', 'actions': [{'type': 'pipican:effect', 'effects': entries}]}]}]
+                r = {'type': 'pipican:on', 'event': 'end', 'name': f'{name} after-effects', 'actions': [{'type': 'pipican:effect', 'effects': entries}]}
+                REACTIONS.setdefault(cid, {}).setdefault(f'{name} after-effects', r)
+                return [{'type': 'pipican:conditional', 'when': when, 'effects': [r]}]
     # --- "when you would die": once per rest / per day / per N minutes
     m = re.fullmatch(rf'(?:once per (rest|day|{N} minutes?),? )?when you(?:\'d| would) die,? (.+)', t)
     if m:

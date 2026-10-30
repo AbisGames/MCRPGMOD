@@ -99,6 +99,11 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code distance_damage}: extra projectile damage per full 16 blocks between you and the target (0.1 = +10%)</li>
  *   <li>{@code triage}: how much more your heals heal other players below 30% health (1 = twice as much)</li>
  *   <li>{@code offhand_combo}: how much more your off-hand swing deals right after a main-hand hit on the same mob</li>
+ *   <li>{@code scrutiny_expose}: how much more damage scrutinised mobs take from everyone (0.1 = +10%)</li>
+ *   <li>{@code scrutiny_weakness}: <i>blocks</i> - mobs you've scrutinised within this range get Weakness I</li>
+ *   <li>{@code keep_hotbar_weapon}: any amount above 0 = the item in hotbar slot 1 stays with you when you die</li>
+ *   <li>{@code grindstone_xp}: how much more experience disenchanting at a grindstone gives (0.1 = +10%)</li>
+ *   <li>{@code keep_optimization}: any amount above 0 = Optimization isn't lost when you die</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -119,7 +124,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         SPLASH_UNDEAD, THROWN_SPEED, MAX_WOLVES, OPEN_LOCKS, REDIRECT_HIT, ILL_FORTUNE, BREW_SPEED, NO_TOP_TIER,
         RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK,
         FREE_ABILITY_EVERY, WEATHER_WARNING, GLORIOUS_DEATH, GUARD_ALLIES, PROJECTILE_WARD, EXECUTE_LOOTING, SURE_TAME,
-        FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO;
+        FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO,
+        SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

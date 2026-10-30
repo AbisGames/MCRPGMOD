@@ -154,5 +154,6 @@
   "pipican.open_locks": "Open Locks: you find extra loot",
   "pipican.glorious_death": "Glorious Death: fight on for 5 more seconds!",
   "pipican.weather_warning.rain": "You sense rain coming in about 30 seconds.",
-  "pipican.weather_warning.thunder": "You sense a thunderstorm coming in about 30 seconds."
+  "pipican.weather_warning.thunder": "You sense a thunderstorm coming in about 30 seconds.",
+  "pipican.ability.locked": "%s can't be ended early"
 }

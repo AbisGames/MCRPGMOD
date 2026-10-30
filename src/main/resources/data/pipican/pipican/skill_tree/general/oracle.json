@@ -55,16 +55,7 @@
     {
       "id": "oracle_steady_mind",
       "name": "Steady Mind",
-      "description": {
-        "text": "the after-effects of Ecstasy last half as long",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "the after-effects of Ecstasy last half as long",
       "type": "notable",
       "x": 872,
       "y": -182,
@@ -72,7 +63,14 @@
         "oracle_vessel"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "divine ecstasy after-effects",
+          "duration": -0.5
+        }
+      ]
     },
     {
       "id": "oracle_prophet",
@@ -99,16 +97,7 @@
     {
       "id": "oracle_avatar",
       "name": "Living Avatar",
-      "description": {
-        "text": "Divine Ecstasy bonuses +50%, but you can't leave it early and it drains 50% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Divine Ecstasy bonuses +50%, but you can't leave it early and it drains 50% faster",
       "type": "keystone",
       "x": 945,
       "y": -167,
@@ -117,7 +106,16 @@
         "oracle_prophet"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:oracle/divine_ecstasy",
+          "strength": 0.5,
+          "drain": 0.5,
+          "locked": true
+        }
+      ]
     }
   ]
 }

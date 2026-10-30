@@ -70,16 +70,7 @@
     {
       "id": "woodwose_deep_roots",
       "name": "Deep Roots",
-      "description": {
-        "text": "+20% knockback resistance on grass",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+20% knockback resistance on grass",
       "type": "notable",
       "x": 1082,
       "y": 872,
@@ -87,7 +78,23 @@
         "woodwose_barkskin"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:standing_on",
+            "blocks": "#minecraft:dirt"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 0.2
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "woodwose_overgrowth",

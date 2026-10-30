@@ -604,6 +604,7 @@ def _translate_line(text, ctx):
     text = re.sub(r'([+-]\d+(?:\.\d+)?%) unarmed damage\b', r'\1 damage while unarmed', text, flags=re.I)
     # "your max health -10%", "you take 10% more (fire) damage", "you take 25% more damage from X"
     text = re.sub(r'\byour max health ([+-]\d+(?:\.\d+)?%)', r'\1 max health', text, flags=re.I)
+    text = re.sub(r'([+-]\d+(?:\.\d+)?%) regeneration\b(?! (?:i|ii|potions?))', r'\1 natural regeneration', text, flags=re.I)
     text = re.sub(r'\byou take (\d+(?:\.\d+)?)% more damage from\b', r'take \1% more damage from', text, flags=re.I)
     text = re.sub(r'\byou take (\d+(?:\.\d+)?)% more ((?:fire|magic|fall|freezing|explosion|projectile) )?damage\b(?! from)', r'+\1% \2damage taken', text, flags=re.I)
     # "in human form you deal -20% damage" -> "-20% damage in human form"
@@ -738,7 +739,11 @@ def _conditional(text, ctx):
     else:
         m = cond.TRAILING.search(t)
         if not m or m.start() == 0:
-            return None
+            # Named states of the class: "+15% knockback resistance in Ecstasy".
+            m = next((x for x in re.finditer(r'\s+(?=(?:while|in|during)\s)', t) if x.start() > 0
+                      and cond.parse(t[x.start():], ctx) is not None), None)
+            if m is None:
+                return None
         eff_text, cond_text = t[:m.start()], t[m.start():]
     when = cond.parse(cond_text, ctx)
     if when is None:

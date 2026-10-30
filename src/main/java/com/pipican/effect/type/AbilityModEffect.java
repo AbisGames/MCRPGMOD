@@ -21,12 +21,12 @@ import net.minecraft.resources.ResourceKey;
  * controls last {@code seconds} longer, and {@code actions} run after its own ("charmed mobs also get Weakness I").
  *
  * <pre>{@code { "type": "pipican:ability_mod", "ability": "pipican:miracle_worker/stigmata", "duration": 1 } }</pre>
- * {@code scaling} applies to every amount the effect sets. Mods for the same ability add up.
+ * {@code locked} stops a running toggle from being switched off early. {@code scaling} applies to every amount the effect sets. Mods for the same ability add up.
  */
 public record AbilityModEffect(ResourceKey<Ability> ability, java.util.Optional<Double> cooldownSeconds, java.util.Optional<Double> cost, java.util.Optional<Double> drain, java.util.Optional<Double> duration,
                                java.util.Optional<Double> radius, int uses, java.util.Optional<Double> strength, List<Scaling> scaling, java.util.Optional<Double> seconds,
                                List<com.pipican.ability.AbilityAction> actions,
-                               java.util.Map<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, Integer> amplify) implements ClassEffect {
+                               java.util.Map<net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>, Integer> amplify, boolean locked) implements ClassEffect {
 
     public static final MapCodec<AbilityModEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             ResourceKey.codec(PipicanRegistries.ABILITY).fieldOf("ability").forGetter(AbilityModEffect::ability),
@@ -40,7 +40,8 @@ public record AbilityModEffect(ResourceKey<Ability> ability, java.util.Optional<
             Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(AbilityModEffect::scaling),
             Codec.DOUBLE.optionalFieldOf("seconds").forGetter(AbilityModEffect::seconds),
             Codec.lazyInitialized(() -> com.pipican.ability.AbilityAction.CODEC).listOf().optionalFieldOf("actions", List.of()).forGetter(AbilityModEffect::actions),
-            Codec.unboundedMap(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("amplify", java.util.Map.of()).forGetter(AbilityModEffect::amplify)
+            Codec.unboundedMap(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("amplify", java.util.Map.of()).forGetter(AbilityModEffect::amplify),
+            Codec.BOOL.optionalFieldOf("locked", false).forGetter(AbilityModEffect::locked)
     ).apply(i, AbilityModEffect::new));
 
     @Override
@@ -52,6 +53,6 @@ public record AbilityModEffect(ResourceKey<Ability> ability, java.util.Optional<
     public void apply(EffectContext ctx) {
         ctx.addAbilityMod(ability, new ClassState.AbilityMod(Scaling.evaluate(cooldownSeconds, scaling, ctx), Scaling.evaluate(cost, scaling, ctx),
                 Scaling.evaluate(drain, scaling, ctx), Scaling.evaluate(duration, scaling, ctx), Scaling.evaluate(radius, scaling, ctx), uses,
-                Scaling.evaluate(strength, scaling, ctx), Scaling.evaluate(seconds, scaling, ctx), actions, amplify));
+                Scaling.evaluate(strength, scaling, ctx), Scaling.evaluate(seconds, scaling, ctx), actions, amplify, locked));
     }
 }

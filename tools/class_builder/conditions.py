@@ -30,7 +30,7 @@ ICON = ['minecraft:totem_of_undying', 'minecraft:golden_sword', 'minecraft:golde
 
 GROUND = {'stone': '#minecraft:base_stone_overworld', 'dirt': '#minecraft:dirt', 'grass': '#minecraft:dirt',
           'sand': '#minecraft:sand', 'gravel': 'minecraft:gravel', 'netherrack': '#minecraft:base_stone_nether',
-          'nether blocks': '#minecraft:base_stone_nether'}
+          'nether blocks': '#minecraft:base_stone_nether', 'leaves': '#minecraft:leaves'}
 
 # Block tags the parsed conditions need; build.py writes them to data/pipican/tags/block/.
 GROUND_TAGS = {}
@@ -102,7 +102,7 @@ def _atoms(ctx):
         (r'(?:in )?(?:a )?(?:snowy|cold|frozen) biomes?', lambda m: {'type': 'pipican:biome', 'biomes': '#pipican:cold'}, PLACE),
         (r'(?:in )?natural biomes?', lambda m: {'type': 'pipican:biome', 'biomes': '#pipican:natural'}, PLACE),
         # ground
-        (r'(?:standing |you stand )?on ((?:stone|dirt|sand|gravel|grass|netherrack|nether blocks)(?:(?:, | or | and |, or )(?:stone|dirt|sand|gravel|grass|netherrack|nether blocks))*)',
+        (r'(?:standing |you stand )?on ((?:stone|dirt|sand|gravel|grass|leaves|netherrack|nether blocks)(?:(?:, | or | and |, or )(?:stone|dirt|sand|gravel|grass|leaves|netherrack|nether blocks))*)',
          lambda m: {'type': 'pipican:standing_on', 'blocks': _ground(m.group(1))}, OTHER),
         # light
         (r'(?:in )?light level (\d+) or (?:lower|less|below)', lambda m: {'type': 'pipican:light', 'max': int(m.group(1)) + 1}, OTHER),
@@ -233,7 +233,7 @@ TRAILING = re.compile(
     r'in light level\b|below half health\b|below \d+% health\b|above half health\b|at full health\b|'
     r'with (?:your |the |a |any )?(?:bound weapon|sigil(?:-marked)? weapons?|staff|weapon that isn\'t your bound weapon)\b|with \d sigil\b|'
     r'with no book\b|while (?:a )?book\b|holding a weapon in your off-hand\b|'
-    r'on land\b|with shield\b|inside villages?\b|within 64 blocks of your (?:bed|spawn|home)|'
+    r'on land\b|with shield\b|on (?:grass|stone|dirt|sand)\b|inside villages?\b|within 64 blocks of your (?:bed|spawn|home)|'
     r'while unarmed\b|with your fists\b|bare-handed\b|'
     r'in combat\b|out of combat\b|inside your temple\b|in your temple\b|when more than \d+ blocks\b|'
     r'outside (?:of )?forests?\b|on solid ground\b|without an icon\b|while holding\b|while travelling\b|while wearing\b|while not\b|'

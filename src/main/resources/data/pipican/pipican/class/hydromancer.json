@@ -73,6 +73,25 @@
       "type": "pipican:attribute",
       "attribute": "minecraft:submerged_mining_speed",
       "amount": 0.8
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "in_water"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.8
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 0.8
+        }
+      ]
     }
   ],
   "special_passives": [
@@ -101,6 +120,37 @@
             {
               "source": "special_stat",
               "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "in_water"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
             }
           ]
         }

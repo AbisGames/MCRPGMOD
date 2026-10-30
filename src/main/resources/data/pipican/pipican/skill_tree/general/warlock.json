@@ -19,21 +19,19 @@
     {
       "id": "warlock_filch",
       "name": "Filch",
-      "description": {
-        "text": "+5% Steal Spell chance",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% Steal Spell chance",
       "type": "small",
       "x": 434,
       "y": 696,
       "links": [
         "warlock_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "spell_ward",
+          "amount": 0.05
+        }
       ]
     },
     {
@@ -106,16 +104,7 @@
     {
       "id": "warlock_oathbreaker",
       "name": "Oathbreaker",
-      "description": {
-        "text": "Steal Spell chance doubles, but you can no longer benefit from beacons",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Steal Spell chance doubles, but you can no longer benefit from beacons",
       "type": "keystone",
       "x": 480,
       "y": 831,
@@ -124,7 +113,19 @@
         "warlock_shroud"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "spell_ward",
+          "amount": 0.15
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_beacon",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

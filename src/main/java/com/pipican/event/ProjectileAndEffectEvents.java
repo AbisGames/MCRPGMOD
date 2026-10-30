@@ -73,6 +73,8 @@ public final class ProjectileAndEffectEvents {
         if (event.getEntity() instanceof ServerPlayer warded && event.getSource().is(net.minecraft.tags.DamageTypeTags.WITCH_RESISTANT_TO)
                 && event.getSource().getEntity() != warded && warded.getRandom().nextDouble() < ClassEffectApplier.state(warded).chance(Kind.SPELL_WARD)) {
             event.setCanceled(true);
+            com.pipican.ability.Reactions.fire(warded, event.getSource().getEntity() instanceof net.minecraft.world.entity.LivingEntity l ? l : null,
+                    ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.WARD);
             return;
         }
         if (event.getEntity() instanceof ServerPlayer player && event.getSource().getDirectEntity() instanceof AbstractThrownPotion
@@ -96,6 +98,8 @@ public final class ProjectileAndEffectEvents {
         double ward = state.chance(Kind.SPELL_WARD);
         if (ward > 0 && event.getEffectSource() != null && event.getEffectSource() != player && player.getRandom().nextDouble() < ward) {
             event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            com.pipican.ability.Reactions.fire(player, event.getEffectSource() instanceof net.minecraft.world.entity.LivingEntity l ? l : null,
+                    ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.WARD);
             return;
         }
         if (event.getEffectSource() instanceof Witch && state.chance(Kind.WITCH_WARD) > 0) {

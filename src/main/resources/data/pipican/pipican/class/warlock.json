@@ -80,6 +80,16 @@
     },
     {
       "type": "pipican:on",
+      "event": "ward",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 10.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
       "event": "hurt",
       "actions": [
         {
@@ -101,6 +111,17 @@
     }
   ],
   "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "spell_ward",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
     {
       "type": "pipican:reaction_mod",
       "name": "vanish",
