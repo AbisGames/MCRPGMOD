@@ -31,8 +31,8 @@ public class RegionalBossEntity extends Monster {
     private final ServerBossEvent bar=new ServerBossEvent(java.util.UUID.randomUUID(),Component.translatable("entity.pipican.morvath_ashen_king"),BossEvent.BossBarColor.RED,BossEvent.BossBarOverlay.PROGRESS);
     public RegionalBossEntity(EntityType<? extends RegionalBossEntity> type,Level level){ super(type,level); this.xpReward=150; setPersistenceRequired(); }
     public static AttributeSupplier.Builder attributes(){
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH,600).add(Attributes.ARMOR,12)
-            .add(Attributes.ATTACK_DAMAGE,12).add(Attributes.MOVEMENT_SPEED,0.24)
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH,BossDesigns.require(BossCatalog.MORVATH.id()).health()).add(Attributes.ARMOR,12)
+            .add(Attributes.ATTACK_DAMAGE,BossDesigns.require(BossCatalog.MORVATH.id()).damage()).add(Attributes.MOVEMENT_SPEED,0.24)
             .add(Attributes.FOLLOW_RANGE,40).add(Attributes.KNOCKBACK_RESISTANCE,1);
     }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder){

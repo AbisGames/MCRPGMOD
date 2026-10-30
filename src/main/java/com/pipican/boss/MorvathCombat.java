@@ -58,11 +58,12 @@ public final class MorvathCombat {
             if(!clock.resolved()) telegraph(level,clock);
         }
         var impact=clock.tick();
+        double baseDamage=boss.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
         switch(impact){
             case BASIC, CLEAVE -> {
                 boolean basic=impact==BossCombatState.Ability.BASIC;
                 for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),attackRange,attackAngle)
-                    && boss.hasLineOfSight(player)) hit(level,player,basic ? 8 : (clock.phase()==2 ? 18 : 14),basic ? 0.4 : 1.1);
+                    && boss.hasLineOfSight(player)) hit(level,player,(float)(baseDamage*(basic ? 2.0/3 : (clock.phase()==2 ? 1.5 : 7.0/6))),basic ? 0.4 : 1.1);
                 boss.playSound(SoundEvents.PLAYER_ATTACK_SWEEP,2,0.65f);
             }
             case METEOR_RAIN -> {
@@ -72,7 +73,7 @@ public final class MorvathCombat {
                     level.sendParticles(ParticleTypes.EXPLOSION,mark.x,mark.y+0.5,mark.z,1,0,0,0,0);
                     for(var player:players()) if(near(mark,player.position(),2.5) && boss.hasLineOfSight(player)) victims.add(player);
                 }
-                for(var player:victims) hit(level,player,clock.phase()==2 ? 16 : 12,0.6);
+                for(var player:victims) hit(level,player,(float)(baseDamage*(clock.phase()==2 ? 4.0/3 : 1)),0.6);
                 boss.playSound(SoundEvents.GENERIC_EXPLODE.value(),1.6f,0.8f);
             }
             case ERUPTION -> { zones=List.copyOf(marks); zoneTicks=clock.phase()==2 ? 120 : 80; }
@@ -111,7 +112,7 @@ public final class MorvathCombat {
         if(zoneTicks%4==0) for(var zone:zones) ring(level,zone,2.5,true);
         if(zoneTicks%20==0){
             for(var player:players()) if(zones.stream().anyMatch(zone->near(zone,player.position(),2.5)) && boss.hasLineOfSight(player))
-                hit(level,player,phase==2 ? 7 : 4,0);
+                hit(level,player,(float)(boss.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)*(phase==2 ? 7.0/12 : 1.0/3)),0);
         }
         if(zoneTicks==0) zones=List.of();
     }

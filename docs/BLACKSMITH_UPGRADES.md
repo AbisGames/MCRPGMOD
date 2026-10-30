@@ -42,4 +42,5 @@ persist through evolution/reload so old requests cannot become valid when a leve
 GameTests cover exact material spending, repeat/stale requests, insufficient ingredients,
 invalid items, early/maximum evolution, all forty upgrade levels and three evolutions,
 metadata/set groups and preservation of enchantments/name/damage/custom data/other modifiers.
-Compilation passes; runtime results are recorded after CI.
+Runtime at `27f951a`: run41068590614 passed 34/34 focused tests and 35/35 with
+native resource generation, including all three blacksmith transaction tests.

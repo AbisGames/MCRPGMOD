@@ -41,6 +41,9 @@ observes naturally decorated RPG and End chunks, checks actual biome/Y/dimension
 vein bounds and no deposit leakage into Heartlands. No manual ore placement in that test.
 
 Focused CI run41066796125 at `4d4c6fe`: **31/31 required tests passed**, including
-the three new resource tests. Native generation is not
-claimed verified before that opt-in test passes. Voidsteel/Celestium/Bloodcrystal are
+the three new resource tests. Native run41068590614 at `27f951a` also passed **35/35 tests**. All eight resources
+were observed in naturally decorated seed-0 RPG/End chunks (not manually placed):
+Soulstone 5 eligible chunks, Abyssium 6, Runestone 5, Astralite 4, Sunforged 10,
+Moonshard 9, Dragonite 25, Primordial 33. This is functional coverage, not a
+statistical distribution claim across seeds. Voidsteel/Celestium/Bloodcrystal are
 materials only; no unfinished bosses are registered or claimed to drop them yet.

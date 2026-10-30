@@ -30,6 +30,9 @@ def validate(path):
         for item in ['ritual_core','morvath_sigil','ashen_kings_heart','infernium']:
             assert f'assets/pipican/textures/item/{item}.png' in names
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
+        if 'com/pipican/boss/BossDesigns.class' in names:
+            designs=json.loads(jar.read('assets/pipican/geo/bosses/combat_designs.json'))
+            assert len(designs)==27 and sum(design['functional'] for design in designs)==1
         if 'com/pipican/blacksmith/BlacksmithUpgrades.class' in names:
             assert 'data/pipican/blacksmith_profiles.json' in names
         if 'com/pipican/resource/RareResources.class' in names:

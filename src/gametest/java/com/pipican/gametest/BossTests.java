@@ -28,7 +28,8 @@ public final class BossTests {
         "boss_unload_and_cleanup",BossTests::unloadAndCleanup,
         "morvath_real_attacks",BossTests::realAttacks,
         "ritual_recipes",BossTests::ritualRecipes,
-        "ritual_interaction_and_loot",BossTests::ritualInteraction);
+        "ritual_interaction_and_loot",BossTests::ritualInteraction,
+        "boss_design_catalog",BossTests::designCatalog);
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -37,6 +38,23 @@ public final class BossTests {
         TESTS.keySet().forEach(name->event.registerTest(Pipican.id(name),new FunctionGameTestInstance(
             ResourceKey.create(Registries.TEST_FUNCTION,Pipican.id(name)),
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
+    }
+    private static void designCatalog(GameTestHelper helper){
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==1,"unfinished boss design activated");
+        var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
+        for(var design:BossDesigns.all()){
+            helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
+            for(var ability:design.abilities()) helper.assertTrue(mechanics.add(ability.behavior()) && !ability.counterplay().isBlank(),"copied or unreadable planned boss mechanic");
+            for(var ingredient:design.sigil().ingredients()) helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(ingredient.item()),"invalid planned sigil ingredient "+ingredient.item());
+            helper.assertTrue(design.sigil().ingredients().stream().mapToInt(BossDesigns.Ingredient::count).sum()==9,"sigil requires wrong ingredient count");
+            helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(design.loot().regional()),"invalid regional boss reward");
+            design.loot().rare().ifPresent(drop->helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(drop.item()) && drop.chance()>0 && drop.chance()<=1,"invalid rare reward"));
+            if(!design.functional()) helper.assertTrue(design.abilities().stream().allMatch(ability->ability.implementation().equals("planned")) && design.loot().trophyItem()==null,"planned trophy/ability presented as implemented");
+        }
+        var morvath=BossDesigns.require(BossCatalog.MORVATH.id());
+        for(var ability:morvath.abilities()) helper.assertTrue(BossCombatState.Ability.valueOf(ability.id()).windup==ability.windup(),"functional attack timing differs from metadata");
+        helper.assertTrue(morvath.health()==600 && morvath.damage()==12 && morvath.loot().rare().orElseThrow().chance()==0.25,"Morvath runtime defaults changed");
+        helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
     @SubscribeEvent public static void rejectSpawn(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent event){
