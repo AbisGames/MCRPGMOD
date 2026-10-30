@@ -7,7 +7,11 @@
         "element_type": "minecraft:single_pool_element",
         "location": "pipican:authored/settlements/stormcoast/lava_field_islands/outpost",
         "processors": {
-          "processors": []
+          "processors": [
+            {
+              "processor_type": "pipican:expedition_foundation"
+            }
+          ]
         },
         "projection": "rigid"
       }

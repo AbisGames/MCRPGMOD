@@ -1,0 +1,30 @@
+name: Run isolated worldgen suite
+description: Run a real NeoForge server suite and preserve its exit status and logs.
+inputs:
+  suite:
+    required: true
+    description: Integration suite name.
+  seed:
+    default: '0'
+    description: World-generation seed.
+  target:
+    default: ''
+    description: Optional capital or regional expedition identifier.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        WORLDGEN_SUITE: ${{ inputs.suite }}
+        WORLDGEN_SEED: ${{ inputs.seed }}
+        WORLDGEN_TARGET: ${{ inputs.target }}
+      run: |
+        set +e
+        ./gradlew runGameTestServer --no-daemon "-PworldgenTestSeed=$WORLDGEN_SEED" "-PworldgenSuite=$WORLDGEN_SUITE" "-PworldgenTarget=$WORLDGEN_TARGET"
+        worldgen_exit=$?
+        case_tag="${WORLDGEN_TARGET:-all}"
+        case_tag="${case_tag//[^a-zA-Z0-9_-]/_}"
+        log_dir="build/worldgen-logs/$WORLDGEN_SUITE/$case_tag"
+        mkdir -p "$log_dir"
+        if [ -d run/logs ]; then cp -a run/logs/. "$log_dir/"; fi
+        exit "$worldgen_exit"

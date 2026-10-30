@@ -2,7 +2,7 @@ package com.pipican.worldgen;
 
 import com.mojang.serialization.Codec;
 import com.pipican.Pipican;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
@@ -27,12 +27,26 @@ public final class PlayerWorldgenProtection extends SavedData {
         PlayerWorldgenProtection::new, data -> List.copyOf(data.positions));
     public static final SavedDataType<PlayerWorldgenProtection> TYPE = new SavedDataType<>(
         Pipican.id("player_worldgen_protection"), PlayerWorldgenProtection::new, CODEC, null);
-    private final Set<Long> positions = new HashSet<>();
+    private static final Map<ServerLevel,PlayerWorldgenProtection> LOADED=
+        java.util.Collections.synchronizedMap(new java.util.WeakHashMap<>());
+    private final Set<Long> positions = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     public PlayerWorldgenProtection() {}
     private PlayerWorldgenProtection(List<Long> saved) { positions.addAll(saved); }
     public static PlayerWorldgenProtection get(ServerLevel level) {
-        return level.getDataStorage().computeIfAbsent(TYPE);
+        synchronized(LOADED){
+            return LOADED.computeIfAbsent(level,key->key.getDataStorage().computeIfAbsent(TYPE));
+        }
+    }
+    /** Native generation workers must not enter SavedDataStorage or load files. */
+    public static PlayerWorldgenProtection cached(ServerLevel level){return LOADED.get(level);}
+    @SubscribeEvent
+    public static void loaded(net.neoforged.neoforge.event.level.LevelEvent.Load event){
+        if(event.getLevel() instanceof ServerLevel level)get(level);
+    }
+    @SubscribeEvent
+    public static void unloaded(net.neoforged.neoforge.event.level.LevelEvent.Unload event){
+        if(event.getLevel() instanceof ServerLevel level)LOADED.remove(level);
     }
     public boolean contains(BlockPos pos) { return positions.contains(pos.asLong()); }
     public void protect(BlockPos pos) {

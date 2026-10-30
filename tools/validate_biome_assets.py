@@ -2,7 +2,7 @@
 """Validate original capital-themed biome assets independently from Minecraft.
 
 This is a strict static preflight: it checks registry references, texture
-integrity and 125 biome data entries. Runtime testing is still required.
+integrity and 150 biome data entries. Runtime testing is still required.
 """
 from pathlib import Path
 import json
@@ -106,7 +106,10 @@ for path in reserved:
     assert not reserved_biome["carvers"],f"Carvers undermine reserved foundations: {path}"
     features=reserved_biome["features"]
     assert not competing.intersection(item for step in features for item in step),path
+    assert not any(item.startswith("minecraft:trees_") for step in features for item in step),path
+    if path.parent.name=="protected":
+        assert "pipican:"+path.stem+"_tree" in features[9],path
 
 print("PASS: 27 palettes; 135 custom block textures; 81 configured features;")
-print("      148 biome definitions (including 23 protected); 120 undergrowth sets;")
+print("      150 biome definitions (including 25 protected); 120 undergrowth sets;")
 print("      22 protected capital subregions; geology rules.")

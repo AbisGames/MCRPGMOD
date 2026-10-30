@@ -14,7 +14,11 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [0, 123, 987654321]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -32,19 +36,76 @@ jobs:
       - name: Compile NeoForge with generated structures
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: Verify final packaged structure templates
+        id: packaged
         run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
-      - name: Boot singleplayer-capable GameTest server and validate registry load
-        run: ./gradlew runGameTestServer --no-daemon
+      - name: Generated sky islands and End portal
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: sky
+          seed: ${{ matrix.seed }}
+      - name: Player protection and ore disk reload
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 10
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: protection
+          seed: ${{ matrix.seed }}
+      - name: Unique landmark placement
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: unique
+          seed: ${{ matrix.seed }}
+      - name: All regional capital terrain
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: terrain
+          seed: ${{ matrix.seed }}
+      - name: All authored settlements and disk reload
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 25
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: settlements
+          seed: ${{ matrix.seed }}
+      - name: Regional native villages and outposts
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 30
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: villages
+          seed: ${{ matrix.seed }}
+      - name: All regional mine and dungeon fixtures
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 45
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: expeditions
+          seed: ${{ matrix.seed }}
+      - name: All capital assemblies and road connectivity
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 60
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: capital
+          seed: ${{ matrix.seed }}
       - name: Preserve generated-asset test diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: structure-asset-diagnostics-${{ github.sha }}
+          name: structure-asset-diagnostics-${{ github.sha }}-seed-${{ matrix.seed }}
           path: |
             run/logs/
             build/reports/
+            build/worldgen-logs/
           if-no-files-found: warn
       - name: Publish generated structure pack
+        if: matrix.seed == 0
         uses: actions/upload-artifact@v4
         with:
           name: pipican-full-regional-structure-models
@@ -54,8 +115,25 @@ jobs:
             tools/worldgen/output/BUILD_REPORT.json
           retention-days: 30
           compression-level: 6
+      - name: Publish mod with regenerated structure templates
+        if: matrix.seed == 0
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipican-generated-singleplayer-${{ github.sha }}
+          path: build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 30
+  publish:
+    needs: generate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/worldgen-and-ores'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: pipican-full-regional-structure-models
+          path: tools/worldgen/output
       - name: Commit validated NBT and pool files to structure branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/worldgen-and-ores'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

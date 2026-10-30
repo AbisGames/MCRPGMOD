@@ -20,15 +20,20 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
  * not claim to measure the natural structure-set frequency.
  */
 final class RegionalExpeditionTests {
-    static void verify(GameTestHelper helper,ServerLevel initial,long seed,
+    static void verify(GameTestHelper helper,ServerLevel initial,long seed,boolean villages,
             Supplier<ServerLevel> reopen,Consumer<ResourceKey<Level>> close){
         ServerLevel level=initial;
         var failures=new ArrayList<String>();
         int shard=seed==123L?1:seed==987654321L?2:0;
-        for(int oreIndex=shard;oreIndex<RegionalOreCatalog.ORES.size();oreIndex+=3){
+        String target=System.getProperty("pipican.worldgenTarget","");
+        helper.assertTrue(target.isEmpty()||RegionalOreCatalog.ORES.stream().anyMatch(o->o.region().equals(target)),
+            "unknown target expedition region: "+target);
+        for(int oreIndex=target.isEmpty()?shard:0;oreIndex<RegionalOreCatalog.ORES.size();oreIndex+=target.isEmpty()?3:1){
         var ore=RegionalOreCatalog.ORES.get(oreIndex);
-        for(String kind:List.of("mine","dungeon")){
-            String id="regional/"+ore.region()+"/"+kind;
+        if(!target.isEmpty()&&!ore.region().equals(target))continue;
+        for(String kind:villages?List.of("village"):List.of("mine","dungeon")){
+            String id=villages?settlementId(ore.region()):"regional/"+ore.region()+"/"+kind;
+            WorldgenTestProgress.touch("native "+id+" selecting start");
             String diagnostic="dimension="+level.dimension().identifier();
             try{
                 var selected=level.registryAccess().lookupOrThrow(Registries.STRUCTURE)
@@ -60,15 +65,32 @@ final class RegionalExpeditionTests {
                         var chunk=level.getChunk(pos.x(),pos.z(),ChunkStatus.STRUCTURE_STARTS);
                         if(chunk.getPersistedStatus().isOrAfter(ChunkStatus.FEATURES)
                                 ||chunk.getAllStarts().values().stream().anyMatch(StructureStart::isValid))continue;
+                        if(overlapsExistingStart(level,box))continue;
                         level.structureManager().setStartForStructure(SectionPos.bottomOf(chunk),selected.value(),candidate,chunk);
                         start=candidate;
                         break search;
                     }
                 helper.assertTrue(start!=null,"seed="+seed+" no valid themed native start for "+id);
-                var box=start.getBoundingBox();
-                diagnostic+=" bounds="+box;
-                for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
-                    for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++)level.getChunk(cx,cz);
+                // StructureStart adds terrain-adaptation padding (12 blocks)
+                // around its pieces. That mask is not the building's floor.
+                var generated=net.minecraft.world.level.levelgen.structure.StructurePiece.createBoundingBox(start.getPieces().stream());
+                var box=generated;
+                if(!villages){
+                    var template=level.getServer().getStructureManager().get(Pipican.id(id)).orElseThrow();
+                    var floors=new java.util.ArrayList<net.minecraft.world.level.levelgen.structure.BoundingBox>();
+                    for(var piece:start.getPieces()){
+                        var pool=(net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece)piece;
+                        helper.assertTrue(pool.getElement() instanceof ExpeditionPoolElement,"missing native access bounds: "+id);
+                        floors.add(template.getBoundingBox(new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings()
+                            .setRotation(pool.getRotation()),pool.getPosition()));
+                    }
+                    box=net.minecraft.world.level.levelgen.structure.BoundingBox.encapsulatingBoxes(floors).orElseThrow();
+                }
+                diagnostic+=" bounds="+box+" generated="+generated;
+                for(int cx=Math.floorDiv(generated.minX(),16);cx<=Math.floorDiv(generated.maxX(),16);cx++)
+                    for(int cz=Math.floorDiv(generated.minZ(),16);cz<=Math.floorDiv(generated.maxZ(),16);cz++){
+                        WorldgenTestProgress.touch("native "+id+" chunk "+cx+","+cz);level.getChunk(cx,cz);
+                    }
                 for(int x:new int[]{box.minX()+4,(box.minX()+box.maxX())/2,box.maxX()-4})
                     for(int z:new int[]{box.minZ()+4,(box.minZ()+box.maxZ())/2,box.maxZ()-4}){
                         var support=new BlockPos(x,box.minY()-1,z);
@@ -76,7 +98,7 @@ final class RegionalExpeditionTests {
                             "unsupported native expedition "+id+" at "+support+" actual="+level.getBlockState(support));
                     }
                 BlockPos node=null;
-                int spawners=0,chests=0;
+                int spawners=0,chests=0,furniture=0;
                 var regionalBlocks=new HashMap<net.minecraft.world.level.block.Block,String>();
                 RegionalOreRegistries.NODES.forEach((name,block)->regionalBlocks.put(block.get(),name));
                 for(int x=box.minX();x<=box.maxX();x++)for(int z=box.minZ();z<=box.maxZ();z++)
@@ -89,7 +111,11 @@ final class RegionalExpeditionTests {
                             if(node==null)node=pos;
                         }
                         if(state.is(net.minecraft.world.level.block.Blocks.TRIAL_SPAWNER))spawners++;
-                        if(state.is(net.minecraft.world.level.block.Blocks.CHEST))chests++;
+                        if(state.is(net.minecraft.tags.BlockTags.BEDS)||state.is(net.minecraft.world.level.block.Blocks.CHEST))furniture++;
+                        if(state.is(net.minecraft.world.level.block.Blocks.CHEST)
+                                &&level.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity chest
+                                &&chest.getLootTable()!=null
+                                &&chest.getLootTable().identifier().equals(Pipican.id("chests/"+ore.region()+"_dungeon")))chests++;
                     }
                 if(kind.equals("mine")){
                     helper.assertTrue(node!=null,"native mine decoration produced no ore: "+id);
@@ -103,18 +129,25 @@ final class RegionalExpeditionTests {
                     helper.assertTrue(RegionalMineEvents.restoreDue(level,queued.restoreAt()-1,8)==0,"premature ore renewal: "+id);
                     helper.assertTrue(RegionalMineEvents.restoreDue(level,queued.restoreAt(),8)==1,"ore did not renew: "+id);
                     level.setBlock(node,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),3);
-                    var snapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,node);
-                    level.setBlock(node,RegionalOreRegistries.NODES.get(ore.id()).get().defaultBlockState(),3);
-                    net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
-                        new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(snapshot,
-                            net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),player));
+                    var stack=new net.minecraft.world.item.ItemStack(RegionalOreRegistries.NODES.get(ore.id()).get());
+                    player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+                    var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(node),
+                        net.minecraft.core.Direction.UP,node,false);
+                    var context=new net.minecraft.world.item.context.UseOnContext(level,player,
+                        net.minecraft.world.InteractionHand.MAIN_HAND,stack,hit){};
+                    stack.useOn(context);
+                    helper.assertTrue(level.getBlockState(node).is(RegionalOreRegistries.NODES.get(ore.id()).get()),
+                        "real BlockItem placement failed inside mine: "+id);
                     net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
                         new net.neoforged.neoforge.event.level.block.BreakBlockEvent(level,node,level.getBlockState(node),player));
                     helper.assertTrue(!data.contains(node),"player-placed ore exploited a real native mine: "+id);
-                }else{
+                }else if(kind.equals("dungeon")){
                     helper.assertTrue(spawners==1&&chests==3,"native dungeon blocks missing: "+id+
                         " spawners="+spawners+" chests="+chests);
-                }
+                }else helper.assertTrue(furniture>0,"native regional settlement has no placed furniture: "+id);
+                WorldgenTestProgress.touch("native "+id+" checking entrance");
+                if(!villages)helper.assertTrue(ExpeditionAccessTests.reachesOutside(level,start),
+                    "no walk/swim/climb route from native expedition doorway to open terrain: "+id);
                 Pipican.LOGGER.info("Verified native chunk decoration seed {} structure {} bounds {}",seed,id,box);
             }catch(RuntimeException error){
                 failures.add(id+" "+diagnostic+": "+error.getMessage());
@@ -127,5 +160,32 @@ final class RegionalExpeditionTests {
         }
         }
         helper.assertTrue(failures.isEmpty(),"seed="+seed+" expedition failures: "+failures);
+    }
+
+    /** A forced fixture must not overwrite a naturally selected neighboring start. */
+    private static boolean overlapsExistingStart(ServerLevel level,net.minecraft.world.level.levelgen.structure.BoundingBox candidate){
+        var protectedBox=candidate.inflatedBy(8);
+        // Native pools stay within 96 blocks of their start; scan beyond that
+        // radius so a root outside the candidate's own chunks is also found.
+        for(int x=Math.floorDiv(candidate.minX()-128,16);x<=Math.floorDiv(candidate.maxX()+128,16);x++)
+            for(int z=Math.floorDiv(candidate.minZ()-128,16);z<=Math.floorDiv(candidate.maxZ()+128,16);z++){
+                WorldgenTestProgress.touch("checking native start neighbors "+x+","+z);
+                var chunk=level.getChunk(x,z,ChunkStatus.STRUCTURE_STARTS);
+                for(var other:chunk.getAllStarts().values())
+                    if(other.isValid()&&protectedBox.intersects(other.getBoundingBox()))return true;
+            }
+        return false;
+    }
+
+    private static String settlementId(String region){
+        if(WorldLayout.EXTRA_BIOMES.stream().anyMatch(e->e.id().equals(region)))return "regional/"+region+"/village";
+        var candidates=new ArrayList<com.google.gson.JsonObject>();
+        for(var entry:WorldgenJson.read("structure_pools_manifest.json").getAsJsonArray("pools")){
+            var row=entry.getAsJsonObject();
+            if(row.get("region").getAsString().equals(region)&&row.get("used_by").getAsString().equals("procedural"))candidates.add(row);
+        }
+        var selected=candidates.stream().filter(e->e.get("tier").getAsString().equals("village"))
+            .findFirst().orElseGet(()->candidates.stream().findFirst().orElseThrow());
+        return "authored/"+selected.get("pool").getAsString();
     }
 }

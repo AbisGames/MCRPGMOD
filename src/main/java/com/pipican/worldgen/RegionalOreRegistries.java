@@ -30,6 +30,7 @@ public final class RegionalOreRegistries {
             DeferredBlock<Block> node=BLOCKS.registerSimpleBlock(id+"_ore",
                 props->props.strength(4.5f,12.0f).requiresCorrectToolForDrops());
             blocks.put(id,node);
+            ITEMS.registerSimpleBlockItem(node);
             items.put(id,ITEMS.registerSimpleItem(id));
         }
         Map<String,DeferredItem<Item>> cores=new LinkedHashMap<>();

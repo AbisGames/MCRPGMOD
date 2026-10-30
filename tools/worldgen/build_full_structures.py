@@ -71,7 +71,9 @@ class Workshop(Build):
     def path(self,x1,z1,x2,z2,base=0):
         xlo,xhi=sorted((x1,x2));zlo,zhi=sorted((z1,z2))
         for x in range(xlo,xhi+1):
-            for z in range(zlo,zhi+1):self.set(x,base,z,self.theme[1])
+            for z in range(zlo,zhi+1):
+                self.set(x,base,z,self.theme[1])
+                self.air(x,base+1,z,x,base+3,z)
     def column(self,x,z,y0,y1,kind=None):
         self.box(x,y0,z,x,y1,z,kind or self.theme[3])
     def window(self,x,y,z,along='z'):
@@ -681,7 +683,8 @@ class Workshop(Build):
         if category in ('garden','temple'):
             for xx in range(cx-8,cx+9):
                 for zz in range(cz-8,cz+9):
-                    if abs(xx-cx)==8 or abs(zz-cz)==8:self.set(xx,1,zz,'oak_leaves')
+                    if (abs(xx-cx)==8 or abs(zz-cz)==8) and abs(xx-cx)>3 and abs(zz-cz)>3:
+                        self.set(xx,1,zz,'oak_leaves')
             self.furniture(cx,1,cz,'altar');self.acc['gardens']+=1
         elif category=='harbor':
             for x in range(cx-13,cx+14):
@@ -995,8 +998,13 @@ def biome_tag(region):return '#pipican:region/'+region if region in REGIONIDS el
 def add_pool(pool_id,structure_id):
     savejson(Path('worldgen/template_pool')/(pool_id+'.json'),{
         'fallback':'minecraft:empty','elements':[{'weight':1,'element':{
-          'element_type':'minecraft:single_pool_element','location':'pipican:'+structure_id,
-          'processors':{'processors':[]},'projection':'rigid'}}]})
+          'element_type':('pipican:expedition' if pool_id.startswith('regional/') and pool_id.rsplit('/',1)[-1] in ('mine','dungeon') else 'minecraft:single_pool_element'),'location':'pipican:'+structure_id,
+          'processors':{'processors':([{'processor_type':'pipican:expedition_foundation'}]
+              if pool_id.startswith('settlements/') or (pool_id.startswith('regional/')
+                  and pool_id.rsplit('/',1)[-1] in ('mine','dungeon','village')) else [])
+              + ([{'processor_type':'pipican:expedition_access'}] if pool_id.startswith('regional/')
+                  and pool_id.rsplit('/',1)[-1] in ('mine','dungeon') else [])},
+          'projection':'rigid'}}]})
 
 def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
     # Underground structures keep their cave elevation. Aerial expeditions
@@ -1020,6 +1028,14 @@ def add_structure(registry_id,pool_id,region,spacing=55,spawn=True):
 def generate():
     OUT.mkdir(parents=True,exist_ok=True)
     SPAWN_BY_REGION.clear()
+    # A repeat build starts with the same pre-integration catalogue as a
+    # clean CI checkout. The special builder installs these four files later.
+    for name in ('aetheris_sky_citadel','pillager_blackspire','umbral_ancient_city','morvath_portal_chamber'):
+        previous=BASE/'structure/special'/(name+'.nbt')
+        if previous.is_file():
+            if not previous.resolve().is_relative_to(OUT.resolve()):
+                raise ValueError('Special output escaped the generated asset directory')
+            previous.unlink()
     # Purge former per-template spread sets: all procedural structures in
     # a region must share one native random-spread grid to prevent collisions.
     set_dir=BASE/'worldgen/structure_set'
@@ -1145,11 +1161,11 @@ def generate():
             'counts':dict(count),'block_placements':sum(x['blocks'] for x in catalog),
             'limitations':[
               'Buildings are procedural furnished shells and districts, not hand-sculpted bespoke architecture.',
-              'Capital assembly functions are manual until a region-coordinate placement service exists.',
-              'Dungeons contain vanilla chest blocks but boss logic and loot attribution are not implemented.',
-              'Mine nodes need cooldown/restoration behavior wired into server SavedData.',
-              'Some jigsaw pools are manifest only; their direct structure entries may not be automatically placed.',
-              'A Minecraft 26.1.2 singleplayer load test has not been run on these generated outputs.']}
+              'Asset generation alone does not verify near-player assembly or native chunk placement.',
+              'Dungeons use vanilla trial spawners and loot tables; bespoke NPC/boss implementation is outside this generator.',
+              'Ore renewal and player-build protection are server systems and require separate runtime tests.',
+              'Controlled native-start fixtures do not measure natural weighted structure frequency.',
+              'Visual quality, complete interior navigation and client FPS require Minecraft client inspection.']}
     (OUT/'BUILD_REPORT.json').write_text(json.dumps(report,indent=2))
     print(json.dumps(report,indent=2))
 

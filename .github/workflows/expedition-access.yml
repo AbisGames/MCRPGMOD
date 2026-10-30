@@ -1,0 +1,83 @@
+name: Native regional validation
+run-name: "${{ inputs.all_regions && 'All' || 'Focused' }} ${{ inputs.suite || 'expeditions' }} validation"
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Native structures to validate
+        type: choice
+        options: [expeditions, villages]
+        default: expeditions
+      all_regions:
+        description: Verify every region across three seed shards
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: pipican-expedition-access-${{ github.ref }}-${{ inputs.suite || 'expeditions' }}
+  cancel-in-progress: true
+jobs:
+  access:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - seed: 0
+            region: heartlands
+          - seed: 123
+            region: umbral_chasm
+          - seed: 987654321
+            region: shimmering_reefs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: gradle
+          cache-dependency-path: |
+            **/*.gradle*
+            **/gradle-wrapper.properties
+      - name: Generate required special models
+        run: |
+          python3 tools/worldgen/build_special_landmarks.py
+          mkdir -p src/main/resources/data/pipican/structure/special
+          cp tools/worldgen/output/data/pipican/structure/special/*.nbt src/main/resources/data/pipican/structure/special/
+          cp tools/worldgen/output/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
+      - name: Compile and package
+        id: build
+        run: chmod +x ./gradlew && ./gradlew build --no-daemon
+      - name: Native surface underground and underwater regressions
+        timeout-minutes: 45
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: ${{ inputs.suite || 'expeditions' }}
+          seed: ${{ matrix.seed }}
+          target: ${{ !inputs.all_regions && matrix.region || '' }}
+      - name: Player provenance and ore disk reload regression
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: protection
+          seed: ${{ matrix.seed }}
+      - name: Preserve compiled test mod
+        if: ${{ !cancelled() && matrix.seed == 0 && steps.build.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipican-native-test-${{ github.sha }}
+          path: build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 30
+      - name: Preserve diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ inputs.suite || 'expeditions' }}-${{ inputs.all_regions && 'all' || 'focused' }}-${{ github.sha }}-seed-${{ matrix.seed }}
+          path: |
+            run/logs/
+            build/worldgen-logs/
+            build/reports/
+          if-no-files-found: warn

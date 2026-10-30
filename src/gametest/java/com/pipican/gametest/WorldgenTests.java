@@ -20,17 +20,18 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 /** Dedicated-server tests for the registered worldgen catalogs and renewable sites. */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class WorldgenTests {
-    private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
-        "worldgen_catalog", WorldgenTests::worldgenCatalog,
-        "capital_protection", WorldgenTests::capitalProtection,
-        "renewable_mine", WorldgenTests::renewableMine,
-        "structure_nbt_load", WorldgenTests::structureNbtLoad,
-        "registries_loaded", WorldgenTests::registriesLoaded,
-        "nature_features_loaded", WorldgenTests::natureFeaturesLoaded,
-        "ore_restoration", WorldgenTests::oreRestoration,
-        "sky_island_geometry", WorldgenTests::skyIslandGeometry,
-        "vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion,
-        "regional_ore_harvest", WorldgenTests::regionalOreHarvest
+    private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.ofEntries(
+        Map.entry("worldgen_catalog", WorldgenTests::worldgenCatalog),
+        Map.entry("capital_protection", WorldgenTests::capitalProtection),
+        Map.entry("renewable_mine", WorldgenTests::renewableMine),
+        Map.entry("structure_nbt_load", WorldgenTests::structureNbtLoad),
+        Map.entry("registries_loaded", WorldgenTests::registriesLoaded),
+        Map.entry("nature_features_loaded", WorldgenTests::natureFeaturesLoaded),
+        Map.entry("ore_restoration", WorldgenTests::oreRestoration),
+        Map.entry("sky_island_geometry", WorldgenTests::skyIslandGeometry),
+        Map.entry("vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion),
+        Map.entry("regional_ore_harvest", WorldgenTests::regionalOreHarvest),
+        Map.entry("expedition_access_safety", ExpeditionProcessorTests::verify)
     );
     private WorldgenTests(){}
 
@@ -196,6 +197,13 @@ public final class WorldgenTests {
         helper.assertTrue(dimensionRegistry.get(ResourceKey.create(Registries.DIMENSION_TYPE,
             Pipican.id("rpg_overworld"))).isPresent(),"missing 576-high dimension");
 
+        for(var biome:biomeRegistry.listElements().toList()){
+            if(!biome.key().identifier().getNamespace().equals(Pipican.MOD_ID))continue;
+            for(var category:net.minecraft.world.entity.MobCategory.values())
+                for(var spawn:biome.value().getMobSettings().getMobs(category).unwrap())
+                    helper.assertTrue(spawn.value().type().getCategory()==category,
+                        "wrong spawn category in "+biome.key().identifier()+": "+spawn.value().type()+" in "+category);
+        }
         int sampled=0;
         var regionMap=WorldgenJson.read("region_map.json");
         for(var region:regionMap.getAsJsonArray("macro_regions")){
@@ -341,6 +349,8 @@ public final class WorldgenTests {
         var empty=net.minecraft.world.item.ItemStack.EMPTY;
         for(var ore:RegionalOreCatalog.ORES){
             var state=RegionalOreRegistries.NODES.get(ore.id()).get().defaultBlockState();
+            helper.assertTrue(state.getBlock().asItem() instanceof net.minecraft.world.item.BlockItem,
+                "ore block item was not registered: "+ore.id());
             helper.assertTrue(pickaxe.isCorrectToolForDrops(state),"pickaxe cannot harvest "+ore.id());
             helper.assertTrue(!empty.isCorrectToolForDrops(state),"bare hand can harvest "+ore.id());
             var drops=net.minecraft.world.level.block.Block.getDrops(state,level,pos,null,null,pickaxe);
