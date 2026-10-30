@@ -91,8 +91,8 @@ files is not guaranteed.
 Native model attachments add a sword, shoulder plates and animated emissive eyes,
 without editing any of the 27 prototype geometry files. Native poses cover idle,
 walk, basic swing, cleave, meteor, eruption, summoning, hurt, transition and death.
-These remain unreviewed art drafts until client inspection establishes alignment,
-scale, clipping and readable animation silhouettes.
+All ten were inspected in the isolated native client on 2026-10-30. See
+[animation QA](MORVATH_ANIMATION_QA.md) for sampled poses, fixes and coverage limits.
 
 Local client preparation initially failed in NeoForm SDK compilation. The isolated QA
 runtime now uses a task-local copy with ECJ 3.44 and Minecraft opens successfully.
@@ -116,7 +116,14 @@ survival fight or multiplayer validation. Hotbar 7 applies hurt; 6 finishes the 
 
 Coplanar outer cuff/boot cubes caused visible surface fighting. Only those Morvath
 runtime shells now expand by 0.035 model pixels; the 27 source geometries are unchanged.
-The new client showed separated cuffs/boots, but the prototype still needs more
-angles, full animation review, body seam inspection and sword/art polish. No measured
-FPS or certification of all ten animation silhouettes is claimed. Native capture:
+That first client pass was followed by the complete ten-pose review and fixes described
+in the animation QA record. No measured FPS or multiplayer certification is claimed. Native capture:
 `run-client-boss/screenshots/2026-10-30_21.47.44.png`. The test world was saved and quit.
+
+Preview controls (only with `-PclientQa=true` in the isolated save root): hotbar 2
+selects the previous pose; 3 selects the next, starting at a held inspection frame;
+4 cycles front/right/back/left views; 5 toggles the normal-speed loop/hold. These
+override renderer inputs only, are labeled QA PREVIEW and are not combat evidence.
+9 exits preview and resumes/toggles real server AI. 6 finishes the real test boss;
+7 applies real hurt; 8 requests real phase two. Re-select a different slot between
+repeated commands. Preview code and fixtures are excluded from the release JAR.

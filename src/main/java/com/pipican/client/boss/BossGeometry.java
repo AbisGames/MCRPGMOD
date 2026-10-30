@@ -36,7 +36,13 @@ final class BossGeometry {
                         var uv=cube.getAsJsonArray("uv");
                         // Prototype cuffs/boots share planes with their underlying limb cubes.
                         // Separate just those outer shells to avoid base/emissive z-fighting.
-                        float shell=name.equals("morvath_ashen_king") && (id.endsWith("_arm") || id.endsWith("_leg")) && cubeIndex>0 ? 0.035f : 0;
+                        boolean morvath=name.equals("morvath_ashen_king");
+                        float shell=morvath && (id.endsWith("_arm") || id.endsWith("_leg")) && cubeIndex>0 ? 0.035f : 0;
+                        // The original hips overlap by 0.825 px and share the torso's front plane.
+                        // Keep the source assets intact while separating the visible armor surfaces.
+                        if(morvath && id.equals("left_leg")) origin[0]-=0.125f;
+                        if(morvath && id.equals("right_leg")) origin[0]+=0.95f;
+                        if(morvath && id.equals("body") && cubeIndex==0) shell=0.06f;
                         cubes.texOffs(uv.get(0).getAsInt(),uv.get(1).getAsInt()).addBox(origin[0]-pivot[0],-origin[1]-size[1]+pivot[1],origin[2]-pivot[2],size[0],size[1],size[2],new CubeDeformation(shell));
                         cubeIndex++;
                     }
@@ -49,9 +55,13 @@ final class BossGeometry {
             if(name.equals("morvath_ashen_king")){
                 // Native attachments preserve the original 27 geometry files.
                 parts.get("right_arm").addOrReplaceChild("royal_blade",CubeListBuilder.create()
-                    .texOffs(160,160).addBox(-2,0,-2,4,9,4)
-                    .texOffs(180,160).addBox(-8,8,-3,16,3,6)
-                    .texOffs(160,180).addBox(-4,11,-1.5f,8,30,3),PartPose.offsetAndRotation(3,19,-2,-1.5708f,0,0));
+                    .texOffs(160,160).addBox(-1.5f,-4,-1.5f,3,9,3)
+                    .texOffs(174,160).addBox(-2,-6,-2,4,2,4)
+                    .texOffs(180,160).addBox(-6,5,-2.5f,12,2,5)
+                    .texOffs(160,180).addBox(-3.5f,7,-1.5f,7,19,3)
+                    .texOffs(184,180).addBox(-2.5f,26,-1.5f,5,5,3)
+                    .texOffs(204,180).addBox(-1.5f,31,-1.0f,3,4,2)
+                    .texOffs(220,180).addBox(-0.5f,35,-0.5f,1,2,1),PartPose.offsetAndRotation(2.5f,19.5f,0,-1.25f,0,0));
                 parts.get("head").addOrReplaceChild("animated_eyes",CubeListBuilder.create().texOffs(230,230)
                     .addBox(-5,-6,-8.1f,3,1,1).addBox(2,-6,-8.1f,3,1,1),PartPose.ZERO);
                 parts.get("left_arm").addOrReplaceChild("shoulder_plate",CubeListBuilder.create().texOffs(190,100).addBox(-9,-4,-7,14,9,14),PartPose.ZERO);

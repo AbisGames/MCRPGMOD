@@ -25,7 +25,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class MorvathClientQa {
     private static final Map<MinecraftServer,Session> SESSIONS=new WeakHashMap<>();
-    private static final class Session { boolean prepared; int lastSlot=-1; final Set<UUID> seen=new HashSet<>(); }
+    private static final class Session { boolean prepared; int lastSlot=-1,angle; final Set<UUID> seen=new HashSet<>(); }
     @SubscribeEvent public static void tick(ServerTickEvent.Post event){
         if(!Boolean.getBoolean("pipican.clientQa")) return;
         var server=event.getServer(); if(!server.isSingleplayer() || server.getPlayerList().getPlayers().isEmpty()) return;
@@ -70,6 +70,16 @@ public final class MorvathClientQa {
         int slot=player.getInventory().getSelectedSlot();
         if(slot!=session.lastSlot){
             for(var boss:bosses){
+                if(slot==1 || slot==2 || slot==3){
+                    boss.setNoAi(true); boss.setTarget(null); boss.getNavigation().stop();
+                    boss.teleportTo(0.5,65,-5.5); boss.setDeltaMovement(Vec3.ZERO);
+                    boss.setYRot(0); boss.setYHeadRot(0); boss.yBodyRot=0;
+                    if(slot==3) session.angle=(session.angle+1)%4;
+                    double angle=session.angle*Math.PI/2;
+                    player.teleportTo(0.5+Math.sin(angle)*10,65,-5.5+Math.cos(angle)*10);
+                    player.setDeltaMovement(Vec3.ZERO); player.clearFire();
+                    player.lookAt(EntityAnchorArgument.Anchor.EYES,boss.position().add(0,2.1,0));
+                }
                 if(slot==6) boss.hurtServer(level,boss.damageSources().playerAttack(player),1);
                 if(slot==5) boss.hurtServer(level,boss.damageSources().genericKill(),10000);
                 if(slot==7){ boss.setHealth(boss.getMaxHealth()*0.49f); boss.setNoAi(false); }
