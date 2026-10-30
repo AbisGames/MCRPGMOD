@@ -142,6 +142,20 @@ public final class BossTests {
             helper.assertTrue(front.getHealth()==20,"eruption had no activation grace period");
             for(int i=0;i<20;i++) boss.tickCombat(level);
             helper.assertTrue(front.getHealth()<20 && level.getBlockState(front.blockPosition()).isAir(),"temporary zone failed or placed permanent lava");
+            output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); boss.saveWithoutId(output);
+            restored=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD); restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+            after=front.getHealth(); front.invulnerableTime=0; restored.tickCombat(level);
+            helper.assertTrue(front.getHealth()==after,"hazard pulse repeated immediately after reload");
+            front.setHealth(20); front.invulnerableTime=0;
+            boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND); boss.snapTo(origin.getX(),origin.getY(),origin.getZ()); boss.setHealth(300);
+            for(int i=0;i<115;i++) boss.tickCombat(level);
+            helper.assertTrue(boss.phase()==2 && front.getHealth()==20,"phase transition missing or dealt unavoidable damage");
+            helper.assertTrue(boss.beginAbility(BossCombatState.Ability.ERUPTION,front),"phase-two eruption could not start");
+            for(int i=0;i<45;i++) boss.tickCombat(level);
+            output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); boss.saveWithoutId(output);
+            helper.assertTrue(output.buildResult().getIntOr("BossZoneTicks",0)==120,"phase-two danger duration did not increase");
+            for(int i=0;i<20;i++) boss.tickCombat(level);
+            helper.assertTrue(front.getHealth()<=13,"phase-two danger damage did not increase");
             helper.succeed();
         }finally { front.discard(); dodge.discard(); }
     }

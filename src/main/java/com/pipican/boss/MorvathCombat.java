@@ -42,23 +42,24 @@ public final class MorvathCombat {
         var target=boss.getTarget();
         if(target!=null && (!target.isAlive() || !boss.insideArena(target.position()))) { boss.setTarget(null); target=null; }
         if(clock.ready() && target!=null && boss.hasLineOfSight(target)){
-            var pattern=List.of(BossCombatState.Ability.CLEAVE,BossCombatState.Ability.METEOR_RAIN,BossCombatState.Ability.ERUPTION);
-            var next=pattern.get(Math.floorMod(sequence++,3));
-            if(next==BossCombatState.Ability.CLEAVE && boss.distanceToSqr(target)>BossBalance.CLEAVE_RANGE.get()*BossBalance.CLEAVE_RANGE.get()) next=BossCombatState.Ability.METEOR_RAIN;
+            var pattern=List.of(BossCombatState.Ability.BASIC,BossCombatState.Ability.CLEAVE,BossCombatState.Ability.METEOR_RAIN,BossCombatState.Ability.ERUPTION);
+            var next=pattern.get(Math.floorMod(sequence++,4));
+            if((next==BossCombatState.Ability.CLEAVE || next==BossCombatState.Ability.BASIC) && boss.distanceToSqr(target)>BossBalance.CLEAVE_RANGE.get()*BossBalance.CLEAVE_RANGE.get()) next=BossCombatState.Ability.METEOR_RAIN;
             begin(clock,next,target);
         }
         if(clock.ability()==BossCombatState.Ability.NONE){
             if(target!=null) boss.getNavigation().moveTo(target,clock.phase()==2 ? 1.25 : 1.0);
         }else{
             boss.getNavigation().stop();
-            if(clock.ability()==BossCombatState.Ability.CLEAVE){ boss.setYRot(yaw); boss.yBodyRot=yaw; }
+            if((clock.ability()==BossCombatState.Ability.CLEAVE || clock.ability()==BossCombatState.Ability.BASIC)){ boss.setYRot(yaw); boss.yBodyRot=yaw; }
             if(!clock.resolved()) telegraph(level,clock);
         }
         var impact=clock.tick();
         switch(impact){
-            case CLEAVE -> {
-                for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),BossBalance.CLEAVE_RANGE.get(),BossBalance.CLEAVE_HALF_ANGLE.get())
-                    && boss.hasLineOfSight(player)) hit(level,player,clock.phase()==2 ? 18 : 14,1.1);
+            case BASIC, CLEAVE -> {
+                boolean basic=impact==BossCombatState.Ability.BASIC;
+                for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),basic ? 3 : BossBalance.CLEAVE_RANGE.get(),basic ? 45 : BossBalance.CLEAVE_HALF_ANGLE.get())
+                    && boss.hasLineOfSight(player)) hit(level,player,basic ? 8 : (clock.phase()==2 ? 18 : 14),basic ? 0.4 : 1.1);
                 boss.playSound(SoundEvents.PLAYER_ATTACK_SWEEP,2,0.65f);
             }
             case METEOR_RAIN -> {
@@ -85,7 +86,7 @@ public final class MorvathCombat {
             if(clock.remaining()%4==0) level.sendParticles(ParticleTypes.FLAME,boss.getX(),boss.getY()+2,boss.getZ(),12,1,1.5,1,0.02);
             return;
         }
-        if(clock.ability()==BossCombatState.Ability.CLEAVE){
+        if((clock.ability()==BossCombatState.Ability.CLEAVE || clock.ability()==BossCombatState.Ability.BASIC)){
             if(clock.remaining()%3!=0) return;
             for(double angle=-BossBalance.CLEAVE_HALF_ANGLE.get();angle<=BossBalance.CLEAVE_HALF_ANGLE.get();angle+=10){
                 double theta=Math.toRadians(yaw+angle);
@@ -135,7 +136,7 @@ public final class MorvathCombat {
     public void load(ValueInput input){
         marks=input.read("BossMarks",Vec3.CODEC.listOf()).orElse(List.of()).stream().limit(6).toList();
         zones=input.read("BossZones",Vec3.CODEC.listOf()).orElse(List.of()).stream().limit(6).toList();
-        zoneTicks=Math.clamp(input.getIntOr("BossZoneTicks",0),0,120); sequence=Math.max(0,input.getIntOr("BossSequence",0))%3;
+        zoneTicks=Math.clamp(input.getIntOr("BossZoneTicks",0),0,120); sequence=Math.max(0,input.getIntOr("BossSequence",0))%4;
         yaw=input.getFloatOr("BossAttackYaw",0);
     }
 }

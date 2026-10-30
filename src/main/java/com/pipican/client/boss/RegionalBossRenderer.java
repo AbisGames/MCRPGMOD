@@ -42,6 +42,7 @@ public final class RegionalBossRenderer extends MobRenderer<RegionalBossEntity,R
             var ability=com.pipican.boss.BossCombatState.Ability.values()[state.ability];
             float windup=Mth.clamp((ability.windup+ability.recovery-state.remaining)/(float)Math.max(1,ability.windup),0,1);
             switch(ability){
+                case BASIC -> { rightArm.xRot=state.remaining>ability.recovery ? -1.5f*windup : 0.6f; }
                 case CLEAVE -> { rightArm.xRot=state.remaining>ability.recovery ? -2.5f*windup : 0.9f; rightArm.yRot=-0.4f; }
                 case METEOR_RAIN -> { leftArm.xRot=-2.6f*windup; rightArm.xRot=-2.6f*windup; }
                 case ERUPTION -> { leftArm.xRot=-1.6f*windup; rightArm.xRot=-1.6f*windup; head.xRot=0.45f; }
