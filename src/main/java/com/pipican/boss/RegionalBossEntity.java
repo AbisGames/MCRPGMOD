@@ -46,20 +46,35 @@ public class RegionalBossEntity extends Monster {
     public int abilityTicksRemaining(){ return entityData.get(REMAINING); }
     @Override protected void customServerAiStep(ServerLevel level){
         super.customServerAiStep(level);
-        if(managedEncounter){
+        combat.updatePhase(getHealth(),getMaxHealth());
+        // Ability effects are added by the concrete encounter implementation.
+        combat.tick();
+        entityData.set(PHASE,combat.phase()); entityData.set(ABILITY,combat.ability().ordinal()); entityData.set(REMAINING,combat.remaining());
+        bar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));
+    }
+    /** Cleanup also runs when vanilla AI is disabled; chunk unload is handled separately. */
+    @Override public void tick(){
+        if(managedEncounter && isAlive() && level() instanceof ServerLevel level){
             var encounters=BossEncounters.get(level);
             var entry=encounters.find(getUUID()).orElse(null);
             if(entry==null || entry.status()!=BossEncounters.Status.ACTIVE){ discard(); return; }
             boolean occupied=!level.getPlayers(player->player.isAlive() && !player.isSpectator() && !player.isCreative()
                 && player.blockPosition().distSqr(entry.arena())<=48*48).isEmpty();
             abandonedTicks=occupied ? 0 : abandonedTicks+1;
-            if(abandonedTicks>=600){ encounters.finish(getUUID(),BossEncounters.Status.CANCELLED); discard(); return; }
+            if(abandonedTicks>=600){
+                encounters.finish(getUUID(),BossEncounters.Status.CANCELLED);
+                discard(); return;
+            }
         }
-        combat.updatePhase(getHealth(),getMaxHealth());
-        // Ability effects are added by the concrete encounter implementation.
-        combat.tick();
-        entityData.set(PHASE,combat.phase()); entityData.set(ABILITY,combat.ability().ordinal()); entityData.set(REMAINING,combat.remaining());
-        bar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));
+        super.tick();
+    }
+    @Override public void onRemoval(RemovalReason reason){
+        if(level() instanceof ServerLevel level){
+            if(managedEncounter && (reason.shouldDestroy() || reason==RemovalReason.CHANGED_DIMENSION))
+                BossEncounters.get(level).finish(getUUID(),BossEncounters.Status.CANCELLED);
+            bar.removeAllPlayers();
+        }
+        super.onRemoval(reason);
     }
     void activateEncounter(){ managedEncounter=true; }
     @Override protected void dropAllDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source){

@@ -24,7 +24,8 @@ public final class BossTests {
         "boss_phase_latch",BossTests::phaseLatch,
         "boss_entity_roundtrip",BossTests::entityRoundtrip,
         "boss_encounter_reservations",BossTests::encounterReservations,
-        "boss_summoning_lifecycle",BossTests::summoningLifecycle);
+        "boss_summoning_lifecycle",BossTests::summoningLifecycle,
+        "boss_unload_and_cleanup",BossTests::unloadAndCleanup);
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -65,11 +66,34 @@ public final class BossTests {
         helper.assertTrue(state.phase()==1 && state.ability()==BossCombatState.Ability.NONE && state.cooldown()==1200,"invalid save fields were not bounded");
         helper.succeed();
     }
+    private static void unloadAndCleanup(GameTestHelper helper){
+        var level=helper.getLevel(); var data=BossEncounters.get(level);
+        var arena=helper.absolutePos(new net.minecraft.core.BlockPos(512,30,512));
+        var entity=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
+        entity.snapTo(arena.getX(),arena.getY(),arena.getZ());
+        helper.assertTrue(data.reserve(entity.getUUID(),UUID.randomUUID(),BossCatalog.MORVATH.id(),arena),"cleanup fixture reservation failed");
+        var output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); entity.saveWithoutId(output);
+        var tag=output.buildResult(); tag.putBoolean("ManagedEncounter",true); tag.putInt("BossAbandonedTicks",599);
+        entity.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),tag));
+        entity.remove(net.minecraft.world.entity.Entity.RemovalReason.UNLOADED_TO_CHUNK);
+        helper.assertTrue(data.find(entity.getUUID()).orElseThrow().status()==BossEncounters.Status.ACTIVE,"chunk unload cancelled persistent encounter");
+        var restored=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD);
+        restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(tag)));
+        restored.setNoAi(true); restored.tick();
+        helper.assertTrue(restored.isRemoved() && data.find(restored.getUUID()).orElseThrow().status()==BossEncounters.Status.CANCELLED,"abandoned encounter with NoAI was not cleaned up after reload");
+        var discarded=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
+        helper.assertTrue(data.reserve(discarded.getUUID(),UUID.randomUUID(),BossCatalog.MORVATH.id(),arena),"terminal arena remained reserved");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); discarded.saveWithoutId(output);
+        tag=output.buildResult(); tag.putBoolean("ManagedEncounter",true);
+        discarded.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),tag)); discarded.discard();
+        helper.assertTrue(data.find(discarded.getUUID()).orElseThrow().status()==BossEncounters.Status.CANCELLED,"permanent entity removal leaked reservation");
+        helper.succeed();
+    }
     private static void summoningLifecycle(GameTestHelper helper){
         var level=helper.getLevel(); var arena=helper.absolutePos(new net.minecraft.core.BlockPos(256,25,256));
         for(int x=-32;x<=32;x+=8) for(int z=-32;z<=32;z+=8) level.getChunkAt(arena.offset(x,0,z));
         var chunk=net.minecraft.world.level.ChunkPos.containing(arena);
-        level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0);
+        level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,2);
         var owner=helper.makeMockServerPlayerInLevel(); owner.snapTo(arena.getX()+6,arena.getY(),arena.getZ());
         try {
             helper.assertTrue(BossEncounterService.summonMorvath(owner,arena)==BossEncounterService.Result.WRONG_BIOME,"non-Ashlands ritual accepted");
@@ -90,13 +114,13 @@ public final class BossTests {
             helper.assertTrue(BossEncounterService.cancel(level,boss.getUUID(),owner.getUUID()),"owner cancellation rejected");
             helper.runAfterDelay(20,()->{
                 try {
-                    helper.assertTrue(boss.isRemoved(),"cancelled encounter entity remained live");
+                    helper.assertTrue(boss.isRemoved(),"cancelled encounter entity remained live (entity ticks="+boss.tickCount+")");
                     helper.assertTrue(!BossEncounters.get(level).conflicts(arena),"cancelled encounter retained arena lock");
                     helper.assertTrue(level.getBlockState(arena.below()).is(net.minecraft.world.level.block.Blocks.STONE),"encounter altered player floor");
                     helper.succeed();
-                }finally{ level.getServer().getPlayerList().remove(owner); level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0); }
+                }finally{ level.getServer().getPlayerList().remove(owner); level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,2); }
             });
-        }catch(RuntimeException|Error failure){ level.getServer().getPlayerList().remove(owner); level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0); throw failure; }
+        }catch(RuntimeException|Error failure){ level.getServer().getPlayerList().remove(owner); level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,2); throw failure; }
     }
     private static void encounterReservations(GameTestHelper helper){
         var encounters=new BossEncounters(); var boss=UUID.randomUUID(); var owner=UUID.randomUUID();
