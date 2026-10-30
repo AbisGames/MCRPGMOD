@@ -34,5 +34,11 @@
     "boss": "kragmor_canyon_warlord",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:nocthar_void_sovereign_sigil",
+    "boss": "nocthar_void_sovereign",
+    "min_y": -64,
+    "max_y": -1
   }
 ]

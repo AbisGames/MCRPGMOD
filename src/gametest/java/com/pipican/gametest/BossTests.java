@@ -19,17 +19,18 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 /** Real registry/entity serialization tests plus deterministic combat timing regressions. */
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class BossTests {
-    private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
-        "boss_combat_reload",BossTests::combatReload,
-        "boss_phase_latch",BossTests::phaseLatch,
-        "boss_entity_roundtrip",BossTests::entityRoundtrip,
-        "boss_encounter_reservations",BossTests::encounterReservations,
-        "boss_summoning_lifecycle",BossTests::summoningLifecycle,
-        "boss_unload_and_cleanup",BossTests::unloadAndCleanup,
-        "morvath_real_attacks",BossTests::realAttacks,
-        "ritual_recipes",BossTests::ritualRecipes,
-        "ritual_interaction_and_loot",BossTests::ritualInteraction,
-        "boss_design_catalog",BossTests::designCatalog);
+    private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.ofEntries(
+        Map.entry("boss_combat_reload",BossTests::combatReload),
+        Map.entry("boss_phase_latch",BossTests::phaseLatch),
+        Map.entry("boss_entity_roundtrip",BossTests::entityRoundtrip),
+        Map.entry("boss_encounter_reservations",BossTests::encounterReservations),
+        Map.entry("boss_summoning_lifecycle",BossTests::summoningLifecycle),
+        Map.entry("boss_unload_and_cleanup",BossTests::unloadAndCleanup),
+        Map.entry("morvath_real_attacks",BossTests::realAttacks),
+        Map.entry("ritual_recipes",BossTests::ritualRecipes),
+        Map.entry("ritual_interaction_and_loot",BossTests::ritualInteraction),
+        Map.entry("boss_design_catalog",BossTests::designCatalog),
+        Map.entry("nocthar_deep_encounter",BossTests::noctharDeepEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -40,7 +41,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==6,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==7,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -69,6 +70,9 @@ public final class BossTests {
         var kragmor=BossDesigns.require("kragmor_canyon_warlord");
         helper.assertTrue(kragmor.functional() && kragmor.sigil().registered() && kragmor.loot().trophyItem().equals("pipican:kragmor_canyon_warlord_trophy"),
             "Kragmor implemented design is missing sigil/reward metadata");
+        var nocthar=BossDesigns.require("nocthar_void_sovereign");
+        helper.assertTrue(nocthar.functional() && nocthar.sigil().registered() && nocthar.sigil().maxY()==-1 && nocthar.loot().rare().orElseThrow().chance()==0.2,
+            "Nocthar implemented design is missing deep-biome/rare-reward metadata");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -81,7 +85,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -95,6 +99,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("redrock_badlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.POINTED_DRIPSTONE));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("umbral_chasm").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.ENDER_PEARL));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -215,6 +222,47 @@ public final class BossTests {
                 "Kragmor trophy or regional materials missing");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
+    }
+    private static void noctharDeepEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(1536,34,1536));var arena=altar.north(6);
+        helper.assertTrue(altar.getY()>=level.getMinY()&&altar.getY()<=-6,"Nocthar test fixture is outside the permitted deep Y band");
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.DEEPSLATE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());
+        var sigil=new net.minecraft.world.item.ItemStack(BossContent.NOCTHAR_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);
+        var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,
+                "Nocthar altar consumed sigil outside its registered deep biome");
+            var sanctuary=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("umbral_sanctuary")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),sanctuary).left().isPresent(),"Nocthar biome fixture failed");
+            helper.assertTrue(BossEncounterService.matchesBiome(level,altar,"nocthar_void_sovereign")&&BossEncounterService.matchesBiome(level,altar.above(),"nocthar_void_sovereign"),
+                "Nocthar's protected sanctuary biome route was rejected");
+            rejectSpawnAt=arena;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1
+                &&!BossEncounters.get(level).conflicts(arena),"failed deep spawn consumed Nocthar sigil or leaked reservation");
+            rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),
+                "valid deep altar summon failed or did not consume one sigil");
+            var boss=level.getEntitiesOfClass(NoctharEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("nocthar_void_sovereign"),"Nocthar encounter type was not persisted");
+            var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());boss.saveWithoutId(saved);
+            var replay=BossRegistries.NOCTHAR.get().create(level,EntitySpawnReason.LOAD);replay.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);
+            var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get())).mapToInt(item->item.getItem().getCount()).sum()==8
+                &&drops.stream().anyMatch(item->item.getItem().is(BossContent.NOCTHAR_TROPHY.get())),"Nocthar guaranteed rewards missing");
+            long rare=drops.stream().filter(item->item.getItem().is(com.pipican.resource.RareResources.MATERIALS.get("voidsteel").get())).mapToInt(item->item.getItem().getCount()).sum();
+            helper.assertTrue(rare==(Math.floorMod(boss.getUUID().hashCode(),5)==0?1:0),"Nocthar Voidsteel 20-percent encounter roll differed");
+            replay.hurtServer(level,replay.damageSources().genericKill(),10000);
+            drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("umbrite").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "reloaded defeated Nocthar duplicated rewards");
+            helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void realAttacks(GameTestHelper helper){
         var level=helper.getLevel(); var origin=helper.absolutePos(new net.minecraft.core.BlockPos(768,30,768));
@@ -447,6 +495,25 @@ public final class BossTests {
         warlord.setHealth(warlord.getMaxHealth()/2);warlord.tickCombat(level);helper.assertTrue(warlord.phase()==2,"Kragmor phase two did not latch");
         output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());warlord.saveWithoutId(output);var warlordReload=BossRegistries.KRAGMOR.get().create(level,EntitySpawnReason.LOAD);
         warlordReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));helper.assertTrue(warlordReload.phase()==2,"Kragmor phase was lost on reload");
+
+        var nocthar=BossRegistries.NOCTHAR.get().create(level,EntitySpawnReason.COMMAND);nocthar.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;
+        var seams=new NoctharCombat(nocthar);helper.assertTrue(seams.begin(NoctharCombat.SEAMS,front),"Nocthar void seam failed to start");
+        front.snapTo(origin.getX()+3.535,origin.getY(),origin.getZ()+3.535);dodge.snapTo(origin.getX()-3.535,origin.getY(),origin.getZ()+3.535);
+        for(int i=0;i<39;i++)seams.tick(level);helper.assertTrue(front.getHealth()==20,"Nocthar seam ruptured before the crossing warning");seams.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Nocthar paired seam crossing or unlinked safe route failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+9);front.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+        var wells=new NoctharCombat(nocthar);helper.assertTrue(wells.begin(NoctharCombat.WELLS,front),"Nocthar gravity wells failed to start");front.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+3.5);
+        for(int i=0;i<49;i++)wells.tick(level);helper.assertTrue(front.getHealth()==20,"Nocthar gravity well damaged before charge");wells.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&front.getDeltaMovement().horizontalDistanceSqr()>0,"Nocthar bounded gravity pull/damage or exit-boundary counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;dodge.setHealth(20);dodge.invulnerableTime=0;
+        var eclipse=new NoctharCombat(nocthar);helper.assertTrue(eclipse.begin(NoctharCombat.ECLIPSE,front),"Nocthar eclipse lanes failed to start");
+        double beam=Math.PI/8,safe=Math.PI*3/8;front.snapTo(origin.getX()+Math.cos(beam)*6,origin.getY(),origin.getZ()+Math.sin(beam)*6);dodge.snapTo(origin.getX()+Math.cos(safe)*6,origin.getY(),origin.getZ()+Math.sin(safe)*6);
+        for(int i=0;i<59;i++)eclipse.tick(level);helper.assertTrue(front.getHealth()==20,"Nocthar eclipse beam fired before lane warning");eclipse.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Nocthar rotating beam lane or unshaded corridor failed");
+        nocthar.setHealth(nocthar.getMaxHealth()/2);nocthar.tickCombat(level);helper.assertTrue(nocthar.phase()==2,"Nocthar phase two did not latch");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());nocthar.saveWithoutId(output);var noctharReload=BossRegistries.NOCTHAR.get().create(level,EntitySpawnReason.LOAD);
+        noctharReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));helper.assertTrue(noctharReload.phase()==2,"Nocthar phase or spatial state was lost on reload");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

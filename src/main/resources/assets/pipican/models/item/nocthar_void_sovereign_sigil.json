@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pipican:item/nocthar_void_sovereign_sigil"
+  }
+}

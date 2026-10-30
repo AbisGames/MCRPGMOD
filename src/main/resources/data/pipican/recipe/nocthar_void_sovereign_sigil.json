@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "UUU",
+    "UDU",
+    "URB"
+  ],
+  "key": {
+    "U": "pipican:umbrite",
+    "D": "pipican:umbral_chasm_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:ender_pearl"
+  },
+  "result": {
+    "id": "pipican:nocthar_void_sovereign_sigil",
+    "count": 1
+  }
+}

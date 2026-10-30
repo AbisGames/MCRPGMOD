@@ -2053,7 +2053,7 @@
   {
     "id": "nocthar_void_sovereign",
     "region": "umbral_chasm",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1600,
     "damage": 20,
@@ -2066,38 +2066,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:ender_pearl",
       "min_y": -64,
-      "max_y": -1
+      "max_y": -1,
+      "item": "pipican:nocthar_void_sovereign_sigil"
     },
     "abilities": [
       {
         "id": "void_seams",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Paired seams preview a spatial crossing and delayed rupture.",
         "counterplay": "Leave the connected seam or use the announced unlinked crossing.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:nocthar_void_sovereign/void_seams"
+        "animation": "nocthar_void_sovereign/void_seams"
       },
       {
         "id": "gravity_wells",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Clearly bounded gravity wells charge before pulling.",
         "counterplay": "Exit the boundary or destroy its exposed focus.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:nocthar_void_sovereign/gravity_wells"
+        "animation": "nocthar_void_sovereign/gravity_wells"
       },
       {
         "id": "eclipse_lanes",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "An eclipse reveals a rotating unshaded corridor between beams.",
         "counterplay": "Follow the unshaded corridor during each announced rotation.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:nocthar_void_sovereign/eclipse_lanes"
+        "animation": "nocthar_void_sovereign/eclipse_lanes"
       }
     ],
     "phase_two": {
@@ -2108,7 +2109,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:umbrite",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:nocthar_void_sovereign_trophy",
       "planned_trophy_name": "Nocthar Void Sovereign Trophy",
       "xp": 400,
       "rare_drop": {
@@ -2120,16 +2121,16 @@
       "geometry": "geometry.pipican.nocthar_void_sovereign",
       "file": "geo/bosses/nocthar_void_sovereign.geo.json",
       "animation_mapping": {
-        "idle": "planned:nocthar_void_sovereign/idle",
-        "walk": "planned:nocthar_void_sovereign/walk",
-        "basic_attack": "planned:nocthar_void_sovereign/basic_attack",
-        "hurt": "planned:nocthar_void_sovereign/hurt",
-        "phase_transition": "planned:nocthar_void_sovereign/phase_transition",
-        "summoning": "planned:nocthar_void_sovereign/summoning",
-        "death": "planned:nocthar_void_sovereign/death",
-        "void_seams": "planned:nocthar_void_sovereign/void_seams",
-        "gravity_wells": "planned:nocthar_void_sovereign/gravity_wells",
-        "eclipse_lanes": "planned:nocthar_void_sovereign/eclipse_lanes"
+        "idle": "nocthar_void_sovereign/idle",
+        "walk": "nocthar_void_sovereign/walk",
+        "basic_attack": "nocthar_void_sovereign/basic_attack",
+        "hurt": "nocthar_void_sovereign/hurt",
+        "phase_transition": "nocthar_void_sovereign/phase_transition",
+        "summoning": "nocthar_void_sovereign/summoning",
+        "death": "nocthar_void_sovereign/death",
+        "void_seams": "nocthar_void_sovereign/void_seams",
+        "gravity_wells": "nocthar_void_sovereign/gravity_wells",
+        "eclipse_lanes": "nocthar_void_sovereign/eclipse_lanes"
       }
     },
     "arena": {

@@ -19,7 +19,8 @@ public final class BossEncounterService {
         "skollvar_winterfang",new Binding(BossCatalog.require("skollvar_winterfang"),BossRegistries.SKOLLVAR::get),
         "eldaroth_treant",new Binding(BossCatalog.require("eldaroth_treant"),BossRegistries.ELDAROTH::get),
         "fallen_king",new Binding(BossCatalog.require("fallen_king"),BossRegistries.FALLEN_KING::get),
-        "kragmor_canyon_warlord",new Binding(BossCatalog.require("kragmor_canyon_warlord"),BossRegistries.KRAGMOR::get));
+        "kragmor_canyon_warlord",new Binding(BossCatalog.require("kragmor_canyon_warlord"),BossRegistries.KRAGMOR::get),
+        "nocthar_void_sovereign",new Binding(BossCatalog.require("nocthar_void_sovereign"),BossRegistries.NOCTHAR::get));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());
