@@ -21,9 +21,12 @@ public final class RareOreFeature extends Feature<NoneFeatureConfiguration> {
         int low=Math.max(deposit.minY(),world.getMinY()), high=Math.min(deposit.maxY(),world.getMaxY()-1);
         if(low>high) return false;
         int start=random.nextInt(high-low+1); BlockPos anchor=null;
+        var candidate=new BlockPos.MutableBlockPos();
         for(int offset=0;offset<=high-low;offset++){
-            var candidate=new BlockPos(origin.getX(),low+(start+offset)%(high-low+1),origin.getZ());
-            if(deposit.allows(world,candidate) && natural(world.getBlockState(candidate)) && !protection.contains(candidate)) { anchor=candidate; break; }
+            candidate.set(origin.getX(),low+(start+offset)%(high-low+1),origin.getZ());
+            // Most sampled heights are air or other non-host blocks. Avoid biome and
+            // protection lookups for them, and allocate only the successful anchor.
+            if(natural(world.getBlockState(candidate)) && deposit.allows(world,candidate) && !protection.contains(candidate)) { anchor=candidate.immutable(); break; }
         }
         if(anchor==null) return false;
         int placed=0; var position=anchor;
