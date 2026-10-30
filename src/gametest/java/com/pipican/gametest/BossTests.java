@@ -22,7 +22,8 @@ public final class BossTests {
     private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of(
         "boss_combat_reload",BossTests::combatReload,
         "boss_phase_latch",BossTests::phaseLatch,
-        "boss_entity_roundtrip",BossTests::entityRoundtrip);
+        "boss_entity_roundtrip",BossTests::entityRoundtrip,
+        "boss_encounter_reservations",BossTests::encounterReservations);
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -63,6 +64,37 @@ public final class BossTests {
         helper.assertTrue(state.phase()==1 && state.ability()==BossCombatState.Ability.NONE && state.cooldown()==1200,"invalid save fields were not bounded");
         helper.succeed();
     }
+    private static void encounterReservations(GameTestHelper helper){
+        var encounters=new BossEncounters(); var boss=UUID.randomUUID(); var owner=UUID.randomUUID();
+        var arena=new net.minecraft.core.BlockPos(100,70,100);
+        helper.assertTrue(encounters.reserve(boss,owner,"morvath_ashen_king",arena),"first reservation rejected");
+        helper.assertTrue(!encounters.reserve(UUID.randomUUID(),UUID.randomUUID(),"other",arena.offset(40,0,0)),"nearby different boss overlapped arena");
+        var saved=BossEncounters.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,encounters).getOrThrow();
+        var envelope=new net.minecraft.nbt.CompoundTag(); envelope.put("entries",saved);
+        encounters=BossEncounters.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE,diskRoundtrip(envelope).get("entries")).getOrThrow();
+        helper.assertTrue(encounters.conflicts(arena) && encounters.find(boss).orElseThrow().owner().equals(owner),"unloaded reservation was lost");
+        helper.assertTrue(encounters.finish(boss,BossEncounters.Status.DEFEATED),"first completion rejected");
+        var completed=new net.minecraft.nbt.CompoundTag(); completed.put("entries",BossEncounters.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,encounters).getOrThrow());
+        encounters=BossEncounters.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE,diskRoundtrip(completed).get("entries")).getOrThrow();
+        helper.assertTrue(!encounters.finish(boss,BossEncounters.Status.DEFEATED),"replayed completion accepted");
+        helper.assertTrue(!encounters.reserve(boss,owner,"morvath_ashen_king",arena),"terminal UUID reused for duplicate reward");
+        helper.assertTrue(encounters.reserve(UUID.randomUUID(),owner,"morvath_ashen_king",arena),"completed arena cannot be reused");
+        var failed=UUID.randomUUID(); var far=arena.offset(200,0,0);
+        helper.assertTrue(encounters.reserve(failed,owner,"morvath_ashen_king",far) && encounters.rollbackUnspawned(failed) && !encounters.conflicts(far),"failed spawn leaked reservation");
+        helper.succeed();
+    }
+    private static net.minecraft.nbt.CompoundTag diskRoundtrip(net.minecraft.nbt.CompoundTag tag){
+        java.nio.file.Path directory=null,file=null;
+        try {
+            directory=java.nio.file.Files.createTempDirectory("pipican-boss-test-"); file=directory.resolve("state.nbt");
+            net.minecraft.nbt.NbtIo.writeCompressed(tag,file);
+            return net.minecraft.nbt.NbtIo.readCompressed(file,net.minecraft.nbt.NbtAccounter.unlimitedHeap());
+        }catch(java.io.IOException error){ throw new IllegalStateException("Boss test disk roundtrip failed",error); }
+        finally {
+            try { if(file!=null) java.nio.file.Files.deleteIfExists(file); if(directory!=null) java.nio.file.Files.deleteIfExists(directory); }
+            catch(java.io.IOException error){ throw new IllegalStateException("Boss fixture cleanup failed",error); }
+        }
+    }
     private static void entityRoundtrip(GameTestHelper helper){
         var level=helper.getLevel();
         var entity=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
@@ -72,7 +104,7 @@ public final class BossTests {
         tag.putInt("BossPhase",2); tag.putInt("BossAbility",BossCombatState.Ability.METEOR_RAIN.ordinal());
         tag.putInt("BossRemaining",65); tag.putInt("BossCooldown",13); tag.putBoolean("BossResolved",false);
         var restored=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD);
-        restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),tag));
+        restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(tag)));
         helper.assertTrue(restored.phase()==2 && restored.ability()==BossCombatState.Ability.METEOR_RAIN && restored.abilityTicksRemaining()==65,"entity combat state did not deserialize");
         var second=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); restored.saveWithoutId(second);
         helper.assertTrue(second.buildResult().getIntOr("BossCooldown",0)==13,"saved cooldown lost");
