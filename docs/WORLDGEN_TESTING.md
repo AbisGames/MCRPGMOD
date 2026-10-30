@@ -269,3 +269,19 @@ in mid-canopy. Ladder access handles height differences larger than one step.
 [All-village run 41011624642](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41011624642)
 verified all 27 representative regional types (nine per seed) at `f966e28`,
 with no close stalls and all three provenance/reload suites passing.
+
+The access endpoint checks terrain surface height rather than direct sky
+visibility: natural leaf/trunk canopies and their intervening air do not make
+an above-ground forest path inaccessible. Solid rock ceilings remain part of
+the surface and reject underground endpoints. A paired safety fixture verifies
+that foliage is ignored but a stone ceiling is not. The two-block route,
+breathing room, outside distance and walking/swimming/climbing checks remain.
+
+The broad pass also found naturally generated moss blocking the new threshold
+preflight. Moss block/carpet now join natural sculk in the access-only
+classifier; player provenance and inventories still reject replacement first.
+The route validator uses native collision shapes for support and a 0.6-block
+wide, two-block-high clearance volume, including partial snow/carpet surfaces.
+Walking transitions stay within a 1.25-block height change, and solid overhead
+obstructions/lava remain forbidden. This replaces the full-cube-only support
+proxy rather than skipping the entrance requirement.

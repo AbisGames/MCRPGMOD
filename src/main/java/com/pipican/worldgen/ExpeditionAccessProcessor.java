@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** A native-generation escape ladder at the cave's sparse front boundary.
+/** A native-generation threshold and escape ladder at the cave's sparse boundary.
  * Every write remains inside the current decoration chunk. The shaft uses
  * only the template's X/Z footprint, so all of its chunks receive processing.
  */
@@ -109,7 +109,8 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
     private static boolean naturalAccessState(BlockState state){
         // Deep-dark terrain and its surface growth are natural, non-inventory blocks.
         // Player provenance and block entities are rejected before this classifier.
-        return CapitalPlacementEvents.isNatural(state)||state.is(Blocks.SCULK)||state.is(Blocks.SCULK_VEIN);
+        return CapitalPlacementEvents.isNatural(state)||state.is(Blocks.SCULK)||state.is(Blocks.SCULK_VEIN)
+            ||state.is(Blocks.MOSS_BLOCK)||state.is(Blocks.MOSS_CARPET);
     }
     private static boolean foliage(BlockState state){
         if(state.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock

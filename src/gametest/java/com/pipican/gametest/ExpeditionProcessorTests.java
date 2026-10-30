@@ -61,7 +61,8 @@ final class ExpeditionProcessorTests {
         var previousSupport=level.getBlockState(supportPos);
         try{
             level.setBlock(supportPos,Blocks.STONE.defaultBlockState(),2);
-            for(var growth:List.of(Blocks.SCULK.defaultBlockState(),Blocks.SCULK_VEIN.defaultBlockState()
+            for(var growth:List.of(Blocks.MOSS_BLOCK.defaultBlockState(),Blocks.MOSS_CARPET.defaultBlockState(),
+                    Blocks.SCULK.defaultBlockState(),Blocks.SCULK_VEIN.defaultBlockState()
                     .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOWN,true))){
                 var previous=level.getBlockState(naturalPos);
                 try{
@@ -72,6 +73,19 @@ final class ExpeditionProcessorTests {
                 }finally{level.setBlock(naturalPos,previous,2);}
             }
         }finally{level.setBlock(supportPos,previousSupport,2);}
+        var canopyPos=origin.offset(64,10,0);
+        level.getChunk(canopyPos.getX()>>4,canopyPos.getZ()>>4);
+        double ground=ExpeditionAccessTests.exteriorSurface(level,canopyPos.getX(),canopyPos.getZ());
+        var previousCanopy=level.getBlockState(canopyPos);
+        try{
+            level.setBlock(canopyPos,Blocks.OAK_LEAVES.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.PERSISTENT,true),2);
+            helper.assertTrue(ExpeditionAccessTests.exteriorSurface(level,canopyPos.getX(),canopyPos.getZ())==ground,
+                "foliage and air gaps incorrectly hid exterior ground");
+            level.setBlock(canopyPos,Blocks.STONE.defaultBlockState(),2);
+            helper.assertTrue(ExpeditionAccessTests.exteriorSurface(level,canopyPos.getX(),canopyPos.getZ())>canopyPos.getY(),
+                "solid underground ceiling was incorrectly accepted as exterior ground");
+        }finally{level.setBlock(canopyPos,previousCanopy,2);}
         helper.succeed();
     }
 }
