@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "pipican:item/umbrite_pickaxe"
+  }
+}

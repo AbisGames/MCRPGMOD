@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/primordial",
+  "features": "pipican:rare_primordial",
+  "step": "underground_ores"
+}

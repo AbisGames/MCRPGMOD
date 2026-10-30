@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:sunscorch_desert/buried_city_ruins",
+    "pipican:sunscorch_desert/glass_desert",
+    "pipican:sunscorch_desert/great_dune_sea",
+    "pipican:sunscorch_desert/oasis_basins",
+    "pipican:sunscorch_desert/rocky_hamada",
+    "pipican:sunscorch_desert/sandstone_mesas"
+  ]
+}

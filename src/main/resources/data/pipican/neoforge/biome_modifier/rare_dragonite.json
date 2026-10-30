@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/dragonite",
+  "features": "pipican:rare_dragonite",
+  "step": "underground_ores"
+}

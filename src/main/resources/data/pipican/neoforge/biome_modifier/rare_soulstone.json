@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/soulstone",
+  "features": "pipican:rare_soulstone",
+  "step": "underground_ores"
+}

@@ -19,6 +19,12 @@
     "pipican:verdantite_ore",
     "pipican:tidalite_ore",
     "pipican:dawnbronze_ore",
-    "pipican:redrock_iron_ore"
+    "pipican:redrock_iron_ore",
+    "pipican:soulstone_ore",
+    "pipican:abyssium_ore",
+    "pipican:runestone_ore",
+    "pipican:astralite_ore",
+    "pipican:sunforged_ore",
+    "pipican:moonshard_ore"
   ]
 }

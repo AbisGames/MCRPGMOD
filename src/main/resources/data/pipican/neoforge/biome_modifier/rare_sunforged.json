@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/sunforged",
+  "features": "pipican:rare_sunforged",
+  "step": "underground_ores"
+}

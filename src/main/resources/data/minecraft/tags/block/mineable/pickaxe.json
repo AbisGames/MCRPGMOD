@@ -54,6 +54,14 @@
     "pipican:tideglass_ore",
     "pipican:umbrite_ore",
     "pipican:verdantite_ore",
-    "pipican:wintersteel_ore"
+    "pipican:wintersteel_ore",
+    "pipican:soulstone_ore",
+    "pipican:dragonite_ore",
+    "pipican:abyssium_ore",
+    "pipican:runestone_ore",
+    "pipican:astralite_ore",
+    "pipican:sunforged_ore",
+    "pipican:moonshard_ore",
+    "pipican:primordial_ore"
   ]
 }

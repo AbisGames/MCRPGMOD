@@ -92,6 +92,12 @@ public final class WorldgenIntegrationTests {
         WorldgenTestProgress.touch("finished suite "+name+"; waiting for remaining GameTests");
     }
 
+    // Reuse isolated generation/storage lifecycle for the new resource-only coverage.
+    static ServerLevel openResourceFixture(GameTestHelper helper){
+        suite="rare_resources"; generationSeed=0; return createLevel(helper,0);
+    }
+    static void closeResourceFixture(GameTestHelper helper,ServerLevel level){ saveAndClose(helper,level.dimension()); }
+
     private static ServerLevel createLevel(GameTestHelper helper,long seed) {
         var RPG=ResourceKey.create(Registries.DIMENSION,Pipican.id("rpg_integration_"+suite+"_"+seed));
         ServerLevel level = helper.getLevel().getServer().getLevel(RPG);

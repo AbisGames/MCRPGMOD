@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/moonshard",
+  "features": "pipican:rare_moonshard",
+  "step": "underground_ores"
+}

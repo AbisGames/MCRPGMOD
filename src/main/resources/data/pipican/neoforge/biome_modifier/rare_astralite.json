@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/astralite",
+  "features": "pipican:rare_astralite",
+  "step": "underground_ores"
+}

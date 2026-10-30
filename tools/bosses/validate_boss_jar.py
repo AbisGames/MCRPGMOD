@@ -30,6 +30,15 @@ def validate(path):
         for item in ['ritual_core','morvath_sigil','ashen_kings_heart','infernium']:
             assert f'assets/pipican/textures/item/{item}.png' in names
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
+        if 'com/pipican/resource/RareResources.class' in names:
+            for resource in ['soulstone','dragonite','abyssium','runestone','astralite','sunforged','moonshard','primordial']:
+                for path in [f'assets/pipican/textures/block/{resource}_ore.png',f'assets/pipican/items/{resource}.json',
+                             f'data/pipican/worldgen/configured_feature/rare_{resource}.json',f'data/pipican/worldgen/placed_feature/rare_{resource}.json',
+                             f'data/pipican/neoforge/biome_modifier/rare_{resource}.json',f'data/pipican/loot_table/blocks/{resource}_ore.json']:
+                    assert path in names,path
+            for material in ['umbrite','tideglass','runic_iron','skycrystal','sunglass','mooncrystal']:
+                assert f'data/pipican/recipe/{material}_pickaxe.json' in names
+
     print('PASS: 27 original geometries, boss/altar classes, textures, models, exact sigil recipe; no GameTest content')
 if __name__=='__main__':
     assert len(sys.argv)==2,'Expected one mod JAR'

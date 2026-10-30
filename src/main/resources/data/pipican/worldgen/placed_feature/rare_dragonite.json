@@ -1,0 +1,27 @@
+{
+  "feature": "pipican:rare_dragonite",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 12
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 8
+        },
+        "max_inclusive": {
+          "absolute": 70
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

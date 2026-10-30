@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_deep_ocean",
+    "pipican:western_ocean/open_deep_ocean",
+    "pipican:western_ocean/abyssal_trench",
+    "pipican:northern_ice_sea/black_ice_trench",
+    "pipican:coral_isles/open_tropical_ocean"
+  ]
+}

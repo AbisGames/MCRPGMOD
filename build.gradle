@@ -81,6 +81,7 @@ neoForge {
             systemProperty 'pipican.worldgenSuite', providers.gradleProperty('worldgenSuite').getOrElse('all')
             systemProperty 'pipican.worldgenTarget', providers.gradleProperty('worldgenTarget').getOrElse('')
             systemProperty 'pipican.worldgenAccessDiagnostics', 'true'
+            systemProperty 'pipican.rareGenerationTests', providers.gradleProperty('rareGenerationTests').getOrElse('false')
         }
 
         data {

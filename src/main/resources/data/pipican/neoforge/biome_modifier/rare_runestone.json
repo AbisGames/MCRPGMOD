@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#pipican:rare_resources/runestone",
+  "features": "pipican:rare_runestone",
+  "step": "underground_ores"
+}
