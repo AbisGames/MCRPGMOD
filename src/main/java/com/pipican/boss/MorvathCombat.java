@@ -12,7 +12,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 
 /** Owned by one boss; telegraphs, fixed target snapshots and hazards never edit terrain. */
-public final class MorvathCombat {
+public final class MorvathCombat implements BossCombat {
     public static final double CLEAVE_RANGE=6, CLEAVE_HALF_ANGLE=60;
     private final RegionalBossEntity boss;
     private List<Vec3> marks=List.of(), zones=List.of();

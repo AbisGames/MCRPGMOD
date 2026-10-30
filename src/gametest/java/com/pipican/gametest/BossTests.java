@@ -205,6 +205,18 @@ public final class BossTests {
             for(int i=0;i<ability.recovery+55;i++) helper.assertTrue(state.tick()==BossCombatState.Ability.NONE,"saved impact applied twice");
             helper.assertTrue(state.ready(),"recovery/cooldown never completed");
         }
+        var timings=Map.of("fissure",new RegionalCombatClock.Timing(40,30,80),"wheel",new RegionalCombatClock.Timing(50,40,100));
+        var regional=new RegionalCombatClock(timings);
+        helper.assertTrue(regional.begin("fissure") && !regional.begin("wheel"),"regional clock accepted overlapping attacks");
+        for(int i=0;i<39;i++) helper.assertTrue(regional.tick().isEmpty(),"regional impact before windup");
+        var output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,helper.getLevel().registryAccess()); regional.save(output);
+        var restored=new RegionalCombatClock(timings); restored.load(TagValueInput.create(ProblemReporter.DISCARDING,helper.getLevel().registryAccess(),diskRoundtrip(output.buildResult())));
+        helper.assertTrue(restored.tick().equals("fissure"),"regional impact lost on reload");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,helper.getLevel().registryAccess()); restored.save(output);
+        regional=new RegionalCombatClock(timings); regional.load(TagValueInput.create(ProblemReporter.DISCARDING,helper.getLevel().registryAccess(),diskRoundtrip(output.buildResult())));
+        for(int i=0;i<30;i++) helper.assertTrue(regional.tick().isEmpty(),"regional impact repeated after reload");
+        helper.assertTrue(regional.cooldown()==80 && !regional.begin("wheel"),"regional cooldown was not applied");
+        helper.assertTrue(regional.updatePhase(50,100) && !regional.updatePhase(40,100) && regional.phase()==2,"regional phase transition not latched");
         helper.succeed();
     }
     private static void phaseLatch(GameTestHelper helper){

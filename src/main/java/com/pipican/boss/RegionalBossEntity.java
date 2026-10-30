@@ -26,7 +26,7 @@ public class RegionalBossEntity extends Monster {
     private static final EntityDataAccessor<Integer> REMAINING=SynchedEntityData.defineId(RegionalBossEntity.class,EntityDataSerializers.INT);
     private boolean managedEncounter;
     private int abandonedTicks;
-    private final MorvathCombat attacks=new MorvathCombat(this);
+    private final BossCombat attacks=new MorvathCombat(this);
     private final BossCombatState combat=new BossCombatState();
     private final ServerBossEvent bar=new ServerBossEvent(java.util.UUID.randomUUID(),Component.translatable("entity.pipican.morvath_ashen_king"),BossEvent.BossBarColor.RED,BossEvent.BossBarOverlay.PROGRESS);
     public RegionalBossEntity(EntityType<? extends RegionalBossEntity> type,Level level){ super(type,level); this.xpReward=150; setPersistenceRequired(); }
