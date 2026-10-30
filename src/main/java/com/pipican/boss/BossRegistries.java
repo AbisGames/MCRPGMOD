@@ -17,7 +17,14 @@ public final class BossRegistries {
         "morvath_ashen_king",()->EntityType.Builder.<RegionalBossEntity>of(RegionalBossEntity::new,MobCategory.MONSTER)
             .sized(1.7f,3.7f).fireImmune().clientTrackingRange(12).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("morvath_ashen_king"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<FrostboundEntity>> FROSTBOUND=ENTITIES.register(
+        "frostbound_colossus",()->EntityType.Builder.<FrostboundEntity>of(FrostboundEntity::new,MobCategory.MONSTER)
+            .sized(2.4f,3.6f).clientTrackingRange(12).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("frostbound_colossus"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
-    private static void attributes(EntityAttributeCreationEvent event){ event.put(MORVATH.get(),RegionalBossEntity.attributes().build()); }
+    private static void attributes(EntityAttributeCreationEvent event){
+        event.put(MORVATH.get(),RegionalBossEntity.attributes().build());
+        event.put(FROSTBOUND.get(),FrostboundEntity.frostAttributes().build());
+    }
 }

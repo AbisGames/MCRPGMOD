@@ -4,5 +4,11 @@
     "boss": "morvath_ashen_king",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:frostbound_colossus_sigil",
+    "boss": "frostbound_colossus",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

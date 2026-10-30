@@ -23,11 +23,11 @@ public final class RitualAltarBlock extends Block {
         if(level.isClientSide()) return InteractionResult.SUCCESS;
         if(!(player instanceof ServerPlayer serverPlayer)) return InteractionResult.FAIL;
         var sigil=definition.get();
-        if(!sigil.boss().equals(BossCatalog.MORVATH.id()) || pos.getY()<sigil.minY() || pos.getY()>sigil.maxY()
-                || !BossEncounterService.morvathBiome(serverPlayer.level(),pos)){
+        if(pos.getY()<sigil.minY() || pos.getY()>sigil.maxY()
+                || !BossEncounterService.matchesBiome(serverPlayer.level(),pos,sigil.boss())){
             serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.wrong_biome"),true); return InteractionResult.FAIL;
         }
-        var result=BossEncounterService.summonMorvath(serverPlayer,pos.north(6));
+        var result=BossEncounterService.summon(serverPlayer,pos.north(6),sigil.boss());
         if(result!=BossEncounterService.Result.SUCCESS){
             serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.failed",Component.translatable("ritual.pipican.result."+result.name().toLowerCase(java.util.Locale.ROOT))),true); return InteractionResult.FAIL;
         }

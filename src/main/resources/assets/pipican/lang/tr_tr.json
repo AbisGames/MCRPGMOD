@@ -47,5 +47,7 @@
   "blacksmith.pipican.tier.regional": "Bölgesel",
   "blacksmith.pipican.tier.elite": "Seçkin",
   "blacksmith.pipican.tier.legendary": "Efsanevi",
-  "blacksmith.pipican.tier.mythic": "Mitik"
+  "blacksmith.pipican.tier.mythic": "Mitik",
+  "item.pipican.frostbound_colossus_sigil": "Buzbağlı Mühür",
+  "item.pipican.frostbound_colossus_trophy": "Buzbağlı Dev Kupası"
 }

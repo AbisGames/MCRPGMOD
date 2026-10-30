@@ -12,8 +12,10 @@ import java.util.function.Supplier;
 /** Summoning transaction boundary. Callers consume ingredients only after SUCCESS. */
 public final class BossEncounterService {
     public enum Result { SUCCESS, INVALID_PLAYER, INVALID_HEIGHT, UNLOADED_ARENA, WRONG_BIOME, OBSTRUCTED, NEARBY_ENCOUNTER, SPAWN_REJECTED, UNSUPPORTED_BOSS }
-    private record Binding(BossCatalog.Definition definition,Supplier<EntityType<RegionalBossEntity>> entity) {}
-    private static final Map<String,Binding> BINDINGS=Map.of(BossCatalog.MORVATH.id(),new Binding(BossCatalog.MORVATH,BossRegistries.MORVATH::get));
+    private record Binding(BossCatalog.Definition definition,Supplier<? extends EntityType<? extends RegionalBossEntity>> entity) {}
+    private static final Map<String,Binding> BINDINGS=Map.of(
+        BossCatalog.MORVATH.id(),new Binding(BossCatalog.MORVATH,BossRegistries.MORVATH::get),
+        "frostbound_colossus",new Binding(BossCatalog.require("frostbound_colossus"),BossRegistries.FROSTBOUND::get));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());

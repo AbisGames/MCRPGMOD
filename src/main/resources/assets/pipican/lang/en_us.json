@@ -349,5 +349,7 @@
   "blacksmith.pipican.tier.regional": "Regional",
   "blacksmith.pipican.tier.elite": "Elite",
   "blacksmith.pipican.tier.legendary": "Legendary",
-  "blacksmith.pipican.tier.mythic": "Mythic"
+  "blacksmith.pipican.tier.mythic": "Mythic",
+  "item.pipican.frostbound_colossus_sigil": "Frostbound Sigil",
+  "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy"
 }

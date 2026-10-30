@@ -12,6 +12,8 @@ public final class BossContent {
     public static final DeferredBlock<RitualAltarBlock> ALTAR=BLOCKS.registerBlock("ritual_altar",RitualAltarBlock::new,p->p.strength(5,1200).lightLevel(s->7));
     public static final DeferredItem<Item> CORE=ITEMS.registerSimpleItem("ritual_core");
     public static final DeferredItem<Item> MORVATH_SIGIL=ITEMS.registerSimpleItem("morvath_sigil");
+    public static final DeferredItem<Item> FROSTBOUND_SIGIL=ITEMS.registerSimpleItem("frostbound_colossus_sigil");
+    public static final DeferredItem<Item> FROSTBOUND_TROPHY=ITEMS.registerSimpleItem("frostbound_colossus_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

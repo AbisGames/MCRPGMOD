@@ -4,7 +4,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 
 | Boss | Entity | Geometry | Textures | Animations | Combat | Phase 2 | Summoning | Loot | GameTests | Client QA |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| frostbound_colossus | partial | prototype | partial | partial | partial | partial | planned | planned | partial | pending |
+| frostbound_colossus | complete | prototype | partial | partial | complete | complete | complete | complete | passed | pending |
 | nhalkorr_leviathan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | skollvar_winterfang | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | hrothgar_drowned_jarl | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -32,4 +32,4 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | vermillion_blood_monarch | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | lumynara_abyssal_oracle | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 
-Current infrastructure work: summoning resolves an explicitly implemented boss binding; Morvath remains the only binding. Its existing altar and save format are unchanged. An unregistered Frostbound entity now owns the fissure, wheel and alternating lance attacks, selects targets, moves and persists combat/phase state. GameTest exercises its attack and phase reload using a fixture entity type. Registry, rendering, phase transition animation, summoning, rewards, full encounter and client QA remain incomplete.
+Frostbound now has a registered entity, unique attributes, independent attacks and phase persistence, craftable sigil, Whitecrown biome gate, transactional altar spawn, boss bar, once-only trophy/Frostcrystal rewards and real server GameTest coverage for attack warning, reload, recipe, summon and drops. Texture/animation states compile against the preserved geometry, but in-client clipping/animation QA remains pending; therefore its visual columns remain partial.

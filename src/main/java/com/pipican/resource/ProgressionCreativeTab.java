@@ -16,6 +16,7 @@ public final class ProgressionCreativeTab {
             .icon(()->BossContent.MORVATH_SIGIL.get().getDefaultInstance()).displayItems((parameters,output)->{
                 output.accept(BossContent.ALTAR.get()); output.accept(BossContent.CORE.get());
                 output.accept(BossContent.MORVATH_SIGIL.get()); output.accept(BossContent.HEART.get());
+                output.accept(BossContent.FROSTBOUND_SIGIL.get()); output.accept(BossContent.FROSTBOUND_TROPHY.get());
                 RareResources.MATERIALS.values().forEach(item->output.accept(item.get()));
                 RareResources.ORES.values().forEach(block->output.accept(block.get()));
                 RareResources.PICKAXES.values().forEach(item->output.accept(item.get()));

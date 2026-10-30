@@ -49,6 +49,7 @@ public final class PipicanClient {
 
     private static void registerBossRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(com.pipican.boss.BossRegistries.MORVATH.get(),com.pipican.client.boss.RegionalBossRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.FROSTBOUND.get(),com.pipican.client.boss.FrostboundRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {

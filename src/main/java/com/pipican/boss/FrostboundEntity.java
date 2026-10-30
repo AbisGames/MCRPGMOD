@@ -19,7 +19,7 @@ public final class FrostboundEntity extends RegionalBossEntity {
     private static final EntityDataAccessor<Integer> ACTION=SynchedEntityData.defineId(FrostboundEntity.class,EntityDataSerializers.INT);
     private static final List<String> PATTERN=List.of(FrostboundCombat.BASIC,FrostboundCombat.FISSURE,FrostboundCombat.WHEEL,FrostboundCombat.LANCES);
     private final FrostboundCombat frost=new FrostboundCombat(this);
-    private int sequence,transitionTicks;
+    private int sequence,transitionTicks,summoningTicks;
     public FrostboundEntity(EntityType<? extends RegionalBossEntity> type,Level level){
         super(type,level,"frostbound_colossus",BossEvent.BossBarColor.BLUE,200);
     }
@@ -34,6 +34,14 @@ public final class FrostboundEntity extends RegionalBossEntity {
     public FrostboundCombat frostCombat(){ return frost; }
     @Override public boolean beginAbility(BossCombatState.Ability ability,net.minecraft.world.entity.LivingEntity target){ return false; }
     @Override protected void tickBossCombat(ServerLevel level){
+        if(summoningTicks>0){
+            summoningTicks--;
+            getNavigation().stop();
+            if(summoningTicks%4==0) level.sendParticles(ParticleTypes.SNOWFLAKE,getX(),getY()+1.5,getZ(),10,1,1,1,0.01);
+            entityData.set(ACTION,summoningTicks>0 ? 6 : 0);
+            syncCombat(frost.clock().phase(),summoningTicks>0 ? BossCombatState.Ability.SUMMONING : BossCombatState.Ability.NONE,summoningTicks);
+            return;
+        }
         if(frost.updatePhase(getHealth(),getMaxHealth())) transitionTicks=60;
         if(transitionTicks>0){
             getNavigation().stop();
@@ -59,19 +67,24 @@ public final class FrostboundEntity extends RegionalBossEntity {
         entityData.set(ACTION,action);
         syncCombat(frost.clock().phase(),BossCombatState.Ability.NONE,frost.clock().remaining());
     }
+    @Override void activateEncounter(){ super.activateEncounter(); summoningTicks=60; }
     @Override protected void addAdditionalSaveData(ValueOutput output){
         super.addAdditionalSaveData(output); frost.save(output);
-        output.putInt("FrostSequence",sequence); output.putInt("FrostTransition",transitionTicks);
+        output.putInt("FrostSequence",sequence); output.putInt("FrostTransition",transitionTicks); output.putInt("FrostSummoning",summoningTicks);
     }
     @Override protected void readAdditionalSaveData(ValueInput input){
         super.readAdditionalSaveData(input); frost.load(input);
         sequence=Math.floorMod(input.getIntOr("FrostSequence",0),PATTERN.size());
         transitionTicks=Math.clamp(input.getIntOr("FrostTransition",0),0,60);
+        summoningTicks=Math.clamp(input.getIntOr("FrostSummoning",0),0,60);
         String active=frost.clock().active();
-        entityData.set(ACTION,transitionTicks>0 ? 5 : active.isEmpty() ? 0 : PATTERN.indexOf(active)+1);
-        syncCombat(frost.clock().phase(),transitionTicks>0 ? BossCombatState.Ability.PHASE_CHANGE : BossCombatState.Ability.NONE,
-            transitionTicks>0 ? transitionTicks : frost.clock().remaining());
+        entityData.set(ACTION,summoningTicks>0 ? 6 : transitionTicks>0 ? 5 : active.isEmpty() ? 0 : PATTERN.indexOf(active)+1);
+        syncCombat(frost.clock().phase(),summoningTicks>0 ? BossCombatState.Ability.SUMMONING : transitionTicks>0 ? BossCombatState.Ability.PHASE_CHANGE : BossCombatState.Ability.NONE,
+            summoningTicks>0 ? summoningTicks : transitionTicks>0 ? transitionTicks : frost.clock().remaining());
     }
     /** No placeholder Morvath trophy can leak from this incomplete encounter. */
-    @Override protected void dropCustomDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source,boolean playerKilled){}
+    @Override protected void dropCustomDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source,boolean playerKilled){
+        spawnAtLocation(level,new net.minecraft.world.item.ItemStack(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),8));
+        spawnAtLocation(level,new net.minecraft.world.item.ItemStack(BossContent.FROSTBOUND_TROPHY.get()));
+    }
 }

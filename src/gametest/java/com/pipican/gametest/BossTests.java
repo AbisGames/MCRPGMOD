@@ -40,7 +40,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==1,"unfinished boss design activated");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==2,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -54,6 +54,9 @@ public final class BossTests {
         var morvath=BossDesigns.require(BossCatalog.MORVATH.id());
         for(var ability:morvath.abilities()) helper.assertTrue(BossCombatState.Ability.valueOf(ability.id()).windup==ability.windup(),"functional attack timing differs from metadata");
         helper.assertTrue(morvath.health()==600 && morvath.damage()==12 && morvath.loot().rare().orElseThrow().chance()==0.25,"Morvath runtime defaults changed");
+        var frost=BossDesigns.require("frostbound_colossus");
+        helper.assertTrue(frost.functional() && frost.sigil().registered() && frost.loot().trophyItem().equals("pipican:frostbound_colossus_trophy"),
+            "Frostbound implemented design is missing registered sigil/reward metadata");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -66,7 +69,11 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil"};
+        rows=new ArrayList<>(rows);
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.BLUE_ICE));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -91,7 +98,7 @@ public final class BossTests {
         var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try {
             var state=level.getBlockState(altar);
-            helper.assertTrue(BossEncounterService.summon(owner,arena,"frostbound_colossus")==BossEncounterService.Result.UNSUPPORTED_BOSS
+            helper.assertTrue(BossEncounterService.summon(owner,arena,"unimplemented_boss")==BossEncounterService.Result.UNSUPPORTED_BOSS
                 && !BossEncounters.get(level).conflicts(arena) && stack.getCount()==2,"unimplemented boss created an encounter or consumed a sigil");
             var tooHigh=new net.minecraft.core.BlockPos(altar.getX(),level.getMaxY()-1,altar.getZ());
             owner.snapTo(tooHigh.getX(),tooHigh.getY(),tooHigh.getZ());
@@ -125,6 +132,19 @@ public final class BossTests {
             var cancelled=level.getEntitiesOfClass(RegionalBossEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(e->e.isAlive()).findFirst().orElseThrow();
             cancelled.hurtServer(level,cancelled.damageSources().genericKill(),10000);
             helper.assertTrue(hearts(level,arena)==1,"administrative cancellation awarded loot");
+            var ice=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("whitecrown_icecap/aurora_plateau")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),ice).left().isPresent(),"Frostbound biome fixture failed");
+            owner.setShiftKeyDown(false); owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.item.ItemStack(BossContent.FROSTBOUND_SIGIL.get()));
+            helper.assertTrue(state.useItemOn(owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND),level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS,
+                "Frostbound altar summon failed");
+            helper.assertTrue(owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty(),"successful Frostbound summon did not consume its sigil");
+            var frostBoss=level.getEntitiesOfClass(FrostboundEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            helper.assertTrue(BossEncounters.get(level).find(frostBoss.getUUID()).orElseThrow().type().equals("frostbound_colossus"),"Frostbound encounter type was not reserved");
+            frostBoss.hurtServer(level,frostBoss.damageSources().genericKill(),10000);
+            var iceDrops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(iceDrops.stream().anyMatch(item->item.getItem().is(BossContent.FROSTBOUND_TROPHY.get()))
+                && iceDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Frostbound one-time regional rewards missing");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
@@ -137,7 +157,7 @@ public final class BossTests {
         front.snapTo(origin.getX(),origin.getY(),origin.getZ()+3); dodge.snapTo(origin.getX(),origin.getY(),origin.getZ()-3);
         level.addFreshEntity(front); level.addFreshEntity(dodge);
         try {
-            var boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
+        var boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
             boss.snapTo(origin.getX(),origin.getY(),origin.getZ()); boss.setNoAi(true);
             for(int i=0;i<40;i++) boss.tickCombat(level);
             helper.assertTrue(boss.beginAbility(BossCombatState.Ability.CLEAVE,front),"cleave rejected after initial cooldown");
@@ -233,7 +253,7 @@ public final class BossTests {
         helper.assertTrue(dodge.getHealth()==after,"second lance row repeated after reload");
         front.setHealth(20); front.invulnerableTime=0;
         front.snapTo(origin.getX(),origin.getY(),origin.getZ()+3);
-        var entity=new FrostboundEntity(BossRegistries.MORVATH.get(),level);
+        var entity=BossRegistries.FROSTBOUND.get().create(level,EntitySpawnReason.COMMAND);
         entity.snapTo(origin.getX(),origin.getY(),origin.getZ()); entity.setTarget(front);
         for(int i=0;i<17;i++) entity.tickCombat(level);
         helper.assertTrue(front.getHealth()==20 && entity.frostAction()==1,"Frostbound AI failed to warn basic attack");

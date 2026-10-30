@@ -2,12 +2,11 @@
   {
     "id": "frostbound_colossus",
     "region": "whitecrown_icecap",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 800,
     "damage": 14,
     "sigil": {
-      "planned_item_id": "pipican:frostbound_colossus_sigil",
       "regional_material": "pipican:frostcrystal",
       "regional_count": 5,
       "dungeon_material": "pipican:whitecrown_icecap_boss_core",
@@ -15,38 +14,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:blue_ice",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:frostbound_colossus_sigil"
     },
     "abilities": [
       {
         "id": "frost_fissure",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Delayed branching ice fissures trace outward from both fists.",
         "counterplay": "Step across an unlit branch before the cracks activate.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:frostbound_colossus/frost_fissure"
+        "animation": "native:frostbound/frost_fissure"
       },
       {
         "id": "winter_wheel",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Concentric freezing rings have a visibly unmarked wedge.",
         "counterplay": "Move through the rotating wedge instead of outrunning the ring.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:frostbound_colossus/winter_wheel"
+        "animation": "native:frostbound/winter_wheel"
       },
       {
         "id": "crystal_lances",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Suspended ice lances fall in alternating rows.",
         "counterplay": "Stand between the highlighted rows; the next row warns separately.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:frostbound_colossus/crystal_lances"
+        "animation": "native:frostbound/crystal_lances"
       }
     ],
     "phase_two": {
@@ -57,7 +57,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:frostcrystal",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:frostbound_colossus_trophy",
       "planned_trophy_name": "Frostbound Colossus Trophy",
       "xp": 200
     },
@@ -65,16 +65,16 @@
       "geometry": "geometry.pipican.frostbound_colossus",
       "file": "geo/bosses/frostbound_colossus.geo.json",
       "animation_mapping": {
-        "idle": "planned:frostbound_colossus/idle",
-        "walk": "planned:frostbound_colossus/walk",
-        "basic_attack": "planned:frostbound_colossus/basic_attack",
-        "hurt": "planned:frostbound_colossus/hurt",
-        "phase_transition": "planned:frostbound_colossus/phase_transition",
-        "summoning": "planned:frostbound_colossus/summoning",
-        "death": "planned:frostbound_colossus/death",
-        "frost_fissure": "planned:frostbound_colossus/frost_fissure",
-        "winter_wheel": "planned:frostbound_colossus/winter_wheel",
-        "crystal_lances": "planned:frostbound_colossus/crystal_lances"
+        "idle": "native:frostbound/idle",
+        "walk": "native:frostbound/walk",
+        "basic_attack": "native:frostbound/basic",
+        "hurt": "native:frostbound/hurt",
+        "phase_transition": "native:frostbound/phase",
+        "summoning": "native:frostbound/summoning",
+        "death": "native:frostbound/death",
+        "frost_fissure": "native:frostbound/fissure",
+        "winter_wheel": "native:frostbound/wheel",
+        "crystal_lances": "native:frostbound/lances"
       }
     },
     "arena": {
