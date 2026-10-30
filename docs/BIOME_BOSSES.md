@@ -1,7 +1,6 @@
 # Biome bosses and progression checkpoint
 
-Branch `biome-bosses`; current implementation checkpoint `8ff718e` plus the
-uncommitted design-loader validation change described below.
+Branch `biome-bosses`; current implementation checkpoint `cdf1e56`.
 Work is only in `48018390/MCRPGMOD-Development`. The old repository, `main` and
 `worldgen-and-ores` were not modified. Existing worldgen algorithms and all 27
 original geometry Git blobs are preserved. Rare deposits are independent additions.
@@ -51,7 +50,7 @@ incomplete/planned animations presented as live, and mismatched reward state. Se
 - `27f951a`, run41068590614: 34/34 focused tests, then 35/35 with all eight native deposits
   and three blacksmith tests (forty upgrades and three evolutions, metadata preservation).
 - `ba49c6e`, run41089596445: 35/35 focused tests including the complete design catalog.
-- `8ff718e` plus current loader validation: local `build` and 36/36 required NeoForge
+- `cdf1e56`: local `build` and 36/36 required NeoForge
   GameTests, including live patron, resource-generation, upgrade and design validation.
 
 The prior `ba49c6e` JAR passed the packaged-asset validator: original model hashes,
@@ -74,6 +73,6 @@ timing, phase transition and death-floor clearance were corrected. See
 `outputs/morvath-animation-qa/`. This is singleplayer visual QA, not final artwork or a
 claim of measured FPS, survival balance or real multiplayer validation.
 
-Latest local validation artifact: `build/libs/pipican-0.1.0.jar`. The older checkpoint
-artifact link/hash above must not be presented as containing the newest design-loader
-guard until the current artifact is copied and validated.
+Latest local validation artifact: `outputs/pipican-0.1.0-design-guard-cdf1e56.jar`;
+SHA-256 `8e720ae737c4ddcdb379e031fa97c4d140b4c21bbc2352f11ae3bcb811dc4f6d`.
+The packaged-asset validator passed on this artifact.
