@@ -97,16 +97,7 @@
     {
       "id": "technomancer_mad_inventor",
       "name": "Mad Inventor",
-      "description": {
-        "text": "gadget bonus doubled, but 10% chance gadgets misfire and damage you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "gadget bonus doubled, but 10% chance gadgets misfire and damage you",
       "type": "keystone",
       "x": -693,
       "y": -1672,
@@ -115,7 +106,26 @@
         "technomancer_gyro_stabilizer"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invention",
+          "strength": 1.0
+        },
+        {
+          "type": "pipican:on",
+          "event": "spend",
+          "name": "misfire",
+          "chance": 0.1,
+          "actions": [
+            {
+              "type": "pipican:hurt_self",
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
     }
   ]
 }

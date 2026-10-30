@@ -1828,6 +1828,33 @@ def world(low, ctx):
     m = re.fullmatch(rf"per {N} ([a-z]+),? prey can'?t become invisible to you", low)
     if m and m.group(2) == sp:
         return bonus_kind('prey_reveal', 0.0, round(1 / float(m.group(1)), 6))
+    # --- Bulk 41
+    half = {'type': 'pipican:resource', 'min': 0.5}
+    m = re.fullmatch(rf'you emit light \(dynamic light level {N}\) while ([a-z ]+) is above half', low)
+    if m and m.group(2) == rn:
+        return [{'type': 'pipican:conditional', 'when': half, 'effects': bonus_kind('emit_light', float(m.group(1)))}]
+    m = re.fullmatch(rf'light radius \+{N} per {N} ([a-z]+)', low)
+    if m and m.group(3) == sp and cid == 'astromancer':
+        # A light block's level is its reach: +1 level per step.
+        return [{'type': 'pipican:conditional', 'when': half, 'effects': bonus_kind('emit_light', 0.0, round(float(m.group(1)) / float(m.group(2)), 6))}]
+    if re.fullmatch(r'you glow and light the area', low):
+        return [{'type': 'pipican:mob_effect', 'effect': 'minecraft:glowing'}, bonus_kind('emit_light', 15.0)[0]]
+    if re.fullmatch(r"your staff returns to you if dropped and can'?t be destroyed", low):
+        # A staff (blaze rod or stick) has no durability; dropping it - or dying - brings it back.
+        return bonus_kind('staff_return', 1.0)
+    if re.fullmatch(r'grimoire bonus also works with a book in any hotbar slot', low):
+        return bonus_kind('book_hotbar', 1.0)
+    if re.fullmatch(r'your pearls can carry a nearby player with you', low):
+        return bonus_kind('pearl_carry', 1.0)
+    if re.fullmatch(r'your mount respawns at your bed a day after dying', low):
+        return bonus_kind('mount_return', 1.0)
+    m = re.fullmatch(rf'mobs below {N}% health that you sweep die instantly', low)
+    if m:
+        return bonus_kind('sweep_execute', pct(m.group(1)))
+    m = re.fullmatch(rf'gadget bonus doubled, but {N}% chance gadgets misfire and damage you', low)
+    if m and 'invention' in REACTIONS.get(cid, {}):
+        return [{'type': 'pipican:reaction_mod', 'name': 'invention', 'strength': 1.0},
+                {'type': 'pipican:on', 'event': 'spend', 'name': 'misfire', 'chance': pct(m.group(1)), 'actions': [{'type': 'pipican:hurt_self', 'amount': 2.0}]}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

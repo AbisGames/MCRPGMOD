@@ -37,21 +37,23 @@
     {
       "id": "miracle_worker_halo",
       "name": "Halo",
-      "description": {
-        "text": "you glow and light the area",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you glow and light the area",
       "type": "small",
       "x": 1304,
       "y": -210,
       "links": [
         "miracle_worker_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:glowing"
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "emit_light",
+          "amount": 15.0
+        }
       ]
     },
     {

@@ -158,6 +158,12 @@ import net.minecraft.util.StringRepresentable;
  *       with effects glow / unopened loot chests / ores sparkle for you</li>
  *   <li>{@code structure_sense}: <i>blocks</i> - holding a compass names the structures this close</li>
  *   <li>{@code prey_reveal}: per whole point, your quarries can't stay invisible</li>
+ *   <li>{@code emit_light}: the <i>light level</i> (up to 15) you give off where you stand</li>
+ *   <li>{@code staff_return}: any amount above 0 = a staff you drop (or lose on death) comes back to your inventory</li>
+ *   <li>{@code book_hotbar}: any amount above 0 = a book anywhere in your hotbar counts as held in the off-hand</li>
+ *   <li>{@code pearl_carry}: any amount above 0 = your ender pearls also carry the nearest player within 3 blocks</li>
+ *   <li>{@code mount_return}: any amount above 0 = a tamed mount of yours that dies comes back at your respawn point a day later</li>
+ *   <li>{@code sweep_execute}: <i>health share</i> - mobs your sweeping attack hits below it die</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -192,7 +198,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         CHAOS_LUCK, TRAMPLE, ILLAGER_DETECTION,
         FALL_FLOOR, FALL_SAFE_GROUND, WIND_KNOCKBACK, SAVE_ALLY, DECOY_PROOF, NO_METAL_ARMOR, ALWAYS_DARK, REOPTIMIZE, SWAP_FAVORED,
         LOW_HEALTH_EXTRA, TNT_POWER, CHARGES_FIZZLE_NETHER, POISON_BREW_SPEED, FIRE_LONGER, MARKED_WEAKNESS, EXTRA_RESTOCK, PET_REGEN,
-        AURA_BREAK_AT, CALM_ANIMALS, SHIELD_BREAK_TIME, SPLASH_POWER, EXTRA_BREW, SENSE_MAGIC, LOOT_SENSE, ORE_SENSE, STRUCTURE_SENSE, PREY_REVEAL;
+        AURA_BREAK_AT, CALM_ANIMALS, SHIELD_BREAK_TIME, SPLASH_POWER, EXTRA_BREW, SENSE_MAGIC, LOOT_SENSE, ORE_SENSE, STRUCTURE_SENSE, PREY_REVEAL,
+        EMIT_LIGHT, STAFF_RETURN, BOOK_HOTBAR, PEARL_CARRY, MOUNT_RETURN, SWEEP_EXECUTE;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

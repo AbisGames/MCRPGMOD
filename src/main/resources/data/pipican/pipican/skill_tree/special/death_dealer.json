@@ -91,16 +91,7 @@
     {
       "id": "reaper",
       "name": "Reaper",
-      "description": {
-        "text": "mobs below 15% health that you sweep die instantly; -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs below 15% health that you sweep die instantly; -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -109,7 +100,20 @@
         "bloodsoaked"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "sweep_execute",
+          "amount": 0.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

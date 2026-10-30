@@ -50,6 +50,14 @@ public record HoldingCondition(HolderSet<Item> items, Hand hand) implements Clas
     public boolean test(ServerPlayer player) {
         boolean main = player.getMainHandItem().is(items);
         boolean off = player.getOffhandItem().is(items);
+        // Second Tome: a book anywhere in the hotbar counts as one in the off-hand.
+        if (!off && hand == Hand.OFF
+                && com.pipican.player.ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.BOOK_HOTBAR) > 0
+                && items.contains(net.minecraft.world.item.Items.BOOK.builtInRegistryHolder())) {
+            for (int slot = 0; slot < 9 && !off; slot++) {
+                off = player.getInventory().getItem(slot).is(items);
+            }
+        }
         return switch (hand) {
             case MAIN -> main;
             case OFF -> off;

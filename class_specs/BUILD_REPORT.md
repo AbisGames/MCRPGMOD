@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2153**, partly working: **8**, not yet: **89**
+- Bonus phrases: **2250**. Fully working: **2162**, partly working: **8**, not yet: **80**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -14,9 +14,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 |---|---|
 | [Other mechanics](#other-mechanics) | 33 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 22 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 19 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 15 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 18 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 16 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 12 |
 | [Immunities](#immunities) | 6 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 3 |
@@ -168,18 +168,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special passive: Form bonuses +1% per Mutability
 - **spellbinder**
   - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
-- **technomancer**
-  - general tree: Mad Inventor: gadget bonus doubled
-  - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
 - **templar**
   - passive: When a hostile mob enters your temple, you get Speed II for 2s
   - general tree: Fortress Temple: temple bonuses doubled
   - special tree: Living Temple: your temple follows you
   - special tree: Living Temple: -15% temple bonuses
-- **traveler**
-  - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
-- **wizard**
-  - special tree: Second Tome: Grimoire bonus also works with a book in any hotbar slot
 
 ## Conditional bonus (while / when / where)
 
@@ -190,9 +183,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **aeromancer**
   - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
   - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **astromancer**
-  - passive: Inner Radiance: you emit light (dynamic light level 12) while Starlight is above half
-  - special passive: Light radius +1 per 20 Radiance
 - **duelist**
   - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
 - **engineer**
@@ -204,8 +194,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Riptide: tridents with Riptide work without rain while Current is above half
 - **infiltrator**
   - passive: Your nameplate is hidden from other players while sneaking or invisible
-- **miracle_worker**
-  - general tree: Halo: you glow and light the area
 - **rogue**
   - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
 - **stormbringer**
@@ -221,10 +209,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **assassin**
   - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
-- **cavalier**
-  - special tree: Bonded Steed: your mount respawns at your bed a day after dying; -10% max health
-- **death_dealer**
-  - special tree: Reaper: mobs below 15% health that you sweep die instantly; -15% max health
 - **diviner**
   - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
 - **enchanter**
@@ -235,8 +219,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
 - **inquisitor**
   - special tree: Grand Inquisitor: scrutinise 2 mobs at once; -10% max health
-- **magus**
-  - special tree: Living Staff: your staff returns to you if dropped and can't be destroyed; -10% max health
 - **savant**
   - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
 - **scout**

@@ -87,16 +87,7 @@
     {
       "id": "gatekeeper",
       "name": "Gatekeeper",
-      "description": {
-        "text": "your pearls can carry a nearby player with you; +50% pearl cooldown",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your pearls can carry a nearby player with you; +50% pearl cooldown",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -105,7 +96,19 @@
         "recall"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_carry",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_cooldown",
+          "amount": 0.5
+        }
+      ]
     }
   ]
 }
