@@ -127,6 +127,13 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code no_hiding}: <i>blocks</i> - invisible mobs this close that you can see lose their invisibility</li>
  *   <li>{@code danger_sense}: <i>blocks</i> - a sound cue when a hostile mob comes this close</li>
  *   <li>{@code never_unaware}: any amount above 0 = "from behind" / "not targeting you" bonuses never apply against you</li>
+ *   <li>{@code bookshelf_bonus}: <i>extra bookshelves</i> your enchanting table counts (up to the usual 15)</li>
+ *   <li>{@code enchant_lapis_keep}: a <i>chance</i> that an enchant gives back all the lapis it cost;
+ *       {@code enchant_lapis_top}: <i>lapis</i> back on the level-3 option</li>
+ *   <li>{@code better_roll}: a <i>chance</i> that each enchanting option is offered about 20% higher (at least +1 level)</li>
+ *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
+ *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
+ *       how much more damage (and Life healing) the picked / other schools give</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -153,7 +160,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         UNMARKED_FORBIDDEN, STAFF_ONLY, FAVORED_ONLY,
         GOLEM_CHEST, ANIMALS_FLEE, ANIMALS_FOLLOW, BURN_LONGER,
         FORGET_FASTER, FORGET_DELAY_MAX, FORGET_SOONER, FORGET_HIT_SNEAKING, FACELESS_RANGE, PET_SHARE_SIGHT, NO_HIDING,
-        DANGER_SENSE, NEVER_UNAWARE;
+        DANGER_SENSE, NEVER_UNAWARE,
+        BOOKSHELF_BONUS, ENCHANT_LAPIS_KEEP, ENCHANT_LAPIS_TOP, BARE_HANDED, FOCUS_SLOTS, FOCUS_BONUS, NON_FOCUS_BONUS, BETTER_ROLL;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

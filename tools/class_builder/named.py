@@ -1504,6 +1504,69 @@ def world(low, ctx):
     m = re.fullmatch(rf"you can'?t be backstabbed \(no bonus damage from mobs hitting you from behind\) and hostile mobs within {N} blocks make a sound cue", low)
     if m:
         return [bonus_kind('never_unaware', 1.0)[0], bonus_kind('danger_sense', float(m.group(1)))[0]]
+    # Savant focus schools (picked with /pipican focus).
+    m = re.fullmatch(rf'pick two elemental focus schools when you choose the class - .*damage and effects of those elements are \+{N}%.*', low)
+    if m:
+        return [bonus_kind('focus_slots', 2.0)[0], bonus_kind('focus_bonus', pct(m.group(1)))[0]]
+    m = re.fullmatch(rf'focus bonus \+{N}%(?: per ([a-z]+))?', low)
+    if m and cid == 'savant' and (not m.group(2) or m.group(2) == sp):
+        return bonus_kind('focus_bonus', 0.0 if m.group(2) else pct(m.group(1)), pct(m.group(1)) if m.group(2) else None)
+    if cid == 'savant' and re.fullmatch(r'focus bonus doubled', low):
+        return bonus_kind('focus_bonus', 0.2)
+    m = re.fullmatch(rf'non-focus schools get \+{N}%', low)
+    if m:
+        return bonus_kind('non_focus_bonus', pct(m.group(1)))
+    m = re.fullmatch(rf'\+{N} more focus schools?', low)
+    if m:
+        return bonus_kind('focus_slots', float(m.group(1)))
+    # Enchanting tables and cheaper crafting stations.
+    m = re.fullmatch(rf'\+{N} (?:counted )?bookshel(?:f|ves)(?: counted)?(?: around your (?:enchanting )?table)?(?: per {N} ([a-z]+))?', low)
+    if m and (not m.group(3) or m.group(3) == sp):
+        if m.group(3):
+            return bonus_kind('bookshelf_bonus', 0.0, round(float(m.group(1)) / float(m.group(2)), 6))
+        return bonus_kind('bookshelf_bonus', float(m.group(1)))
+    m = re.fullmatch(rf'\+{N} counted bookshelf, -{N} enchanting cost', low)
+    if m:
+        return [bonus_kind('bookshelf_bonus', float(m.group(1)))[0], bonus_kind('enchant_levels', float(m.group(2)))[0]]
+    m = re.fullmatch(rf'\+{N}% chance of a better enchantment roll', low)
+    if m:
+        return bonus_kind('better_roll', pct(m.group(1)))
+    m = re.fullmatch(rf'-{N} lapis cost on level-3 enchants', low)
+    if m:
+        return bonus_kind('enchant_lapis_top', float(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% chance per ([a-z]+) point to keep the lapis when enchanting', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('enchant_lapis_keep', 0.0, pct(m.group(1)))
+    m = re.fullmatch(r'(brewing and enchanting|enchanting, brewing and anvil use all) cost slightly less \(-1 level\s*[,/]\s*10% faster(?: brew)?\)', low)
+    if m:
+        out = [bonus_kind('enchant_levels', 1.0)[0], bonus_kind('brew_speed', 0.1)[0]]
+        if 'anvil' in m.group(1):
+            out.append(bonus_kind('anvil_levels', 1.0)[0])
+        return out
+    # Engineer eidolon
+    m = re.fullmatch(rf'eidolon armou?r \+{N} per {N} ([a-z]+)', low)
+    if m and m.group(3) == sp:
+        return [{'type': 'pipican:eidolon', 'attribute': 'minecraft:armor', 'amount': 0.0,
+                 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(1)) / float(m.group(2)), 6)}]}]
+    m = re.fullmatch(rf'eidolon becomes size 2 \(bigger, \+{N}% stats\) but it moves {N}% slower', low)
+    if m:
+        k = pct(m.group(1))
+        out = [{'type': 'pipican:eidolon', 'attribute': 'minecraft:scale', 'amount': 1.0, 'operation': 'add_multiplied_base'}]
+        out += [{'type': 'pipican:eidolon', 'attribute': a, 'amount': k, 'operation': 'add_multiplied_base'}
+                for a in ('minecraft:max_health', 'minecraft:attack_damage', 'minecraft:armor')]
+        out.append({'type': 'pipican:eidolon', 'attribute': 'minecraft:movement_speed', 'amount': -pct(m.group(2)), 'operation': 'add_multiplied_base'})
+        return out
+    # Shapeshifter: forms
+    forms = [w['ability'] for n, (w, _) in NAMED.get(cid, {}).items() if n.endswith(' form') and w.get('type') == 'pipican:ability_active']
+    m = re.fullmatch(rf'\+{N}% bonus from your current form', low)
+    if m and forms and ctx.get('implicit_per_point'):
+        return [{'type': 'pipican:ability_mod', 'ability': a, 'strength': 0.0, 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]} for a in forms]
+    if forms and re.fullmatch(r'changing form is instant and cleanses slowness', low):
+        # Forms are already instant toggles; switching also clears Slowness.
+        return [{'type': 'pipican:ability_mod', 'ability': a, 'actions': [{'type': 'pipican:cleanse', 'target': 'self', 'effects': ['minecraft:slowness']}]} for a in forms]
+    if forms and re.fullmatch(r"while transformed you can'?t use weapons, bows, shields or items \(only bare-handed attacks\)", low):
+        any_form = forms and {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:ability_active', 'ability': a} for a in forms]}
+        return [{'type': 'pipican:conditional', 'when': any_form, 'effects': [bonus_kind('bare_handed', 1.0)[0], bonus_kind('no_shield', 1.0)[0]]}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

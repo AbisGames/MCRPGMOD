@@ -262,6 +262,10 @@ public final class WorldBonusEvents {
         if (player.tickCount % 5 == 0) {
             com.pipican.ability.Quarries.playerTick(player);
         }
+        if (player.tickCount % 600 == 0 && com.pipican.ability.Focus.chosen(player).size() < com.pipican.ability.Focus.slots(player)) {
+            player.sendSystemMessage(Component.translatable("pipican.focus.choose", com.pipican.ability.Focus.slots(player) - com.pipican.ability.Focus.chosen(player).size(),
+                    String.join(", ", com.pipican.ability.Focus.SCHOOLS)));
+        }
         if (player.tickCount % 20 == 0) {
             taunt(player, level);
             wildfire(player, level);
@@ -495,6 +499,22 @@ public final class WorldBonusEvents {
             golem.setPersistentAngerTarget(net.minecraft.world.entity.EntityReference.of(player));
             golem.startPersistentAngerTimer();
             golem.setTarget(player);
+        }
+    }
+
+    /** {@code bare_handed}: while it holds, only empty-handed hits land and items can't be used. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
+    static void onBareHanded(LivingIncomingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.BARE_HANDED) > 0
+                && (event.getSource().getDirectEntity() != player || !player.getMainHandItem().isEmpty())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    static void onBareHandedUse(PlayerInteractEvent.RightClickItem event) {
+        if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.BARE_HANDED) > 0) {
+            event.setCanceled(true);
         }
     }
 }

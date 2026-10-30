@@ -97,16 +97,7 @@
     {
       "id": "engineer_iron_titan",
       "name": "Iron Titan",
-      "description": {
-        "text": "eidolon becomes Size 2 (bigger, +50% stats) but it moves 20% slower",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "eidolon becomes Size 2 (bigger, +50% stats) but it moves 20% slower",
       "type": "keystone",
       "x": -973,
       "y": -1527,
@@ -115,7 +106,39 @@
         "engineer_servo_speed"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:scale",
+          "amount": 1.0,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:max_health",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:attack_damage",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:armor",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

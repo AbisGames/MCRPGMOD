@@ -40,7 +40,7 @@ public record HealAction(Targets targets, double amount, double percent, boolean
             return;
         }
         for (LivingEntity target : selected) {
-            double given = ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.HEALING_GIVEN);
+            double given = ClassEffectApplier.state(ctx.player()).bonus(BonusEffect.Kind.HEALING_GIVEN) * com.pipican.ability.Focus.healing(ctx.player());
             if (target != ctx.player() && target instanceof net.minecraft.world.entity.player.Player && target.getHealth() < target.getMaxHealth() * 0.3) {
                 given *= 1 + ClassEffectApplier.state(ctx.player()).chance(BonusEffect.Kind.TRIAGE);
             }

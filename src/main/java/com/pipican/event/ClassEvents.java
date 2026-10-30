@@ -216,6 +216,7 @@ public final class ClassEvents {
             // Ability marks on the target and "your next hit" buffs.
             amount *= (float) Marks.multiplier(attacker, event.getEntity(), event.getSource());
             amount *= (float) com.pipican.ability.Quarries.multiplier(attacker, event.getEntity());
+            amount *= (float) com.pipican.ability.Focus.damage(attacker, event.getSource(), event.getEntity());
             amount *= (float) com.pipican.ability.Strikes.nthHit(attacker, event.getEntity(), event.getSource());
             amount = Empowers.apply(attacker, event.getEntity(), amount);
         }

@@ -92,6 +92,17 @@
           "per": 0.04
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "enchant_lapis_keep",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

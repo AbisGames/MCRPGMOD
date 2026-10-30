@@ -55,16 +55,7 @@
     {
       "id": "wizard_library",
       "name": "Library",
-      "description": {
-        "text": "+1 counted bookshelf, -1 enchanting cost",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 counted bookshelf, -1 enchanting cost",
       "type": "notable",
       "x": 127,
       "y": -881,
@@ -72,7 +63,19 @@
         "wizard_annotations"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "bookshelf_bonus",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "enchant_levels",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "wizard_arcane_ward",

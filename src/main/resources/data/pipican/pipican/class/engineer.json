@@ -101,6 +101,17 @@
     },
     {
       "type": "pipican:eidolon",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:eidolon",
       "attribute": "minecraft:movement_speed",
       "amount": 0.05,
       "operation": "add_multiplied_base"

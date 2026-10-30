@@ -59,6 +59,71 @@
   },
   "passives": [
     {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/wolf_form",
+      "actions": [
+        {
+          "type": "pipican:cleanse",
+          "target": "self",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/bear_form",
+      "actions": [
+        {
+          "type": "pipican:cleanse",
+          "target": "self",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/cat_form",
+      "actions": [
+        {
+          "type": "pipican:cleanse",
+          "target": "self",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/fish_form",
+      "actions": [
+        {
+          "type": "pipican:cleanse",
+          "target": "self",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/bird_form",
+      "actions": [
+        {
+          "type": "pipican:cleanse",
+          "target": "self",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:any_of",
@@ -96,6 +161,61 @@
   ],
   "special_passives": [
     {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/wolf_form",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/bear_form",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/cat_form",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/fish_form",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/bird_form",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
       "type": "pipican:resource",
       "target": "regen",
       "amount": 0.0,
@@ -109,17 +229,49 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Animals can't use tools.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Animals can't use tools.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:ability_active",
+              "ability": "pipican:shapeshifter/wolf_form"
+            },
+            {
+              "type": "pipican:ability_active",
+              "ability": "pipican:shapeshifter/bear_form"
+            },
+            {
+              "type": "pipican:ability_active",
+              "ability": "pipican:shapeshifter/cat_form"
+            },
+            {
+              "type": "pipican:ability_active",
+              "ability": "pipican:shapeshifter/fish_form"
+            },
+            {
+              "type": "pipican:ability_active",
+              "ability": "pipican:shapeshifter/bird_form"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:bonus",
+            "kind": "bare_handed",
+            "amount": 1.0
+          },
+          {
+            "type": "pipican:bonus",
+            "kind": "no_shield",
+            "amount": 1.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

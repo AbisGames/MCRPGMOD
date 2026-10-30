@@ -363,6 +363,46 @@ public final class BonusEvents {
         }
     }
 
+    /** Experience level at the end of the last tick, to see what an enchant cost. */
+    private static final java.util.Map<java.util.UUID, Integer> LEVEL_BEFORE = new java.util.concurrent.ConcurrentHashMap<>();
+
+    @SubscribeEvent
+    static void onLevelSnapshot(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
+        if (event.getEntity() instanceof ServerPlayer player && player.containerMenu instanceof net.minecraft.world.inventory.EnchantmentMenu) {
+            LEVEL_BEFORE.put(player.getUUID(), player.experienceLevel);
+        }
+    }
+
+    /** {@code bookshelf_bonus}: the table counts more bookshelves for the player using it. */
+    @SubscribeEvent
+    static void onEnchantLevels(net.neoforged.neoforge.event.enchanting.EnchantmentLevelSetEvent event) {
+        if (!(event.getLevel() instanceof net.minecraft.server.level.ServerLevel level) || event.getEnchantLevel() <= 0) {
+            return;
+        }
+        ServerPlayer user = level.getEntitiesOfClass(ServerPlayer.class, new net.minecraft.world.phys.AABB(event.getPos()).inflate(8),
+                p -> p.containerMenu instanceof net.minecraft.world.inventory.EnchantmentMenu).stream().findFirst().orElse(null);
+        if (user == null) {
+            return;
+        }
+        double better = ClassEffectApplier.state(user).chance(Kind.BETTER_ROLL);
+        if (better > 0 && user.getRandom().nextDouble() < better) {
+            event.setEnchantLevel(Math.min(30, event.getEnchantLevel() + Math.max(1, (int) Math.round(event.getEnchantLevel() * 0.2))));
+        }
+        int extra = (int) Math.floor(ClassEffectApplier.state(user).chance(Kind.BOOKSHELF_BONUS) + 1e-9);
+        int power = Math.min(15, event.getPower() + extra) - event.getPower();
+        if (power <= 0) {
+            return;
+        }
+        // Vanilla: each bookshelf adds about one level to the top option, 2/3 and 1/3 to the others; the top is at least 2x shelves.
+        double[] share = {1 / 3.0, 2 / 3.0, 1};
+        int row = Math.clamp(event.getEnchantRow(), 0, 2);
+        int boosted = event.getEnchantLevel() + (int) Math.round(power * share[row]);
+        if (row == 2) {
+            boosted = Math.max(boosted, (event.getPower() + power) * 2);
+        }
+        event.setEnchantLevel(Math.min(30, boosted));
+    }
+
     @SubscribeEvent
     static void onEnchant(net.neoforged.neoforge.event.entity.player.PlayerEnchantItemEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
@@ -371,6 +411,14 @@ public final class BonusEvents {
         ClassState state = ClassEffectApplier.state(player);
         int levels = (int) Math.floor(state.chance(Kind.ENCHANT_LEVELS) + 1e-9);
         int lapis = (int) Math.floor(state.chance(Kind.ENCHANT_LAPIS) + 1e-9);
+        // The levels just spent tell which option was picked (1-3; the lapis cost is the same).
+        int spent = Math.max(0, LEVEL_BEFORE.getOrDefault(player.getUUID(), player.experienceLevel) - player.experienceLevel);
+        if (spent == 3) {
+            lapis += (int) Math.floor(state.chance(Kind.ENCHANT_LAPIS_TOP) + 1e-9);
+        }
+        if (spent > 0 && player.getRandom().nextDouble() < state.chance(Kind.ENCHANT_LAPIS_KEEP)) {
+            lapis += spent;
+        }
         if (levels != 0) {
             // Negative: enchanting costs that many more levels (never below 0).
             player.giveExperienceLevels(Math.max(levels, -player.experienceLevel));

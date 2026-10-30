@@ -344,6 +344,16 @@
       "seconds": 60,
       "replace": true,
       "multiplier": 1.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "focus_slots",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "focus_bonus",
+      "amount": 0.5
     }
   ]
 }

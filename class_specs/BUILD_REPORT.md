@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2060**, partly working: **16**, not yet: **174**
+- Bonus phrases: **2250**. Fully working: **2081**, partly working: **16**, not yet: **153**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,11 +12,11 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 54 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 47 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 40 |
+| [Other mechanics](#other-mechanics) | 49 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 38 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 34 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 28 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 26 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 12 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 10 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 6 |
@@ -47,8 +47,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: no slowdown from powder snow, soul sand, cobwebs or honey
 - **duelist**
   - general tree: Lone Wolf: Duel bonuses doubled
-- **engineer**
-  - general tree: Iron Titan: it moves 20% slower
 - **executioner**
   - special tree: Steady: exposure after charged hits lasts 1s
 - **explorer**
@@ -75,8 +73,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Prodigy: Prodigy picks the stat you most recently used
 - **mage_knight**
   - special passive: Per 10 Battle Arcana, +1 escalating hit
-- **magician**
-  - skill Enchanting: +1 bookshelf counted around your table
 - **miracle_worker**
   - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
   - general tree: Saint Among Us: miracles cost half
@@ -87,10 +83,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Turtle: blocking also stops arrows from the sides
 - **pyromancer**
   - passive: Fire you start burns 50% longer
-- **savant**
-  - special passive: Focus bonus +0.5% per Breadth
-  - special tree: Second Focus: focus bonus +10%
-  - special tree: Generalist: non-focus schools get +10%
 - **sentinel**
   - special stat per point: +0.5 blocks hostile-mob detection range
   - general tree: Sentinel: +4 blocks detection range
@@ -114,81 +106,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
 - **zealot**
   - special tree: Violent Madness: Violent Madness no longer targets players
-
-## Active abilities (named abilities, cooldowns, auras, summons)
-
-- **abjurer**
-  - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
-- **bard**
-  - special tree: Swift Song: Inspiring Song refreshes twice as fast
-- **berserker**
-  - weakness: can't go Berserk again for 15s
-  - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
-- **champion**
-  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
-- **chaplain**
-  - weakness: Battle Chant switches off for 10s whenever you take more than 6 damage in one hit
-  - general tree: Steady Voice: Battle Chant no longer stops from big hits below 10 damage
-  - special tree: Emboldening Chant: +5% more damage in chant
-- **chronomancer**
-  - special tree: Precognition: unlocks Insight: after you dodge, your next hit is a guaranteed crit
-- **cleric**
-  - special tree: Turn Undead: unlocks Turn Undead (undead flee for 5s)
-- **conjurer**
-  - special passive: Per 20 Summoning, +1 minion at a time
-- **diviner**
-  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
-- **dreadnaught**
-  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
-- **engineer**
-  - special passive: Eidolon armor +1 per 10 Engineering
-  - general tree: Iron Titan: eidolon becomes Size 2
-  - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **hexer**
-  - general tree: Withering Gaze: Pain curse also gives Weakness
-  - special tree: Desire: Desire-cursed mobs fight other mobs
-- **illusionist**
-  - weakness: decoys never fool wardens, endermen or the Wither
-  - special tree: Blur: after a decoy, you're invisible for 1s
-- **jack_of_all_trades**
-  - special tree: Magical Epiphany: brewing and enchanting cost slightly less (-1 level, 10% faster brew)
-- **magician**
-  - passive: Sense Magic: enchanted items and mobs with potion effects within 12 blocks glow for you while sneaking
-  - special passive: +0.5% chance per Power point to keep the lapis when enchanting
-  - skill Enchanting: +5% chance of a better enchantment roll
-  - skill Enchanting: -1 lapis cost on level-3 enchants
-  - skill Enchanting: +5% chance of a better enchantment roll
-  - skill Enchanting: +10% chance of a better enchantment roll
-- **magus**
-  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
-  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
-- **runesmith**
-  - general tree: Runelord: sigil bonuses doubled
-- **savant**
-  - passive: Enchanting, brewing and anvil use all cost slightly less (-1 level / 10% faster)
-- **shapeshifter**
-  - special stat per point: +1% bonus from your current form
-  - passive: Swift Transformation: changing form is instant and cleanses Slowness
-  - special passive: Form bonuses +1% per Mutability
-- **spellbinder**
-  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
-  - special passive: Magic Weapon: per 10 Binding, +2% bound weapon critical damage
-- **technomancer**
-  - general tree: Mad Inventor: gadget bonus doubled
-  - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
-- **templar**
-  - passive: When a hostile mob enters your temple, you get Speed II for 2s
-  - general tree: Fortress Temple: temple bonuses doubled
-  - special tree: Living Temple: your temple follows you
-  - special tree: Living Temple: -15% temple bonuses
-- **traveler**
-  - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
-- **weapon_master**
-  - special tree: Swift Change: you can change favored weapon once per day without sleeping
-- **wizard**
-  - special passive: +1 bookshelf counted around your enchanting table per 20 Lore
-  - general tree: Library: +1 counted bookshelf, -1 enchanting cost
-  - special tree: Second Tome: Grimoire bonus also works with a book in any hotbar slot
 
 ## Conditional bonus (while / when / where)
 
@@ -238,10 +155,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Poison Mastery: your melee hits and arrows apply Poison I for 4s (Poison II if you hold a pufferfish or poison potion in the off-hand)
 - **rogue**
   - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
-- **savant**
-  - passive: Tradition Focus: pick two elemental focus schools when you choose the class - Fire, Water, Air, Earth, Storm, Shadow, Light (sun/celestial) or Life. Damage and effects of those elements are +20% (Fire = burning/fire charges, Water = drowned/underwater/trident, Air = wind charges/fall, Earth = explosions/blocks, Storm = lightning, Shadow = darkness/wither, Light = undead/smite, Life = healing)
-- **shapeshifter**
-  - weakness: while transformed you can't use weapons, bows, shields or items (only bare-handed attacks)
 - **stormbringer**
   - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
   - general tree: Storm Avatar: your lightning chance works in any rain, but you take 25% more fire damage
@@ -259,6 +172,66 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Axemanship: +10% shield-disable time when you break a shield
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
+
+## Active abilities (named abilities, cooldowns, auras, summons)
+
+- **abjurer**
+  - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
+- **bard**
+  - special tree: Swift Song: Inspiring Song refreshes twice as fast
+- **berserker**
+  - weakness: can't go Berserk again for 15s
+  - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
+- **champion**
+  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
+- **chaplain**
+  - weakness: Battle Chant switches off for 10s whenever you take more than 6 damage in one hit
+  - general tree: Steady Voice: Battle Chant no longer stops from big hits below 10 damage
+  - special tree: Emboldening Chant: +5% more damage in chant
+- **chronomancer**
+  - special tree: Precognition: unlocks Insight: after you dodge, your next hit is a guaranteed crit
+- **cleric**
+  - special tree: Turn Undead: unlocks Turn Undead (undead flee for 5s)
+- **conjurer**
+  - special passive: Per 20 Summoning, +1 minion at a time
+- **diviner**
+  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
+- **dreadnaught**
+  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
+- **engineer**
+  - special tree: Mecha: while in the cockpit, eidolon damage +25%
+- **hexer**
+  - general tree: Withering Gaze: Pain curse also gives Weakness
+  - special tree: Desire: Desire-cursed mobs fight other mobs
+- **illusionist**
+  - weakness: decoys never fool wardens, endermen or the Wither
+  - special tree: Blur: after a decoy, you're invisible for 1s
+- **magician**
+  - passive: Sense Magic: enchanted items and mobs with potion effects within 12 blocks glow for you while sneaking
+- **magus**
+  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
+  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
+- **runesmith**
+  - general tree: Runelord: sigil bonuses doubled
+- **shapeshifter**
+  - special passive: Form bonuses +1% per Mutability
+- **spellbinder**
+  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
+  - special passive: Magic Weapon: per 10 Binding, +2% bound weapon critical damage
+- **technomancer**
+  - general tree: Mad Inventor: gadget bonus doubled
+  - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
+- **templar**
+  - passive: When a hostile mob enters your temple, you get Speed II for 2s
+  - general tree: Fortress Temple: temple bonuses doubled
+  - special tree: Living Temple: your temple follows you
+  - special tree: Living Temple: -15% temple bonuses
+- **traveler**
+  - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
+- **weapon_master**
+  - special tree: Swift Change: you can change favored weapon once per day without sleeping
+- **wizard**
+  - special tree: Second Tome: Grimoire bonus also works with a book in any hotbar slot
 
 ## Skill trigger approximated
 
@@ -355,8 +328,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: in the Nether and the End: Devotion does not regenerate and Prayer is disabled
 - **savant**
   - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
-  - general tree: Omniscient: +1 more focus school, but -15% max health
-  - special tree: Grand Savant: focus bonus doubled; -10% Insight regen
 - **scout**
   - special tree: Low Blow: when a revealed mob takes damage from an ally, you get a free 50% damage hit on it; -10% max Stride
 - **shapeshifter**

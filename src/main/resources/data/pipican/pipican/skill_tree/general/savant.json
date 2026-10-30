@@ -96,16 +96,7 @@
     {
       "id": "savant_omniscient",
       "name": "Omniscient",
-      "description": {
-        "text": "+1 more focus school, but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+1 more focus school, but -15% max health",
       "type": "keystone",
       "x": 469,
       "y": -1383,
@@ -114,7 +105,20 @@
         "savant_fast_learner"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "focus_slots",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

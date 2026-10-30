@@ -29,37 +29,26 @@
     {
       "id": "second_focus",
       "name": "Second Focus",
-      "description": {
-        "text": "focus bonus +10%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "focus bonus +10%",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "focus_bonus",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "generalist",
       "name": "Generalist",
-      "description": {
-        "text": "non-focus schools get +10%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "non-focus schools get +10%",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -67,7 +56,14 @@
         "annotations"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "non_focus_bonus",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "encyclopedic",
@@ -92,16 +88,7 @@
     {
       "id": "grand_savant",
       "name": "Grand Savant",
-      "description": {
-        "text": "focus bonus doubled; -10% Insight regen",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "focus bonus doubled; -10% Insight regen",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -110,7 +97,20 @@
         "encyclopedic"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "focus_bonus",
+          "amount": 0.2
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

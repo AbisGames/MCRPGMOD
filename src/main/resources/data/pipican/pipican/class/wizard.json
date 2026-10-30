@@ -125,6 +125,17 @@
       ]
     },
     {
+      "type": "pipican:bonus",
+      "kind": "bookshelf_bonus",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    },
+    {
       "type": "pipican:resource",
       "target": "regen",
       "amount": 0.0,

@@ -688,6 +688,12 @@ public final class ClassSystemTests {
         var lonely = new AbilityContext(player, Optional.empty(), player.position().add(0, 50, 0), Optional.empty(), 0);
         succor.run(lonely);
         helper.assertTrue(lonely.fizzled(), "no one to heal: fizzled");
+
+        // Focus schools: one slot; fire picked, so fire damage is +50% and a second pick is refused.
+        helper.assertTrue(com.pipican.ability.Focus.choose(player, "fire").success(), "fire picked");
+        helper.assertTrue(!com.pipican.ability.Focus.choose(player, "water").success(), "only one slot");
+        assertNear(helper, 1.5, com.pipican.ability.Focus.damage(player, level.damageSources().onFire(), spare), "fire focus");
+        assertNear(helper, 1, com.pipican.ability.Focus.damage(player, level.damageSources().cactus(), spare), "no school");
         helper.succeed();
     }
 

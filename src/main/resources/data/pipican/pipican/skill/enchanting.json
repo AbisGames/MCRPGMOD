@@ -28,69 +28,54 @@
   ],
   "tiers": [
     {
-      "description": {
-        "text": "+5% chance of a better enchantment roll",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% chance of a better enchantment roll",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "better_roll",
+          "amount": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "-1 lapis cost on level-3 enchants",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "-1 lapis cost on level-3 enchants",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "enchant_lapis_top",
+          "amount": 1.0
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+5% chance of a better enchantment roll",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% chance of a better enchantment roll",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "better_roll",
+          "amount": 0.05
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+1 bookshelf counted around your table",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1 bookshelf counted around your table",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "bookshelf_bonus",
+          "amount": 1.0
+        }
+      ]
     },
     {
-      "description": {
-        "text": "+10% chance of a better enchantment roll",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% chance of a better enchantment roll",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "better_roll",
+          "amount": 0.1
+        }
+      ]
     }
   ]
 }

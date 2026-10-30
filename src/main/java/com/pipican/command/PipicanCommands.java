@@ -172,6 +172,17 @@ public final class PipicanCommands {
                                 .executes(c -> report(c.getSource(), Optimize.choose(c.getSource().getPlayerOrException(),
                                         ResourceKeyArgument.getRegistryKey(c, "raise", PipicanRegistries.STAT, UNKNOWN_STAT),
                                         ResourceKeyArgument.getRegistryKey(c, "lower", PipicanRegistries.STAT, UNKNOWN_STAT)))))))
+                .then(Commands.literal("focus")
+                        .executes(c -> {
+                            var p = c.getSource().getPlayerOrException();
+                            c.getSource().sendSuccess(() -> Component.translatable("pipican.focus.list", String.join(", ", com.pipican.ability.Focus.chosen(p)),
+                                    com.pipican.ability.Focus.slots(p), String.join(", ", com.pipican.ability.Focus.SCHOOLS)), false);
+                            return 1;
+                        })
+                        .then(Commands.argument("school", com.mojang.brigadier.arguments.StringArgumentType.word())
+                                .suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(com.pipican.ability.Focus.SCHOOLS, b))
+                                .executes(c -> report(c.getSource(), com.pipican.ability.Focus.choose(c.getSource().getPlayerOrException(),
+                                        com.mojang.brigadier.arguments.StringArgumentType.getString(c, "school"))))))
                 .then(Commands.literal("ability")
                         .then(Commands.literal("use").then(Commands.argument("ability", ResourceKeyArgument.key(PipicanRegistries.ABILITY))
                                 .executes(c -> report(c.getSource(), AbilityService.use(c.getSource().getPlayerOrException(),

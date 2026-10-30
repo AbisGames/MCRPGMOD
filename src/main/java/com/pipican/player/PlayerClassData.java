@@ -64,7 +64,8 @@ public final class PlayerClassData {
                 Codec.INT.optionalFieldOf("spell_points", 0).forGetter(e -> e.spellPoints),
                 UUIDUtil.CODEC.optionalFieldOf("bond").forGetter(e -> e.bond),
                 Optimization.CODEC.optionalFieldOf("optimization").forGetter(e -> e.optimization),
-                Codec.STRING.optionalFieldOf("favored_weapon").forGetter(e -> e.favoredWeapon)
+                Codec.STRING.optionalFieldOf("favored_weapon").forGetter(e -> e.favoredWeapon),
+                Codec.STRING.listOf().optionalFieldOf("focus_schools", List.of()).forGetter(e -> e.focusSchools)
         ).apply(i, Extras::new));
 
         public Optional<GlobalPos> waypoint;
@@ -73,19 +74,22 @@ public final class PlayerClassData {
         public Optional<UUID> bond;
         public Optional<Optimization> optimization;
         public Optional<String> favoredWeapon;
+        /** Savant: the elemental schools picked with /pipican focus. */
+        public final List<String> focusSchools;
 
         Extras(Optional<GlobalPos> waypoint, Map<ResourceKey<Ability>, Integer> restUses, int spellPoints, Optional<UUID> bond,
-               Optional<Optimization> optimization, Optional<String> favoredWeapon) {
+               Optional<Optimization> optimization, Optional<String> favoredWeapon, List<String> focusSchools) {
             this.waypoint = waypoint;
             this.restUses = new HashMap<>(restUses);
             this.spellPoints = spellPoints;
             this.bond = bond;
             this.optimization = optimization;
             this.favoredWeapon = favoredWeapon;
+            this.focusSchools = new java.util.ArrayList<>(focusSchools);
         }
 
         Extras() {
-            this(Optional.empty(), Map.of(), 0, Optional.empty(), Optional.empty(), Optional.empty());
+            this(Optional.empty(), Map.of(), 0, Optional.empty(), Optional.empty(), Optional.empty(), List.of());
         }
     }
 
