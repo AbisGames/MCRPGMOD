@@ -26,6 +26,10 @@ public record StillCondition(double seconds) implements ClassCondition {
 
     @Override
     public boolean test(ServerPlayer player) {
-        return Movement.stillFor(player) >= Math.max(10, seconds * 20);
+        if (Movement.stillFor(player) >= Math.max(10, seconds * 20)) {
+            return true;
+        }
+        // Living Legend: walking slowly (sneaking) holds a stance too.
+        return player.isShiftKeyDown() && com.pipican.player.ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.STANCE_WALK) > 0;
     }
 }

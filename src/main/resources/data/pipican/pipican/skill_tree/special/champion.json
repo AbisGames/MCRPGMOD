@@ -103,16 +103,7 @@
     {
       "id": "living_legend",
       "name": "Living Legend",
-      "description": {
-        "text": "Battle Stance can be held while walking slowly; -10% movement speed",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Battle Stance can be held while walking slowly; -10% movement speed",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -121,7 +112,20 @@
         "champion_s_resolve"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "stance_walk",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -1918,6 +1918,17 @@ def world(low, ctx):
             PATCHES.setdefault(cid, []).append(_berserk(cid, base, None))
             return [bonus_kind('threshold_drop', round((float(m.group(3)) - float(m.group(1))) / 100, 6))[0],
                     {'type': 'pipican:reaction_mod', 'name': 'berserk after-effects', 'duration': 1.0}]
+    # --- Bulk 44
+    if re.fullmatch(r'chaos outcomes can hit 2 mobs', low):
+        return bonus_kind('chaos_double', 1.0)
+    if re.fullmatch(r'battle stance can be held while walking slowly', low):
+        return bonus_kind('stance_walk', 1.0)
+    m = re.fullmatch(rf'while wearing 2 or more pieces of heavy armou?r: -{N}% movement speed and ([a-z\' ]+) is disabled', low)
+    if m and m.group(2) in REACTION_NAMES.get(cid, set()):
+        heavy2 = {'type': 'pipican:item_rule', 'rule': 'heavy_armor', 'min': 2}
+        PATCHES.setdefault(cid, []).append(_gate_reaction(m.group(2), {'type': 'pipican:not', 'condition': heavy2}))
+        return [{'type': 'pipican:conditional', 'when': heavy2, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:movement_speed',
+                 'amount': -pct(m.group(1)), 'operation': 'add_multiplied_base'}]}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
@@ -2260,6 +2271,21 @@ def _berserk(cid, base, lock):
                 for v in o:
                     walk(v)
         walk(rpg)
+    return patch
+
+
+
+def _gate_reaction(name, when):
+    """A patch for the finished class JSON: the passive reaction called `name` only works while `when` holds."""
+    def patch(rpg):
+        for key in ('passives', 'special_passives'):
+            out = []
+            for e in rpg.get(key, []):
+                if e.get('type') == 'pipican:on' and e.get('name') == name:
+                    e = {'type': 'pipican:conditional', 'when': when, 'effects': [e]}
+                out.append(e)
+            if key in rpg:
+                rpg[key] = out
     return patch
 
 

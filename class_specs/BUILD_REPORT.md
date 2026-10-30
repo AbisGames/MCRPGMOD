@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2177**, partly working: **5**, not yet: **68**
+- Bonus phrases: **2250**. Fully working: **2180**, partly working: **5**, not yet: **65**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,9 +13,9 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 25 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 15 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 14 |
+| [Other mechanics](#other-mechanics) | 24 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 14 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 13 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 10 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
 | [Immunities](#immunities) | 5 |
@@ -120,8 +120,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Fortress Temple: outside it you lose all class passives
 - **tenebrist**
   - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
-- **thaumaturge**
-  - special tree: Pandemonium: chaos outcomes can hit 2 mobs
 - **thief**
   - special tree: Escape Artist: cobwebs don't slow you
 - **transmuter**
@@ -149,8 +147,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Riptide: tridents with Riptide work without rain while Current is above half
 - **infiltrator**
   - passive: Your nameplate is hidden from other players while sneaking or invisible
-- **rogue**
-  - weakness: while wearing 2 or more pieces of heavy armor: -15% movement speed and Trickery is disabled
 - **stormbringer**
   - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
 - **templar**
@@ -164,8 +160,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **bard**
   - special tree: Swift Song: Inspiring Song refreshes twice as fast
-- **champion**
-  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
 - **diviner**
   - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
 - **dreadnaught**

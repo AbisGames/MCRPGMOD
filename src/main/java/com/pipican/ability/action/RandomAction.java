@@ -47,5 +47,30 @@ public record RandomAction(List<List<AbilityAction>> choices) implements Ability
                 return;
             }
         }
+        // Pandemonium: the outcome also hits the nearest other mob.
+        if (ctx.subject().isPresent() && com.pipican.player.ClassEffectApplier.state(ctx.player()).chance(com.pipican.effect.type.BonusEffect.Kind.CHAOS_DOUBLE) > 0) {
+            var subject = ctx.subject().get();
+            var player = ctx.player();
+            var mod = ctx.mod();
+            var finalPick = pick;
+            player.level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, subject.getBoundingBox().inflate(4),
+                            e -> e != subject && e != player && e.isAlive() && !(e instanceof net.minecraft.world.entity.player.Player))
+                    .stream().min(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(subject)))
+                    .ifPresent(other -> {
+                        AbilityContext second = new AbilityContext(player, java.util.Optional.empty(), other.position(), java.util.Optional.of(other), 0).withMod(mod);
+                        for (AbilityAction action : finalPick) {
+                            // Only what lands on the mob is repeated (not heals or blasts on yourself).
+                            boolean onVictim = action instanceof DamageAction d && d.targets().target() == com.pipican.ability.Targets.Kind.VICTIM
+                                    || action instanceof EffectAction e && e.targets().target() == com.pipican.ability.Targets.Kind.VICTIM;
+                            if (!onVictim) {
+                                continue;
+                            }
+                            action.run(second);
+                            if (second.isCancelled()) {
+                                return;
+                            }
+                        }
+                    });
+        }
     }
 }

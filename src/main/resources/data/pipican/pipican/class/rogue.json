@@ -74,19 +74,32 @@
       "multiplier": 0.8
     },
     {
-      "type": "pipican:on",
-      "event": "second",
-      "cooldown_ticks": 80,
-      "actions": [
-        {
-          "type": "pipican:empower",
-          "target": "self",
-          "multiplier": 1.15,
-          "hits": 1,
-          "seconds": 4.0
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:not",
+        "condition": {
+          "type": "pipican:item_rule",
+          "rule": "heavy_armor",
+          "min": 2
         }
-      ],
-      "name": "trickery"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 80,
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.15,
+              "hits": 1,
+              "seconds": 4.0
+            }
+          ],
+          "name": "trickery"
+        }
+      ]
     },
     {
       "type": "pipican:on",
@@ -138,17 +151,25 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Loud armor gives you away and slows your tricks.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Loud armor gives you away and slows your tricks.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:item_rule",
+          "rule": "heavy_armor",
+          "min": 2
+        },
+        "effects": [
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:movement_speed",
+            "amount": -0.15,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",
