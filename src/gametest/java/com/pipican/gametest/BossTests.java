@@ -23,7 +23,8 @@ public final class BossTests {
         "boss_combat_reload",BossTests::combatReload,
         "boss_phase_latch",BossTests::phaseLatch,
         "boss_entity_roundtrip",BossTests::entityRoundtrip,
-        "boss_encounter_reservations",BossTests::encounterReservations);
+        "boss_encounter_reservations",BossTests::encounterReservations,
+        "boss_summoning_lifecycle",BossTests::summoningLifecycle);
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -63,6 +64,39 @@ public final class BossTests {
         state.restore(99,999,-100,Integer.MAX_VALUE,false);
         helper.assertTrue(state.phase()==1 && state.ability()==BossCombatState.Ability.NONE && state.cooldown()==1200,"invalid save fields were not bounded");
         helper.succeed();
+    }
+    private static void summoningLifecycle(GameTestHelper helper){
+        var level=helper.getLevel(); var arena=helper.absolutePos(new net.minecraft.core.BlockPos(256,25,256));
+        for(int x=-32;x<=32;x+=8) for(int z=-32;z<=32;z+=8) level.getChunkAt(arena.offset(x,0,z));
+        var chunk=new net.minecraft.world.level.ChunkPos(arena);
+        level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0);
+        var owner=helper.makeMockServerPlayerInLevel(); owner.snapTo(arena.getX()+6,arena.getY(),arena.getZ());
+        try {
+            helper.assertTrue(BossEncounterService.summonMorvath(owner,arena)==BossEncounterService.Result.WRONG_BIOME,"non-Ashlands ritual accepted");
+            var ashlands=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("ashlands/ash_waste_plains")));
+            var filled=net.minecraft.server.commands.FillBiomeCommand.fill(level,arena.offset(-8,-8,-8),arena.offset(8,8,8),ashlands);
+            helper.assertTrue(filled.left().isPresent(),"fixture biome fill failed");
+            helper.assertTrue(BossEncounterService.morvathBiome(level,arena) && !BossEncounterService.morvathBiome(level,arena.above(40)),"boss biome check ignored Y");
+            for(var pos:net.minecraft.core.BlockPos.betweenClosed(arena.offset(-2,-1,-2),arena.offset(2,5,2)))
+                level.setBlock(pos,pos.getY()==arena.getY()-1 ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState() : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+            var obstruction=arena.above(2); level.setBlock(obstruction,net.minecraft.world.level.block.Blocks.GOLD_BLOCK.defaultBlockState(),2);
+            helper.assertTrue(BossEncounterService.summonMorvath(owner,arena)==BossEncounterService.Result.OBSTRUCTED,"obstructed player arena accepted");
+            helper.assertTrue(level.getBlockState(obstruction).is(net.minecraft.world.level.block.Blocks.GOLD_BLOCK),"summoning modified player blocks");
+            level.setBlock(obstruction,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+            helper.assertTrue(BossEncounterService.summonMorvath(owner,arena)==BossEncounterService.Result.SUCCESS,"valid player-built Ashlands arena rejected");
+            var boss=level.getEntitiesOfClass(RegionalBossEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).getFirst();
+            helper.assertTrue(BossEncounterService.summonMorvath(owner,arena)==BossEncounterService.Result.NEARBY_ENCOUNTER,"duplicate encounter accepted");
+            helper.assertTrue(!BossEncounterService.cancel(level,boss.getUUID(),UUID.randomUUID()),"non-owner cancelled encounter");
+            helper.assertTrue(BossEncounterService.cancel(level,boss.getUUID(),owner.getUUID()),"owner cancellation rejected");
+            helper.runAfterDelay(20,()->{
+                try {
+                    helper.assertTrue(boss.isRemoved(),"cancelled encounter entity remained live");
+                    helper.assertTrue(!BossEncounters.get(level).conflicts(arena),"cancelled encounter retained arena lock");
+                    helper.assertTrue(level.getBlockState(arena.below()).is(net.minecraft.world.level.block.Blocks.STONE),"encounter altered player floor");
+                    helper.succeed();
+                }finally{ level.getServer().getPlayerList().remove(owner); level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0); }
+            });
+        }catch(RuntimeException|Error failure){ level.getServer().getPlayerList().remove(owner); level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0); throw failure; }
     }
     private static void encounterReservations(GameTestHelper helper){
         var encounters=new BossEncounters(); var boss=UUID.randomUUID(); var owner=UUID.randomUUID();
