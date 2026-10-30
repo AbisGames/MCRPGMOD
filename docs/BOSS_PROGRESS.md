@@ -18,7 +18,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | morgatha_swamp_queen | implemented | preserved source geometry + native swamp-casting poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | aurelios_sunken_emperor | implemented | preserved source geometry + native trident/mirror poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | morvath_ashen_king | complete | prototype | complete | complete | complete | complete | complete | complete | passed | sampled |
-| lianhua_lotus_serpent | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| lianhua_lotus_serpent | implemented | preserved source geometry + flowing segment poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | akhmar_sand_emperor | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | netharis_river_guardian | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | zahira_crimson_corsair | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -60,3 +60,6 @@ Morgatha now has saved poison-pool bubbles (projectiles can burst a swelling bub
 
 
 Aurelios now has directional mirror sectors that reduce damage only from guarded angles while announced beams strike along those lines; approaching a mirror core breaks its guard, leaving the open flank exposed. Pressure-grid rows alternate through a marked refuge row. Three treasury orbs travel along announced paths; touching one safely intercepts it and shortens the active mirror shield, while surviving orbs announce their center pulse. Phase two alternates different row lanes and shortens shield duration. Inner Sea summoning, exact Pearlsilver/core/gold recipe, trophy and guaranteed Pearlsilver are covered by GameTests. Client appearance QA remains pending for the unavailable target-version client.
+
+
+Lianhua now has rotating petal danger arcs around a safe central lily, a fixed coiling river route with a marked opening, and four bloom pulses followed by a separately warned reflected echo. In phase two the petal gap rotates between pulses and the serpent exposes its tail for bonus damage from behind. The Lotus Delta altar, exact Lotus Opal/core/lily-pad sigil recipe, unique trophy and eight guaranteed Lotus Opals are implemented with save/reload and combat counterplay coverage. Client visual QA remains pending for the target Minecraft version.

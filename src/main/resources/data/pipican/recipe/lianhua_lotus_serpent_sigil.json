@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOO",
+    "OCL",
+    "OCR"
+  ],
+  "key": {
+    "O": "pipican:lotus_opal",
+    "C": "pipican:lotus_delta_boss_core",
+    "L": "minecraft:lily_pad",
+    "R": "pipican:ritual_core"
+  },
+  "result": {
+    "id": "pipican:lianhua_lotus_serpent_sigil",
+    "count": 1
+  }
+}

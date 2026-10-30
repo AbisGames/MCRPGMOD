@@ -379,5 +379,8 @@
   "entity.pipican.morgatha_swamp_queen": "Morgatha, Swamp Queen",
   "item.pipican.aurelios_sunken_emperor_sigil": "Aurelios' Tide Sigil",
   "item.pipican.aurelios_sunken_emperor_trophy": "Sunken Emperor Trophy",
-  "entity.pipican.aurelios_sunken_emperor": "Aurelios, Sunken Emperor"
+  "entity.pipican.aurelios_sunken_emperor": "Aurelios, Sunken Emperor",
+  "item.pipican.lianhua_lotus_serpent_sigil": "Lianhua's Lotus Sigil",
+  "item.pipican.lianhua_lotus_serpent_trophy": "Lotus Serpent Trophy",
+  "entity.pipican.lianhua_lotus_serpent": "Lianhua, Lotus Serpent"
 }

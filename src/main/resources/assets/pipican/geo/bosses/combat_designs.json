@@ -1201,7 +1201,7 @@
   {
     "id": "lianhua_lotus_serpent",
     "region": "lotus_delta",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 850,
     "damage": 15,
@@ -1214,38 +1214,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:lily_pad",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:lianhua_lotus_serpent_sigil"
     },
     "abilities": [
       {
         "id": "lotus_petals",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Petal-shaped danger arcs open around a central safe lily.",
         "counterplay": "Move through the unlit petal before the arcs close.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:lianhua_lotus_serpent/lotus_petals"
+        "animation": "lotus_petals"
       },
       {
         "id": "river_coils",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "The serpent previews a coiled route then traverses it.",
         "counterplay": "Cross the announced coil opening rather than following the head.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:lianhua_lotus_serpent/river_coils"
+        "animation": "river_coils"
       },
       {
         "id": "bloom_reflections",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Reflected blooms copy a pulse after a separate warning.",
         "counterplay": "Leave the echo bloom before its delayed second pulse.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:lianhua_lotus_serpent/bloom_reflections"
+        "animation": "bloom_reflections"
       }
     ],
     "phase_two": {
@@ -1256,7 +1257,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:lotus_opal",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:lianhua_lotus_serpent_trophy",
       "planned_trophy_name": "Lianhua Lotus Serpent Trophy",
       "xp": 212
     },
@@ -1264,16 +1265,16 @@
       "geometry": "geometry.pipican.lianhua_lotus_serpent",
       "file": "geo/bosses/lianhua_lotus_serpent.geo.json",
       "animation_mapping": {
-        "idle": "planned:lianhua_lotus_serpent/idle",
-        "walk": "planned:lianhua_lotus_serpent/walk",
-        "basic_attack": "planned:lianhua_lotus_serpent/basic_attack",
-        "hurt": "planned:lianhua_lotus_serpent/hurt",
-        "phase_transition": "planned:lianhua_lotus_serpent/phase_transition",
-        "summoning": "planned:lianhua_lotus_serpent/summoning",
-        "death": "planned:lianhua_lotus_serpent/death",
-        "lotus_petals": "planned:lianhua_lotus_serpent/lotus_petals",
-        "river_coils": "planned:lianhua_lotus_serpent/river_coils",
-        "bloom_reflections": "planned:lianhua_lotus_serpent/bloom_reflections"
+        "idle": "lianhua_lotus_serpent/idle",
+        "walk": "lianhua_lotus_serpent/walk",
+        "basic_attack": "lianhua_lotus_serpent/basic_attack",
+        "hurt": "lianhua_lotus_serpent/hurt",
+        "phase_transition": "lianhua_lotus_serpent/phase_transition",
+        "summoning": "lianhua_lotus_serpent/summoning",
+        "death": "lianhua_lotus_serpent/death",
+        "lotus_petals": "lianhua_lotus_serpent/lotus_petals",
+        "river_coils": "lianhua_lotus_serpent/river_coils",
+        "bloom_reflections": "lianhua_lotus_serpent/bloom_reflections"
       }
     },
     "arena": {

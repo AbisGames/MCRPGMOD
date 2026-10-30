@@ -61,6 +61,10 @@ public final class BossRegistries {
         "aurelios_sunken_emperor",()->EntityType.Builder.<AureliosEntity>of(AureliosEntity::new,MobCategory.MONSTER)
             .sized(1.8f,3.5f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("aurelios_sunken_emperor"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<LianhuaEntity>> LIANHUA=ENTITIES.register(
+        "lianhua_lotus_serpent",()->EntityType.Builder.<LianhuaEntity>of(LianhuaEntity::new,MobCategory.MONSTER)
+            .sized(2.6f,2.8f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("lianhua_lotus_serpent"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -76,5 +80,6 @@ public final class BossRegistries {
         event.put(LONGWEI.get(),LongweiEntity.attributes().build());
         event.put(MORGATHA.get(),MorgathaEntity.attributes().build());
         event.put(AURELIOS.get(),AureliosEntity.attributes().build());
+        event.put(LIANHUA.get(),LianhuaEntity.attributes().build());
     }
 }

@@ -70,5 +70,11 @@
     "boss": "aurelios_sunken_emperor",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:lianhua_lotus_serpent_sigil",
+    "boss": "lianhua_lotus_serpent",
+    "min_y": -64,
+    "max_y": 448
   }
 ]
