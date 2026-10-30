@@ -28,8 +28,12 @@ public class RegionalBossEntity extends Monster {
     private int abandonedTicks;
     private final BossCombat attacks=new MorvathCombat(this);
     private final BossCombatState combat=new BossCombatState();
-    private final ServerBossEvent bar=new ServerBossEvent(java.util.UUID.randomUUID(),Component.translatable("entity.pipican.morvath_ashen_king"),BossEvent.BossBarColor.RED,BossEvent.BossBarOverlay.PROGRESS);
-    public RegionalBossEntity(EntityType<? extends RegionalBossEntity> type,Level level){ super(type,level); this.xpReward=150; setPersistenceRequired(); }
+    private final ServerBossEvent bar;
+    public RegionalBossEntity(EntityType<? extends RegionalBossEntity> type,Level level){ this(type,level,"morvath_ashen_king",BossEvent.BossBarColor.RED,150); }
+    protected RegionalBossEntity(EntityType<? extends RegionalBossEntity> type,Level level,String id,BossEvent.BossBarColor color,int xp){
+        super(type,level); bar=new ServerBossEvent(java.util.UUID.randomUUID(),Component.translatable("entity.pipican."+id),color,BossEvent.BossBarOverlay.PROGRESS);
+        this.xpReward=xp; setPersistenceRequired();
+    }
     public static AttributeSupplier.Builder attributes(){
         return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH,BossDesigns.require(BossCatalog.MORVATH.id()).health()).add(Attributes.ARMOR,12)
             .add(Attributes.ATTACK_DAMAGE,BossDesigns.require(BossCatalog.MORVATH.id()).damage()).add(Attributes.MOVEMENT_SPEED,0.24)
@@ -47,11 +51,17 @@ public class RegionalBossEntity extends Monster {
     public int abilityTicksRemaining(){ return entityData.get(REMAINING); }
     @Override protected void customServerAiStep(ServerLevel level){
         super.customServerAiStep(level);
+        tickBossCombat(level);
+        bar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));
+    }
+    protected void tickBossCombat(ServerLevel level){
         combat.updatePhase(getHealth(),getMaxHealth());
         attacks.tick(level,combat);
         if(combat.phase()==2 && tickCount%10==0) level.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME,getX(),getY()+2,getZ(),5,0.8,1.4,0.8,0.01);
-        entityData.set(PHASE,combat.phase()); entityData.set(ABILITY,combat.ability().ordinal()); entityData.set(REMAINING,combat.remaining());
-        bar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));
+        syncCombat(combat.phase(),combat.ability(),combat.remaining());
+    }
+    protected final void syncCombat(int phase,BossCombatState.Ability ability,int remaining){
+        entityData.set(PHASE,phase); entityData.set(ABILITY,ability.ordinal()); entityData.set(REMAINING,remaining);
     }
     /** Cleanup also runs when vanilla AI is disabled; chunk unload is handled separately. */
     @Override public void tick(){

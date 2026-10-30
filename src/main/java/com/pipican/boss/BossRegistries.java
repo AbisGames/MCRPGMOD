@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class BossRegistries {
     private static final DeferredRegister<EntityType<?>> ENTITIES=DeferredRegister.create(Registries.ENTITY_TYPE,Pipican.MOD_ID);
     public static final DeferredHolder<EntityType<?>,EntityType<RegionalBossEntity>> MORVATH=ENTITIES.register(
-        "morvath_ashen_king",()->EntityType.Builder.of(RegionalBossEntity::new,MobCategory.MONSTER)
+        "morvath_ashen_king",()->EntityType.Builder.<RegionalBossEntity>of(RegionalBossEntity::new,MobCategory.MONSTER)
             .sized(1.7f,3.7f).fireImmune().clientTrackingRange(12).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("morvath_ashen_king"))));
     private BossRegistries(){}

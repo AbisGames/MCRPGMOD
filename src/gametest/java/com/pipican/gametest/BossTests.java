@@ -231,6 +231,23 @@ public final class BossTests {
         frost.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
         float after=dodge.getHealth(); dodge.invulnerableTime=0; frost.tick(level);
         helper.assertTrue(dodge.getHealth()==after,"second lance row repeated after reload");
+        front.setHealth(20); front.invulnerableTime=0;
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()+3);
+        var entity=new FrostboundEntity(BossRegistries.MORVATH.get(),level);
+        entity.snapTo(origin.getX(),origin.getY(),origin.getZ()); entity.setTarget(front);
+        for(int i=0;i<17;i++) entity.tickCombat(level);
+        helper.assertTrue(front.getHealth()==20 && entity.frostAction()==1,"Frostbound AI failed to warn basic attack");
+        entity.tickCombat(level);
+        helper.assertTrue(front.getHealth()<20,"Frostbound AI did not resolve a real attack");
+        entity.setHealth(entity.getMaxHealth()/2);
+        for(int i=0;i<20;i++) entity.tickCombat(level);
+        helper.assertTrue(entity.phase()==2 && entity.frostAction()==5,"Frostbound phase transition missing");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); entity.saveWithoutId(output);
+        var reloaded=new FrostboundEntity(BossRegistries.MORVATH.get(),level);
+        reloaded.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        helper.assertTrue(reloaded.phase()==2 && reloaded.frostAction()==5,"Frostbound phase was lost on reload");
+        for(int i=0;i<40;i++) reloaded.tickCombat(level);
+        helper.assertTrue(reloaded.phase()==2 && reloaded.frostAction()!=5,"Frostbound transition failed to finish after reload");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){
