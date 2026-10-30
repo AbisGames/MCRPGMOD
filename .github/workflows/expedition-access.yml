@@ -47,6 +47,7 @@ jobs:
           cp tools/worldgen/output/data/pipican/structure/special/*.nbt src/main/resources/data/pipican/structure/special/
           cp tools/worldgen/output/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
       - name: Compile and package
+        id: build
         run: chmod +x ./gradlew && ./gradlew build --no-daemon
       - name: Native surface underground and underwater regressions
         timeout-minutes: 45
@@ -62,6 +63,14 @@ jobs:
         with:
           suite: protection
           seed: ${{ matrix.seed }}
+      - name: Preserve compiled test mod
+        if: ${{ !cancelled() && matrix.seed == 0 && steps.build.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipican-native-test-${{ github.sha }}
+          path: build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 30
       - name: Preserve diagnostics
         if: always()
         uses: actions/upload-artifact@v4
