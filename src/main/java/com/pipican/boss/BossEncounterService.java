@@ -11,10 +11,7 @@ public final class BossEncounterService {
     public enum Result { SUCCESS, INVALID_PLAYER, UNLOADED_ARENA, WRONG_BIOME, OBSTRUCTED, NEARBY_ENCOUNTER, SPAWN_REJECTED }
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
-        return level.getBiome(pos).unwrapKey().map(key->{
-            var id=key.identifier();
-            return id.getNamespace().equals("pipican") && (id.getPath().startsWith("ashlands/") || id.getPath().equals("protected/ashlands"));
-        }).orElse(false);
+        return level.getBiome(pos).unwrapKey().map(key->BossCatalog.MORVATH.matchesBiome(key.identifier())).orElse(false);
     }
     public static Result summonMorvath(ServerPlayer owner,BlockPos arena){
         var level=owner.level();
@@ -35,7 +32,7 @@ public final class BossEncounterService {
         if(boss==null) return Result.SPAWN_REJECTED;
         boss.snapTo(arena.getX()+0.5,arena.getY(),arena.getZ()+0.5);
         if(!level.noCollision(boss,boss.getBoundingBox())) return Result.OBSTRUCTED;
-        if(!encounters.reserve(boss.getUUID(),owner.getUUID(),"morvath_ashen_king",arena)) return Result.NEARBY_ENCOUNTER;
+        if(!encounters.reserve(boss.getUUID(),owner.getUUID(),BossCatalog.MORVATH.id(),arena)) return Result.NEARBY_ENCOUNTER;
         boss.activateEncounter();
         boolean spawned=false;
         try { spawned=level.addFreshEntity(boss); return spawned ? Result.SUCCESS : Result.SPAWN_REJECTED; }

@@ -68,7 +68,7 @@ public final class BossTests {
     private static void summoningLifecycle(GameTestHelper helper){
         var level=helper.getLevel(); var arena=helper.absolutePos(new net.minecraft.core.BlockPos(256,25,256));
         for(int x=-32;x<=32;x+=8) for(int z=-32;z<=32;z+=8) level.getChunkAt(arena.offset(x,0,z));
-        var chunk=new net.minecraft.world.level.ChunkPos(arena);
+        var chunk=net.minecraft.world.level.ChunkPos.containing(arena);
         level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,0);
         var owner=helper.makeMockServerPlayerInLevel(); owner.snapTo(arena.getX()+6,arena.getY(),arena.getZ());
         try {
@@ -130,6 +130,9 @@ public final class BossTests {
         }
     }
     private static void entityRoundtrip(GameTestHelper helper){
+        helper.assertTrue(BossCatalog.all().size()==27,"boss metadata catalog incomplete");
+        helper.assertTrue(BossCatalog.MORVATH.matchesBiome(Pipican.id("protected/ashlands"))
+            && !BossCatalog.MORVATH.matchesBiome(Pipican.id("crimson_wilds")),"boss region metadata crosses unrelated biomes");
         var level=helper.getLevel();
         var entity=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
         helper.assertTrue(entity!=null && entity.getMaxHealth()==600,"entity registration or attributes missing");
