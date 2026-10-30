@@ -310,5 +310,6 @@
   "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
   "ritual.pipican.failed": "Ritual rejected: %s",
   "ritual.pipican.summoned": "The Ashen King awakens.",
-  "ritual.pipican.instructions": "Use an Ashen King sigil. Prepare a clear platform six blocks north of the altar."
+  "ritual.pipican.instructions": "Prepare a solid 13×13 floor and 11×11×5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
+  "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted."
 }

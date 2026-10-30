@@ -36,7 +36,15 @@ public final class RitualAltarBlock extends Block {
         return InteractionResult.SUCCESS;
     }
     @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){
-        if(player instanceof ServerPlayer serverPlayer) serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.instructions"),true);
+        if(player instanceof ServerPlayer serverPlayer){
+            if(player.isShiftKeyDown()){
+                var encounter=BossEncounters.get(serverPlayer.level()).ownedNear(player.getUUID(),pos);
+                if(encounter.isPresent() && BossEncounterService.cancel(serverPlayer.level(),encounter.get().boss(),player.getUUID())){
+                    serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.cancelled"),true); return InteractionResult.SUCCESS;
+                }
+            }
+            serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.instructions"),true);
+        }
         return InteractionResult.SUCCESS;
     }
 }

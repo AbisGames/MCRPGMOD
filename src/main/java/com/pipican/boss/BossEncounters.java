@@ -34,6 +34,10 @@ public final class BossEncounters extends SavedData {
     private BossEncounters(List<Encounter> saved){ for(var entry:saved) encounters.put(entry.boss(),entry); }
     public static BossEncounters get(ServerLevel level){ return level.getDataStorage().computeIfAbsent(TYPE); }
     public Optional<Encounter> find(UUID boss){ return Optional.ofNullable(encounters.get(boss)); }
+    public Optional<Encounter> ownedNear(UUID owner,BlockPos position){
+        return encounters.values().stream().filter(entry->entry.status()==Status.ACTIVE && entry.owner().equals(owner)
+            && entry.arena().distSqr(position)<64*64).min(Comparator.comparingDouble(entry->entry.arena().distSqr(position)));
+    }
     public boolean conflicts(BlockPos arena){
         long distance=2L*ARENA_RADIUS+8;
         return encounters.values().stream().anyMatch(entry->entry.status()==Status.ACTIVE && entry.arena().distSqr(arena)<distance*distance);

@@ -90,6 +90,12 @@ public final class BossTests {
             replay.hurtServer(level,replay.damageSources().genericKill(),10000);
             helper.assertTrue(hearts(level,arena)==1,"pre-death reload duplicated boss loot");
             helper.assertTrue(level.getBlockState(altar).is(BossContent.ALTAR.get()),"reusable altar destroyed");
+            helper.assertTrue(state.useItemOn(stack,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS && stack.isEmpty(),"altar could not be reused after completion");
+            owner.setShiftKeyDown(true); state.useWithoutItem(level,owner,hit);
+            helper.assertTrue(!BossEncounters.get(level).conflicts(arena),"owner could not cancel through empty-hand altar interaction");
+            var cancelled=level.getEntitiesOfClass(RegionalBossEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(e->e.isAlive()).findFirst().orElseThrow();
+            cancelled.hurtServer(level,cancelled.damageSources().genericKill(),10000);
+            helper.assertTrue(hearts(level,arena)==1,"administrative cancellation awarded loot");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
@@ -205,7 +211,7 @@ public final class BossTests {
             var filled=net.minecraft.server.commands.FillBiomeCommand.fill(level,arena.offset(-8,-8,-8),arena.offset(8,8,8),ashlands);
             helper.assertTrue(filled.left().isPresent(),"fixture biome fill failed");
             helper.assertTrue(BossEncounterService.morvathBiome(level,arena) && !BossEncounterService.morvathBiome(level,arena.above(40)),"boss biome check ignored Y");
-            for(var pos:net.minecraft.core.BlockPos.betweenClosed(arena.offset(-2,-1,-2),arena.offset(2,5,2)))
+            for(var pos:net.minecraft.core.BlockPos.betweenClosed(arena.offset(-6,-1,-6),arena.offset(6,5,6)))
                 level.setBlock(pos,pos.getY()==arena.getY()-1 ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState() : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
             var obstruction=arena.above(2); level.setBlock(obstruction,net.minecraft.world.level.block.Blocks.GOLD_BLOCK.defaultBlockState(),2);
             helper.assertTrue(BossEncounterService.summonMorvath(owner,arena)==BossEncounterService.Result.OBSTRUCTED,"obstructed player arena accepted");

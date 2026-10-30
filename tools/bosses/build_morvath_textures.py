@@ -23,4 +23,15 @@ def build(enraged):
 if __name__=='__main__':
     TARGET.mkdir(parents=True,exist_ok=True)
     for enraged,name in [(False,'armored'),(True,'enraged')]:
-        build(enraged).save(TARGET/f'morvath_{name}.png')
+        base=build(enraged)
+        glow=Image.new('RGBA',(256,256))
+        for y in range(256):
+            for x in range(256):
+                seam=(x+(y//7)*3)%29==0 or (y+(x//13)*2)%37==0
+                if seam or (enraged and (x+y)%43==0):
+                    glow.putpixel((x,y),(255,155 if enraged else 83,28 if enraged else 8,255))
+        for y in range(230,234):
+            for x in range(230,240):
+                base.putpixel((x,y),(255,190,35,255)); glow.putpixel((x,y),(255,190,35,255))
+        base.save(TARGET/f'morvath_{name}.png')
+        glow.save(TARGET/f'morvath_{name}_glow.png')

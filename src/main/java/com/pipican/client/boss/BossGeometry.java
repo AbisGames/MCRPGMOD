@@ -47,6 +47,8 @@ final class BossGeometry {
                     .texOffs(160,160).addBox(-2,0,-2,4,9,4)
                     .texOffs(180,160).addBox(-8,8,-3,16,3,6)
                     .texOffs(160,180).addBox(-4,11,-1.5f,8,30,3),PartPose.offsetAndRotation(3,19,-2,-1.5708f,0,0));
+                parts.get("head").addOrReplaceChild("animated_eyes",CubeListBuilder.create().texOffs(230,230)
+                    .addBox(-5,-6,-8.1f,3,1,1).addBox(2,-6,-8.1f,3,1,1),PartPose.ZERO);
                 parts.get("left_arm").addOrReplaceChild("shoulder_plate",CubeListBuilder.create().texOffs(190,100).addBox(-9,-4,-7,14,9,14),PartPose.ZERO);
                 parts.get("right_arm").addOrReplaceChild("shoulder_plate",CubeListBuilder.create().texOffs(190,100).addBox(-5,-4,-7,14,9,14),PartPose.ZERO);
             }

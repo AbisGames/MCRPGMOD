@@ -1,12 +1,13 @@
 {
   "entity.pipican.morvath_ashen_king": "Morvath, Kül Kralı",
   "block.pipican.ritual_altar": "Ritüel Sunağı",
-  "item.pipican.ritual_core": "Ritual Core",
-  "item.pipican.morvath_sigil": "Sigil of the Ashen King",
-  "item.pipican.ashen_kings_heart": "Ashen King's Heart",
+  "item.pipican.ritual_core": "Ritüel Çekirdeği",
+  "item.pipican.morvath_sigil": "Kül Kralı Mührü",
+  "item.pipican.ashen_kings_heart": "Kül Kralının Kalbi",
   "item.pipican.infernium": "Infernium",
-  "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
-  "ritual.pipican.failed": "Ritual rejected: %s",
-  "ritual.pipican.summoned": "The Ashen King awakens.",
-  "ritual.pipican.instructions": "Use an Ashen King sigil. Prepare a clear platform six blocks north of the altar."
+  "ritual.pipican.wrong_biome": "Bu mühür uygun yükseklikte bir Ashlands sunağı gerektirir.",
+  "ritual.pipican.failed": "Ritüel reddedildi: %s",
+  "ritual.pipican.summoned": "Kül Kralı uyanıyor.",
+  "ritual.pipican.instructions": "13×13 sağlam platform ve 11×11×5 boşluk hazırlayın. Boss sunağın 6 blok kuzeyinde doğar. Boş elle eğilerek kullanmak kendi savaşınızı iptal eder.",
+  "ritual.pipican.cancelled": "Karşılaşma iptal edildi. Ganimet verilmez."
 }

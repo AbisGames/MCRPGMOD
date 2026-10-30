@@ -49,6 +49,7 @@ public class RegionalBossEntity extends Monster {
         super.customServerAiStep(level);
         combat.updatePhase(getHealth(),getMaxHealth());
         attacks.tick(level,combat);
+        if(combat.phase()==2 && tickCount%10==0) level.sendParticles(net.minecraft.core.particles.ParticleTypes.FLAME,getX(),getY()+2,getZ(),5,0.8,1.4,0.8,0.01);
         entityData.set(PHASE,combat.phase()); entityData.set(ABILITY,combat.ability().ordinal()); entityData.set(REMAINING,combat.remaining());
         bar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));
     }
@@ -58,6 +59,7 @@ public class RegionalBossEntity extends Monster {
             var encounters=BossEncounters.get(level);
             var entry=encounters.find(getUUID()).orElse(null);
             if(entry==null || entry.status()!=BossEncounters.Status.ACTIVE){ discard(); return; }
+            if(position().distanceToSqr(net.minecraft.world.phys.Vec3.atBottomCenterOf(entry.arena()))>32*32){ discard(); return; }
             boolean occupied=!level.getPlayers(player->player.isAlive() && !player.isSpectator() && !player.isCreative()
                 && player.blockPosition().distSqr(entry.arena())<=48*48).isEmpty();
             abandonedTicks=occupied ? 0 : abandonedTicks+1;
@@ -87,7 +89,7 @@ public class RegionalBossEntity extends Monster {
     public boolean beginAbility(BossCombatState.Ability ability,net.minecraft.world.entity.LivingEntity target){
         return level() instanceof ServerLevel && insideArena(target.position()) && attacks.begin(combat,ability,target);
     }
-    public void tickCombat(ServerLevel level){ customServerAiStep(level); }
+    public void tickCombat(ServerLevel level){ if(level!=level()) throw new IllegalArgumentException("Wrong combat dimension"); customServerAiStep(level); }
     void activateEncounter(){ managedEncounter=true; combat.summon(); }
     @Override protected void dropAllDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source){
         if(!managedEncounter || !BossEncounters.get(level).finish(getUUID(),BossEncounters.Status.DEFEATED)) return;

@@ -24,10 +24,13 @@ public final class BossEncounterService {
         var encounters=BossEncounters.get(level);
         if(encounters.conflicts(arena)) return Result.NEARBY_ENCOUNTER;
         // Only inspect; player-built floors and surrounding blocks are never modified.
-        for(var pos:BlockPos.betweenClosed(arena.offset(-1,0,-1),arena.offset(1,4,1)))
+        for(var pos:BlockPos.betweenClosed(arena.offset(-5,0,-5),arena.offset(5,4,5)))
             if(!level.getBlockState(pos).getCollisionShape(level,pos).isEmpty() || !level.getFluidState(pos).isEmpty()) return Result.OBSTRUCTED;
-        for(var floor:BlockPos.betweenClosed(arena.offset(-1,-1,-1),arena.offset(1,-1,1)))
-            if(!level.getBlockState(floor).isFaceSturdy(level,floor,net.minecraft.core.Direction.UP)) return Result.OBSTRUCTED;
+        for(var floor:BlockPos.betweenClosed(arena.offset(-6,-1,-6),arena.offset(6,-1,6)))
+            if(!level.getFluidState(floor).isEmpty() || level.getBlockState(floor).is(net.minecraft.world.level.block.Blocks.MAGMA_BLOCK)
+                || level.getBlockState(floor).is(net.minecraft.world.level.block.Blocks.CAMPFIRE)
+                || level.getBlockState(floor).is(net.minecraft.world.level.block.Blocks.SOUL_CAMPFIRE)
+                || !level.getBlockState(floor).isFaceSturdy(level,floor,net.minecraft.core.Direction.UP)) return Result.OBSTRUCTED;
         var boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.TRIGGERED);
         if(boss==null) return Result.SPAWN_REJECTED;
         boss.snapTo(arena.getX()+0.5,arena.getY(),arena.getZ()+0.5);
