@@ -2144,7 +2144,7 @@
   {
     "id": "vermillion_blood_monarch",
     "region": "crimson_wilds",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1400,
     "damage": 19,
@@ -2157,38 +2157,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:nether_wart",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:vermillion_blood_monarch_sigil"
     },
     "abilities": [
       {
         "id": "blood_tethers",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Visible draining tethers connect charged vessels to the monarch.",
         "counterplay": "Break a vessel or move out of its announced line.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:vermillion_blood_monarch/blood_tethers"
+        "animation": "vermillion_blood_monarch/blood_tethers"
       },
       {
         "id": "crimson_orbits",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Blades orbit in staggered heights with a visible safe crossing.",
         "counterplay": "Use the crossing when its blade has just passed.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:vermillion_blood_monarch/crimson_orbits"
+        "animation": "vermillion_blood_monarch/crimson_orbits"
       },
       {
         "id": "sanguine_court",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Spectral courtiers announce a shared life-drain channel.",
         "counterplay": "Interrupt a marked courtier or leave its limited channel sector.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:vermillion_blood_monarch/sanguine_court"
+        "animation": "vermillion_blood_monarch/sanguine_court"
       }
     ],
     "phase_two": {
@@ -2199,7 +2200,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:bloodstone",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:vermillion_blood_monarch_trophy",
       "planned_trophy_name": "Vermillion Blood Monarch Trophy",
       "xp": 350,
       "rare_drop": {
@@ -2211,16 +2212,16 @@
       "geometry": "geometry.pipican.vermillion_blood_monarch",
       "file": "geo/bosses/vermillion_blood_monarch.geo.json",
       "animation_mapping": {
-        "idle": "planned:vermillion_blood_monarch/idle",
-        "walk": "planned:vermillion_blood_monarch/walk",
-        "basic_attack": "planned:vermillion_blood_monarch/basic_attack",
-        "hurt": "planned:vermillion_blood_monarch/hurt",
-        "phase_transition": "planned:vermillion_blood_monarch/phase_transition",
-        "summoning": "planned:vermillion_blood_monarch/summoning",
-        "death": "planned:vermillion_blood_monarch/death",
-        "blood_tethers": "planned:vermillion_blood_monarch/blood_tethers",
-        "crimson_orbits": "planned:vermillion_blood_monarch/crimson_orbits",
-        "sanguine_court": "planned:vermillion_blood_monarch/sanguine_court"
+        "idle": "vermillion_blood_monarch/idle",
+        "walk": "vermillion_blood_monarch/walk",
+        "basic_attack": "vermillion_blood_monarch/basic_attack",
+        "hurt": "vermillion_blood_monarch/hurt",
+        "phase_transition": "vermillion_blood_monarch/phase_transition",
+        "summoning": "vermillion_blood_monarch/summoning",
+        "death": "vermillion_blood_monarch/death",
+        "blood_tethers": "vermillion_blood_monarch/blood_tethers",
+        "crimson_orbits": "vermillion_blood_monarch/crimson_orbits",
+        "sanguine_court": "vermillion_blood_monarch/sanguine_court"
       }
     },
     "arena": {

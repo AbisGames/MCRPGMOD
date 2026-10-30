@@ -56,6 +56,7 @@ public final class PipicanClient {
         event.registerEntityRenderer(com.pipican.boss.BossRegistries.KRAGMOR.get(),com.pipican.client.boss.KragmorRenderer::new);
         event.registerEntityRenderer(com.pipican.boss.BossRegistries.NOCTHAR.get(),com.pipican.client.boss.NoctharRenderer::new);
         event.registerEntityRenderer(com.pipican.boss.BossRegistries.AETHERION.get(),com.pipican.client.boss.AetherionRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.VERMILLION.get(),com.pipican.client.boss.VermillionRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {

@@ -29,7 +29,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | aetherion_sky_guardian | implemented | preserved source geometry + native flight pose renderer | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | sylthera_primordial_bloom | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | nocthar_void_sovereign | implemented | prototype | implemented | implemented | implemented | implemented | implemented | passed | passed | pending |
-| vermillion_blood_monarch | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| vermillion_blood_monarch | implemented | preserved source geometry + native attack poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | lumynara_abyssal_oracle | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 
 Frostbound now has a registered entity, unique attributes, independent attacks and phase persistence, craftable sigil, Whitecrown biome gate, transactional altar spawn, boss bar, once-only trophy/Frostcrystal rewards and real server GameTest coverage for attack warning, reload, recipe, summon and drops. Texture/animation states compile against the preserved geometry, but in-client clipping/animation QA remains pending; therefore its visual columns remain partial.
@@ -48,3 +48,6 @@ Nocthar now has a registered void sovereign, preserved robe/staff geometry, pair
 
 
 Aetherion now uses a true flying move controller and 3D path navigation, rises during its altar summon, and keeps its locked dive locations and wake timer through save/reload. Updraft paths lift players before a low sweep, feather links can be interrupted by occupying a node, and the dive circle resolves before a separately warned wake. The high-altitude Aetheris sanctuary route, Y band, exact Skycrystal/core/feather recipe, unique trophy, guaranteed Skycrystal and deterministic 25% Celestium roll pass GameTests. The full server suite passes 37/37 tests and the packaged JAR validator confirms both 256px phase atlases, item assets, recipe and unchanged source geometries. Client appearance QA is pending because the only available Prism client profiles are Minecraft 1.20.1 and a server profile; the mod targets Minecraft 26.1.2.
+
+
+Vermillion now has independent vessel tethers, three staggered blade orbit heights with a marked center refuge, and three limited spectral court channels that can be interrupted at their source. The phase-two vessel break exposes the monarch to increased incoming damage for a saved 80-tick window. Crimson Wilds biome gating, sigil recipe (Bloodstone + Crimson core + ritual core + Nether Wart), one-time trophy/Bloodstone rewards, and deterministic 25% Bloodcrystal are tested. All 38 required GameTests pass, including attack telegraphs/counterplay, exposure persistence, altar rejection/summoning and rewards. Client appearance QA remains pending.

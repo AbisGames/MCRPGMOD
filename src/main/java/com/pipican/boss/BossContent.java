@@ -26,6 +26,8 @@ public final class BossContent {
     public static final DeferredItem<Item> NOCTHAR_TROPHY=ITEMS.registerSimpleItem("nocthar_void_sovereign_trophy");
     public static final DeferredItem<Item> AETHERION_SIGIL=ITEMS.registerSimpleItem("aetherion_sky_guardian_sigil");
     public static final DeferredItem<Item> AETHERION_TROPHY=ITEMS.registerSimpleItem("aetherion_sky_guardian_trophy");
+    public static final DeferredItem<Item> VERMILLION_SIGIL=ITEMS.registerSimpleItem("vermillion_blood_monarch_sigil");
+    public static final DeferredItem<Item> VERMILLION_TROPHY=ITEMS.registerSimpleItem("vermillion_blood_monarch_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

@@ -31,7 +31,8 @@ public final class BossTests {
         Map.entry("ritual_interaction_and_loot",BossTests::ritualInteraction),
         Map.entry("boss_design_catalog",BossTests::designCatalog),
         Map.entry("nocthar_deep_encounter",BossTests::noctharDeepEncounter),
-        Map.entry("aetherion_high_encounter",BossTests::aetherionHighEncounter));
+        Map.entry("aetherion_high_encounter",BossTests::aetherionHighEncounter),
+        Map.entry("vermillion_crimson_encounter",BossTests::vermillionCrimsonEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -42,7 +43,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==8,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==9,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -78,6 +79,9 @@ public final class BossTests {
         helper.assertTrue(aetherion.functional() && aetherion.sigil().registered() && aetherion.sigil().minY()==251
             && aetherion.loot().trophyItem().equals("pipican:aetherion_sky_guardian_trophy") && aetherion.loot().rare().orElseThrow().chance()==0.25,
             "Aetherion flight/high-altitude/unique-loot metadata is incomplete");
+        var vermillion=BossDesigns.require("vermillion_blood_monarch");
+        helper.assertTrue(vermillion.functional() && vermillion.sigil().registered() && vermillion.loot().trophyItem().equals("pipican:vermillion_blood_monarch_trophy")
+            && vermillion.loot().rare().orElseThrow().chance()==0.25,"Vermillion channel/loot metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -90,7 +94,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -110,6 +114,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("aetheris_expanse").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("skycrystal").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.FEATHER));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("crimson_wilds").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.NETHER_WART));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -307,6 +314,32 @@ public final class BossTests {
             long rare=drops.stream().filter(item->item.getItem().is(com.pipican.resource.RareResources.MATERIALS.get("celestium").get())).mapToInt(item->item.getItem().getCount()).sum();
             helper.assertTrue(rare==(Math.floorMod(boss.getUUID().hashCode(),4)==0?1:0),"Aetherion Celestium 25-percent encounter roll differed");
             helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void vermillionCrimsonEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(2048,32,2048));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.BLACKSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.VERMILLION_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,
+                "Vermillion altar accepted a non-Crimson biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("crimson_wilds")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Crimson Wilds biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL
+                &&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Vermillion spawn consumed sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Crimson altar summon failed");
+            var boss=level.getEntitiesOfClass(VermillionEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Vermillion spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("vermillion_blood_monarch"),"Vermillion encounter type was not saved");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.VERMILLION_TROPHY.get()))
+                &&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("bloodstone").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Vermillion guaranteed trophy/bloodstone rewards missing");
+            long rare=drops.stream().filter(item->item.getItem().is(com.pipican.resource.RareResources.MATERIALS.get("bloodcrystal").get())).mapToInt(item->item.getItem().getCount()).sum();
+            helper.assertTrue(rare==(Math.floorMod(boss.getUUID().hashCode(),4)==0?1:0),"Vermillion Bloodcrystal encounter roll differed");helper.succeed();
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void realAttacks(GameTestHelper helper){
@@ -581,6 +614,27 @@ public final class BossTests {
         var aetherionReload=BossRegistries.AETHERION.get().create(level,EntitySpawnReason.LOAD);aetherionReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
         helper.assertTrue(aetherionReload.phase()==2&&aetherionReload.isNoGravity()&&aetherionReload.getNavigation() instanceof net.minecraft.world.entity.ai.navigation.FlyingPathNavigation,
             "Aetherion phase/3D navigation did not survive entity reload");
+
+        var monarch=BossRegistries.VERMILLION.get().create(level,EntitySpawnReason.COMMAND);monarch.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+7,origin.getY(),origin.getZ());
+        var bloodTethers=new VermillionCombat(monarch);helper.assertTrue(bloodTethers.begin(VermillionCombat.TETHERS,front),"Vermillion blood vessels failed to start");front.snapTo(origin.getX()+3,origin.getY(),origin.getZ()+2.6);
+        for(int i=0;i<39;i++)bloodTethers.tick(level);helper.assertTrue(front.getHealth()==20,"Vermillion tether drained before warning");bloodTethers.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Vermillion line damage or vessel interruption failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6.5,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var orbits=new VermillionCombat(monarch);helper.assertTrue(orbits.begin(VermillionCombat.ORBITS,front),"Vermillion blade orbit failed to start");
+        for(int i=0;i<49;i++)orbits.tick(level);helper.assertTrue(front.getHealth()==20,"Vermillion orbit struck before blade arrival");orbits.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Vermillion staggered blade lane or center refuge failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+5.8);dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+5.5,origin.getY(),origin.getZ());
+        var court=new VermillionCombat(monarch);helper.assertTrue(court.begin(VermillionCombat.COURT,front),"Vermillion court channel failed to start");
+        for(int i=0;i<59;i++)court.tick(level);helper.assertTrue(front.getHealth()==20,"Vermillion channel resolved before warning");court.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Vermillion limited channel sector or courtier interruption failed");
+        var breaker=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(breaker);monarch.setHealth(700);
+        front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());var phaseTwo=new VermillionCombat(monarch);helper.assertTrue(phaseTwo.updatePhase(700,1400)&&phaseTwo.begin(VermillionCombat.TETHERS,front),"Vermillion phase-two tethers failed");
+        front.snapTo(origin.getX()+5.36,origin.getY(),origin.getZ()-4.62);dodge.snapTo(origin.getX()+7,origin.getY(),origin.getZ());breaker.snapTo(origin.getX()+5.36,origin.getY(),origin.getZ()+4.62);
+        for(int i=0;i<40;i++)phaseTwo.tick(level);helper.assertTrue(phaseTwo.exposed(),"breaking all phase-two vessels did not expose the monarch");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());phaseTwo.save(output);var phaseTwoReload=new VermillionCombat(monarch);
+        phaseTwoReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        helper.assertTrue(phaseTwoReload.exposed()&&phaseTwoReload.clock().phase()==2,"Vermillion exposed vulnerability or phase was lost on reload");breaker.discard();
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pipican:item/vermillion_blood_monarch_trophy"
+  }
+}

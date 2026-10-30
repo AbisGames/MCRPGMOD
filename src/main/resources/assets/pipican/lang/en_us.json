@@ -367,5 +367,8 @@
   "entity.pipican.nocthar_void_sovereign": "Nocthar, Void Sovereign",
   "item.pipican.aetherion_sky_guardian_sigil": "Aetherion Sigil",
   "item.pipican.aetherion_sky_guardian_trophy": "Aetherion Skyheart",
-  "entity.pipican.aetherion_sky_guardian": "Aetherion, Sky Guardian"
+  "entity.pipican.aetherion_sky_guardian": "Aetherion, Sky Guardian",
+  "item.pipican.vermillion_blood_monarch_sigil": "Vermillion Sigil",
+  "item.pipican.vermillion_blood_monarch_trophy": "Blood Monarch's Crown",
+  "entity.pipican.vermillion_blood_monarch": "Vermillion, Blood Monarch"
 }

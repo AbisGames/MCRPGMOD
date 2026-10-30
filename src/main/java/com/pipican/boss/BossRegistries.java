@@ -45,6 +45,10 @@ public final class BossRegistries {
         "aetherion_sky_guardian",()->EntityType.Builder.<AetherionEntity>of(AetherionEntity::new,MobCategory.MONSTER)
             .sized(2.0f,3.6f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("aetherion_sky_guardian"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<VermillionEntity>> VERMILLION=ENTITIES.register(
+        "vermillion_blood_monarch",()->EntityType.Builder.<VermillionEntity>of(VermillionEntity::new,MobCategory.MONSTER)
+            .sized(1.8f,3.8f).fireImmune().clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("vermillion_blood_monarch"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -56,5 +60,6 @@ public final class BossRegistries {
         event.put(KRAGMOR.get(),KragmorEntity.attributes().build());
         event.put(NOCTHAR.get(),NoctharEntity.attributes().build());
         event.put(AETHERION.get(),AetherionEntity.attributes().build());
+        event.put(VERMILLION.get(),VermillionEntity.attributes().build());
     }
 }

@@ -46,5 +46,11 @@
     "boss": "aetherion_sky_guardian",
     "min_y": 251,
     "max_y": 448
+  },
+  {
+    "item": "pipican:vermillion_blood_monarch_sigil",
+    "boss": "vermillion_blood_monarch",
+    "min_y": -64,
+    "max_y": 448
   }
 ]
