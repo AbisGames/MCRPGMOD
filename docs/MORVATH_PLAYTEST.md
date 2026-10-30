@@ -1,0 +1,106 @@
+# Morvath development playtest
+
+Minecraft 26.1.2 / NeoForge 26.1.2.124 / Java 25. Use a separate test world.
+Verified worldgen was preserved. The other 26 bosses are not registered as finished encounters.
+
+## Crafting
+
+Ritual Altar:
+
+```
+Obsidian        Amethyst Shard  Obsidian
+Crying Obsidian Ender Pearl     Crying Obsidian
+Obsidian        Diamond         Obsidian
+```
+
+Ritual Core:
+
+```
+Amethyst Shard Gold Ingot  Amethyst Shard
+Gold Ingot     Ender Pearl Gold Ingot
+Amethyst Shard Gold Ingot  Amethyst Shard
+```
+
+Morvath sigil (`C` Cinderite, `D` existing Ashlands dungeon core
+`pipican:ashlands_boss_core`, `R` Ritual Core, `M` Magma Cream):
+
+```
+CCC
+CDC
+DRM
+```
+
+## Arena and interaction
+
+Place the altar in an actual Ashlands biome, at Y -64..448 and within the
+world's build limits, at least five blocks below the world ceiling. Biome lookup includes Y; the same XZ in another biome is rejected.
+The spawn point is **six blocks north of the altar**, at its base Y.
+Build a solid **13x13 floor**, centered on that spawn point, with **11x11x5 clear
+space** above it. Fluids, magma and campfire floors are rejected. No terrain is edited.
+Surrounding chunks within 24 blocks must already be loaded.
+
+Use the sigil on the altar. A successful spawn consumes exactly one, including
+creative mode. Wrong biome, blocked/unsafe floor, another active encounter or rejected
+spawn consume none. The altar is reusable after completion/cancellation.
+Sneak-use it with an empty hand to cancel your nearest owned encounter within 64 blocks.
+Cancellation grants no rewards or refund. Another player cannot cancel your fight.
+
+Fight within 24 blocks of the encounter center. A boss displaced over 32 blocks
+cancels safely. After 600 loaded entity ticks with no living, non-creative,
+non-spectating players nearby, it cancels. Chunk unload pauses and preserves the
+fight rather than granting rewards or releasing a live reservation.
+
+## Combat
+
+600 health, 12 armor. Basic swing plus three telegraphed attacks:
+
+- Infernal Cleave: 30-tick windup, fixed heading, configurable 6-block/120-degree
+  cone, 14 damage (18 in phase two), knockback and two seconds of ignition.
+  Dodge behind or outside the marked cone. Range/half-angle are server-configurable
+  in `pipican-bosses-server.toml` and are snapshotted per attack.
+- Meteor Rain: 50-tick warning, fixed position markers, falling flame trails,
+  one server-authoritative area impact. Leave the circles. Overlapping impacts
+  cannot hit a player twice in the same cast. At most six markers per cast;
+  phase two adds adjacent markers.
+- Volcanic Eruption: 45-tick warning, temporary areas pulse every 20 ticks.
+  Phase one: 80 ticks/4 damage; phase two: 120 ticks/7 damage. No lava blocks,
+  explosions that edit terrain or fire placement.
+
+At half health a single transition interrupts the current windup. Phase two
+persists through healing/reload, moves faster and reduces attack cooldowns.
+Normal game armor/difficulty/fire resistance rules apply. No class selection is required.
+
+## Rewards
+
+One shared ground-drop bundle per valid completed encounter, available to the group
+under normal Minecraft pickup rules; **not one bundle per participant**:
+
+- One Ashen King's Heart.
+- Eight Cinderite.
+- 150 XP before other mods' experience hooks and normal game rules.
+- One Infernium with a deterministic 25% roll from encounter UUID hash modulo four.
+  Reloading never rerolls the encounter.
+
+The terminal encounter claim gates all reward processing. Administrative cancellation,
+invalid/unmanaged command-spawned bosses and replay of a pre-death save grant no rewards.
+Normal reload behavior is tested; power-loss atomicity across independently saved world
+files is not guaranteed.
+
+## Visual QA limits
+
+Native model attachments add a sword, shoulder plates and animated emissive eyes,
+without editing any of the 27 prototype geometry files. Native poses cover idle,
+walk, basic swing, cleave, meteor, eruption, summoning, hurt, transition and death.
+These remain unreviewed art drafts until client inspection establishes alignment,
+scale, clipping and readable animation silhouettes.
+
+A local isolated `runClient` attempt failed before the game started, in NeoForm's
+Minecraft SDK recompile task (writing `package-info`), not in the mod's Java sources.
+ZIP filesystem preflight succeeded, so the old ZIP access diagnosis alone no longer
+explains the current blocker. No screenshots, rendered model or FPS results are claimed.
+`-PclientGameDir=...` selects an isolated directory; default is `run-client-boss`.
+
+The supported NeoForm Eclipse-compiler alternative was tried once with a local-only
+init script. Its bundled compiler rejected flexible constructor bodies as a disabled
+preview feature while rebuilding Minecraft sources. This did not reach mod/client
+execution either. No compiler-preview workaround or Windows security change was applied.

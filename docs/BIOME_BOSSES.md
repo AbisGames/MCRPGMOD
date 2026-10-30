@@ -1,66 +1,71 @@
-# Biome boss development
+# Biome bosses progress
 
-## Current checkpoint: server framework
+Branch: `biome-bosses`. Worldgen remains at its verified implementation; no worldgen
+production files were modified. Original checkpoint `93beb03` / 25 tests is retained
+in history. All 27 original geometry Git blobs are preserved (CRLF conversion normalized).
 
-Branch `biome-bosses`; verified production code `93beb03`.
-Worldgen checkpoint `b0f3443` was merged at `9f170c9`. All 27 original `.geo.json`
-blobs still match `7aafa4f` exactly. See `WORLDGEN_TESTING.md` for worldgen coverage.
+## This session
 
-Implemented:
-- Shared metadata catalog for all 27 regions; only Morvath is registered as an entity.
-- Entity attributes, persistent mob, native multiplayer tracking boss bar.
-- Server combat clock: windup/recovery/cooldown and a latched half-health phase.
-- Entity serialization and synchronization of phase, ability, remaining ticks,
-  cooldown and resolved impact. An impact cannot repeat after normal reload.
-- Per-dimension encounter SavedData: owner, arena reservation and terminal tombstones.
-  Active reservations survive chunk unload. Completion can be claimed once.
-- Summoning service checks the actual 3D biome, loaded arena, collision/headroom and
-  a sturdy player-built floor. It never modifies blocks. Failed spawn rolls back
-  its reservation; callers must consume ingredients only after SUCCESS.
-- Managed bosses cancel after 600 loaded entity ticks without eligible nearby players.
-  Owner cancellation, missing/terminal records and permanent entity removal clean up
-  safely, including when NoAI is set. Chunk unload preserves the encounter.
-  Leaving the dimension cancels it. Terminal records gate all death reward processing.
-- Native client renderer converts preserved Bedrock box geometry into model parts;
-  idle/walk/head movement and two original, reproducibly generated basalt texture drafts.
-  Prototype scale is already baked into geometry and is not multiplied again.
+- `194d1a5`: actual cleave/meteor/eruption damage, telegraphs, fixed marks, persistent
+  impact state and temporary hazards. Actual damage/reload/dodge GameTest passed.
+- `8c532d0`: craftable altar/core/Morvath sigil, real block interaction and spawn rollback,
+  summoning animation, guaranteed heart/8 Cinderite/XP and 25% Infernium. Nine boss tests,
+  28 total required tests passed in run41027720654.
+- `daf607e`: 13x13 safe floor/11x11x5 clearance, owner cancellation through altar,
+  native sword/shoulders, emissive animated eyes/cracks and native combat poses.
+  Run41028128907 passed.
+- `63fd915`: complete basic-swing/three-ability loop and stronger phase-two hazards.
+  Actual phase-two damage/duration and hazard-pulse reload assertions; run41028428224 passed.
+- `b1ebad1`: packaged-JAR assets/geometry hash validation, reward assertions, per-attack
+  balance snapshots, isolated client QA directory. Local compilation passed; run41029291366 is queued for a runner at this checkpoint.
+  Do not call this commit runtime verified yet.
+- `9a3a729`: validates full arena height against dimension build limits and translates
+  rejection messages for players; local main/test compilation passes, CI pending.
 
-## Runtime verification
+New block: `pipican:ritual_altar` (also an item).
+New items: `pipican:ritual_core`, `pipican:morvath_sigil`, `pipican:ashen_kings_heart`,
+`pipican:infernium`. No additional entities beyond the existing Morvath registration.
+Ashlands dungeon ingredient is the already registered `pipican:ashlands_boss_core`.
+No NPC/class-system implementation was overwritten.
 
-[Run 41024349874](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41024349874),
-commit `93beb03`: **all 25 required GameTests passed**, including six boss tests:
+See [playtest instructions](MORVATH_PLAYTEST.md) for exact recipes, platform size,
+biome/height rules, telegraphs, cancellation and deterministic multiplayer rewards.
 
-1. Interrupted windup/reload after impact: no early or duplicate effect, cooldown completes.
-2. Half-health phase remains latched after healing/reload, transition runs once.
-3. Registered entity attributes and combat NBT survive compressed disk roundtrip.
-4. Arena/owner reservation and terminal completion survive compressed disk roundtrip;
-   overlapping encounters, repeated completion and terminal UUID reuse are rejected.
-5. Actual mock server player and Ashlands biome fixture: positive spawn on a player-built
-   floor; wrong biome, same XZ at a different Y, solid obstruction and duplicate rejection;
-   non-owner cancellation rejection and owner cancellation/entity cleanup. Floor survives.
-6. Chunk unload retains reservation; abandoned NoAI entity cleans up after reload;
-   permanent removal releases its arena without awarding a completion.
+## Coverage and limits
 
-Existing class, worldgen catalogue/access safety and player provenance/ore renewal
-reload regressions also passed in this run. Tests live only in the GameTest source set.
-The published development JAR was checked for all 27 geometries, both draft textures,
-expected common/client classes and absence of GameTest classes.
+GameTests cover real registered entities/attributes, combat state and compressed disk
+roundtrip, phase latching, actual player damage/cone dodge, meteor mark dodge and reload,
+temporary zones/phase-two damage and duration, no immediate replayed hazard pulse,
+actual crafting recipes, real altar block interaction, forced rejected-spawn rollback,
+exact sigil consumption, repeat interaction, owner cancellation, one-time loot,
+pre-death reload replay, no cancellation loot, cleanup/NoAI/unload and existing regressions.
+Packaged mod validation checks 27 original models, texture/model/class presence,
+exact sigil ingredients and exclusion of GameTest code/data.
 
-Earlier successful checkpoints: `26dcac0` / run41022507755 (22 tests),
-`d0c1d36` / run41022987435 (23 tests). Later fixture debugging corrected an obsolete
-ChunkPos constructor and a FULL-only ticket that did not simulate entities; assertions
-were retained, and the final positive fixture uses an entity-ticking ticket.
+Local ECJ Java25 main/test compilation succeeds. Local client launch failed before
+Minecraft started in NeoForm SDK compilation (package-info write error). ZIP preflight
+succeeded; no client screenshots or visual/FPS/multiplayer play session are claimed.
+Art/animation code is present, but final artwork/alignment is not verified. Meteor
+projectile visuals are server-issued falling particle trails, not a separate projectile entity.
+Normal save/reload is covered; crash atomicity across separate save files is not guaranteed.
 
-## Still unfinished
+## Remaining milestones
 
-Morvath is **not a completed playable fight**. There are no damaging attack effects,
-ritual altar/sigil items, finished loot, full combat animations or reviewed final artwork.
-The clock enumerates attacks but does not execute them yet. The summoning service is an
-internal API; command spawning remains for development. Other 26 bosses are unregistered
-geometry prototypes. Client appearance, FPS, a real multiplayer play session and crash
-atomicity across independent world files have not been verified.
+Finish client render/playtest and polish Morvath art before declaring the encounter final.
+Infernium is implemented as a boss crafting material; the other 11 rare resources,
+regional pickaxes/mining gates/natural deposits and blacksmith upgrade backend are pending.
+The 26 other bosses remain unregistered geometry prototypes with catalog metadata;
+full unique ability/loot/sigil/animation configurations and implementations are pending.
 
-Next implementation: Morvath Infernal Cleave, marked Meteor Rain and temporary
-non-terrain Volcanic Eruption; phase visuals/animations and loot; then altar/sigil
-transaction and player-facing summoning. Remaining boss batches, rare ores and armor
-upgrade service follow the user-requested phase order.
+The supported NeoForm Eclipse-compiler alternative was tried once with a local-only
+init script. Its bundled compiler rejected flexible constructor bodies as a disabled
+preview feature while rebuilding Minecraft sources. This did not reach mod/client
+execution either. No compiler-preview workaround or Windows security change was applied.
+
+## Distributable checkpoint
+
+`63fd915` passed all 28 required tests in run41028428224. Its distributable also passed
+`tools/bosses/validate_boss_jar.py` locally. SHA256:
+`425b27b21bc2ee98e05e459ae01dd08b95a55ae13b6e1e50ca2e13d240279d80`.
+This is the server-verified playable development candidate; client artwork is unreviewed.
+Do not confuse it with the older framework-only JAR or the newer queued `b1ebad1` candidate.

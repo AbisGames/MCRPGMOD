@@ -1,13 +1,12 @@
 # Biome boss geometry prototypes
 
-27 distinct articulated Bedrock-style `*.geo.json` starting models, with box UVs
-and separate bones. The geometry files remain byte-identical to the initial
-`biome-bosses` prototypes; see `boss_manifest.json` for region/identifier metadata.
+All 27 original Bedrock-style `.geo.json` Git blobs are preserved. See
+`boss_manifest.json` for identifiers and region assignments.
 
-Morvath now has a native Minecraft renderer, basic idle/walk/head animation,
-entity registration and two original draft basalt textures. The manifest scale
-was baked into these prototypes; the renderer does not multiply it a second time.
-The other 26 bosses remain unregistered prototypes. None is claimed as finished
-art or a completed playable fight at this framework checkpoint.
+Morvath now has a server-tested combat loop, reusable altar, rewards and native
+rendering. Sword/shoulder/eye attachments are added in native model code, without
+editing these prototypes. Prototype scale is already baked in; do not multiply it again.
+Other 26 bosses remain unregistered prototypes. Morvath artwork and animation alignment
+still require client review; rendering code is not proof of final artwork.
 
-See `docs/BIOME_BOSSES.md` for implemented server features, tests and remaining work.
+See `docs/BIOME_BOSSES.md` and `docs/MORVATH_PLAYTEST.md` for results and usage.
