@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 
 /** Summoning transaction boundary. Callers consume ingredients only after SUCCESS. */
 public final class BossEncounterService {
-    public enum Result { SUCCESS, INVALID_PLAYER, UNLOADED_ARENA, WRONG_BIOME, OBSTRUCTED, NEARBY_ENCOUNTER, SPAWN_REJECTED }
+    public enum Result { SUCCESS, INVALID_PLAYER, INVALID_HEIGHT, UNLOADED_ARENA, WRONG_BIOME, OBSTRUCTED, NEARBY_ENCOUNTER, SPAWN_REJECTED }
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return level.getBiome(pos).unwrapKey().map(key->BossCatalog.MORVATH.matchesBiome(key.identifier())).orElse(false);
@@ -16,6 +16,7 @@ public final class BossEncounterService {
     public static Result summonMorvath(ServerPlayer owner,BlockPos arena){
         var level=owner.level();
         if(!owner.isAlive() || owner.isSpectator() || owner.blockPosition().distSqr(arena)>48*48) return Result.INVALID_PLAYER;
+        if(arena.getY()<=level.getMinY() || arena.getY()+5>level.getMaxY()) return Result.INVALID_HEIGHT;
         int radius=BossEncounters.ARENA_RADIUS;
         for(int x=arena.getX()-radius;x<=arena.getX()+radius;x+=8)
             for(int z=arena.getZ()-radius;z<=arena.getZ()+radius;z+=8)

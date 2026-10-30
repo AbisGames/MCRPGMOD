@@ -29,7 +29,7 @@ public final class RitualAltarBlock extends Block {
         }
         var result=BossEncounterService.summonMorvath(serverPlayer,pos.north(6));
         if(result!=BossEncounterService.Result.SUCCESS){
-            serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.failed",result.name()),true); return InteractionResult.FAIL;
+            serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.failed",Component.translatable("ritual.pipican.result."+result.name().toLowerCase(java.util.Locale.ROOT))),true); return InteractionResult.FAIL;
         }
         stack.shrink(1); // Exactly once, including creative; all validation/spawn work has succeeded.
         serverPlayer.sendSystemMessage(Component.translatable("ritual.pipican.summoned"),true);

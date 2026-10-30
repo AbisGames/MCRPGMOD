@@ -9,5 +9,12 @@
   "ritual.pipican.failed": "Ritüel reddedildi: %s",
   "ritual.pipican.summoned": "Kül Kralı uyanıyor.",
   "ritual.pipican.instructions": "13×13 sağlam platform ve 11×11×5 boşluk hazırlayın. Boss sunağın 6 blok kuzeyinde doğar. Boş elle eğilerek kullanmak kendi savaşınızı iptal eder.",
-  "ritual.pipican.cancelled": "Karşılaşma iptal edildi. Ganimet verilmez."
+  "ritual.pipican.cancelled": "Karşılaşma iptal edildi. Ganimet verilmez.",
+  "ritual.pipican.result.invalid_player": "Çağırmak için canlı ve sunağa yakın olmalısın.",
+  "ritual.pipican.result.invalid_height": "Dünya tavanının altında en az beş blok boşluk bırak.",
+  "ritual.pipican.result.unloaded_arena": "Çevredeki arena yüklenene kadar yakınında bekle.",
+  "ritual.pipican.result.wrong_biome": "Bu karşılaşma Ashlands arenası gerektirir.",
+  "ritual.pipican.result.obstructed": "13x13 güvenli zemin ve 11x11x5 boş alan hazırla.",
+  "ritual.pipican.result.nearby_encounter": "Yakında başka bir aktif karşılaşma var.",
+  "ritual.pipican.result.spawn_rejected": "Sunucu kuralı çağırmayı engelledi; mührün korunuyor."
 }

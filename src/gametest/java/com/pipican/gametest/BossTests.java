@@ -73,6 +73,10 @@ public final class BossTests {
         var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try {
             var state=level.getBlockState(altar);
+            var tooHigh=new net.minecraft.core.BlockPos(altar.getX(),level.getMaxY()-1,altar.getZ());
+            owner.snapTo(tooHigh.getX(),tooHigh.getY(),tooHigh.getZ());
+            helper.assertTrue(BossEncounterService.summonMorvath(owner,tooHigh)==BossEncounterService.Result.INVALID_HEIGHT && stack.getCount()==2,"world ceiling allowed an incomplete arena");
+            owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());
             helper.assertTrue(state.useItemOn(stack,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL && stack.getCount()==2,"wrong-biome altar consumed a sigil");
             var ashlands=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("ashlands/ash_waste_plains")));
             helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),ashlands).left().isPresent(),"ritual biome fixture failed");

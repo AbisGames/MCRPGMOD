@@ -311,5 +311,12 @@
   "ritual.pipican.failed": "Ritual rejected: %s",
   "ritual.pipican.summoned": "The Ashen King awakens.",
   "ritual.pipican.instructions": "Prepare a solid 13×13 floor and 11×11×5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
-  "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted."
+  "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted.",
+  "ritual.pipican.result.invalid_player": "Stand near the altar while alive to summon.",
+  "ritual.pipican.result.invalid_height": "Leave at least five blocks below the world ceiling.",
+  "ritual.pipican.result.unloaded_arena": "Wait nearby for the surrounding arena to load.",
+  "ritual.pipican.result.wrong_biome": "This encounter requires an Ashlands arena.",
+  "ritual.pipican.result.obstructed": "Prepare a safe 13x13 floor and 11x11x5 clear space.",
+  "ritual.pipican.result.nearby_encounter": "Another active encounter is too close.",
+  "ritual.pipican.result.spawn_rejected": "A server rule prevented summoning; your sigil was preserved."
 }
