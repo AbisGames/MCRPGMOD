@@ -268,6 +268,44 @@ public final class BossTests {
         helper.assertTrue(reloaded.phase()==2 && reloaded.frostAction()==5,"Frostbound phase was lost on reload");
         for(int i=0;i<40;i++) reloaded.tickCombat(level);
         helper.assertTrue(reloaded.phase()==2 && reloaded.frostAction()!=5,"Frostbound transition failed to finish after reload");
+        front.setHealth(20); front.invulnerableTime=0; front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        dodge.setHealth(20); dodge.invulnerableTime=0; dodge.snapTo(origin.getX()+3,origin.getY(),origin.getZ()+5);
+        var hunt=new SkollvarCombat(boss);
+        helper.assertTrue(hunt.begin(SkollvarCombat.CHARGE,front),"Skollvar scent charge failed to start");
+        for(int i=0;i<39;i++) hunt.tick(level);
+        helper.assertTrue(front.getHealth()==20,"Skollvar charge hit before the trail warning");
+        hunt.tick(level);
+        helper.assertTrue(front.getHealth()<20 && dodge.getHealth()==20,"Skollvar straight charge or sidestep counterplay failed");
+        front.setHealth(20); front.invulnerableTime=0; front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        hunt=new SkollvarCombat(boss);
+        helper.assertTrue(hunt.begin(SkollvarCombat.MIRAGES,front),"Skollvar pack mirages failed to start");
+        front.snapTo(origin.getX()-3.5,origin.getY(),origin.getZ()+5);
+        for(int i=0;i<49;i++) hunt.tick(level);
+        helper.assertTrue(front.getHealth()==20,"Skollvar mirage struck before its landing warning");
+        hunt.tick(level);
+        helper.assertTrue(front.getHealth()<20,"Skollvar alternating pack pounce missed its marked shadow");
+        front.setHealth(20); front.invulnerableTime=0; front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        hunt=new SkollvarCombat(boss);
+        helper.assertTrue(hunt.begin(SkollvarCombat.PROWL,front),"Skollvar silent prowl failed to start");
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()-5);
+        for(int i=0;i<60;i++) hunt.tick(level);
+        helper.assertTrue(front.getHealth()==20,"Skollvar prowl followed the moving player instead of the warned footprint");
+        front.setHealth(20); front.invulnerableTime=0; dodge.setHealth(20); dodge.invulnerableTime=0;
+        boss.setHealth(boss.getMaxHealth()/2);
+        var feint=new SkollvarCombat(boss); var target=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        target.snapTo(origin.getX(),origin.getY(),origin.getZ()+5); level.addFreshEntity(target);
+        helper.assertTrue(feint.updatePhase(300,600),"Skollvar phase two did not latch");
+        for(int attack=0;attack<2;attack++){
+            for(int i=0;i<80;i++) feint.tick(level);
+            helper.assertTrue(feint.begin(SkollvarCombat.CHARGE,target),"Skollvar second-phase charge did not start");
+            for(int i=0;i<70;i++) feint.tick(level);
+        }
+        target.setHealth(20); target.invulnerableTime=0;
+        for(int i=0;i<80;i++) feint.tick(level);
+        helper.assertTrue(feint.begin(SkollvarCombat.CHARGE,target),"Skollvar feint charge did not start");
+        float before=target.getHealth(); for(int i=0;i<70;i++) feint.tick(level);
+        helper.assertTrue(target.getHealth()==before,"Skollvar feinted third charge dealt damage");
+        target.discard();
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){
