@@ -189,6 +189,8 @@ import net.minecraft.util.StringRepresentable;
  *       quarry, you can't damage other mobs</li>
  *   <li>{@code mark_targets}: how many more mobs a capped mark ({@code max} on {@code pipican:mark}) may be on at once;
  *       {@code scrutiny_targets}: how many more mobs can be scrutinised at once (one without it - a new one replaces the oldest)</li>
+ *   <li>{@code empower_knockback}: the first hit of each "your next hits" buff also knocks the mob back this hard (vanilla
+ *       Knockback I is about 0.5)</li>
  *   <li>{@code magic_armor_pierce}: the share of armor your magic damage ignores</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
@@ -230,7 +232,7 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         THRESHOLD_DROP, TEMPLE_ALARM, STANCE_WALK, CHAOS_DOUBLE,
         NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE,
         HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
-        POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS;
+        POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

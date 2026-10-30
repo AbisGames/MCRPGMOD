@@ -31,7 +31,7 @@ public final class Empowers {
     public static void add(Player player, long ticks, double multiplier, double bonus, List<MobEffectInstance> effects,
                            Optional<HolderSet<EntityType<?>>> against, int hits) {
         EMPOWERS.computeIfAbsent(player.getUUID(), k -> new ArrayList<>())
-                .add(new Empower(player.level().getGameTime() + ticks, multiplier, bonus, List.copyOf(effects), against, new int[] {hits}));
+                .add(new Empower(player.level().getGameTime() + ticks, multiplier, bonus, List.copyOf(effects), against, new int[] {hits, hits}));
     }
 
     /** How many live empowers {@code player} has with this multiplier and bonus (stored charges of one kind). */
@@ -64,6 +64,13 @@ public final class Empowers {
                     continue;
                 }
                 amount = (float) (amount * e.multiplier() + e.bonus());
+                // empower_knockback (Charged Blade): the first empowered hit also knocks the mob back.
+                double push = attacker instanceof net.minecraft.server.level.ServerPlayer sp
+                        ? com.pipican.player.ClassEffectApplier.state(sp).chance(com.pipican.effect.type.BonusEffect.Kind.EMPOWER_KNOCKBACK) : 0;
+                if (push > 0 && e.hitsLeft()[0] == e.hitsLeft()[1]) {
+                    target.knockback(push, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+                    target.hurtMarked = true;
+                }
                 for (MobEffectInstance effect : e.effects()) {
                     target.addEffect(new MobEffectInstance(effect), attacker);
                 }

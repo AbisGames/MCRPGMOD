@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2209**, partly working: **2**, not yet: **39**
+- Bonus phrases: **2250**. Fully working: **2210**, partly working: **2**, not yet: **38**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -20,7 +20,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
 | [Immunities](#immunities) | 4 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 1 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 1 |
 
 ## Skill trigger approximated
@@ -187,11 +186,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - resource: Strain drains 0.2/s; filling it from fighting needs the active-skill system
 - **zealot**
   - resource: Madness drains 0.3/s; filling it from fighting needs the active-skill system
-
-## Chance on hit / proc effects
-
-- **mage_knight**
-  - special tree: Charged Blade: first escalating hit also knocks back
 
 ## Bonus against a kind of mob / marked target
 

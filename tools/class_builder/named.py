@@ -2340,6 +2340,8 @@ def world(low, ctx):
         rest = _rest(m.group(2), ctx) if m.group(2) else []
         if rest is not None:
             return bonus_kind('scrutiny_targets', float(m.group(1)) - 1) + rest
+    if re.fullmatch(r'first escalating hit also knocks back', low) and cid == 'mage_knight':
+        return bonus_kind('empower_knockback', 0.8)
     # Lone Wolf (duelist): the challenge is the class's quarry.
     if re.fullmatch(r'duel bonuses doubled', low) and cid == 'duelist':
         return bonus_kind('quarry_double', 1.0)
