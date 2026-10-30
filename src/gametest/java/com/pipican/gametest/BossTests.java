@@ -34,7 +34,8 @@ public final class BossTests {
         Map.entry("aetherion_high_encounter",BossTests::aetherionHighEncounter),
         Map.entry("vermillion_crimson_encounter",BossTests::vermillionCrimsonEncounter),
         Map.entry("longwei_jade_encounter",BossTests::longweiJadeEncounter),
-        Map.entry("morgatha_marshfen_encounter",BossTests::morgathaMarshfenEncounter));
+        Map.entry("morgatha_marshfen_encounter",BossTests::morgathaMarshfenEncounter),
+        Map.entry("aurelios_inner_sea_encounter",BossTests::aureliosInnerSeaEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -45,7 +46,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==11,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==12,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -88,6 +89,8 @@ public final class BossTests {
         helper.assertTrue(longwei.functional()&&longwei.sigil().registered()&&longwei.loot().trophyItem().equals("pipican:longwei_jade_dragon_trophy"),"Longwei jade dragon metadata is incomplete");
         var morgatha=BossDesigns.require("morgatha_swamp_queen");
         helper.assertTrue(morgatha.functional()&&morgatha.sigil().registered()&&morgatha.loot().trophyItem().equals("pipican:morgatha_swamp_queen_trophy"),"Morgatha swamp queen metadata is incomplete");
+        var aurelios=BossDesigns.require("aurelios_sunken_emperor");
+        helper.assertTrue(aurelios.functional()&&aurelios.sigil().registered()&&aurelios.loot().trophyItem().equals("pipican:aurelios_sunken_emperor_trophy"),"Aurelios sunken emperor metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -100,7 +103,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -129,6 +132,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("marshfen").get(),net.minecraft.world.item.Items.SLIME_BALL,
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("marshfen").get(),BossContent.CORE.get()));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("pearlsilver").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("pearlsilver").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("pearlsilver").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("pearlsilver").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("inner_sea").get(),net.minecraft.world.item.Items.GOLD_INGOT,
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("pearlsilver").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("inner_sea").get(),BossContent.CORE.get()));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -395,6 +401,26 @@ public final class BossTests {
             helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("morgatha_swamp_queen"),"Morgatha encounter type was not saved");
             boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
             helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.MORGATHA_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Morgatha trophy/mirestone rewards missing");helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void aureliosInnerSeaEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(3328,32,3328));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.AURELIOS_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,"Aurelios altar accepted a non-Inner Sea biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/inner_sea")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Inner Sea biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Aurelios spawn consumed its sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Inner Sea altar summon failed");
+            var boss=level.getEntitiesOfClass(AureliosEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Aurelios spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("aurelios_sunken_emperor"),"Aurelios encounter type was not saved");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.AURELIOS_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("pearlsilver").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Aurelios trophy/pearlsilver rewards missing");helper.succeed();
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void realAttacks(GameTestHelper helper){
@@ -732,6 +758,28 @@ public final class BossTests {
         for(int i=0;i<60;i++)blightedHex.tick(level);for(int i=0;i<8;i++)blightedHex.tick(level);output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());blightedHex.save(output);var blightedReload=new MorgathaCombat(queen);blightedReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
         for(int i=0;i<5;i++)blightedReload.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Morgatha phase-two wave warning resolved early");blightedReload.tick(level);
         helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&blightedReload.clock().phase()==2,"Morgatha extended phase-two warning or save state failed");
+
+        var emperor=BossRegistries.AURELIOS.get().create(level,EntitySpawnReason.COMMAND);emperor.snapTo(origin.getX(),origin.getY(),origin.getZ());emperor.setNoAi(true);level.addFreshEntity(emperor);
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()-8,origin.getY(),origin.getZ());
+        var mirrors=new AureliosCombat(emperor);helper.assertTrue(mirrors.begin(AureliosCombat.MIRRORS,front),"Aurelios water mirrors failed to begin");for(int i=0;i<39;i++)mirrors.tick(level);
+        helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Aurelios mirror beams struck before warning");mirrors.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Aurelios mirrored ray sectors or open flank failed");
+        var guarded=emperor.damageSources().mobAttack(front);helper.assertTrue(mirrors.damageMultiplier(guarded)<0.3f,"Aurelios mirror direction did not shield incoming damage");
+        helper.assertTrue(mirrors.damageMultiplier(emperor.damageSources().mobAttack(dodge))==1f,"Aurelios open flank was incorrectly shielded");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+3.2,origin.getY()+0.8,origin.getZ());helper.assertTrue(mirrors.damageMultiplier(emperor.damageSources().mobAttack(front))==1f,"Aurelios exposed mirror core did not open the damage lane");
+        front.snapTo(origin.getX()-4,origin.getY(),origin.getZ()+6.93);for(int i=0;i<31;i++)mirrors.tick(level);
+        helper.assertTrue(mirrors.clock().active().isEmpty()&&mirrors.damageMultiplier(emperor.damageSources().mobAttack(front))<0.3f,"Aurelios directional shield ended with its attack recovery instead of its saved duration");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var grid=new AureliosCombat(emperor);helper.assertTrue(grid.begin(AureliosCombat.GRID,front),"Aurelios pressure grid failed to begin");front.snapTo(origin.getX()-6.3,origin.getY(),origin.getZ());
+        for(int i=0;i<49;i++)grid.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Aurelios alternating pressure row fired early");grid.tick(level);grid.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Aurelios active pressure row/inactive row counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        for(int i=0;i<79;i++)mirrors.tick(level);var tithe=mirrors;helper.assertTrue(tithe.begin(AureliosCombat.TITHE,front),"Aurelios treasury tribute failed to begin");for(int i=0;i<60;i++)tithe.tick(level);
+        int shieldBeforeOrb=tithe.shieldTicks();var tribute=tithe.tributeOrbPosition(0);front.snapTo(tribute.x,tribute.y,tribute.z);tithe.tick(level);helper.assertTrue(tithe.interceptedOrbs()==1&&tithe.shieldTicks()<shieldBeforeOrb,"Aurelios tribute orb did not intercept safely or shorten the mirror shield");
+        for(int i=0;i<31;i++)tithe.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Aurelios intercepted-orb path or announced pulse counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());var phaseTwoMirrors=new AureliosCombat(emperor);
+        helper.assertTrue(phaseTwoMirrors.updatePhase(475,950)&&phaseTwoMirrors.begin(AureliosCombat.MIRRORS,front),"Aurelios phase-two mirrors did not begin");for(int i=0;i<40;i++)phaseTwoMirrors.tick(level);
+        helper.assertTrue(phaseTwoMirrors.clock().phase()==2&&phaseTwoMirrors.shieldTicks()==180,"Aurelios phase-two shorter mirror shield failed");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

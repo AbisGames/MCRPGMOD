@@ -376,5 +376,8 @@
   "entity.pipican.longwei_jade_dragon": "Longwei, Jade Dragon",
   "item.pipican.morgatha_swamp_queen_sigil": "Morgatha's Bog Sigil",
   "item.pipican.morgatha_swamp_queen_trophy": "Swamp Queen Trophy",
-  "entity.pipican.morgatha_swamp_queen": "Morgatha, Swamp Queen"
+  "entity.pipican.morgatha_swamp_queen": "Morgatha, Swamp Queen",
+  "item.pipican.aurelios_sunken_emperor_sigil": "Aurelios' Tide Sigil",
+  "item.pipican.aurelios_sunken_emperor_trophy": "Sunken Emperor Trophy",
+  "entity.pipican.aurelios_sunken_emperor": "Aurelios, Sunken Emperor"
 }

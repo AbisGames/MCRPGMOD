@@ -16,7 +16,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | durmagon_runic_titan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | longwei_jade_dragon | implemented | preserved source geometry + segmented native renderer | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | morgatha_swamp_queen | implemented | preserved source geometry + native swamp-casting poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
-| aurelios_sunken_emperor | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| aurelios_sunken_emperor | implemented | preserved source geometry + native trident/mirror poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | morvath_ashen_king | complete | prototype | complete | complete | complete | complete | complete | complete | passed | sampled |
 | lianhua_lotus_serpent | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | akhmar_sand_emperor | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -57,3 +57,6 @@ Longwei now has a segmented jade-dragon renderer and independent serpentine brea
 
 
 Morgatha now has saved poison-pool bubbles (projectiles can burst a swelling bubble), a slowly pursuing cloud locked to one marked target, and a charged decoy that teleports only the queen before a directional hex wave. Phase two adds a distinct saved 14-tick wave warning. The Marshfen biome altar, exact 5 Mirestone + 2 Marshfen cores + ritual core + slime-ball sigil recipe, guaranteed trophy and eight Mirestone rewards are covered. GameTests verify warnings, avoidance, poison/slow effects, phase-two reload, failed-spawn rollback, and reward consistency. Client appearance QA remains pending because the available Prism profiles do not match Minecraft 26.1.2.
+
+
+Aurelios now has directional mirror sectors that reduce damage only from guarded angles while announced beams strike along those lines; approaching a mirror core breaks its guard, leaving the open flank exposed. Pressure-grid rows alternate through a marked refuge row. Three treasury orbs travel along announced paths; touching one safely intercepts it and shortens the active mirror shield, while surviving orbs announce their center pulse. Phase two alternates different row lanes and shortens shield duration. Inner Sea summoning, exact Pearlsilver/core/gold recipe, trophy and guaranteed Pearlsilver are covered by GameTests. Client appearance QA remains pending for the unavailable target-version client.

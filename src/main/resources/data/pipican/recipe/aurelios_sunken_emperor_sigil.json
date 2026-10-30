@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "PCG",
+    "PCR"
+  ],
+  "key": {
+    "P": "pipican:pearlsilver",
+    "C": "pipican:inner_sea_boss_core",
+    "G": "minecraft:gold_ingot",
+    "R": "pipican:ritual_core"
+  },
+  "result": {
+    "id": "pipican:aurelios_sunken_emperor_sigil",
+    "count": 1
+  }
+}

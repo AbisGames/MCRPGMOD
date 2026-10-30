@@ -1026,7 +1026,7 @@
   {
     "id": "aurelios_sunken_emperor",
     "region": "inner_sea",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 950,
     "damage": 16,
@@ -1039,38 +1039,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:gold_ingot",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:aurelios_sunken_emperor_sigil"
     },
     "abilities": [
       {
         "id": "mirror_guards",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Water mirrors shield announced projectile directions only.",
         "counterplay": "Attack from the open flank or strike the exposed mirror core.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:aurelios_sunken_emperor/mirror_guards"
+        "animation": "mirror_guards"
       },
       {
         "id": "pressure_grid",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Jets activate alternating rows of a visible grid.",
         "counterplay": "Move into the next inactive row during the warning.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:aurelios_sunken_emperor/pressure_grid"
+        "animation": "pressure_grid"
       },
       {
         "id": "treasury_tithe",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Tribute orbs travel toward a shield while broadcasting their paths.",
         "counterplay": "Intercept an orb safely or dodge the resulting announced pulse.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:aurelios_sunken_emperor/treasury_tithe"
+        "animation": "treasury_tithe"
       }
     ],
     "phase_two": {
@@ -1081,7 +1082,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:pearlsilver",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:aurelios_sunken_emperor_trophy",
       "planned_trophy_name": "Aurelios Sunken Emperor Trophy",
       "xp": 238
     },
@@ -1089,16 +1090,16 @@
       "geometry": "geometry.pipican.aurelios_sunken_emperor",
       "file": "geo/bosses/aurelios_sunken_emperor.geo.json",
       "animation_mapping": {
-        "idle": "planned:aurelios_sunken_emperor/idle",
-        "walk": "planned:aurelios_sunken_emperor/walk",
-        "basic_attack": "planned:aurelios_sunken_emperor/basic_attack",
-        "hurt": "planned:aurelios_sunken_emperor/hurt",
-        "phase_transition": "planned:aurelios_sunken_emperor/phase_transition",
-        "summoning": "planned:aurelios_sunken_emperor/summoning",
-        "death": "planned:aurelios_sunken_emperor/death",
-        "mirror_guards": "planned:aurelios_sunken_emperor/mirror_guards",
-        "pressure_grid": "planned:aurelios_sunken_emperor/pressure_grid",
-        "treasury_tithe": "planned:aurelios_sunken_emperor/treasury_tithe"
+        "idle": "aurelios_sunken_emperor/idle",
+        "walk": "aurelios_sunken_emperor/walk",
+        "basic_attack": "aurelios_sunken_emperor/basic_attack",
+        "hurt": "aurelios_sunken_emperor/hurt",
+        "phase_transition": "aurelios_sunken_emperor/phase_transition",
+        "summoning": "aurelios_sunken_emperor/summoning",
+        "death": "aurelios_sunken_emperor/death",
+        "mirror_guards": "aurelios_sunken_emperor/mirror_guards",
+        "pressure_grid": "aurelios_sunken_emperor/pressure_grid",
+        "treasury_tithe": "aurelios_sunken_emperor/treasury_tithe"
       }
     },
     "arena": {

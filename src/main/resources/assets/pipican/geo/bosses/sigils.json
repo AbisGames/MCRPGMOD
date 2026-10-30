@@ -64,5 +64,11 @@
     "boss": "morgatha_swamp_queen",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:aurelios_sunken_emperor_sigil",
+    "boss": "aurelios_sunken_emperor",
+    "min_y": -64,
+    "max_y": 448
   }
 ]
