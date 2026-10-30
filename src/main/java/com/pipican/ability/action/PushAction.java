@@ -36,7 +36,8 @@ public record PushAction(Targets targets, double strength) implements AbilityAct
             }
             Vec3 away = target.position().subtract(from);
             // knockback() pushes away from the given direction, so pass the vector pointing back at the user.
-            target.knockback(strength, -away.x, -away.z);
+            // A reaction's radius upgrades push farther (about 1 strength per 3 blocks).
+            target.knockback(strength + ctx.mod().radius() / 3, -away.x, -away.z);
             target.hurtMarked = true;
         }
     }

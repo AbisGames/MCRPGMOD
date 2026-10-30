@@ -44,17 +44,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% shield-disable time when you break a shield",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% shield-disable time when you break a shield",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "shield_break_time",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "description": "+3% axe damage",

@@ -254,6 +254,7 @@ public final class AbilityService {
             return;
         }
         data.extras().restUses.clear();
+        Boosts.onWake(player);
         data.extras().spellPoints = ClassEffectApplier.state(player).spellPoints();
         TemporaryItems.removeAll(player);
         if (ClassEffectApplier.state(player).optimizationAmount() > 0) {

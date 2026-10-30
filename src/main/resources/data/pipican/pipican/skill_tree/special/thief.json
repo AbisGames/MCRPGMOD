@@ -66,16 +66,7 @@
     {
       "id": "keen_senses",
       "name": "Keen Senses",
-      "description": {
-        "text": "chests with loot within 8 blocks sparkle while you sneak",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "chests with loot within 8 blocks sparkle while you sneak",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -83,7 +74,14 @@
         "escape_artist"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "loot_sense",
+          "amount": 8.0
+        }
+      ]
     },
     {
       "id": "dodge",

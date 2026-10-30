@@ -173,17 +173,14 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "A chaplain must keep speaking. Silenced, the chant stops.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A chaplain must keep speaking. Silenced, the chant stops.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "aura_break_at",
+        "amount": 6.0
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

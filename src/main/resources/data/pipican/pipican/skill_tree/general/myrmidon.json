@@ -37,21 +37,19 @@
     {
       "id": "myrmidon_boss_strike",
       "name": "Boss Strike",
-      "description": {
-        "text": "shield bash +2 damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "shield bash +2 damage",
       "type": "small",
       "x": -1560,
       "y": -597,
       "links": [
         "myrmidon_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "shield bash",
+          "damage": 2.0
+        }
       ]
     },
     {

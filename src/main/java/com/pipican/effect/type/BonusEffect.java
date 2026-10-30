@@ -149,6 +149,15 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code marked_weakness}: per whole point, mobs you've marked within 4 blocks get Weakness (1 = I, 2 = II)</li>
  *   <li>{@code extra_restock}: how much more often villagers you trade with restock (1 = twice as often)</li>
  *   <li>{@code pet_regen}: <i>health</i> your tamed animals within 32 blocks regain every 5 seconds</li>
+ *   <li>{@code aura_break_at}: <i>damage</i> - a hit bigger than this switches your auras off for 10s</li>
+ *   <li>{@code calm_animals}: any amount above 0 = animals you hurt don't panic and run</li>
+ *   <li>{@code shield_break_time}: how much longer a shield you disable with an axe stays down (0.1 = +10%)</li>
+ *   <li>{@code splash_power}: how much stronger the Instant Health / Instant Damage of splash potions you throw is</li>
+ *   <li>{@code extra_brew}: a <i>chance</i> that a brewing stand you opened brews one extra potion</li>
+ *   <li>{@code sense_magic} / {@code loot_sense} / {@code ore_sense}: <i>blocks</i> - while sneaking, enchanted items and mobs
+ *       with effects glow / unopened loot chests / ores sparkle for you</li>
+ *   <li>{@code structure_sense}: <i>blocks</i> - holding a compass names the structures this close</li>
+ *   <li>{@code prey_reveal}: per whole point, your quarries can't stay invisible</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -182,7 +191,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         BOOKSHELF_BONUS, ENCHANT_LAPIS_KEEP, ENCHANT_LAPIS_TOP, BARE_HANDED, FOCUS_SLOTS, FOCUS_BONUS, NON_FOCUS_BONUS, BETTER_ROLL,
         CHAOS_LUCK, TRAMPLE, ILLAGER_DETECTION,
         FALL_FLOOR, FALL_SAFE_GROUND, WIND_KNOCKBACK, SAVE_ALLY, DECOY_PROOF, NO_METAL_ARMOR, ALWAYS_DARK, REOPTIMIZE, SWAP_FAVORED,
-        LOW_HEALTH_EXTRA, TNT_POWER, CHARGES_FIZZLE_NETHER, POISON_BREW_SPEED, FIRE_LONGER, MARKED_WEAKNESS, EXTRA_RESTOCK, PET_REGEN;
+        LOW_HEALTH_EXTRA, TNT_POWER, CHARGES_FIZZLE_NETHER, POISON_BREW_SPEED, FIRE_LONGER, MARKED_WEAKNESS, EXTRA_RESTOCK, PET_REGEN,
+        AURA_BREAK_AT, CALM_ANIMALS, SHIELD_BREAK_TIME, SPLASH_POWER, EXTRA_BREW, SENSE_MAGIC, LOOT_SENSE, ORE_SENSE, STRUCTURE_SENSE, PREY_REVEAL;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

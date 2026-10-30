@@ -60,6 +60,11 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "sense_magic",
+      "amount": 12.0
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_magic",
       "multiplier": 0.85

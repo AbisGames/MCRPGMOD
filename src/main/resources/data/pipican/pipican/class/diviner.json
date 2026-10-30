@@ -74,6 +74,11 @@
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "structure_sense",
+      "amount": 64.0
     }
   ],
   "special_passives": [

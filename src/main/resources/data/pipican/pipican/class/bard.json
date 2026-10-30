@@ -150,17 +150,32 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "A bard's power is in an audience. Alone, the song falls flat.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "A bard's power is in an audience. Alone, the song falls flat.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 16.0,
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.5,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:aura_mod",
+            "name": "inspiring song",
+            "strength": -100.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

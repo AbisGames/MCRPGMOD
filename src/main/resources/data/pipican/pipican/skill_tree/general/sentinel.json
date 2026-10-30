@@ -4,19 +4,17 @@
     {
       "id": "sentinel_start",
       "name": "Sentinel",
-      "description": {
-        "text": "+4 blocks detection range",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+4 blocks detection range",
       "type": "start",
       "x": 163,
-      "y": 1239
+      "y": 1239,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "perfect awareness",
+          "radius": 4.0
+        }
+      ]
     },
     {
       "id": "sentinel_eagle_eyes",

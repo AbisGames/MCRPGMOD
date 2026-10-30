@@ -116,17 +116,42 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Far from the sky, the gods' voices fade.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Far from the sky, the gods' voices fade.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:dimension",
+              "dimensions": [
+                "minecraft:the_nether"
+              ]
+            },
+            {
+              "type": "pipican:dimension",
+              "dimensions": [
+                "minecraft:the_end"
+              ]
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:aura_mod",
+            "name": "prayer",
+            "strength": -100.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

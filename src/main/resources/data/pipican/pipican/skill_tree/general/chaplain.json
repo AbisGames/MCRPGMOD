@@ -42,21 +42,19 @@
     {
       "id": "chaplain_steady_voice",
       "name": "Steady Voice",
-      "description": {
-        "text": "Battle Chant no longer stops from big hits below 10 damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Battle Chant no longer stops from big hits below 10 damage",
       "type": "small",
       "x": 1064,
       "y": -782,
       "links": [
         "chaplain_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "aura_break_at",
+          "amount": 4.0
+        }
       ]
     },
     {

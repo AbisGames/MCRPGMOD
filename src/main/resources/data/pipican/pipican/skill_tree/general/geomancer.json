@@ -85,16 +85,7 @@
     {
       "id": "geomancer_ore_sense",
       "name": "Ore Sense",
-      "description": {
-        "text": "ores within 6 blocks glow while you sneak",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "ores within 6 blocks glow while you sneak",
       "type": "notable",
       "x": 1565,
       "y": 760,
@@ -102,7 +93,14 @@
         "geomancer_prospector"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "ore_sense",
+          "amount": 6.0
+        }
+      ]
     },
     {
       "id": "geomancer_living_mountain",

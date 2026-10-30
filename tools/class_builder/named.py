@@ -1752,6 +1752,82 @@ def world(low, ctx):
     m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N} minions? at a time', low)
     if m and m.group(2) == sp:
         return [{'type': 'pipican:summon_mod', 'extra': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / float(m.group(1)), 6)}]}]
+    # --- Bulk 40
+    m = re.fullmatch(rf'-{N}% ([a-z ]+) regen and ([a-z\' ]+) is disabled when no other player is within {N} blocks', low)
+    if m and m.group(2) == rn and (regen := _rest(f'-{m.group(1)}% {ctx.get("resource_name")} regen', ctx)):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:nearby', 'entities': 'players', 'radius': float(m.group(4)), 'min': 0, 'max': 0},
+                 'effects': regen + [{'type': 'pipican:aura_mod', 'name': m.group(3), 'strength': -100.0}]}]
+    m = re.fullmatch(r"in the nether and the end: ([a-z ]+) does not regenerate and ([a-z' ]+) is disabled", low)
+    if m and m.group(1) == rn and (regen := _rest(f'-100% {ctx.get("resource_name")} regen', ctx)):
+        where = {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:dimension', 'dimensions': ['minecraft:the_nether']},
+                                                          {'type': 'pipican:dimension', 'dimensions': ['minecraft:the_end']}]}
+        return [{'type': 'pipican:conditional', 'when': where, 'effects': regen + [{'type': 'pipican:aura_mod', 'name': m.group(2), 'strength': -100.0}]}]
+    m = re.fullmatch(rf"([a-z' ]+) switches off for 10s whenever you take more than {N} damage in one hit", low)
+    if m and m.group(1) in AURAS.get(cid, {}):
+        return bonus_kind('aura_break_at', float(m.group(2)))
+    m = re.fullmatch(rf"([a-z' ]+) no longer stops from big hits below {N} damage", low)
+    if m and m.group(1) in AURAS.get(cid, {}):
+        # The base threshold is 6 damage.
+        return bonus_kind('aura_break_at', float(m.group(2)) - 6)
+    m = re.fullmatch(rf'\+{N}% more damage in chant', low)
+    if m:
+        return [{'type': 'pipican:aura_mod', 'name': 'chant', 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]}]
+    m = re.fullmatch(rf"([a-z' ]+) range \+{N}(?: blocks?)?", low)
+    if m and m.group(1) in AURAS.get(cid, {}):
+        return [{'type': 'pipican:aura_mod', 'name': m.group(1), 'radius': float(m.group(2))}]
+    # Myrmidon: shield bash (blocking a hit while sneaking bashes the attacker) and Forceful Shield knockback.
+    m = re.fullmatch(rf'sneak-attacking with a raised shield bashes for {N} damage', low)
+    if m:
+        r = {'type': 'pipican:on', 'event': 'block', 'name': 'shield bash', 'actions': [{'type': 'pipican:damage', 'target': 'victim', 'amount': float(m.group(1)), 'kind': 'melee'}]}
+        REACTIONS.setdefault(cid, {}).setdefault('shield bash', r)
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sneaking'}, 'effects': [r]}]
+    m = re.fullmatch(rf'shield bash \+{N} damage', low)
+    if m:
+        return [{'type': 'pipican:reaction_mod', 'name': 'shield bash', 'damage': float(m.group(1))}]
+    m = re.fullmatch(rf'\+{N}% shield bash damage and -{N}% damage taken while blocking', low)
+    if m and ctx.get('implicit_per_point'):
+        return [{'type': 'pipican:reaction_mod', 'name': 'shield bash', 'damage': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(4 * float(m.group(1)) / 100, 6)}]},
+                {'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'blocking'}, 'effects': [{'type': 'pipican:damage_taken', 'multiplier': 1.0,
+                 'scaling': [{'source': 'special_stat', 'per': -pct(m.group(2))}]}]}]
+    m = re.fullmatch(rf'knockback \+{N} blocks per ([a-z]+)', low)
+    if m and m.group(2) == sp and 'forceful shield' in REACTIONS.get(cid, {}):
+        return [{'type': 'pipican:reaction_mod', 'name': 'forceful shield', 'radius': 0.0, 'scaling': [{'source': 'special_stat', 'per': float(m.group(1))}]}]
+    m = re.fullmatch(rf'\+{N} knockback blocks', low)
+    if m and 'forceful shield' in REACTIONS.get(cid, {}):
+        return [{'type': 'pipican:reaction_mod', 'name': 'forceful shield', 'radius': float(m.group(1))}]
+    # Sentinel: Perfect Awareness reach
+    m = re.fullmatch(rf'\+{N} blocks? (?:hostile-mob )?detection range', low)
+    if m and 'perfect awareness' in REACTIONS.get(cid, {}):
+        if ctx.get('implicit_per_point'):
+            return [{'type': 'pipican:reaction_mod', 'name': 'perfect awareness', 'radius': 0.0, 'scaling': [{'source': 'special_stat', 'per': float(m.group(1))}]}]
+        return [{'type': 'pipican:reaction_mod', 'name': 'perfect awareness', 'radius': float(m.group(1))}]
+    # Druid, Warrior, Witch, senses
+    if re.fullmatch(r'passive animals within 16 blocks never flee from you', low):
+        return bonus_kind('calm_animals', 1.0)
+    m = re.fullmatch(rf'\+{N}% shield-disable time when you break a shield', low)
+    if m:
+        return bonus_kind('shield_break_time', pct(m.group(1)))
+    m = re.fullmatch(rf'your instant health/damage splash potions are {N}% stronger', low)
+    if m:
+        return bonus_kind('splash_power', pct(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% chance per {N} ([a-z]+) to brew one extra potion per brewing cycle', low)
+    if m and m.group(3) == sp:
+        return bonus_kind('extra_brew', 0.0, round(float(m.group(1)) / 100 / float(m.group(2)), 6))
+    m = re.fullmatch(rf'enchanted items and mobs with potion effects within {N} blocks glow for you while sneaking', low)
+    if m:
+        return bonus_kind('sense_magic', float(m.group(1)))
+    m = re.fullmatch(rf'chests with loot within {N} blocks sparkle while you sneak', low)
+    if m:
+        return bonus_kind('loot_sense', float(m.group(1)))
+    m = re.fullmatch(rf'ores within {N} blocks glow while you sneak', low)
+    if m:
+        return bonus_kind('ore_sense', float(m.group(1)))
+    m = re.fullmatch(rf'structures within {N} blocks are hinted in chat when you look at a compass', low)
+    if m:
+        return bonus_kind('structure_sense', float(m.group(1)))
+    m = re.fullmatch(rf"per {N} ([a-z]+),? prey can'?t become invisible to you", low)
+    if m and m.group(2) == sp:
+        return bonus_kind('prey_reveal', 0.0, round(1 / float(m.group(1)), 6))
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

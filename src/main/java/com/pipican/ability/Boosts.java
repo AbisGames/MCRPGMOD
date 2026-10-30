@@ -66,6 +66,14 @@ public final class Boosts {
         }
     }
 
+    /** On waking: ends boosts that last "until you sleep". */
+    public static void onWake(ServerPlayer player) {
+        List<Boost> list = ACTIVE.get(player.getUUID());
+        if (list != null && list.removeIf(b -> b.source instanceof com.pipican.ability.action.BoostAction a && a.untilSleep())) {
+            ClassService.changed(player);
+        }
+    }
+
     public static void forget(ServerPlayer player) {
         ACTIVE.remove(player.getUUID());
     }

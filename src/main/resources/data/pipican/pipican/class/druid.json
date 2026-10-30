@@ -126,6 +126,21 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "calm_animals",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:pet_mod",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ],
+      "hearts": 0.0
     }
   ],
   "weakness": {

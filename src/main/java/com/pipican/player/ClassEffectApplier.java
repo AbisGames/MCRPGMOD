@@ -529,6 +529,9 @@ public final class ClassEffectApplier {
                         effects.addAll(m.effects());
                     }
                 }
+                if (k <= 1.0e-9) {
+                    continue;  // switched off ("Inspiring Song is disabled when...")
+                }
                 ClassState.Aura aura = new ClassState.Aura(Math.max(0, radius), List.copyOf(effects), Math.max(0, k));
                 auras.add(aura);
                 if (includeSelf) {

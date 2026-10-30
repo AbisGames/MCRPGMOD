@@ -118,6 +118,13 @@ public final class Quarries {
         }
     }
 
+    /** {@code player}'s live quarries. */
+    public static java.util.List<LivingEntity> targets(ServerPlayer player) {
+        Map<String, Active> mine = ACTIVE.get(player.getUUID());
+        long now = player.level().getGameTime();
+        return mine == null ? java.util.List.of() : mine.values().stream().filter(a -> live(a, now)).map(a -> a.target).toList();
+    }
+
     /** True if {@code entity} is one of {@code player}'s live quarries. */
     public static boolean isQuarryOf(LivingEntity entity, ServerPlayer player) {
         Map<String, Active> mine = ACTIVE.get(player.getUUID());

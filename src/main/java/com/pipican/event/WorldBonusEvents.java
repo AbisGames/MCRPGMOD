@@ -54,6 +54,7 @@ public final class WorldBonusEvents {
     /** Brewing stands by position, with the player who last opened them (for {@code brew_speed}). */
     private static final Map<ResourceKey<Level>, Map<BlockPos, UUID>> BREWERS = new ConcurrentHashMap<>();
     private static final Map<BlockPos, Double> BREW_PROGRESS = new ConcurrentHashMap<>();
+    private static final Map<BlockPos, Integer> LAST_BREW = new ConcurrentHashMap<>();
 
     private WorldBonusEvents() {}
 
@@ -209,6 +210,12 @@ public final class WorldBonusEvents {
                 return true;
             }
             ServerPlayer player = level.getServer().getPlayerList().getPlayer(entry.getValue());
+            // Extra brew: when a brew finishes, sometimes one more potion drops out.
+            Integer was = LAST_BREW.put(pos, stand.brewTime);
+            if (player != null && was != null && was == 1 && stand.brewTime == 0 && !stand.getItem(0).isEmpty()
+                    && player.getRandom().nextDouble() < ClassEffectApplier.state(player).chance(Kind.EXTRA_BREW)) {
+                Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stand.getItem(0).copyWithCount(1));
+            }
             if (player == null || stand.brewTime <= 1) {
                 return false;
             }

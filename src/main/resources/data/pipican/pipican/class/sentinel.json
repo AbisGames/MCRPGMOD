@@ -148,6 +148,17 @@
       ]
     },
     {
+      "type": "pipican:reaction_mod",
+      "name": "perfect awareness",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.5
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:still",
