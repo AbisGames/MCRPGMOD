@@ -34,6 +34,7 @@ public final class PipicanClient {
     public PipicanClient(IEventBus modBus) {
         modBus.addListener(PipicanClient::registerPayloadHandlers);
         modBus.addListener(PipicanClient::registerScreens);
+        modBus.addListener(PipicanClient::registerBossRenderers);
         modBus.addListener(PipicanClient::registerKeys);
         modBus.addListener(PipicanClient::registerHud);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onClientTick);
@@ -44,6 +45,10 @@ public final class PipicanClient {
     private static void registerPayloadHandlers(RegisterClientPayloadHandlersEvent event) {
         event.register(OpenClassSelectionPayload.TYPE, (payload, ctx) -> openClassSelection());
         event.register(OpenSkillTreePayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new SkillTreeScreen()));
+    }
+
+    private static void registerBossRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.MORVATH.get(),com.pipican.client.boss.RegionalBossRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {

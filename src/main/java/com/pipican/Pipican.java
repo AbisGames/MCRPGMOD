@@ -42,6 +42,7 @@ public final class Pipican {
         PipicanAttachments.REGISTER.register(modBus);
         PipicanMenus.REGISTER.register(modBus);
         RegionalOreRegistries.register(modBus);
+        com.pipican.boss.BossRegistries.register(modBus);
         RegionalNatureBlocks.register(modBus);
         RegionalNatureTab.register(modBus);
         WorldgenCodecs.register(modBus);

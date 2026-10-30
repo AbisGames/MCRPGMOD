@@ -300,5 +300,6 @@
   "block.pipican.verdant_depths_ground": "Verdant Depths Ground",
   "block.pipican.umbral_chasm_ground": "Umbral Chasm Ground",
   "block.pipican.crimson_wilds_ground": "Crimson Wilds Ground",
-  "block.pipican.shimmering_reefs_ground": "Shimmering Reefs Ground"
+  "block.pipican.shimmering_reefs_ground": "Shimmering Reefs Ground",
+  "entity.pipican.morvath_ashen_king": "Morvath, Ashen King"
 }
