@@ -55,16 +55,7 @@
     {
       "id": "attack_command",
       "name": "Attack Command",
-      "description": {
-        "text": "goat horn cooldown -20s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "goat horn cooldown -20s",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -72,7 +63,14 @@
         "tactician"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "attack command",
+          "cooldown": -0.333333
+        }
+      ]
     },
     {
       "id": "hold_formation",

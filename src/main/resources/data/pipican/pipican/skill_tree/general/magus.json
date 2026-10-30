@@ -77,16 +77,7 @@
     {
       "id": "magus_sweeping_staff",
       "name": "Sweeping Staff",
-      "description": {
-        "text": "staff hits sweep 1 extra mob",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "staff hits sweep 1 extra mob",
       "type": "notable",
       "x": 350,
       "y": -1705,
@@ -94,7 +85,16 @@
         "magus_ironwood"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:cleave",
+          "fraction": 0.5,
+          "radius": 2.5,
+          "max_targets": 1,
+          "weapons": "#pipican:weapons/staff"
+        }
+      ]
     },
     {
       "id": "magus_spellguard_staff",
@@ -131,16 +131,7 @@
     {
       "id": "magus_staff_of_the_archmagus",
       "name": "Staff of the Archmagus",
-      "description": {
-        "text": "+25% staff damage, but you can't use any other weapon at better than clumsy",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+25% staff damage, but you can't use any other weapon at better than clumsy",
       "type": "keystone",
       "x": 392,
       "y": -1767,
@@ -149,7 +140,30 @@
         "magus_spellguard_staff"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "staff_only",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

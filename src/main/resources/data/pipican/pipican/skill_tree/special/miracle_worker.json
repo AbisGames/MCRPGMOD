@@ -29,16 +29,7 @@
     {
       "id": "booming_voice",
       "name": "Booming Voice",
-      "description": {
-        "text": "Tongues messages carry server-wide",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Tongues messages carry server-wide",
       "type": "small",
       "x": -35,
       "y": 70,

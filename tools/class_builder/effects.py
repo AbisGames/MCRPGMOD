@@ -43,6 +43,7 @@ DAMAGE_TAGS = {
     'falling block': '#pipican:is_falling_block', 'falling blocks': '#pipican:is_falling_block',
 }
 DAMAGE_TYPE_TAGS = {
+    'is_mace_smash': ['minecraft:mace_smash'],
     'is_magic': ['minecraft:magic', 'minecraft:indirect_magic', 'minecraft:sonic_boom', 'minecraft:thorns'],
     'is_wither': ['minecraft:wither', 'minecraft:wither_skull'],
     'is_melee': ['minecraft:player_attack', 'minecraft:mob_attack', 'minecraft:mob_attack_no_aggro'],
@@ -582,7 +583,7 @@ def _translate_line(text, ctx):
     text = re.sub(lab + rf'{item} (damage|critical damage) ([+-]\d+(?:\.\d+)?%)(.*)$', r'\1\4 \3 with your \2\5', text, flags=re.I)
     text = re.sub(r'\bwith your (?:favored|favoured)(?: weapon)?\b', 'while holding your favored weapon', text, flags=re.I)
     text = re.sub(r'(while holding your favored weapon) (per .+)$', r'\2 \1', text, flags=re.I)
-    text = re.sub(r'^sigil armor:\s*(.+?) per piece$', r'\1 per sigil piece', text, flags=re.I)
+    text = re.sub(r'(^|;\s*)sigil armor:\s*(.+?) per piece(?=;|$)', r'\1\2 per sigil piece', text, flags=re.I)
     # Phrasings: "you take +10% damage while moving", "spears deal +15% damage while mounted", "immune to X always",
     # "No fall damage below 8 blocks", "+20% stealth", "mobs notice you from 20% farther away".
     text = re.sub(lab + r'you take ([+-]\d+(?:\.\d+)?%) (?:more )?damage\b', r'\1\2 damage taken', text, flags=re.I)

@@ -177,17 +177,24 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "No hand free for a shield or a bow.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "No hand free for a shield or a bow.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "no_shield",
+        "amount": 1.0
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "weapons": "#pipican:weapons/bows",
+        "multiplier": 0.75
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "weapons": "#pipican:weapons/crossbows",
+        "multiplier": 0.75
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

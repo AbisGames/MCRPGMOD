@@ -64,16 +64,7 @@
     {
       "id": "mighty_sigils",
       "name": "Mighty Sigils",
-      "description": {
-        "text": "Mighty Sigils triggers at 75% Rune Power",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Mighty Sigils triggers at 75% Rune Power",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -81,7 +72,32 @@
         "chisel"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:resource",
+                "min": 0.75,
+                "max": 0.9999
+              },
+              {
+                "type": "pipican:item_rule",
+                "rule": "sigil_weapon"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "thunder_rune",

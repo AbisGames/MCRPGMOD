@@ -28,6 +28,12 @@ public final class FavoredWeapon {
         return KINDS.stream().filter(k -> !stack.isEmpty() && stack.is(tag(k))).findFirst();
     }
 
+    /** {@code stack} is the player's favored kind of weapon. */
+    public static boolean isFavored(ServerPlayer player, ItemStack stack) {
+        Optional<String> favored = ClassService.data(player).extras().favoredWeapon;
+        return favored.isPresent() && stack.is(tag(favored.get()));
+    }
+
     public static boolean holding(ServerPlayer player) {
         Optional<String> favored = ClassService.data(player).extras().favoredWeapon;
         return favored.isPresent() && player.getMainHandItem().is(tag(favored.get()));

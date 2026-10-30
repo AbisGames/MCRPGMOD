@@ -75,6 +75,17 @@
       ]
     },
     {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "sigil_armor",
+          "per": 1.0
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:resource",
@@ -97,18 +108,137 @@
       ]
     }
   ],
-  "weakness": {
-    "description": {
-      "text": "Runes need marked gear. Plain gear is dead weight.",
-      "extra": [
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "sigil_weapon"
+      },
+      "effects": [
         {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
         }
       ]
     },
-    "effects": []
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "sigil_armor",
+        "min": 1
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "sigil_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "sigil_armor",
+        "min": 1
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Runes need marked gear. Plain gear is dead weight.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/melee"
+                },
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/ranged"
+                }
+              ]
+            },
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:item_rule",
+                "rule": "sigil_weapon"
+              }
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          }
+        ]
+      },
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:armor",
+        "amount": 0.0,
+        "scaling": [
+          {
+            "source": "unmarked_armor",
+            "per": -1.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

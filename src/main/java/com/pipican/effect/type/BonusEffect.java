@@ -111,6 +111,9 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code quarry_pursuit}: movement speed while you move toward one of your quarries (0.1 = +10%)</li>
  *   <li>{@code quarry_attack_speed} / {@code quarry_reach}: attack speed (0.05 = +5%) / reach (<i>blocks</i>) while you look
  *       at one of your quarries</li>
+ *   <li>{@code unmarked_forbidden}: any amount above 0 = weapons and armor that aren't sigil-marked are forbidden-tier for you</li>
+ *   <li>{@code staff_only}: any amount above 0 = weapons other than a staff are at best clumsy for you</li>
+ *   <li>{@code favored_only}: any amount above 0 = weapons that aren't your favored kind are forbidden-tier for you</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -133,7 +136,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         FREE_ABILITY_EVERY, WEATHER_WARNING, GLORIOUS_DEATH, GUARD_ALLIES, PROJECTILE_WARD, EXECUTE_LOOTING, SURE_TAME,
         FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO,
         SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION, EXPLODE_SELF_SHARE,
-        EMPOWER_CHARGES, WILDFIRE, TAUNT_RADIUS, QUARRY_PURSUIT, QUARRY_ATTACK_SPEED, QUARRY_REACH;
+        EMPOWER_CHARGES, WILDFIRE, TAUNT_RADIUS, QUARRY_PURSUIT, QUARRY_ATTACK_SPEED, QUARRY_REACH,
+        UNMARKED_FORBIDDEN, STAFF_ONLY, FAVORED_ONLY;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

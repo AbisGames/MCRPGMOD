@@ -46,6 +46,28 @@ public final class SpecialItems {
         return n;
     }
 
+    /** Sigil-marked gear: a weapon renamed at an anvil or a piece of armor with a trim. */
+    public static boolean isSigil(ItemStack stack) {
+        return isWeapon(stack) ? stack.has(DataComponents.CUSTOM_NAME) : stack.has(DataComponents.TRIM);
+    }
+
+    /** A staff: a blaze rod or a stick. */
+    public static boolean isStaff(ItemStack stack) {
+        return stack.is(net.minecraft.world.item.Items.BLAZE_ROD) || stack.is(net.minecraft.world.item.Items.STICK);
+    }
+
+    /** Worn armor pieces without an armor trim. */
+    public static int unmarkedArmor(ServerPlayer player) {
+        int n = 0;
+        for (EquipmentSlot slot : ARMOR) {
+            ItemStack stack = player.getItemBySlot(slot);
+            if (!stack.isEmpty() && !stack.has(DataComponents.TRIM)) {
+                n++;
+            }
+        }
+        return n;
+    }
+
     /** Worn armor pieces with an armor trim. */
     public static int sigilArmor(ServerPlayer player) {
         int n = 0;

@@ -126,16 +126,7 @@
     {
       "id": "weapon_master_one_true_weapon",
       "name": "One True Weapon",
-      "description": {
-        "text": "+30% favored damage, but other weapons are forbidden-tier",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% favored damage, but other weapons are forbidden-tier",
       "type": "keystone",
       "x": -1339,
       "y": -582,
@@ -144,7 +135,26 @@
         "weapon_master_signature_move"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "favored_only",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

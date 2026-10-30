@@ -1275,6 +1275,79 @@ def world(low, ctx):
     m = re.fullmatch(rf'\+{N} blocks? reach against (?:the )?challenged foe', low)
     if m:
         return bonus_kind('quarry_reach', float(m.group(1)))
+    # Runesmith sigils. The definition itself is built in (renamed weapons, trimmed armor).
+    if re.fullmatch(r"armor with a trim and weapons you'?ve renamed at an anvil count as sigil-marked", low):
+        return []
+    sigil_weapon = {'type': 'pipican:item_rule', 'rule': 'sigil_weapon'}
+    sigil_armor = {'type': 'pipican:item_rule', 'rule': 'sigil_armor', 'min': 1}
+    m = re.fullmatch(rf'sigil weapon damage \+{N}% per ([a-z]+)', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:conditional', 'when': sigil_weapon, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': 1.0,
+                 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}]}]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N} armou?r toughness from sigil armou?r', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:conditional', 'when': sigil_armor, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:armor_toughness',
+                 'amount': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / float(m.group(1)), 6)}]}]}]
+    m = re.fullmatch(rf'\+{N}% damage with sigil-marked weapons and \+{N} armou?r with sigil-marked armou?r', low)
+    if m and ctx.get('implicit_per_point'):
+        return [{'type': 'pipican:conditional', 'when': sigil_weapon, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': 1.0,
+                 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}]},
+                {'type': 'pipican:conditional', 'when': sigil_armor, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:armor',
+                 'amount': 0.0, 'scaling': [{'source': 'special_stat', 'per': float(m.group(2))}]}]}]
+    m = re.fullmatch(rf'-{N}% damage with unmarked weapons and -{N} armou?r per unmarked armou?r piece', low)
+    if m:
+        armed = {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:holding', 'items': '#pipican:weapons/melee'},
+                                                          {'type': 'pipican:holding', 'items': '#pipican:weapons/ranged'}]}
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [armed, {'type': 'pipican:not', 'condition': sigil_weapon}]},
+                 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 - float(m.group(1)) / 100, 6)}]},
+                {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': 0.0, 'scaling': [{'source': 'unmarked_armor', 'per': -float(m.group(2))}]}]
+    m = re.fullmatch(rf'mighty sigils triggers at {N}% ([a-z ]+)', low)
+    if m and m.group(2) == rn and float(m.group(1)) < 100:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [
+                    {'type': 'pipican:resource', 'min': pct(m.group(1)), 'max': 0.9999}, sigil_weapon]},
+                 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': 1.1}]}]
+    # Weapon limits: "+25% staff damage, but you can't use any other weapon at better than clumsy",
+    # "+30% favored damage, but other weapons are forbidden-tier", Dervish's shields and bows.
+    staff = {'type': 'pipican:holding', 'items': ['minecraft:blaze_rod', 'minecraft:stick']}
+    m = re.fullmatch(rf"\+{N}% staff damage, but you can'?t use any other weapon at better than clumsy", low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': staff, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]},
+                bonus_kind('staff_only', 1.0)[0]]
+    m = re.fullmatch(rf'\+{N}% favou?red damage, but other weapons are forbidden-tier', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:holding_favored'},
+                 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]}, bonus_kind('favored_only', 1.0)[0]]
+    m = re.fullmatch(rf'shields count as forbidden and -{N}% damage with bows and crossbows', low)
+    if m:
+        k = round(1 - float(m.group(1)) / 100, 6)
+        return [bonus_kind('no_shield', 1.0)[0], {'type': 'pipican:damage_dealt', 'weapons': '#pipican:weapons/bows', 'multiplier': k},
+                {'type': 'pipican:damage_dealt', 'weapons': '#pipican:weapons/crossbows', 'multiplier': k}]
+    m = re.fullmatch(rf'staff hits sweep {N} extra mobs?', low)
+    if m:
+        return [{'type': 'pipican:cleave', 'fraction': 0.5, 'radius': 2.5, 'max_targets': int(float(m.group(1))), 'weapons': '#pipican:weapons/staff'}]
+    m = re.fullmatch(rf'(?:a blaze rod or stick held in the main hand counts as your staff - )?\+{N} attack damage, \+{N}% of it as magic damage', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': staff, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:attack_damage', 'amount': float(m.group(1))},
+                 bonus_kind('magic_portion', pct(m.group(2)))[0]]}]
+    # Mace smash
+    m = re.fullmatch(rf'\+{N}% fall-smash damage', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'damage_types': '#pipican:is_mace_smash', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
+    # Range / cooldown upgrades of named reactions: "Frightful Wrath range +3 blocks", "goat horn cooldown -20s"
+    labels = {v.strip('"').lower() for v in LABELS.get(cid, {}).values()}
+    m = re.fullmatch(rf"([a-z' ]+) range \+{N} blocks?", low)
+    if m and (m.group(1) in labels or m.group(1) in REACTIONS.get(cid, {})):
+        return [{'type': 'pipican:reaction_mod', 'name': m.group(1), 'radius': float(m.group(2))}]
+    m = re.fullmatch(rf'goat horn cooldown -{N}s', low)
+    if m and 'attack command' in REACTIONS.get(cid, {}) and REACTIONS[cid]['attack command'].get('cooldown_ticks'):
+        base = REACTIONS[cid]['attack command']['cooldown_ticks'] / 20
+        return [{'type': 'pipican:reaction_mod', 'name': 'attack command', 'cooldown': round(-float(m.group(1)) / base, 6)}]
+    m = re.fullmatch(rf'absorption \+{N} more hearts', low)
+    if m and "nature's resilience" in REACTIONS.get(cid, {}):
+        return [{'type': 'pipican:reaction_mod', 'name': "nature's resilience", 'amplify': {'minecraft:absorption': int(float(m.group(1)) // 2)}}]
+    # Tongues: chat already reaches every player on the server.
+    if re.fullmatch(r"your chat messages can be read by all players within 1000 blocks when you start them with '!'|tongues messages carry server-wide", low):
+        return []
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
@@ -1597,7 +1670,7 @@ def whole_line(text, ctx):
     t = re.sub(r"^[A-Z][\w' -]{1,30}:\s+", '', t)
     low = t.lower()
     w = world(low, ctx)
-    if w:
+    if w is not None:
         return w
     # "immune to Nausea, and Blindness/Darkness last half as long": the ", and" ends the immunity list.
     m = re.fullmatch(r'(immune to [a-z ]+), and (.+)', low)

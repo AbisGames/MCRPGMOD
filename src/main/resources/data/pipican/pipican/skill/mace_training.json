@@ -43,17 +43,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+10% fall-smash damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+10% fall-smash damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_mace_smash",
+          "multiplier": 1.1
+        }
+      ]
     },
     {
       "description": "+3% mace damage",

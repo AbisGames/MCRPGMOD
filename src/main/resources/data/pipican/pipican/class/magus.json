@@ -58,9 +58,26 @@
   },
   "passives": [
     {
-      "type": "pipican:attribute",
-      "attribute": "minecraft:attack_damage",
-      "amount": 6.0
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_damage",
+          "amount": 6.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "type": "pipican:conditional",

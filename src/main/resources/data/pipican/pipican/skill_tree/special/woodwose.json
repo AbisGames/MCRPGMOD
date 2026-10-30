@@ -44,16 +44,7 @@
     {
       "id": "nature_s_resilience",
       "name": "Nature's Resilience",
-      "description": {
-        "text": "absorption +2 more hearts",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "absorption +2 more hearts",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -61,7 +52,16 @@
         "green_blood"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "nature's resilience",
+          "amplify": {
+            "minecraft:absorption": 1
+          }
+        }
+      ]
     },
     {
       "id": "nature_bond",
