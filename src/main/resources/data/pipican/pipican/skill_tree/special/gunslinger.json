@@ -64,16 +64,7 @@
     {
       "id": "ricochet",
       "name": "Ricochet",
-      "description": {
-        "text": "bullets bounce to a second mob within 4 blocks for 50%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bullets bounce to a second mob within 4 blocks for 50%",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -81,21 +72,19 @@
         "speed_loader"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "ricochet",
+          "amount": 0.5
+        }
+      ]
     },
     {
       "id": "last_gunslinger",
       "name": "Last Gunslinger",
-      "description": {
-        "text": "6th shot in a cylinder always crits; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "6th shot in a cylinder always crits; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -104,7 +93,20 @@
         "ricochet"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "last_shot_crit",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

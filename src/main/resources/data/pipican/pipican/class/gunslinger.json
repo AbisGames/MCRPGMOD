@@ -62,9 +62,19 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "cylinder",
+      "amount": 6.0
+    },
+    {
       "type": "pipican:damage_dealt",
       "weapons": "#pipican:weapons/crossbows",
       "multiplier": 1.2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "accuracy",
+      "amount": 0.15
     },
     {
       "type": "pipican:bonus",
@@ -105,20 +115,27 @@
           "per": 0.003
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "cylinder",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Guns are loud and need reloading.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Guns are loud and need reloading.",
     "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "shot_alert",
+        "amount": 24.0
+      },
       {
         "type": "pipican:damage_dealt",
         "damage_types": "#pipican:is_melee",

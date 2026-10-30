@@ -1855,6 +1855,40 @@ def world(low, ctx):
     if m and 'invention' in REACTIONS.get(cid, {}):
         return [{'type': 'pipican:reaction_mod', 'name': 'invention', 'strength': 1.0},
                 {'type': 'pipican:on', 'event': 'spend', 'name': 'misfire', 'chance': pct(m.group(1)), 'actions': [{'type': 'pipican:hurt_self', 'amount': 2.0}]}]
+    # --- Bulk 42: Gunslinger (crossbows are the firearms until guns exist)
+    gun = '#pipican:weapons/crossbows'
+    m = re.fullmatch(rf'a pistol you modify at a smithing table holds {N} shots before reloading and never misfires', low)
+    if m:
+        return bonus_kind('cylinder', float(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% firearm damage and \+{N}% accuracy(?: \(less spread\))?', low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'weapons': gun, 'multiplier': round(1 + float(m.group(1)) / 100, 6)}, bonus_kind('accuracy', pct(m.group(2)))[0]]
+    m = re.fullmatch(rf'\+{N}% accuracy', low)
+    if m:
+        return bonus_kind('accuracy', pct(m.group(1)))
+    m = re.fullmatch(rf'per {N} ([a-z ]+?),? \+{N} shots? per cylinder', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('cylinder', 0.0, round(float(m.group(3)) / float(m.group(1)), 6))
+    m = re.fullmatch(rf'every shot alerts hostile mobs within {N} blocks, and -{N}% melee damage', low)
+    if m:
+        return [bonus_kind('shot_alert', float(m.group(1)))[0], {'type': 'pipican:damage_dealt', 'damage_types': '#pipican:is_melee',
+                'multiplier': round(1 - float(m.group(2)) / 100, 6)}]
+    m = re.fullmatch(rf'first shot after swapping to a gun deals \+{N}%', low)
+    if m:
+        return bonus_kind('quick_draw', pct(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% fire rate', low)
+    if m:
+        return bonus_kind('reload_speed', pct(m.group(1)))
+    m = re.fullmatch(rf"\+{N}% firearm damage, but you can'?t wear heavy armou?r without -{N}% accuracy", low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'weapons': gun, 'multiplier': round(1 + float(m.group(1)) / 100, 6)},
+                {'type': 'pipican:conditional', 'when': {'type': 'pipican:item_rule', 'rule': 'heavy_armor', 'min': 1},
+                 'effects': bonus_kind('accuracy', -pct(m.group(2)))}]
+    if re.fullmatch(r'6th shot in a cylinder always crits', low):
+        return bonus_kind('last_shot_crit', 1.0)
+    m = re.fullmatch(rf'bullets bounce to a second mob within 4 blocks for {N}%', low)
+    if m:
+        return bonus_kind('ricochet', pct(m.group(1)))
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

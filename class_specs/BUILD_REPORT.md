@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2162**, partly working: **8**, not yet: **80**
+- Bonus phrases: **2250**. Fully working: **2172**, partly working: **6**, not yet: **72**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,77 +12,16 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Other mechanics](#other-mechanics) | 33 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
+| [Other mechanics](#other-mechanics) | 26 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 18 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 16 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 12 |
-| [Immunities](#immunities) | 6 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 15 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 11 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
+| [Immunities](#immunities) | 5 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 3 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 2 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
-
-## Other mechanics
-
-- **abjurer**
-  - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
-- **acrobat**
-  - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
-- **berserker**
-  - special tree: Reckless Strike: fatigue lasts twice as long
-- **cleric**
-  - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
-- **conqueror**
-  - special stat per point: +0.5% damage for players near you
-- **destroyer**
-  - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
-- **druid**
-  - passive: no slowdown from powder snow, soul sand, cobwebs or honey
-- **duelist**
-  - general tree: Lone Wolf: Duel bonuses doubled
-- **executioner**
-  - special tree: Steady: exposure after charged hits lasts 1s
-- **explorer**
-  - general tree: Cartographer: maps you make explore 25% faster
-- **gunslinger**
-  - passive: +15% accuracy
-  - special passive: Per 10 Trigger Finger, +1 shot per cylinder
-  - weakness: every shot alerts hostile mobs within 24 blocks
-  - general tree: Quick Draw: first shot after swapping to a gun deals +25%
-  - general tree: Steady Hand: +5% accuracy
-  - general tree: Fan the Hammer: +15% fire rate
-  - special tree: Ricochet: bullets bounce to a second mob within 4 blocks for 50%
-- **hexer**
-  - special tree: Lethargy: Lethargy also stops jumping
-- **illusionist**
-  - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
-- **inquisitor**
-  - special passive: Scrutiny bonus +0.5% per point
-- **jack_of_all_trades**
-  - special tree: Prodigy: Prodigy picks the stat you most recently used
-- **miracle_worker**
-  - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
-  - general tree: Saint Among Us: miracles cost half
-  - general tree: Saint Among Us: max health penalty is 3 per use
-- **myrmidon**
-  - general tree: Turtle: blocking also stops arrows from the sides
-- **technomancer**
-  - passive: Redstone you place powers 2 blocks farther
-- **templar**
-  - general tree: Fortress Temple: outside it you lose all class passives
-- **tenebrist**
-  - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
-- **thaumaturge**
-  - special tree: Pandemonium: chaos outcomes can hit 2 mobs
-- **thief**
-  - special tree: Escape Artist: cobwebs don't slow you
-- **transmuter**
-  - special stat per point: +0.2 to every stat per 10 points (rounded down)
-- **warlock**
-  - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
-- **zealot**
-  - special tree: Violent Madness: Violent Madness no longer targets players
 
 ## Skill trigger approximated
 
@@ -141,6 +80,59 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **witch**
   - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
 
+## Other mechanics
+
+- **abjurer**
+  - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
+- **acrobat**
+  - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
+- **berserker**
+  - special tree: Reckless Strike: fatigue lasts twice as long
+- **cleric**
+  - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
+- **conqueror**
+  - special stat per point: +0.5% damage for players near you
+- **destroyer**
+  - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
+- **druid**
+  - passive: no slowdown from powder snow, soul sand, cobwebs or honey
+- **duelist**
+  - general tree: Lone Wolf: Duel bonuses doubled
+- **executioner**
+  - special tree: Steady: exposure after charged hits lasts 1s
+- **explorer**
+  - general tree: Cartographer: maps you make explore 25% faster
+- **hexer**
+  - special tree: Lethargy: Lethargy also stops jumping
+- **illusionist**
+  - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
+- **inquisitor**
+  - special passive: Scrutiny bonus +0.5% per point
+- **jack_of_all_trades**
+  - special tree: Prodigy: Prodigy picks the stat you most recently used
+- **miracle_worker**
+  - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
+  - general tree: Saint Among Us: miracles cost half
+  - general tree: Saint Among Us: max health penalty is 3 per use
+- **myrmidon**
+  - general tree: Turtle: blocking also stops arrows from the sides
+- **technomancer**
+  - passive: Redstone you place powers 2 blocks farther
+- **templar**
+  - general tree: Fortress Temple: outside it you lose all class passives
+- **tenebrist**
+  - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
+- **thaumaturge**
+  - special tree: Pandemonium: chaos outcomes can hit 2 mobs
+- **thief**
+  - special tree: Escape Artist: cobwebs don't slow you
+- **transmuter**
+  - special stat per point: +0.2 to every stat per 10 points (rounded down)
+- **warlock**
+  - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
+- **zealot**
+  - special tree: Violent Madness: Violent Madness no longer targets players
+
 ## Active abilities (named abilities, cooldowns, auras, summons)
 
 - **bard**
@@ -187,8 +179,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
-- **gunslinger**
-  - general tree: Showdown: +30% firearm damage, but you can't wear heavy armor without -50% accuracy
 - **hydromancer**
   - passive: Flow: while wet (rain or water), you can't be slowed or caught by cobwebs/powder snow and +10% damage
   - general tree: Riptide: tridents with Riptide work without rain while Current is above half
@@ -213,8 +203,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
 - **enchanter**
   - special tree: Puppet Master: you can keep one charmed mob as a pet until you sleep; -15% max health
-- **gunslinger**
-  - special tree: Last Gunslinger: 6th shot in a cylinder always crits; -10% max health
 - **hexer**
   - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
 - **inquisitor**
@@ -232,21 +220,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **witch**
   - general tree: Coven: +10% max Witchery, Guidance range +2
 
-## Immunities
-
-- **druid**
-  - special tree: Trackless: your steps never trigger sculk sensors or pressure plates
-- **gunslinger**
-  - passive: Six-Shooter: a pistol you modify at a smithing table holds 6 shots before reloading and never misfires
-- **hydromancer**
-  - special tree: Slippery: immune to being held (guardians' beam slow too)
-- **scout**
-  - passive: Trackless: your footsteps never trigger sculk sensors, shriekers or tripwires
-- **sorcerer**
-  - passive: Sorcery: magic damage you deal ignores 20% of the target's armor
-- **thief**
-  - passive: you never trigger tripwires or pressure plates
-
 ## Potions, XP, loot, trading, crafting, food
 
 - **artificer**
@@ -258,6 +231,19 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Read the Signs: loot chests show their contents' rarity colour
 - **fighter**
   - general tree: Living Weapon: +15% weapon damage and attack speed, but -30% magic damage and potion strength
+
+## Immunities
+
+- **druid**
+  - special tree: Trackless: your steps never trigger sculk sensors or pressure plates
+- **hydromancer**
+  - special tree: Slippery: immune to being held (guardians' beam slow too)
+- **scout**
+  - passive: Trackless: your footsteps never trigger sculk sensors, shriekers or tripwires
+- **sorcerer**
+  - passive: Sorcery: magic damage you deal ignores 20% of the target's armor
+- **thief**
+  - passive: you never trigger tripwires or pressure plates
 
 ## Bonus against a kind of mob / marked target
 

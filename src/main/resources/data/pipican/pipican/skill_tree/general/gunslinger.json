@@ -19,56 +19,43 @@
     {
       "id": "gunslinger_quick_draw",
       "name": "Quick Draw",
-      "description": {
-        "text": "first shot after swapping to a gun deals +25%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "first shot after swapping to a gun deals +25%",
       "type": "small",
       "x": -1640,
       "y": 317,
       "links": [
         "gunslinger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quick_draw",
+          "amount": 0.25
+        }
       ]
     },
     {
       "id": "gunslinger_steady_hand",
       "name": "Steady Hand",
-      "description": {
-        "text": "+5% accuracy",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+5% accuracy",
       "type": "small",
       "x": -1649,
       "y": 263,
       "links": [
         "gunslinger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "accuracy",
+          "amount": 0.05
+        }
       ]
     },
     {
       "id": "gunslinger_fan_the_hammer",
       "name": "Fan the Hammer",
-      "description": {
-        "text": "+15% fire rate",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% fire rate",
       "type": "notable",
       "x": -1709,
       "y": 329,
@@ -76,7 +63,14 @@
         "gunslinger_quick_draw"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.15
+        }
+      ]
     },
     {
       "id": "gunslinger_hollow_point",
@@ -103,16 +97,7 @@
     {
       "id": "gunslinger_showdown",
       "name": "Showdown",
-      "description": {
-        "text": "+30% firearm damage, but you can't wear heavy armor without -50% accuracy",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+30% firearm damage, but you can't wear heavy armor without -50% accuracy",
       "type": "keystone",
       "x": -1783,
       "y": 314,
@@ -121,7 +106,29 @@
         "gunslinger_hollow_point"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "heavy_armor",
+            "min": 1
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "accuracy",
+              "amount": -0.5
+            }
+          ]
+        }
+      ]
     }
   ]
 }
