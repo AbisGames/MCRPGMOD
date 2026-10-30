@@ -185,8 +185,52 @@ public final class BossTests {
             helper.assertTrue(output.buildResult().getIntOr("BossZoneTicks",0)==120,"phase-two danger duration did not increase");
             for(int i=0;i<20;i++) boss.tickCombat(level);
             helper.assertTrue(front.getHealth()<=13,"phase-two danger damage did not increase");
+            frostboundAttacks(helper,boss,front,dodge,origin);
             helper.succeed();
         }finally { front.discard(); dodge.discard(); }
+    }
+    private static void frostboundAttacks(GameTestHelper helper,RegionalBossEntity boss,net.minecraft.world.entity.player.Player front,
+            net.minecraft.world.entity.player.Player dodge,net.minecraft.core.BlockPos origin){
+        var level=helper.getLevel();
+        boss.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20); front.invulnerableTime=0;
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        var frost=new FrostboundCombat(boss);
+        helper.assertTrue(frost.begin(FrostboundCombat.FISSURE,front),"fissure failed to start");
+        front.snapTo(origin.getX()+1.75,origin.getY(),origin.getZ()+3);
+        dodge.snapTo(origin.getX()-8,origin.getY(),origin.getZ()-8);
+        for(int i=0;i<39;i++) frost.tick(level);
+        helper.assertTrue(front.getHealth()==20,"fissure hit before warning completed");
+        frost.tick(level);
+        helper.assertTrue(front.getHealth()<20 && dodge.getHealth()==20,"fissure damage or avoidance failed");
+        front.setHealth(20); front.invulnerableTime=0;
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        frost=new FrostboundCombat(boss);
+        helper.assertTrue(frost.begin(FrostboundCombat.WHEEL,front),"wheel failed to start");
+        front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());
+        dodge.snapTo(origin.getX()-4.24,origin.getY(),origin.getZ()+4.24);
+        for(int i=0;i<50;i++) frost.tick(level);
+        helper.assertTrue(front.getHealth()<20 && dodge.getHealth()==20,"wheel safe wedge or damage failed");
+        front.setHealth(20); front.invulnerableTime=0;
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()+5);
+        frost=new FrostboundCombat(boss);
+        helper.assertTrue(frost.begin(FrostboundCombat.LANCES,front),"lances failed to start");
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()+4);
+        dodge.snapTo(origin.getX()+3,origin.getY(),origin.getZ()+4);
+        for(int i=0;i<60;i++) frost.tick(level);
+        helper.assertTrue(front.getHealth()<20 && dodge.getHealth()==20,"first lance row damage failed");
+        var output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); frost.save(output);
+        var restored=new FrostboundCombat(boss);
+        restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        for(int i=0;i<19;i++) restored.tick(level);
+        helper.assertTrue(dodge.getHealth()==20,"second lance row hit before warning");
+        restored.tick(level);
+        helper.assertTrue(dodge.getHealth()<20,"second lance row failed after reload");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); restored.save(output);
+        frost=new FrostboundCombat(boss);
+        frost.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        float after=dodge.getHealth(); dodge.invulnerableTime=0; frost.tick(level);
+        helper.assertTrue(dodge.getHealth()==after,"second lance row repeated after reload");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

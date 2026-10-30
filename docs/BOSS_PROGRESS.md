@@ -4,7 +4,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 
 | Boss | Entity | Geometry | Textures | Animations | Combat | Phase 2 | Summoning | Loot | GameTests | Client QA |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| frostbound_colossus | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| frostbound_colossus | planned | prototype | planned | planned | partial | partial | planned | planned | partial | pending |
 | nhalkorr_leviathan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | skollvar_winterfang | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | hrothgar_drowned_jarl | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -32,4 +32,4 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | vermillion_blood_monarch | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | lumynara_abyssal_oracle | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 
-Current infrastructure work: summoning resolves an explicitly implemented boss binding; Morvath remains the only binding. Its existing altar and save format are unchanged. Ground-combat batch A is next.
+Current infrastructure work: summoning resolves an explicitly implemented boss binding; Morvath remains the only binding. Its existing altar and save format are unchanged. Frostbound has an isolated server combat implementation with fissure, wheel and alternating lance rows; it is not yet connected to a registered entity or render state. Its phase transition animation, summoning, rewards, full encounter and client QA remain incomplete.
