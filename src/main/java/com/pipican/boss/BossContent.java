@@ -16,6 +16,8 @@ public final class BossContent {
     public static final DeferredItem<Item> FROSTBOUND_TROPHY=ITEMS.registerSimpleItem("frostbound_colossus_trophy");
     public static final DeferredItem<Item> SKOLLVAR_SIGIL=ITEMS.registerSimpleItem("skollvar_winterfang_sigil");
     public static final DeferredItem<Item> SKOLLVAR_TROPHY=ITEMS.registerSimpleItem("skollvar_winterfang_trophy");
+    public static final DeferredItem<Item> ELDAROTH_SIGIL=ITEMS.registerSimpleItem("eldaroth_treant_sigil");
+    public static final DeferredItem<Item> ELDAROTH_TROPHY=ITEMS.registerSimpleItem("eldaroth_treant_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

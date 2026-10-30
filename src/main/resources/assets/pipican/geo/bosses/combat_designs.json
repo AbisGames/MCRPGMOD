@@ -597,7 +597,7 @@
   {
     "id": "eldaroth_treant",
     "region": "elderwood",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 900,
     "damage": 14,
@@ -610,38 +610,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:oak_sapling",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:eldaroth_treant_sigil"
     },
     "abilities": [
       {
         "id": "root_lattice",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Root lines form a delayed lattice with open cells.",
         "counterplay": "Move into an unrooted cell before the roots close.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:eldaroth_treant/root_lattice"
+        "animation": "eldaroth_treant/root_lattice"
       },
       {
         "id": "seed_pods",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Lobbed pods sprout short-lived hazards at fixed landings.",
         "counterplay": "Leave the landing rings or destroy the dormant pod.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:eldaroth_treant/seed_pods"
+        "animation": "eldaroth_treant/seed_pods"
       },
       {
         "id": "branch_clock",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A high branch rotates around a visible near-trunk refuge.",
         "counterplay": "Use the inner refuge or pass behind the branch after its sweep.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:eldaroth_treant/branch_clock"
+        "animation": "eldaroth_treant/branch_clock"
       }
     ],
     "phase_two": {
@@ -652,7 +653,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:mooncrystal",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:eldaroth_treant_trophy",
       "planned_trophy_name": "Eldaroth Treant Trophy",
       "xp": 225
     },
@@ -660,16 +661,16 @@
       "geometry": "geometry.pipican.eldaroth_treant",
       "file": "geo/bosses/eldaroth_treant.geo.json",
       "animation_mapping": {
-        "idle": "planned:eldaroth_treant/idle",
-        "walk": "planned:eldaroth_treant/walk",
-        "basic_attack": "planned:eldaroth_treant/basic_attack",
-        "hurt": "planned:eldaroth_treant/hurt",
-        "phase_transition": "planned:eldaroth_treant/phase_transition",
-        "summoning": "planned:eldaroth_treant/summoning",
-        "death": "planned:eldaroth_treant/death",
-        "root_lattice": "planned:eldaroth_treant/root_lattice",
-        "seed_pods": "planned:eldaroth_treant/seed_pods",
-        "branch_clock": "planned:eldaroth_treant/branch_clock"
+        "idle": "eldaroth_treant/idle",
+        "walk": "eldaroth_treant/walk",
+        "basic_attack": "eldaroth_treant/basic_attack",
+        "hurt": "eldaroth_treant/hurt",
+        "phase_transition": "eldaroth_treant/phase_transition",
+        "summoning": "eldaroth_treant/summoning",
+        "death": "eldaroth_treant/death",
+        "root_lattice": "eldaroth_treant/root_lattice",
+        "seed_pods": "eldaroth_treant/seed_pods",
+        "branch_clock": "eldaroth_treant/branch_clock"
       }
     },
     "arena": {

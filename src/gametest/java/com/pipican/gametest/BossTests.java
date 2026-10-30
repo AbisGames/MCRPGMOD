@@ -40,7 +40,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==3,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==4,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -60,6 +60,9 @@ public final class BossTests {
         var skoll=BossDesigns.require("skollvar_winterfang");
         helper.assertTrue(skoll.functional() && skoll.sigil().registered() && skoll.loot().trophyItem().equals("pipican:skollvar_winterfang_trophy"),
             "Skollvar implemented design is missing sigil/reward metadata");
+        var eldaroth=BossDesigns.require("eldaroth_treant");
+        helper.assertTrue(eldaroth.functional() && eldaroth.sigil().registered() && eldaroth.loot().trophyItem().equals("pipican:eldaroth_treant_trophy"),
+            "Eldaroth implemented design is missing sigil/reward metadata");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -72,11 +75,14 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.BLUE_ICE));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("elderwood").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.OAK_SAPLING));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -159,6 +165,18 @@ public final class BossTests {
             helper.assertTrue(wolfDrops.stream().anyMatch(item->item.getItem().is(BossContent.SKOLLVAR_TROPHY.get()))
                 && wolfDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("wintersteel").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
                 "Skollvar trophy or regional materials missing");
+            var forest=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("elderwood/glowing_glades")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),forest).left().isPresent(),"Eldaroth biome fixture failed");
+            owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.item.ItemStack(BossContent.ELDAROTH_SIGIL.get()));
+            helper.assertTrue(state.useItemOn(owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND),level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS
+                && owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty(),"Eldaroth altar summon failed or retained the sigil");
+            var treant=level.getEntitiesOfClass(EldarothEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            helper.assertTrue(BossEncounters.get(level).find(treant.getUUID()).orElseThrow().type().equals("eldaroth_treant"),"Eldaroth encounter type was not reserved");
+            treant.hurtServer(level,treant.damageSources().genericKill(),10000);
+            var treantDrops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(treantDrops.stream().anyMatch(item->item.getItem().is(BossContent.ELDAROTH_TROPHY.get()))
+                && treantDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Eldaroth trophy or regional materials missing");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
@@ -322,6 +340,34 @@ public final class BossTests {
         float before=target.getHealth(); for(int i=0;i<70;i++) feint.tick(level);
         helper.assertTrue(target.getHealth()==before,"Skollvar feinted third charge dealt damage");
         target.discard();
+
+        var treant=BossRegistries.ELDAROTH.get().create(level,EntitySpawnReason.COMMAND);treant.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+5,origin.getY(),origin.getZ());
+        dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var roots=new EldarothCombat(treant);helper.assertTrue(roots.begin(EldarothCombat.ROOTS,front),"Eldaroth root lattice failed to start");
+        for(int i=0;i<39;i++)roots.tick(level);helper.assertTrue(front.getHealth()==20,"Eldaroth roots hit before full warning");roots.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Eldaroth root lattice damage or safe-cell counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6.5,origin.getY(),origin.getZ());
+        var pods=new EldarothCombat(treant);helper.assertTrue(pods.begin(EldarothCombat.PODS,front),"Eldaroth seed pods failed to start");front.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        for(int i=0;i<49;i++)pods.tick(level);helper.assertTrue(front.getHealth()==20,"Eldaroth seed pods hit before landing");pods.tick(level);
+        helper.assertTrue(front.getHealth()==20,"Eldaroth pod landing did not preserve fixed-mark dodge");
+        front.snapTo(origin.getX()+6.5,origin.getY(),origin.getZ());front.invulnerableTime=0;pods=new EldarothCombat(treant);pods.begin(EldarothCombat.PODS,front);
+        for(int i=0;i<50;i++)pods.tick(level);helper.assertTrue(front.getHealth()<20,"Eldaroth seed pod failed to damage at its telegraphed landing");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var branch=new EldarothCombat(treant);helper.assertTrue(branch.begin(EldarothCombat.BRANCH,front),"Eldaroth branch clock failed to start");
+        for(int i=0;i<59;i++)branch.tick(level);helper.assertTrue(front.getHealth()==20,"Eldaroth branch hit before sweep warning");branch.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Eldaroth branch sweep or inner refuge counterplay failed");
+        treant.setHealth(treant.getMaxHealth()/2);treant.tickCombat(level);
+        helper.assertTrue(treant.phase()==2,"Eldaroth phase two failed to latch");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());treant.saveWithoutId(output);
+        var eldarothReloaded=BossRegistries.ELDAROTH.get().create(level,EntitySpawnReason.LOAD);eldarothReloaded.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        helper.assertTrue(eldarothReloaded.phase()==2,"Eldaroth phase was lost on save/reload");
+        var doubleBloom=new EldarothCombat(treant);helper.assertTrue(doubleBloom.updatePhase(450,900)&&doubleBloom.begin(EldarothCombat.PODS,front),"Eldaroth phase-two seed bloom failed to start");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+5.6,origin.getY(),origin.getZ());
+        for(int i=0;i<50;i++)doubleBloom.tick(level);helper.assertTrue(front.getHealth()<20,"Eldaroth phase-two first bloom did not hit its warning mark");
+        front.setHealth(20);front.invulnerableTime=0;double nextX=origin.getX()+Math.cos(0.43)*5.6,nextZ=origin.getZ()+Math.sin(0.43)*5.6;front.snapTo(nextX,origin.getY(),nextZ);
+        for(int i=0;i<15;i++)doubleBloom.tick(level);helper.assertTrue(front.getHealth()==20,"Eldaroth second bloom fired before its warning interval");doubleBloom.tick(level);
+        helper.assertTrue(front.getHealth()<20,"Eldaroth second phase-two bloom did not resolve after its second warning");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

@@ -25,11 +25,16 @@ public final class BossRegistries {
         "skollvar_winterfang",()->EntityType.Builder.<SkollvarEntity>of(SkollvarEntity::new,MobCategory.MONSTER)
             .sized(1.5f,1.8f).clientTrackingRange(12).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("skollvar_winterfang"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<EldarothEntity>> ELDAROTH=ENTITIES.register(
+        "eldaroth_treant",()->EntityType.Builder.<EldarothEntity>of(EldarothEntity::new,MobCategory.MONSTER)
+            .sized(2.7f,4.1f).clientTrackingRange(12).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("eldaroth_treant"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
         event.put(MORVATH.get(),RegionalBossEntity.attributes().build());
         event.put(FROSTBOUND.get(),FrostboundEntity.frostAttributes().build());
         event.put(SKOLLVAR.get(),SkollvarEntity.attributes().build());
+        event.put(ELDAROTH.get(),EldarothEntity.attributes().build());
     }
 }

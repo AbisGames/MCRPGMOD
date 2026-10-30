@@ -11,7 +11,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | valthor_stormbringer | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | tengri_champion | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | thalassor_deep_tyrant | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
-| eldaroth_treant | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| eldaroth_treant | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | fallen_king | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | durmagon_runic_titan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | longwei_jade_dragon | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -37,3 +37,5 @@ Frostbound now has a registered entity, unique attributes, independent attacks a
 Sköllvar has a separate combat controller for locked scent charges, alternating marked pack pounces and attacks on the last observed footprint. GameTests verify charge avoidance, pounce markers, footprint counterplay and the phase-two third-charge feint.
 
 Update: Sköllvar now has a registered wolf entity, its own attributes and movement, persisted phase/summoning state, client renderer, two phase textures, a survival sigil recipe, Pinewall biome altar route and one-time Wintersteel/trophy rewards. Actual altar summoning and loot pass GameTest. In-entity AI/save-reload and client visual QA still need focused coverage.
+
+Eldaroth now has a registered treant entity, native pose renderer and original geometry preserved, a bark/heartwood atlas, three independent attacks (delayed root lattice with open refuge, fixed seed-pod landings, rotating branch sweep with inner refuge), server damage, saved combat timing and phase-two double-bloom behavior. Its Mooncrystal + Elderwood core + ritual core + oak sapling sigil recipe is registered; the Elderwood altar route and one-time trophy/material rewards are covered by the server encounter test. The current full server run passes all 35 required GameTests, including Eldaroth warning/counterplay/damage, phase reload, exact recipe, biome-bound ritual summon and rewards. Client appearance/clipping remains unverified.

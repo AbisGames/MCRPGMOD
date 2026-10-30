@@ -16,5 +16,11 @@
     "boss": "skollvar_winterfang",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:eldaroth_treant_sigil",
+    "boss": "eldaroth_treant",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

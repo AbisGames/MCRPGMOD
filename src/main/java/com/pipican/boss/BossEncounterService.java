@@ -16,7 +16,8 @@ public final class BossEncounterService {
     private static final Map<String,Binding> BINDINGS=Map.of(
         BossCatalog.MORVATH.id(),new Binding(BossCatalog.MORVATH,BossRegistries.MORVATH::get),
         "frostbound_colossus",new Binding(BossCatalog.require("frostbound_colossus"),BossRegistries.FROSTBOUND::get),
-        "skollvar_winterfang",new Binding(BossCatalog.require("skollvar_winterfang"),BossRegistries.SKOLLVAR::get));
+        "skollvar_winterfang",new Binding(BossCatalog.require("skollvar_winterfang"),BossRegistries.SKOLLVAR::get),
+        "eldaroth_treant",new Binding(BossCatalog.require("eldaroth_treant"),BossRegistries.ELDAROTH::get));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());
