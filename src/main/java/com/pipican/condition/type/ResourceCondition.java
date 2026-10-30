@@ -13,10 +13,14 @@ import net.minecraft.server.level.ServerPlayer;
  * False for classes without a resource.
  *
  * <pre>{@code { "type": "pipican:resource", "min": 1 } }   bar is full</pre>
+ * With {@code lowerable}, {@code threshold_drop} bonuses lower {@code min}.
  */
-public record ResourceCondition(Bounds bounds) implements ClassCondition {
+public record ResourceCondition(Bounds bounds, boolean lowerable) implements ClassCondition {
 
-    public static final MapCodec<ResourceCondition> CODEC = Bounds.MAP_CODEC.xmap(ResourceCondition::new, ResourceCondition::bounds);
+    public static final MapCodec<ResourceCondition> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(i -> i.group(
+            Bounds.MAP_CODEC.forGetter(ResourceCondition::bounds),
+            com.mojang.serialization.Codec.BOOL.optionalFieldOf("lowerable", false).forGetter(ResourceCondition::lowerable)
+    ).apply(i, ResourceCondition::new));
 
     @Override
     public ConditionTypes.Type type() {
@@ -26,6 +30,15 @@ public record ResourceCondition(Bounds bounds) implements ClassCondition {
     @Override
     public boolean test(ServerPlayer player) {
         PlayerClassData data = player.getData(PipicanAttachments.CLASS_DATA);
-        return data.resourceMax() > 0 && bounds.test(data.resource() / data.resourceMax());
+        if (data.resourceMax() <= 0) {
+            return false;
+        }
+        double fraction = data.resource() / data.resourceMax();
+        // "Berserk triggers at 50% Rage instead of 75%": threshold_drop lowers a lowerable minimum.
+        if (lowerable && bounds.min().isPresent()) {
+            double drop = com.pipican.player.ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.THRESHOLD_DROP);
+            return fraction >= bounds.min().get() - drop && (bounds.max().isEmpty() || fraction <= bounds.max().get());
+        }
+        return bounds.test(fraction);
     }
 }

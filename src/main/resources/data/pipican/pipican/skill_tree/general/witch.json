@@ -86,16 +86,7 @@
     {
       "id": "witch_coven",
       "name": "Coven",
-      "description": {
-        "text": "+10% max Witchery, Guidance range +2",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% max Witchery, Guidance range +2",
       "type": "notable",
       "x": 469,
       "y": -757,
@@ -104,7 +95,20 @@
         "witch_hex"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:aura_mod",
+          "name": "guidance",
+          "radius": 2.0
+        }
+      ]
     },
     {
       "id": "witch_crone",

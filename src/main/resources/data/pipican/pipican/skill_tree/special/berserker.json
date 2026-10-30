@@ -134,16 +134,7 @@
     {
       "id": "reckless",
       "name": "Reckless Strike",
-      "description": {
-        "text": "Berserk triggers at 50% Rage instead of 75%; fatigue lasts twice as long",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Berserk triggers at 50% Rage instead of 75%; fatigue lasts twice as long",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -152,7 +143,19 @@
         "fury_unleashed"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "threshold_drop",
+          "amount": 0.25
+        },
+        {
+          "type": "pipican:reaction_mod",
+          "name": "berserk after-effects",
+          "duration": 1.0
+        }
+      ]
     }
   ]
 }

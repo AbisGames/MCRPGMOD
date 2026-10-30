@@ -659,6 +659,8 @@ def main(spec_dir, res_dir, report_path):
         own = [a for a in ability_ids.values() if a not in node_granted and a not in tier_granted]
         if own:
             rpg['abilities'] = own
+        for patch in named.PATCHES.get(cid, []):
+            patch(rpg)
         write(f'{NS}/{NS}/class/{cid}.json', rpg)
 
     # --- skills

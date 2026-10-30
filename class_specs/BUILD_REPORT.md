@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2172**, partly working: **6**, not yet: **72**
+- Bonus phrases: **2250**. Fully working: **2177**, partly working: **5**, not yet: **68**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,10 +13,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 26 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 18 |
+| [Other mechanics](#other-mechanics) | 25 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 15 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 11 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 14 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 10 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
 | [Immunities](#immunities) | 5 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 3 |
@@ -86,8 +86,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
 - **acrobat**
   - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
-- **berserker**
-  - special tree: Reckless Strike: fatigue lasts twice as long
 - **cleric**
   - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
 - **conqueror**
@@ -133,39 +131,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **zealot**
   - special tree: Violent Madness: Violent Madness no longer targets players
 
-## Active abilities (named abilities, cooldowns, auras, summons)
-
-- **bard**
-  - special tree: Swift Song: Inspiring Song refreshes twice as fast
-- **berserker**
-  - weakness: can't go Berserk again for 15s
-  - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
-- **champion**
-  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
-- **diviner**
-  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
-- **dreadnaught**
-  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
-- **engineer**
-  - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **hexer**
-  - general tree: Withering Gaze: Pain curse also gives Weakness
-  - special tree: Desire: Desire-cursed mobs fight other mobs
-- **magus**
-  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
-  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
-- **runesmith**
-  - general tree: Runelord: sigil bonuses doubled
-- **shapeshifter**
-  - special passive: Form bonuses +1% per Mutability
-- **spellbinder**
-  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
-- **templar**
-  - passive: When a hostile mob enters your temple, you get Speed II for 2s
-  - general tree: Fortress Temple: temple bonuses doubled
-  - special tree: Living Temple: your temple follows you
-  - special tree: Living Temple: -15% temple bonuses
-
 ## Conditional bonus (while / when / where)
 
 - **acrobat**
@@ -195,6 +160,34 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
+## Active abilities (named abilities, cooldowns, auras, summons)
+
+- **bard**
+  - special tree: Swift Song: Inspiring Song refreshes twice as fast
+- **champion**
+  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
+- **diviner**
+  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
+- **dreadnaught**
+  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
+- **engineer**
+  - special tree: Mecha: while in the cockpit, eidolon damage +25%
+- **hexer**
+  - special tree: Desire: Desire-cursed mobs fight other mobs
+- **magus**
+  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
+  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
+- **runesmith**
+  - general tree: Runelord: sigil bonuses doubled
+- **shapeshifter**
+  - special passive: Form bonuses +1% per Mutability
+- **spellbinder**
+  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
+- **templar**
+  - general tree: Fortress Temple: temple bonuses doubled
+  - special tree: Living Temple: your temple follows you
+  - special tree: Living Temple: -15% temple bonuses
+
 ## Resource bar: filling, refills, spending
 
 - **assassin**
@@ -217,8 +210,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
 - **templar**
   - general tree: Sacred Ground: players in your temple regenerate 20% faster
-- **witch**
-  - general tree: Coven: +10% max Witchery, Guidance range +2
 
 ## Potions, XP, loot, trading, crafting, food
 

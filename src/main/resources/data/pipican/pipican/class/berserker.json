@@ -85,8 +85,21 @@
     {
       "type": "pipican:conditional",
       "when": {
-        "type": "pipican:resource",
-        "min": 0.75
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:resource",
+            "min": 0.75,
+            "lowerable": true
+          },
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:flag",
+              "name": "berserk lockout"
+            }
+          }
+        ]
       },
       "effects": [
         {
@@ -116,8 +129,21 @@
     {
       "type": "pipican:conditional",
       "when": {
-        "type": "pipican:resource",
-        "min": 0.75
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:resource",
+            "min": 0.75,
+            "lowerable": true
+          },
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:flag",
+              "name": "berserk lockout"
+            }
+          }
+        ]
       },
       "effects": [
         {
@@ -176,8 +202,21 @@
     {
       "type": "pipican:conditional",
       "when": {
-        "type": "pipican:resource",
-        "min": 0.75
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:resource",
+            "min": 0.75,
+            "lowerable": true
+          },
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:flag",
+              "name": "berserk lockout"
+            }
+          }
+        ]
       },
       "effects": [
         {
@@ -196,8 +235,21 @@
     {
       "type": "pipican:conditional",
       "when": {
-        "type": "pipican:resource",
-        "min": 0.75
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:resource",
+            "min": 0.75,
+            "lowerable": true
+          },
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:flag",
+              "name": "berserk lockout"
+            }
+          }
+        ]
       },
       "effects": [
         {
@@ -216,22 +268,26 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "When the rage leaves, it takes everything with it.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "When the rage leaves, it takes everything with it.",
     "effects": [
       {
         "type": "pipican:conditional",
         "when": {
-          "type": "pipican:resource",
-          "min": 0.75
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:resource",
+              "min": 0.75,
+              "lowerable": true
+            },
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:flag",
+                "name": "berserk lockout"
+              }
+            }
+          ]
         },
         "effects": [
           {
@@ -251,6 +307,11 @@
                     "seconds": 8.0
                   }
                 ]
+              },
+              {
+                "type": "pipican:flag",
+                "name": "berserk lockout",
+                "seconds": 15.0
               }
             ]
           }

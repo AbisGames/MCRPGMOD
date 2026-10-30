@@ -44,6 +44,7 @@ public final class ConditionTypes {
 
     public static final Type STATE = register("state", StateCondition.CODEC);
     public static final Type QUARRY = register("quarry", com.pipican.condition.type.QuarryCondition.CODEC);
+    public static final Type FLAG = register("flag", com.pipican.condition.type.FlagCondition.CODEC);
     public static final Type HEALTH = register("health", HealthCondition.CODEC);
     public static final Type RESOURCE = register("resource", ResourceCondition.CODEC);
     public static final Type LIGHT = register("light", LightCondition.CODEC);

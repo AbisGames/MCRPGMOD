@@ -19,6 +19,8 @@ STATIC = {}
 REACTION_NAMES = {}
 # class id -> {label: the pipican:on reaction its line defines} ("Guarded Casting: whenever you spend Ward, ...")
 REACTIONS = {}
+# class id -> functions that adjust the finished class JSON (a weakness that changes how a passive's state works)
+PATCHES = {}
 LABEL = re.compile(r"^([A-Z][A-Za-z' ]{2,30}?):\s*(.+)$")
 
 
@@ -1889,6 +1891,33 @@ def world(low, ctx):
     m = re.fullmatch(rf'bullets bounce to a second mob within 4 blocks for {N}%', low)
     if m:
         return bonus_kind('ricochet', pct(m.group(1)))
+    # --- Bulk 43
+    # "+10% max Witchery, Guidance range +2": a plain bonus and a named upgrade split by a comma.
+    if ', ' in low and ';' not in low and low.count(', ') == 1:
+        first, second = low.split(', ')
+        tail = world(second, ctx)
+        if tail and (head := _rest(first, ctx)):
+            return head + tail
+    if re.fullmatch(r'when a hostile mob enters your temple, you get speed ii for 2s', low):
+        return bonus_kind('temple_alarm', 1.0)
+    m = re.fullmatch(r'pain curse also gives (weakness|slowness|blindness)', low)
+    if m and 'curse' in REACTION_NAMES.get(cid, set()):
+        # Pain is the curse that bleeds the mob.
+        return [{'type': 'pipican:reaction_mod', 'name': 'curse', 'actions': [{'type': 'pipican:effect', 'target': 'victim', 'state': {'bleeding': True},
+                 'effects': [{'effect': 'minecraft:' + m.group(1), 'seconds': 8.0}]}]}]
+    # Berserk: lockout after it ends, and Reckless Strike lowering its threshold.
+    if 'berserk' in NAMED.get(cid, {}):
+        base = NAMED[cid]['berserk'][0]
+
+        m = re.fullmatch(rf"can'?t go berserk again for {N}s", low)
+        if m:
+            PATCHES.setdefault(cid, []).append(_berserk(cid, base, float(m.group(1))))
+            return []
+        m = re.fullmatch(rf'berserk triggers at {N}% ([a-z ]+) instead of {N}%; fatigue lasts twice as long', low)
+        if m and m.group(2) == rn:
+            PATCHES.setdefault(cid, []).append(_berserk(cid, base, None))
+            return [bonus_kind('threshold_drop', round((float(m.group(3)) - float(m.group(1))) / 100, 6))[0],
+                    {'type': 'pipican:reaction_mod', 'name': 'berserk after-effects', 'duration': 1.0}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
@@ -2198,6 +2227,40 @@ def world(low, ctx):
     if m and (ctx.get('node_name') or '').lower() == 'perfect shot' and float(m.group(1)) > 20:
         return bonus_kind('ranged_armor_pierce', pct(float(m.group(1)) - 20))
     return None
+
+
+
+def _berserk(cid, base, lock):
+    """A patch for the finished class JSON: Berserk's resource condition becomes lowerable (threshold_drop) and, with
+    `lock` seconds, can't start again while the "berserk lockout" flag set when it ends is running."""
+    def patch(rpg):
+        def walk(o):
+            if isinstance(o, dict):
+                w = o.get('when')
+                if o.get('type') == 'pipican:conditional' and isinstance(w, dict):
+                    if w.get('type') == 'pipican:all_of' and w.get('conditions') and isinstance(w['conditions'][0], dict) \
+                            and {k: v for k, v in w['conditions'][0].items() if k != 'lowerable'} == base:
+                        core, rest = w['conditions'][0], w['conditions'][1:]
+                    elif {k: v for k, v in w.items() if k != 'lowerable'} == base:
+                        core, rest = w, []
+                    else:
+                        core = None
+                    if core is not None:
+                        core = dict(core, lowerable=True)
+                        flag = {'type': 'pipican:not', 'condition': {'type': 'pipican:flag', 'name': 'berserk lockout'}}
+                        if lock and flag not in rest:
+                            rest = rest + [flag]
+                        o['when'] = {'type': 'pipican:all_of', 'conditions': [core] + rest} if rest else core
+                if lock and o.get('type') == 'pipican:on' and o.get('name') == 'berserk after-effects' \
+                        and not any(a.get('type') == 'pipican:flag' for a in o.get('actions', [])):
+                    o['actions'].append({'type': 'pipican:flag', 'name': 'berserk lockout', 'seconds': lock})
+                for v in list(o.values()):
+                    walk(v)
+            elif isinstance(o, list):
+                for v in o:
+                    walk(v)
+        walk(rpg)
+    return patch
 
 
 def whole_line(text, ctx):

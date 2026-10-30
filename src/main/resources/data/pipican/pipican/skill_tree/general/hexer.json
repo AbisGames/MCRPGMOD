@@ -55,16 +55,7 @@
     {
       "id": "hexer_withering_gaze",
       "name": "Withering Gaze",
-      "description": {
-        "text": "Pain curse also gives Weakness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Pain curse also gives Weakness",
       "type": "notable",
       "x": 775,
       "y": -1154,
@@ -72,7 +63,28 @@
         "hexer_wicked"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "curse",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "state": {
+                "bleeding": true
+              },
+              "effects": [
+                {
+                  "effect": "minecraft:weakness",
+                  "seconds": 8.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "hexer_hex_ward",

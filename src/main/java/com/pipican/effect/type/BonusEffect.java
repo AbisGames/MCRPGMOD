@@ -169,6 +169,8 @@ import net.minecraft.util.StringRepresentable;
  *       shot within 5s of drawing deals more; {@code cylinder} (<i>shots</i>) - the crossbow reloads itself from your arrows until
  *       that many shots are fired; {@code last_shot_crit} - the last shot of a cylinder is critical;
  *       {@code ricochet} - the share of a shot's damage that bounces to another mob within 4 blocks</li>
+ *   <li>{@code threshold_drop}: how much lower (0.25 = 25 points of the bar) "lowerable" resource conditions start</li>
+ *   <li>{@code temple_alarm}: any amount above 0 = Speed II for 2s when a hostile mob comes into your temple</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -205,7 +207,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         LOW_HEALTH_EXTRA, TNT_POWER, CHARGES_FIZZLE_NETHER, POISON_BREW_SPEED, FIRE_LONGER, MARKED_WEAKNESS, EXTRA_RESTOCK, PET_REGEN,
         AURA_BREAK_AT, CALM_ANIMALS, SHIELD_BREAK_TIME, SPLASH_POWER, EXTRA_BREW, SENSE_MAGIC, LOOT_SENSE, ORE_SENSE, STRUCTURE_SENSE, PREY_REVEAL,
         EMIT_LIGHT, STAFF_RETURN, BOOK_HOTBAR, PEARL_CARRY, MOUNT_RETURN, SWEEP_EXECUTE,
-        ACCURACY, SHOT_ALERT, QUICK_DRAW, CYLINDER, LAST_SHOT_CRIT, RICOCHET;
+        ACCURACY, SHOT_ALERT, QUICK_DRAW, CYLINDER, LAST_SHOT_CRIT, RICOCHET,
+        THRESHOLD_DROP, TEMPLE_ALARM;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

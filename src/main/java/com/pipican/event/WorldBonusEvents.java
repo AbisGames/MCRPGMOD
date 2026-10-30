@@ -284,6 +284,7 @@ public final class WorldBonusEvents {
         }
         if (player.tickCount % 20 == 0) {
             markedWeakness(player, level);
+            templeAlarm(player, level);
             taunt(player, level);
             trample(player, level);
             wildfire(player, level);
@@ -673,5 +674,30 @@ public final class WorldBonusEvents {
                 e -> !(e instanceof Player) && e.distanceToSqr(player) <= 16 && com.pipican.ability.Marks.isMarkedBy(e, player))) {
             mob.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 30, Math.min(2, level0 - 1), false, true), player);
         }
+    }
+
+    private static final Map<UUID, java.util.Set<UUID>> IN_TEMPLE = new ConcurrentHashMap<>();
+
+    /** {@code temple_alarm}: a hostile mob stepping into your temple gives you Speed II for 2s. */
+    private static void templeAlarm(ServerPlayer player, ServerLevel level) {
+        if (ClassEffectApplier.state(player).chance(Kind.TEMPLE_ALARM) <= 0) {
+            return;
+        }
+        var config = player.getRespawnConfig();
+        if (config == null || config.respawnData().dimension() != level.dimension()) {
+            return;
+        }
+        BlockPos temple = config.respawnData().pos();
+        double r = 10 + ClassEffectApplier.state(player).chance(Kind.TEMPLE_RADIUS);
+        java.util.Set<UUID> before = IN_TEMPLE.getOrDefault(player.getUUID(), java.util.Set.of());
+        java.util.Set<UUID> now = new java.util.HashSet<>();
+        for (LivingEntity mob : level.getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(temple).inflate(r),
+                e -> e instanceof Enemy && e.isAlive() && e.blockPosition().distSqr(temple) <= r * r)) {
+            now.add(mob.getUUID());
+        }
+        if (now.stream().anyMatch(id -> !before.contains(id))) {
+            player.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.SPEED, 40, 1), player);
+        }
+        IN_TEMPLE.put(player.getUUID(), now);
     }
 }

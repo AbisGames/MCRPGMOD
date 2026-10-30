@@ -103,7 +103,8 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
                     out.add(mount);
                 }
             }
-            case VICTIM -> ctx.subject().filter(LivingEntity::isAlive).ifPresent(out::add);
+            case VICTIM -> ctx.subject().filter(LivingEntity::isAlive)
+                    .filter(e -> state.isEmpty() || state.get().test(player, e)).ifPresent(out::add);
             case COMPANIONS -> out.addAll(Companions.of(player, radius));
             case NEAR_VICTIM -> ctx.subject().ifPresent(subject -> player.level().getEntitiesOfClass(LivingEntity.class, subject.getBoundingBox().inflate(radius),
                             e -> e != subject && e != player && e.isAlive() && e instanceof Enemy && e.distanceTo(subject) <= radius).stream()

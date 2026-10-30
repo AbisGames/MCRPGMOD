@@ -718,7 +718,7 @@ def _segment(seg, ctx):
     if unsupported and not effects:
         # Whole-line phrases ("killing a marked target heals you 25%") also work as one segment of a longer line.
         whole = named.whole_line(seg, ctx)
-        if whole:
+        if whole is not None:
             return whole, []
     return effects, unsupported
 
