@@ -940,7 +940,7 @@
   {
     "id": "morgatha_swamp_queen",
     "region": "marshfen",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 800,
     "damage": 14,
@@ -953,38 +953,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:slime_ball",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:morgatha_swamp_queen_sigil"
     },
     "abilities": [
       {
         "id": "muck_bubbles",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Swelling bubbles burst into temporary poison pools.",
         "counterplay": "Leave the swelling circle or burst it early from range.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:morgatha_swamp_queen/muck_bubbles"
+        "animation": "muck_bubbles"
       },
       {
         "id": "mosquito_veil",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A slow cloud pursues one clearly marked target.",
         "counterplay": "Kite the cloud out of the group or interrupt its caster.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:morgatha_swamp_queen/mosquito_veil"
+        "animation": "mosquito_veil"
       },
       {
         "id": "bog_decoys",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "The queen swaps with a visibly charged decoy before a hex wave.",
         "counterplay": "Watch the charged decoy and leave its announced wave direction.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:morgatha_swamp_queen/bog_decoys"
+        "animation": "bog_decoys"
       }
     ],
     "phase_two": {
@@ -995,7 +996,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:mirestone",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:morgatha_swamp_queen_trophy",
       "planned_trophy_name": "Morgatha Swamp Queen Trophy",
       "xp": 200
     },
@@ -1003,16 +1004,16 @@
       "geometry": "geometry.pipican.morgatha_swamp_queen",
       "file": "geo/bosses/morgatha_swamp_queen.geo.json",
       "animation_mapping": {
-        "idle": "planned:morgatha_swamp_queen/idle",
-        "walk": "planned:morgatha_swamp_queen/walk",
-        "basic_attack": "planned:morgatha_swamp_queen/basic_attack",
-        "hurt": "planned:morgatha_swamp_queen/hurt",
-        "phase_transition": "planned:morgatha_swamp_queen/phase_transition",
-        "summoning": "planned:morgatha_swamp_queen/summoning",
-        "death": "planned:morgatha_swamp_queen/death",
-        "muck_bubbles": "planned:morgatha_swamp_queen/muck_bubbles",
-        "mosquito_veil": "planned:morgatha_swamp_queen/mosquito_veil",
-        "bog_decoys": "planned:morgatha_swamp_queen/bog_decoys"
+        "idle": "morgatha_swamp_queen/idle",
+        "walk": "morgatha_swamp_queen/walk",
+        "basic_attack": "morgatha_swamp_queen/basic_attack",
+        "hurt": "morgatha_swamp_queen/hurt",
+        "phase_transition": "morgatha_swamp_queen/phase_transition",
+        "summoning": "morgatha_swamp_queen/summoning",
+        "death": "morgatha_swamp_queen/death",
+        "muck_bubbles": "morgatha_swamp_queen/muck_bubbles",
+        "mosquito_veil": "morgatha_swamp_queen/mosquito_veil",
+        "bog_decoys": "morgatha_swamp_queen/bog_decoys"
       }
     },
     "arena": {

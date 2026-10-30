@@ -13,17 +13,18 @@ import java.util.function.Supplier;
 public final class BossEncounterService {
     public enum Result { SUCCESS, INVALID_PLAYER, INVALID_HEIGHT, UNLOADED_ARENA, WRONG_BIOME, OBSTRUCTED, NEARBY_ENCOUNTER, SPAWN_REJECTED, UNSUPPORTED_BOSS }
     private record Binding(BossCatalog.Definition definition,Supplier<? extends EntityType<? extends RegionalBossEntity>> entity) {}
-    private static final Map<String,Binding> BINDINGS=Map.of(
-        BossCatalog.MORVATH.id(),new Binding(BossCatalog.MORVATH,BossRegistries.MORVATH::get),
-        "frostbound_colossus",new Binding(BossCatalog.require("frostbound_colossus"),BossRegistries.FROSTBOUND::get),
-        "skollvar_winterfang",new Binding(BossCatalog.require("skollvar_winterfang"),BossRegistries.SKOLLVAR::get),
-        "eldaroth_treant",new Binding(BossCatalog.require("eldaroth_treant"),BossRegistries.ELDAROTH::get),
-        "fallen_king",new Binding(BossCatalog.require("fallen_king"),BossRegistries.FALLEN_KING::get),
-        "kragmor_canyon_warlord",new Binding(BossCatalog.require("kragmor_canyon_warlord"),BossRegistries.KRAGMOR::get),
-        "nocthar_void_sovereign",new Binding(BossCatalog.require("nocthar_void_sovereign"),BossRegistries.NOCTHAR::get),
-        "aetherion_sky_guardian",new Binding(BossCatalog.require("aetherion_sky_guardian"),BossRegistries.AETHERION::get),
-        "vermillion_blood_monarch",new Binding(BossCatalog.require("vermillion_blood_monarch"),BossRegistries.VERMILLION::get),
-        "longwei_jade_dragon",new Binding(BossCatalog.require("longwei_jade_dragon"),BossRegistries.LONGWEI::get));
+    private static final Map<String,Binding> BINDINGS=Map.ofEntries(
+        Map.entry(BossCatalog.MORVATH.id(),new Binding(BossCatalog.MORVATH,BossRegistries.MORVATH::get)),
+        Map.entry("frostbound_colossus",new Binding(BossCatalog.require("frostbound_colossus"),BossRegistries.FROSTBOUND::get)),
+        Map.entry("skollvar_winterfang",new Binding(BossCatalog.require("skollvar_winterfang"),BossRegistries.SKOLLVAR::get)),
+        Map.entry("eldaroth_treant",new Binding(BossCatalog.require("eldaroth_treant"),BossRegistries.ELDAROTH::get)),
+        Map.entry("fallen_king",new Binding(BossCatalog.require("fallen_king"),BossRegistries.FALLEN_KING::get)),
+        Map.entry("kragmor_canyon_warlord",new Binding(BossCatalog.require("kragmor_canyon_warlord"),BossRegistries.KRAGMOR::get)),
+        Map.entry("nocthar_void_sovereign",new Binding(BossCatalog.require("nocthar_void_sovereign"),BossRegistries.NOCTHAR::get)),
+        Map.entry("aetherion_sky_guardian",new Binding(BossCatalog.require("aetherion_sky_guardian"),BossRegistries.AETHERION::get)),
+        Map.entry("vermillion_blood_monarch",new Binding(BossCatalog.require("vermillion_blood_monarch"),BossRegistries.VERMILLION::get)),
+        Map.entry("longwei_jade_dragon",new Binding(BossCatalog.require("longwei_jade_dragon"),BossRegistries.LONGWEI::get)),
+        Map.entry("morgatha_swamp_queen",new Binding(BossCatalog.require("morgatha_swamp_queen"),BossRegistries.MORGATHA::get)));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());

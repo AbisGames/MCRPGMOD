@@ -33,7 +33,8 @@ public final class BossTests {
         Map.entry("nocthar_deep_encounter",BossTests::noctharDeepEncounter),
         Map.entry("aetherion_high_encounter",BossTests::aetherionHighEncounter),
         Map.entry("vermillion_crimson_encounter",BossTests::vermillionCrimsonEncounter),
-        Map.entry("longwei_jade_encounter",BossTests::longweiJadeEncounter));
+        Map.entry("longwei_jade_encounter",BossTests::longweiJadeEncounter),
+        Map.entry("morgatha_marshfen_encounter",BossTests::morgathaMarshfenEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -44,7 +45,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==10,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==11,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -85,6 +86,8 @@ public final class BossTests {
             && vermillion.loot().rare().orElseThrow().chance()==0.25,"Vermillion channel/loot metadata is incomplete");
         var longwei=BossDesigns.require("longwei_jade_dragon");
         helper.assertTrue(longwei.functional()&&longwei.sigil().registered()&&longwei.loot().trophyItem().equals("pipican:longwei_jade_dragon_trophy"),"Longwei jade dragon metadata is incomplete");
+        var morgatha=BossDesigns.require("morgatha_swamp_queen");
+        helper.assertTrue(morgatha.functional()&&morgatha.sigil().registered()&&morgatha.loot().trophyItem().equals("pipican:morgatha_swamp_queen_trophy"),"Morgatha swamp queen metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -97,7 +100,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -123,6 +126,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("jade_empire").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.GREEN_DYE));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("marshfen").get(),net.minecraft.world.item.Items.SLIME_BALL,
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("marshfen").get(),BossContent.CORE.get()));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -369,6 +375,26 @@ public final class BossTests {
             helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.LONGWEI_TROPHY.get()))
                 &&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("jade_essence").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
                 "Longwei guaranteed jade scale/essence rewards missing");helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void morgathaMarshfenEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(3072,32,3072));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MUD_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.MORGATHA_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,"Morgatha altar accepted a non-Marshfen biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/marshfen")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Marshfen biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Morgatha spawn consumed its sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Marshfen altar summon failed");
+            var boss=level.getEntitiesOfClass(MorgathaEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Morgatha spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("morgatha_swamp_queen"),"Morgatha encounter type was not saved");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.MORGATHA_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mirestone").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Morgatha trophy/mirestone rewards missing");helper.succeed();
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void realAttacks(GameTestHelper helper){
@@ -686,6 +712,26 @@ public final class BossTests {
         jadeComboReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
         for(int i=0;i<15;i++)jadeComboReload.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Longwei phase-two spiral follow-up resolved early or was lost on reload");jadeComboReload.tick(level);
         helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&jadeComboReload.clock().phase()==2,"Longwei saved separate spiral follow-up or central refuge failed");
+
+        var queen=BossRegistries.MORGATHA.get().create(level,EntitySpawnReason.COMMAND);queen.snapTo(origin.getX(),origin.getY(),origin.getZ());queen.setNoAi(true);level.addFreshEntity(queen);
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()-6,origin.getY(),origin.getZ());
+        var bubbles=new MorgathaCombat(queen);helper.assertTrue(bubbles.begin(MorgathaCombat.BUBBLES,front),"Morgatha swelling bog bubbles failed to start");
+        for(int i=0;i<39;i++)bubbles.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Morgatha bubbles hit before warning finished");bubbles.tick(level);
+        var bubbleSave=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());bubbles.save(bubbleSave);var bubblesReload=new MorgathaCombat(queen);bubblesReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(bubbleSave.buildResult())));
+        for(int i=0;i<19;i++)bubblesReload.tick(level);helper.assertTrue(front.getHealth()==20,"Morgatha poison pool pulsed before its safe window");bubblesReload.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&front.hasEffect(net.minecraft.world.effect.MobEffects.POISON),"Morgatha pool damage/poison or leave-the-circle counterplay failed");
+        front.setHealth(20);front.removeEffect(net.minecraft.world.effect.MobEffects.POISON);front.invulnerableTime=0;front.snapTo(origin.getX()+2,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+8,origin.getY(),origin.getZ());
+        var veil=new MorgathaCombat(queen);helper.assertTrue(veil.begin(MorgathaCombat.VEIL,front),"Morgatha marked mosquito veil failed to start");for(int i=0;i<50;i++)veil.tick(level);
+        for(int i=0;i<16;i++)veil.tick(level);helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Morgatha slow target cloud failed to track one marked player");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var hex=new MorgathaCombat(queen);helper.assertTrue(hex.begin(MorgathaCombat.DECOYS,front),"Morgatha charged decoy hex failed to start");for(int i=0;i<59;i++)hex.tick(level);
+        helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Morgatha decoy wave resolved before charge completed");hex.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Morgatha decoy direction or safe-lane counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+20,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var blightedHex=new MorgathaCombat(queen);helper.assertTrue(blightedHex.updatePhase(400,800)&&blightedHex.begin(MorgathaCombat.DECOYS,front),"Morgatha phase-two charged decoy failed to start");
+        for(int i=0;i<60;i++)blightedHex.tick(level);for(int i=0;i<8;i++)blightedHex.tick(level);output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());blightedHex.save(output);var blightedReload=new MorgathaCombat(queen);blightedReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+        for(int i=0;i<5;i++)blightedReload.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Morgatha phase-two wave warning resolved early");blightedReload.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&blightedReload.clock().phase()==2,"Morgatha extended phase-two warning or save state failed");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

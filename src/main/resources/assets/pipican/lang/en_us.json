@@ -373,5 +373,8 @@
   "entity.pipican.vermillion_blood_monarch": "Vermillion, Blood Monarch",
   "item.pipican.longwei_jade_dragon_sigil": "Longwei Sigil",
   "item.pipican.longwei_jade_dragon_trophy": "Jade Dragon Scale",
-  "entity.pipican.longwei_jade_dragon": "Longwei, Jade Dragon"
+  "entity.pipican.longwei_jade_dragon": "Longwei, Jade Dragon",
+  "item.pipican.morgatha_swamp_queen_sigil": "Morgatha's Bog Sigil",
+  "item.pipican.morgatha_swamp_queen_trophy": "Swamp Queen Trophy",
+  "entity.pipican.morgatha_swamp_queen": "Morgatha, Swamp Queen"
 }

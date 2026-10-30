@@ -58,5 +58,11 @@
     "boss": "longwei_jade_dragon",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:morgatha_swamp_queen_sigil",
+    "boss": "morgatha_swamp_queen",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

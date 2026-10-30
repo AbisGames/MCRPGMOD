@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MMM",
+    "MCS",
+    "MCR"
+  ],
+  "key": {
+    "M": "pipican:mirestone",
+    "C": "pipican:marshfen_boss_core",
+    "R": "pipican:ritual_core",
+    "S": "minecraft:slime_ball"
+  },
+  "result": {
+    "id": "pipican:morgatha_swamp_queen_sigil",
+    "count": 1
+  }
+}

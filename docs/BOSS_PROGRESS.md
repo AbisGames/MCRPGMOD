@@ -15,7 +15,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | fallen_king | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | durmagon_runic_titan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | longwei_jade_dragon | implemented | preserved source geometry + segmented native renderer | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
-| morgatha_swamp_queen | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| morgatha_swamp_queen | implemented | preserved source geometry + native swamp-casting poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | aurelios_sunken_emperor | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | morvath_ashen_king | complete | prototype | complete | complete | complete | complete | complete | complete | passed | sampled |
 | lianhua_lotus_serpent | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -54,3 +54,6 @@ Vermillion now has independent vessel tethers, three staggered blade orbit heigh
 
 
 Longwei now has a segmented jade-dragon renderer and independent serpentine breath, refuge-gap spiral descent and five sequential orb pulses. Phase two adds a separately saved and warned spiral follow-up after the breath. The Jade Empire altar route, exact green-dye recipe, unique trophy and guaranteed Jade Essence rewards pass alongside combat warning/counterplay and reload checks. The complete server suite passes 39/39 tests; the packaged JAR validator confirms retained source geometries, boss/altar classes, textures, models and exact sigil recipes. Client visual QA remains pending because the available Prism profiles do not match Minecraft 26.1.2.
+
+
+Morgatha now has saved poison-pool bubbles (projectiles can burst a swelling bubble), a slowly pursuing cloud locked to one marked target, and a charged decoy that teleports only the queen before a directional hex wave. Phase two adds a distinct saved 14-tick wave warning. The Marshfen biome altar, exact 5 Mirestone + 2 Marshfen cores + ritual core + slime-ball sigil recipe, guaranteed trophy and eight Mirestone rewards are covered. GameTests verify warnings, avoidance, poison/slow effects, phase-two reload, failed-spawn rollback, and reward consistency. Client appearance QA remains pending because the available Prism profiles do not match Minecraft 26.1.2.

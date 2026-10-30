@@ -53,6 +53,10 @@ public final class BossRegistries {
         "longwei_jade_dragon",()->EntityType.Builder.<LongweiEntity>of(LongweiEntity::new,MobCategory.MONSTER)
             .sized(3.0f,2.6f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("longwei_jade_dragon"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<MorgathaEntity>> MORGATHA=ENTITIES.register(
+        "morgatha_swamp_queen",()->EntityType.Builder.<MorgathaEntity>of(MorgathaEntity::new,MobCategory.MONSTER)
+            .sized(1.9f,3.4f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("morgatha_swamp_queen"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -66,5 +70,6 @@ public final class BossRegistries {
         event.put(AETHERION.get(),AetherionEntity.attributes().build());
         event.put(VERMILLION.get(),VermillionEntity.attributes().build());
         event.put(LONGWEI.get(),LongweiEntity.attributes().build());
+        event.put(MORGATHA.get(),MorgathaEntity.attributes().build());
     }
 }
