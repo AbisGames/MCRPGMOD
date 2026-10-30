@@ -18,11 +18,14 @@ public final class MorvathCombat {
     private List<Vec3> marks=List.of(), zones=List.of();
     private int zoneTicks, sequence;
     private float yaw;
+    private double attackRange=6,attackAngle=60;
     public MorvathCombat(RegionalBossEntity boss){ this.boss=boss; }
     public boolean begin(BossCombatState clock,BossCombatState.Ability ability,LivingEntity target){
         if(!clock.begin(ability)) return false;
         double dx=target.getX()-boss.getX(), dz=target.getZ()-boss.getZ();
         yaw=(float)Math.toDegrees(Math.atan2(-dx,dz));
+        attackRange=ability==BossCombatState.Ability.BASIC ? 3 : BossBalance.CLEAVE_RANGE.get();
+        attackAngle=ability==BossCombatState.Ability.BASIC ? 45 : BossBalance.CLEAVE_HALF_ANGLE.get();
         var selected=new ArrayList<Vec3>();
         if(ability==BossCombatState.Ability.METEOR_RAIN){
             for(var player:players()){
@@ -58,7 +61,7 @@ public final class MorvathCombat {
         switch(impact){
             case BASIC, CLEAVE -> {
                 boolean basic=impact==BossCombatState.Ability.BASIC;
-                for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),basic ? 3 : BossBalance.CLEAVE_RANGE.get(),basic ? 45 : BossBalance.CLEAVE_HALF_ANGLE.get())
+                for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),attackRange,attackAngle)
                     && boss.hasLineOfSight(player)) hit(level,player,basic ? 8 : (clock.phase()==2 ? 18 : 14),basic ? 0.4 : 1.1);
                 boss.playSound(SoundEvents.PLAYER_ATTACK_SWEEP,2,0.65f);
             }
@@ -88,9 +91,9 @@ public final class MorvathCombat {
         }
         if((clock.ability()==BossCombatState.Ability.CLEAVE || clock.ability()==BossCombatState.Ability.BASIC)){
             if(clock.remaining()%3!=0) return;
-            for(double angle=-BossBalance.CLEAVE_HALF_ANGLE.get();angle<=BossBalance.CLEAVE_HALF_ANGLE.get();angle+=10){
+            for(double angle=-attackAngle;angle<=attackAngle;angle+=10){
                 double theta=Math.toRadians(yaw+angle);
-                for(int radius=2;radius<=BossBalance.CLEAVE_RANGE.get();radius+=2) level.sendParticles(ParticleTypes.FLAME,boss.getX()-Math.sin(theta)*radius,boss.getY()+0.15,boss.getZ()+Math.cos(theta)*radius,1,0,0,0,0);
+                for(int radius=2;radius<=attackRange;radius+=2) level.sendParticles(ParticleTypes.FLAME,boss.getX()-Math.sin(theta)*radius,boss.getY()+0.15,boss.getZ()+Math.cos(theta)*radius,1,0,0,0,0);
             }
         }else for(var mark:marks){
             if(clock.remaining()%4==0) ring(level,mark,2.5,false);
@@ -131,12 +134,13 @@ public final class MorvathCombat {
     public void clear(){ marks=List.of(); zones=List.of(); zoneTicks=0; }
     public void save(ValueOutput output){
         output.store("BossMarks",Vec3.CODEC.listOf(),marks); output.store("BossZones",Vec3.CODEC.listOf(),zones);
-        output.putInt("BossZoneTicks",zoneTicks); output.putInt("BossSequence",sequence); output.putFloat("BossAttackYaw",yaw);
+        output.putInt("BossZoneTicks",zoneTicks); output.putInt("BossSequence",sequence); output.putFloat("BossAttackYaw",yaw); output.putDouble("BossAttackRange",attackRange); output.putDouble("BossAttackAngle",attackAngle);
     }
     public void load(ValueInput input){
         marks=input.read("BossMarks",Vec3.CODEC.listOf()).orElse(List.of()).stream().limit(6).toList();
         zones=input.read("BossZones",Vec3.CODEC.listOf()).orElse(List.of()).stream().limit(6).toList();
         zoneTicks=Math.clamp(input.getIntOr("BossZoneTicks",0),0,120); sequence=Math.max(0,input.getIntOr("BossSequence",0))%4;
         yaw=input.getFloatOr("BossAttackYaw",0);
+        attackRange=Math.clamp(input.getDoubleOr("BossAttackRange",6),2,12); attackAngle=Math.clamp(input.getDoubleOr("BossAttackAngle",60),15,85);
     }
 }

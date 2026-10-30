@@ -57,6 +57,7 @@ neoForge {
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
+            gameDirectory = project.file(providers.gradleProperty('clientGameDir').getOrElse('run-client-boss'))
             client()
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id

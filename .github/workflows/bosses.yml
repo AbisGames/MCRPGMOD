@@ -29,6 +29,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew build --no-daemon
+          python3 tools/bosses/validate_boss_jar.py build/libs/*.jar
           ./gradlew runGameTestServer --no-daemon -PworldgenSuite=protection -PworldgenTestSeed=0
       - uses: actions/upload-artifact@v4
         if: always()

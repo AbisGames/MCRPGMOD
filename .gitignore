@@ -43,3 +43,6 @@ repo/
 __pycache__/
 *.py[cod]
 tools/worldgen/output/
+
+# Isolated Morvath client QA
+run-client-boss/

@@ -86,6 +86,11 @@ public final class BossTests {
             helper.assertTrue(hearts(level,arena)==0,"loot existed before defeat");
             boss.hurtServer(level,boss.damageSources().genericKill(),10000);
             helper.assertTrue(hearts(level,arena)==1,"valid defeat did not create exactly one heart");
+            var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"regional reward missing");
+            long rare=drops.stream().filter(item->item.getItem().is(BossContent.INFERNIUM.get())).mapToInt(item->item.getItem().getCount()).sum();
+            helper.assertTrue(rare==(Math.floorMod(boss.getUUID().hashCode(),4)==0 ? 1 : 0),"Infernium roll differed from encounter roll");
+            helper.assertTrue(!level.getEntitiesOfClass(net.minecraft.world.entity.ExperienceOrb.class,new net.minecraft.world.phys.AABB(arena).inflate(8)).isEmpty(),"experience reward missing");
             var replay=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD); replay.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
             replay.hurtServer(level,replay.damageSources().genericKill(),10000);
             helper.assertTrue(hearts(level,arena)==1,"pre-death reload duplicated boss loot");
