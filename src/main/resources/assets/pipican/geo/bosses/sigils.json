@@ -28,5 +28,11 @@
     "boss": "fallen_king",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:kragmor_canyon_warlord_sigil",
+    "boss": "kragmor_canyon_warlord",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

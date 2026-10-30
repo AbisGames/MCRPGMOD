@@ -310,7 +310,7 @@
   "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
   "ritual.pipican.failed": "Ritual rejected: %s",
   "ritual.pipican.summoned": "The Ashen King awakens.",
-  "ritual.pipican.instructions": "Prepare a solid 13Ã—13 floor and 11Ã—11Ã—5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
+  "ritual.pipican.instructions": "Prepare a solid 13×13 floor and 11×11×5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
   "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted.",
   "ritual.pipican.result.invalid_player": "Stand near the altar while alive to summon.",
   "ritual.pipican.result.invalid_height": "Leave at least five blocks below the world ceiling.",
@@ -353,10 +353,13 @@
   "item.pipican.frostbound_colossus_sigil": "Frostbound Sigil",
   "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy",
   "item.pipican.skollvar_winterfang_sigil": "Winterfang Sigil",
-  "item.pipican.skollvar_winterfang_trophy": "SkÃ¶llvar Trophy",
+  "item.pipican.skollvar_winterfang_trophy": "Sköllvar Trophy",
   "item.pipican.eldaroth_treant_sigil": "Eldaroth Sigil",
   "item.pipican.eldaroth_treant_trophy": "Ancient Treant Trophy",
   "item.pipican.fallen_king_sigil": "Fallen King Sigil",
   "item.pipican.fallen_king_trophy": "Fallen King Crown",
-  "entity.pipican.fallen_king": "Fallen King"
+  "entity.pipican.fallen_king": "Fallen King",
+  "item.pipican.kragmor_canyon_warlord_sigil": "Kragmor Sigil",
+  "item.pipican.kragmor_canyon_warlord_trophy": "Kragmor War Crown",
+  "entity.pipican.kragmor_canyon_warlord": "Kragmor, Canyon Warlord"
 }

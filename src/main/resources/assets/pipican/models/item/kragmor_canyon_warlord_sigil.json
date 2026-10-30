@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "pipican:item/kragmor_canyon_warlord_sigil"
+  }
+}

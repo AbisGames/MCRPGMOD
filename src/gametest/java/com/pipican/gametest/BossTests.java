@@ -40,7 +40,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==5,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==6,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -66,6 +66,9 @@ public final class BossTests {
         var fallen=BossDesigns.require("fallen_king");
         helper.assertTrue(fallen.functional() && fallen.sigil().registered() && fallen.loot().trophyItem().equals("pipican:fallen_king_trophy"),
             "Fallen King implemented design is missing sigil/reward metadata");
+        var kragmor=BossDesigns.require("kragmor_canyon_warlord");
+        helper.assertTrue(kragmor.functional() && kragmor.sigil().registered() && kragmor.loot().trophyItem().equals("pipican:kragmor_canyon_warlord_trophy"),
+            "Kragmor implemented design is missing sigil/reward metadata");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -78,7 +81,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -89,6 +92,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("heartlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.GOLDEN_APPLE));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("redrock_badlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.POINTED_DRIPSTONE));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -195,6 +201,18 @@ public final class BossTests {
             helper.assertTrue(kingDrops.stream().anyMatch(item->item.getItem().is(BossContent.FALLEN_KING_TROPHY.get()))
                 && kingDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
                 "Fallen King trophy or regional materials missing");
+            var badlands=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/redrock_badlands")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),badlands).left().isPresent(),"Kragmor biome fixture failed");
+            owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.item.ItemStack(BossContent.KRAGMOR_SIGIL.get()));
+            helper.assertTrue(state.useItemOn(owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND),level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS
+                && owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty(),"Kragmor altar summon failed or retained the sigil");
+            var warlord=level.getEntitiesOfClass(KragmorEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            helper.assertTrue(BossEncounters.get(level).find(warlord.getUUID()).orElseThrow().type().equals("kragmor_canyon_warlord"),"Kragmor encounter type was not reserved");
+            warlord.hurtServer(level,warlord.damageSources().genericKill(),10000);
+            var warlordDrops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(warlordDrops.stream().anyMatch(item->item.getItem().is(BossContent.KRAGMOR_TROPHY.get()))
+                && warlordDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("redrock_iron").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Kragmor trophy or regional materials missing");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
@@ -406,6 +424,29 @@ public final class BossTests {
         var regalia=new FallenKingCombat(king);helper.assertTrue(regalia.begin(FallenKingCombat.REGALIA,front),"Fallen King broken regalia failed to start");
         for(int i=0;i<59;i++)regalia.tick(level);helper.assertTrue(dodge.getHealth()==20,"Fallen King regalia hit before crest warning");regalia.tick(level);
         helper.assertTrue(dodge.getHealth()<20&&front.getHealth()==20,"Fallen King regalia safe exposed sector failed");
+
+        var warlord=BossRegistries.KRAGMOR.get().create(level,EntitySpawnReason.COMMAND);warlord.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+4,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+7.3,origin.getY(),origin.getZ());
+        var rockfall=new KragmorCombat(warlord);helper.assertTrue(rockfall.begin(KragmorCombat.ROCKFALL,front),"Kragmor rockfall failed to start");
+        for(int i=0;i<39;i++)rockfall.tick(level);helper.assertTrue(front.getHealth()==20,"Kragmor rockfall struck before shadow warning");rockfall.tick(level);
+        for(int i=0;i<7;i++)rockfall.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Kragmor first rock landed before its shadow interval");rockfall.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Kragmor first locked rockfall missed its shadow");
+        for(int i=0;i<7;i++)rockfall.tick(level);helper.assertTrue(dodge.getHealth()==20,"Kragmor second rock landed before its new warning interval");rockfall.tick(level);
+        helper.assertTrue(dodge.getHealth()<20,"Kragmor sequential second locked rock missed its shadow");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+3,origin.getY(),origin.getZ()-3);dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        var tethers=new KragmorCombat(warlord);helper.assertTrue(tethers.begin(KragmorCombat.TETHERS,front),"Kragmor cairn tethers failed to start");
+        for(int i=0;i<49;i++)tethers.tick(level);helper.assertTrue(front.getHealth()==20,"Kragmor tethers struck before web warning");tethers.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Kragmor tether segment damage or outside-web counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+13,origin.getY(),origin.getZ());
+        var leap=new KragmorCombat(warlord);helper.assertTrue(leap.begin(KragmorCombat.LEAP,front),"Kragmor ravine leap failed to start");
+        for(int i=0;i<59;i++)leap.tick(level);helper.assertTrue(front.getHealth()==20,"Kragmor landing circle struck before warning");leap.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Kragmor leap landing circle or locked destination failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ()+5);dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+13,origin.getY(),origin.getZ());
+        for(int i=0;i<17;i++)leap.tick(level);helper.assertTrue(dodge.getHealth()==20,"Kragmor shock line hit before second warning");leap.tick(level);
+        helper.assertTrue(dodge.getHealth()<20&&front.getHealth()==20,"Kragmor narrow follow-up shock line or sidestep counterplay failed");
+        warlord.setHealth(warlord.getMaxHealth()/2);warlord.tickCombat(level);helper.assertTrue(warlord.phase()==2,"Kragmor phase two did not latch");
+        output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());warlord.saveWithoutId(output);var warlordReload=BossRegistries.KRAGMOR.get().create(level,EntitySpawnReason.LOAD);
+        warlordReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));helper.assertTrue(warlordReload.phase()==2,"Kragmor phase was lost on reload");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

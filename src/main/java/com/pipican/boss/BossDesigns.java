@@ -31,7 +31,7 @@ public final class BossDesigns {
                 var object=entry.getAsJsonObject(); String id=object.get("id").getAsString();
                 var catalog=BossCatalog.require(id); String region=object.get("region").getAsString();
                 boolean functional=object.get("functional").getAsBoolean();
-                if(!region.equals(catalog.region()) || functional && !Set.of(BossCatalog.MORVATH.id(),"frostbound_colossus","skollvar_winterfang","eldaroth_treant","fallen_king").contains(id))
+                if(!region.equals(catalog.region()) || functional && !Set.of(BossCatalog.MORVATH.id(),"frostbound_colossus","skollvar_winterfang","eldaroth_treant","fallen_king","kragmor_canyon_warlord").contains(id))
                     throw new IllegalStateException("Invalid/unimplemented boss binding: "+id);
                 double health=object.get("health").getAsDouble(),damage=object.get("damage").getAsDouble();
                 if(!Double.isFinite(health) || !Double.isFinite(damage) || health<=0 || damage<=0) throw new IllegalStateException("Invalid boss stats");

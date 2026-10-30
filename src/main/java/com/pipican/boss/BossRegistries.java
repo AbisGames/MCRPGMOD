@@ -33,6 +33,10 @@ public final class BossRegistries {
         "fallen_king",()->EntityType.Builder.<FallenKingEntity>of(FallenKingEntity::new,MobCategory.MONSTER)
             .sized(1.5f,3.4f).clientTrackingRange(12).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("fallen_king"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<KragmorEntity>> KRAGMOR=ENTITIES.register(
+        "kragmor_canyon_warlord",()->EntityType.Builder.<KragmorEntity>of(KragmorEntity::new,MobCategory.MONSTER)
+            .sized(2.6f,3.8f).clientTrackingRange(12).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("kragmor_canyon_warlord"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -41,5 +45,6 @@ public final class BossRegistries {
         event.put(SKOLLVAR.get(),SkollvarEntity.attributes().build());
         event.put(ELDAROTH.get(),EldarothEntity.attributes().build());
         event.put(FALLEN_KING.get(),FallenKingEntity.attributes().build());
+        event.put(KRAGMOR.get(),KragmorEntity.attributes().build());
     }
 }

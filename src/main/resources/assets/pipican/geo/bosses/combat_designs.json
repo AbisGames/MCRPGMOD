@@ -1793,7 +1793,7 @@
   {
     "id": "kragmor_canyon_warlord",
     "region": "redrock_badlands",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1000,
     "damage": 17,
@@ -1806,38 +1806,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:pointed_dripstone",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:kragmor_canyon_warlord_sigil"
     },
     "abilities": [
       {
         "id": "canyon_rockfall",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Shadows mark sequential falling rocks along canyon lanes.",
         "counterplay": "Leave the next shadow; each rock locks its landing.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:kragmor_canyon_warlord/canyon_rockfall"
+        "animation": "kragmor_canyon_warlord/canyon_rockfall"
       },
       {
         "id": "cairn_tethers",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Temporary cairns trace a delayed tether web.",
         "counterplay": "Break a lit cairn or stand outside connected segments.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:kragmor_canyon_warlord/cairn_tethers"
+        "animation": "kragmor_canyon_warlord/cairn_tethers"
       },
       {
         "id": "ravine_leap",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "The warlord previews a leap and a subsequent narrow shock line.",
         "counterplay": "Leave the landing circle, then sidestep the announced line.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:kragmor_canyon_warlord/ravine_leap"
+        "animation": "kragmor_canyon_warlord/ravine_leap"
       }
     ],
     "phase_two": {
@@ -1848,7 +1849,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:redrock_iron",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:kragmor_canyon_warlord_trophy",
       "planned_trophy_name": "Kragmor Canyon Warlord Trophy",
       "xp": 250
     },
@@ -1856,16 +1857,16 @@
       "geometry": "geometry.pipican.kragmor_canyon_warlord",
       "file": "geo/bosses/kragmor_canyon_warlord.geo.json",
       "animation_mapping": {
-        "idle": "planned:kragmor_canyon_warlord/idle",
-        "walk": "planned:kragmor_canyon_warlord/walk",
-        "basic_attack": "planned:kragmor_canyon_warlord/basic_attack",
-        "hurt": "planned:kragmor_canyon_warlord/hurt",
-        "phase_transition": "planned:kragmor_canyon_warlord/phase_transition",
-        "summoning": "planned:kragmor_canyon_warlord/summoning",
-        "death": "planned:kragmor_canyon_warlord/death",
-        "canyon_rockfall": "planned:kragmor_canyon_warlord/canyon_rockfall",
-        "cairn_tethers": "planned:kragmor_canyon_warlord/cairn_tethers",
-        "ravine_leap": "planned:kragmor_canyon_warlord/ravine_leap"
+        "idle": "kragmor_canyon_warlord/idle",
+        "walk": "kragmor_canyon_warlord/walk",
+        "basic_attack": "kragmor_canyon_warlord/basic_attack",
+        "hurt": "kragmor_canyon_warlord/hurt",
+        "phase_transition": "kragmor_canyon_warlord/phase_transition",
+        "summoning": "kragmor_canyon_warlord/summoning",
+        "death": "kragmor_canyon_warlord/death",
+        "canyon_rockfall": "kragmor_canyon_warlord/canyon_rockfall",
+        "cairn_tethers": "kragmor_canyon_warlord/cairn_tethers",
+        "ravine_leap": "kragmor_canyon_warlord/ravine_leap"
       }
     },
     "arena": {
