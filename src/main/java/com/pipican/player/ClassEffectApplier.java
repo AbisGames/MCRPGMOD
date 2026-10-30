@@ -779,9 +779,9 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims) {
+        public void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims, Optional<com.pipican.effect.VictimState> victim) {
             if (threshold > 0) {
-                executes.add(new ClassState.Execute(Math.min(threshold, 0.9), victims));
+                executes.add(new ClassState.Execute(Math.min(threshold, 0.9), victims, victim));
             }
         }
 

@@ -113,16 +113,7 @@
     {
       "id": "assassin_death_mark",
       "name": "Death Mark",
-      "description": {
-        "text": "Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you",
       "type": "keystone",
       "x": -480,
       "y": 831,
@@ -131,7 +122,23 @@
         "assassin_shadowstep"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:execute",
+          "threshold": 0.3,
+          "victim": {
+            "not_targeting_you": true
+          }
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "targeting_you": true
+          },
+          "multiplier": 0.8
+        }
+      ]
     }
   ]
 }

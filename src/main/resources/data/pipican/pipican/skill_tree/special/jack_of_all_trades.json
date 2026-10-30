@@ -95,16 +95,7 @@
     {
       "id": "uncommon_ability",
       "name": "Uncommon Ability",
-      "description": {
-        "text": "Aptitude crit triggers every 30s; -10% max Knack",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Aptitude crit triggers every 30s; -10% max Knack",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -113,7 +104,20 @@
         "prodigy"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "aptitude crit",
+          "cooldown": -0.5
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -80,6 +80,13 @@
       "multiplier": 1.6
     },
     {
+      "type": "pipican:execute",
+      "threshold": 0.2,
+      "victim": {
+        "not_targeting_you": true
+      }
+    },
+    {
       "type": "pipican:on",
       "event": "hurt",
       "actions": [

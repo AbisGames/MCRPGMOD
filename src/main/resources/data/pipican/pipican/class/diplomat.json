@@ -93,6 +93,11 @@
           ]
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "illager_detection",
+      "amount": -0.3
     }
   ],
   "special_passives": [

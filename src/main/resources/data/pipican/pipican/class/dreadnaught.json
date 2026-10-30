@@ -59,6 +59,17 @@
   },
   "passives": [
     {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "heavy_armor",
+          "per": 1.0
+        }
+      ]
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:state",
@@ -69,6 +80,26 @@
           "type": "pipican:attribute",
           "attribute": "minecraft:knockback_resistance",
           "amount": 1.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "heavy_armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.8
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 0.8
         }
       ]
     }
@@ -95,24 +126,34 @@
       ]
     },
     {
-      "type": "pipican:damage_taken",
-      "damage_types": "#pipican:is_melee",
-      "multiplier": 1.0,
-      "scaling": [
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "heavy_armor",
+        "min": 4
+      },
+      "effects": [
         {
-          "source": "special_stat",
-          "per": -0.002
-        }
-      ]
-    },
-    {
-      "type": "pipican:damage_taken",
-      "damage_types": "#minecraft:is_projectile",
-      "multiplier": 1.0,
-      "scaling": [
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        },
         {
-          "source": "special_stat",
-          "per": -0.002
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
         }
       ]
     },

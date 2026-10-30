@@ -24,12 +24,24 @@ public record RandomAction(List<List<AbilityAction>> choices) implements Ability
         return AbilityActionTypes.RANDOM;
     }
 
+    private static boolean bad(List<AbilityAction> choice) {
+        return choice.stream().anyMatch(a -> a instanceof ExplodeAction || a instanceof HurtSelfAction
+                || a instanceof DamageAction d && d.targets().target() == com.pipican.ability.Targets.Kind.SELF);
+    }
+
     @Override
     public void run(AbilityContext ctx) {
         if (choices.isEmpty()) {
             return;
         }
-        for (AbilityAction action : choices.get(ctx.player().getRandom().nextInt(choices.size()))) {
+        var random = ctx.player().getRandom();
+        List<AbilityAction> pick = choices.get(random.nextInt(choices.size()));
+        // chaos_luck: a bad outcome (one that hurts the user) may be rolled again.
+        double luck = com.pipican.player.ClassEffectApplier.state(ctx.player()).chance(com.pipican.effect.type.BonusEffect.Kind.CHAOS_LUCK);
+        if (luck > 0 && bad(pick) && random.nextDouble() < luck) {
+            pick = choices.get(random.nextInt(choices.size()));
+        }
+        for (AbilityAction action : pick) {
             action.run(ctx);
             if (ctx.isCancelled()) {
                 return;

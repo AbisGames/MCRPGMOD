@@ -131,6 +131,9 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code enchant_lapis_keep}: a <i>chance</i> that an enchant gives back all the lapis it cost;
  *       {@code enchant_lapis_top}: <i>lapis</i> back on the level-3 option</li>
  *   <li>{@code better_roll}: a <i>chance</i> that each enchanting option is offered about 20% higher (at least +1 level)</li>
+ *   <li>{@code chaos_luck}: a <i>chance</i> that a random outcome which hurts you is rolled again</li>
+ *   <li>{@code trample}: <i>damage</i> your mount deals to small mobs it runs into (once a second each)</li>
+ *   <li>{@code illager_detection}: how far illagers notice you (-0.3 = 30% closer)</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -161,7 +164,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         GOLEM_CHEST, ANIMALS_FLEE, ANIMALS_FOLLOW, BURN_LONGER,
         FORGET_FASTER, FORGET_DELAY_MAX, FORGET_SOONER, FORGET_HIT_SNEAKING, FACELESS_RANGE, PET_SHARE_SIGHT, NO_HIDING,
         DANGER_SENSE, NEVER_UNAWARE,
-        BOOKSHELF_BONUS, ENCHANT_LAPIS_KEEP, ENCHANT_LAPIS_TOP, BARE_HANDED, FOCUS_SLOTS, FOCUS_BONUS, NON_FOCUS_BONUS, BETTER_ROLL;
+        BOOKSHELF_BONUS, ENCHANT_LAPIS_KEEP, ENCHANT_LAPIS_TOP, BARE_HANDED, FOCUS_SLOTS, FOCUS_BONUS, NON_FOCUS_BONUS, BETTER_ROLL,
+        CHAOS_LUCK, TRAMPLE, ILLAGER_DETECTION;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -244,6 +244,9 @@ public final class BonusEvents {
     static void onVisibility(LivingEvent.LivingVisibilityEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             double mult = ClassEffectApplier.state(player).bonus(Kind.DETECTION_RANGE);
+            if (event.getLookingEntity() instanceof net.minecraft.world.entity.monster.illager.AbstractIllager) {
+                mult *= ClassEffectApplier.state(player).bonus(Kind.ILLAGER_DETECTION);
+            }
             if (mult != 1) {
                 event.modifyVisibility(mult);
             }

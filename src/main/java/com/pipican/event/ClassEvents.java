@@ -497,6 +497,7 @@ public final class ClassEvents {
         double fraction = victim.getHealth() / victim.getMaxHealth();
         for (ClassState.Execute e : ClassEffectApplier.state(attacker).executes()) {
             if (fraction < e.threshold() && (e.victims().isEmpty() || e.victims().get().contains(victim.getType().builtInRegistryHolder()))
+                    && (e.victim().isEmpty() || e.victim().get().test(attacker, victim))
                     && victim.level() instanceof ServerLevel level) {
                 victim.getPersistentData().putBoolean(EXECUTED, true);
                 victim.hurtServer(level, level.damageSources().source(DamageTypes.GENERIC_KILL, attacker), Float.MAX_VALUE);

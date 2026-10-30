@@ -80,7 +80,7 @@ public interface EffectContext {
     void addRangedDodge(double chance);
 
     /** Hits that leave a mob below {@code threshold} of its health kill it (only {@code victims}, if given). */
-    void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims);
+    void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims, Optional<com.pipican.effect.VictimState> victim);
 
     /** Nearby players (and you, with {@code includeSelf}) get {@code effects}. */
     void addAura(String name, double radius, boolean includeSelf, List<ClassEffect> effects);

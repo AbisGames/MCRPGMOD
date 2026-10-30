@@ -20,7 +20,7 @@ import net.minecraft.util.StringRepresentable;
 public record ItemRuleCondition(Rule rule, int min) implements ClassCondition {
 
     public enum Rule implements StringRepresentable {
-        BOUND_WEAPON, SIGIL_WEAPON, SIGIL_ARMOR;
+        BOUND_WEAPON, SIGIL_WEAPON, SIGIL_ARMOR, HEAVY_ARMOR;
 
         public static final Codec<Rule> CODEC = StringRepresentable.fromEnum(Rule::values);
 
@@ -46,6 +46,7 @@ public record ItemRuleCondition(Rule rule, int min) implements ClassCondition {
             case BOUND_WEAPON -> SpecialItems.holdingBound(player);
             case SIGIL_WEAPON -> SpecialItems.holdingSigil(player);
             case SIGIL_ARMOR -> SpecialItems.sigilArmor(player) >= min;
+            case HEAVY_ARMOR -> SpecialItems.heavyArmor(player) >= min;
         };
     }
 }

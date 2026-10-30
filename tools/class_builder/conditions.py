@@ -132,6 +132,8 @@ def _atoms(ctx):
              not_({'type': 'pipican:item_rule', 'rule': 'bound_weapon'})]}, OTHER),
         (r'(?:with|holding|using) (?:your |the )?bound weapon', lambda m: {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}, OTHER),
         (r'(?:with|holding|using) (?:your |a )?sigil(?:-marked)? weapons?', lambda m: {'type': 'pipican:item_rule', 'rule': 'sigil_weapon'}, OTHER),
+        (r'(?:while )?wearing (\d|one|two|three|four) heavy (?:armou?r )?pieces', lambda m: {'type': 'pipican:item_rule', 'rule': 'heavy_armor',
+            'min': {'one': 1, 'two': 2, 'three': 3, 'four': 4}.get(m.group(1)) or int(m.group(1))}, OTHER),
         (r'(?:with|wearing) (\d|one|two|three|four) sigil(?:-marked)? (?:armor )?pieces', lambda m: {'type': 'pipican:item_rule', 'rule': 'sigil_armor',
          'min': int(WORDS.get(m.group(1), m.group(1)))}, OTHER),
         (r'(?:while )?(?:a |holding a )?book(?:, writable book or enchanted book)? is in your off-hand|(?:with|holding) a book in your off-hand',

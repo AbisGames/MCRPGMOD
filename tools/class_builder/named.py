@@ -371,7 +371,9 @@ def reaction_mods(t, ctx):
         else:
             name, value, n, stat = m.group(2), float(m.group(1)), m.group(3), m.group(4)
         base = base_value(reactions[name])
-        if base and not (reactions[name].get('chance', 1.0) < 1 and 'damage' not in t):
+        # "+1 Aptitude" is the special stat when a reaction shares its name.
+        stat_name = name == (ctx.get('special_name') or '').lower() and '%' not in t
+        if base and not stat_name and not (reactions[name].get('chance', 1.0) < 1 and 'damage' not in t):
             return scaled(name, 'strength', round(value / base, 6), n, stat)
     # chance upgrades: "Stay the Hand +0.3% per Rapport", "+5% Stay the Hand", "Hasty Escape chance +5%",
     # "Stay the Hand 30%" (a new total), "Hasty Escape always triggers"
@@ -1567,6 +1569,83 @@ def world(low, ctx):
     if forms and re.fullmatch(r"while transformed you can'?t use weapons, bows, shields or items \(only bare-handed attacks\)", low):
         any_form = forms and {'type': 'pipican:any_of', 'conditions': [{'type': 'pipican:ability_active', 'ability': a} for a in forms]}
         return [{'type': 'pipican:conditional', 'when': any_form, 'effects': [bonus_kind('bare_handed', 1.0)[0], bonus_kind('no_shield', 1.0)[0]]}]
+    # Dreadnaught: heavy armor
+    m = re.fullmatch(rf'heavy armou?r gives \+{N} armou?r per piece and no movement penalty', low)
+    if m:
+        # Heavy armor is mastery-tier for the class, which already has no movement penalty.
+        return [{'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': 0.0, 'scaling': [{'source': 'heavy_armor', 'per': float(m.group(1))}]}]
+    heavy4 = {'type': 'pipican:item_rule', 'rule': 'heavy_armor', 'min': 4}
+    m = re.fullmatch(rf'weapon resistance \+{N}% per ([a-z]+)', low)
+    if m and m.group(2) == sp:
+        sc = [{'source': 'special_stat', 'per': -pct(m.group(1))}]
+        return [{'type': 'pipican:conditional', 'when': heavy4, 'effects': [
+            {'type': 'pipican:damage_taken', 'damage_types': '#pipican:is_melee', 'multiplier': 1.0, 'scaling': sc},
+            {'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_projectile', 'multiplier': 1.0, 'scaling': sc}]}]
+    m = re.fullmatch(rf'\+{N}% more weapon resistance', low)
+    if m:
+        k = round(1 - float(m.group(1)) / 100, 6)
+        return [{'type': 'pipican:conditional', 'when': heavy4, 'effects': [
+            {'type': 'pipican:damage_taken', 'damage_types': '#pipican:is_melee', 'multiplier': k},
+            {'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_projectile', 'multiplier': k}]}]
+    # Assassin: Assassinate finishes what the ambush starts.
+    unaware = {'not_targeting_you': True}
+    m = re.fullmatch(rf"your first hit on a mob that isn'?t targeting you deals \+{N}% damage; if that brings it below {N}% health, it dies", low)
+    if m:
+        return [{'type': 'pipican:damage_dealt', 'victim': unaware, 'multiplier': round(1 + float(m.group(1)) / 100, 6)},
+                {'type': 'pipican:execute', 'threshold': pct(m.group(2)), 'victim': unaware}]
+    m = re.fullmatch(rf'assassinate threshold rises to {N}% health, but -{N}% damage to mobs that are targeting you', low)
+    if m:
+        return [{'type': 'pipican:execute', 'threshold': pct(m.group(1)), 'victim': unaware},
+                {'type': 'pipican:damage_dealt', 'victim': {'targeting_you': True}, 'multiplier': round(1 - float(m.group(2)) / 100, 6)}]
+    # Jack of All Trades: Aptitude
+    m = re.fullmatch(rf'once every {N}s, your next hit is a guaranteed critical with \+{N}% damage', low)
+    if m:
+        # A critical is +50%; the extra damage multiplies on top.
+        # Named apart from the Aptitude stat, so "+1 Aptitude" stays a stat.
+        r = {'type': 'pipican:on', 'event': 'second', 'name': 'aptitude crit', 'cooldown_ticks': int(float(m.group(1)) * 20),
+             'actions': [{'type': 'pipican:empower', 'target': 'self', 'multiplier': round(1.5 * (1 + float(m.group(2)) / 100), 6),
+                          'seconds': float(m.group(1)) * 10, 'charges': 1}]}
+        REACTIONS.setdefault(cid, {}).setdefault('aptitude crit', r)
+        return [r]
+    m = re.fullmatch(rf'aptitude crit triggers every {N}s', low)
+    if m and REACTIONS.get(cid, {}).get('aptitude crit', {}).get('cooldown_ticks'):
+        return [{'type': 'pipican:reaction_mod', 'name': 'aptitude crit', 'cooldown': round(float(m.group(1)) * 20 / REACTIONS[cid]['aptitude crit']['cooldown_ticks'] - 1, 6)}]
+    m = re.fullmatch(rf'\+{N} luck and no gear is worse than neutral for you', low)
+    if m and (luck := _rest(f'+{m.group(1)} luck', ctx)):
+        return luck + [bonus_kind('affinity_floor', 1.0)[0]]
+    # Thaumaturge: chaos luck
+    m = re.fullmatch(rf'per {N} ([a-z]+),? bad chaos outcomes are {N}% rarer', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('chaos_luck', 0.0, round(float(m.group(3)) / 100 / float(m.group(1)), 6))
+    m = re.fullmatch(rf'bad (?:chaos )?outcomes {N}% rarer', low)
+    if m:
+        return bonus_kind('chaos_luck', pct(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% to all random effects in your favou?r \(chaos, crits, loot\)', low)
+    if m and ctx.get('implicit_per_point'):
+        sc = [{'source': 'special_stat', 'per': pct(m.group(1))}]
+        return [{'type': 'pipican:bonus', 'kind': 'chaos_luck', 'amount': 0.0, 'scaling': sc},
+                {'type': 'pipican:critical', 'chance': 0.0, 'scaling': sc},
+                {'type': 'pipican:bonus', 'kind': 'extra_loot', 'amount': 0.0, 'scaling': sc}]
+    if re.fullmatch(r'seize chaos chance doubled, but outcomes are fully random', low):
+        return [{'type': 'pipican:reaction_chance', 'name': 'seize chaos', 'multiplier': 2.0}, bonus_kind('chaos_luck', -10.0)[0]]
+    # Cavalier
+    if re.fullmatch(r'you never fall off when your mount is hit', low):
+        return []  # being hit never throws a rider off
+    m = re.fullmatch(rf'sprinting or riding at full speed into a mob adds \+{N}% damage to the hit \(\+{N}% mounted\)', low)
+    if m:
+        mounted = {'type': 'pipican:state', 'state': 'mounted'}
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [{'type': 'pipican:state', 'state': 'sprinting'},
+                 {'type': 'pipican:not', 'condition': mounted}]}, 'effects': [{'type': 'pipican:damage_dealt', 'damage_types': '#pipican:is_melee',
+                 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]},
+                {'type': 'pipican:conditional', 'when': mounted, 'effects': [{'type': 'pipican:damage_dealt', 'damage_types': '#pipican:is_melee',
+                 'multiplier': round(1 + float(m.group(2)) / 100, 6)}]}]
+    if re.fullmatch(r'your mount damages small mobs it runs into', low):
+        return bonus_kind('trample', 2.0)
+    if re.fullmatch(r"taking damage doesn'?t drain ([a-z ]+)", low):
+        return []  # nothing drains the bar on damage
+    m = re.fullmatch(rf'illagers are {N}% slower to notice you', low)
+    if m:
+        return bonus_kind('illager_detection', -pct(m.group(1)))
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

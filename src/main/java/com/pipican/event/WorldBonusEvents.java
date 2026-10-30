@@ -268,6 +268,7 @@ public final class WorldBonusEvents {
         }
         if (player.tickCount % 20 == 0) {
             taunt(player, level);
+            trample(player, level);
             wildfire(player, level);
             animals(player, level);
         }
@@ -515,6 +516,18 @@ public final class WorldBonusEvents {
     static void onBareHandedUse(PlayerInteractEvent.RightClickItem event) {
         if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.BARE_HANDED) > 0) {
             event.setCanceled(true);
+        }
+    }
+
+    /** {@code trample}: small mobs in the way of your moving mount get hurt. */
+    private static void trample(ServerPlayer player, ServerLevel level) {
+        double damage = ClassEffectApplier.state(player).chance(Kind.TRAMPLE);
+        if (damage <= 0 || !(player.getVehicle() instanceof LivingEntity mount) || (mount.getX() - mount.xo) * (mount.getX() - mount.xo) + (mount.getZ() - mount.zo) * (mount.getZ() - mount.zo) < 0.0025) {
+            return;
+        }
+        for (LivingEntity small : level.getEntitiesOfClass(LivingEntity.class, mount.getBoundingBox().inflate(0.5),
+                e -> e != mount && e != player && e.isAlive() && e.getBbHeight() < 1.0 && !(e instanceof Player) && Pets.owner(e) != player)) {
+            small.hurtServer(level, level.damageSources().mobAttack(mount), (float) damage);
         }
     }
 }

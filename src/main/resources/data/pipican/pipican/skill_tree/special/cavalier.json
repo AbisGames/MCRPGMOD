@@ -29,23 +29,21 @@
     {
       "id": "trample",
       "name": "Trample",
-      "description": {
-        "text": "your mount damages small mobs it runs into",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your mount damages small mobs it runs into",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trample",
+          "amount": 2.0
+        }
+      ]
     },
     {
       "id": "devastating_charge",

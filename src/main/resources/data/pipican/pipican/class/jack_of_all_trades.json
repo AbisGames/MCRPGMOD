@@ -68,6 +68,21 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "second",
+      "name": "aptitude crit",
+      "cooldown_ticks": 1200,
+      "actions": [
+        {
+          "type": "pipican:empower",
+          "target": "self",
+          "multiplier": 1.8,
+          "seconds": 600.0,
+          "charges": 1
+        }
+      ]
+    },
+    {
       "type": "pipican:bonus",
       "kind": "skill_training",
       "amount": 0.25
@@ -76,6 +91,11 @@
       "type": "pipican:stat",
       "stat": "pipican:luck",
       "amount": 1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "affinity_floor",
+      "amount": 1.0
     },
     {
       "type": "pipican:on",

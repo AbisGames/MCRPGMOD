@@ -59,14 +59,24 @@
       "required_level": 15,
       "effects": [
         {
-          "type": "pipican:damage_taken",
-          "damage_types": "#pipican:is_melee",
-          "multiplier": 0.9
-        },
-        {
-          "type": "pipican:damage_taken",
-          "damage_types": "#minecraft:is_projectile",
-          "multiplier": 0.9
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "heavy_armor",
+            "min": 4
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "damage_types": "#pipican:is_melee",
+              "multiplier": 0.9
+            },
+            {
+              "type": "pipican:damage_taken",
+              "damage_types": "#minecraft:is_projectile",
+              "multiplier": 0.9
+            }
+          ]
         }
       ]
     },

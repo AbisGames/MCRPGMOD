@@ -116,7 +116,7 @@ public record ClassState(
     }
 
     /** A {@code pipican:execute}: below this fraction of max health, the player's hits kill. */
-    public record Execute(double threshold, Optional<HolderSet<EntityType<?>>> victims) {}
+    public record Execute(double threshold, Optional<HolderSet<EntityType<?>>> victims, Optional<com.pipican.effect.VictimState> victim) {}
 
     /** A {@code pipican:aura} the player gives nearby players. */
     public record Aura(double radius, List<ClassEffect> effects, double strength) {}

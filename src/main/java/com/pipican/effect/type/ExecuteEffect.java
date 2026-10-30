@@ -18,14 +18,17 @@ import net.minecraft.world.entity.EntityType;
  * {@code pipican:execute} - a mob your hit leaves below {@code threshold} of its max health dies (never players or bosses).
  *
  * <pre>{@code { "type": "pipican:execute", "threshold": 0.15, "victims": "#pipican:mobs/unclean" } }</pre>
+ * {@code victim} (a victim state, checked after the hit) limits it further ("if your ambush leaves it below 20%").
  * The highest matching threshold counts; {@code scaling} raises it ("Execute threshold +0.1% per Severance").
  */
-public record ExecuteEffect(double threshold, Optional<HolderSet<EntityType<?>>> victims, List<Scaling> scaling) implements ClassEffect {
+public record ExecuteEffect(double threshold, Optional<HolderSet<EntityType<?>>> victims, List<Scaling> scaling,
+                            Optional<com.pipican.effect.VictimState> victim) implements ClassEffect {
 
     public static final MapCodec<ExecuteEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.doubleRange(0, 1).optionalFieldOf("threshold", 0.0).forGetter(ExecuteEffect::threshold),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("victims").forGetter(ExecuteEffect::victims),
-            Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(ExecuteEffect::scaling)
+            Scaling.LIST_CODEC.optionalFieldOf("scaling", List.of()).forGetter(ExecuteEffect::scaling),
+            com.pipican.effect.VictimState.CODEC.optionalFieldOf("victim").forGetter(ExecuteEffect::victim)
     ).apply(i, ExecuteEffect::new));
 
     @Override
@@ -35,6 +38,6 @@ public record ExecuteEffect(double threshold, Optional<HolderSet<EntityType<?>>>
 
     @Override
     public void apply(EffectContext ctx) {
-        ctx.addExecute(Scaling.evaluate(threshold, scaling, ctx), victims);
+        ctx.addExecute(Scaling.evaluate(threshold, scaling, ctx), victims, victim);
     }
 }

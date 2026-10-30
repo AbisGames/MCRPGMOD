@@ -93,6 +93,46 @@
       "attribute": "minecraft:movement_speed",
       "amount": 0.1,
       "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "mounted"
+            }
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.2
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "mounted"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.4
+        }
+      ]
     }
   ],
   "special_passives": [

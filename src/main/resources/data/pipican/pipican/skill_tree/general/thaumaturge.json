@@ -55,16 +55,7 @@
     {
       "id": "thaumaturge_probability_bend",
       "name": "Probability Bend",
-      "description": {
-        "text": "bad outcomes 20% rarer",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "bad outcomes 20% rarer",
       "type": "notable",
       "x": 39,
       "y": -1390,
@@ -72,7 +63,14 @@
         "thaumaturge_lucky_streak"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "chaos_luck",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "id": "thaumaturge_chaos_shield",
@@ -97,16 +95,7 @@
     {
       "id": "thaumaturge_agent_of_chaos",
       "name": "Agent of Chaos",
-      "description": {
-        "text": "Seize Chaos chance doubled, but outcomes are fully random",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Seize Chaos chance doubled, but outcomes are fully random",
       "type": "keystone",
       "x": 70,
       "y": -1458,
@@ -115,7 +104,19 @@
         "thaumaturge_chaos_shield"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "seize chaos",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "chaos_luck",
+          "amount": -10.0
+        }
+      ]
     }
   ]
 }

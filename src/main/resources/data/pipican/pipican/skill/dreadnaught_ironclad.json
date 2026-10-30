@@ -9,8 +9,8 @@
       "action": "hurt"
     },
     "when": {
-      "type": "pipican:wearing",
-      "items": "#pipican:armor/heavy",
+      "type": "pipican:item_rule",
+      "rule": "heavy_armor",
       "min": 4
     }
   },
