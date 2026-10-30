@@ -57,14 +57,21 @@ final class ExpeditionProcessorTests {
         var naturalInput=List.of(new StructureTemplate.StructureBlockInfo(naturalOrigin.offset(40,0,1),Blocks.STONE.defaultBlockState(),null));
         var naturalClip=new StructurePlaceSettings().setBoundingBox(new BoundingBox(naturalPos.getX()-1,level.getMinY(),naturalPos.getZ(),
             naturalPos.getX(),level.getMaxY()-1,naturalPos.getZ()));
-        for(var growth:List.of(Blocks.SCULK.defaultBlockState(),Blocks.SCULK_VEIN.defaultBlockState())){
-            var previous=level.getBlockState(naturalPos);
-            try{
-                level.setBlock(naturalPos,growth,2);
-                helper.assertTrue(processor.finalizeProcessing(level,naturalOrigin,naturalOrigin,List.of(local),naturalInput,naturalClip).size()>naturalInput.size(),
-                    "natural deep-dark terrain blocked access: "+growth);
-            }finally{level.setBlock(naturalPos,previous,2);}
-        }
+        var supportPos=naturalPos.below();
+        var previousSupport=level.getBlockState(supportPos);
+        try{
+            level.setBlock(supportPos,Blocks.STONE.defaultBlockState(),2);
+            for(var growth:List.of(Blocks.SCULK.defaultBlockState(),Blocks.SCULK_VEIN.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOWN,true))){
+                var previous=level.getBlockState(naturalPos);
+                try{
+                    level.setBlock(naturalPos,growth,2);
+                    helper.assertTrue(level.getBlockState(naturalPos).is(growth.getBlock()),"natural growth fixture did not survive placement");
+                    helper.assertTrue(processor.finalizeProcessing(level,naturalOrigin,naturalOrigin,List.of(local),naturalInput,naturalClip).size()>naturalInput.size(),
+                        "natural deep-dark terrain blocked access: "+growth);
+                }finally{level.setBlock(naturalPos,previous,2);}
+            }
+        }finally{level.setBlock(supportPos,previousSupport,2);}
         helper.succeed();
     }
 }

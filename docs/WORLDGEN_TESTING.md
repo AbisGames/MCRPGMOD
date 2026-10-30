@@ -253,3 +253,19 @@ Access grading now recognizes non-inventory sculk terrain and sculk veins,
 while retaining the preceding player-provenance and block-entity checks.
 Safety fixtures run away from other GameTest boundary barriers and require
 an unobstructed baseline before inserting a chest or artificial block.
+
+## Native entrance completion pass
+
+[All-expedition run 41012045275](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41012045275)
+verified 46 of 54 types at `1f6d542`. Eight access checks failed; all three
+provenance/disk-reload checks passed. Most remaining failures had no ladder
+because the outside matched doorway height, but the sparse template boundary
+had no guaranteed floor. Native access now adds a protected nine-block-wide
+threshold on row zero, with two-block headroom and foundation support. Its
+writes remain within the current decoration chunk and template X/Z footprint.
+The outside surface scan also skips air gaps below foliage instead of stopping
+in mid-canopy. Ladder access handles height differences larger than one step.
+
+[All-village run 41011624642](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41011624642)
+verified all 27 representative regional types (nine per seed) at `f966e28`,
+with no close stalls and all three provenance/reload suites passing.

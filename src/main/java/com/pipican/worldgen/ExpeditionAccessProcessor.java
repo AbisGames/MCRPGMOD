@@ -45,10 +45,13 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         var outside=world(origin,settings,40,-1);
         int surface=level.getHeight(level instanceof net.minecraft.server.level.ServerLevel?
             Heightmap.Types.WORLD_SURFACE:Heightmap.Types.WORLD_SURFACE_WG,outside.getX(),outside.getZ());
-        while(surface>level.getMinY()+1&&foliage(level.getBlockState(new BlockPos(outside.getX(),surface-1,outside.getZ()))))surface--;
+        while(surface>level.getMinY()+1){
+            var state=level.getBlockState(new BlockPos(outside.getX(),surface-1,outside.getZ()));
+            if(!state.isAir()&&!foliage(state))break;
+            surface--;
+        }
         if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))
             Pipican.LOGGER.info("Native expedition access origin {} floor {} outside {} surface {} bounds {}",origin,floor,outside,surface,bounds);
-        if(Math.abs(surface-(floor+1))<=4)return processed;
         int bottom=Math.max(level.getMinY()+1,Math.min(surface,floor+1));
         int top=Math.min(level.getMaxY()-3,Math.max(surface,floor+1));
         BlockState support=processed.stream().filter(b->b.pos().getY()==floor&&b.state().isSolid()
@@ -57,11 +60,28 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         BlockState climbing=Blocks.LADDER.defaultBlockState().setValue(LadderBlock.FACING,Direction.EAST);
         // StructureTemplate rotates states after finalizeProcessing.
         var edits=new LinkedHashMap<BlockPos,BlockState>();
-        for(int y=bottom;y<=top;y++){
-            edits.put(new BlockPos(casing.getX(),y,casing.getZ()),support);
-            edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),climbing);
+        // Cave templates deliberately leave row zero sparse. Bridge that
+        // one-block gap even when the outside is already at doorway height.
+        for(int x=36;x<=44;x++){
+            var edge=world(origin,settings,x,0);
+            var foot=new BlockPos(edge.getX(),floor,edge.getZ());
+            if(bounds!=null&&!bounds.isInside(foot))continue;
+            edits.put(foot,support);
+            edits.put(foot.above(),Blocks.AIR.defaultBlockState());
+            edits.put(foot.above(2),Blocks.AIR.defaultBlockState());
+            for(int y=floor-1;y>level.getMinY();y--){
+                var pos=new BlockPos(edge.getX(),y,edge.getZ());
+                if(level.getBlockState(pos).isSolid())break;
+                edits.put(pos,support);
+            }
         }
-        for(int y=top+1;y<=top+2;y++)edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),Blocks.AIR.defaultBlockState());
+        if(Math.abs(surface-(floor+1))>1){
+            for(int y=bottom;y<=top;y++){
+                edits.put(new BlockPos(casing.getX(),y,casing.getZ()),support);
+                edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),climbing);
+            }
+            for(int y=top+1;y<=top+2;y++)edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),Blocks.AIR.defaultBlockState());
+        }
         var protection=PlayerWorldgenProtection.cached(level.getLevel());
         if(protection==null){
             if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))Pipican.LOGGER.info("Native access skipped: provenance cache unavailable");

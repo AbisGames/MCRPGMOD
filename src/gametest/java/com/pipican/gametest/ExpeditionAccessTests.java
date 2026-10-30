@@ -56,8 +56,9 @@ final class ExpeditionAccessTests {
                     count++;lowest=Math.min(lowest,y);highest=Math.max(highest,y);
                 }
             }
-            com.pipican.Pipican.LOGGER.warn("Unreachable expedition entry {} outward {} visited {} ladder column {} count {} lowest {} highest {} entry block {} head {}",
-                entry,outward,seen.size(),shaft,count,lowest,highest,level.getBlockState(shaft),level.getBlockState(shaft.above()));
+            com.pipican.Pipican.LOGGER.warn("Unreachable expedition entry {} outward {} visited {} ladder column {} count {} lowest {} highest {} entry block {} head {} floor {} outside surface {}",
+                entry,outward,seen.size(),shaft,count,lowest,highest,level.getBlockState(shaft),level.getBlockState(shaft.above()),
+                level.getBlockState(shaft.below()),level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,shaft.relative(outward).getX(),shaft.relative(outward).getZ()));
         }
         return false;
     }
