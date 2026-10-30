@@ -11,7 +11,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: pipican-bosses-${{ github.ref }}
+  group: pipican-bosses-${{ github.ref }}-${{ inputs.rare_generation && 'rare' || 'focused' }}
   cancel-in-progress: true
 jobs:
   boss-server:

@@ -344,5 +344,10 @@
   "item.pipican.voidsteel": "Voidsteel",
   "item.pipican.celestium": "Celestium",
   "item.pipican.bloodcrystal": "Bloodcrystal",
-  "itemGroup.pipican.progression": "RPG Progression"
+  "itemGroup.pipican.progression": "RPG Progression",
+  "blacksmith.pipican.upgrade": "%s +%s (%s)",
+  "blacksmith.pipican.tier.regional": "Regional",
+  "blacksmith.pipican.tier.elite": "Elite",
+  "blacksmith.pipican.tier.legendary": "Legendary",
+  "blacksmith.pipican.tier.mythic": "Mythic"
 }

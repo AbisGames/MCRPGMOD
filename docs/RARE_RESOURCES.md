@@ -40,6 +40,7 @@ placement versus provenance/inventory/artificial-block protection. Optional nati
 observes naturally decorated RPG and End chunks, checks actual biome/Y/dimension, small
 vein bounds and no deposit leakage into Heartlands. No manual ore placement in that test.
 
-Compilation passes. Runtime results are recorded after CI; native generation is not
+Focused CI run41066796125 at `4d4c6fe`: **31/31 required tests passed**, including
+the three new resource tests. Native generation is not
 claimed verified before that opt-in test passes. Voidsteel/Celestium/Bloodcrystal are
 materials only; no unfinished bosses are registered or claimed to drop them yet.

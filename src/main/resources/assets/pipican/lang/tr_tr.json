@@ -42,5 +42,10 @@
   "item.pipican.voidsteel": "Voidsteel",
   "item.pipican.celestium": "Celestium",
   "item.pipican.bloodcrystal": "Bloodcrystal",
-  "itemGroup.pipican.progression": "RPG İlerleme"
+  "itemGroup.pipican.progression": "RPG İlerleme",
+  "blacksmith.pipican.upgrade": "%s +%s (%s)",
+  "blacksmith.pipican.tier.regional": "Bölgesel",
+  "blacksmith.pipican.tier.elite": "Seçkin",
+  "blacksmith.pipican.tier.legendary": "Efsanevi",
+  "blacksmith.pipican.tier.mythic": "Mitik"
 }

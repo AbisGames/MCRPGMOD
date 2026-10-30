@@ -30,6 +30,8 @@ def validate(path):
         for item in ['ritual_core','morvath_sigil','ashen_kings_heart','infernium']:
             assert f'assets/pipican/textures/item/{item}.png' in names
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
+        if 'com/pipican/blacksmith/BlacksmithUpgrades.class' in names:
+            assert 'data/pipican/blacksmith_profiles.json' in names
         if 'com/pipican/resource/RareResources.class' in names:
             for resource in ['soulstone','dragonite','abyssium','runestone','astralite','sunforged','moonshard','primordial']:
                 for path in [f'assets/pipican/textures/block/{resource}_ore.png',f'assets/pipican/items/{resource}.json',
