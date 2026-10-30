@@ -30,10 +30,15 @@ final class BossGeometry {
                     float[] pivot=vector(bone.getAsJsonArray("pivot"));
                     float[] base=parent==null ? new float[]{0,0,0} : pivots.get(parent);
                     var cubes=CubeListBuilder.create();
+                    int cubeIndex=0;
                     if(bone.has("cubes")) for(var entry:bone.getAsJsonArray("cubes")){
                         var cube=entry.getAsJsonObject(); float[] origin=vector(cube.getAsJsonArray("origin")), size=vector(cube.getAsJsonArray("size"));
                         var uv=cube.getAsJsonArray("uv");
-                        cubes.texOffs(uv.get(0).getAsInt(),uv.get(1).getAsInt()).addBox(origin[0]-pivot[0],-origin[1]-size[1]+pivot[1],origin[2]-pivot[2],size[0],size[1],size[2]);
+                        // Prototype cuffs/boots share planes with their underlying limb cubes.
+                        // Separate just those outer shells to avoid base/emissive z-fighting.
+                        float shell=name.equals("morvath_ashen_king") && (id.endsWith("_arm") || id.endsWith("_leg")) && cubeIndex>0 ? 0.035f : 0;
+                        cubes.texOffs(uv.get(0).getAsInt(),uv.get(1).getAsInt()).addBox(origin[0]-pivot[0],-origin[1]-size[1]+pivot[1],origin[2]-pivot[2],size[0],size[1],size[2],new CubeDeformation(shell));
+                        cubeIndex++;
                     }
                     var target=parent==null ? mesh.getRoot() : parts.get(parent);
                     parts.put(id,target.addOrReplaceChild(id,cubes,PartPose.offset(pivot[0]-base[0],-pivot[1]+base[1]+(parent==null ? 24 : 0),pivot[2]-base[2])));

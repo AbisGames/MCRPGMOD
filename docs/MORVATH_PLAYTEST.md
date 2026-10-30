@@ -106,5 +106,17 @@ triggers phase two. This fixture never ships in the mod JAR. It is for visual in
 not proof of player damage/balance. Actual damage is covered by server GameTests.
 
 `-PclientGameDir=...` selects an isolated directory; default is `run-client-boss`.
-Current in-world testing awaits approval of Minecraft's new-world experimental-feature
-warning. No in-world screenshot, clipping/FPS/alignment result is claimed yet.
+On 2026-10-30 the approved isolated world was inspected on NeoForge 26.1.2.124.
+Using a sigil on the altar consumed exactly one (4 -> 3), spawned Morvath and showed
+his boss bar, full model, sword, shoulder plates and emissive eyes/cracks. Resuming AI
+showed approach, sword poses and fire particles. The phase-two control was confirmed
+by the server log (phase=2); its transition silhouette was not captured. The test-only
+kill control removed the bar and the Heart/XP were picked up. This is not a full
+survival fight or multiplayer validation. Hotbar 7 applies hurt; 6 finishes the test boss.
+
+Coplanar outer cuff/boot cubes caused visible surface fighting. Only those Morvath
+runtime shells now expand by 0.035 model pixels; the 27 source geometries are unchanged.
+The new client showed separated cuffs/boots, but the prototype still needs more
+angles, full animation review, body seam inspection and sword/art polish. No measured
+FPS or certification of all ten animation silhouettes is claimed. Native capture:
+`run-client-boss/screenshots/2026-10-30_21.47.44.png`. The test world was saved and quit.

@@ -55,7 +55,7 @@ public final class MorvathClientQa {
             player.teleportTo(0.5,65,3.5); player.resetFallDistance();
             player.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(0.5,65.7,0.5));
             player.containerMenu.broadcastChanges();
-            player.sendSystemMessage(Component.literal("QA ready: use sigil on altar. Boss starts paused. Hotbar 8: phase two; 9: pause/resume AI. Visual immunity is active."));
+            player.sendSystemMessage(Component.literal("QA ready: use sigil on altar. Boss starts paused. Hotbar 6: finish; 7: hurt; 8: phase two; 9: pause/resume AI. Visual immunity is active."));
             Pipican.LOGGER.info("CLIENT QA READY world={} altar=0,65,0 boss=0,65,-6 visualImmunity=true",server.getWorldPath(LevelResource.ROOT));
             session.prepared=true;
         }
@@ -70,8 +70,11 @@ public final class MorvathClientQa {
         int slot=player.getInventory().getSelectedSlot();
         if(slot!=session.lastSlot){
             for(var boss:bosses){
+                if(slot==6) boss.hurtServer(level,boss.damageSources().playerAttack(player),1);
+                if(slot==5) boss.hurtServer(level,boss.damageSources().genericKill(),10000);
                 if(slot==7){ boss.setHealth(boss.getMaxHealth()*0.49f); boss.setNoAi(false); }
                 if(slot==8) boss.setNoAi(!boss.isNoAi());
+                Pipican.LOGGER.info("CLIENT QA CONTROL slot={} phase={} ability={} remaining={} paused={}",slot+1,boss.phase(),boss.ability(),boss.abilityTicksRemaining(),boss.isNoAi());
             }
         }
         session.lastSlot=slot;
