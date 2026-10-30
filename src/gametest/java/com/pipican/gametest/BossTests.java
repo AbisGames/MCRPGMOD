@@ -25,7 +25,8 @@ public final class BossTests {
         "boss_entity_roundtrip",BossTests::entityRoundtrip,
         "boss_encounter_reservations",BossTests::encounterReservations,
         "boss_summoning_lifecycle",BossTests::summoningLifecycle,
-        "boss_unload_and_cleanup",BossTests::unloadAndCleanup);
+        "boss_unload_and_cleanup",BossTests::unloadAndCleanup,
+        "morvath_real_attacks",BossTests::realAttacks);
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -34,6 +35,52 @@ public final class BossTests {
         TESTS.keySet().forEach(name->event.registerTest(Pipican.id(name),new FunctionGameTestInstance(
             ResourceKey.create(Registries.TEST_FUNCTION,Pipican.id(name)),
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
+    }
+    private static void realAttacks(GameTestHelper helper){
+        var level=helper.getLevel(); var origin=helper.absolutePos(new net.minecraft.core.BlockPos(768,30,768));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))
+            level.setBlock(pos,pos.getY()==origin.getY()-1 ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState() : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        var dodge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        front.snapTo(origin.getX(),origin.getY(),origin.getZ()+3); dodge.snapTo(origin.getX(),origin.getY(),origin.getZ()-3);
+        level.addFreshEntity(front); level.addFreshEntity(dodge);
+        try {
+            var boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
+            boss.snapTo(origin.getX(),origin.getY(),origin.getZ()); boss.setNoAi(true);
+            for(int i=0;i<40;i++) boss.tickCombat(level);
+            helper.assertTrue(boss.beginAbility(BossCombatState.Ability.CLEAVE,front),"cleave rejected after initial cooldown");
+            for(int i=0;i<29;i++) boss.tickCombat(level);
+            helper.assertTrue(front.getHealth()==20,"cleave damaged during telegraph");
+            boss.tickCombat(level);
+            helper.assertTrue(front.getHealth()<20 && dodge.getHealth()==20,"cleave damage/cone counterplay failed");
+            var output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); boss.saveWithoutId(output);
+            var restored=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD);
+            restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+            float after=front.getHealth(); for(int i=0;i<18;i++) restored.tickCombat(level);
+            helper.assertTrue(front.getHealth()==after,"cleave impact replayed after disk reload");
+            front.setHealth(20); front.invulnerableTime=0;
+            boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND); boss.snapTo(origin.getX(),origin.getY(),origin.getZ());
+            for(int i=0;i<40;i++) boss.tickCombat(level);
+            helper.assertTrue(boss.beginAbility(BossCombatState.Ability.METEOR_RAIN,front),"meteor failed to begin");
+            for(int i=0;i<20;i++) boss.tickCombat(level);
+            output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); boss.saveWithoutId(output);
+            restored=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD);
+            restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+            dodge.snapTo(origin.getX()+10,origin.getY(),origin.getZ()-3);
+            for(int i=0;i<29;i++) restored.tickCombat(level);
+            helper.assertTrue(front.getHealth()==20,"meteor damaged before full warning after reload");
+            restored.tickCombat(level);
+            helper.assertTrue(front.getHealth()<20 && dodge.getHealth()==20,"meteor impact or marked-position dodge failed");
+            front.setHealth(20); front.invulnerableTime=0;
+            boss=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND); boss.snapTo(origin.getX(),origin.getY(),origin.getZ());
+            for(int i=0;i<40;i++) boss.tickCombat(level);
+            helper.assertTrue(boss.beginAbility(BossCombatState.Ability.ERUPTION,front),"eruption failed to begin");
+            for(int i=0;i<45;i++) boss.tickCombat(level);
+            helper.assertTrue(front.getHealth()==20,"eruption had no activation grace period");
+            for(int i=0;i<20;i++) boss.tickCombat(level);
+            helper.assertTrue(front.getHealth()<20 && level.getBlockState(front.blockPosition()).isAir(),"temporary zone failed or placed permanent lava");
+            helper.succeed();
+        }finally { front.discard(); dodge.discard(); }
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

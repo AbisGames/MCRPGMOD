@@ -26,6 +26,7 @@ public class RegionalBossEntity extends Monster {
     private static final EntityDataAccessor<Integer> REMAINING=SynchedEntityData.defineId(RegionalBossEntity.class,EntityDataSerializers.INT);
     private boolean managedEncounter;
     private int abandonedTicks;
+    private final MorvathCombat attacks=new MorvathCombat(this);
     private final BossCombatState combat=new BossCombatState();
     private final ServerBossEvent bar=new ServerBossEvent(java.util.UUID.randomUUID(),Component.translatable("entity.pipican.morvath_ashen_king"),BossEvent.BossBarColor.RED,BossEvent.BossBarOverlay.PROGRESS);
     public RegionalBossEntity(EntityType<? extends RegionalBossEntity> type,Level level){ super(type,level); this.xpReward=150; setPersistenceRequired(); }
@@ -47,8 +48,7 @@ public class RegionalBossEntity extends Monster {
     @Override protected void customServerAiStep(ServerLevel level){
         super.customServerAiStep(level);
         combat.updatePhase(getHealth(),getMaxHealth());
-        // Ability effects are added by the concrete encounter implementation.
-        combat.tick();
+        attacks.tick(level,combat);
         entityData.set(PHASE,combat.phase()); entityData.set(ABILITY,combat.ability().ordinal()); entityData.set(REMAINING,combat.remaining());
         bar.setProgress(Math.clamp(getHealth()/getMaxHealth(),0,1));
     }
@@ -72,13 +72,26 @@ public class RegionalBossEntity extends Monster {
         if(level() instanceof ServerLevel level){
             if(managedEncounter && (reason.shouldDestroy() || reason==RemovalReason.CHANGED_DIMENSION))
                 BossEncounters.get(level).finish(getUUID(),BossEncounters.Status.CANCELLED);
+            attacks.clear();
             bar.removeAllPlayers();
         }
         super.onRemoval(reason);
     }
+    public boolean insideArena(net.minecraft.world.phys.Vec3 position){
+        if(!managedEncounter) return position.distanceToSqr(position())<=40*40;
+        return level() instanceof ServerLevel level && BossEncounters.get(level).find(getUUID())
+            .filter(entry->entry.status()==BossEncounters.Status.ACTIVE)
+            .map(entry->position.distanceToSqr(net.minecraft.world.phys.Vec3.atBottomCenterOf(entry.arena()))<=24*24).orElse(false);
+    }
+    /** Server-only ability request; timing and cooldown remain authoritative. */
+    public boolean beginAbility(BossCombatState.Ability ability,net.minecraft.world.entity.LivingEntity target){
+        return level() instanceof ServerLevel && insideArena(target.position()) && attacks.begin(combat,ability,target);
+    }
+    public void tickCombat(ServerLevel level){ customServerAiStep(level); }
     void activateEncounter(){ managedEncounter=true; }
     @Override protected void dropAllDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source){
         if(managedEncounter && !BossEncounters.get(level).finish(getUUID(),BossEncounters.Status.DEFEATED)) return;
+        attacks.clear();
         super.dropAllDeathLoot(level,source);
     }
     @Override public void startSeenByPlayer(ServerPlayer player){ super.startSeenByPlayer(player); bar.addPlayer(player); }
@@ -86,12 +99,14 @@ public class RegionalBossEntity extends Monster {
     @Override public boolean removeWhenFarAway(double distance){ return false; }
     @Override protected void addAdditionalSaveData(ValueOutput output){
         super.addAdditionalSaveData(output);
+        attacks.save(output);
         output.putBoolean("ManagedEncounter",managedEncounter); output.putInt("BossAbandonedTicks",abandonedTicks);
         output.putInt("BossPhase",combat.phase()); output.putInt("BossAbility",combat.ability().ordinal());
         output.putInt("BossRemaining",combat.remaining()); output.putInt("BossCooldown",combat.cooldown()); output.putBoolean("BossResolved",combat.resolved());
     }
     @Override protected void readAdditionalSaveData(ValueInput input){
         super.readAdditionalSaveData(input);
+        attacks.load(input);
         managedEncounter=input.getBooleanOr("ManagedEncounter",false); abandonedTicks=Math.clamp(input.getIntOr("BossAbandonedTicks",0),0,600);
         combat.restore(input.getIntOr("BossPhase",1),input.getIntOr("BossAbility",0),input.getIntOr("BossRemaining",0),input.getIntOr("BossCooldown",40),input.getBooleanOr("BossResolved",false));
         entityData.set(PHASE,combat.phase()); entityData.set(ABILITY,combat.ability().ordinal()); entityData.set(REMAINING,combat.remaining());
