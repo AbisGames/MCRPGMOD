@@ -72,6 +72,11 @@
       "damage": 0.1
     },
     {
+      "type": "pipican:bonus",
+      "kind": "pet_share_sight",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:holding",

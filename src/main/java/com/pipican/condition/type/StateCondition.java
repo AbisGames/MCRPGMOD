@@ -52,7 +52,9 @@ public record StateCondition(State state) implements ClassCondition {
         /** The first 6 seconds of a fight ("first round of combat"). */
         COMBAT_START("combat_start"),
         /** Standing in a 1-block-wide space: solid blocks on both sides along one axis. */
-        NARROW("narrow");
+        NARROW("narrow"),
+        /** Standing in leaves, tall grass or ferns. */
+        IN_FOLIAGE("in_foliage");
 
         public static final Codec<State> CODEC = StringRepresentable.fromEnum(State::values);
         private final String name;
@@ -74,6 +76,12 @@ public record StateCondition(State state) implements ClassCondition {
     @Override
     public ConditionTypes.Type type() {
         return ConditionTypes.STATE;
+    }
+
+    private static boolean foliage(net.minecraft.world.level.block.state.BlockState state) {
+        return state.is(net.minecraft.tags.BlockTags.LEAVES) || state.is(net.minecraft.world.level.block.Blocks.SHORT_GRASS)
+                || state.is(net.minecraft.world.level.block.Blocks.TALL_GRASS) || state.is(net.minecraft.world.level.block.Blocks.FERN)
+                || state.is(net.minecraft.world.level.block.Blocks.LARGE_FERN);
     }
 
     private static boolean narrow(ServerPlayer player) {
@@ -118,6 +126,7 @@ public record StateCondition(State state) implements ClassCondition {
                 yield t >= 0 && t < 120;
             }
             case NARROW -> narrow(player);
+            case IN_FOLIAGE -> foliage(level.getBlockState(player.blockPosition())) || foliage(level.getBlockState(BlockPos.containing(player.getEyePosition())));
         };
     }
 }

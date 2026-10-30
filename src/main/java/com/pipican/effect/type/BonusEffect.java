@@ -118,6 +118,15 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code animals_flee} / {@code animals_follow}: any amount above 0 = passive animals within 10 blocks run from you /
  *       follow you</li>
  *   <li>{@code burn_longer}: how much longer fire lasts on you once you catch it (0.5 = +50%)</li>
+ *   <li>Losing mobs: a mob that can't see you forgets you after 3s; {@code forget_faster} shortens that (0.5 = half as
+ *       long), {@code forget_sooner} by <i>seconds</i>, {@code forget_delay_max} caps it (<i>seconds</i>), and
+ *       {@code forget_hit_sneaking} shortens it more for mobs you hit while sneaking</li>
+ *   <li>{@code faceless_range}: <i>blocks</i> - while sneaking and not attacking, hostile mobs farther than this can't target
+ *       you (0 or less: off)</li>
+ *   <li>{@code pet_share_sight}: any amount above 0 = your tamed animals within 32 blocks get your Night Vision and glow</li>
+ *   <li>{@code no_hiding}: <i>blocks</i> - invisible mobs this close that you can see lose their invisibility</li>
+ *   <li>{@code danger_sense}: <i>blocks</i> - a sound cue when a hostile mob comes this close</li>
+ *   <li>{@code never_unaware}: any amount above 0 = "from behind" / "not targeting you" bonuses never apply against you</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -142,7 +151,9 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION, EXPLODE_SELF_SHARE,
         EMPOWER_CHARGES, WILDFIRE, TAUNT_RADIUS, QUARRY_PURSUIT, QUARRY_ATTACK_SPEED, QUARRY_REACH,
         UNMARKED_FORBIDDEN, STAFF_ONLY, FAVORED_ONLY,
-        GOLEM_CHEST, ANIMALS_FLEE, ANIMALS_FOLLOW, BURN_LONGER;
+        GOLEM_CHEST, ANIMALS_FLEE, ANIMALS_FOLLOW, BURN_LONGER,
+        FORGET_FASTER, FORGET_DELAY_MAX, FORGET_SOONER, FORGET_HIT_SNEAKING, FACELESS_RANGE, PET_SHARE_SIGHT, NO_HIDING,
+        DANGER_SENSE, NEVER_UNAWARE;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -82,6 +82,10 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
     }
 
     public boolean test(LivingEntity attacker, LivingEntity victim) {
+        if ((fromBehind || notTargetingYou) && victim instanceof net.minecraft.server.level.ServerPlayer p
+                && com.pipican.player.ClassEffectApplier.state(p).chance(com.pipican.effect.type.BonusEffect.Kind.NEVER_UNAWARE) > 0) {
+            return false;
+        }
         if (health.isPresent() && !(victim.getMaxHealth() > 0 && health.get().test(victim.getHealth() / victim.getMaxHealth()))) {
             return false;
         }

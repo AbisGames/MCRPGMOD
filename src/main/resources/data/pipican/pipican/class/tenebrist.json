@@ -69,6 +69,32 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:light",
+        "max": 8
+      },
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:invisibility"
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.15
+        }
+      ]
+    },
+    {
       "type": "pipican:mob_effect",
       "effect": "minecraft:night_vision"
     }

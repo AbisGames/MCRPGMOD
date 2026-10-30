@@ -90,16 +90,7 @@
     {
       "id": "infiltrator_forgettable",
       "name": "Forgettable",
-      "description": {
-        "text": "mobs forget you 1s faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs forget you 1s faster",
       "type": "notable",
       "x": 350,
       "y": 1705,
@@ -107,21 +98,19 @@
         "infiltrator_shadow_step"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "forget_sooner",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "infiltrator_no_one",
       "name": "No One",
-      "description": {
-        "text": "Faceless works within 2 blocks, but -20% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Faceless works within 2 blocks, but -20% max health",
       "type": "keystone",
       "x": 392,
       "y": 1767,
@@ -130,7 +119,20 @@
         "infiltrator_forgettable"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "faceless_range",
+          "amount": -2.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

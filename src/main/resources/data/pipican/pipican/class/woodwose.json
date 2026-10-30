@@ -68,6 +68,28 @@
     {
       "type": "pipican:conditional",
       "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:state",
+            "state": "in_foliage"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:invisibility"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
         "type": "pipican:wearing",
         "items": [
           "minecraft:leather_helmet",
@@ -180,6 +202,26 @@
             {
               "source": "special_stat",
               "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:biome",
+        "biomes": "#minecraft:is_forest"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
             }
           ]
         }

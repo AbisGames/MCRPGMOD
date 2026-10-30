@@ -94,6 +94,33 @@
         }
       ],
       "name": "the sight"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sneaking"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 6.0,
+              "effects": [
+                {
+                  "effect": "minecraft:glowing",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ],
+          "name": "visions"
+        }
+      ]
     }
   ],
   "special_passives": [

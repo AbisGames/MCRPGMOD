@@ -70,11 +70,21 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "faceless_range",
+      "amount": 4.0
+    },
+    {
       "type": "pipican:damage_dealt",
       "victim": {
         "not_targeting_you": true
       },
       "multiplier": 1.4
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "forget_delay_max",
+      "amount": 2.0
     }
   ],
   "special_passives": [
@@ -86,6 +96,17 @@
         {
           "source": "special_stat",
           "per": -0.004
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "faceless_range",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.05
         }
       ]
     },
@@ -104,17 +125,32 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Infiltrators avoid notice - and avoid armor that clanks.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Infiltrators avoid notice - and avoid armor that clanks.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:wearing",
+              "items": "#pipican:armor/medium"
+            },
+            {
+              "type": "pipican:wearing",
+              "items": "#pipican:armor/heavy"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:bonus",
+            "kind": "faceless_range",
+            "amount": -100.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

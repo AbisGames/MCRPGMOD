@@ -89,16 +89,7 @@
     {
       "id": "scout_lookout",
       "name": "Lookout",
-      "description": {
-        "text": "can't be hit by sneak-attack bonuses (you are never 'unaware')",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "can't be hit by sneak-attack bonuses (you are never 'unaware')",
       "type": "notable",
       "x": 127,
       "y": 881,
@@ -106,7 +97,14 @@
         "scout_keen_eyes"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "never_unaware",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "scout_pathfinder",

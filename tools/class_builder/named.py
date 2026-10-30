@@ -1442,6 +1442,68 @@ def world(low, ctx):
     if m:
         return [{'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_fire', 'multiplier': round(1 + float(m.group(1)) / 100, 6)},
                 bonus_kind('burn_longer', pct(m.group(2)))[0]]
+    # Mob memory: "mobs that lose sight of you forget you 50% faster", "... forget you after 2s", "mobs forget you 1s faster"
+    m = re.fullmatch(rf'mobs (?:that lose sight of you forget you|lose track of you) {N}% faster', low)
+    if m:
+        return bonus_kind('forget_faster', pct(m.group(1)))
+    m = re.fullmatch(rf'breaking line of sight with a mob makes it forget you after {N}s', low)
+    if m:
+        return bonus_kind('forget_delay_max', float(m.group(1)))
+    m = re.fullmatch(rf'mobs forget you {N}s faster', low)
+    if m:
+        return bonus_kind('forget_sooner', float(m.group(1)))
+    m = re.fullmatch(rf'mobs you hit while sneaking forget you {N}% faster', low)
+    if m:
+        return bonus_kind('forget_hit_sneaking', pct(m.group(1)))
+    # Infiltrator: Faceless
+    m = re.fullmatch(rf"while sneaking and not attacking, hostile mobs beyond {N} blocks can'?t see you at all", low)
+    if m:
+        return bonus_kind('faceless_range', float(m.group(1)))
+    if re.fullmatch(r"while wearing any medium or heavy armou?r, faceless doesn'?t work", low):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:any_of', 'conditions': [
+            {'type': 'pipican:wearing', 'items': '#pipican:armor/medium'}, {'type': 'pipican:wearing', 'items': '#pipican:armor/heavy'}]},
+            'effects': bonus_kind('faceless_range', -100.0)}]
+    m = re.fullmatch(rf'faceless distance -{N} blocks per ([a-z]+)', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('faceless_range', 0.0, -float(m.group(1)))
+    m = re.fullmatch(rf'faceless works within {N} blocks', low)
+    if m and cid == 'infiltrator':
+        # The base range is 4 blocks.
+        return bonus_kind('faceless_range', float(m.group(1)) - 4)
+    # Woodwose Forest Hide, Tenebrist Shadow Form
+    m = re.fullmatch(r'in foliage(?: \(leaves, tall grass, ferns\))?, sneaking makes you invisible', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [
+            {'type': 'pipican:state', 'state': 'sneaking'}, {'type': 'pipican:state', 'state': 'in_foliage'}]},
+            'effects': [{'type': 'pipican:mob_effect', 'effect': 'minecraft:invisibility'}]}]
+    shadow = lambda: [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sneaking'},
+                       'effects': [{'type': 'pipican:mob_effect', 'effect': 'minecraft:invisibility'}]},
+                      {'type': 'pipican:damage_dealt', 'multiplier': 1.15}]
+    m = re.fullmatch(r"in light level 7 or lower, you'?re invisible while sneaking and \+15% damage", low)
+    if m and cid == 'tenebrist':
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:light', 'max': 8}, 'effects': shadow()}]
+    if cid == 'tenebrist' and re.fullmatch(r'shadow form works in any light', low):
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:not', 'condition': {'type': 'pipican:light', 'max': 8}}, 'effects': shadow()}]
+    m = re.fullmatch(rf'forest armou?r \+{N} per {N} ([a-z]+)', low)
+    if m and m.group(3) == sp and (forest := cond.parse('in forests', ctx)):
+        return [{'type': 'pipican:conditional', 'when': forest, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': 0.0,
+                 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(1)) / float(m.group(2)), 6)}]}]}]
+    # Seeing: Visions, Primal Bond, No Hiding, Sentry, Lookout, Alertness
+    m = re.fullmatch(rf'you see the outline of hostile mobs through walls within {N} blocks while sneaking', low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'sneaking'},
+                 'effects': [{'type': 'pipican:on', 'event': 'second', 'actions': [_glow('hostiles', float(m.group(1)))]}]}]
+    if re.fullmatch(r'your tamed animals within 32 blocks share your night vision and you see them through walls', low):
+        return bonus_kind('pet_share_sight', 1.0)
+    if re.fullmatch(r"mobs you see can'?t become invisible to anyone near you", low):
+        return bonus_kind('no_hiding', 16.0)
+    if re.fullmatch(r'players within 8 blocks also see what glows for you', low):
+        return []  # glowing already shows to every player
+    if re.fullmatch(r"can'?t be hit by sneak-attack bonuses \(you are never 'unaware'\)", low):
+        return bonus_kind('never_unaware', 1.0)
+    m = re.fullmatch(rf"you can'?t be backstabbed \(no bonus damage from mobs hitting you from behind\) and hostile mobs within {N} blocks make a sound cue", low)
+    if m:
+        return [bonus_kind('never_unaware', 1.0)[0], bonus_kind('danger_sense', float(m.group(1)))[0]]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
