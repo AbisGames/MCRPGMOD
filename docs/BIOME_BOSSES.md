@@ -1,71 +1,68 @@
-# Biome bosses progress
+# Biome bosses and progression checkpoint
 
-Branch: `biome-bosses`. Worldgen remains at its verified implementation; no worldgen
-production files were modified. Original checkpoint `93beb03` / 25 tests is retained
-in history. All 27 original geometry Git blobs are preserved (CRLF conversion normalized).
+Branch `biome-bosses`; current server-verified production checkpoint `ba49c6e`.
+Work is only in `48018390/MCRPGMOD-Development`. The old repository, `main` and
+`worldgen-and-ores` were not modified. Existing worldgen algorithms and all 27
+original geometry Git blobs are preserved. Rare deposits are independent additions.
 
-## This session
+## Implemented
 
-- `194d1a5`: actual cleave/meteor/eruption damage, telegraphs, fixed marks, persistent
-  impact state and temporary hazards. Actual damage/reload/dodge GameTest passed.
-- `8c532d0`: craftable altar/core/Morvath sigil, real block interaction and spawn rollback,
-  summoning animation, guaranteed heart/8 Cinderite/XP and 25% Infernium. Nine boss tests,
-  28 total required tests passed in run41027720654.
-- `daf607e`: 13x13 safe floor/11x11x5 clearance, owner cancellation through altar,
-  native sword/shoulders, emissive animated eyes/cracks and native combat poses.
-  Run41028128907 passed.
-- `63fd915`: complete basic-swing/three-ability loop and stronger phase-two hazards.
-  Actual phase-two damage/duration and hazard-pulse reload assertions; run41028428224 passed.
-- `b1ebad1`: packaged-JAR assets/geometry hash validation, reward assertions, per-attack
-  balance snapshots, isolated client QA directory. Local compilation passed; run41029291366 is queued for a runner at this checkpoint.
-  Do not call this commit runtime verified yet.
-- `9a3a729`: validates full arena height against dimension build limits and translates
-  rejection messages for players; local main/test compilation passes, CI pending.
+Morvath has a basic swing, Infernal Cleave, Meteor Rain and Volcanic Eruption;
+server-authoritative damage, fixed telegraphs, cooldown/recovery, persistent marks and
+hazards, half-health transition and stronger phase-two behavior. Hazards never place
+lava/fire or destroy terrain. Projectile visuals use falling particle trails.
 
-New block: `pipican:ritual_altar` (also an item).
-New items: `pipican:ritual_core`, `pipican:morvath_sigil`, `pipican:ashen_kings_heart`,
-`pipican:infernium`. No additional entities beyond the existing Morvath registration.
-Ashlands dungeon ingredient is the already registered `pipican:ashlands_boss_core`.
-No NPC/class-system implementation was overwritten.
+Craftable reusable Ritual Altar/Core and Morvath sigil validate actual biome/Y,
+dimension build bounds, loaded space, a safe 13x13 floor and 11x11x5 clearance.
+One sigil is consumed only after successful spawning. Owner sneak-use cancellation,
+cleanup, reservation persistence and terminal reward gating are implemented. Valid
+completion grants one shared bundle: heart, eight Cinderite, base 150 XP and 25%
+UUID-stable Infernium. See [playtest guide](MORVATH_PLAYTEST.md).
 
-See [playtest instructions](MORVATH_PLAYTEST.md) for exact recipes, platform size,
-biome/height rules, telegraphs, cancellation and deterministic multiplayer rewards.
+Native attachments add sword/shoulders/animated emissive eyes without editing the
+original geometry. Native poses cover idle/walk/basic/three abilities/hurt/summon/
+transition/death. These are art drafts pending actual in-world visual review.
 
-## Coverage and limits
+Twelve rare materials, eight natural ore blocks and six regional pickaxes are registered.
+All eight natural deposit types were observed in generated RPG/End chunks. Server
+mining identity checks and tool-conditioned loot prevent wrong-tool/explosion bypasses.
+Voidsteel/Celestium/Bloodcrystal are materials only until their planned bosses work.
+See [resource rules and coverage](RARE_RESOURCES.md).
 
-GameTests cover real registered entities/attributes, combat state and compressed disk
-roundtrip, phase latching, actual player damage/cone dodge, meteor mark dodge and reload,
-temporary zones/phase-two damage and duration, no immediate replayed hazard pulse,
-actual crafting recipes, real altar block interaction, forced rejected-spawn rollback,
-exact sigil consumption, repeat interaction, owner cancellation, one-time loot,
-pre-death reload replay, no cancellation loot, cleanup/NoAI/unload and existing regressions.
-Packaged mod validation checks 27 original models, texture/model/class presence,
-exact sigil ingredients and exclusion of GameTest code/data.
+The blacksmith backend supports four tiers with +1..+10, monotonic revisions, safe
+material transactions, evolution and set metadata while preserving item components.
+Only Ashlands is an active material profile. No NPC interface or set-effect/class
+rewrite is introduced. See [backend contract](BLACKSMITH_UPGRADES.md).
 
-Local ECJ Java25 main/test compilation succeeds. Local client launch failed before
-Minecraft started in NeoForm SDK compilation (package-info write error). ZIP preflight
-succeeded; no client screenshots or visual/FPS/multiplayer play session are claimed.
-Art/animation code is present, but final artwork/alignment is not verified. Meteor
-projectile visuals are server-issued falling particle trails, not a separate projectile entity.
-Normal save/reload is covered; crash atomicity across separate save files is not guaranteed.
+All 27 bosses have distinct design metadata: stats, sigil, three mechanics/counterplay,
+phase behavior, rewards and model/animation mapping. The other 26 remain disabled
+plans; only Morvath has a functional entity/ability binding. See [design catalog](BOSS_DESIGNS.md).
 
-## Remaining milestones
+## Verification
 
-Finish client render/playtest and polish Morvath art before declaring the encounter final.
-Infernium is implemented as a boss crafting material; the other 11 rare resources,
-regional pickaxes/mining gates/natural deposits and blacksmith upgrade backend are pending.
-The 26 other bosses remain unregistered geometry prototypes with catalog metadata;
-full unique ability/loot/sigil/animation configurations and implementations are pending.
+- `93beb03`, run41024349874: original 25/25 framework tests.
+- `63fd915`, run41028428224: 28/28 tests with real Morvath damage/phase/altar/loot.
+- `9a3a729`, run41030392276: passed with build-boundary and player-message fixes.
+- `4d4c6fe`, run41066796125: 31/31 tests, including mining and feature safety.
+- `27f951a`, run41068590614: 34/34 focused tests, then 35/35 with all eight native deposits
+  and three blacksmith tests (forty upgrades and three evolutions, metadata preservation).
+- `ba49c6e`, run41089596445: 35/35 focused tests including the complete design catalog.
 
-The supported NeoForm Eclipse-compiler alternative was tried once with a local-only
-init script. Its bundled compiler rejected flexible constructor bodies as a disabled
-preview feature while rebuilding Minecraft sources. This did not reach mod/client
-execution either. No compiler-preview workaround or Windows security change was applied.
+The actual `ba49c6e` JAR passed the packaged-asset validator: original model hashes,
+required textures/models/classes/recipes/profile metadata, no GameTest code/data.
+Native-generation coverage is seed 0; it is not a statistical frequency or all-seed claim.
+Normal disk reload is tested; crash atomicity across separate save files is not guaranteed.
 
-## Distributable checkpoint
+## Client testing in progress
 
-`63fd915` passed all 28 required tests in run41028428224. Its distributable also passed
-`tools/bosses/validate_boss_jar.py` locally. SHA256:
-`425b27b21bc2ee98e05e459ae01dd08b95a55ae13b6e1e50ca2e13d240279d80`.
-This is the server-verified playable development candidate; client artwork is unreviewed.
-Do not confuse it with the older framework-only JAR or the newer queued `b1ebad1` candidate.
+Local SDK preparation was repaired in a task-local tool copy by replacing the older
+bundled ECJ with the existing ECJ 3.44 compiler. No Windows security setting or release
+CI compiler was changed. Minecraft 26.1.2 / NeoForge 26.1.2.124 opened successfully on
+AMD OpenGL 3.3 in the isolated `run-client-boss` directory.
+
+An opt-in GameTest-source client QA scene prepares a guarded isolated test arena and
+visual-immunity player; it is excluded from distributed JARs. The scene is gated by
+`clientQa=true`, integrated-server detection and an explicit save-root boundary.
+New-world experimental-feature confirmation is currently awaiting the user's approval.
+No in-world Morvath screenshot, clipping/scale/animation/FPS or real multiplayer play
+session is claimed yet. Finish these checks and polish the art before declaring it final.

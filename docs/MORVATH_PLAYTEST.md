@@ -94,13 +94,17 @@ walk, basic swing, cleave, meteor, eruption, summoning, hurt, transition and dea
 These remain unreviewed art drafts until client inspection establishes alignment,
 scale, clipping and readable animation silhouettes.
 
-A local isolated `runClient` attempt failed before the game started, in NeoForm's
-Minecraft SDK recompile task (writing `package-info`), not in the mod's Java sources.
-ZIP filesystem preflight succeeded, so the old ZIP access diagnosis alone no longer
-explains the current blocker. No screenshots, rendered model or FPS results are claimed.
-`-PclientGameDir=...` selects an isolated directory; default is `run-client-boss`.
+Local client preparation initially failed in NeoForm SDK compilation. The isolated QA
+runtime now uses a task-local copy with ECJ 3.44 and Minecraft opens successfully.
+This does not modify the release build compiler or Windows security settings.
 
-The supported NeoForm Eclipse-compiler alternative was tried once with a local-only
-init script. Its bundled compiler rejected flexible constructor bodies as a disabled
-preview feature while rebuilding Minecraft sources. This did not reach mod/client
-execution either. No compiler-preview workaround or Windows security change was applied.
+For the opt-in development fixture, run the client with `-PclientQa=true`; its save root
+is explicitly checked and only integrated singleplayer is accepted. The GameTest source
+prepares a test platform, altar and four sigils with visual-immunity effects. The first
+boss pauses in its summoning pose for inspection; hotbar 9 toggles AI and hotbar 8
+triggers phase two. This fixture never ships in the mod JAR. It is for visual inspection,
+not proof of player damage/balance. Actual damage is covered by server GameTests.
+
+`-PclientGameDir=...` selects an isolated directory; default is `run-client-boss`.
+Current in-world testing awaits approval of Minecraft's new-world experimental-feature
+warning. No in-world screenshot, clipping/FPS/alignment result is claimed yet.

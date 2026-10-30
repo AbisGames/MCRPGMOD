@@ -59,6 +59,8 @@ neoForge {
         client {
             gameDirectory = project.file(providers.gradleProperty('clientGameDir').getOrElse('run-client-boss'))
             client()
+            systemProperty 'pipican.clientQa', providers.gradleProperty('clientQa').getOrElse('false')
+            systemProperty 'pipican.clientQaRoot', project.file(providers.gradleProperty('clientGameDir').getOrElse('run-client-boss')).absolutePath
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
