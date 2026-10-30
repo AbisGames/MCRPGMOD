@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **1990**, partly working: **19**, not yet: **241**
+- Bonus phrases: **2250**. Fully working: **2004**, partly working: **19**, not yet: **227**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -12,125 +12,17 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 73 |
-| [Other mechanics](#other-mechanics) | 71 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 50 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 35 |
+| [Other mechanics](#other-mechanics) | 68 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 68 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 49 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 34 |
 | [Skill trigger approximated](#skill-trigger-approximated) | 29 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 20 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 16 |
 | [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 12 |
 | [Immunities](#immunities) | 8 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 6 |
 | [Critical hits](#critical-hits) | 2 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
-
-## Active abilities (named abilities, cooldowns, auras, summons)
-
-- **abjurer**
-  - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
-- **avenger**
-  - general tree: Pursuit: +8% movement speed toward the marked target
-- **bard**
-  - special tree: Swift Song: Inspiring Song refreshes twice as fast
-- **berserker**
-  - weakness: can't go Berserk again for 15s
-  - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
-- **champion**
-  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
-- **chaplain**
-  - passive: Succor: crouching next to a downed-ish player (below 4 HP) for 3s heals them 6 HP (60s cooldown)
-  - special passive: Succor heal +1 per 10 Sermon
-  - weakness: Battle Chant switches off for 10s whenever you take more than 6 damage in one hit
-  - general tree: Steady Voice: Battle Chant no longer stops from big hits below 10 damage
-  - general tree: Field Medic: Succor cooldown -20s
-  - special tree: Emboldening Chant: +5% more damage in chant
-  - special tree: Succor: Succor also removes Poison and Wither
-- **chronomancer**
-  - special tree: Precognition: unlocks Insight: after you dodge, your next hit is a guaranteed crit
-- **cleric**
-  - special tree: Turn Undead: unlocks Turn Undead (undead flee for 5s)
-- **conjurer**
-  - special passive: Per 20 Summoning, +1 minion at a time
-- **conqueror**
-  - special tree: Attack Command: goat horn cooldown -20s
-- **diviner**
-  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
-- **dreadnaught**
-  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
-- **engineer**
-  - special passive: Eidolon armor +1 per 10 Engineering
-  - general tree: Iron Titan: eidolon becomes Size 2
-  - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **fighter**
-  - weakness: -25% potion effect duration on you, and enchanting costs +1 level
-- **hexer**
-  - general tree: Withering Gaze: Pain curse also gives Weakness
-  - special tree: Desire: Desire-cursed mobs fight other mobs
-- **illusionist**
-  - weakness: decoys never fool wardens, endermen or the Wither
-  - special tree: Blur: after a decoy, you're invisible for 1s
-- **infiltrator**
-  - special passive: Faceless distance -0.05 blocks per Subtlety
-- **jack_of_all_trades**
-  - special tree: Magical Epiphany: brewing and enchanting cost slightly less (-1 level, 10% faster brew)
-- **magician**
-  - passive: Sense Magic: enchanted items and mobs with potion effects within 12 blocks glow for you while sneaking
-  - special passive: +0.5% chance per Power point to keep the lapis when enchanting
-  - skill Enchanting: +5% chance of a better enchantment roll
-  - skill Enchanting: -1 lapis cost on level-3 enchants
-  - skill Enchanting: +5% chance of a better enchantment roll
-  - skill Enchanting: +10% chance of a better enchantment roll
-- **magus**
-  - passive: +20% of it as magic damage with your staff
-  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
-  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
-  - general tree: Sweeping Staff: staff hits sweep 1 extra mob
-  - general tree: Staff of the Archmagus: +25% staff damage, but you can't use any other weapon at better than clumsy
-- **paladin**
-  - weakness: killing a villager, iron golem or tamed animal empties Smite and gives Weakness I for 5 minutes
-- **ranger**
-  - general tree: Stalker: +10% movement speed toward your prey
-- **runesmith**
-  - special stat per point: +0.5% damage with sigil-marked weapons
-  - special stat per point: +0.05 armor with sigil-marked armor
-  - passive: Sigils of Power: armor with a trim and weapons you've renamed at an anvil count as sigil-marked
-  - passive: sigil armor: +1 armor per piece
-  - special passive: Sigil weapon damage +0.5% per Runecraft
-  - special passive: Per 20 Runecraft, +1 armor toughness from sigil armor
-  - general tree: Runelord: sigil bonuses doubled
-  - special tree: Mighty Sigils: Mighty Sigils triggers at 75% Rune Power
-- **savant**
-  - passive: Enchanting, brewing and anvil use all cost slightly less (-1 level / 10% faster)
-- **shapeshifter**
-  - special stat per point: +1% bonus from your current form
-  - passive: Swift Transformation: changing form is instant and cleanses Slowness
-  - special passive: Form bonuses +1% per Mutability
-- **spellbinder**
-  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
-  - special passive: Magic Weapon: per 10 Binding, +2% bound weapon critical damage
-- **technomancer**
-  - special passive: Gadget bonus +0.5% per Circuitry
-  - special passive: Per 20 Circuitry, +1 gadget charge stored
-  - general tree: Mad Inventor: gadget bonus doubled
-  - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
-  - special tree: Pocket Gadget: +1 gadget charge
-- **templar**
-  - passive: When a hostile mob enters your temple, you get Speed II for 2s
-  - special passive: Per 10 Sanctum, temple armor bonus +1
-  - general tree: Fortress Temple: temple bonuses doubled
-  - special tree: Living Temple: your temple follows you
-  - special tree: Living Temple: -15% temple bonuses
-- **tenebrist**
-  - passive: Shadow Form: in light level 7 or lower, you're invisible while sneaking and +15% damage
-- **traveler**
-  - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
-- **weapon_master**
-  - general tree: One True Weapon: +30% favored damage, but other weapons are forbidden-tier
-  - special tree: Swift Change: you can change favored weapon once per day without sleeping
-- **wizard**
-  - special passive: +1 bookshelf counted around your enchanting table per 20 Lore
-  - general tree: Library: +1 counted bookshelf, -1 enchanting cost
-  - special tree: Second Tome: Grimoire bonus also works with a book in any hotbar slot
 
 ## Other mechanics
 
@@ -138,8 +30,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
 - **acrobat**
   - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
-- **avenger**
-  - special tree: Hound: Speed boost lasts 2s longer
 - **berserker**
   - special tree: Frightful Wrath: Frightful Wrath range +3 blocks
   - special tree: Reckless Strike: fatigue lasts twice as long
@@ -147,8 +37,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
 - **conqueror**
   - special stat per point: +0.5% damage for players near you
-- **defender**
-  - general tree: Taunt: mobs within 6 blocks prefer to target you
 - **dervish**
   - weakness: shields count as forbidden and -25% damage with bows and crossbows
 - **destroyer**
@@ -213,7 +101,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Mace Training: +10% fall-smash damage
 - **pyromancer**
   - passive: Fire you start burns 50% longer
-  - general tree: Wildfire: burning mobs spread fire to adjacent mobs
 - **savant**
   - special passive: Focus bonus +0.5% per Breadth
   - special tree: Second Focus: focus bonus +10%
@@ -248,6 +135,107 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Nature's Resilience: absorption +2 more hearts
 - **zealot**
   - special tree: Violent Madness: Violent Madness no longer targets players
+
+## Active abilities (named abilities, cooldowns, auras, summons)
+
+- **abjurer**
+  - special tree: Inviolable: immune to knockback while Ward is above half; -10% movement speed
+- **bard**
+  - special tree: Swift Song: Inspiring Song refreshes twice as fast
+- **berserker**
+  - weakness: can't go Berserk again for 15s
+  - special tree: Reckless Strike: Berserk triggers at 50% Rage instead of 75%
+- **champion**
+  - special tree: Living Legend: Battle Stance can be held while walking slowly; -10% movement speed
+- **chaplain**
+  - passive: Succor: crouching next to a downed-ish player (below 4 HP) for 3s heals them 6 HP (60s cooldown)
+  - special passive: Succor heal +1 per 10 Sermon
+  - weakness: Battle Chant switches off for 10s whenever you take more than 6 damage in one hit
+  - general tree: Steady Voice: Battle Chant no longer stops from big hits below 10 damage
+  - general tree: Field Medic: Succor cooldown -20s
+  - special tree: Emboldening Chant: +5% more damage in chant
+  - special tree: Succor: Succor also removes Poison and Wither
+- **chronomancer**
+  - special tree: Precognition: unlocks Insight: after you dodge, your next hit is a guaranteed crit
+- **cleric**
+  - special tree: Turn Undead: unlocks Turn Undead (undead flee for 5s)
+- **conjurer**
+  - special passive: Per 20 Summoning, +1 minion at a time
+- **conqueror**
+  - special tree: Attack Command: goat horn cooldown -20s
+- **diviner**
+  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
+- **dreadnaught**
+  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
+- **engineer**
+  - special passive: Eidolon armor +1 per 10 Engineering
+  - general tree: Iron Titan: eidolon becomes Size 2
+  - special tree: Mecha: while in the cockpit, eidolon damage +25%
+- **fighter**
+  - weakness: -25% potion effect duration on you, and enchanting costs +1 level
+- **hexer**
+  - general tree: Withering Gaze: Pain curse also gives Weakness
+  - special tree: Desire: Desire-cursed mobs fight other mobs
+- **illusionist**
+  - weakness: decoys never fool wardens, endermen or the Wither
+  - special tree: Blur: after a decoy, you're invisible for 1s
+- **infiltrator**
+  - special passive: Faceless distance -0.05 blocks per Subtlety
+- **jack_of_all_trades**
+  - special tree: Magical Epiphany: brewing and enchanting cost slightly less (-1 level, 10% faster brew)
+- **magician**
+  - passive: Sense Magic: enchanted items and mobs with potion effects within 12 blocks glow for you while sneaking
+  - special passive: +0.5% chance per Power point to keep the lapis when enchanting
+  - skill Enchanting: +5% chance of a better enchantment roll
+  - skill Enchanting: -1 lapis cost on level-3 enchants
+  - skill Enchanting: +5% chance of a better enchantment roll
+  - skill Enchanting: +10% chance of a better enchantment roll
+- **magus**
+  - passive: +20% of it as magic damage with your staff
+  - passive: Lost staffs can be remade at a crafting table (blaze rod + amethyst shard)
+  - special passive: Per 10 Staffcraft, staff hits give Slowness I for 1s
+  - general tree: Sweeping Staff: staff hits sweep 1 extra mob
+  - general tree: Staff of the Archmagus: +25% staff damage, but you can't use any other weapon at better than clumsy
+- **paladin**
+  - weakness: killing a villager, iron golem or tamed animal empties Smite and gives Weakness I for 5 minutes
+- **runesmith**
+  - special stat per point: +0.5% damage with sigil-marked weapons
+  - special stat per point: +0.05 armor with sigil-marked armor
+  - passive: Sigils of Power: armor with a trim and weapons you've renamed at an anvil count as sigil-marked
+  - passive: sigil armor: +1 armor per piece
+  - special passive: Sigil weapon damage +0.5% per Runecraft
+  - special passive: Per 20 Runecraft, +1 armor toughness from sigil armor
+  - general tree: Runelord: sigil bonuses doubled
+  - special tree: Mighty Sigils: Mighty Sigils triggers at 75% Rune Power
+- **savant**
+  - passive: Enchanting, brewing and anvil use all cost slightly less (-1 level / 10% faster)
+- **shapeshifter**
+  - special stat per point: +1% bonus from your current form
+  - passive: Swift Transformation: changing form is instant and cleanses Slowness
+  - special passive: Form bonuses +1% per Mutability
+- **spellbinder**
+  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
+  - special passive: Magic Weapon: per 10 Binding, +2% bound weapon critical damage
+- **technomancer**
+  - general tree: Mad Inventor: gadget bonus doubled
+  - general tree: Mad Inventor: 10% chance gadgets misfire and damage you
+- **templar**
+  - passive: When a hostile mob enters your temple, you get Speed II for 2s
+  - special passive: Per 10 Sanctum, temple armor bonus +1
+  - general tree: Fortress Temple: temple bonuses doubled
+  - special tree: Living Temple: your temple follows you
+  - special tree: Living Temple: -15% temple bonuses
+- **tenebrist**
+  - passive: Shadow Form: in light level 7 or lower, you're invisible while sneaking and +15% damage
+- **traveler**
+  - special tree: Gatekeeper: your pearls can carry a nearby player with you; +50% pearl cooldown
+- **weapon_master**
+  - general tree: One True Weapon: +30% favored damage, but other weapons are forbidden-tier
+  - special tree: Swift Change: you can change favored weapon once per day without sleeping
+- **wizard**
+  - special passive: +1 bookshelf counted around your enchanting table per 20 Lore
+  - general tree: Library: +1 counted bookshelf, -1 enchanting cost
+  - special tree: Second Tome: Grimoire bonus also works with a book in any hotbar slot
 
 ## Conditional bonus (while / when / where)
 
@@ -313,7 +301,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **stormbringer**
   - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
   - general tree: Storm Avatar: your lightning chance works in any rain, but you take 25% more fire damage
-  - special tree: Chain Lightning: lightning arcs to 2 more mobs
   - special tree: Stormlord: you can't wear iron or netherite armor
 - **templar**
   - special tree: Temple Guardian: Slowness becomes immobilise for 1s
@@ -381,7 +368,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **sorcerer**
   - special tree: Sorcerous Blast: unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2
 - **technomancer**
-  - passive: Invention: each time you spend Voltage, you get a 'gadget' charge - your next attack or check (dodge, crit) is improved (+20%)
   - weakness: Voltage regen stops while wet and gadgets fizzle in the Nether
   - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
 - **templar**
@@ -467,7 +453,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **assassin**
   - general tree: Death Mark: Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you
 - **avenger**
-  - passive: When your marked target moves away, you get Speed II for 2s
   - special passive: Per 10 Vengeance, marked targets within 4 blocks get Weakness I
 - **beastmaster**
   - passive: Primal Bond: your tamed animals within 32 blocks share your Night Vision and you see them through walls
@@ -477,14 +462,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **druid**
   - special passive: Passive animals within 16 blocks never flee from you
   - special passive: per 20 Wildness, +1 heart to animals you tame
-- **duelist**
-  - special passive: Per 10 Finesse, +5% attack speed against the foe
-  - special tree: Lunge: +1 block reach against challenged foe
 - **poisoner**
   - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
 - **ranger**
   - special passive: Master Hunter: per 10 Instinct, prey can't become invisible to you
-  - special tree: Relentless Pursuit: when prey flees, you get Speed I for 3s
 - **runesmith**
   - weakness: -15% damage with unmarked weapons per unmarked armor piece
   - weakness: -1 armor per unmarked armor piece

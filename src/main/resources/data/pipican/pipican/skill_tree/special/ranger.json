@@ -83,16 +83,7 @@
     {
       "id": "relentless",
       "name": "Relentless Pursuit",
-      "description": {
-        "text": "when prey flees, you get Speed I for 3s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "when prey flees, you get Speed I for 3s",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -100,7 +91,26 @@
         "natural_lore"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "quarry_flee",
+          "name": "pursuit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:speed",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "master_hunter",

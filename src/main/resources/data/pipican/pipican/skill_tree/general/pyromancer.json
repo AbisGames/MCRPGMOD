@@ -63,16 +63,7 @@
     {
       "id": "pyromancer_wildfire",
       "name": "Wildfire",
-      "description": {
-        "text": "burning mobs spread fire to adjacent mobs",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "burning mobs spread fire to adjacent mobs",
       "type": "notable",
       "x": -345,
       "y": -1347,
@@ -80,7 +71,14 @@
         "pyromancer_kindling"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "wildfire",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "pyromancer_ash_walker",

@@ -70,6 +70,20 @@
   },
   "passives": [
     {
+      "type": "pipican:on",
+      "event": "spend",
+      "name": "invention",
+      "actions": [
+        {
+          "type": "pipican:empower",
+          "target": "self",
+          "multiplier": 1.2,
+          "seconds": 600.0,
+          "charges": 1
+        }
+      ]
+    },
+    {
       "type": "pipican:damage_dealt",
       "weapons": "#pipican:weapons/crossbows",
       "multiplier": 1.1
@@ -105,6 +119,28 @@
         {
           "source": "special_stat",
           "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "invention",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.025
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "empower_charges",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
         }
       ]
     }

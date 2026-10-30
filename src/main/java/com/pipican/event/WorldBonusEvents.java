@@ -258,6 +258,13 @@ public final class WorldBonusEvents {
         if (!(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
             return;
         }
+        if (player.tickCount % 5 == 0) {
+            com.pipican.ability.Quarries.playerTick(player);
+        }
+        if (player.tickCount % 20 == 0) {
+            taunt(player, level);
+            wildfire(player, level);
+        }
         // Resource bar filled up: "when Strain reaches max".
         var data = com.pipican.player.ClassService.data(player);
         boolean full = data.resourceMax() > 0 && data.resource() >= data.resourceMax() - 1.0e-6;
@@ -417,6 +424,32 @@ public final class WorldBonusEvents {
         int orbs = (int) extra + (player.getRandom().nextDouble() < extra - (int) extra ? 1 : 0);
         if (orbs > 0) {
             net.minecraft.world.entity.ExperienceOrb.award((ServerLevel) player.level(), player.position(), orbs);
+        }
+    }
+
+    /** {@code taunt_radius}: hostile mobs near you that target another player switch to you. */
+    private static void taunt(ServerPlayer player, ServerLevel level) {
+        double r = ClassEffectApplier.state(player).chance(Kind.TAUNT_RADIUS);
+        if (r <= 0 || player.isSpectator() || player.isCreative()) {
+            return;
+        }
+        for (Mob mob : level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(r),
+                m -> m instanceof Enemy && m.distanceToSqr(player) <= r * r && m.getTarget() instanceof Player other && other != player)) {
+            mob.setTarget(player);
+        }
+    }
+
+    /** {@code wildfire}: burning mobs you hurt set mobs next to them on fire. */
+    private static void wildfire(ServerPlayer player, ServerLevel level) {
+        if (ClassEffectApplier.state(player).chance(Kind.WILDFIRE) <= 0) {
+            return;
+        }
+        for (LivingEntity burning : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(16),
+                e -> e.isOnFire() && !(e instanceof Player) && e.getLastHurtByMob() == player)) {
+            for (LivingEntity next : level.getEntitiesOfClass(LivingEntity.class, burning.getBoundingBox().inflate(1.5),
+                    e -> e != burning && !e.isOnFire() && !(e instanceof Player) && Pets.owner(e) != player && !com.pipican.ability.Summons.isSummonOf(e, player))) {
+                next.igniteForSeconds(4);
+            }
         }
     }
 }

@@ -34,6 +34,18 @@ public final class Empowers {
                 .add(new Empower(player.level().getGameTime() + ticks, multiplier, bonus, List.copyOf(effects), against, new int[] {hits}));
     }
 
+    /** How many live empowers {@code player} has with this multiplier and bonus (stored charges of one kind). */
+    public static int count(Player player, double multiplier, double bonus) {
+        List<Empower> list = EMPOWERS.get(player.getUUID());
+        if (list == null) {
+            return 0;
+        }
+        long now = player.level().getGameTime();
+        synchronized (list) {
+            return (int) list.stream().filter(e -> e.endsAt() > now && e.multiplier() == multiplier && e.bonus() == bonus).count();
+        }
+    }
+
     /** New damage for {@code attacker}'s hit on {@code target}, using up empowered hits; also applies their effects. */
     public static float apply(Player attacker, LivingEntity target, float amount) {
         List<Empower> list = EMPOWERS.get(attacker.getUUID());

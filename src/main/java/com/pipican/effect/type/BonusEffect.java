@@ -105,6 +105,12 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code grindstone_xp}: how much more experience disenchanting at a grindstone gives (0.1 = +10%)</li>
  *   <li>{@code keep_optimization}: any amount above 0 = Optimization isn't lost when you die</li>
  *   <li>{@code explode_self_share}: the share of the damage your own {@code pipican:explode} blasts deal that you take too</li>
+ *   <li>{@code empower_charges}: <i>extra charges</i> of {@code pipican:empower} with {@code charges} you can store (whole numbers)</li>
+ *   <li>{@code wildfire}: any amount above 0 = burning mobs you hurt set mobs next to them on fire</li>
+ *   <li>{@code taunt_radius}: <i>blocks</i> - hostile mobs this close that target another player switch to you</li>
+ *   <li>{@code quarry_pursuit}: movement speed while you move toward one of your quarries (0.1 = +10%)</li>
+ *   <li>{@code quarry_attack_speed} / {@code quarry_reach}: attack speed (0.05 = +5%) / reach (<i>blocks</i>) while you look
+ *       at one of your quarries</li>
  *   <li>{@code knockback}: how far your hits knock mobs back</li>
  *   <li>{@code extra_loot} / {@code extra_ore} / {@code extra_crop}: a <i>chance</i> (0.1 = 10%) that a mob you kill drops one
  *       more item / an ore or crop you break drops double</li>
@@ -126,7 +132,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         RESOURCE_REFUND, REFUND_BONUS, SHARE_DRINK,
         FREE_ABILITY_EVERY, WEATHER_WARNING, GLORIOUS_DEATH, GUARD_ALLIES, PROJECTILE_WARD, EXECUTE_LOOTING, SURE_TAME,
         FIRE_CHARGE_DAMAGE, WIND_CHARGE_DAMAGE, DISTANCE_DAMAGE, TRIAGE, OFFHAND_COMBO,
-        SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION, EXPLODE_SELF_SHARE;
+        SCRUTINY_EXPOSE, SCRUTINY_WEAKNESS, KEEP_HOTBAR_WEAPON, GRINDSTONE_XP, KEEP_OPTIMIZATION, EXPLODE_SELF_SHARE,
+        EMPOWER_CHARGES, WILDFIRE, TAUNT_RADIUS, QUARRY_PURSUIT, QUARRY_ATTACK_SPEED, QUARRY_REACH;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

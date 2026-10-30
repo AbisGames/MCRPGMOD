@@ -119,6 +119,17 @@
           "per": 0.003
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "quarry_attack_speed",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
     }
   ],
   "weakness": {

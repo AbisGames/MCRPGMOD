@@ -23,6 +23,7 @@ public final class Quarries {
         final LivingEntity target;
         final long endsAt;
         boolean hitYou;
+        double lastDistance = -1;
 
         Active(LivingEntity target, long endsAt) {
             this.target = target;
@@ -166,13 +167,83 @@ public final class Quarries {
         return mult;
     }
 
-    /** Every second: forgets ended quarries. */
+    private static final net.minecraft.resources.Identifier PURSUIT = com.pipican.Pipican.id("quarry/pursuit");
+    private static final net.minecraft.resources.Identifier FOE_SPEED = com.pipican.Pipican.id("quarry/attack_speed");
+    private static final net.minecraft.resources.Identifier FOE_REACH = com.pipican.Pipican.id("quarry/reach");
+    private static final Map<UUID, net.minecraft.world.phys.Vec3> LAST_POS = new ConcurrentHashMap<>();
+
+    /** Every second: forgets ended quarries; a quarry moving away from its player fires quarry_flee. */
     public static void tick(MinecraftServer server) {
         ACTIVE.forEach((uuid, mine) -> {
             mine.values().removeIf(a -> !live(a, a.target.level().getGameTime()));
             if (mine.isEmpty()) {
                 ACTIVE.remove(uuid);
+                return;
+            }
+            ServerPlayer owner = server.getPlayerList().getPlayer(uuid);
+            if (owner == null) {
+                return;
+            }
+            for (Active a : mine.values()) {
+                double d = a.target.level() == owner.level() ? a.target.distanceTo(owner) : -1;
+                if (d > 4 && a.lastDistance >= 0 && d > a.lastDistance + 1) {
+                    Reactions.fire(owner, a.target, net.minecraft.world.item.ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.QUARRY_FLEE);
+                }
+                a.lastDistance = d;
             }
         });
+    }
+
+    /**
+     * Every 5 ticks: {@code quarry_pursuit} speed while moving toward a quarry, {@code quarry_attack_speed} /
+     * {@code quarry_reach} while looking at one.
+     */
+    public static void playerTick(ServerPlayer player) {
+        ClassState state = ClassEffectApplier.state(player);
+        double pursuit = state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_PURSUIT);
+        double speed = state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_ATTACK_SPEED);
+        double reach = state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_REACH);
+        Map<String, Active> mine = ACTIVE.get(player.getUUID());
+        long now = player.level().getGameTime();
+        var pos = player.position();
+        var last = LAST_POS.put(player.getUUID(), pos);
+        boolean toward = false;
+        boolean looking = false;
+        if (mine != null && (pursuit != 0 || speed != 0 || reach != 0)) {
+            LivingEntity look = speed != 0 || reach != 0 ? Targets.lookTarget(player, 6 + reach) : null;
+            for (Active a : mine.values()) {
+                if (!live(a, now) || a.target.level() != player.level()) {
+                    continue;
+                }
+                if (last != null) {
+                    var moved = pos.subtract(last).multiply(1, 0, 1);
+                    var to = a.target.position().subtract(pos).multiply(1, 0, 1);
+                    toward |= moved.lengthSqr() > 0.01 && to.lengthSqr() > 1.0e-4 && moved.normalize().dot(to.normalize()) > 0.5;
+                }
+                looking |= look == a.target;
+            }
+        }
+        modifier(player, net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, PURSUIT, toward ? pursuit : 0,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        modifier(player, net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, FOE_SPEED, looking ? speed : 0,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        modifier(player, net.minecraft.world.entity.ai.attributes.Attributes.ENTITY_INTERACTION_RANGE, FOE_REACH, looking ? reach : 0,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE);
+    }
+
+    private static void modifier(ServerPlayer player, net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute,
+                                 net.minecraft.resources.Identifier id, double amount, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation op) {
+        var instance = player.getAttribute(attribute);
+        if (instance == null) {
+            return;
+        }
+        var current = instance.getModifier(id);
+        if (current != null && current.amount() == amount) {
+            return;
+        }
+        instance.removeModifier(id);
+        if (amount != 0) {
+            instance.addTransientModifier(new net.minecraft.world.entity.ai.attributes.AttributeModifier(id, amount, op));
+        }
     }
 }

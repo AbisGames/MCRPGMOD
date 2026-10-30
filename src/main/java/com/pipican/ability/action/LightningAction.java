@@ -19,11 +19,13 @@ import net.minecraft.world.phys.Vec3;
  * Never aims at players.
  *
  * <pre>{@code { "type": "pipican:lightning", "range": 32 } }</pre>
+ * With {@code others} above 0 it instead strikes that many other mobs within 6 blocks of the target (chain lightning).
  */
-public record LightningAction(double range) implements AbilityAction {
+public record LightningAction(double range, int others) implements AbilityAction {
 
     public static final MapCodec<LightningAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            Codec.doubleRange(1, 128).optionalFieldOf("range", 32.0).forGetter(LightningAction::range)
+            Codec.doubleRange(1, 128).optionalFieldOf("range", 32.0).forGetter(LightningAction::range),
+            Codec.intRange(0, 16).optionalFieldOf("others", 0).forGetter(LightningAction::others)
     ).apply(i, LightningAction::new));
 
     @Override
@@ -36,6 +38,16 @@ public record LightningAction(double range) implements AbilityAction {
         var player = ctx.player();
         // In a reaction ("your hits may call down lightning") strike the mob that was hit.
         var target = ctx.subject().filter(e -> !(e instanceof Player)).orElseGet(() -> Targets.lookTarget(player, range));
+        if (others > 0) {
+            if (target != null) {
+                var center = target;
+                ctx.level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, center.getBoundingBox().inflate(6),
+                                e -> e != center && e.isAlive() && !(e instanceof Player) && !com.pipican.ability.Summons.isSummonOf(e, player))
+                        .stream().sorted(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(center))).limit(others)
+                        .forEach(e -> strike(ctx, player, e.position()));
+            }
+            return;
+        }
         Vec3 at;
         if (target != null && !(target instanceof Player)) {
             at = target.position();
@@ -46,6 +58,10 @@ public record LightningAction(double range) implements AbilityAction {
             }
             at = hit.getLocation();
         }
+        strike(ctx, player, at);
+    }
+
+    private static void strike(AbilityContext ctx, net.minecraft.server.level.ServerPlayer player, Vec3 at) {
         LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(ctx.level(), EntitySpawnReason.TRIGGERED);
         if (bolt != null) {
             bolt.snapTo(at);

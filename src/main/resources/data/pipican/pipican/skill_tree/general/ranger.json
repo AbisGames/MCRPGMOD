@@ -84,16 +84,7 @@
     {
       "id": "ranger_stalker",
       "name": "Stalker",
-      "description": {
-        "text": "+10% movement speed toward your prey",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+10% movement speed toward your prey",
       "type": "notable",
       "x": -881,
       "y": 127,
@@ -101,7 +92,14 @@
         "ranger_woodcraft"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_pursuit",
+          "amount": 0.1
+        }
+      ]
     },
     {
       "id": "ranger_apex",

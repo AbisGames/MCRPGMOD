@@ -56,16 +56,7 @@
     {
       "id": "avenger_pursuit",
       "name": "Pursuit",
-      "description": {
-        "text": "+8% movement speed toward the marked target",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+8% movement speed toward the marked target",
       "type": "notable",
       "x": 1386,
       "y": 110,
@@ -73,7 +64,14 @@
         "avenger_grudge"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_pursuit",
+          "amount": 0.08
+        }
+      ]
     },
     {
       "id": "avenger_righteous_fury",

@@ -674,6 +674,13 @@ public final class ClassSystemTests {
         helper.assertTrue(haste != null && haste.getDuration() == 100, "half as long: " + (haste == null ? "none" : haste.getDuration()));
         player.removeEffect(MobEffects.HASTE);
 
+        // Stored charges: an empower with charges 1 keeps at most one waiting.
+        var gadget = com.pipican.ability.action.EmpowerAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"multiplier\": 1.37, \"seconds\": 60, \"charges\": 1}")).getOrThrow();
+        gadget.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
+        gadget.run(new AbilityContext(player, Optional.empty(), player.position(), Optional.empty(), 0));
+        helper.assertTrue(com.pipican.ability.Empowers.count(player, 1.37, 0) == 1, "one gadget charge stored: " + com.pipican.ability.Empowers.count(player, 1.37, 0));
+        com.pipican.ability.Empowers.forget(player);
         helper.succeed();
     }
 

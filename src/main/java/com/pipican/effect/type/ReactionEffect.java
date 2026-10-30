@@ -97,7 +97,9 @@ public record ReactionEffect(Event event, double chance, int cooldownTicks, Opti
         /** {@code spell_ward} cancelled a harmful effect or magic attack aimed at you. */
         WARD("ward"),
         /** Your resource bar just became full. */
-        RESOURCE_FULL("resource_full");
+        RESOURCE_FULL("resource_full"),
+        /** Your quarry (marked target, prey...) is moving away from you (the victim is the quarry). */
+        QUARRY_FLEE("quarry_flee");
 
         public static final Codec<Event> CODEC = StringRepresentable.fromEnum(Event::values);
         private final String name;

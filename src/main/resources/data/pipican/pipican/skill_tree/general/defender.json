@@ -80,16 +80,7 @@
     {
       "id": "defender_taunt",
       "name": "Taunt",
-      "description": {
-        "text": "mobs within 6 blocks prefer to target you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "mobs within 6 blocks prefer to target you",
       "type": "notable",
       "x": 1344,
       "y": 355,
@@ -97,7 +88,14 @@
         "defender_plate"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "taunt_radius",
+          "amount": 6.0
+        }
+      ]
     },
     {
       "id": "defender_living_wall",

@@ -1233,6 +1233,48 @@ def world(low, ctx):
             if r.get('cooldown_ticks') and any(a.get('type') == 'pipican:summon' for a in r.get('actions', [])):
                 return [{'type': 'pipican:reaction_mod', 'name': r.get('name', name),
                          'cooldown': round(float(m.group(1)) * 20 / r['cooldown_ticks'] - 1, 6)}]
+    # Technomancer gadgets: stored next-hit charges from spending Voltage.
+    m = re.fullmatch(rf"each time you spend ([a-z ]+), you get a '?gadget'? charge - your next attack or check \(dodge, crit\) is improved \(\+{N}%\)", low)
+    if m and m.group(1) == rn:
+        r = {'type': 'pipican:on', 'event': 'spend', 'name': 'invention', 'actions': [{'type': 'pipican:empower', 'target': 'self',
+             'multiplier': round(1 + float(m.group(2)) / 100, 6), 'seconds': 600.0, 'charges': 1}]}
+        REACTIONS.setdefault(cid, {}).setdefault('invention', r)
+        return [r]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N} gadget charges? stored|\+{N} gadget charges? stored per {N} ([a-z]+)', low)
+    if m:
+        n, stat, k = (m.group(1), m.group(2), m.group(3)) if m.group(1) else (m.group(5), m.group(6), m.group(4))
+        if stat == sp:
+            return bonus_kind('empower_charges', 0.0, round(float(k) / float(n), 6))
+    m = re.fullmatch(rf'\+{N} gadget charges?', low)
+    if m:
+        return bonus_kind('empower_charges', float(m.group(1)))
+    m = re.fullmatch(rf'lightning arcs to {N} more mobs', low)
+    # (the on-hit lightning reactions are named "lightning")
+    if m:
+        return [{'type': 'pipican:reaction_mod', 'name': 'lightning', 'actions': [{'type': 'pipican:lightning', 'others': int(float(m.group(1)))}]}]
+    if re.fullmatch(r'burning mobs spread fire to adjacent mobs', low):
+        return bonus_kind('wildfire', 1.0)
+    m = re.fullmatch(rf'mobs within {N} blocks prefer to target you', low)
+    if m:
+        return bonus_kind('taunt_radius', float(m.group(1)))
+    # Quarries on the move: "When your marked target moves away, you get Speed II for 2s", "when prey flees, ..."
+    m = re.fullmatch(r'when (?:your marked target moves away|prey flees|your prey flees), you get (.+)', low)
+    if m and (out := combat.outcome('get ' + m.group(1), 'self')):
+        r = {'type': 'pipican:on', 'event': 'quarry_flee', 'name': 'pursuit', 'actions': out}
+        REACTIONS.setdefault(cid, {}).setdefault('pursuit', r)
+        return [r]
+    m = re.fullmatch(rf'speed boost lasts {N}s longer', low)
+    if m and 'pursuit' in REACTIONS.get(cid, {}):
+        return [{'type': 'pipican:reaction_mod', 'name': 'pursuit', 'seconds': float(m.group(1))}]
+    m = re.fullmatch(rf'\+{N}% movement speed toward (?:the marked target|your prey|your marked target)', low)
+    if m:
+        return bonus_kind('quarry_pursuit', pct(m.group(1)))
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N}% attack speed against the foe', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('quarry_attack_speed', 0.0, round(float(m.group(3)) / 100 / float(m.group(1)), 6))
+    m = re.fullmatch(rf'\+{N} blocks? reach against (?:the )?challenged foe', low)
+    if m:
+        return bonus_kind('quarry_reach', float(m.group(1)))
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)
@@ -1294,7 +1336,7 @@ def world(low, ctx):
     for name, r in REACTIONS.get(cid, {}).items():
         for alias in {name, name.split()[0], name.split()[-1]}:
             names.setdefault(alias, (r.get('name', name), r))
-    for label, rname in {('zealot', 'divine might'): 'zeal'}.items():
+    for label, rname in {('zealot', 'divine might'): 'zeal', ('technomancer', 'gadget'): 'invention'}.items():
         if label[0] == cid and rname in REACTIONS.get(cid, {}):
             names[label[1]] = (rname, REACTIONS[cid][rname])
     node = (ctx.get('node_name') or '').lower()

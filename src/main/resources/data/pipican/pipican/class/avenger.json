@@ -96,6 +96,24 @@
     },
     {
       "type": "pipican:on",
+      "event": "quarry_flee",
+      "name": "pursuit",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:speed",
+              "seconds": 2.0,
+              "amplifier": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
       "event": "hurt",
       "actions": [
         {
