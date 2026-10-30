@@ -40,7 +40,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==4,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==5,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -63,6 +63,9 @@ public final class BossTests {
         var eldaroth=BossDesigns.require("eldaroth_treant");
         helper.assertTrue(eldaroth.functional() && eldaroth.sigil().registered() && eldaroth.loot().trophyItem().equals("pipican:eldaroth_treant_trophy"),
             "Eldaroth implemented design is missing sigil/reward metadata");
+        var fallen=BossDesigns.require("fallen_king");
+        helper.assertTrue(fallen.functional() && fallen.sigil().registered() && fallen.loot().trophyItem().equals("pipican:fallen_king_trophy"),
+            "Fallen King implemented design is missing sigil/reward metadata");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -75,7 +78,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -83,6 +86,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("elderwood").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.OAK_SAPLING));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("heartlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.GOLDEN_APPLE));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -177,6 +183,18 @@ public final class BossTests {
             helper.assertTrue(treantDrops.stream().anyMatch(item->item.getItem().is(BossContent.ELDAROTH_TROPHY.get()))
                 && treantDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("mooncrystal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
                 "Eldaroth trophy or regional materials missing");
+            var heartlands=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("heartlands/farmland_plains")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),heartlands).left().isPresent(),"Fallen King biome fixture failed");
+            owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new net.minecraft.world.item.ItemStack(BossContent.FALLEN_KING_SIGIL.get()));
+            helper.assertTrue(state.useItemOn(owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND),level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS
+                && owner.getItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND).isEmpty(),"Fallen King altar summon failed or retained the sigil");
+            var fallen=level.getEntitiesOfClass(FallenKingEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow();
+            helper.assertTrue(BossEncounters.get(level).find(fallen.getUUID()).orElseThrow().type().equals("fallen_king"),"Fallen King encounter type was not reserved");
+            fallen.hurtServer(level,fallen.damageSources().genericKill(),10000);
+            var kingDrops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(kingDrops.stream().anyMatch(item->item.getItem().is(BossContent.FALLEN_KING_TROPHY.get()))
+                && kingDrops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("royal_silver").get())).mapToInt(item->item.getItem().getCount()).sum()==8,
+                "Fallen King trophy or regional materials missing");
             helper.succeed();
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
@@ -368,6 +386,26 @@ public final class BossTests {
         front.setHealth(20);front.invulnerableTime=0;double nextX=origin.getX()+Math.cos(0.43)*5.6,nextZ=origin.getZ()+Math.sin(0.43)*5.6;front.snapTo(nextX,origin.getY(),nextZ);
         for(int i=0;i<15;i++)doubleBloom.tick(level);helper.assertTrue(front.getHealth()==20,"Eldaroth second bloom fired before its warning interval");doubleBloom.tick(level);
         helper.assertTrue(front.getHealth()<20,"Eldaroth second phase-two bloom did not resolve after its second warning");
+
+        var king=BossRegistries.FALLEN_KING.get().create(level,EntitySpawnReason.COMMAND);king.snapTo(origin.getX(),origin.getY(),origin.getZ());
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+5,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;
+        var duel=new FallenKingCombat(king);helper.assertTrue(duel.begin(FallenKingCombat.DUEL,front),"Fallen King royal duel failed to start");front.snapTo(origin.getX()+10,origin.getY(),origin.getZ());
+        for(int i=0;i<39;i++)duel.tick(level);helper.assertTrue(front.getHealth()==20,"Fallen King thrust hit before its warning");duel.tick(level);
+        helper.assertTrue(front.getHealth()==20,"Fallen King thrust followed the player instead of the announced lane");
+        front.snapTo(origin.getX()+5,origin.getY(),origin.getZ());front.invulnerableTime=0;duel=new FallenKingCombat(king);duel.begin(FallenKingCombat.DUEL,front);
+        for(int i=0;i<40;i++)duel.tick(level);helper.assertTrue(front.getHealth()<20,"Fallen King announced thrust missed its marked lane");
+        front.setHealth(20);front.invulnerableTime=0;duel=new FallenKingCombat(king);helper.assertTrue(duel.updatePhase(350,700)&&duel.begin(FallenKingCombat.DUEL,front),"Fallen King phase-two feint failed to start");
+        for(int i=0;i<40;i++)duel.tick(level);helper.assertTrue(front.getHealth()==20,"Fallen King feint hit before its riposte");
+        for(int i=0;i<17;i++)duel.tick(level);helper.assertTrue(front.getHealth()==20,"Fallen King riposte ignored its second warning");duel.tick(level);
+        helper.assertTrue(front.getHealth()<20,"Fallen King phase-two riposte failed to hit after warning");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+7,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+7,origin.getY(),origin.getZ());
+        var cavalry=new FallenKingCombat(king);helper.assertTrue(cavalry.begin(FallenKingCombat.CAVALRY,front),"Fallen King cavalry failed to start");front.snapTo(origin.getX()+7,origin.getY(),origin.getZ()+6);
+        for(int i=0;i<49;i++)cavalry.tick(level);helper.assertTrue(dodge.getHealth()==20,"Fallen King cavalry struck before lane warning");cavalry.tick(level);
+        helper.assertTrue(dodge.getHealth()<20&&front.getHealth()==20,"Fallen King heralded cavalry lanes or missing-lane counterplay failed");
+        front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ()+6);
+        var regalia=new FallenKingCombat(king);helper.assertTrue(regalia.begin(FallenKingCombat.REGALIA,front),"Fallen King broken regalia failed to start");
+        for(int i=0;i<59;i++)regalia.tick(level);helper.assertTrue(dodge.getHealth()==20,"Fallen King regalia hit before crest warning");regalia.tick(level);
+        helper.assertTrue(dodge.getHealth()<20&&front.getHealth()==20,"Fallen King regalia safe exposed sector failed");
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){

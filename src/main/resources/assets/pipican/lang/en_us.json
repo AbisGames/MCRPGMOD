@@ -355,5 +355,8 @@
   "item.pipican.skollvar_winterfang_sigil": "Winterfang Sigil",
   "item.pipican.skollvar_winterfang_trophy": "Sköllvar Trophy",
   "item.pipican.eldaroth_treant_sigil": "Eldaroth Sigil",
-  "item.pipican.eldaroth_treant_trophy": "Ancient Treant Trophy"
+  "item.pipican.eldaroth_treant_trophy": "Ancient Treant Trophy",
+  "item.pipican.fallen_king_sigil": "Fallen King Sigil",
+  "item.pipican.fallen_king_trophy": "Fallen King Crown",
+  "entity.pipican.fallen_king": "Fallen King"
 }

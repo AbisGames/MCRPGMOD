@@ -683,7 +683,7 @@
   {
     "id": "fallen_king",
     "region": "heartlands",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 700,
     "damage": 13,
@@ -696,38 +696,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:golden_apple",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:fallen_king_sigil"
     },
     "abilities": [
       {
         "id": "royal_duel",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "The king announces a thrust, feint or guarded riposte with distinct stances.",
         "counterplay": "Sidestep the thrust; wait out the riposte stance before attacking.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:fallen_king/royal_duel"
+        "animation": "fallen_king/royal_duel"
       },
       {
         "id": "phantom_cavalry",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Spectral knights charge only along heralded lanes.",
         "counterplay": "Move into the missing rank or interrupt its standard bearer.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:fallen_king/phantom_cavalry"
+        "animation": "fallen_king/phantom_cavalry"
       },
       {
         "id": "broken_regalia",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Orbiting regalia shield marked directions while exposing another.",
         "counterplay": "Attack from the exposed direction or break a lit regalia piece.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:fallen_king/broken_regalia"
+        "animation": "fallen_king/broken_regalia"
       }
     ],
     "phase_two": {
@@ -738,7 +739,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:royal_silver",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:fallen_king_trophy",
       "planned_trophy_name": "Fallen King Trophy",
       "xp": 175
     },
@@ -746,16 +747,16 @@
       "geometry": "geometry.pipican.fallen_king",
       "file": "geo/bosses/fallen_king.geo.json",
       "animation_mapping": {
-        "idle": "planned:fallen_king/idle",
-        "walk": "planned:fallen_king/walk",
-        "basic_attack": "planned:fallen_king/basic_attack",
-        "hurt": "planned:fallen_king/hurt",
-        "phase_transition": "planned:fallen_king/phase_transition",
-        "summoning": "planned:fallen_king/summoning",
-        "death": "planned:fallen_king/death",
-        "royal_duel": "planned:fallen_king/royal_duel",
-        "phantom_cavalry": "planned:fallen_king/phantom_cavalry",
-        "broken_regalia": "planned:fallen_king/broken_regalia"
+        "idle": "fallen_king/idle",
+        "walk": "fallen_king/walk",
+        "basic_attack": "fallen_king/basic_attack",
+        "hurt": "fallen_king/hurt",
+        "phase_transition": "fallen_king/phase_transition",
+        "summoning": "fallen_king/summoning",
+        "death": "fallen_king/death",
+        "royal_duel": "fallen_king/royal_duel",
+        "phantom_cavalry": "fallen_king/phantom_cavalry",
+        "broken_regalia": "fallen_king/broken_regalia"
       }
     },
     "arena": {

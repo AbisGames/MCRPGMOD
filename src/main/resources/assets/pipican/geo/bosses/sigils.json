@@ -22,5 +22,11 @@
     "boss": "eldaroth_treant",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:fallen_king_sigil",
+    "boss": "fallen_king",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

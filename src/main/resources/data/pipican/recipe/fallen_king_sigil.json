@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "RRR",
+    "RDR",
+    "RGB"
+  ],
+  "key": {
+    "R": "pipican:royal_silver",
+    "D": "pipican:heartlands_boss_core",
+    "G": "pipican:ritual_core",
+    "B": "minecraft:golden_apple"
+  },
+  "result": {
+    "id": "pipican:fallen_king_sigil",
+    "count": 1
+  }
+}

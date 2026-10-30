@@ -29,6 +29,10 @@ public final class BossRegistries {
         "eldaroth_treant",()->EntityType.Builder.<EldarothEntity>of(EldarothEntity::new,MobCategory.MONSTER)
             .sized(2.7f,4.1f).clientTrackingRange(12).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("eldaroth_treant"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<FallenKingEntity>> FALLEN_KING=ENTITIES.register(
+        "fallen_king",()->EntityType.Builder.<FallenKingEntity>of(FallenKingEntity::new,MobCategory.MONSTER)
+            .sized(1.5f,3.4f).clientTrackingRange(12).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("fallen_king"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -36,5 +40,6 @@ public final class BossRegistries {
         event.put(FROSTBOUND.get(),FrostboundEntity.frostAttributes().build());
         event.put(SKOLLVAR.get(),SkollvarEntity.attributes().build());
         event.put(ELDAROTH.get(),EldarothEntity.attributes().build());
+        event.put(FALLEN_KING.get(),FallenKingEntity.attributes().build());
     }
 }
