@@ -20,7 +20,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class MovementEvents {
 
-    private static final List<Kind> CLIENT_KINDS = List.of(Kind.NO_COBWEB, Kind.NO_POWDER_SNOW, Kind.DOUBLE_JUMP, Kind.WALL_RUN, Kind.WALL_CLIMB, Kind.GLIDE, Kind.HIDE_NAMEPLATE);
+    private static final List<Kind> CLIENT_KINDS = List.of(Kind.NO_COBWEB, Kind.NO_POWDER_SNOW, Kind.DOUBLE_JUMP, Kind.WALL_RUN, Kind.WALL_CLIMB, Kind.GLIDE, Kind.HIDE_NAMEPLATE, Kind.SINK);
 
     private MovementEvents() {}
 

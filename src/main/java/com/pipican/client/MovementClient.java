@@ -40,6 +40,11 @@ final class MovementClient {
         if (player.getAbilities().flying || player.isPassenger() || player.isFallFlying()) {
             return;
         }
+        // Sinking: in water you can't rise, swimming up or not.
+        if (flags.has("sink") && player.isInWater()) {
+            Vec3 down = player.getDeltaMovement();
+            player.setDeltaMovement(down.x, Math.min(down.y, -0.06), down.z);
+        }
         // Cobwebs / powder snow: drop the slowdown they set this tick.
         BlockPos feet = player.blockPosition();
         var level = player.level();

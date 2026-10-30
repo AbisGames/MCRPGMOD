@@ -211,6 +211,10 @@ public final class ClassEvents {
             }
         }
         if (event.getSource().getEntity() instanceof ServerPlayer attacker) {
+            if (com.pipican.ability.Quarries.lockedOut(attacker, event.getEntity())) {
+                event.setCanceled(true);
+                return;
+            }
             ClassState state = ClassEffectApplier.state(attacker);
             amount *= (float) ClassState.multiplier(state.damageDealt(), event.getSource(), event.getEntity(), attacker);
             ItemStack weapon = event.getSource().getWeaponItem();

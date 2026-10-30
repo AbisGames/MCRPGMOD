@@ -20,15 +20,15 @@ import net.minecraft.world.effect.MobEffect;
  * {@code min_amplifier} + 1, and also brings the effects in {@code also} (effect -> amplifier) for as long.
  *
  * <pre>{@code { "type": "pipican:applied_effect", "effect": "minecraft:poison", "seconds": 1, "also": { "minecraft:slowness": 0 } } }</pre>
- * {@code scaling} applies to {@code seconds} and {@code duration}. Adds up over effects.
+ * {@code scaling} applies to whichever of {@code seconds} and {@code duration} the effect sets. Adds up over effects.
  */
-public record AppliedEffectEffect(Holder<MobEffect> effect, double seconds, double duration, int minAmplifier,
+public record AppliedEffectEffect(Holder<MobEffect> effect, java.util.Optional<Double> seconds, java.util.Optional<Double> duration, int minAmplifier,
                                   Map<Holder<MobEffect>, Integer> also, List<Scaling> scaling) implements ClassEffect {
 
     public static final MapCodec<AppliedEffectEffect> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             BuiltInRegistries.MOB_EFFECT.holderByNameCodec().fieldOf("effect").forGetter(AppliedEffectEffect::effect),
-            Codec.DOUBLE.optionalFieldOf("seconds", 0.0).forGetter(AppliedEffectEffect::seconds),
-            Codec.DOUBLE.optionalFieldOf("duration", 0.0).forGetter(AppliedEffectEffect::duration),
+            Codec.DOUBLE.optionalFieldOf("seconds").forGetter(AppliedEffectEffect::seconds),
+            Codec.DOUBLE.optionalFieldOf("duration").forGetter(AppliedEffectEffect::duration),
             Codec.intRange(0, 9).optionalFieldOf("min_amplifier", 0).forGetter(AppliedEffectEffect::minAmplifier),
             Codec.unboundedMap(BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), Codec.intRange(0, 9)).optionalFieldOf("also", Map.of())
                     .forGetter(AppliedEffectEffect::also),

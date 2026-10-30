@@ -2295,6 +2295,62 @@ def world(low, ctx):
     m = re.fullmatch(rf'armor ignore {N}%', low)
     if m and (ctx.get('node_name') or '').lower() == 'perfect shot' and float(m.group(1)) > 20:
         return bonus_kind('ranged_armor_pierce', pct(float(m.group(1)) - 20))
+    # --- Bulk 47
+    m = re.fullmatch(rf"sinks in water,? (?:and )?can'?t swim upward while wearing {N}\+ heavy pieces", low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:item_rule', 'rule': 'heavy_armor', 'min': int(float(m.group(1)))},
+                 'effects': bonus_kind('sink', 1.0)}]
+    if re.fullmatch(r'blocking also stops arrows from the sides', low):
+        return bonus_kind('side_block', 1.0)
+    m = re.fullmatch(rf'poison you apply also works on undead \(as wither instead\) and deals \+{N}% damage', low)
+    if m:
+        return bonus_kind('poison_undead', 1.0) + bonus_kind('poison_damage', pct(m.group(1)))
+    m = re.fullmatch(rf'\+{N}% poison damage and duration you apply', low)
+    if m and ctx.get('implicit_per_point'):
+        return bonus_kind('poison_damage', 0.0, pct(m.group(1))) + [
+            {'type': 'pipican:applied_effect', 'effect': 'minecraft:poison', 'duration': 0.0, 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}]
+    m = re.fullmatch(rf'copper golems near you move and work {N}% faster', low)
+    if m:
+        return bonus_kind('copper_heart', pct(m.group(1)))
+    m = re.fullmatch(rf"magic damage you deal ignores {N}% of the target'?s armou?r", low)
+    if m:
+        return bonus_kind('magic_armor_pierce', pct(m.group(1)))
+    if re.fullmatch(r'lethargy also stops jumping', low) and 'curse' in REACTION_NAMES.get(cid, set()):
+        # Lethargy is the curse that slows: the hobble only takes on a mob the curse just slowed.
+        return [{'type': 'pipican:reaction_mod', 'name': 'curse', 'actions': [{'type': 'pipican:hobble', 'seconds': 8.0, 'if_effect': 'minecraft:slowness'}]}]
+    m = re.fullmatch(rf'slowness becomes immobilise for {N}s', low)
+    if m and 'temple guardian' in REACTION_NAMES.get(cid, set()):
+        return [{'type': 'pipican:reaction_mod', 'name': 'temple guardian', 'actions': [{'type': 'pipican:hobble', 'seconds': float(m.group(1)), 'root': True}]}]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? ride the lightning works in clear weather at half strength', low)
+    if m and m.group(2) == sp:
+        wet = [{'type': 'pipican:state', 'state': 'raining'}, {'type': 'pipican:state', 'state': 'thundering'}]
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [
+                    {'type': 'pipican:not', 'condition': {'type': 'pipican:any_of', 'conditions': wet}},
+                    {'type': 'pipican:special_stat', 'min': float(m.group(1))}]},
+                 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:movement_speed', 'amount': 0.1, 'operation': 'add_multiplied_base'},
+                             {'type': 'pipican:damage_dealt', 'multiplier': 1.075}]}]
+    # Arch-Hexer / Grand Inquisitor: one curse / scrutinised mob at a time otherwise.
+    m = re.fullmatch(rf'you can curse {N} mobs at once(?:; (.+))?', low)
+    if m and 'curse' in REACTION_NAMES.get(cid, set()):
+        rest = _rest(m.group(2), ctx) if m.group(2) else []
+        if rest is not None:
+            return bonus_kind('mark_targets', float(m.group(1)) - 1) + rest
+    m = re.fullmatch(rf'scrutini[sz]e {N} mobs at once(?:; (.+))?', low)
+    if m and cid == 'inquisitor':
+        rest = _rest(m.group(2), ctx) if m.group(2) else []
+        if rest is not None:
+            return bonus_kind('scrutiny_targets', float(m.group(1)) - 1) + rest
+    # Lone Wolf (duelist): the challenge is the class's quarry.
+    if re.fullmatch(r'duel bonuses doubled', low) and cid == 'duelist':
+        return bonus_kind('quarry_double', 1.0)
+    m = re.fullmatch(rf"you can'?t damage non-challenged mobs for {N}s after challenging", low)
+    if m and cid == 'duelist':
+        return bonus_kind('quarry_lockout', float(m.group(1)))
+    m = re.fullmatch(r'while ([a-z ]+) is full, your bound weapon glows and lights the area around you', low)
+    if m and m.group(1) == rn:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:all_of', 'conditions': [
+                    {'type': 'pipican:resource', 'min': 0.999}, {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}]},
+                 'effects': bonus_kind('emit_light', 15.0)}]
     return None
 
 
@@ -2684,7 +2740,7 @@ def whole_line(text, ctx):
                 acts = [{'type': 'pipican:effect', 'target': 'victim', 'effects': entries}]
             choices.append(acts)
         return [{'type': 'pipican:on', 'event': 'hit', 'chance': round(float(m.group(1)) / 100, 6), 'name': 'curse', 'actions': [
-            {'type': 'pipican:mark', 'target': 'victim', 'seconds': secs, 'multiplier': 1.0, 'glow': False},
+            {'type': 'pipican:mark', 'target': 'victim', 'seconds': secs, 'multiplier': 1.0, 'glow': False, 'max': 1},
             {'type': 'pipican:random', 'choices': choices}]}]
     # Illusory Duplicates: "12% chance an attack against you hits a decoy instead; you blink 4 blocks away"
     m = re.fullmatch(rf'{N}% chance an attack against you hits a decoy instead(?:; you blink {N} blocks away)?', low)

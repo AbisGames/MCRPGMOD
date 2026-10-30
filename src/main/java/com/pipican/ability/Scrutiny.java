@@ -17,6 +17,8 @@ public final class Scrutiny {
     private record Look(UUID target, long since) {}
 
     private static final Map<UUID, Look> LOOKING = new ConcurrentHashMap<>();
+    /** Player -> the mobs they have scrutinised, oldest first. */
+    private static final Map<UUID, java.util.ArrayDeque<LivingEntity>> SCRUTINISED = new ConcurrentHashMap<>();
 
     private Scrutiny() {}
 
@@ -48,6 +50,16 @@ public final class Scrutiny {
         }
         if (now - look.since >= Math.max(0, s.lookSeconds()) * 20 && !Marks.isMarkedBy(target, player)) {
             long ticks = Math.round(s.seconds() * 20);
+            // One scrutinised mob at a time (more with scrutiny_targets): a new one replaces the oldest.
+            var mine = SCRUTINISED.computeIfAbsent(player.getUUID(), k -> new java.util.ArrayDeque<>());
+            mine.removeIf(e -> !e.isAlive() || !Marks.isMarkedBy(e, player));
+            int cap = 1 + (int) Math.floor(ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.SCRUTINY_TARGETS) + 1e-9);
+            while (mine.size() >= cap) {
+                LivingEntity old = mine.pollFirst();
+                Marks.remove(old, player);
+                old.removeEffect(MobEffects.GLOWING);
+            }
+            mine.addLast(target);
             Marks.add(target, player, ticks, 1.0, false, false, false);
             double expose = ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.SCRUTINY_EXPOSE);
             if (expose > 0) {
@@ -60,5 +72,6 @@ public final class Scrutiny {
 
     public static void forget(ServerPlayer player) {
         LOOKING.remove(player.getUUID());
+        SCRUTINISED.remove(player.getUUID());
     }
 }

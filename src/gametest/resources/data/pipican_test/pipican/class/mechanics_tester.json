@@ -354,6 +354,11 @@
       "type": "pipican:bonus",
       "kind": "focus_bonus",
       "amount": 0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "poison_undead",
+      "amount": 1
     }
   ]
 }

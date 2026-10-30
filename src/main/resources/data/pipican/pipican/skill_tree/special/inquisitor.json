@@ -90,16 +90,7 @@
     {
       "id": "grand_inquisitor",
       "name": "Grand Inquisitor",
-      "description": {
-        "text": "scrutinise 2 mobs at once; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "scrutinise 2 mobs at once; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -108,7 +99,20 @@
         "expose"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "scrutiny_targets",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

@@ -100,16 +100,7 @@
     {
       "id": "duelist_lone_wolf",
       "name": "Lone Wolf",
-      "description": {
-        "text": "Duel bonuses doubled, but you can't damage non-challenged mobs for 3s after challenging",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Duel bonuses doubled, but you can't damage non-challenged mobs for 3s after challenging",
       "type": "keystone",
       "x": -1410,
       "y": -378,
@@ -118,7 +109,19 @@
         "duelist_parry"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_double",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_lockout",
+          "amount": 3.0
+        }
+      ]
     }
   ]
 }

@@ -101,6 +101,7 @@ public final class Quarries {
         }
         long ticks = q.forever() ? Long.MAX_VALUE / 4 : Math.round(q.seconds() * 20);
         mine.put(name, new Active(target, now + ticks));
+        PICKED.put(player.getUUID(), now);
         Marks.add(target, player, ticks, 1.0, false, false, false);
         int duration = q.forever() || ticks > Integer.MAX_VALUE ? MobEffectInstance.INFINITE_DURATION : (int) ticks;
         if (q.glow()) {
@@ -125,6 +126,16 @@ public final class Quarries {
         return mine == null ? java.util.List.of() : mine.values().stream().filter(a -> live(a, now)).map(a -> a.target).toList();
     }
 
+    /** Player -> game time they last picked a quarry (for {@code quarry_lockout}). */
+    private static final Map<UUID, Long> PICKED = new ConcurrentHashMap<>();
+
+    /** {@code quarry_lockout}: right after picking a quarry, {@code player} can't damage mobs that aren't one. */
+    public static boolean lockedOut(ServerPlayer player, LivingEntity victim) {
+        double lock = ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_LOCKOUT);
+        Long at = PICKED.get(player.getUUID());
+        return lock > 0 && at != null && player.level().getGameTime() - at < lock * 20 && !(victim instanceof Player) && !isQuarryOf(victim, player);
+    }
+
     /** True if {@code entity} is one of {@code player}'s live quarries. */
     public static boolean isQuarryOf(LivingEntity entity, ServerPlayer player) {
         Map<String, Active> mine = ACTIVE.get(player.getUUID());
@@ -145,7 +156,8 @@ public final class Quarries {
             Active a = entry.getValue();
             ClassState.Quarry q = quarries.get(entry.getKey());
             if (q != null && a.target == victim && live(a, now)) {
-                mult *= q.multiplier() * (a.hitYou ? 1 : 1 + q.untouched());
+                double k = 1 + ClassEffectApplier.state(attacker).chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_DOUBLE);
+                mult *= (1 + (q.multiplier() - 1) * k) * (a.hitYou ? 1 : 1 + q.untouched() * k);
             }
         }
         return mult;
@@ -167,7 +179,7 @@ public final class Quarries {
             for (var a : entry.getValue().entrySet()) {
                 ClassState.Quarry q = quarries.get(a.getKey());
                 if (q != null && q.othersDamage() > 0 && a.getValue().target == attacker && live(a.getValue(), now)) {
-                    mult *= 1 - q.othersDamage();
+                    mult *= Math.max(0, 1 - q.othersDamage() * (1 + ClassEffectApplier.state(owner).chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_DOUBLE)));
                 }
             }
         }
@@ -210,6 +222,10 @@ public final class Quarries {
         double pursuit = state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_PURSUIT);
         double speed = state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_ATTACK_SPEED);
         double reach = state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_REACH);
+        double k = 1 + state.chance(com.pipican.effect.type.BonusEffect.Kind.QUARRY_DOUBLE);
+        pursuit *= k;
+        speed *= k;
+        reach *= k;
         Map<String, Active> mine = ACTIVE.get(player.getUUID());
         long now = player.level().getGameTime();
         var pos = player.position();

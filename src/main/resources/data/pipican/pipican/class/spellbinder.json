@@ -105,6 +105,29 @@
           "amount": 0.15
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:resource",
+            "min": 0.999
+          },
+          {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "emit_light",
+          "amount": 15.0
+        }
+      ]
     }
   ],
   "special_passives": [

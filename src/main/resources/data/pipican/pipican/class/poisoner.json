@@ -135,6 +135,16 @@
       ]
     },
     {
+      "type": "pipican:bonus",
+      "kind": "poison_undead",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "poison_damage",
+      "amount": 0.5
+    },
+    {
       "type": "pipican:immune",
       "effects": "minecraft:poison"
     },
@@ -145,6 +155,28 @@
     }
   ],
   "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "poison_damage",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:applied_effect",
+      "effect": "minecraft:poison",
+      "duration": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
     {
       "type": "pipican:applied_effect",
       "effect": "minecraft:poison",

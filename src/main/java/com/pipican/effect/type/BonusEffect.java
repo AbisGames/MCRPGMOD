@@ -179,6 +179,17 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code hide_nameplate}: any amount above 0 = other players don't see your name while you sneak or are invisible</li>
  *   <li>{@code icon_shield}: any amount above 0 = a shield with a banner pattern in the off-hand counts as your Icon of Faith</li>
  *   <li>{@code puppet}: any amount above 0 = the first mob you charm becomes your ally until you sleep (one at a time)</li>
+ *   <li>{@code poison_undead}: any amount above 0 = Poison you give an undead mob becomes Wither instead; {@code poison_damage}:
+ *       how much more damage Poison (and that Wither) you gave does</li>
+ *   <li>{@code side_block}: any amount above 0 = a raised shield also blocks projectiles from the sides (not from behind)</li>
+ *   <li>{@code sink}: any amount above 0 = you sink in water and can't swim upward</li>
+ *   <li>{@code copper_heart}: how much faster copper golems within 16 blocks move (0.25 = +25%)</li>
+ *   <li>{@code quarry_double}: quarry bonuses (damage to marked mobs, a quarry's own damage and others-damage cut, quarry pursuit /
+ *       attack speed / reach) are this much stronger (1 = doubled); {@code quarry_lockout}: for this many seconds after picking a
+ *       quarry, you can't damage other mobs</li>
+ *   <li>{@code mark_targets}: how many more mobs a capped mark ({@code max} on {@code pipican:mark}) may be on at once;
+ *       {@code scrutiny_targets}: how many more mobs can be scrutinised at once (one without it - a new one replaces the oldest)</li>
+ *   <li>{@code magic_armor_pierce}: the share of armor your magic damage ignores</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -218,7 +229,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         ACCURACY, SHOT_ALERT, QUICK_DRAW, CYLINDER, LAST_SHOT_CRIT, RICOCHET,
         THRESHOLD_DROP, TEMPLE_ALARM, STANCE_WALK, CHAOS_DOUBLE,
         NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE,
-        HIDE_NAMEPLATE, ICON_SHIELD, PUPPET;
+        HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
+        POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

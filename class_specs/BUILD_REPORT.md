@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2196**, partly working: **3**, not yet: **51**
+- Bonus phrases: **2250**. Fully working: **2209**, partly working: **2**, not yet: **39**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,15 +13,15 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 18 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 10 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 9 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 8 |
+| [Other mechanics](#other-mechanics) | 15 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 8 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 7 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 5 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
-| [Immunities](#immunities) | 5 |
-| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 3 |
-| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 2 |
+| [Immunities](#immunities) | 4 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
+| [Chance on hit / proc effects](#chance-on-hit-proc-effects) | 1 |
+| [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 1 |
 
 ## Skill trigger approximated
 
@@ -84,14 +84,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **destroyer**
   - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
-- **duelist**
-  - general tree: Lone Wolf: Duel bonuses doubled
 - **executioner**
   - special tree: Steady: exposure after charged hits lasts 1s
 - **explorer**
   - general tree: Cartographer: maps you make explore 25% faster
-- **hexer**
-  - special tree: Lethargy: Lethargy also stops jumping
 - **illusionist**
   - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
 - **inquisitor**
@@ -102,8 +98,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - weakness: each Stigmata or Worker of Miracles use lowers your max health by 2 until you sleep (stacks)
   - general tree: Saint Among Us: miracles cost half
   - general tree: Saint Among Us: max health penalty is 3 per use
-- **myrmidon**
-  - general tree: Turtle: blocking also stops arrows from the sides
 - **technomancer**
   - passive: Redstone you place powers 2 blocks farther
 - **templar**
@@ -123,16 +117,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Swift Song: Inspiring Song refreshes twice as fast
 - **diviner**
   - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
-- **dreadnaught**
-  - weakness: sinks in water, can't swim upward while wearing 3+ heavy pieces
 - **engineer**
   - special tree: Mecha: while in the cockpit, eidolon damage +25%
 - **runesmith**
   - general tree: Runelord: sigil bonuses doubled
 - **shapeshifter**
   - special passive: Form bonuses +1% per Mutability
-- **spellbinder**
-  - passive: Invest Power: while Eldritch Charge is full, your bound weapon glows and lights the area around you
 - **templar**
   - general tree: Fortress Temple: temple bonuses doubled
   - special tree: Living Temple: your temple follows you
@@ -144,10 +134,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
 - **diviner**
   - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
-- **hexer**
-  - special tree: Arch-Hexer: you can curse 3 mobs at once; Spite regen -25%
-- **inquisitor**
-  - special tree: Grand Inquisitor: scrutinise 2 mobs at once; -10% max health
 - **savant**
   - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
 - **scout**
@@ -165,16 +151,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: You can walk through other players and pass by mobs without being pushed
 - **aeromancer**
   - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **duelist**
-  - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
 - **engineer**
   - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
 - **hydromancer**
   - general tree: Riptide: tridents with Riptide work without rain while Current is above half
-- **stormbringer**
-  - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
-- **templar**
-  - special tree: Temple Guardian: Slowness becomes immobilise for 1s
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
@@ -198,26 +178,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Slippery: immune to being held (guardians' beam slow too)
 - **scout**
   - passive: Trackless: your footsteps never trigger sculk sensors, shriekers or tripwires
-- **sorcerer**
-  - passive: Sorcery: magic damage you deal ignores 20% of the target's armor
 - **thief**
   - passive: you never trigger tripwires or pressure plates
-
-## Bonus against a kind of mob / marked target
-
-- **artificer**
-  - special tree: Copper Heart: copper golems near you move and work 25% faster
-- **poisoner**
-  - passive: Poison you apply also works on undead (as Wither instead) and deals +50% damage
-- **runesmith**
-  - general tree: Runelord: unmarked gear is forbidden-tier
-
-## Chance on hit / proc effects
-
-- **mage_knight**
-  - special tree: Charged Blade: first escalating hit also knocks back
-- **poisoner**
-  - special stat per point: +1% poison damage and duration you apply
 
 ## Resource bar that fills from use (only the drain works)
 
@@ -225,6 +187,16 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - resource: Strain drains 0.2/s; filling it from fighting needs the active-skill system
 - **zealot**
   - resource: Madness drains 0.3/s; filling it from fighting needs the active-skill system
+
+## Chance on hit / proc effects
+
+- **mage_knight**
+  - special tree: Charged Blade: first escalating hit also knocks back
+
+## Bonus against a kind of mob / marked target
+
+- **runesmith**
+  - general tree: Runelord: unmarked gear is forbidden-tier
 
 ## Other notes per class
 

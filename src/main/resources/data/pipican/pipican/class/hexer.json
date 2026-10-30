@@ -80,7 +80,8 @@
           "target": "victim",
           "seconds": 8.0,
           "multiplier": 1.0,
-          "glow": false
+          "glow": false,
+          "max": 1
         },
         {
           "type": "pipican:random",

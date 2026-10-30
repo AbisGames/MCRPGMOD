@@ -55,16 +55,7 @@
     {
       "id": "myrmidon_turtle",
       "name": "Turtle",
-      "description": {
-        "text": "blocking also stops arrows from the sides",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "blocking also stops arrows from the sides",
       "type": "notable",
       "x": -1644,
       "y": -569,
@@ -72,7 +63,14 @@
         "myrmidon_brace"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "side_block",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "myrmidon_counterbash",

@@ -189,6 +189,46 @@
           "per": 0.002
         }
       ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:state",
+                  "state": "raining"
+                },
+                {
+                  "type": "pipican:state",
+                  "state": "thundering"
+                }
+              ]
+            }
+          },
+          {
+            "type": "pipican:special_stat",
+            "min": 10.0
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.075
+        }
+      ]
     }
   ],
   "weakness": {

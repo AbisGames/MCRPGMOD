@@ -170,17 +170,23 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Plate is heavy. Water is deep.",
-      "extra": [
-        {
-          "text": " (partly not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
+    "description": "Plate is heavy. Water is deep.",
     "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:item_rule",
+          "rule": "heavy_armor",
+          "min": 3
+        },
+        "effects": [
+          {
+            "type": "pipican:bonus",
+            "kind": "sink",
+            "amount": 1.0
+          }
+        ]
+      },
       {
         "type": "pipican:damage_taken",
         "damage_types": "#minecraft:is_drowning",

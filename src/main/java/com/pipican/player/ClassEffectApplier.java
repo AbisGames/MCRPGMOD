@@ -314,7 +314,11 @@ public final class ClassEffectApplier {
 
         List<ClassState.ConditionCheck> checks = new ArrayList<>();
         c.conditions.forEach((condition, result) -> checks.add(new ClassState.ConditionCheck(condition, result)));
-        return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
+        // quarry_double: damage bonuses against marked mobs grow.
+        double duel = c.bonuses.getOrDefault(BonusEffect.Kind.QUARRY_DOUBLE, 0.0);
+        List<ClassState.DamageRule> dealt = duel <= 0 ? c.dealt : c.dealt.stream().map(r -> r.victim().filter(v -> v.marked()).isEmpty() ? r
+                : new ClassState.DamageRule(r.types(), r.weapons(), r.against(), r.victim(), 1 + (r.multiplier() - 1) * (1 + duel), r.except())).toList();
+        return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(dealt),
                 Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
                 List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount,
                 List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses), Map.copyOf(c.mount),

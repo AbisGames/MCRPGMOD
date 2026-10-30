@@ -48,16 +48,7 @@
     {
       "id": "temple_guardian",
       "name": "Temple Guardian",
-      "description": {
-        "text": "Slowness becomes immobilise for 1s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Slowness becomes immobilise for 1s",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -65,7 +56,20 @@
         "consecrate"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "temple guardian",
+          "actions": [
+            {
+              "type": "pipican:hobble",
+              "seconds": 1.0,
+              "root": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "portable_shrine",

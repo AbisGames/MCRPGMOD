@@ -55,16 +55,7 @@
     {
       "id": "lethargy",
       "name": "Lethargy",
-      "description": {
-        "text": "Lethargy also stops jumping",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Lethargy also stops jumping",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -72,7 +63,20 @@
         "spiteful"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "curse",
+          "actions": [
+            {
+              "type": "pipican:hobble",
+              "seconds": 8.0,
+              "if_effect": "minecraft:slowness"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "pain",
@@ -97,16 +101,7 @@
     {
       "id": "arch_hexer",
       "name": "Arch-Hexer",
-      "description": {
-        "text": "you can curse 3 mobs at once; Spite regen -25%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can curse 3 mobs at once; Spite regen -25%",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -115,7 +110,20 @@
         "pain"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "mark_targets",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

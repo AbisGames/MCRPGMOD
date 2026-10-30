@@ -694,6 +694,31 @@ public final class ClassSystemTests {
         helper.assertTrue(!com.pipican.ability.Focus.choose(player, "water").success(), "only one slot");
         assertNear(helper, 1.5, com.pipican.ability.Focus.damage(player, level.damageSources().onFire(), spare), "fire focus");
         assertNear(helper, 1, com.pipican.ability.Focus.damage(player, level.damageSources().cactus(), spare), "no school");
+
+        // Hobbles: "if_effect" only takes on a mob with that effect; a root also stops jumping.
+        var lethargy = com.pipican.ability.action.HobbleAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"seconds\": 5, \"if_effect\": \"minecraft:slowness\"}")).getOrThrow();
+        spare.removeEffect(MobEffects.SLOWNESS);
+        lethargy.run(new AbilityContext(player, Optional.empty(), spare.position(), Optional.of(spare), 0));
+        helper.assertTrue(!com.pipican.ability.action.HobbleAction.noJump(spare), "not slowed: may still jump");
+        spare.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.SLOWNESS, 100, 1));
+        lethargy.run(new AbilityContext(player, Optional.empty(), spare.position(), Optional.of(spare), 0));
+        helper.assertTrue(com.pipican.ability.action.HobbleAction.noJump(spare) && !com.pipican.ability.action.HobbleAction.rooted(spare), "slowed: can't jump");
+        spare.removeEffect(MobEffects.SLOWNESS);
+
+        // Poison on undead becomes Wither.
+        spare.addEffect(new net.minecraft.world.effect.MobEffectInstance(MobEffects.POISON, 80, 0), player);
+        helper.assertTrue(!spare.hasEffect(MobEffects.POISON) && spare.hasEffect(MobEffects.WITHER), "zombie poison became wither");
+        spare.removeEffect(MobEffects.WITHER);
+
+        // A capped mark ("max": 1): a second mob can't be marked while the first one is.
+        var curse = com.pipican.ability.action.MarkAction.CODEC.codec().parse(com.mojang.serialization.JsonOps.INSTANCE,
+                com.google.gson.JsonParser.parseString("{\"target\": \"victim\", \"seconds\": 5, \"multiplier\": 1.0, \"glow\": false, \"max\": 1}")).getOrThrow();
+        var cursedOne = new AbilityContext(player, Optional.empty(), spare.position(), Optional.of(spare), 0);
+        curse.run(cursedOne);
+        var cursedTwo = new AbilityContext(player, Optional.empty(), prey.position(), Optional.of(prey), 0);
+        curse.run(cursedTwo);
+        helper.assertTrue(!cursedOne.fizzled() && cursedTwo.fizzled(), "one curse at a time");
         helper.succeed();
     }
 
