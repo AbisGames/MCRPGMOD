@@ -65,6 +65,7 @@ final class RegionalExpeditionTests {
                         var chunk=level.getChunk(pos.x(),pos.z(),ChunkStatus.STRUCTURE_STARTS);
                         if(chunk.getPersistedStatus().isOrAfter(ChunkStatus.FEATURES)
                                 ||chunk.getAllStarts().values().stream().anyMatch(StructureStart::isValid))continue;
+                        if(overlapsExistingStart(level,box))continue;
                         level.structureManager().setStartForStructure(SectionPos.bottomOf(chunk),selected.value(),candidate,chunk);
                         start=candidate;
                         break search;
@@ -159,6 +160,20 @@ final class RegionalExpeditionTests {
         }
         }
         helper.assertTrue(failures.isEmpty(),"seed="+seed+" expedition failures: "+failures);
+    }
+
+    /** A forced fixture must not overwrite a naturally selected neighboring start. */
+    private static boolean overlapsExistingStart(ServerLevel level,net.minecraft.world.level.levelgen.structure.BoundingBox candidate){
+        var protectedBox=candidate.inflatedBy(8);
+        // Native pools stay within 96 blocks of their start; scan beyond that
+        // radius so a root outside the candidate's own chunks is also found.
+        for(int x=Math.floorDiv(candidate.minX()-128,16);x<=Math.floorDiv(candidate.maxX()+128,16);x++)
+            for(int z=Math.floorDiv(candidate.minZ()-128,16);z<=Math.floorDiv(candidate.maxZ()+128,16);z++){
+                var chunk=level.getChunk(x,z,ChunkStatus.STRUCTURE_STARTS);
+                for(var other:chunk.getAllStarts().values())
+                    if(other.isValid()&&protectedBox.intersects(other.getBoundingBox()))return true;
+            }
+        return false;
     }
 
     private static String settlementId(String region){

@@ -294,3 +294,11 @@ ladder there when needed. The building NBT stays unchanged. Interior support
 and ore/reward checks use the actual template bounds; generation and collision
 reservations include the corridor. The pool codec is round-tripped and portal
 coverage checked in all four rotations. These new bounds affect new starts.
+
+The corridor run at `796208e` verified 52/54 expedition types. Natural cave
+vines and dripleaf now join the access-only vegetation classifier, retaining
+provenance and inventory rejection. The other failure was a forced fixture
+overlapping an already selected neighboring native structure. Fixture selection
+now checks neighboring STRUCTURE_STARTS before installing its artificial start;
+it does not whitelist or excavate the existing structure's prismarine bricks.
+This corrects controlled test placement, not natural structure frequency.

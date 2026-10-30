@@ -60,8 +60,8 @@ final class ExpeditionProcessorTests {
         var supportPos=naturalPos.below();
         var previousSupport=level.getBlockState(supportPos);
         try{
-            level.setBlock(supportPos,Blocks.STONE.defaultBlockState(),2);
-            for(var growth:List.of(Blocks.MOSS_BLOCK.defaultBlockState(),Blocks.MOSS_CARPET.defaultBlockState(),
+            level.setBlock(supportPos,Blocks.MOSS_BLOCK.defaultBlockState(),2);
+            for(var growth:List.of(Blocks.BIG_DRIPLEAF.defaultBlockState(),Blocks.MOSS_BLOCK.defaultBlockState(),Blocks.MOSS_CARPET.defaultBlockState(),
                     Blocks.SCULK.defaultBlockState(),Blocks.SCULK_VEIN.defaultBlockState()
                     .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOWN,true))){
                 var previous=level.getBlockState(naturalPos);
@@ -73,6 +73,16 @@ final class ExpeditionProcessorTests {
                 }finally{level.setBlock(naturalPos,previous,2);}
             }
         }finally{level.setBlock(supportPos,previousSupport,2);}
+        var vineCeiling=naturalPos.above();
+        var oldCeiling=level.getBlockState(vineCeiling);
+        var oldVine=level.getBlockState(naturalPos);
+        try{
+            level.setBlock(vineCeiling,Blocks.STONE.defaultBlockState(),2);
+            level.setBlock(naturalPos,Blocks.CAVE_VINES.defaultBlockState(),2);
+            helper.assertTrue(level.getBlockState(naturalPos).is(Blocks.CAVE_VINES),"cave-vine fixture did not survive placement");
+            helper.assertTrue(processor.finalizeProcessing(level,naturalOrigin,naturalOrigin,List.of(local),naturalInput,naturalClip).size()>naturalInput.size(),
+                "natural cave vines blocked access");
+        }finally{level.setBlock(naturalPos,oldVine,2);level.setBlock(vineCeiling,oldCeiling,2);}
         var canopyPos=origin.offset(64,10,0);
         level.getChunk(canopyPos.getX()>>4,canopyPos.getZ()>>4);
         double ground=ExpeditionAccessTests.exteriorSurface(level,canopyPos.getX(),canopyPos.getZ());

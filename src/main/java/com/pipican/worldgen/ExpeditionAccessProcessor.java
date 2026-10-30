@@ -116,7 +116,9 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         // Deep-dark terrain and its surface growth are natural, non-inventory blocks.
         // Player provenance and block entities are rejected before this classifier.
         return CapitalPlacementEvents.isNatural(state)||state.is(Blocks.SCULK)||state.is(Blocks.SCULK_VEIN)
-            ||state.is(Blocks.MOSS_BLOCK)||state.is(Blocks.MOSS_CARPET);
+            ||state.is(Blocks.MOSS_BLOCK)||state.is(Blocks.MOSS_CARPET)
+            ||state.is(Blocks.CAVE_VINES)||state.is(Blocks.CAVE_VINES_PLANT)
+            ||state.is(Blocks.BIG_DRIPLEAF)||state.is(Blocks.BIG_DRIPLEAF_STEM)||state.is(Blocks.SMALL_DRIPLEAF);
     }
     private static boolean foliage(BlockState state){
         if(state.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock
