@@ -246,3 +246,10 @@ The native fixture close trace identified a queued POI callback waiting on
 SectionStorage while draining server tasks. Test closure now always drains both
 chunk work and queued server callbacks to a short quiescent interval before
 closing a temporary world's storage. Save/reload assertions remain unchanged.
+
+The resumed focused test at `720ed84` verified the Umbral Chasm mine. Its
+dungeon rejected a naturally generated `sculk_vein` as artificial terrain.
+Access grading now recognizes non-inventory sculk terrain and sculk veins,
+while retaining the preceding player-provenance and block-entity checks.
+Safety fixtures run away from other GameTest boundary barriers and require
+an unobstructed baseline before inserting a chest or artificial block.

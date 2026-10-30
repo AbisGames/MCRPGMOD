@@ -18,7 +18,7 @@ final class ExpeditionProcessorTests {
         PlayerWorldgenProtection.get(level);
         var processor=StructureProcessorType.SINGLE_CODEC.parse(JsonOps.INSTANCE,
             JsonParser.parseString("{\"processor_type\":\"pipican:expedition_access\"}")).getOrThrow();
-        var origin=helper.absolutePos(new BlockPos(-40,25,0));
+        var origin=helper.absolutePos(new BlockPos(-1040,25,-1024));
         var ladder=origin.offset(40,1,0);
         var local=new StructureTemplate.StructureBlockInfo(new BlockPos(40,0,1),Blocks.STONE.defaultBlockState(),null);
         var placed=new StructureTemplate.StructureBlockInfo(origin.offset(40,0,1),Blocks.STONE.defaultBlockState(),null);
@@ -43,12 +43,27 @@ final class ExpeditionProcessorTests {
             var shiftedInput=List.of(new StructureTemplate.StructureBlockInfo(shifted.offset(40,0,1),Blocks.STONE.defaultBlockState(),null));
             var clip=new StructurePlaceSettings().setBoundingBox(new BoundingBox(blocked.getX()-1,level.getMinY(),blocked.getZ(),
                 blocked.getX(),level.getMaxY()-1,blocked.getZ()));
+            helper.assertTrue(processor.finalizeProcessing(level,shifted,shifted,List.of(local),shiftedInput,clip).size()>shiftedInput.size(),
+                "obstruction fixture was already blocked before inserting the tested block");
             try{
                 level.setBlock(blocked,obstruction,2);
                 helper.assertTrue(processor.finalizeProcessing(level,shifted,shifted,List.of(local),shiftedInput,clip).equals(shiftedInput),
                     "access processor replaced an inventory or artificial block: "+obstruction);
                 helper.assertTrue(level.getBlockState(blocked).equals(obstruction),"preflight mutated the world");
             }finally{level.setBlock(blocked,previous,2);}
+        }
+        var naturalOrigin=origin.offset(16,0,0);
+        var naturalPos=naturalOrigin.offset(40,1,0);
+        var naturalInput=List.of(new StructureTemplate.StructureBlockInfo(naturalOrigin.offset(40,0,1),Blocks.STONE.defaultBlockState(),null));
+        var naturalClip=new StructurePlaceSettings().setBoundingBox(new BoundingBox(naturalPos.getX()-1,level.getMinY(),naturalPos.getZ(),
+            naturalPos.getX(),level.getMaxY()-1,naturalPos.getZ()));
+        for(var growth:List.of(Blocks.SCULK.defaultBlockState(),Blocks.SCULK_VEIN.defaultBlockState())){
+            var previous=level.getBlockState(naturalPos);
+            try{
+                level.setBlock(naturalPos,growth,2);
+                helper.assertTrue(processor.finalizeProcessing(level,naturalOrigin,naturalOrigin,List.of(local),naturalInput,naturalClip).size()>naturalInput.size(),
+                    "natural deep-dark terrain blocked access: "+growth);
+            }finally{level.setBlock(naturalPos,previous,2);}
         }
         helper.succeed();
     }

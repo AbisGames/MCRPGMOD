@@ -72,7 +72,7 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
             var pos=entry.getKey();
             if(bounds!=null&&!bounds.isInside(pos))continue;
             var state=level.getBlockState(pos);
-            if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!CapitalPlacementEvents.isNatural(state))){
+            if(protection.contains(pos)||state.hasBlockEntity()||(!state.isAir()&&!naturalAccessState(state))){
                 if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))
                     Pipican.LOGGER.info("Expedition access deferred at {} by {} protected {}",pos,state,protection.contains(pos));
                 return processed;
@@ -85,6 +85,11 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
     }
     private static BlockPos world(BlockPos origin,StructurePlaceSettings settings,int x,int z){
         return StructureTemplate.transform(new BlockPos(x,0,z),settings.getMirror(),settings.getRotation(),settings.getRotationPivot()).offset(origin);
+    }
+    private static boolean naturalAccessState(BlockState state){
+        // Deep-dark terrain and its surface growth are natural, non-inventory blocks.
+        // Player provenance and block entities are rejected before this classifier.
+        return CapitalPlacementEvents.isNatural(state)||state.is(Blocks.SCULK)||state.is(Blocks.SCULK_VEIN);
     }
     private static boolean foliage(BlockState state){
         if(state.getBlock() instanceof net.minecraft.world.level.block.VegetationBlock
