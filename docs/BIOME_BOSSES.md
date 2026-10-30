@@ -1,6 +1,7 @@
 # Biome bosses and progression checkpoint
 
-Branch `biome-bosses`; current server-verified production checkpoint `ba49c6e`.
+Branch `biome-bosses`; current implementation checkpoint `8ff718e` plus the
+uncommitted design-loader validation change described below.
 Work is only in `48018390/MCRPGMOD-Development`. The old repository, `main` and
 `worldgen-and-ores` were not modified. Existing worldgen algorithms and all 27
 original geometry Git blobs are preserved. Rare deposits are independent additions.
@@ -36,7 +37,10 @@ rewrite is introduced. See [backend contract](BLACKSMITH_UPGRADES.md).
 
 All 27 bosses have distinct design metadata: stats, sigil, three mechanics/counterplay,
 phase behavior, rewards and model/animation mapping. The other 26 remain disabled
-plans; only Morvath has a functional entity/ability binding. See [design catalog](BOSS_DESIGNS.md).
+plans; only Morvath has a functional entity/ability binding. Runtime loading now rejects
+duplicate sigils, invalid ingredient totals/heights, fake implementation markers,
+incomplete/planned animations presented as live, and mismatched reward state. See
+[design catalog](BOSS_DESIGNS.md).
 
 ## Verification
 
@@ -47,22 +51,29 @@ plans; only Morvath has a functional entity/ability binding. See [design catalog
 - `27f951a`, run41068590614: 34/34 focused tests, then 35/35 with all eight native deposits
   and three blacksmith tests (forty upgrades and three evolutions, metadata preservation).
 - `ba49c6e`, run41089596445: 35/35 focused tests including the complete design catalog.
+- `8ff718e` plus current loader validation: local `build` and 36/36 required NeoForge
+  GameTests, including live patron, resource-generation, upgrade and design validation.
 
-The actual `ba49c6e` JAR passed the packaged-asset validator: original model hashes,
+The prior `ba49c6e` JAR passed the packaged-asset validator: original model hashes,
 required textures/models/classes/recipes/profile metadata, no GameTest code/data.
 Native-generation coverage is seed 0; it is not a statistical frequency or all-seed claim.
 Normal disk reload is tested; crash atomicity across separate save files is not guaranteed.
 
-## Client testing in progress
+## Client visual QA
 
 Local SDK preparation was repaired in a task-local tool copy by replacing the older
 bundled ECJ with the existing ECJ 3.44 compiler. No Windows security setting or release
 CI compiler was changed. Minecraft 26.1.2 / NeoForge 26.1.2.124 opened successfully on
 AMD OpenGL 3.3 in the isolated `run-client-boss` directory.
 
-An opt-in GameTest-source client QA scene prepares a guarded isolated test arena and
-visual-immunity player; it is excluded from distributed JARs. The scene is gated by
-`clientQa=true`, integrated-server detection and an explicit save-root boundary.
-New-world experimental-feature confirmation is currently awaiting the user's approval.
-No in-world Morvath screenshot, clipping/scale/animation/FPS or real multiplayer play
-session is claimed yet. Finish these checks and polish the art before declaring it final.
+An opt-in GameTest-source client QA scene prepared a guarded isolated test arena and
+visual-immunity player; it is excluded from distributed JARs. All ten native poses were
+inspected in the approved isolated test world, and sword grip, armor overlap, animation
+timing, phase transition and death-floor clearance were corrected. See
+[animation QA notes](MORVATH_ANIMATION_QA.md) and the final captures in
+`outputs/morvath-animation-qa/`. This is singleplayer visual QA, not final artwork or a
+claim of measured FPS, survival balance or real multiplayer validation.
+
+Latest local validation artifact: `build/libs/pipican-0.1.0.jar`. The older checkpoint
+artifact link/hash above must not be presented as containing the newest design-loader
+guard until the current artifact is copied and validated.

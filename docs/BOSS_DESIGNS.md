@@ -25,6 +25,11 @@ Morvath's registered health/base damage now read the shared design. Ability dama
 scales from the native attack-damage attribute; default values stay unchanged. The
 native clock/animation bindings remain authoritative and are checked against metadata.
 
-GameTest validates all 27 regions/models, three unique behavior descriptions and ten
-animation mappings each, real ingredient/reward identifiers, one functional binding and
-Morvath timing/default stats. Compilation passes; CI results follow execution.
+The runtime loader rejects malformed or misleading designs before exposing them: sigil
+IDs must be unique, Y ranges and all four ingredient counts valid (9 ingredients total),
+ability implementation markers must agree with whether the boss is playable, and the
+ten animation slots must be complete and may not claim planned assets are implemented.
+Reward counts/XP/chances and trophy registration must also match the functional state.
+GameTest validates all 27 regions/models, unique mechanics, real ingredient/reward IDs,
+one functional binding and Morvath timing/default stats. The tightened loader passed
+36/36 required server GameTests on 2026-10-30.
