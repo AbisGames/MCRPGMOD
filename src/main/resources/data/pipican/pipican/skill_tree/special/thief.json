@@ -11,16 +11,7 @@
     {
       "id": "escape_artist",
       "name": "Escape Artist",
-      "description": {
-        "text": "+2 Finesse; cobwebs don't slow you",
-        "extra": [
-          {
-            "text": " (partly not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+2 Finesse; cobwebs don't slow you",
       "type": "small",
       "x": 35,
       "y": 70,
@@ -32,6 +23,11 @@
           "type": "pipican:stat",
           "stat": "pipican:thief_finesse",
           "amount": 2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_cobweb",
+          "amount": 1.0
         }
       ]
     },

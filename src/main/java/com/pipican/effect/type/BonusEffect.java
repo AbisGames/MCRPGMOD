@@ -173,6 +173,9 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code temple_alarm}: any amount above 0 = Speed II for 2s when a hostile mob comes into your temple</li>
  *   <li>{@code stance_walk}: any amount above 0 = sneaking while walking still counts as standing still</li>
  *   <li>{@code chaos_double}: any amount above 0 = random outcomes on a mob also hit the nearest other mob within 4 blocks</li>
+ *   <li>Movement (any amount above 0): {@code no_cobweb} / {@code no_powder_snow} - they don't slow you; {@code double_jump} -
+ *       jump again in mid-air (once per 5s); {@code wall_run} - sprinting into a wall runs up it 2 blocks; {@code wall_climb} -
+ *       sneak and hold jump to climb walls; {@code glide} - hold jump while falling to glide</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -210,7 +213,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         AURA_BREAK_AT, CALM_ANIMALS, SHIELD_BREAK_TIME, SPLASH_POWER, EXTRA_BREW, SENSE_MAGIC, LOOT_SENSE, ORE_SENSE, STRUCTURE_SENSE, PREY_REVEAL,
         EMIT_LIGHT, STAFF_RETURN, BOOK_HOTBAR, PEARL_CARRY, MOUNT_RETURN, SWEEP_EXECUTE,
         ACCURACY, SHOT_ALERT, QUICK_DRAW, CYLINDER, LAST_SHOT_CRIT, RICOCHET,
-        THRESHOLD_DROP, TEMPLE_ALARM, STANCE_WALK, CHAOS_DOUBLE;
+        THRESHOLD_DROP, TEMPLE_ALARM, STANCE_WALK, CHAOS_DOUBLE,
+        NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -78,6 +78,35 @@
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:state",
+        "state": "wet"
+      },
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_cobweb",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_powder_snow",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
         "state": "in_water"
       },
       "effects": [

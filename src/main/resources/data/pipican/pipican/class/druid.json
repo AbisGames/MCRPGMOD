@@ -65,6 +65,21 @@
   },
   "passives": [
     {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_efficiency",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_cobweb",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_powder_snow",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#pipican:is_plant",
       "multiplier": 0.0

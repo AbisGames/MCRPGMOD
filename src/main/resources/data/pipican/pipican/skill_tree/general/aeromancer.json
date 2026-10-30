@@ -97,16 +97,7 @@
     {
       "id": "aeromancer_eye_of_the_storm",
       "name": "Eye of the Storm",
-      "description": {
-        "text": "you can glide like with an elytra without one, but -3 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can glide like with an elytra without one, but -3 armor",
       "type": "keystone",
       "x": -529,
       "y": -1361,
@@ -115,7 +106,19 @@
         "aeromancer_skyborn"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "glide",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": -3.0
+        }
+      ]
     }
   ]
 }

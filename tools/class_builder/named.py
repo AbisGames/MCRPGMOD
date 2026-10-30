@@ -1929,6 +1929,38 @@ def world(low, ctx):
         PATCHES.setdefault(cid, []).append(_gate_reaction(m.group(2), {'type': 'pipican:not', 'condition': heavy2}))
         return [{'type': 'pipican:conditional', 'when': heavy2, 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:movement_speed',
                  'amount': -pct(m.group(1)), 'operation': 'add_multiplied_base'}]}]
+    # --- Bulk 45: movement (the client moves the player; the server only sends which abilities it has)
+    eff_attr = lambda a: {'type': 'pipican:attribute', 'attribute': a, 'amount': 1.0}
+    m = re.fullmatch(r'no slowdown from ((?:powder snow|soul sand|cobwebs|honey|when swimming)(?:(?:, |,? or )(?:powder snow|soul sand|cobwebs|honey|when swimming))*)', low)
+    if m:
+        what = m.group(1)
+        out = []
+        if 'soul sand' in what or 'honey' in what:
+            out.append(eff_attr('minecraft:movement_efficiency'))
+        if 'swimming' in what:
+            out.append(eff_attr('minecraft:water_movement_efficiency'))
+        if 'cobwebs' in what:
+            out.append(bonus_kind('no_cobweb', 1.0)[0])
+        if 'powder snow' in what:
+            out.append(bonus_kind('no_powder_snow', 1.0)[0])
+        return out
+    if re.fullmatch(r"cobwebs don'?t slow you", low):
+        return bonus_kind('no_cobweb', 1.0)
+    m = re.fullmatch(rf"while wet(?: \(rain or water\))?, you can'?t be slowed or caught by cobwebs/powder snow and \+{N}% damage", low)
+    if m:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:state', 'state': 'wet'}, 'effects': [
+            {'type': 'pipican:immune', 'effects': ['minecraft:slowness']}, bonus_kind('no_cobweb', 1.0)[0], bonus_kind('no_powder_snow', 1.0)[0],
+            {'type': 'pipican:damage_dealt', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]}]
+    if re.fullmatch(r'sprinting into a wall lets you run up it for 2 blocks', low):
+        return bonus_kind('wall_run', 1.0)
+    m = re.fullmatch(rf'double-jump in mid-air once per 5s, but -{N} armou?r', low)
+    if m:
+        return [bonus_kind('double_jump', 1.0)[0], {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': -float(m.group(1))}]
+    m = re.fullmatch(rf'you can glide like with an elytra without one, but -{N} armou?r', low)
+    if m:
+        return [bonus_kind('glide', 1.0)[0], {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': -float(m.group(1))}]
+    if re.fullmatch(r'you can climb any wall like a ladder while sneaking and holding jump', low):
+        return bonus_kind('wall_climb', 1.0)
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

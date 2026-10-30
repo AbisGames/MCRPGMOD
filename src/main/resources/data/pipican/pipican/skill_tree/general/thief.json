@@ -56,16 +56,7 @@
     {
       "id": "thief_climber",
       "name": "Scale Walls",
-      "description": {
-        "text": "you can climb any wall like a ladder while sneaking and holding jump",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can climb any wall like a ladder while sneaking and holding jump",
       "type": "notable",
       "x": -127,
       "y": 881,
@@ -73,7 +64,14 @@
         "thief_quiet"
       ],
       "cost": 2,
-      "required_level": 10
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "wall_climb",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "thief_fence",

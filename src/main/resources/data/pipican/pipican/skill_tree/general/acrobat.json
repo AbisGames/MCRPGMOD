@@ -57,16 +57,7 @@
     {
       "id": "acrobat_wall_run",
       "name": "Wall Run",
-      "description": {
-        "text": "sprinting into a wall lets you run up it for 2 blocks",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "sprinting into a wall lets you run up it for 2 blocks",
       "type": "notable",
       "x": 444,
       "y": 1317,
@@ -74,7 +65,14 @@
         "acrobat_light_landing"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "wall_run",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "acrobat_untouchable",
@@ -98,16 +96,7 @@
     {
       "id": "acrobat_wind_dancer",
       "name": "Wind Dancer",
-      "description": {
-        "text": "double-jump in mid-air once per 5s, but -2 armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "double-jump in mid-air once per 5s, but -2 armor",
       "type": "keystone",
       "x": 439,
       "y": 1392,
@@ -116,7 +105,19 @@
         "acrobat_untouchable"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "double_jump",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": -2.0
+        }
+      ]
     }
   ]
 }

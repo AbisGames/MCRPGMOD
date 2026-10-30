@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2180**, partly working: **5**, not yet: **65**
+- Bonus phrases: **2250**. Fully working: **2188**, partly working: **3**, not yet: **59**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,10 +13,10 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 24 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 14 |
+| [Other mechanics](#other-mechanics) | 21 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 13 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 10 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 9 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
 | [Immunities](#immunities) | 5 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 3 |
@@ -84,16 +84,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 - **abjurer**
   - special tree: Ward Allies: Guarded Casting also gives +2 armor to players within 6 blocks
-- **acrobat**
-  - general tree: Wind Dancer: double-jump in mid-air once per 5s, but -2 armor
 - **cleric**
   - special tree: Blessed Symbol: Icon of Faith also accepts any shield with a banner pattern
 - **conqueror**
   - special stat per point: +0.5% damage for players near you
 - **destroyer**
   - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
-- **druid**
-  - passive: no slowdown from powder snow, soul sand, cobwebs or honey
 - **duelist**
   - general tree: Lone Wolf: Duel bonuses doubled
 - **executioner**
@@ -120,41 +116,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Fortress Temple: outside it you lose all class passives
 - **tenebrist**
   - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
-- **thief**
-  - special tree: Escape Artist: cobwebs don't slow you
 - **transmuter**
   - special stat per point: +0.2 to every stat per 10 points (rounded down)
 - **warlock**
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
 - **zealot**
   - special tree: Violent Madness: Violent Madness no longer targets players
-
-## Conditional bonus (while / when / where)
-
-- **acrobat**
-  - passive: You can walk through other players and pass by mobs without being pushed
-  - passive: No slowdown from soul sand, honey, cobwebs or when swimming
-  - general tree: Wall Run: sprinting into a wall lets you run up it for 2 blocks
-- **aeromancer**
-  - general tree: Eye of the Storm: you can glide like with an elytra without one, but -3 armor
-  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **duelist**
-  - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
-- **engineer**
-  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
-- **hydromancer**
-  - passive: Flow: while wet (rain or water), you can't be slowed or caught by cobwebs/powder snow and +10% damage
-  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
-- **infiltrator**
-  - passive: Your nameplate is hidden from other players while sneaking or invisible
-- **stormbringer**
-  - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
-- **templar**
-  - special tree: Temple Guardian: Slowness becomes immobilise for 1s
-- **thief**
-  - general tree: Scale Walls: you can climb any wall like a ladder while sneaking and holding jump
-- **zealot**
-  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
 ## Active abilities (named abilities, cooldowns, auras, summons)
 
@@ -204,6 +171,27 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
 - **templar**
   - general tree: Sacred Ground: players in your temple regenerate 20% faster
+
+## Conditional bonus (while / when / where)
+
+- **acrobat**
+  - passive: You can walk through other players and pass by mobs without being pushed
+- **aeromancer**
+  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
+- **duelist**
+  - general tree: Lone Wolf: you can't damage non-challenged mobs for 3s after challenging
+- **engineer**
+  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
+- **hydromancer**
+  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
+- **infiltrator**
+  - passive: Your nameplate is hidden from other players while sneaking or invisible
+- **stormbringer**
+  - special passive: Per 10 Tempest, Ride the Lightning works in clear weather at half strength
+- **templar**
+  - special tree: Temple Guardian: Slowness becomes immobilise for 1s
+- **zealot**
+  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
 ## Potions, XP, loot, trading, crafting, food
 

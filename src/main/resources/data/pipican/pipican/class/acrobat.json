@@ -75,6 +75,21 @@
       "type": "pipican:bonus",
       "kind": "fall_floor",
       "amount": 4.0
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_efficiency",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:water_movement_efficiency",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_cobweb",
+      "amount": 1.0
     }
   ],
   "special_passives": [

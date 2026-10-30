@@ -18,5 +18,23 @@ public final class PipicanAttachments {
                     .sync((holder, to) -> holder == to, PlayerClassData.STREAM_CODEC)
                     .build());
 
+    /** Movement abilities the client applies itself (double jump, glide...), from the class state. Not saved. */
+    public static final Supplier<AttachmentType<MoveFlags>> MOVE_FLAGS = REGISTER.register("move_flags", () ->
+            AttachmentType.builder(() -> MoveFlags.NONE)
+                    .sync((holder, to) -> holder == to, MoveFlags.STREAM_CODEC)
+                    .build());
+
+    /** The movement flags: names of {@code BonusEffect.Kind}s the client acts on. */
+    public record MoveFlags(java.util.List<String> flags) {
+        public static final MoveFlags NONE = new MoveFlags(java.util.List.of());
+        public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, MoveFlags> STREAM_CODEC =
+                net.minecraft.network.codec.ByteBufCodecs.STRING_UTF8.apply(net.minecraft.network.codec.ByteBufCodecs.list())
+                        .map(MoveFlags::new, MoveFlags::flags);
+
+        public boolean has(String flag) {
+            return flags.contains(flag);
+        }
+    }
+
     private PipicanAttachments() {}
 }
