@@ -146,17 +146,29 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Gadgets break in harsh environments.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Gadgets break in harsh environments.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "wet"
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "charges_fizzle_nether",
+        "amount": 1.0
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

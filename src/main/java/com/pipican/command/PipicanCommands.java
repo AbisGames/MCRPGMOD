@@ -172,6 +172,20 @@ public final class PipicanCommands {
                                 .executes(c -> report(c.getSource(), Optimize.choose(c.getSource().getPlayerOrException(),
                                         ResourceKeyArgument.getRegistryKey(c, "raise", PipicanRegistries.STAT, UNKNOWN_STAT),
                                         ResourceKeyArgument.getRegistryKey(c, "lower", PipicanRegistries.STAT, UNKNOWN_STAT)))))))
+                .then(Commands.literal("favored").executes(c -> {
+                    // Swift Change: once per day, the weapon in hand becomes the favored kind without sleeping.
+                    var p = c.getSource().getPlayerOrException();
+                    long day = p.level().getOverworldClockTime() / 24000;
+                    if (com.pipican.player.ClassEffectApplier.state(p).chance(com.pipican.effect.type.BonusEffect.Kind.SWAP_FAVORED) <= 0
+                            || p.getPersistentData().getLongOr("pipican_favored_swap", -1) == day) {
+                        c.getSource().sendFailure(Component.translatable("pipican.favored.no_swap"));
+                        return 0;
+                    }
+                    p.getPersistentData().putLong("pipican_favored_swap", day);
+                    com.pipican.ability.FavoredWeapon.choose(p);
+                    com.pipican.player.ClassService.changed(p);
+                    return 1;
+                }))
                 .then(Commands.literal("focus")
                         .executes(c -> {
                             var p = c.getSource().getPlayerOrException();

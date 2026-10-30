@@ -205,7 +205,6 @@
     "pipican:cloak": 1
   },
   "abilities": [
-    "pipican:cleric/turn_undead",
     "pipican:cleric/holy_strike"
   ]
 }

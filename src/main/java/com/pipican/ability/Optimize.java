@@ -56,7 +56,14 @@ public final class Optimize {
             return ClassService.Result.fail(Component.translatable("pipican.optimize.not_yours"));
         }
         if (data.extras().optimization.map(o -> !o.pending()).orElse(true)) {
-            return ClassService.Result.fail(Component.translatable("pipican.optimize.not_pending"));
+            // Rapid Shift: once per day, a new choice without sleeping.
+            long day = player.level().getOverworldClockTime() / 24000;
+            boolean again = data.extras().optimization.isPresent() && ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.REOPTIMIZE) > 0
+                    && player.getPersistentData().getLongOr("pipican_reoptimized", -1) != day;
+            if (!again) {
+                return ClassService.Result.fail(Component.translatable("pipican.optimize.not_pending"));
+            }
+            player.getPersistentData().putLong("pipican_reoptimized", day);
         }
         if (raise.equals(lower)) {
             return ClassService.Result.fail(Component.translatable("pipican.optimize.same"));

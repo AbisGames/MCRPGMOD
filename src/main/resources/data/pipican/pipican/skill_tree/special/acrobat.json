@@ -29,16 +29,7 @@
     {
       "id": "kip_up",
       "name": "Kip-up",
-      "description": {
-        "text": "no slowdown after being knocked back",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "no slowdown after being knocked back",
       "type": "small",
       "x": -35,
       "y": 70,
@@ -50,16 +41,7 @@
     {
       "id": "mobility",
       "name": "Mobility",
-      "description": {
-        "text": "your movement never triggers mob 'attack of opportunity' style knockback",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your movement never triggers mob 'attack of opportunity' style knockback",
       "type": "notable",
       "x": 35,
       "y": 140,

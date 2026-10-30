@@ -85,16 +85,7 @@
     {
       "id": "holy_radiance",
       "name": "Holy Radiance",
-      "description": {
-        "text": "unlocks Holy Radiance; -15% max Smite",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Holy Radiance; -15% max Smite",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -103,7 +94,18 @@
         "sense_evil"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:paladin/holy_radiance"
+      ]
     }
   ]
 }

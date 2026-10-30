@@ -138,16 +138,7 @@
     {
       "id": "stormbringer_storm_avatar",
       "name": "Storm Avatar",
-      "description": {
-        "text": "your lightning chance works in any rain, but you take 25% more fire damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your lightning chance works in any rain, but you take 25% more fire damage",
       "type": "keystone",
       "x": -158,
       "y": -1803,
@@ -156,7 +147,46 @@
         "stormbringer_eye_of_the_storm"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "raining"
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:state",
+                  "state": "thundering"
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "hit",
+              "chance": 0.05,
+              "name": "lightning",
+              "actions": [
+                {
+                  "type": "pipican:lightning"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 1.25
+        }
+      ]
     }
   ]
 }

@@ -29,17 +29,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+1 villager restock",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+1 villager restock",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_restock",
+          "amount": 0.5
+        }
+      ]
     },
     {
       "description": "-3% trade prices",

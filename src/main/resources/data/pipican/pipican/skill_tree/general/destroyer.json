@@ -86,16 +86,7 @@
     {
       "id": "destroyer_bigger_booms",
       "name": "Bigger Booms",
-      "description": {
-        "text": "your TNT has +25% radius",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your TNT has +25% radius",
       "type": "notable",
       "x": -424,
       "y": -1688,
@@ -103,7 +94,14 @@
         "destroyer_blast_shield"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "tnt_power",
+          "amount": 0.25
+        }
+      ]
     },
     {
       "id": "destroyer_annihilator",

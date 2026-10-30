@@ -98,6 +98,11 @@
       "type": "pipican:bonus",
       "kind": "fire_charge_damage",
       "amount": 0.5
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "fire_longer",
+      "amount": 0.5
     }
   ],
   "special_passives": [

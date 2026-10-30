@@ -53,6 +53,10 @@ public record EmpowerAction(Targets targets, double multiplier, double bonus, do
                 double mult = 1 + (multiplier - 1) * (1 + ctx.mod().strength());
                 double flat = bonus + bonusPerSpent * ctx.spent();
                 if (charges > 0 && p instanceof net.minecraft.server.level.ServerPlayer sp) {
+                    if (sp.level().dimension() == net.minecraft.world.level.Level.NETHER
+                            && com.pipican.player.ClassEffectApplier.state(sp).chance(com.pipican.effect.type.BonusEffect.Kind.CHARGES_FIZZLE_NETHER) > 0) {
+                        continue;
+                    }
                     int max = charges + (int) Math.floor(com.pipican.player.ClassEffectApplier.state(sp).chance(com.pipican.effect.type.BonusEffect.Kind.EMPOWER_CHARGES) + 1e-9);
                     if (Empowers.count(p, mult, flat) >= max) {
                         continue;

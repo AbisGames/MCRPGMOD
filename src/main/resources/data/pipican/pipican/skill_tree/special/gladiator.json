@@ -29,23 +29,41 @@
     {
       "id": "low_blow",
       "name": "Low Blow",
-      "description": {
-        "text": "Dirty Fighting can also apply Weakness",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Dirty Fighting can also apply Weakness",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "dirty fighting",
+          "actions": [
+            {
+              "type": "pipican:random",
+              "choices": [
+                [
+                  {
+                    "type": "pipican:effect",
+                    "target": "victim",
+                    "effects": [
+                      {
+                        "effect": "minecraft:weakness",
+                        "seconds": 2.0
+                      }
+                    ]
+                  }
+                ],
+                [],
+                []
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "win_at_any_cost",

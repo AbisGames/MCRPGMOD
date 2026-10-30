@@ -131,17 +131,23 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Illusions shatter on the truly perceptive.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Illusions shatter on the truly perceptive.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "decoy_proof",
+        "amount": 1.0
+      },
+      {
+        "type": "pipican:damage_taken",
+        "against": [
+          "minecraft:warden",
+          "minecraft:enderman",
+          "minecraft:wither"
+        ],
+        "multiplier": 1.15
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

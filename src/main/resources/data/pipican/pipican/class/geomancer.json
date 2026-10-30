@@ -74,6 +74,11 @@
       ]
     },
     {
+      "type": "pipican:bonus",
+      "kind": "fall_safe_ground",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:block_break_speed",
       "amount": 0.2,

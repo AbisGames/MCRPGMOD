@@ -80,6 +80,11 @@
       "name": "air walk"
     },
     {
+      "type": "pipican:bonus",
+      "kind": "wind_knockback",
+      "amount": 0.5
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:resource",
@@ -100,6 +105,17 @@
     }
   ],
   "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "wind_knockback",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
     {
       "type": "pipican:dodge",
       "chance": 0.0,

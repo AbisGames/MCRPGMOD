@@ -124,6 +124,17 @@
         }
       ],
       "armor": 0.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "pet_regen",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
     }
   ],
   "weakness": {

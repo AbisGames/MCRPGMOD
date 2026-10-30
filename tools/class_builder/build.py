@@ -177,7 +177,8 @@ def with_marker(text, unsupported, any_effects):
 # ------------------------------------------------------------------ abilities
 
 ABILITY_IN_NOTES = re.compile(r'\*\*([^*]+)\*\*\s*\(((?:[^()]|\([^)]*\))*)\)')
-UNLOCKS = re.compile(r'(?:^|[;,]\s*)unlocks (?:the )?([A-Z][\w\' -]+?) ability', re.I)
+# "unlocks Recall Weapon ability", "unlocks Holy Radiance; ...", "unlocks Turn Undead (undead flee for 5s)"
+UNLOCKS = re.compile(r'(?:^|[;,]\s*)unlocks (?:the )?(?!an? )([A-Z][\w\' -]+?)(?: ability)?(?:\s*\([^)]*\))?(?=\s*(?:[;,]|$))', re.I)
 
 
 def spec_abilities(c):

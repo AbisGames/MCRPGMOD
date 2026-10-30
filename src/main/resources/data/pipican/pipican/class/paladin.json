@@ -190,8 +190,5 @@
     "pipican:ring": 1,
     "pipican:cloak": 1,
     "pipican:shoulderpad": 1
-  },
-  "abilities": [
-    "pipican:paladin/holy_radiance"
-  ]
+  }
 }

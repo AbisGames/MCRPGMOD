@@ -162,5 +162,8 @@
   "pipican.focus.full": "Your focus schools are already chosen: %s",
   "pipican.focus.chosen": "Focus school chosen: %s (%s of %s)",
   "pipican.focus.list": "Focus schools: [%s] (%s slots). Schools: %s",
-  "pipican.focus.choose": "You have %s focus school(s) to choose: /pipican focus <school> (%s)"
+  "pipican.focus.choose": "You have %s focus school(s) to choose: /pipican focus <school> (%s)",
+  "pipican.saved_by": "%s saved you from death!",
+  "pipican.favored.swapped": "Favored weapon changed",
+  "pipican.favored.no_swap": "You can't change your favored weapon again today"
 }

@@ -124,6 +124,16 @@
           "per": 0.01
         }
       ]
+    },
+    {
+      "type": "pipican:summon_mod",
+      "extra": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
     }
   ],
   "weakness": {

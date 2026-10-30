@@ -85,16 +85,7 @@
     {
       "id": "stormlord",
       "name": "Stormlord",
-      "description": {
-        "text": "Powered by Storm lasts 3 minutes; you can't wear iron or netherite armor",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Powered by Storm lasts 3 minutes; you can't wear iron or netherite armor",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -103,7 +94,19 @@
         "call_the_storm"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "struck by lightning",
+          "seconds": 120.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_metal_armor",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

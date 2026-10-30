@@ -62,6 +62,16 @@
   },
   "passives": [
     {
+      "type": "pipican:bonus",
+      "kind": "trade_price",
+      "amount": -0.25
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "extra_restock",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:on",
       "event": "attacked_melee",
       "chance": 0.15,

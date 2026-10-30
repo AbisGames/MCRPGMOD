@@ -134,6 +134,21 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code chaos_luck}: a <i>chance</i> that a random outcome which hurts you is rolled again</li>
  *   <li>{@code trample}: <i>damage</i> your mount deals to small mobs it runs into (once a second each)</li>
  *   <li>{@code illager_detection}: how far illagers notice you (-0.3 = 30% closer)</li>
+ *   <li>{@code fall_floor}: <i>health</i> a fall can't take you below; {@code fall_safe_ground}: no fall damage landing on stone or dirt</li>
+ *   <li>{@code wind_knockback}: how far your wind charges throw others (0.5 = +50%)</li>
+ *   <li>{@code save_ally}: once per day, another player who dies within 16 blocks of you is saved at this much <i>health</i></li>
+ *   <li>{@code decoy_proof}: any amount above 0 = wardens, endermen and the Wither are never fooled by your decoys and dodges</li>
+ *   <li>{@code no_metal_armor}: any amount above 0 = iron and netherite armor is forbidden-tier for you</li>
+ *   <li>{@code always_dark}: any amount above 0 = you count as being in darkness for light-level conditions</li>
+ *   <li>{@code reoptimize} / {@code swap_favored}: once per day you may re-pick Optimization / your favored weapon without sleeping</li>
+ *   <li>{@code low_health_extra}: <i>health</i> added to the "below 2 hearts" line of low-health reactions</li>
+ *   <li>{@code tnt_power}: how much stronger TNT you light explodes (0.25 = +25%)</li>
+ *   <li>{@code charges_fizzle_nether}: any amount above 0 = stored empower charges aren't gained in the Nether</li>
+ *   <li>{@code poison_brew_speed}: how much faster brewing stands you opened brew spider-eye (poison) potions</li>
+ *   <li>{@code fire_longer}: how much longer fires you start on mobs burn (0.5 = +50%)</li>
+ *   <li>{@code marked_weakness}: per whole point, mobs you've marked within 4 blocks get Weakness (1 = I, 2 = II)</li>
+ *   <li>{@code extra_restock}: how much more often villagers you trade with restock (1 = twice as often)</li>
+ *   <li>{@code pet_regen}: <i>health</i> your tamed animals within 32 blocks regain every 5 seconds</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
  *       how much more damage (and Life healing) the picked / other schools give</li>
@@ -165,7 +180,9 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         FORGET_FASTER, FORGET_DELAY_MAX, FORGET_SOONER, FORGET_HIT_SNEAKING, FACELESS_RANGE, PET_SHARE_SIGHT, NO_HIDING,
         DANGER_SENSE, NEVER_UNAWARE,
         BOOKSHELF_BONUS, ENCHANT_LAPIS_KEEP, ENCHANT_LAPIS_TOP, BARE_HANDED, FOCUS_SLOTS, FOCUS_BONUS, NON_FOCUS_BONUS, BETTER_ROLL,
-        CHAOS_LUCK, TRAMPLE, ILLAGER_DETECTION;
+        CHAOS_LUCK, TRAMPLE, ILLAGER_DETECTION,
+        FALL_FLOOR, FALL_SAFE_GROUND, WIND_KNOCKBACK, SAVE_ALLY, DECOY_PROOF, NO_METAL_ARMOR, ALWAYS_DARK, REOPTIMIZE, SWAP_FAVORED,
+        LOW_HEALTH_EXTRA, TNT_POWER, CHARGES_FIZZLE_NETHER, POISON_BREW_SPEED, FIRE_LONGER, MARKED_WEAKNESS, EXTRA_RESTOCK, PET_REGEN;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

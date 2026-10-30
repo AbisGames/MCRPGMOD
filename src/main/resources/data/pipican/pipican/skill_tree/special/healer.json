@@ -86,16 +86,7 @@
     {
       "id": "resurrection",
       "name": "Resurrection",
-      "description": {
-        "text": "once per day, a player who dies near you is saved at 4 HP; -20% max Lifeblood",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "once per day, a player who dies near you is saved at 4 HP; -20% max Lifeblood",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -104,7 +95,20 @@
         "unassailable_vitality"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "save_ally",
+          "amount": 4.0
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

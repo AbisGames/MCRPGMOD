@@ -94,16 +94,7 @@
     {
       "id": "spell_thief_mastery",
       "name": "Spell Thief Mastery",
-      "description": {
-        "text": "Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -112,7 +103,27 @@
         "vanishing_escape"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.15,
+          "name": "steal spell",
+          "actions": [
+            {
+              "type": "pipican:steal_effects",
+              "target": "victim"
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

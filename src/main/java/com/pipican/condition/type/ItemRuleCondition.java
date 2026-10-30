@@ -20,7 +20,7 @@ import net.minecraft.util.StringRepresentable;
 public record ItemRuleCondition(Rule rule, int min) implements ClassCondition {
 
     public enum Rule implements StringRepresentable {
-        BOUND_WEAPON, SIGIL_WEAPON, SIGIL_ARMOR, HEAVY_ARMOR;
+        BOUND_WEAPON, SIGIL_WEAPON, SIGIL_ARMOR, HEAVY_ARMOR, POISON_OFFHAND;
 
         public static final Codec<Rule> CODEC = StringRepresentable.fromEnum(Rule::values);
 
@@ -47,6 +47,15 @@ public record ItemRuleCondition(Rule rule, int min) implements ClassCondition {
             case SIGIL_WEAPON -> SpecialItems.holdingSigil(player);
             case SIGIL_ARMOR -> SpecialItems.sigilArmor(player) >= min;
             case HEAVY_ARMOR -> SpecialItems.heavyArmor(player) >= min;
+            case POISON_OFFHAND -> {
+                var off = player.getOffhandItem();
+                var potion = off.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+                boolean[] poison = {false};
+                if (potion != null) {
+                    potion.forEachEffect(e -> poison[0] |= e.getEffect() == net.minecraft.world.effect.MobEffects.POISON, 1);
+                }
+                yield off.is(net.minecraft.world.item.Items.PUFFERFISH) || poison[0];
+            }
         };
     }
 }

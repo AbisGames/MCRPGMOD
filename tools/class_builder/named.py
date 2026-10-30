@@ -1058,9 +1058,11 @@ def triggers_more(t, ctx):
         eff = _rest(m.group(1), ctx)
         entries = _effects_list(f'{m.group(2)} for {m.group(3)}s')
         if eff and entries:
-            return [{'type': 'pipican:on', 'event': 'lightning', 'cooldown_ticks': 40, 'actions': [
+            r = {'type': 'pipican:on', 'event': 'lightning', 'name': 'struck by lightning', 'cooldown_ticks': 40, 'actions': [
                 {'type': 'pipican:resource', 'percent': 1.0}, {'type': 'pipican:boost', 'seconds': float(m.group(3)), 'effects': eff},
-                {'type': 'pipican:effect', 'effects': entries}]}]
+                {'type': 'pipican:effect', 'effects': entries}]}
+            REACTIONS.setdefault(ctx.get('class_id'), {}).setdefault('struck by lightning', r)
+            return [r]
     m = re.fullmatch(rf'a lightning strike drains all {r}', t) if r else None
     if m:
         return [{'type': 'pipican:on', 'event': 'lightning', 'cooldown_ticks': 40, 'actions': [{'type': 'pipican:resource', 'percent': -1.0}]}]
@@ -1646,6 +1648,110 @@ def world(low, ctx):
     m = re.fullmatch(rf'illagers are {N}% slower to notice you', low)
     if m:
         return bonus_kind('illager_detection', -pct(m.group(1)))
+    # --- Bulk 39
+    m = re.fullmatch(r'immune to knockback while ([a-z ]+) is above half', low)
+    if m and m.group(1) == rn:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:resource', 'min': 0.5},
+                 'effects': [{'type': 'pipican:attribute', 'attribute': 'minecraft:knockback_resistance', 'amount': 1.0}]}]
+    m = re.fullmatch(rf"landing from any fall can'?t break your legs below {N} hearts", low)
+    if m:
+        return bonus_kind('fall_floor', float(m.group(1)) * 2)
+    if re.fullmatch(r"no slowdown after being knocked back|your movement never triggers mob 'attack of opportunity' style knockback", low):
+        return []  # neither slowdown nor attacks of opportunity exist in the game
+    m = re.fullmatch(rf"\+{N}% wind charge knockback(?: and they don'?t hurt you)?", low)
+    if m and not ctx.get('implicit_per_point'):
+        return bonus_kind('wind_knockback', pct(m.group(1)))  # your own wind charges never hurt you
+    m = re.fullmatch(rf'\+{N}% movement speed and \+{N}% wind charge knockback', low)
+    if m and ctx.get('implicit_per_point'):
+        return [{'type': 'pipican:attribute', 'attribute': 'minecraft:movement_speed', 'amount': 0.0, 'operation': 'add_multiplied_base',
+                 'scaling': [{'source': 'special_stat', 'per': pct(m.group(1))}]}, bonus_kind('wind_knockback', 0.0, pct(m.group(2)))[0]]
+    m = re.fullmatch(r'(?:unlocks insight: )?after you dodge, your next hit is a guaranteed crit|a successful parry makes your next hit a crit', low)
+    if m:
+        # A crit is +50%, like vanilla's.
+        return [{'type': 'pipican:on', 'event': 'dodge', 'actions': [{'type': 'pipican:empower', 'target': 'self', 'multiplier': 1.5, 'hits': 1, 'seconds': 10.0}]}]
+    if re.fullmatch(r'no fall damage when landing on stone or dirt', low):
+        return bonus_kind('fall_safe_ground', 1.0)
+    if re.fullmatch(r'dirty fighting can also apply weakness', low):
+        return [{'type': 'pipican:reaction_mod', 'name': 'dirty fighting', 'actions': [{'type': 'pipican:random', 'choices': [
+            [{'type': 'pipican:effect', 'target': 'victim', 'effects': [{'effect': 'minecraft:weakness', 'seconds': 2.0}]}], [], []]}]}]
+    m = re.fullmatch(rf'once per day, a player who dies near you is saved at {N} hp', low)
+    if m:
+        return bonus_kind('save_ally', float(m.group(1)))
+    m = re.fullmatch(rf"after a decoy, you'?re invisible for {N}s", low)
+    if m:
+        return [{'type': 'pipican:reaction_mod', 'name': 'decoy', 'actions': [{'type': 'pipican:effect', 'target': 'self',
+                 'effects': [{'effect': 'minecraft:invisibility', 'seconds': float(m.group(1))}]}]}]
+    m = re.fullmatch(rf'decoys never fool wardens, endermen or the wither, and you take {N}% more damage from them', low)
+    if m:
+        return [bonus_kind('decoy_proof', 1.0)[0], {'type': 'pipican:damage_taken', 'against': ['minecraft:warden', 'minecraft:enderman', 'minecraft:wither'],
+                'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
+    m = re.fullmatch(rf'per {N} ([a-z ]+?),? \+{N} escalating hits?', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:reaction_mod', 'name': 'escalating violence', 'hits': 0.0,
+                 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / float(m.group(1)), 6)}]}]
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N}% bound weapon critical damage', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:item_rule', 'rule': 'bound_weapon'}, 'effects': [
+            {'type': 'pipican:critical', 'damage': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / 100 / float(m.group(1)), 6)}]}]}]
+    m = re.fullmatch(rf'your lightning chance works in any rain, but you take {N}% more fire damage', low)
+    if m and cid == 'stormbringer':
+        rain = {'type': 'pipican:all_of', 'conditions': [{'type': 'pipican:state', 'state': 'raining'},
+                                                         {'type': 'pipican:not', 'condition': {'type': 'pipican:state', 'state': 'thundering'}}]}
+        return [{'type': 'pipican:conditional', 'when': rain, 'effects': [{'type': 'pipican:on', 'event': 'hit', 'chance': 0.05, 'name': 'lightning',
+                 'actions': [{'type': 'pipican:lightning'}]}]},
+                {'type': 'pipican:damage_taken', 'damage_types': '#minecraft:is_fire', 'multiplier': round(1 + float(m.group(1)) / 100, 6)}]
+    m = re.fullmatch(rf"powered by storm lasts {N} minutes; you can'?t wear iron or netherite armou?r", low)
+    if m and 'struck by lightning' in REACTIONS.get(cid, {}):
+        base = next((a['seconds'] for a in REACTIONS[cid]['struck by lightning']['actions'] if a.get('type') == 'pipican:boost'), 60.0)
+        return [{'type': 'pipican:reaction_mod', 'name': 'struck by lightning', 'seconds': float(m.group(1)) * 60 - base}, bonus_kind('no_metal_armor', 1.0)[0]]
+    m = re.fullmatch(rf'you count as being in darkness at all times - (?:mobs detect you {N}% later|-{N}% detection range)', low)
+    if m:
+        return [bonus_kind('always_dark', 1.0)[0], bonus_kind('detection_range', -pct(m.group(1) or m.group(2)))[0]]
+    if re.fullmatch(r'you can re-optimize once per day without sleeping', low):
+        return bonus_kind('reoptimize', 1.0)
+    if re.fullmatch(r'you can change favou?red weapon once per day without sleeping', low):
+        return bonus_kind('swap_favored', 1.0)
+    m = re.fullmatch(rf'steal spell also steals beneficial effects from mobs you hit \(witches!\), but -{N}% max health', low)
+    if m and (hp := _rest(f'-{m.group(1)}% max health', ctx)):
+        return [{'type': 'pipican:on', 'event': 'hit', 'chance': 0.15, 'name': 'steal spell', 'actions': [{'type': 'pipican:steal_effects', 'target': 'victim'}]}] + hp
+    m = re.fullmatch(rf'zeal triggers at {N} hearts; ([a-z ]+) fills twice as fast', low)
+    if m and m.group(2) == rn and float(m.group(1)) >= 2:
+        return [bonus_kind('low_health_extra', (float(m.group(1)) - 2) * 2)[0], bonus_kind('resource_gain', 1.0)[0]]
+    m = re.fullmatch(rf'your tnt has \+{N}% radius', low)
+    if m:
+        return bonus_kind('tnt_power', pct(m.group(1)))
+    m = re.fullmatch(r'([a-z ]+) regen stops while wet and gadgets fizzle in the nether', low)
+    if m and m.group(1) == rn and (wet := _rest(f'no {ctx.get("resource_name")} regen while wet', ctx)):
+        return wet + [bonus_kind('charges_fizzle_nether', 1.0)[0]]
+    m = re.fullmatch(rf'your melee hits and arrows apply poison i for {N}s \(poison ii if you hold a pufferfish or poison potion in the off-hand\)', low)
+    if m:
+        off = {'type': 'pipican:item_rule', 'rule': 'poison_offhand'}
+        hit = lambda amp: {'type': 'pipican:on', 'event': 'hit', 'name': 'poison mastery', 'actions': [{'type': 'pipican:effect', 'target': 'victim',
+                           'effects': [dict({'effect': 'minecraft:poison', 'seconds': float(m.group(1))}, **({'amplifier': amp} if amp else {}))]}]}
+        return [{'type': 'pipican:conditional', 'when': {'type': 'pipican:not', 'condition': off}, 'effects': [hit(0)]},
+                {'type': 'pipican:conditional', 'when': off, 'effects': [hit(1)]}]
+    m = re.fullmatch(rf'brewing poison potions is {N}% faster', low)
+    if m:
+        return bonus_kind('poison_brew_speed', pct(m.group(1)))
+    m = re.fullmatch(rf'fire you start burns {N}% longer', low)
+    if m:
+        return bonus_kind('fire_longer', pct(m.group(1)))
+    m = re.fullmatch(rf'per {N} ([a-z]+),? marked targets within 4 blocks get weakness i', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('marked_weakness', 0.0, round(1 / float(m.group(1)), 6))
+    m = re.fullmatch(rf'villager trades cost {N}% less and villagers restock twice as often for you', low)
+    if m:
+        return [bonus_kind('trade_price', -pct(m.group(1)))[0], bonus_kind('extra_restock', 1.0)[0]]
+    m = re.fullmatch(rf'\+{N} villager restocks?', low)
+    if m:
+        # Villagers restock about twice a day: one more is +50%.
+        return bonus_kind('extra_restock', round(float(m.group(1)) / 2, 6))
+    m = re.fullmatch(rf'\+{N} tamed-animal regen per {N} ([a-z ]+)', low)
+    if m and m.group(3) == sp:
+        return bonus_kind('pet_regen', 0.0, round(float(m.group(1)) / float(m.group(2)), 6))
+    m = re.fullmatch(rf'per {N} ([a-z]+),? \+{N} minions? at a time', low)
+    if m and m.group(2) == sp:
+        return [{'type': 'pipican:summon_mod', 'extra': 0.0, 'scaling': [{'source': 'special_stat', 'per': round(float(m.group(3)) / float(m.group(1)), 6)}]}]
     if re.fullmatch(r"when you'?d die, you keep fighting for 5s at 1 hp, then die; once per day", low):
         return bonus_kind('glorious_death', 1.0)
     m = re.fullmatch(r'every (\d+)(?:st|nd|rd|th) ability is free', low)

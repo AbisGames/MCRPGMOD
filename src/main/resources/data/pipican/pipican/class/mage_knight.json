@@ -122,6 +122,17 @@
           "per": 0.025
         }
       ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "escalating violence",
+      "hits": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

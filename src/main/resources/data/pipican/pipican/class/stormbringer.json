@@ -68,6 +68,7 @@
     {
       "type": "pipican:on",
       "event": "lightning",
+      "name": "struck by lightning",
       "cooldown_ticks": 40,
       "actions": [
         {
@@ -180,7 +181,7 @@
     },
     {
       "type": "pipican:reaction_chance",
-      "name": "lightning",
+      "name": "struck by lightning",
       "amount": 0.0,
       "scaling": [
         {

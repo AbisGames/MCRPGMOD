@@ -79,8 +79,69 @@
   },
   "passives": [
     {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:not",
+        "condition": {
+          "type": "pipican:item_rule",
+          "rule": "poison_offhand"
+        }
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "name": "poison mastery",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:poison",
+                  "seconds": 4.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "poison_offhand"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "name": "poison mastery",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:poison",
+                  "seconds": 4.0,
+                  "amplifier": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "pipican:immune",
       "effects": "minecraft:poison"
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "poison_brew_speed",
+      "amount": 0.5
     }
   ],
   "special_passives": [

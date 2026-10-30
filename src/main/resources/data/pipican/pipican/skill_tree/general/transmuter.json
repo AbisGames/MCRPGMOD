@@ -109,16 +109,7 @@
     {
       "id": "transmuter_rapid_shift",
       "name": "Rapid Shift",
-      "description": {
-        "text": "you can re-Optimize once per day without sleeping",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can re-Optimize once per day without sleeping",
       "type": "notable",
       "x": 691,
       "y": -1597,
@@ -126,7 +117,14 @@
         "transmuter_stable_form"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reoptimize",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "transmuter_perfected",

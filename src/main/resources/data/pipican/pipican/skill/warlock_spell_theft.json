@@ -3,7 +3,8 @@
   "description": "Trained by stealing effects with Steal Spell.",
   "icon": "minecraft:ominous_bottle",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:reaction",
+    "name": "steal spell"
   },
   "thresholds": [
     50,

@@ -22,6 +22,11 @@ public record LightCondition(Bounds bounds) implements ClassCondition {
 
     @Override
     public boolean test(ServerPlayer player) {
+        // Cloak of Shadows: "you count as being in darkness" for darkness checks (a max with no min).
+        if (bounds.max().isPresent() && bounds.min().isEmpty()
+                && com.pipican.player.ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.ALWAYS_DARK) > 0) {
+            return true;
+        }
         return bounds.test(player.level().getMaxLocalRawBrightness(player.blockPosition()));
     }
 }

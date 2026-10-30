@@ -175,7 +175,10 @@ public final class ClassEvents {
         if (event.getEntity() instanceof ServerPlayer victim) {
             ClassState state = ClassEffectApplier.state(victim);
             // Decoys and premonitions: "an attack against you hits a decoy instead".
-            if (source != null && (Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED)
+            boolean fooled = !(state.chance(com.pipican.effect.type.BonusEffect.Kind.DECOY_PROOF) > 0 && source != null
+                    && (source.getType() == net.minecraft.world.entity.EntityType.WARDEN || source.getType() == net.minecraft.world.entity.EntityType.ENDERMAN
+                        || source.getType() == net.minecraft.world.entity.EntityType.WITHER));
+            if (fooled && source != null && (Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED)
                     || event.getSource().getDirectEntity() == source
                     && Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.ATTACKED_MELEE))) {
                 victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
@@ -189,6 +192,7 @@ public final class ClassEvents {
                 if (chance > 0 && victim.getRandom().nextDouble() < chance) {
                     victim.sendOverlayMessage(Component.translatable("pipican.dodged"));
                     MasteryEvents.did(victim, SkillAction.Did.Kind.DODGE);
+                    Reactions.fire(victim, source, ItemStack.EMPTY, ReactionEffect.Event.DODGE);
                     if (com.pipican.ability.Quarries.isQuarryOf(source, victim)) {
                         Reactions.fire(victim, source, ItemStack.EMPTY, ReactionEffect.Event.QUARRY_MISS);
                     }
@@ -198,7 +202,8 @@ public final class ClassEvents {
             }
             amount *= (float) ClassState.multiplier(state.damageTaken(), event.getSource(), source, victim);
             // Zeal: "when a hit would bring you below 2 hearts".
-            if (amount > 0 && victim.getHealth() - amount < 4 && victim.getHealth() > 0
+            double lowLine = 4 + state.chance(com.pipican.effect.type.BonusEffect.Kind.LOW_HEALTH_EXTRA);
+            if (amount > 0 && victim.getHealth() - amount < lowLine && victim.getHealth() > 0
                     && Reactions.fire(victim, source, event.getSource().getWeaponItem(), ReactionEffect.Event.LOW_HEALTH)) {
                 victim.sendOverlayMessage(Component.translatable("pipican.shrugged"));
                 event.setCanceled(true);

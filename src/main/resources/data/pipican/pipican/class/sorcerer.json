@@ -195,8 +195,5 @@
   "trinket_slots": {
     "pipican:amulet": 2,
     "pipican:ring": 2
-  },
-  "abilities": [
-    "pipican:sorcerer/sorcerous_blast"
-  ]
+  }
 }

@@ -159,6 +159,17 @@
           "per": 0.005
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "marked_weakness",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

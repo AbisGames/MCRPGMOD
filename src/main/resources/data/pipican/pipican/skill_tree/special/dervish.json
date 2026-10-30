@@ -29,23 +29,29 @@
     {
       "id": "counter",
       "name": "Counter",
-      "description": {
-        "text": "a successful parry makes your next hit a crit",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "a successful parry makes your next hit a crit",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "dodge",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.5,
+              "hits": 1,
+              "seconds": 10.0
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "off_hand_parry",

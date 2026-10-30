@@ -90,16 +90,7 @@
     {
       "id": "prophet_of_ruin",
       "name": "Prophet of Ruin",
-      "description": {
-        "text": "Zeal triggers at 3 hearts; Madness fills twice as fast",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Zeal triggers at 3 hearts; Madness fills twice as fast",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -108,7 +99,19 @@
         "violent_madness"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "low_health_extra",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "resource_gain",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

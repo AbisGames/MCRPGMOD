@@ -384,6 +384,12 @@ public final class ClassEffectApplier {
         if (bonus.apply(BonusEffect.Kind.FAVORED_ONLY) > 0 && weapon && !com.pipican.ability.FavoredWeapon.isFavored(player, stack)) {
             out = Affinity.FORBIDDEN;
         }
+        if (bonus.apply(BonusEffect.Kind.NO_METAL_ARMOR) > 0 && !weapon && stack.has(net.minecraft.core.component.DataComponents.EQUIPPABLE)) {
+            String path = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
+            if (path.startsWith("iron_") || path.startsWith("netherite_")) {
+                out = Affinity.FORBIDDEN;
+            }
+        }
         return out;
     }
 

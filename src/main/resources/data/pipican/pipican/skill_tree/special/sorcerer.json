@@ -89,16 +89,7 @@
     {
       "id": "sorcerous_blast",
       "name": "Sorcerous Blast",
-      "description": {
-        "text": "unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -107,7 +98,17 @@
         "greater_sorcery"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -2.0
+        }
+      ],
+      "grants": [
+        "pipican:sorcerer/sorcerous_blast"
+      ]
     }
   ]
 }
