@@ -1,3 +1,12 @@
 {
-  "entity.pipican.morvath_ashen_king": "Morvath, Kül Kralı"
+  "entity.pipican.morvath_ashen_king": "Morvath, Kül Kralı",
+  "block.pipican.ritual_altar": "Ritüel Sunağı",
+  "item.pipican.ritual_core": "Ritual Core",
+  "item.pipican.morvath_sigil": "Sigil of the Ashen King",
+  "item.pipican.ashen_kings_heart": "Ashen King's Heart",
+  "item.pipican.infernium": "Infernium",
+  "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
+  "ritual.pipican.failed": "Ritual rejected: %s",
+  "ritual.pipican.summoned": "The Ashen King awakens.",
+  "ritual.pipican.instructions": "Use an Ashen King sigil. Prepare a clear platform six blocks north of the altar."
 }

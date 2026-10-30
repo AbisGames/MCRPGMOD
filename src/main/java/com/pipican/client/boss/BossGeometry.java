@@ -41,6 +41,15 @@ final class BossGeometry {
                 }
                 if(before==pending.size()) throw new IllegalArgumentException("Cyclic or missing boss bone parent: "+name);
             }
+            if(name.equals("morvath_ashen_king")){
+                // Native attachments preserve the original 27 geometry files.
+                parts.get("right_arm").addOrReplaceChild("royal_blade",CubeListBuilder.create()
+                    .texOffs(160,160).addBox(-2,0,-2,4,9,4)
+                    .texOffs(180,160).addBox(-8,8,-3,16,3,6)
+                    .texOffs(160,180).addBox(-4,11,-1.5f,8,30,3),PartPose.offsetAndRotation(3,19,-2,-1.5708f,0,0));
+                parts.get("left_arm").addOrReplaceChild("shoulder_plate",CubeListBuilder.create().texOffs(190,100).addBox(-9,-4,-7,14,9,14),PartPose.ZERO);
+                parts.get("right_arm").addOrReplaceChild("shoulder_plate",CubeListBuilder.create().texOffs(190,100).addBox(-5,-4,-7,14,9,14),PartPose.ZERO);
+            }
             return LayerDefinition.create(mesh,description.get("texture_width").getAsInt(),description.get("texture_height").getAsInt()).bakeRoot();
         }catch(IOException exception){ throw new IllegalStateException("Cannot load boss geometry "+name,exception); }
     }

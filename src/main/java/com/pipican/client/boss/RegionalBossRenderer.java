@@ -12,10 +12,10 @@ import net.minecraft.util.Mth;
 
 public final class RegionalBossRenderer extends MobRenderer<RegionalBossEntity,RegionalBossRenderer.State,RegionalBossRenderer.Model> {
     public RegionalBossRenderer(EntityRendererProvider.Context context){ super(context,new Model(BossGeometry.load("morvath_ashen_king")),1.1f); }
-    public static final class State extends LivingEntityRenderState { public int phase=1; }
+    public static final class State extends LivingEntityRenderState { public int phase=1,ability,remaining; public float hurtTime; }
     @Override public State createRenderState(){ return new State(); }
     @Override public Identifier getTextureLocation(State state){ return Pipican.id("textures/entity/boss/morvath_"+(state.phase==2 ? "enraged" : "armored")+".png"); }
-    @Override public void extractRenderState(RegionalBossEntity entity,State state,float partial){ super.extractRenderState(entity,state,partial); state.phase=entity.phase(); }
+    @Override public void extractRenderState(RegionalBossEntity entity,State state,float partial){ super.extractRenderState(entity,state,partial); state.phase=entity.phase(); state.ability=entity.ability().ordinal(); state.remaining=entity.abilityTicksRemaining(); state.hurtTime=entity.hurtTime-partial; }
     static final class Model extends EntityModel<State> {
         private final ModelPart head,leftArm,rightArm,leftLeg,rightLeg;
         Model(ModelPart modelRoot){
@@ -31,6 +31,18 @@ public final class RegionalBossRenderer extends MobRenderer<RegionalBossEntity,R
             rightLeg.xRot=-leftLeg.xRot;
             leftArm.xRot=-leftLeg.xRot*0.65f; rightArm.xRot=-rightLeg.xRot*0.65f;
             leftArm.zRot=0.035f*Mth.sin(state.ageInTicks*0.09f); rightArm.zRot=-leftArm.zRot;
+            var ability=com.pipican.boss.BossCombatState.Ability.values()[state.ability];
+            float windup=Mth.clamp((ability.windup+ability.recovery-state.remaining)/(float)Math.max(1,ability.windup),0,1);
+            switch(ability){
+                case CLEAVE -> { rightArm.xRot=state.remaining>ability.recovery ? -2.5f*windup : 0.9f; rightArm.yRot=-0.4f; }
+                case METEOR_RAIN -> { leftArm.xRot=-2.6f*windup; rightArm.xRot=-2.6f*windup; }
+                case ERUPTION -> { leftArm.xRot=-1.6f*windup; rightArm.xRot=-1.6f*windup; head.xRot=0.45f; }
+                case PHASE_CHANGE -> { leftArm.zRot=-0.7f*windup; rightArm.zRot=0.7f*windup; head.xRot=-0.5f; }
+                case SUMMONING -> { leftArm.xRot=-1.2f*(1-windup); rightArm.xRot=-1.2f*(1-windup); head.xRot=0.7f*(1-windup); }
+                default -> {}
+            }
+            if(state.hurtTime>0) head.zRot=0.15f*Mth.sin(state.hurtTime*1.5f);
+            if(state.deathTime>0){ leftArm.xRot=-0.8f; rightArm.xRot=-0.8f; head.xRot=0.6f; }
         }
     }
 }

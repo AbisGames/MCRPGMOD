@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AGA",
+    "GEG",
+    "AGA"
+  ],
+  "key": {
+    "A": "minecraft:amethyst_shard",
+    "G": "minecraft:gold_ingot",
+    "E": "minecraft:ender_pearl"
+  },
+  "result": {
+    "id": "pipican:ritual_core",
+    "count": 1
+  }
+}

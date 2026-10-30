@@ -3,7 +3,7 @@ package com.pipican.boss;
 /** Server-owned combat clock. Time is remaining ticks so unloading cannot skip a telegraph. */
 public final class BossCombatState {
     public enum Ability {
-        NONE(0, 0), CLEAVE(30, 18), METEOR_RAIN(50, 40), ERUPTION(45, 30), PHASE_CHANGE(60, 20);
+        NONE(0, 0), CLEAVE(30, 18), METEOR_RAIN(50, 40), ERUPTION(45, 30), PHASE_CHANGE(60, 20), SUMMONING(60,20);
         public final int windup, recovery;
         Ability(int windup, int recovery) { this.windup=windup; this.recovery=recovery; }
     }
@@ -20,6 +20,7 @@ public final class BossCombatState {
         if(!ready() || next==Ability.NONE || next==Ability.PHASE_CHANGE) return false;
         start(next); return true;
     }
+    public void summon(){ start(Ability.SUMMONING); }
     private void start(Ability next){ ability=next; remaining=next.windup+next.recovery; resolved=false; }
     /** Half health transition is latched, including across healing and save/reload. */
     public void updatePhase(float health, float maximum){

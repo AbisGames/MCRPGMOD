@@ -88,11 +88,17 @@ public class RegionalBossEntity extends Monster {
         return level() instanceof ServerLevel && insideArena(target.position()) && attacks.begin(combat,ability,target);
     }
     public void tickCombat(ServerLevel level){ customServerAiStep(level); }
-    void activateEncounter(){ managedEncounter=true; }
+    void activateEncounter(){ managedEncounter=true; combat.summon(); }
     @Override protected void dropAllDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source){
-        if(managedEncounter && !BossEncounters.get(level).finish(getUUID(),BossEncounters.Status.DEFEATED)) return;
+        if(!managedEncounter || !BossEncounters.get(level).finish(getUUID(),BossEncounters.Status.DEFEATED)) return;
         attacks.clear();
         super.dropAllDeathLoot(level,source);
+    }
+    @Override protected boolean isAlwaysExperienceDropper(){ return managedEncounter; }
+    @Override protected void dropCustomDeathLoot(ServerLevel level,net.minecraft.world.damagesource.DamageSource source,boolean playerKilled){
+        spawnAtLocation(level,new net.minecraft.world.item.ItemStack(BossContent.HEART.get()));
+        spawnAtLocation(level,new net.minecraft.world.item.ItemStack(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),8));
+        if(Math.floorMod(getUUID().hashCode(),4)==0) spawnAtLocation(level,new net.minecraft.world.item.ItemStack(BossContent.INFERNIUM.get()));
     }
     @Override public void startSeenByPlayer(ServerPlayer player){ super.startSeenByPlayer(player); bar.addPlayer(player); }
     @Override public void stopSeenByPlayer(ServerPlayer player){ super.stopSeenByPlayer(player); bar.removePlayer(player); }

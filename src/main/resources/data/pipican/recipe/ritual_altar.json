@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OAO",
+    "CEC",
+    "ODO"
+  ],
+  "key": {
+    "O": "minecraft:obsidian",
+    "A": "minecraft:amethyst_shard",
+    "C": "minecraft:crying_obsidian",
+    "E": "minecraft:ender_pearl",
+    "D": "minecraft:diamond"
+  },
+  "result": {
+    "id": "pipican:ritual_altar",
+    "count": 1
+  }
+}

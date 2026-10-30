@@ -1,0 +1,8 @@
+[
+  {
+    "item": "pipican:morvath_sigil",
+    "boss": "morvath_ashen_king",
+    "min_y": -64,
+    "max_y": 448
+  }
+]

@@ -26,7 +26,9 @@ public final class BossTests {
         "boss_encounter_reservations",BossTests::encounterReservations,
         "boss_summoning_lifecycle",BossTests::summoningLifecycle,
         "boss_unload_and_cleanup",BossTests::unloadAndCleanup,
-        "morvath_real_attacks",BossTests::realAttacks);
+        "morvath_real_attacks",BossTests::realAttacks,
+        "ritual_recipes",BossTests::ritualRecipes,
+        "ritual_interaction_and_loot",BossTests::ritualInteraction);
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -35,6 +37,61 @@ public final class BossTests {
         TESTS.keySet().forEach(name->event.registerTest(Pipican.id(name),new FunctionGameTestInstance(
             ResourceKey.create(Registries.TEST_FUNCTION,Pipican.id(name)),
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
+    }
+    private static net.minecraft.core.BlockPos rejectSpawnAt;
+    @SubscribeEvent public static void rejectSpawn(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent event){
+        if(rejectSpawnAt!=null && event.getEntity() instanceof RegionalBossEntity && event.getEntity().blockPosition().equals(rejectSpawnAt)) event.setCanceled(true);
+    }
+    private static void ritualRecipes(GameTestHelper helper){
+        var level=helper.getLevel();
+        var rows=List.of(
+            List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
+            List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
+            List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil"};
+        for(int index=0;index<ids.length;index++){
+            var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
+            var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
+            var input=net.minecraft.world.item.crafting.CraftingInput.of(3,3,rows.get(index).stream().map(net.minecraft.world.item.ItemStack::new).toList());
+            helper.assertTrue(recipe.matches(input,level),"ritual recipe does not accept its exact nine ingredients: "+ids[index]);
+            helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(recipe.assemble(input).getItem()).equals(Pipican.id(ids[index])),"wrong ritual crafting output");
+        }
+        helper.succeed();
+    }
+    private static long hearts(net.minecraft.server.level.ServerLevel level,net.minecraft.core.BlockPos arena){
+        return level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8)).stream()
+            .filter(item->item.getItem().is(BossContent.HEART.get())).mapToLong(item->item.getItem().getCount()).sum();
+    }
+    private static void ritualInteraction(GameTestHelper helper){
+        var level=helper.getLevel(); var altar=helper.absolutePos(new net.minecraft.core.BlockPos(1024,30,1024)); var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8) for(int z=-32;z<=32;z+=8) level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1 ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState() : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel(); owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());
+        var stack=new net.minecraft.world.item.ItemStack(BossContent.MORVATH_SIGIL.get(),2); owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+        var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try {
+            var state=level.getBlockState(altar);
+            helper.assertTrue(state.useItemOn(stack,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL && stack.getCount()==2,"wrong-biome altar consumed a sigil");
+            var ashlands=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("ashlands/ash_waste_plains")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),ashlands).left().isPresent(),"ritual biome fixture failed");
+            rejectSpawnAt=arena;
+            helper.assertTrue(state.useItemOn(stack,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL && stack.getCount()==2,"failed spawn consumed sigil");
+            helper.assertTrue(!BossEncounters.get(level).conflicts(arena),"failed spawn leaked reservation"); rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(stack,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS && stack.getCount()==1,"successful interaction did not consume exactly one sigil");
+            helper.assertTrue(state.useItemOn(stack,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL && stack.getCount()==1,"repeated interaction consumed a second sigil");
+            var boss=level.getEntitiesOfClass(RegionalBossEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(4)).getFirst();
+            var output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess()); boss.saveWithoutId(output);
+            helper.assertTrue(hearts(level,arena)==0,"loot existed before defeat");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);
+            helper.assertTrue(hearts(level,arena)==1,"valid defeat did not create exactly one heart");
+            var replay=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.LOAD); replay.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
+            replay.hurtServer(level,replay.damageSources().genericKill(),10000);
+            helper.assertTrue(hearts(level,arena)==1,"pre-death reload duplicated boss loot");
+            helper.assertTrue(level.getBlockState(altar).is(BossContent.ALTAR.get()),"reusable altar destroyed");
+            helper.succeed();
+        }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
     private static void realAttacks(GameTestHelper helper){
         var level=helper.getLevel(); var origin=helper.absolutePos(new net.minecraft.core.BlockPos(768,30,768));

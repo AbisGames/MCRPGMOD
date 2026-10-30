@@ -43,6 +43,7 @@ public final class Pipican {
         PipicanMenus.REGISTER.register(modBus);
         RegionalOreRegistries.register(modBus);
         com.pipican.boss.BossRegistries.register(modBus);
+        com.pipican.boss.BossContent.register(modBus);
         RegionalNatureBlocks.register(modBus);
         RegionalNatureTab.register(modBus);
         WorldgenCodecs.register(modBus);
@@ -54,6 +55,7 @@ public final class Pipican {
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);
+        container.registerConfig(ModConfig.Type.SERVER, com.pipican.boss.BossBalance.SPEC,"pipican-bosses-server.toml");
     }
 
     public static Identifier id(String path) {

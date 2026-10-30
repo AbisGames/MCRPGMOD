@@ -43,8 +43,8 @@ public final class MorvathCombat {
         if(target!=null && (!target.isAlive() || !boss.insideArena(target.position()))) { boss.setTarget(null); target=null; }
         if(clock.ready() && target!=null && boss.hasLineOfSight(target)){
             var pattern=List.of(BossCombatState.Ability.CLEAVE,BossCombatState.Ability.METEOR_RAIN,BossCombatState.Ability.ERUPTION);
-            var next=pattern.get(sequence++%3);
-            if(next==BossCombatState.Ability.CLEAVE && boss.distanceToSqr(target)>CLEAVE_RANGE*CLEAVE_RANGE) next=BossCombatState.Ability.METEOR_RAIN;
+            var next=pattern.get(Math.floorMod(sequence++,3));
+            if(next==BossCombatState.Ability.CLEAVE && boss.distanceToSqr(target)>BossBalance.CLEAVE_RANGE.get()*BossBalance.CLEAVE_RANGE.get()) next=BossCombatState.Ability.METEOR_RAIN;
             begin(clock,next,target);
         }
         if(clock.ability()==BossCombatState.Ability.NONE){
@@ -57,7 +57,7 @@ public final class MorvathCombat {
         var impact=clock.tick();
         switch(impact){
             case CLEAVE -> {
-                for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),CLEAVE_RANGE,CLEAVE_HALF_ANGLE)
+                for(var player:players()) if(inCleave(boss.position(),yaw,player.position(),BossBalance.CLEAVE_RANGE.get(),BossBalance.CLEAVE_HALF_ANGLE.get())
                     && boss.hasLineOfSight(player)) hit(level,player,clock.phase()==2 ? 18 : 14,1.1);
                 boss.playSound(SoundEvents.PLAYER_ATTACK_SWEEP,2,0.65f);
             }
@@ -87,9 +87,9 @@ public final class MorvathCombat {
         }
         if(clock.ability()==BossCombatState.Ability.CLEAVE){
             if(clock.remaining()%3!=0) return;
-            for(int angle=-60;angle<=60;angle+=10){
+            for(double angle=-BossBalance.CLEAVE_HALF_ANGLE.get();angle<=BossBalance.CLEAVE_HALF_ANGLE.get();angle+=10){
                 double theta=Math.toRadians(yaw+angle);
-                for(int radius=2;radius<=6;radius+=2) level.sendParticles(ParticleTypes.FLAME,boss.getX()-Math.sin(theta)*radius,boss.getY()+0.15,boss.getZ()+Math.cos(theta)*radius,1,0,0,0,0);
+                for(int radius=2;radius<=BossBalance.CLEAVE_RANGE.get();radius+=2) level.sendParticles(ParticleTypes.FLAME,boss.getX()-Math.sin(theta)*radius,boss.getY()+0.15,boss.getZ()+Math.cos(theta)*radius,1,0,0,0,0);
             }
         }else for(var mark:marks){
             if(clock.remaining()%4==0) ring(level,mark,2.5,false);
