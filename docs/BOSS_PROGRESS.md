@@ -4,7 +4,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 
 | Boss | Entity | Geometry | Textures | Animations | Combat | Phase 2 | Summoning | Loot | GameTests | Client QA |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| frostbound_colossus | partial | prototype | planned | planned | partial | partial | planned | planned | partial | pending |
+| frostbound_colossus | partial | prototype | partial | partial | partial | partial | planned | planned | partial | pending |
 | nhalkorr_leviathan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | skollvar_winterfang | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | hrothgar_drowned_jarl | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
