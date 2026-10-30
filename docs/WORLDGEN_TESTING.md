@@ -1,304 +1,190 @@
-# Worldgen server integration tests
+# Worldgen verification
 
-Use Java 25 and the Gradle wrapper. No personal Minecraft save is used.
+## Checkpoint â€” 2026-10-30
 
-```powershell
+Worldgen is **verified for the server fixture coverage below**. Client visual/FPS
+and natural-distribution limits remain explicit. Work is confined to
+`48018390/MCRPGMOD-Development`, branch `worldgen-and-ores`.
+
+| Scope | Runtime evidence | Result |
+| --- | --- | --- |
+| 22 capitals, 63 pieces each | [40733045807](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40733045807), `28c3f5c` | All assemblies, foundations, roads and disk reload passed |
+| 48 fixed settlements | Same broad run | All placements, contents, support and disk reload passed |
+| 27 representative native villages/outposts | [41011624642](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41011624642), `f966e28` | All 27 passed; no close stalls |
+| Sky islands/End portal, unique sites, capital-core terrain | Broad run, all three seeds | Passed |
+| Player provenance and ore renewal disk reload | Broad and subsequent native runs, all three seeds | Passed |
+| Focused surface/deep/underwater mine+dungeon regressions | [41011529452](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41011529452), `f966e28` | All six examples and protection suites passed |
+| All 54 native mine/dungeon types | [41019418456](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41019418456), `db0aea9` | All 54 passed; 18 per seed |
+| Final provenance/ore reload regression | Same native run, all three seeds | All 19 required tests passed in each suite |
+
+Catalogues are distributed by index modulo three over seeds **0, 123 and
+987654321**: 22 full capital assemblies, 48 settlements, 27 native settlement
+types and 54 expeditions in total. This is not a claim that every complete
+assembly was placed on every seed. Terrain-core, sky and protection suites run
+on all three seeds. Later production changes require their own relevant checks;
+a previous green run does not automatically verify a newer commit.
+
+Boss framework, Morvath, rituals, rare ores and upgrades are subsequent phases.
+The 27 geometry prototypes remain on `biome-bosses`.
+
+## Run the checks
+
+Java 25, Minecraft 26.1.2 and NeoForge 26.1.2.124 are required.
+
+```sh
 python tools/validate_worldgen.py
 python tools/validate_biome_assets.py
 python tools/worldgen/validate_biome_mines.py
-.\gradlew.bat build --no-daemon
+```
+
+The CI workflow generates special landmark NBT and copies it into the mod
+resources before `./gradlew build --no-daemon`. Follow those preparation steps
+when building locally. Check the resulting binary, not just source JSON:
+
+```sh
 python tools/worldgen/validate_packaged_mod.py build/libs/pipican-0.1.0.jar
-.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0
-.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=123
-.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=987654321
 ```
 
-For a focused regression while debugging:
+Run a selected real-server suite:
 
-```powershell
-.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=capital -PworldgenTarget=aldermere
-.\gradlew.bat runGameTestServer --no-daemon -PworldgenTestSeed=0 -PworldgenSuite=expeditions -PworldgenTarget=heartlands
+```sh
+./gradlew runGameTestServer --no-daemon -PworldgenSuite=capital -PworldgenTestSeed=0 -PworldgenTarget=hallvard
+./gradlew runGameTestServer --no-daemon -PworldgenSuite=expeditions -PworldgenTestSeed=123 -PworldgenTarget=umbral_chasm
+./gradlew runGameTestServer --no-daemon -PworldgenSuite=villages -PworldgenTestSeed=987654321
+./gradlew runGameTestServer --no-daemon -PworldgenSuite=protection -PworldgenTestSeed=0
 ```
 
-CI runs focused capital regressions first, followed by regional settlements and the full matrix in
-separate Java processes per integration suite, retaining each suite's logs. A
-focused pass cannot make the workflow green without the full integration run.
+On Windows use `gradlew.bat`. Available ordinary suites are `sky`, `terrain`,
+`capital`, `settlements`, `villages`, `protection`, `unique` and `expeditions`.
+Run all three catalogue shards to cover every entry. An empty native target
+selects the seed's shard; an explicit region selects that region directly.
+The optional `terrain_probe` suite requires one of the three capital targets
+and is excluded from the default `all` selection.
 
-The manually dispatched workflow has a `focused_only` input. Its default `true`
-runs the three previously failing capital/seed pairs only: Hallvard/0,
-Skelvik/123 and Bogmere/987654321. This is an explicit verification checkpoint;
-it does not establish full worldgen completion. Dispatch with `focused_only=false`
-to run the complete matrix. Push and pull-request runs retain the full matrix.
+### Workflows
 
-The GameTest run has a 4 GB maximum heap. CI runs the three seeds as independent
-jobs and retains logs and build reports even when a test fails. The generated
-structure workflow also rebuilds the authored assets before running all three
-seeds. Publishing generated assets waits for every seed job to pass.
+- `worldgen.yml`: manual `focused_only=true` first checks Hallvard/Skelvik/Bogmere
+  with their regression seeds. `focused_only=false` runs the full matrix.
+  `probe_terrain=true` substitutes a density diagnostic for the first focused
+  capital check; a diagnostic pass does not establish full assembly success.
+- `expedition-access.yml`: `suite=expeditions` or `villages`. With
+  `all_regions=true`, the three seed jobs cover the entire selected catalogue.
+  Otherwise they target Heartlands, Umbral Chasm and Shimmering Reefs. Each job
+  additionally runs the provenance/ore disk-reload suite.
 
-The asset sequence is full generation, full-catalogue validation, then special
-landmark integration. Repeating full generation clears only the four known
-special NBT outputs from the generated directory before recreating the base
-catalogue; it never removes templates from source resources or Minecraft saves.
+Logs/reports are retained as diagnostic artifacts. The native workflow also
+uploads a compiled test JAR from seed 0. A compiled-JAR artifact can exist even
+when a runtime test failed: inspect the suite conclusions and logs separately.
+Gradle dependencies are cached; sources, packaging and server tests still run.
 
-## Actual world generation
+## What the fixtures exercise
 
-`WorldgenIntegrationTests` creates real RPG `ServerLevel` instances using the
-registered RPG preset, noise settings and biome source. Each test uses a fresh
-temporary directory below the GameTest world's `rpg-integration` directory.
-Directories are retained for investigation; the harness never deletes saves.
+Tests create real temporary RPG `ServerLevel` instances. The harness replaces
+GameTestServer's hard-coded seed/structure options only inside the fixture and
+restores them afterwards. The production preset/noise generator, native biome
+selection, registered structures, templates, processors and actual blocks run.
+Test-only data and code are excluded from the shipped mod JAR.
 
-Vanilla's GameTest server hardcodes seed 0 and disables structure generation.
-The harness temporarily replaces that server instance's world-generation
-settings for the selected seed and restores them in a `finally` block. Passing
-only the `ServerLevel` biome-zoom seed would not test different noise seeds.
-This reflection is test-only and is not packaged in the mod JAR.
+### Capitals and fixed settlements
 
-The integration suites assert:
+Each capital places all 25 districts and 38 road pieces through the production
+placement service. Tests inspect foundations, a conservative walking connection
+between district entrances, terminal progress and actual disk persistence,
+including a reload after the first eleven pieces. The other 48 authored sites
+verify placed content, support, saved completion and prevention of rebuilding.
 
-- Generated terrain and building clearance on the seven authored sky islands.
-- Actual placement of the Sky Citadel and all six floating villages.
-- Activation of the End portal by inserting eyes through vanilla item logic.
-- Generated solid terrain at every capital's centre for each seed.
-- All 22 capital assemblies across the three jobs, with 63 pieces per capital,
-  real disk save/reload after eleven pieces, foundation checks and a walking
-  search from the keep approach to the 25 district entrances.
-- The complete, initially unlit Nether portal in Morvath's central keep.
-- Actual Blackspire and underground Umbral City placement.
-- All other 48 authored sites across the three seeds, including actual storage
-  placement, foundations and completion/block persistence after disk reload.
-- Player placement provenance and pending ore renewal across disk save/reload,
-  including a previously loaded, then unloaded queued chunk.
+Production capital ticks prepare neighboring chunks using expiring loading
+tickets and place one near-player tile per interval. The synchronous fixture
+finishes its requested chunks for deterministic inspection; it is not a client
+performance benchmark. Template cache entries are released after direct placement.
 
-The capital and regional expedition catalogues are distributed by catalogue
-index modulo three. Run all three commands to cover every entry. A failure in
-one capital or expedition is collected and reported without skipping the
-remaining entries in that job.
+Foundation Y is sampled from the real saved terrain, then retained for the city.
+New cities use a centre-first tile order; legacy progress preserves its existing
+order. Natural grading is bounded by a 24-block cut and 12-block foundation fill.
+The complete grading/headroom volume is preflighted before mutation; inventories,
+player provenance and artificial obstructions defer placement. A rejected
+template restores any collected natural grading edits.
 
-## Regional mine and dungeon fixtures
+### Native settlements, mines and dungeons
 
-`RegionalExpeditionTests` covers all 27 mine and 27 dungeon types across the
-three jobs. It asks the registered native structure to generate a valid start
-in an eligible biome outside authored reservations. It installs that start in
-a protochunk before references and decoration, then generates real full
-chunks. This exercises native structure pieces, terrain generation and actual
-placed blocks, rather than merely decoding NBT or calculating coordinates.
+Fixtures deliberately force a selected valid native start in an eligible biome
+outside authored reservations. They install it before decoration, then generate
+real chunks. Neighboring STRUCTURE_STARTS are checked first so the forced
+fixture cannot overwrite an already selected natural structure. This controls
+coverage; it does not measure naturally weighted placement frequency.
 
-Mine checks inspect regional ore blocks, reject foreign regional ores, post
-server break events and place the actual ore BlockItem through item-use logic.
-They test the configured cooldown, renewal and
-the player-placed-ore exploit inside a registered generated mine. Dungeon
-checks inspect the placed trial spawner and three regional reward loot tables;
-decorative storage chests are excluded from the reward count. Foundation
-samples use actual piece bounds, excluding the terrain-adaptation padding
-added by StructureStart to its overall bounding box.
+Village/outpost fixtures cover one representative type per each of 27 regions,
+including all five exotic regions. They inspect actual furniture and support,
+not every authored subbiome variant.
 
-Native expedition pools use `ExpeditionFoundationProcessor` to extend solid
-bottom-floor blocks through air and fluid down to existing support. Its writes
-stay within the chunk decoration box. It stops at existing non-replaceable
-blocks and block entities. Noise adaptation alone did not support every column
-under these large templates on uneven terrain and ocean floors.
+All 27 mine and 27 dungeon types inspect real interior blocks and support. Mine
+checks reject foreign regional ore, post natural break events, test cooldown
+and renewal, and place the actual ore BlockItem to reject player-ore renewal
+exploits. Dungeon checks require the trial spawner and three regional reward
+loot tables; decorative storage chests do not count as rewards.
 
-The `villages` suite covers one native regional settlement per region (27 in
-total), preferring a village and falling back to another regional settlement
-where no village is authored. The five exotic village types are included.
-These fixtures inspect real placed furniture and foundations. They are
-representative coverage, not exhaustive placement of every subbiome variant.
+`ExpeditionFoundationProcessor` extends bottom-floor blocks through air/fluid
+to existing support within the current decoration chunk. Native access uses
+`ExpeditionPoolElement`, which reserves a 16-block front corridor in the piece
+bounds. `ExpeditionAccessProcessor` preflights and builds that route and its
+outer escape ladder, clipped to each reserved decoration chunk. It retains
+player provenance, inventory and artificial-block rejection; natural sculk,
+moss and lush-cave growth are recognized explicitly. The room NBT is unchanged.
 
-**These fixtures deliberately force the selected valid start for coverage.**
-They do not measure natural weighted structure-set frequency or prove that
-every naturally selected placement has an accessible entrance. Selected mine
-and dungeon fixtures include the local entrance-access check below; broader
-distribution and detailed interior navigation need separate checks.
+Generation/collision bounds include the access corridor. Interior support and
+ore/reward checks use actual template bounds, excluding the added corridor and
+StructureStart's terrain-adaptation padding. The pool codec is round-tripped,
+and portal coverage is checked in all four rotations. Existing serialized
+vanilla pool elements remain supported. These changes apply to new starts;
+old structures are not silently regenerated or given retroactive exits.
 
-## Safety and limits
+The entrance search requires an actual walking/swimming/climbing route from the
+rotated doorway to exterior terrain. It uses native collision shapes, a
+0.6-block-wide/two-block-high body, a 1.25-block step bound, breathing room and
+lava rejection. Foliage and air gaps below canopies do not hide exterior ground;
+solid rock ceilings still reject underground endpoints. A paired foliage/stone
+fixture checks this distinction. Search is bounded to 100,000 visited positions
+and a local 32-block horizontal radius, so it can conservatively reject a long
+winding natural cave exit beyond that area. This is not a full interior navmesh.
 
-Placement checks retain block-entity and obstruction protection. New player
-placements, multi-block placements, piston movement, fluid sources and ordinary excavation are recorded in
-per-dimension saved data. Natural mining nodes remain eligible for renewal;
-player-placed ore does not. Protected player positions deliberately defer
-authored placement instead of being overwritten.
+### Protection and persistence
 
-Authored terrain grading separates a maximum 24-block natural cut from a
-12-block foundation fill. The complete grading volume is checked before any
-block changes, including headroom above short road pieces. Player provenance,
-inventories and non-natural obstructions still defer placement. Grading keeps
-the already-saved city elevation, so partially assembled cities stay aligned;
-an invalid/empty template restores the cleared natural blocks on failure.
+Per-dimension provenance records player placements, multi-block placements,
+ordinary excavation, piston movement and fluid-source changes. Player-placed
+natural-looking ore remains ineligible for renewal. Due renewal nodes in
+unloaded or pending-load chunks remain queued without forcing synchronous loads.
+Tests save/reopen worlds and verify provenance, cooldowns, queue state and ore.
 
-Old saves do not contain historical provenance for natural-looking blocks
-placed before this tracking existed. Piston provenance is checked using the
-native resolver/event; full redstone timing and derived fluid-flow provenance are not covered
-by the current placement-history tests. The protection system
-must not be described as a complete historical reconstruction of user edits.
+Provenance is initialized on server level load, cached by level identity, and
+read by generation workers through a concurrent position set. Workers do not
+load saved-data files. An unavailable cache rejects the access edit plan.
+Access safety tests require an unblocked baseline before inserting protected
+air, inventories or artificial blocks, and verify that natural-growth samples
+survive placement. Appended edits stay inside the decoration box.
 
-Static catalogue validation and JAR/NBT checks are separate from runtime
-generation. A green formatting check alone does not establish worldgen success.
-The packaged-JAR validator checks every structure entry, including compression,
-palette indices, sampled block coordinates and special landmark inclusion.
+Temporary-world closure drains chunk work and queued server/POI callbacks while
+storage remains open, reaches a short quiescent interval, saves, then closes.
+A close watchdog records stalled stacks and fails the disposable JVM after
+180 seconds. A server progress watchdog reports stalled server/worker stacks
+and exits with failure after five minutes without a fixture/chunk checkpoint.
+Neither watchdog suppresses assertions or converts a timeout into success.
 
-The walking check is a conservative two-block clearance search around the
-capital ground floor. It does not validate every room, staircase or artistic
-detail. Visual terrain quality, full interior navigation and client FPS require
-a Minecraft client inspection. The synchronous fixture's mass chunk generation
-is not a client performance benchmark; production capital ticks prepare chunks
-asynchronously using expiring loading tickets.
+## Remaining limits
 
-## Capital aquifer regression
+- Historical player edits before provenance tracking cannot be reconstructed.
+- Full redstone timing and provenance of every derived fluid flow are not covered.
+- New terrain fixes do not rewrite already generated terrain or personal saves.
+- Controlled native fixtures do not establish natural weighted distribution or
+  exhaustive placement of every subbiome variant.
+- Visual terrain quality, all interior navigation, client rendering and FPS
+  require client inspection; server placement checks do not prove those results.
+- Static catalogues, registry decoding, packaged NBT and runtime generation are
+  separate checks. The packaged validator currently checks 1,439 structure
+  templates, including legacy assets; that count alone does not prove placement.
 
-The 2026-10-28 terrain probe reproduced Hallvard seed 0 at (-3929,-12705)
-and Skelvik seed 123 at (8921,-21095). Their noise densities were respectively
--11.18 and -19.39, but the generated columns still contained stone at Y=129
-and Y=158. Final-density terracing alone does not constrain aquifer barrier
-stone: the aquifer was using the unchanged vanilla preliminary surface.
-
-The RPG preliminary surface now includes the same regional elevation density.
-Its search starts at Y=432 to include regional mountains and floating islands;
-regional elevation ends above Y=430 and vanilla terrain ends below that.
-Aquifers remain enabled. This changes new terrain, not already generated
-chunks. Verify the three focused capital assemblies after the diagnostic probe;
-a green probe alone does not prove full assembly or worldgen completion.
-
-The expedition fixture additionally searches actual placed blocks from the
-rotated nine-block front doorway to terrain at least eight blocks outside,
-with two-block clearance and an open-sky breathing position. It permits
-one-block walking steps, water swimming and climbable blocks, rejects lava,
-and bounds the local search to 100,000 visited positions. It can conservatively
-reject a long winding cave exit outside that local search volume. It is an
-entrance-access check, not a full interior navigation or distribution test.
-
-## Verified checkpoint ? 2026-10-28
-
-Worldgen is **partially verified**. Commit `27d93f8` passed the actual NeoForge
-server focused regression in the personal repository:
-[run 40731587424](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40731587424).
-
-| Seed | Capital | Result |
-| --- | --- | --- |
-| 0 | Hallvard | 63 pieces, foundations, road connectivity, disk reload; all 18 required tests passed |
-| 123 | Skelvik | 63 pieces, foundations, road connectivity, disk reload; all 18 required tests passed |
-| 987654321 | Bogmere | 63 pieces, foundations, road connectivity, disk reload; all 18 required tests passed |
-
-The earlier failing density probe is retained in
-[run 40730694226](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40730694226).
-No excavation bound was increased for the aquifer fix. These successes do not
-verify every capital, settlement, expedition entrance or sky island. Those
-require the full matrix, including the entrance test added in `0fe0e10`.
-Boss framework, Morvath, rituals, rare ores and upgrades remain subsequent phases.
-
-## Deep expedition access
-
-Focused entrance run
-[40733574565](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40733574565)
-passed Heartlands seed 0 and Shimmering Reefs seed 987654321, but reproduced
-inaccessible Umbral Chasm mine and dungeon entrances at seed 123. Both deep
-structures were at floor Y=-21 without a route to open terrain.
-
-`ExpeditionAccessProcessor` adds a front-boundary ladder and supporting casing
-when the outside terrain differs from doorway height by more than four blocks.
-It connects that height to the actual outside surface, including underwater
-and elevated terrain, using only the template's X/Z footprint and the current
-chunk decoration box. It checks player provenance, non-natural blocks and block
-entities before returning local edits. State rotation is left to native template
-placement. Flat, already reachable entrances remain unchanged. This processor
-is attached only to the 54 mine/dungeon pools, never the village pools.
-
-Changes affect newly generated expeditions. Existing structures do not acquire
-a shaft retroactively. The focused access workflow runs three representative
-regions separately from the full worldgen workflow; neither scope replaces the
-other. The access fix must pass the server regression before being called verified.
-
-`expedition_access_safety` separately exercises the edit-plan preflight in an
-actual test level: protected air, inventories and artificial blocks must reject
-the local shaft plan without a world mutation. Appended edits must stay within
-the decoration box, and empty data-marker processing must remain empty.
-
-Synchronous fixture work has a wall-clock progress watchdog. After two minutes
-without a fixture/chunk checkpoint it records server and worker stacks; after
-five minutes without progress it terminates only the disposable GameTest JVM
-with exit code 4. Each capital tile, native structure chunk and world-close
-checkpoint refreshes progress. This turns a stalled fixture into diagnosable
-failure, without bypassing assertions or treating the suite as successful.
-
-Player provenance is initialized on server level load and cached by level
-identity. Native access workers read that cache and a concurrent position set;
-they never load saved-data files. An unavailable cache rejects the shaft plan.
-Temporary integration levels explicitly perform the same initialization before
-requesting generated chunks. Existing saved provenance is still serialized in
-the original format and disk-reload assertions remain enabled.
-
-Server logs exposed 13 Pipican biomes with ocelots incorrectly assigned to the
-monster category. Their entries now use the registered creature category,
-preserving spawn weights and pack sizes. The registry test checks every
-Pipican spawn entry against its EntityType category to prevent this regression.
-
-## Completed broad-run evidence reviewed 2026-10-30
-
-[Run 40733045807](https://github.com/48018390/MCRPGMOD-Development/actions/runs/40733045807)
-completed at `28c3f5c`. All 22 capital assemblies and all 48 authored settlements
-passed their three distributed seed shards, including disk reloads. All three
-seed jobs passed sky/End portal, player-protection/ore reload, unique landmark
-and capital-core terrain steps. This remains a partial worldgen checkpoint:
-expedition entrances failed, one village shard failed, and one focused village
-step timed out. The newer provenance/access implementation requires its own
-regressions; these broad results do not verify later code automatically.
-
-The native fixture close trace identified a queued POI callback waiting on
-SectionStorage while draining server tasks. Test closure now always drains both
-chunk work and queued server callbacks to a short quiescent interval before
-closing a temporary world's storage. Save/reload assertions remain unchanged.
-
-The resumed focused test at `720ed84` verified the Umbral Chasm mine. Its
-dungeon rejected a naturally generated `sculk_vein` as artificial terrain.
-Access grading now recognizes non-inventory sculk terrain and sculk veins,
-while retaining the preceding player-provenance and block-entity checks.
-Safety fixtures run away from other GameTest boundary barriers and require
-an unobstructed baseline before inserting a chest or artificial block.
-
-## Native entrance completion pass
-
-[All-expedition run 41012045275](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41012045275)
-verified 46 of 54 types at `1f6d542`. Eight access checks failed; all three
-provenance/disk-reload checks passed. Most remaining failures had no ladder
-because the outside matched doorway height, but the sparse template boundary
-had no guaranteed floor. Native access now adds a protected nine-block-wide
-threshold on row zero, with two-block headroom and foundation support. Its
-writes remain within the current decoration chunk and template X/Z footprint.
-The outside surface scan also skips air gaps below foliage instead of stopping
-in mid-canopy. Ladder access handles height differences larger than one step.
-
-[All-village run 41011624642](https://github.com/48018390/MCRPGMOD-Development/actions/runs/41011624642)
-verified all 27 representative regional types (nine per seed) at `f966e28`,
-with no close stalls and all three provenance/reload suites passing.
-
-The access endpoint checks terrain surface height rather than direct sky
-visibility: natural leaf/trunk canopies and their intervening air do not make
-an above-ground forest path inaccessible. Solid rock ceilings remain part of
-the surface and reject underground endpoints. A paired safety fixture verifies
-that foliage is ignored but a stone ceiling is not. The two-block route,
-breathing room, outside distance and walking/swimming/climbing checks remain.
-
-The broad pass also found naturally generated moss blocking the new threshold
-preflight. Moss block/carpet now join natural sculk in the access-only
-classifier; player provenance and inventories still reject replacement first.
-The route validator uses native collision shapes for support and a 0.6-block
-wide, two-block-high clearance volume, including partial snow/carpet surfaces.
-Walking transitions stay within a 1.25-block height change, and solid overhead
-obstructions/lava remain forbidden. This replaces the full-cube-only support
-proxy rather than skipping the entrance requirement.
-
-The final near-door failures reached only 2–6 blocks beyond the doorway.
-`ExpeditionPoolElement` reserves an additional 16-block front corridor in the
-native piece bounds, including its rotated decoration chunks. Access processing
-carves the protected walking route to its outer portal and places an escape
-ladder there when needed. The building NBT stays unchanged. Interior support
-and ore/reward checks use the actual template bounds; generation and collision
-reservations include the corridor. The pool codec is round-tripped and portal
-coverage checked in all four rotations. These new bounds affect new starts.
-
-The corridor run at `796208e` verified 52/54 expedition types. Natural cave
-vines and dripleaf now join the access-only vegetation classifier, retaining
-provenance and inventory rejection. The other failure was a forced fixture
-overlapping an already selected neighboring native structure. Fixture selection
-now checks neighboring STRUCTURE_STARTS before installing its artificial start;
-it does not whitelist or excavate the existing structure's prismarine bricks.
-This corrects controlled test placement, not natural structure frequency.
+The aquifer regression illustrates the distinction: Hallvard/Skelvik had
+negative final density but still contained high stone because preliminary
+aquifer surface estimates remained vanilla. Regional density now participates
+in that preliminary surface, and the corrected complete assemblies passed
+actual server tests. Spawn registries also reject wrong mob categories; the
+13 erroneous ocelot entries were moved to CREATURE without changing weights.

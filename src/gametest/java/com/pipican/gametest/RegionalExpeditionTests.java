@@ -169,6 +169,7 @@ final class RegionalExpeditionTests {
         // radius so a root outside the candidate's own chunks is also found.
         for(int x=Math.floorDiv(candidate.minX()-128,16);x<=Math.floorDiv(candidate.maxX()+128,16);x++)
             for(int z=Math.floorDiv(candidate.minZ()-128,16);z<=Math.floorDiv(candidate.maxZ()+128,16);z++){
+                WorldgenTestProgress.touch("checking native start neighbors "+x+","+z);
                 var chunk=level.getChunk(x,z,ChunkStatus.STRUCTURE_STARTS);
                 for(var other:chunk.getAllStarts().values())
                     if(other.isValid()&&protectedBox.intersects(other.getBoundingBox()))return true;
