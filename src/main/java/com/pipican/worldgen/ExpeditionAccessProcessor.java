@@ -16,9 +16,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** A native-generation threshold and escape ladder at the cave's sparse boundary.
- * Every write remains inside the current decoration chunk. The shaft uses
- * only the template's X/Z footprint, so all of its chunks receive processing.
+/** Native access corridor and escape ladder inside the extended pool-piece bounds.
+ * Every write remains inside the current decoration chunk. The pool element
+ * reserves the corridor chunks so native generation processes its whole route.
  */
 public final class ExpeditionAccessProcessor extends StructureProcessor {
     private static final ExpeditionAccessProcessor INSTANCE=new ExpeditionAccessProcessor();
@@ -36,22 +36,29 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
             List<StructureTemplate.StructureBlockInfo> original,
             List<StructureTemplate.StructureBlockInfo> processed,StructurePlaceSettings settings){
         if(original.isEmpty())return processed; // SinglePoolElement also processes data markers.
-        var ladder=world(origin,settings,40,0);
-        var casing=world(origin,settings,39,0);
+        int length=ExpeditionPoolElement.ACCESS_LENGTH;
+        var ladder=world(origin,settings,40,-length);
+        var casing=world(origin,settings,39,-length);
         var bounds=settings.getBoundingBox();
-        if(bounds!=null&&!bounds.isInside(ladder)&&!bounds.isInside(casing))return processed;
+        var corridor=net.minecraft.world.level.levelgen.structure.BoundingBox.fromCorners(
+            world(origin,settings,36,-length),world(origin,settings,44,0));
+        if(bounds!=null&&!bounds.intersects(corridor))return processed;
+        boolean shaftChunk=bounds==null||bounds.isInside(ladder)||bounds.isInside(casing);
         // Original positions precede foundation extension and are template-local.
         int floor=origin.getY()+original.stream().mapToInt(b->b.pos().getY()).min().orElse(0);
-        var outside=world(origin,settings,40,-1);
-        int surface=level.getHeight(level instanceof net.minecraft.server.level.ServerLevel?
-            Heightmap.Types.WORLD_SURFACE:Heightmap.Types.WORLD_SURFACE_WG,outside.getX(),outside.getZ());
-        while(surface>level.getMinY()+1){
-            var state=level.getBlockState(new BlockPos(outside.getX(),surface-1,outside.getZ()));
-            if(!state.isAir()&&!foliage(state))break;
-            surface--;
+        int surface=floor+1;
+        if(shaftChunk){
+            var outside=world(origin,settings,40,-length-1);
+            surface=level.getHeight(level instanceof net.minecraft.server.level.ServerLevel?
+                Heightmap.Types.WORLD_SURFACE:Heightmap.Types.WORLD_SURFACE_WG,outside.getX(),outside.getZ());
+            while(surface>level.getMinY()+1){
+                var state=level.getBlockState(new BlockPos(outside.getX(),surface-1,outside.getZ()));
+                if(!state.isAir()&&!foliage(state))break;
+                surface--;
+            }
+            if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))
+                Pipican.LOGGER.info("Native access shaft origin {} floor {} outside {} surface {} bounds {}",origin,floor,outside,surface,bounds);
         }
-        if(Boolean.getBoolean("pipican.worldgenAccessDiagnostics"))
-            Pipican.LOGGER.info("Native expedition access origin {} floor {} outside {} surface {} bounds {}",origin,floor,outside,surface,bounds);
         int bottom=Math.max(level.getMinY()+1,Math.min(surface,floor+1));
         int top=Math.min(level.getMaxY()-3,Math.max(surface,floor+1));
         BlockState support=processed.stream().filter(b->b.pos().getY()==floor&&b.state().isSolid()
@@ -60,10 +67,9 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
         BlockState climbing=Blocks.LADDER.defaultBlockState().setValue(LadderBlock.FACING,Direction.EAST);
         // StructureTemplate rotates states after finalizeProcessing.
         var edits=new LinkedHashMap<BlockPos,BlockState>();
-        // Cave templates deliberately leave row zero sparse. Bridge that
-        // one-block gap even when the outside is already at doorway height.
-        for(int x=36;x<=44;x++){
-            var edge=world(origin,settings,x,0);
+        // Connect the interior to a portal beyond steep immediate edge terrain.
+        for(int z=-length;z<=0;z++)for(int x=36;x<=44;x++){
+            var edge=world(origin,settings,x,z);
             var foot=new BlockPos(edge.getX(),floor,edge.getZ());
             if(bounds!=null&&!bounds.isInside(foot))continue;
             edits.put(foot,support);
@@ -75,7 +81,7 @@ public final class ExpeditionAccessProcessor extends StructureProcessor {
                 edits.put(pos,support);
             }
         }
-        if(Math.abs(surface-(floor+1))>1){
+        if(shaftChunk&&Math.abs(surface-(floor+1))>1){
             for(int y=bottom;y<=top;y++){
                 edits.put(new BlockPos(casing.getX(),y,casing.getZ()),support);
                 edits.put(new BlockPos(ladder.getX(),y,ladder.getZ()),climbing);

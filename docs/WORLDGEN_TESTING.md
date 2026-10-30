@@ -285,3 +285,12 @@ wide, two-block-high clearance volume, including partial snow/carpet surfaces.
 Walking transitions stay within a 1.25-block height change, and solid overhead
 obstructions/lava remain forbidden. This replaces the full-cube-only support
 proxy rather than skipping the entrance requirement.
+
+The final near-door failures reached only 2–6 blocks beyond the doorway.
+`ExpeditionPoolElement` reserves an additional 16-block front corridor in the
+native piece bounds, including its rotated decoration chunks. Access processing
+carves the protected walking route to its outer portal and places an escape
+ladder there when needed. The building NBT stays unchanged. Interior support
+and ore/reward checks use the actual template bounds; generation and collision
+reservations include the corridor. The pool codec is round-tripped and portal
+coverage checked in all four rotations. These new bounds affect new starts.

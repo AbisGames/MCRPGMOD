@@ -21,8 +21,8 @@ final class ExpeditionAccessTests {
             var rotation=pool.getRotation();
             var entry=new BlockPos(40,1,1).rotate(rotation).offset(origin);
             var outward=rotation.rotate(Direction.NORTH);
-            for(int cx=Math.floorDiv(entry.getX()-18,16);cx<=Math.floorDiv(entry.getX()+18,16);cx++)
-                for(int cz=Math.floorDiv(entry.getZ()-18,16);cz<=Math.floorDiv(entry.getZ()+18,16);cz++){
+            for(int cx=Math.floorDiv(entry.getX()-34,16);cx<=Math.floorDiv(entry.getX()+34,16);cx++)
+                for(int cz=Math.floorDiv(entry.getZ()-34,16);cz<=Math.floorDiv(entry.getZ()+34,16);cz++){
                     WorldgenTestProgress.touch("entrance neighborhood chunk "+cx+","+cz);level.getChunk(cx,cz);
                 }
             var queue=new ArrayDeque<BlockPos>();
@@ -56,7 +56,9 @@ final class ExpeditionAccessTests {
                     enqueue(level,entry,pos.below(),queue,seen);
                 }
             }
-            var shaft=entry.relative(outward);
+            int accessLength=pool.getElement() instanceof com.pipican.worldgen.ExpeditionPoolElement?
+                com.pipican.worldgen.ExpeditionPoolElement.ACCESS_LENGTH:0;
+            var shaft=entry.relative(outward,accessLength+1);
             int count=0,lowest=Integer.MAX_VALUE,highest=Integer.MIN_VALUE;
             for(int y=level.getMinY();y<level.getMaxY();y++){
                 var pos=new BlockPos(shaft.getX(),y,shaft.getZ());
@@ -92,7 +94,7 @@ final class ExpeditionAccessTests {
     }
     private static void enqueue(ServerLevel level,BlockPos entry,BlockPos pos,
             ArrayDeque<BlockPos> queue,Set<BlockPos> seen){
-        if(Math.abs(pos.getX()-entry.getX())>16||Math.abs(pos.getZ()-entry.getZ())>16
+        if(Math.abs(pos.getX()-entry.getX())>32||Math.abs(pos.getZ()-entry.getZ())>32
                 ||pos.getY()<=level.getMinY()||pos.getY()+2>=level.getMaxY()||seen.contains(pos))return;
         if(standing(level,pos)){seen.add(pos);queue.add(pos);}
     }

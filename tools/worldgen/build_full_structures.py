@@ -998,7 +998,7 @@ def biome_tag(region):return '#pipican:region/'+region if region in REGIONIDS el
 def add_pool(pool_id,structure_id):
     savejson(Path('worldgen/template_pool')/(pool_id+'.json'),{
         'fallback':'minecraft:empty','elements':[{'weight':1,'element':{
-          'element_type':'minecraft:single_pool_element','location':'pipican:'+structure_id,
+          'element_type':('pipican:expedition' if pool_id.startswith('regional/') and pool_id.rsplit('/',1)[-1] in ('mine','dungeon') else 'minecraft:single_pool_element'),'location':'pipican:'+structure_id,
           'processors':{'processors':([{'processor_type':'pipican:expedition_foundation'}]
               if pool_id.startswith('settlements/') or (pool_id.startswith('regional/')
                   and pool_id.rsplit('/',1)[-1] in ('mine','dungeon','village')) else [])

@@ -72,10 +72,22 @@ final class RegionalExpeditionTests {
                 helper.assertTrue(start!=null,"seed="+seed+" no valid themed native start for "+id);
                 // StructureStart adds terrain-adaptation padding (12 blocks)
                 // around its pieces. That mask is not the building's floor.
-                var box=net.minecraft.world.level.levelgen.structure.StructurePiece.createBoundingBox(start.getPieces().stream());
-                diagnostic+=" bounds="+box;
-                for(int cx=Math.floorDiv(box.minX(),16);cx<=Math.floorDiv(box.maxX(),16);cx++)
-                    for(int cz=Math.floorDiv(box.minZ(),16);cz<=Math.floorDiv(box.maxZ(),16);cz++){
+                var generated=net.minecraft.world.level.levelgen.structure.StructurePiece.createBoundingBox(start.getPieces().stream());
+                var box=generated;
+                if(!villages){
+                    var template=level.getServer().getStructureManager().get(Pipican.id(id)).orElseThrow();
+                    var floors=new java.util.ArrayList<net.minecraft.world.level.levelgen.structure.BoundingBox>();
+                    for(var piece:start.getPieces()){
+                        var pool=(net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece)piece;
+                        helper.assertTrue(pool.getElement() instanceof ExpeditionPoolElement,"missing native access bounds: "+id);
+                        floors.add(template.getBoundingBox(new net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings()
+                            .setRotation(pool.getRotation()),pool.getPosition()));
+                    }
+                    box=net.minecraft.world.level.levelgen.structure.BoundingBox.encapsulatingBoxes(floors).orElseThrow();
+                }
+                diagnostic+=" bounds="+box+" generated="+generated;
+                for(int cx=Math.floorDiv(generated.minX(),16);cx<=Math.floorDiv(generated.maxX(),16);cx++)
+                    for(int cz=Math.floorDiv(generated.minZ(),16);cz<=Math.floorDiv(generated.maxZ(),16);cz++){
                         WorldgenTestProgress.touch("native "+id+" chunk "+cx+","+cz);level.getChunk(cx,cz);
                     }
                 for(int x:new int[]{box.minX()+4,(box.minX()+box.maxX())/2,box.maxX()-4})

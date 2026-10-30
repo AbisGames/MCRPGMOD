@@ -86,6 +86,20 @@ final class ExpeditionProcessorTests {
             helper.assertTrue(ExpeditionAccessTests.exteriorSurface(level,canopyPos.getX(),canopyPos.getZ())>canopyPos.getY(),
                 "solid underground ceiling was incorrectly accepted as exterior ground");
         }finally{level.setBlock(canopyPos,previousCanopy,2);}
+        var poolJson=com.pipican.worldgen.WorldgenJson.read("template_pool/regional/heartlands/mine.json")
+            .getAsJsonArray("elements").get(0).getAsJsonObject().get("element");
+        var ops=net.minecraft.resources.RegistryOps.create(JsonOps.INSTANCE,level.registryAccess());
+        var pool=net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement.CODEC.parse(ops,poolJson).getOrThrow();
+        helper.assertTrue(pool instanceof com.pipican.worldgen.ExpeditionPoolElement,"native access pool codec was not registered");
+        var encoded=net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement.CODEC.encodeStart(ops,pool).getOrThrow();
+        var restored=net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement.CODEC.parse(ops,encoded).getOrThrow();
+        for(var rotation:net.minecraft.world.level.block.Rotation.values()){
+            var box=pool.getBoundingBox(level.getServer().getStructureManager(),origin,rotation);
+            var portal=new BlockPos(40,0,-com.pipican.worldgen.ExpeditionPoolElement.ACCESS_LENGTH).rotate(rotation).offset(origin);
+            helper.assertTrue(box.isInside(portal),"native decoration bounds omitted rotated access portal: "+rotation);
+            helper.assertTrue(box.equals(restored.getBoundingBox(level.getServer().getStructureManager(),origin,rotation)),
+                "serialized native access bounds changed on reload: "+rotation);
+        }
         helper.succeed();
     }
 }
