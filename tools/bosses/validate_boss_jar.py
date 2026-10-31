@@ -11,7 +11,7 @@ def validate(path):
         assert not any(n.startswith(('com/pipican/gametest/','data/pipican_test/')) for n in names),'Test content shipped'
         for name,digest in expected.items():
             assert hashlib.sha256(jar.read('assets/pipican/geo/bosses/'+name).replace(b'\r\n',b'\n')).hexdigest()==digest,name
-        for name in ['RegionalBossEntity','MorvathCombat','FrostboundEntity','FrostboundCombat','SkollvarEntity','SkollvarCombat','EldarothEntity','EldarothCombat','FallenKingEntity','FallenKingCombat','KragmorEntity','KragmorCombat','NoctharEntity','NoctharCombat','AetherionEntity','AetherionCombat','VermillionEntity','VermillionCombat','LongweiEntity','LongweiCombat','MorgathaEntity','MorgathaCombat','AureliosEntity','AureliosCombat','LianhuaEntity','LianhuaCombat','AkhmarEntity','AkhmarCombat','RitualAltarBlock','RitualSigils','BossContent','XaltekEntity','XaltekCombat','CorallithEntity','CorallithCombat','AzharEntity','AzharCombat','NhalkorrEntity','NhalkorrCombat','HrothgarEntity','HrothgarCombat','ValthorEntity','ValthorCombat','TengriEntity','TengriCombat','ThalassorEntity','ThalassorCombat','DurmagonEntity','DurmagonCombat']:
+        for name in ['RegionalBossEntity','MorvathCombat','FrostboundEntity','FrostboundCombat','SkollvarEntity','SkollvarCombat','EldarothEntity','EldarothCombat','FallenKingEntity','FallenKingCombat','KragmorEntity','KragmorCombat','NoctharEntity','NoctharCombat','AetherionEntity','AetherionCombat','VermillionEntity','VermillionCombat','LongweiEntity','LongweiCombat','MorgathaEntity','MorgathaCombat','AureliosEntity','AureliosCombat','LianhuaEntity','LianhuaCombat','AkhmarEntity','AkhmarCombat','RitualAltarBlock','RitualSigils','BossContent','XaltekEntity','XaltekCombat','CorallithEntity','CorallithCombat','AzharEntity','AzharCombat','NhalkorrEntity','NhalkorrCombat','HrothgarEntity','HrothgarCombat','ValthorEntity','ValthorCombat','TengriEntity','TengriCombat','ThalassorEntity','ThalassorCombat','DurmagonEntity','DurmagonCombat','SyltheraEntity','SyltheraCombat']:
             assert 'com/pipican/boss/'+name+'.class' in names,name
         for phase in ['armored','enraged']:
             for suffix in ['', '_glow']:
@@ -36,7 +36,7 @@ def validate(path):
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
         if 'com/pipican/boss/BossDesigns.class' in names:
             designs=json.loads(jar.read('assets/pipican/geo/bosses/combat_designs.json'))
-            assert len(designs)==27 and sum(design['functional'] for design in designs)==25
+            assert len(designs)==27 and sum(design['functional'] for design in designs)==26
             assert 'com/pipican/boss/FrostboundEntity.class' in names
             assert 'com/pipican/boss/SkollvarEntity.class' in names
             assert 'com/pipican/boss/EldarothEntity.class' in names
@@ -134,6 +134,21 @@ def validate(path):
                 data=jar.read(f'assets/pipican/textures/entity/boss/durmagon_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
             assert 'com/pipican/client/boss/DurmagonRenderer.class' in names
+            sylthera=next(design for design in designs if design['id']=='sylthera_primordial_bloom')
+            assert sylthera['functional'] and sylthera['sigil']['item']=='pipican:sylthera_primordial_bloom_sigil'
+            assert sylthera['loot']['trophy_item']=='pipican:sylthera_primordial_bloom_trophy'
+            assert all(ability['implementation']=='functional' for ability in sylthera['abilities'])
+            for item in ['sigil','trophy']:
+                assert f'assets/pipican/models/item/sylthera_primordial_bloom_{item}.json' in names
+                data=jar.read(f'assets/pipican/textures/item/sylthera_primordial_bloom_{item}.png')
+                assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
+            recipe=json.loads(jar.read('data/pipican/recipe/sylthera_primordial_bloom_sigil.json'))
+            counts=Counter(recipe['key'][symbol] for row in recipe['pattern'] for symbol in row)
+            assert counts=={'pipican:lifebloom_crystal':5,'pipican:verdant_depths_boss_core':2,'pipican:ritual_core':1,'minecraft:moss_block':1},counts
+            for phase in ['bloom','primordial']:
+                data=jar.read(f'assets/pipican/textures/entity/boss/sylthera_{phase}.png')
+                assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
+            assert 'com/pipican/client/boss/SyltheraRenderer.class' in names
             for phase in ['dormant','awakened']:
                 data=jar.read(f'assets/pipican/textures/entity/boss/frostbound_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256

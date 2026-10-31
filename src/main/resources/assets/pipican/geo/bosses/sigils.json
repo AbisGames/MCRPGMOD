@@ -148,5 +148,11 @@
     "boss": "durmagon_runic_titan",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:sylthera_primordial_bloom_sigil",
+    "boss": "sylthera_primordial_bloom",
+    "min_y": -64,
+    "max_y": 43
   }
 ]

@@ -12,6 +12,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | tengri_champion | implemented | prototype + native crest/limb poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | thalassor_deep_tyrant | implemented | prototype + native core/crest poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | durmagon_runic_titan | implemented | prototype + native core/shoulder poses | implemented | implemented | implemented | implemented | implemented | implemented | pending | pending |
+| sylthera_primordial_bloom | implemented | prototype + native crest/staff poses | implemented | implemented | implemented | implemented | implemented | implemented | pending | pending |
 | eldaroth_treant | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | fallen_king | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | durmagon_runic_titan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -84,3 +85,5 @@ Tengri Champion now combines a previewed triangular charge, a five-ray falcon vo
 Thalassor Deep Tyrant now telegraphs a seven-ray trident fan with a rotating gap, an expanding pressure field that can be escaped beyond its boundary, and a linked four-mine chain whose source mine interrupts the detonation. Its entity, phase and warning save state, ocean altar route, crafted sigil, texture atlases, trophy and Tideglass reward are registered and covered by server GameTests. In-client visual QA remains pending.
 
 Durmagon Runic Titan has a shootable four-node circuit, a three-lane forge projectile with a visible single rebound, and a polygonal hammer stamp with a phase-shifting safe rune pad. Entity combat and phase timers persist, while the Greyspine altar route, exact Runic Iron/core/ritual/amethyst recipe, two 256px phase atlases, trophy and material reward are wired. Server GameTests cover attack counterplay, summoning and rewards; client visual QA remains pending.
+
+Sylthera Primordial Bloom sequences spore hazard rings with an indicated safe band, uses breakable seedlings to suppress the root pool's heal, and releases a locked directional bloom after its inhale tell. Phase and attack state persist; the Verdant Depths Y-gated altar, Lifebloom/core/ritual/moss recipe, paired atlases, trophy and Lifebloom rewards are wired. Server GameTests cover combat, altar and loot; client visual QA remains pending.

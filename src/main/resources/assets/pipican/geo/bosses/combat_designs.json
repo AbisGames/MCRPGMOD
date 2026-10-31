@@ -1974,7 +1974,7 @@
   {
     "id": "sylthera_primordial_bloom",
     "region": "verdant_depths",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1100,
     "damage": 17,
@@ -1987,38 +1987,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:moss_block",
       "min_y": -64,
-      "max_y": 43
+      "max_y": 43,
+      "item": "pipican:sylthera_primordial_bloom_sigil"
     },
     "abilities": [
       {
         "id": "spore_sequence",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Colored spore rings activate in a displayed sequence.",
         "counterplay": "Move into a ring that has just finished pulsing.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:sylthera_primordial_bloom/spore_sequence"
+        "animation": "sylthera_primordial_bloom/spore_sequence"
       },
       {
         "id": "root_nursery",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Seedlings feed a healing root pool while warning their growth area.",
         "counterplay": "Destroy a seedling to open a safe path and interrupt healing.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:sylthera_primordial_bloom/root_nursery"
+        "animation": "sylthera_primordial_bloom/root_nursery"
       },
       {
         "id": "bloom_inhalation",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A slow inhalation draws spores inward before a directional release.",
         "counterplay": "Move out of the drawn release sector or interrupt the throat bloom.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:sylthera_primordial_bloom/bloom_inhalation"
+        "animation": "sylthera_primordial_bloom/bloom_inhalation"
       }
     ],
     "phase_two": {
@@ -2029,7 +2030,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:lifebloom_crystal",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:sylthera_primordial_bloom_trophy",
       "planned_trophy_name": "Sylthera Primordial Bloom Trophy",
       "xp": 275
     },
@@ -2037,16 +2038,16 @@
       "geometry": "geometry.pipican.sylthera_primordial_bloom",
       "file": "geo/bosses/sylthera_primordial_bloom.geo.json",
       "animation_mapping": {
-        "idle": "planned:sylthera_primordial_bloom/idle",
-        "walk": "planned:sylthera_primordial_bloom/walk",
-        "basic_attack": "planned:sylthera_primordial_bloom/basic_attack",
-        "hurt": "planned:sylthera_primordial_bloom/hurt",
-        "phase_transition": "planned:sylthera_primordial_bloom/phase_transition",
-        "summoning": "planned:sylthera_primordial_bloom/summoning",
-        "death": "planned:sylthera_primordial_bloom/death",
-        "spore_sequence": "planned:sylthera_primordial_bloom/spore_sequence",
-        "root_nursery": "planned:sylthera_primordial_bloom/root_nursery",
-        "bloom_inhalation": "planned:sylthera_primordial_bloom/bloom_inhalation"
+        "idle": "sylthera_primordial_bloom/idle",
+        "walk": "sylthera_primordial_bloom/walk",
+        "basic_attack": "sylthera_primordial_bloom/basic_attack",
+        "hurt": "sylthera_primordial_bloom/hurt",
+        "phase_transition": "sylthera_primordial_bloom/phase_transition",
+        "summoning": "sylthera_primordial_bloom/summoning",
+        "death": "sylthera_primordial_bloom/death",
+        "spore_sequence": "sylthera_primordial_bloom/spore_sequence",
+        "root_nursery": "sylthera_primordial_bloom/root_nursery",
+        "bloom_inhalation": "sylthera_primordial_bloom/bloom_inhalation"
       }
     },
     "arena": {

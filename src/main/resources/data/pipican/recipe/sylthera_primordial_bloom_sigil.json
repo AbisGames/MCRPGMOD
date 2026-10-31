@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LLL",
+    "LCL",
+    "KCM"
+  ],
+  "key": {
+    "L": "pipican:lifebloom_crystal",
+    "C": "pipican:verdant_depths_boss_core",
+    "K": "pipican:ritual_core",
+    "M": "minecraft:moss_block"
+  },
+  "result": {
+    "id": "pipican:sylthera_primordial_bloom_sigil",
+    "count": 1
+  }
+}

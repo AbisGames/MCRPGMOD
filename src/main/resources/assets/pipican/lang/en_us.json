@@ -418,5 +418,8 @@
   "entity.pipican.thalassor_deep_tyrant": "Thalassor, Deep Tyrant",
   "item.pipican.durmagon_runic_titan_sigil": "Durmagon's Runic Seal",
   "item.pipican.durmagon_runic_titan_trophy": "Runic Titan's Core",
-  "entity.pipican.durmagon_runic_titan": "Durmagon, Runic Titan"
+  "entity.pipican.durmagon_runic_titan": "Durmagon, Runic Titan",
+  "item.pipican.sylthera_primordial_bloom_sigil": "Sylthera's Blooming Seal",
+  "item.pipican.sylthera_primordial_bloom_trophy": "Primordial Bloom",
+  "entity.pipican.sylthera_primordial_bloom": "Sylthera, Primordial Bloom"
 }

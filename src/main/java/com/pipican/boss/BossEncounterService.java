@@ -38,7 +38,8 @@ public final class BossEncounterService {
         Map.entry("valthor_stormbringer",new Binding(BossCatalog.require("valthor_stormbringer"),BossRegistries.VALTHOR::get)),
         Map.entry("tengri_champion",new Binding(BossCatalog.require("tengri_champion"),BossRegistries.TENGRI::get)),
         Map.entry("thalassor_deep_tyrant",new Binding(BossCatalog.require("thalassor_deep_tyrant"),BossRegistries.THALASSOR::get)),
-        Map.entry("durmagon_runic_titan",new Binding(BossCatalog.require("durmagon_runic_titan"),BossRegistries.DURMAGON::get)));
+        Map.entry("durmagon_runic_titan",new Binding(BossCatalog.require("durmagon_runic_titan"),BossRegistries.DURMAGON::get)),
+        Map.entry("sylthera_primordial_bloom",new Binding(BossCatalog.require("sylthera_primordial_bloom"),BossRegistries.SYLTHERA::get)));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());
