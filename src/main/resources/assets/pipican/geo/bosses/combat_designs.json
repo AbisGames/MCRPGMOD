@@ -1372,12 +1372,12 @@
   {
     "id": "netharis_river_guardian",
     "region": "riverlands",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 850,
     "damage": 14,
     "sigil": {
-      "planned_item_id": "pipican:netharis_river_guardian_sigil",
+      "item": "pipican:netharis_river_guardian_sigil",
       "regional_material": "pipican:sunstone",
       "regional_count": 5,
       "dungeon_material": "pipican:riverlands_boss_core",
@@ -1390,33 +1390,33 @@
     "abilities": [
       {
         "id": "river_gates",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Temporary water-gate waves sweep through visible openings.",
         "counterplay": "Pass through an announced opening before the gate reaches you.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:netharis_river_guardian/river_gates"
+        "animation": "netharis_river_guardian/river_gates"
       },
       {
         "id": "silt_javelins",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Javelins rise from marked riverbed spots in sequence.",
         "counterplay": "Leave the next numbered spot during its separate warning.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:netharis_river_guardian/silt_javelins"
+        "animation": "netharis_river_guardian/silt_javelins"
       },
       {
         "id": "tributary_call",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Small current anchors feed a central charge.",
         "counterplay": "Interrupt an anchor or use its unlit crossing before the surge.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:netharis_river_guardian/tributary_call"
+        "animation": "netharis_river_guardian/tributary_call"
       }
     ],
     "phase_two": {
@@ -1427,7 +1427,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:sunstone",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:netharis_river_guardian_trophy",
       "planned_trophy_name": "Netharis River Guardian Trophy",
       "xp": 212
     },
@@ -1435,16 +1435,16 @@
       "geometry": "geometry.pipican.netharis_river_guardian",
       "file": "geo/bosses/netharis_river_guardian.geo.json",
       "animation_mapping": {
-        "idle": "planned:netharis_river_guardian/idle",
-        "walk": "planned:netharis_river_guardian/walk",
-        "basic_attack": "planned:netharis_river_guardian/basic_attack",
-        "hurt": "planned:netharis_river_guardian/hurt",
-        "phase_transition": "planned:netharis_river_guardian/phase_transition",
-        "summoning": "planned:netharis_river_guardian/summoning",
-        "death": "planned:netharis_river_guardian/death",
-        "river_gates": "planned:netharis_river_guardian/river_gates",
-        "silt_javelins": "planned:netharis_river_guardian/silt_javelins",
-        "tributary_call": "planned:netharis_river_guardian/tributary_call"
+        "idle": "netharis_river_guardian/idle",
+        "walk": "netharis_river_guardian/walk",
+        "basic_attack": "netharis_river_guardian/basic_attack",
+        "hurt": "netharis_river_guardian/hurt",
+        "phase_transition": "netharis_river_guardian/phase_transition",
+        "summoning": "netharis_river_guardian/summoning",
+        "death": "netharis_river_guardian/death",
+        "river_gates": "netharis_river_guardian/river_gates",
+        "silt_javelins": "netharis_river_guardian/silt_javelins",
+        "tributary_call": "netharis_river_guardian/tributary_call"
       }
     },
     "arena": {

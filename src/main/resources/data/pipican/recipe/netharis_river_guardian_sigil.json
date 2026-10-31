@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SSS", "SCR", "SCB"],
+  "key": {
+    "S": "pipican:sunstone",
+    "C": "pipican:riverlands_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:glow_ink_sac"
+  },
+  "result": {
+    "id": "pipican:netharis_river_guardian_sigil",
+    "count": 1
+  }
+}

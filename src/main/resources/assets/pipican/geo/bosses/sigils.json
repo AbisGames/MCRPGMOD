@@ -82,5 +82,11 @@
     "boss": "akhmar_sand_emperor",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:netharis_river_guardian_sigil",
+    "boss": "netharis_river_guardian",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

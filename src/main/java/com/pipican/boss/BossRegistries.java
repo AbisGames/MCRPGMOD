@@ -69,6 +69,10 @@ public final class BossRegistries {
         "akhmar_sand_emperor",()->EntityType.Builder.<AkhmarEntity>of(AkhmarEntity::new,MobCategory.MONSTER)
             .sized(1.9f,3.6f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("akhmar_sand_emperor"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<NetharisEntity>> NETHARIS=ENTITIES.register(
+        "netharis_river_guardian",()->EntityType.Builder.<NetharisEntity>of(NetharisEntity::new,MobCategory.MONSTER)
+            .sized(2.4f,3.4f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("netharis_river_guardian"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -86,5 +90,6 @@ public final class BossRegistries {
         event.put(AURELIOS.get(),AureliosEntity.attributes().build());
         event.put(LIANHUA.get(),LianhuaEntity.attributes().build());
         event.put(AKHMAR.get(),AkhmarEntity.attributes().build());
+        event.put(NETHARIS.get(),NetharisEntity.attributes().build());
     }
 }

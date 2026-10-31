@@ -21,7 +21,7 @@ def validate(path):
             definition=json.loads(jar.read(f'assets/pipican/items/{item}.json'))
             namespace,model=definition['model']['model'].split(':')
             assert f'assets/{namespace}/models/{model}.json' in names,model
-        for item in ['frostbound_colossus_sigil','frostbound_colossus_trophy','skollvar_winterfang_sigil','skollvar_winterfang_trophy','eldaroth_treant_sigil','eldaroth_treant_trophy','fallen_king_sigil','fallen_king_trophy','kragmor_canyon_warlord_sigil','kragmor_canyon_warlord_trophy','nocthar_void_sovereign_sigil','nocthar_void_sovereign_trophy','aetherion_sky_guardian_sigil','aetherion_sky_guardian_trophy','vermillion_blood_monarch_sigil','vermillion_blood_monarch_trophy','longwei_jade_dragon_sigil','longwei_jade_dragon_trophy','morgatha_swamp_queen_sigil','morgatha_swamp_queen_trophy','aurelios_sunken_emperor_sigil','aurelios_sunken_emperor_trophy','lianhua_lotus_serpent_sigil','lianhua_lotus_serpent_trophy','akhmar_sand_emperor_sigil','akhmar_sand_emperor_trophy']:
+        for item in ['frostbound_colossus_sigil','frostbound_colossus_trophy','skollvar_winterfang_sigil','skollvar_winterfang_trophy','eldaroth_treant_sigil','eldaroth_treant_trophy','fallen_king_sigil','fallen_king_trophy','kragmor_canyon_warlord_sigil','kragmor_canyon_warlord_trophy','nocthar_void_sovereign_sigil','nocthar_void_sovereign_trophy','aetherion_sky_guardian_sigil','aetherion_sky_guardian_trophy','vermillion_blood_monarch_sigil','vermillion_blood_monarch_trophy','longwei_jade_dragon_sigil','longwei_jade_dragon_trophy','morgatha_swamp_queen_sigil','morgatha_swamp_queen_trophy','aurelios_sunken_emperor_sigil','aurelios_sunken_emperor_trophy','lianhua_lotus_serpent_sigil','lianhua_lotus_serpent_trophy','akhmar_sand_emperor_sigil','akhmar_sand_emperor_trophy','netharis_river_guardian_sigil','netharis_river_guardian_trophy']:
             assert f'assets/pipican/models/item/{item}.json' in names
             assert f'assets/pipican/textures/item/{item}.png' in names
         for name in ['ritual_altar','ritual_core','morvath_sigil']:
@@ -36,7 +36,7 @@ def validate(path):
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
         if 'com/pipican/boss/BossDesigns.class' in names:
             designs=json.loads(jar.read('assets/pipican/geo/bosses/combat_designs.json'))
-            assert len(designs)==27 and sum(design['functional'] for design in designs)==14
+            assert len(designs)==27 and sum(design['functional'] for design in designs)==15
             assert 'com/pipican/boss/FrostboundEntity.class' in names
             assert 'com/pipican/boss/SkollvarEntity.class' in names
             assert 'com/pipican/boss/EldarothEntity.class' in names
@@ -62,6 +62,9 @@ def validate(path):
             assert 'com/pipican/boss/AkhmarEntity.class' in names
             assert 'com/pipican/boss/AkhmarCombat.class' in names
             assert 'com/pipican/client/boss/AkhmarRenderer.class' in names
+            assert 'com/pipican/boss/NetharisEntity.class' in names
+            assert 'com/pipican/boss/NetharisCombat.class' in names
+            assert 'com/pipican/client/boss/NetharisRenderer.class' in names
             for phase in ['dormant','awakened']:
                 data=jar.read(f'assets/pipican/textures/entity/boss/frostbound_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
@@ -103,6 +106,13 @@ def validate(path):
             assert counts=={'pipican:sunglass':5,'pipican:sunscorch_desert_boss_core':2,'pipican:ritual_core':1,'minecraft:rabbit_foot':1},counts
             for phase in ['sand_emperor','sunfire']:
                 data=jar.read(f'assets/pipican/textures/entity/boss/akhmar_{phase}.png')
+                assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
+            assert 'data/pipican/recipe/netharis_river_guardian_sigil.json' in names
+            recipe=json.loads(jar.read('data/pipican/recipe/netharis_river_guardian_sigil.json'))
+            counts=Counter(recipe['key'][symbol] for row in recipe['pattern'] for symbol in row)
+            assert counts=={'pipican:sunstone':5,'pipican:riverlands_boss_core':2,'pipican:ritual_core':1,'minecraft:glow_ink_sac':1},counts
+            for phase in ['river_guardian','flooded']:
+                data=jar.read(f'assets/pipican/textures/entity/boss/netharis_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
             for phase in ['heartwood','awakened']:
                 data=jar.read(f'assets/pipican/textures/entity/boss/eldaroth_ancient_{phase}.png')

@@ -385,5 +385,8 @@
   "entity.pipican.lianhua_lotus_serpent": "Lianhua, Lotus Serpent",
   "item.pipican.akhmar_sand_emperor_sigil": "Akhmar's Sun Sigil",
   "item.pipican.akhmar_sand_emperor_trophy": "Akhmar's Sun Crown",
-  "entity.pipican.akhmar_sand_emperor": "Akhmar, Sand Emperor"
+  "entity.pipican.akhmar_sand_emperor": "Akhmar, Sand Emperor",
+  "item.pipican.netharis_river_guardian_sigil": "Netharis' River Sigil",
+  "item.pipican.netharis_river_guardian_trophy": "River Guardian's Crest",
+  "entity.pipican.netharis_river_guardian": "Netharis, River Guardian"
 }

@@ -20,7 +20,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | morvath_ashen_king | complete | prototype | complete | complete | complete | complete | complete | complete | passed | sampled |
 | lianhua_lotus_serpent | implemented | preserved source geometry + flowing segment poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | akhmar_sand_emperor | implemented | preserved source geometry + native crown/mantle poses | implemented | implemented | implemented | implemented | implemented | implemented | implemented | pending |
-| netharis_river_guardian | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| netharis_river_guardian | implemented | preserved source geometry + native gill/crest poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | zahira_crimson_corsair | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | xaltek_emerald_devourer | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | corallith_reef_colossus | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |

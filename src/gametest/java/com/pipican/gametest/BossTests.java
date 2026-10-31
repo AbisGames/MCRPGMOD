@@ -38,7 +38,9 @@ public final class BossTests {
         Map.entry("aurelios_inner_sea_encounter",BossTests::aureliosInnerSeaEncounter),
         Map.entry("lianhua_lotus_encounter",BossTests::lianhuaLotusEncounter),
         Map.entry("akhmar_sun_encounter",BossTests::akhmarSunEncounter),
-        Map.entry("akhmar_combat",BossTests::akhmarCombat));
+        Map.entry("akhmar_combat",BossTests::akhmarCombat),
+        Map.entry("netharis_river_encounter",BossTests::netharisRiverEncounter),
+        Map.entry("netharis_combat",BossTests::netharisCombat));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -49,7 +51,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==14,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==15,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -98,6 +100,8 @@ public final class BossTests {
         helper.assertTrue(lianhua.functional()&&lianhua.sigil().registered()&&lianhua.loot().trophyItem().equals("pipican:lianhua_lotus_serpent_trophy"),"Lianhua lotus serpent metadata is incomplete");
         var akhmar=BossDesigns.require("akhmar_sand_emperor");
         helper.assertTrue(akhmar.functional()&&akhmar.sigil().registered()&&akhmar.loot().trophyItem().equals("pipican:akhmar_sand_emperor_trophy"),"Akhmar sand emperor metadata is incomplete");
+        var netharis=BossDesigns.require("netharis_river_guardian");
+        helper.assertTrue(netharis.functional()&&netharis.sigil().registered()&&netharis.loot().trophyItem().equals("pipican:netharis_river_guardian_trophy"),"Netharis river guardian metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -110,7 +114,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil","netharis_river_guardian_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -148,6 +152,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("sunscorch_desert").get(),BossContent.CORE.get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("sunscorch_desert").get(),net.minecraft.world.item.Items.RABBIT_FOOT));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("riverlands").get(),BossContent.CORE.get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("riverlands").get(),net.minecraft.world.item.Items.GLOW_INK_SAC));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -507,6 +514,48 @@ public final class BossTests {
             helper.assertTrue(reloaded.clock().phase()==2&&reloaded.clock().active().equals(AkhmarCombat.PROCESSION),"Akhmar phase/lane attack state was lost on reload");helper.succeed();
         }finally{front.discard();refuge.discard();}
     }
+    private static void netharisRiverEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(4608,32,4608));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.COBBLESTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.NETHARIS_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,"Netharis altar accepted a non-Riverlands biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/riverlands")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Riverlands biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Netharis spawn consumed its sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Riverlands altar summon failed");
+            var boss=level.getEntitiesOfClass(NetharisEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Netharis spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("netharis_river_guardian"),"Netharis encounter type was not saved");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.NETHARIS_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Netharis trophy/Sunstone rewards missing");helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void netharisCombat(GameTestHelper helper){
+        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(53000,30,53000));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(front);level.addFreshEntity(refuge);
+        var boss=BossRegistries.NETHARIS.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
+        try{
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+12,origin.getY(),origin.getZ());refuge.setHealth(20);refuge.invulnerableTime=0;
+            var gates=new NetharisCombat(boss);helper.assertTrue(gates.begin(NetharisCombat.GATES,front),"Netharis river gates failed to start");var crossing=gates.safeGatePosition(0);refuge.snapTo(crossing.x,crossing.y,crossing.z);front.snapTo(origin.getX()+4,origin.getY(),origin.getZ()-5);
+            for(int i=0;i<40;i++)gates.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()==20,"Netharis gate struck before its marked crossing");gates.tick(level);gates.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20,"Netharis moving water gate or marked-opening counterplay failed");
+            front.setHealth(20);front.invulnerableTime=0;var spears=new NetharisCombat(boss);helper.assertTrue(spears.begin(NetharisCombat.JAVELINS,front),"Netharis silt javelins failed to start");var first=spears.javelinPosition(0);front.snapTo(first.x,first.y,first.z);
+            for(int i=0;i<50;i++)spears.tick(level);helper.assertTrue(front.getHealth()==20,"Netharis javelin struck before its warning ended");spears.tick(level);spears.tick(level);
+            helper.assertTrue(front.getHealth()<20&&spears.javelinProgress()==1,"first sequential Netharis javelin failed");front.setHealth(20);front.invulnerableTime=0;var second=spears.javelinPosition(1);front.snapTo(second.x,second.y,second.z);
+            for(int i=0;i<9;i++)spears.tick(level);helper.assertTrue(front.getHealth()<20&&spears.javelinProgress()==2,"numbered javelin sequence did not advance independently");
+            front.setHealth(20);front.invulnerableTime=0;refuge.setHealth(20);refuge.invulnerableTime=0;var current=new NetharisCombat(boss);helper.assertTrue(current.begin(NetharisCombat.TRIBUTARY,front),"Netharis tributary call failed to start");var safe=current.safeCrossingPosition();refuge.snapTo(safe.x,safe.y,safe.z);front.snapTo(origin.getX()+8,origin.getY(),origin.getZ()-5);
+            for(int i=0;i<60;i++)current.tick(level);helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20,"Netharis surge unlit-crossing counterplay failed");
+            front.setHealth(20);front.invulnerableTime=0;var interrupted=new NetharisCombat(boss);helper.assertTrue(interrupted.updatePhase(425,850)&&interrupted.begin(NetharisCombat.TRIBUTARY,front),"Netharis phase-two call did not begin");var rotated=interrupted.safeCrossingPosition();helper.assertTrue(rotated.distanceToSqr(safe)>1,"Netharis phase-two crossing failed to rotate");
+            for(int i=0;i<3;i++){var shot=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(shot!=null,"Netharis anchor interrupt projectile could not be created");var p=interrupted.anchorPosition(i);shot.setPos(p.x,p.y,p.z);shot.setNoGravity(true);shot.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);level.addFreshEntity(shot);}
+            interrupted.tick(level);helper.assertTrue(interrupted.brokenAnchors()==3,"projectiles did not interrupt all tributary anchors");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());interrupted.save(saved);
+            var reloaded=new NetharisCombat(boss);reloaded.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));for(int i=0;i<59;i++)reloaded.tick(level);
+            helper.assertTrue(reloaded.clock().phase()==2&&reloaded.brokenAnchors()==3&&front.getHealth()==20&&reloaded.exposureTicks()>0,"phase-two interrupted surge or anchor exposure did not persist");helper.succeed();
+        }finally{front.discard();refuge.discard();boss.discard();}
+    }
     private static void realAttacks(GameTestHelper helper){
         var level=helper.getLevel(); var origin=helper.absolutePos(new net.minecraft.core.BlockPos(768,30,768));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))
@@ -792,7 +841,7 @@ public final class BossTests {
         front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+5.8);dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+5.5,origin.getY(),origin.getZ());
         var court=new VermillionCombat(monarch);helper.assertTrue(court.begin(VermillionCombat.COURT,front),"Vermillion court channel failed to start");
         for(int i=0;i<59;i++)court.tick(level);helper.assertTrue(front.getHealth()==20,"Vermillion channel resolved before warning");court.tick(level);
-        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Vermillion limited channel sector or courtier interruption failed");
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Vermillion limited channel sector or courtier interruption failed: front="+front.getHealth()+", dodge="+dodge.getHealth()+", active="+court.clock().active()+", resolved="+court.clock().resolved()+", insideFront="+monarch.insideArena(front.position())+", front="+front.position()+", dodge="+dodge.position());
         var breaker=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(breaker);monarch.setHealth(700);
         front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());var phaseTwo=new VermillionCombat(monarch);helper.assertTrue(phaseTwo.updatePhase(700,1400)&&phaseTwo.begin(VermillionCombat.TETHERS,front),"Vermillion phase-two tethers failed");
         front.snapTo(origin.getX()+5.36,origin.getY(),origin.getZ()-4.62);dodge.snapTo(origin.getX()+7,origin.getY(),origin.getZ());breaker.snapTo(origin.getX()+5.36,origin.getY(),origin.getZ()+4.62);
