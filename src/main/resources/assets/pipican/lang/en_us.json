@@ -310,7 +310,7 @@
   "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
   "ritual.pipican.failed": "Ritual rejected: %s",
   "ritual.pipican.summoned": "The Ashen King awakens.",
-  "ritual.pipican.instructions": "Prepare a solid 13\u00d713 floor and 11\u00d711\u00d75 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
+  "ritual.pipican.instructions": "Prepare a solid 13×13 floor and 11×11×5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
   "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted.",
   "ritual.pipican.result.invalid_player": "Stand near the altar while alive to summon.",
   "ritual.pipican.result.invalid_height": "Leave at least five blocks below the world ceiling.",
@@ -353,7 +353,7 @@
   "item.pipican.frostbound_colossus_sigil": "Frostbound Sigil",
   "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy",
   "item.pipican.skollvar_winterfang_sigil": "Winterfang Sigil",
-  "item.pipican.skollvar_winterfang_trophy": "Sk\u00f6llvar Trophy",
+  "item.pipican.skollvar_winterfang_trophy": "Sköllvar Trophy",
   "item.pipican.eldaroth_treant_sigil": "Eldaroth Sigil",
   "item.pipican.eldaroth_treant_trophy": "Ancient Treant Trophy",
   "item.pipican.fallen_king_sigil": "Fallen King Sigil",
@@ -406,5 +406,8 @@
   "entity.pipican.nhalkorr_leviathan": "Nhalkorr, the Leviathan",
   "item.pipican.hrothgar_drowned_jarl_sigil": "Hrothgar's Drowned Oath",
   "item.pipican.hrothgar_drowned_jarl_trophy": "Jarl's Salt-Iron Axe",
-  "entity.pipican.hrothgar_drowned_jarl": "Hrothgar, Drowned Jarl"
+  "entity.pipican.hrothgar_drowned_jarl": "Hrothgar, Drowned Jarl",
+  "item.pipican.valthor_stormbringer_sigil": "Valthor's Storm Sigil",
+  "item.pipican.valthor_stormbringer_trophy": "Stormbringer's Crown",
+  "entity.pipican.valthor_stormbringer": "Valthor, Stormbringer"
 }

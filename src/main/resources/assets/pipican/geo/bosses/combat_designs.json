@@ -342,12 +342,12 @@
   {
     "id": "valthor_stormbringer",
     "region": "stormcoast",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 850,
     "damage": 16,
     "sigil": {
-      "planned_item_id": "pipican:valthor_stormbringer_sigil",
+      "item": "pipican:valthor_stormbringer_sigil",
       "regional_material": "pipican:thunderbasalt",
       "regional_count": 5,
       "dungeon_material": "pipican:stormcoast_boss_core",
@@ -360,33 +360,33 @@
     "abilities": [
       {
         "id": "conductor_link",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Placed spectral conductors connect with delayed lightning lines.",
         "counterplay": "Stand outside the drawn connections or break a conductor.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:valthor_stormbringer/conductor_link"
+        "animation": "native:valthor_stormbringer/conductor_link"
       },
       {
         "id": "thunder_donut",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A thunderclap expands through an annulus, leaving the center safe.",
         "counterplay": "Choose the inner refuge or leave the outer edge during windup.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:valthor_stormbringer/thunder_donut"
+        "animation": "native:valthor_stormbringer/thunder_donut"
       },
       {
         "id": "gale_channels",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Parallel wind channels push toward lit strike zones.",
         "counterplay": "Move into an unlit channel before the push starts.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:valthor_stormbringer/gale_channels"
+        "animation": "native:valthor_stormbringer/gale_channels"
       }
     ],
     "phase_two": {
@@ -397,7 +397,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:thunderbasalt",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:valthor_stormbringer_trophy",
       "planned_trophy_name": "Valthor Stormbringer Trophy",
       "xp": 212
     },
@@ -405,16 +405,16 @@
       "geometry": "geometry.pipican.valthor_stormbringer",
       "file": "geo/bosses/valthor_stormbringer.geo.json",
       "animation_mapping": {
-        "idle": "planned:valthor_stormbringer/idle",
-        "walk": "planned:valthor_stormbringer/walk",
-        "basic_attack": "planned:valthor_stormbringer/basic_attack",
-        "hurt": "planned:valthor_stormbringer/hurt",
-        "phase_transition": "planned:valthor_stormbringer/phase_transition",
-        "summoning": "planned:valthor_stormbringer/summoning",
-        "death": "planned:valthor_stormbringer/death",
-        "conductor_link": "planned:valthor_stormbringer/conductor_link",
-        "thunder_donut": "planned:valthor_stormbringer/thunder_donut",
-        "gale_channels": "planned:valthor_stormbringer/gale_channels"
+        "idle": "native:valthor_stormbringer/idle",
+        "walk": "native:valthor_stormbringer/walk",
+        "basic_attack": "native:valthor_stormbringer/basic_attack",
+        "hurt": "native:valthor_stormbringer/hurt",
+        "phase_transition": "native:valthor_stormbringer/phase_transition",
+        "summoning": "native:valthor_stormbringer/summoning",
+        "death": "native:valthor_stormbringer/death",
+        "conductor_link": "native:valthor_stormbringer/conductor_link",
+        "thunder_donut": "native:valthor_stormbringer/thunder_donut",
+        "gale_channels": "native:valthor_stormbringer/gale_channels"
       }
     },
     "arena": {

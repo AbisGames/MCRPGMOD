@@ -34,7 +34,8 @@ public final class BossEncounterService {
         Map.entry("corallith_reef_colossus",new Binding(BossCatalog.require("corallith_reef_colossus"),BossRegistries.CORALLITH::get)),
         Map.entry("azhar_golden_behemoth",new Binding(BossCatalog.require("azhar_golden_behemoth"),BossRegistries.AZHAR::get)),
         Map.entry("nhalkorr_leviathan",new Binding(BossCatalog.require("nhalkorr_leviathan"),BossRegistries.NHALKORR::get)),
-        Map.entry("hrothgar_drowned_jarl",new Binding(BossCatalog.require("hrothgar_drowned_jarl"),BossRegistries.HROTHGAR::get)));
+        Map.entry("hrothgar_drowned_jarl",new Binding(BossCatalog.require("hrothgar_drowned_jarl"),BossRegistries.HROTHGAR::get)),
+        Map.entry("valthor_stormbringer",new Binding(BossCatalog.require("valthor_stormbringer"),BossRegistries.VALTHOR::get)));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());

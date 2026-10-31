@@ -124,5 +124,11 @@
     "boss": "hrothgar_drowned_jarl",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:valthor_stormbringer_sigil",
+    "boss": "valthor_stormbringer",
+    "min_y": -64,
+    "max_y": 448
   }
 ]
