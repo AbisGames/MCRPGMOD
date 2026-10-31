@@ -84,6 +84,14 @@ neoForge {
             systemProperty 'pipican.worldgenTarget', providers.gradleProperty('worldgenTarget').getOrElse('')
             systemProperty 'pipican.worldgenAccessDiagnostics', 'true'
             systemProperty 'pipican.rareGenerationTests', providers.gradleProperty('rareGenerationTests').getOrElse('false')
+            // Run only some tests, or repeat them: ./gradlew runGameTestServer -Ptests='pipican:*_combat' -PrepeatCount=3
+            // (the full suite takes ~45 minutes; its city/worldgen tests are the slow ones).
+            if (providers.gradleProperty('tests').isPresent()) {
+                programArguments.addAll '--tests', providers.gradleProperty('tests').get()
+            }
+            if (providers.gradleProperty('repeatCount').isPresent()) {
+                programArguments.addAll '--repeatCount', providers.gradleProperty('repeatCount').get()
+            }
         }
 
         data {
