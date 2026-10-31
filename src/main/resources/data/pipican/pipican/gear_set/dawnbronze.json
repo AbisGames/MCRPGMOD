@@ -1,0 +1,42 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/dawnbronze/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "day"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/dawnbronze/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.15
+        }
+      ]
+    }
+  ]
+}

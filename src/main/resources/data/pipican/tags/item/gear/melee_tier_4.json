@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:arcanite_axe",
+    "pipican:arcanite_sword",
+    "pipican:black_metal_axe",
+    "pipican:black_metal_sword",
+    "pipican:carbalite_axe",
+    "pipican:carbalite_sword",
+    "pipican:celestial_bronze_axe",
+    "pipican:celestial_bronze_sword",
+    "pipican:dimeritium_axe",
+    "pipican:dimeritium_sword",
+    "pipican:elementium_axe",
+    "pipican:elementium_sword",
+    "pipican:goblin_silver_axe",
+    "pipican:goblin_silver_sword",
+    "pipican:imperial_gold_axe",
+    "pipican:imperial_gold_sword",
+    "pipican:iridium_axe",
+    "pipican:iridium_sword",
+    "pipican:magisteel_axe",
+    "pipican:magisteel_sword",
+    "pipican:meteoric_iron_axe",
+    "pipican:meteoric_iron_sword",
+    "pipican:palladium_axe",
+    "pipican:palladium_sword",
+    "pipican:starsilver_axe",
+    "pipican:starsilver_sword"
+  ]
+}

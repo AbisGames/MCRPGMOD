@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:terrasteel_axe",
+    "pipican:terrasteel_hoe",
+    "pipican:terrasteel_pickaxe",
+    "pipican:terrasteel_shovel",
+    "pipican:terrasteel_spear",
+    "pipican:terrasteel_sword"
+  ]
+}

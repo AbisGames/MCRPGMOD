@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:redrock_iron_boots",
+    "pipican:redrock_iron_chestplate",
+    "pipican:redrock_iron_helmet",
+    "pipican:redrock_iron_leggings"
+  ]
+}

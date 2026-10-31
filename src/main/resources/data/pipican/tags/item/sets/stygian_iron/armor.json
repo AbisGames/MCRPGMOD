@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:stygian_iron_boots",
+    "pipican:stygian_iron_chestplate",
+    "pipican:stygian_iron_helmet",
+    "pipican:stygian_iron_leggings"
+  ]
+}

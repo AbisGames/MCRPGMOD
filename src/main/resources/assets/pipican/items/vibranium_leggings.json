@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/vibranium_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9470552
+      }
+    ]
+  }
+}

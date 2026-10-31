@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:moonstone_axe",
+    "pipican:moonstone_hoe",
+    "pipican:moonstone_pickaxe",
+    "pipican:moonstone_shovel",
+    "pipican:moonstone_spear",
+    "pipican:moonstone_sword"
+  ]
+}

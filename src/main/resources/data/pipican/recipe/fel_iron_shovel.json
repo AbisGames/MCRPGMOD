@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "#": "pipican:fel_iron_ingot",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "#",
+    "/",
+    "/"
+  ],
+  "result": {
+    "id": "pipican:fel_iron_shovel"
+  }
+}

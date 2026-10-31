@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/gromril_boots",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9537663
+      }
+    ]
+  }
+}

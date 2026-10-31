@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:tidalite_axe",
+    "pipican:tidalite_hoe",
+    "pipican:tidalite_pickaxe",
+    "pipican:tidalite_shovel",
+    "pipican:tidalite_spear",
+    "pipican:tidalite_sword"
+  ]
+}

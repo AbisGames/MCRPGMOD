@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cold_iron_axe",
+    "pipican:cold_iron_sword",
+    "pipican:corundum_axe",
+    "pipican:corundum_sword",
+    "pipican:electrum_axe",
+    "pipican:electrum_sword",
+    "pipican:pearlsilver_axe",
+    "pipican:pearlsilver_sword",
+    "pipican:redrock_iron_axe",
+    "pipican:redrock_iron_sword",
+    "pipican:runic_iron_axe",
+    "pipican:runic_iron_sword",
+    "pipican:stormsilver_axe",
+    "pipican:stormsilver_sword",
+    "pipican:truesilver_axe",
+    "pipican:truesilver_sword"
+  ]
+}

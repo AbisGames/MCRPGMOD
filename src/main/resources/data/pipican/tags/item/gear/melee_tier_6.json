@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:aetherium_axe",
+    "pipican:aetherium_sword",
+    "pipican:allthemodium_axe",
+    "pipican:allthemodium_sword",
+    "pipican:chlorophyte_axe",
+    "pipican:chlorophyte_sword",
+    "pipican:dragon_metal_axe",
+    "pipican:dragon_metal_sword",
+    "pipican:flametal_axe",
+    "pipican:flametal_sword",
+    "pipican:gundanium_axe",
+    "pipican:gundanium_sword",
+    "pipican:inertron_axe",
+    "pipican:inertron_sword",
+    "pipican:orichalcum_axe",
+    "pipican:orichalcum_sword",
+    "pipican:phrik_axe",
+    "pipican:phrik_sword",
+    "pipican:sigmarite_axe",
+    "pipican:sigmarite_sword",
+    "pipican:terrasteel_axe",
+    "pipican:terrasteel_sword",
+    "pipican:trinium_axe",
+    "pipican:trinium_sword",
+    "pipican:void_metal_axe",
+    "pipican:void_metal_sword"
+  ]
+}

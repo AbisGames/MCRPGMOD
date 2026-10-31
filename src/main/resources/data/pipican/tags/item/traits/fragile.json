@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:electrum_axe",
+    "pipican:electrum_boots",
+    "pipican:electrum_chestplate",
+    "pipican:electrum_helmet",
+    "pipican:electrum_hoe",
+    "pipican:electrum_leggings",
+    "pipican:electrum_pickaxe",
+    "pipican:electrum_shovel",
+    "pipican:electrum_spear",
+    "pipican:electrum_sword",
+    "pipican:malachite_axe",
+    "pipican:malachite_boots",
+    "pipican:malachite_chestplate",
+    "pipican:malachite_helmet",
+    "pipican:malachite_hoe",
+    "pipican:malachite_leggings",
+    "pipican:malachite_pickaxe",
+    "pipican:malachite_shovel",
+    "pipican:malachite_spear",
+    "pipican:malachite_sword"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:electrum_boots",
+    "pipican:electrum_chestplate",
+    "pipican:electrum_helmet",
+    "pipican:electrum_leggings"
+  ]
+}

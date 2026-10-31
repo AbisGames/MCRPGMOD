@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:crystallite_axe",
+    "pipican:crystallite_hoe",
+    "pipican:crystallite_pickaxe",
+    "pipican:crystallite_shovel",
+    "pipican:crystallite_spear",
+    "pipican:crystallite_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:aetherium_axe",
+    "pipican:aetherium_hoe",
+    "pipican:aetherium_pickaxe",
+    "pipican:aetherium_shovel",
+    "pipican:aetherium_spear",
+    "pipican:aetherium_sword"
+  ]
+}

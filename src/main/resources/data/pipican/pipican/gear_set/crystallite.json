@@ -1,0 +1,35 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/crystallite/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/crystallite/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:nth_hit",
+          "every": 3,
+          "multiplier": 1.4
+        }
+      ]
+    }
+  ]
+}

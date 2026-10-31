@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:hallowed_axe",
+    "pipican:hallowed_hoe",
+    "pipican:hallowed_pickaxe",
+    "pipican:hallowed_shovel",
+    "pipican:hallowed_spear",
+    "pipican:hallowed_sword"
+  ]
+}

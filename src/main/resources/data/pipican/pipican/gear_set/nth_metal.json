@@ -1,0 +1,37 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/nth_metal/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.0
+        },
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:slow_falling"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/nth_metal/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.25
+        }
+      ]
+    }
+  ]
+}

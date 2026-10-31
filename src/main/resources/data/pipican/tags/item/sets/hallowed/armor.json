@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:hallowed_boots",
+    "pipican:hallowed_chestplate",
+    "pipican:hallowed_helmet",
+    "pipican:hallowed_leggings"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:stygian_iron_axe",
+    "pipican:stygian_iron_hoe",
+    "pipican:stygian_iron_pickaxe",
+    "pipican:stygian_iron_shovel",
+    "pipican:stygian_iron_spear",
+    "pipican:stygian_iron_sword"
+  ]
+}

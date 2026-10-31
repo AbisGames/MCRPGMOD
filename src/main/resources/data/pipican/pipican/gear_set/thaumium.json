@@ -1,0 +1,39 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/thaumium/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.15
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "ability_cost",
+          "amount": -0.15
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/thaumium/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:magisteel_axe",
+    "pipican:magisteel_hoe",
+    "pipican:magisteel_pickaxe",
+    "pipican:magisteel_shovel",
+    "pipican:magisteel_spear",
+    "pipican:magisteel_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:quicksilver_axe",
+    "pipican:quicksilver_hoe",
+    "pipican:quicksilver_pickaxe",
+    "pipican:quicksilver_shovel",
+    "pipican:quicksilver_spear",
+    "pipican:quicksilver_sword"
+  ]
+}

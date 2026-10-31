@@ -1,0 +1,38 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/dragonite/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:fire_resistance"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/dragonite/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "minecraft:ender_dragon",
+          "multiplier": 1.4
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/end",
+          "multiplier": 1.2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:scarlet_axe",
+    "pipican:scarlet_hoe",
+    "pipican:scarlet_pickaxe",
+    "pipican:scarlet_shovel",
+    "pipican:scarlet_spear",
+    "pipican:scarlet_sword"
+  ]
+}

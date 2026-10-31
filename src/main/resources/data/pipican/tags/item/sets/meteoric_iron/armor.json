@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:meteoric_iron_boots",
+    "pipican:meteoric_iron_chestplate",
+    "pipican:meteoric_iron_helmet",
+    "pipican:meteoric_iron_leggings"
+  ]
+}

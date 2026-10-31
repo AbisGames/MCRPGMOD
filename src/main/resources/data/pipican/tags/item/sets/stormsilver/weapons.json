@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:stormsilver_axe",
+    "pipican:stormsilver_hoe",
+    "pipican:stormsilver_pickaxe",
+    "pipican:stormsilver_shovel",
+    "pipican:stormsilver_spear",
+    "pipican:stormsilver_sword"
+  ]
+}

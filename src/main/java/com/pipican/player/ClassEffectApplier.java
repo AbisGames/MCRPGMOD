@@ -209,6 +209,8 @@ public final class ClassEffectApplier {
             rpgClass.specialPassives().forEach(e -> effects.add(Map.entry(e, 1)));
         }
         rpgClass.weakness().ifPresent(w -> w.effects().forEach(e -> effects.add(Map.entry(e, 1))));
+        // Armor and weapon set bonuses (each guarded by "wearing the set" / "holding its weapon").
+        ClassLookup.gearSets(access).forEach(set -> set.effects().forEach(e -> effects.add(Map.entry(e, 1))));
         for (TreeKind kind : TreeKind.values()) {
             Optional<SkillTree> tree = ClassLookup.tree(access, rpgClass, kind);
             if (tree.isEmpty()) {

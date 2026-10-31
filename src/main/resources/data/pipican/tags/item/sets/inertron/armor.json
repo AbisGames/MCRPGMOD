@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:inertron_boots",
+    "pipican:inertron_chestplate",
+    "pipican:inertron_helmet",
+    "pipican:inertron_leggings"
+  ]
+}

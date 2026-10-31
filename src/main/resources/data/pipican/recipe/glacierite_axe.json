@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "#": "pipican:glacierite",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "##",
+    "#/",
+    " /"
+  ],
+  "result": {
+    "id": "pipican:glacierite_axe"
+  }
+}

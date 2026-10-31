@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:draconium_axe",
+    "pipican:draconium_hoe",
+    "pipican:draconium_pickaxe",
+    "pipican:draconium_shovel",
+    "pipican:draconium_spear",
+    "pipican:draconium_sword"
+  ]
+}

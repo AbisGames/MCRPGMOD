@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:dragon_metal_axe",
+    "pipican:dragon_metal_hoe",
+    "pipican:dragon_metal_pickaxe",
+    "pipican:dragon_metal_shovel",
+    "pipican:dragon_metal_spear",
+    "pipican:dragon_metal_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:goblin_silver_axe",
+    "pipican:goblin_silver_hoe",
+    "pipican:goblin_silver_pickaxe",
+    "pipican:goblin_silver_shovel",
+    "pipican:goblin_silver_spear",
+    "pipican:goblin_silver_sword"
+  ]
+}

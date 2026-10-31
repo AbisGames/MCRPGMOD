@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:orichalcum_axe",
+    "pipican:orichalcum_hoe",
+    "pipican:orichalcum_pickaxe",
+    "pipican:orichalcum_shovel",
+    "pipican:orichalcum_spear",
+    "pipican:orichalcum_sword"
+  ]
+}

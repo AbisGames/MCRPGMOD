@@ -83,6 +83,78 @@
         "minecraft:netherite_boots"
       ],
       "min": 9
+    },
+    {
+      "items": "#pipican:gear/melee_tier_1",
+      "min": 2
+    },
+    {
+      "items": "#pipican:gear/melee_tier_2",
+      "min": 3
+    },
+    {
+      "items": "#pipican:gear/melee_tier_3",
+      "min": 5
+    },
+    {
+      "items": "#pipican:gear/melee_tier_4",
+      "min": 6
+    },
+    {
+      "items": "#pipican:gear/melee_tier_5",
+      "min": 9
+    },
+    {
+      "items": "#pipican:gear/melee_tier_6",
+      "min": 12
+    },
+    {
+      "items": "#pipican:gear/melee_tier_7",
+      "min": 15
+    },
+    {
+      "items": "#pipican:gear/melee_tier_8",
+      "min": 20
+    },
+    {
+      "items": "#pipican:gear/melee_tier_9",
+      "min": 25
+    },
+    {
+      "items": "#pipican:gear/armor_tier_1",
+      "min": 2
+    },
+    {
+      "items": "#pipican:gear/armor_tier_2",
+      "min": 3
+    },
+    {
+      "items": "#pipican:gear/armor_tier_3",
+      "min": 5
+    },
+    {
+      "items": "#pipican:gear/armor_tier_4",
+      "min": 6
+    },
+    {
+      "items": "#pipican:gear/armor_tier_5",
+      "min": 9
+    },
+    {
+      "items": "#pipican:gear/armor_tier_6",
+      "min": 12
+    },
+    {
+      "items": "#pipican:gear/armor_tier_7",
+      "min": 15
+    },
+    {
+      "items": "#pipican:gear/armor_tier_8",
+      "min": 20
+    },
+    {
+      "items": "#pipican:gear/armor_tier_9",
+      "min": 25
     }
   ]
 }

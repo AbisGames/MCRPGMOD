@@ -1,0 +1,46 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/unobtanium/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.4
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.7
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:regeneration"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/unobtanium/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.4
+        }
+      ]
+    }
+  ]
+}

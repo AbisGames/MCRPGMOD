@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:sigmarite_axe",
+    "pipican:sigmarite_hoe",
+    "pipican:sigmarite_pickaxe",
+    "pipican:sigmarite_shovel",
+    "pipican:sigmarite_spear",
+    "pipican:sigmarite_sword"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:crystallite_boots",
+    "pipican:crystallite_chestplate",
+    "pipican:crystallite_helmet",
+    "pipican:crystallite_leggings"
+  ]
+}

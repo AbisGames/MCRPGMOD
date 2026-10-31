@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "#": "pipican:celestial_bronze_ingot",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "##",
+    " /",
+    " /"
+  ],
+  "result": {
+    "id": "pipican:celestial_bronze_hoe"
+  }
+}

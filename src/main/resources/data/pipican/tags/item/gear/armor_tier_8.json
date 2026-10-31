@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantium_boots",
+    "pipican:adamantium_chestplate",
+    "pipican:adamantium_helmet",
+    "pipican:adamantium_leggings",
+    "pipican:draconium_boots",
+    "pipican:draconium_chestplate",
+    "pipican:draconium_helmet",
+    "pipican:draconium_leggings",
+    "pipican:luminite_boots",
+    "pipican:luminite_chestplate",
+    "pipican:luminite_helmet",
+    "pipican:luminite_leggings",
+    "pipican:phazon_boots",
+    "pipican:phazon_chestplate",
+    "pipican:phazon_helmet",
+    "pipican:phazon_leggings",
+    "pipican:uru_boots",
+    "pipican:uru_chestplate",
+    "pipican:uru_helmet",
+    "pipican:uru_leggings"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/allthemodium_helmet",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -864182
+      }
+    ]
+  }
+}

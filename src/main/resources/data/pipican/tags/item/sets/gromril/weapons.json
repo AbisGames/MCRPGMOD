@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:gromril_axe",
+    "pipican:gromril_hoe",
+    "pipican:gromril_pickaxe",
+    "pipican:gromril_shovel",
+    "pipican:gromril_spear",
+    "pipican:gromril_sword"
+  ]
+}

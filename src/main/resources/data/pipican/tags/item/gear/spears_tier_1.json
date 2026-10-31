@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cold_iron_spear",
+    "pipican:corundum_spear",
+    "pipican:electrum_spear",
+    "pipican:pearlsilver_spear",
+    "pipican:redrock_iron_spear",
+    "pipican:runic_iron_spear",
+    "pipican:stormsilver_spear",
+    "pipican:truesilver_spear"
+  ]
+}

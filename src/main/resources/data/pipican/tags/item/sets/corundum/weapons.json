@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:corundum_axe",
+    "pipican:corundum_hoe",
+    "pipican:corundum_pickaxe",
+    "pipican:corundum_shovel",
+    "pipican:corundum_spear",
+    "pipican:corundum_sword"
+  ]
+}

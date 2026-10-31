@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:phrik_axe",
+    "pipican:phrik_hoe",
+    "pipican:phrik_pickaxe",
+    "pipican:phrik_shovel",
+    "pipican:phrik_spear",
+    "pipican:phrik_sword"
+  ]
+}

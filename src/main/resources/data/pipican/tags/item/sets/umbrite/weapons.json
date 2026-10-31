@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:umbrite_axe",
+    "pipican:umbrite_hoe",
+    "pipican:umbrite_pickaxe",
+    "pipican:umbrite_shovel",
+    "pipican:umbrite_spear",
+    "pipican:umbrite_sword"
+  ]
+}

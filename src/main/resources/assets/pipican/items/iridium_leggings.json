@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/iridium_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4743968
+      }
+    ]
+  }
+}

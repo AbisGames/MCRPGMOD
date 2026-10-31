@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/darksteel_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -15000286
+      }
+    ]
+  }
+}

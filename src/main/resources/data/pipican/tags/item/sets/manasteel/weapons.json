@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:manasteel_axe",
+    "pipican:manasteel_hoe",
+    "pipican:manasteel_pickaxe",
+    "pipican:manasteel_shovel",
+    "pipican:manasteel_spear",
+    "pipican:manasteel_sword"
+  ]
+}

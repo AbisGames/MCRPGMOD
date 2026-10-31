@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:carbonadium_axe",
+    "pipican:carbonadium_hoe",
+    "pipican:carbonadium_pickaxe",
+    "pipican:carbonadium_shovel",
+    "pipican:carbonadium_spear",
+    "pipican:carbonadium_sword"
+  ]
+}

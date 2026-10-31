@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:palladium_axe",
+    "pipican:palladium_hoe",
+    "pipican:palladium_pickaxe",
+    "pipican:palladium_shovel",
+    "pipican:palladium_spear",
+    "pipican:palladium_sword"
+  ]
+}

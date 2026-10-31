@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:dwemer_metal_boots",
+    "pipican:dwemer_metal_chestplate",
+    "pipican:dwemer_metal_helmet",
+    "pipican:dwemer_metal_leggings"
+  ]
+}

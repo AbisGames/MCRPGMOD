@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:truesilver_axe",
+    "pipican:truesilver_hoe",
+    "pipican:truesilver_pickaxe",
+    "pipican:truesilver_shovel",
+    "pipican:truesilver_spear",
+    "pipican:truesilver_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cold_iron_axe",
+    "pipican:cold_iron_hoe",
+    "pipican:cold_iron_pickaxe",
+    "pipican:cold_iron_shovel",
+    "pipican:cold_iron_spear",
+    "pipican:cold_iron_sword"
+  ]
+}

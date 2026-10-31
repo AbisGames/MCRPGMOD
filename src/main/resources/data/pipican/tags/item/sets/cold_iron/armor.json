@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cold_iron_boots",
+    "pipican:cold_iron_chestplate",
+    "pipican:cold_iron_helmet",
+    "pipican:cold_iron_leggings"
+  ]
+}

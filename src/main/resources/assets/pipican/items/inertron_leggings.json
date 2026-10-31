@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/inertron_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7696487
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantium_spear",
+    "pipican:draconium_spear",
+    "pipican:luminite_spear",
+    "pipican:phazon_spear",
+    "pipican:uru_spear"
+  ]
+}

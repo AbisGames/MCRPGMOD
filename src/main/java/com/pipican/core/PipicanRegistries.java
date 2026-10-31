@@ -22,6 +22,7 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
  *   data/&lt;namespace&gt;/pipican/class/&lt;name&gt;.json         -> {@link RpgClass}
  *   data/&lt;namespace&gt;/pipican/skill/&lt;name&gt;.json         -> {@link Skill} (masterable skills)
  *   data/&lt;namespace&gt;/pipican/ability/&lt;name&gt;.json       -> {@link Ability} (active abilities)
+ *   data/&lt;namespace&gt;/pipican/gear_set/&lt;name&gt;.json      -> {@link com.pipican.ore.GearSet} (armor/weapon set bonuses)
  * </pre>
  * Adding a new class therefore never needs Java code - only new JSON files. See docs/CLASS_SYSTEM.md.
  *
@@ -34,6 +35,7 @@ public final class PipicanRegistries {
     public static final ResourceKey<Registry<Skill>> SKILL = key("skill");
     public static final ResourceKey<Registry<RpgClass>> CLASS = key("class");
     public static final ResourceKey<Registry<Ability>> ABILITY = key("ability");
+    public static final ResourceKey<Registry<com.pipican.ore.GearSet>> GEAR_SET = key("gear_set");
 
     private PipicanRegistries() {}
 
@@ -49,5 +51,6 @@ public final class PipicanRegistries {
         event.dataPackRegistry(SKILL, Skill.CODEC, Skill.CODEC);
         event.dataPackRegistry(ABILITY, Ability.CODEC, Ability.CODEC);
         event.dataPackRegistry(CLASS, RpgClass.CODEC, RpgClass.CODEC);
+        event.dataPackRegistry(GEAR_SET, com.pipican.ore.GearSet.CODEC, com.pipican.ore.GearSet.CODEC);
     }
 }

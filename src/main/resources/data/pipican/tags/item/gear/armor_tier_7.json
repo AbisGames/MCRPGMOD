@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_boots",
+    "pipican:adamantine_chestplate",
+    "pipican:adamantine_helmet",
+    "pipican:adamantine_leggings",
+    "pipican:beskar_boots",
+    "pipican:beskar_chestplate",
+    "pipican:beskar_helmet",
+    "pipican:beskar_leggings",
+    "pipican:daedric_boots",
+    "pipican:daedric_chestplate",
+    "pipican:daedric_helmet",
+    "pipican:daedric_leggings",
+    "pipican:darksteel_boots",
+    "pipican:darksteel_chestplate",
+    "pipican:darksteel_helmet",
+    "pipican:darksteel_leggings",
+    "pipican:hihiirokane_boots",
+    "pipican:hihiirokane_chestplate",
+    "pipican:hihiirokane_helmet",
+    "pipican:hihiirokane_leggings",
+    "pipican:nth_metal_boots",
+    "pipican:nth_metal_chestplate",
+    "pipican:nth_metal_helmet",
+    "pipican:nth_metal_leggings",
+    "pipican:vibranium_boots",
+    "pipican:vibranium_chestplate",
+    "pipican:vibranium_helmet",
+    "pipican:vibranium_leggings"
+  ]
+}

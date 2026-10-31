@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:daedric_axe",
+    "pipican:daedric_hoe",
+    "pipican:daedric_pickaxe",
+    "pipican:daedric_shovel",
+    "pipican:daedric_spear",
+    "pipican:daedric_sword"
+  ]
+}

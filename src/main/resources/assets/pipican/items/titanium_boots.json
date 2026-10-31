@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/titanium_boots",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5655616
+      }
+    ]
+  }
+}

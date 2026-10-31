@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:dragonite_axe",
+    "pipican:dragonite_hoe",
+    "pipican:dragonite_pickaxe",
+    "pipican:dragonite_shovel",
+    "pipican:dragonite_spear",
+    "pipican:dragonite_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:dimeritium_axe",
+    "pipican:dimeritium_hoe",
+    "pipican:dimeritium_pickaxe",
+    "pipican:dimeritium_shovel",
+    "pipican:dimeritium_spear",
+    "pipican:dimeritium_sword"
+  ]
+}

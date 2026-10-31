@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:beskar_axe",
+    "pipican:beskar_hoe",
+    "pipican:beskar_pickaxe",
+    "pipican:beskar_shovel",
+    "pipican:beskar_spear",
+    "pipican:beskar_sword"
+  ]
+}

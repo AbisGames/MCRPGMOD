@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:ardite_axe",
+    "pipican:ardite_sword",
+    "pipican:cobalt_axe",
+    "pipican:cobalt_sword",
+    "pipican:dawnbronze_axe",
+    "pipican:dawnbronze_sword",
+    "pipican:dwemer_metal_axe",
+    "pipican:dwemer_metal_sword",
+    "pipican:fel_iron_axe",
+    "pipican:fel_iron_sword",
+    "pipican:hellstone_axe",
+    "pipican:hellstone_sword",
+    "pipican:malachite_axe",
+    "pipican:malachite_sword",
+    "pipican:manasteel_axe",
+    "pipican:manasteel_sword",
+    "pipican:quicksilver_axe",
+    "pipican:quicksilver_sword",
+    "pipican:royal_silver_axe",
+    "pipican:royal_silver_sword",
+    "pipican:thaumium_axe",
+    "pipican:thaumium_sword",
+    "pipican:thorium_axe",
+    "pipican:thorium_sword",
+    "pipican:wintersteel_axe",
+    "pipican:wintersteel_sword"
+  ]
+}

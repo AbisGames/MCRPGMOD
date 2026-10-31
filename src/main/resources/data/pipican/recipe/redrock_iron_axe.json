@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "#": "pipican:redrock_iron_ingot",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "##",
+    "#/",
+    " /"
+  ],
+  "result": {
+    "id": "pipican:redrock_iron_axe"
+  }
+}

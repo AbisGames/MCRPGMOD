@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:thaumium_axe",
+    "pipican:thaumium_hoe",
+    "pipican:thaumium_pickaxe",
+    "pipican:thaumium_shovel",
+    "pipican:thaumium_spear",
+    "pipican:thaumium_sword"
+  ]
+}

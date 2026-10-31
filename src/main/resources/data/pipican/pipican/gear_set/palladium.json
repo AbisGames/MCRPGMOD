@@ -1,0 +1,40 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/palladium/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:regeneration"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/palladium/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.2,
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "amount": 3.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

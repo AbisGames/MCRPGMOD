@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:trinium_axe",
+    "pipican:trinium_hoe",
+    "pipican:trinium_pickaxe",
+    "pipican:trinium_shovel",
+    "pipican:trinium_spear",
+    "pipican:trinium_sword"
+  ]
+}

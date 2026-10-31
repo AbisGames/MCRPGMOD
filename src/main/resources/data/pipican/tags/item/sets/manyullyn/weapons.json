@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:manyullyn_axe",
+    "pipican:manyullyn_hoe",
+    "pipican:manyullyn_pickaxe",
+    "pipican:manyullyn_shovel",
+    "pipican:manyullyn_spear",
+    "pipican:manyullyn_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:glacierite_axe",
+    "pipican:glacierite_hoe",
+    "pipican:glacierite_pickaxe",
+    "pipican:glacierite_shovel",
+    "pipican:glacierite_spear",
+    "pipican:glacierite_sword"
+  ]
+}

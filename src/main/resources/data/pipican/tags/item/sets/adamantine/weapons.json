@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_axe",
+    "pipican:adamantine_hoe",
+    "pipican:adamantine_pickaxe",
+    "pipican:adamantine_shovel",
+    "pipican:adamantine_spear",
+    "pipican:adamantine_sword"
+  ]
+}

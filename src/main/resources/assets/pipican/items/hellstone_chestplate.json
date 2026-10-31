@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/hellstone_chestplate",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2079204
+      }
+    ]
+  }
+}

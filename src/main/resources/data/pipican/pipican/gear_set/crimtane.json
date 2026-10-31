@@ -1,0 +1,41 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/crimtane/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/crimtane/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.15,
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

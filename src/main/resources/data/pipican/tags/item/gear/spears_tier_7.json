@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_spear",
+    "pipican:beskar_spear",
+    "pipican:daedric_spear",
+    "pipican:darksteel_spear",
+    "pipican:hihiirokane_spear",
+    "pipican:nth_metal_spear",
+    "pipican:valyrian_steel_spear",
+    "pipican:vibranium_spear"
+  ]
+}

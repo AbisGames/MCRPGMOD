@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:inertron_axe",
+    "pipican:inertron_hoe",
+    "pipican:inertron_pickaxe",
+    "pipican:inertron_shovel",
+    "pipican:inertron_spear",
+    "pipican:inertron_sword"
+  ]
+}

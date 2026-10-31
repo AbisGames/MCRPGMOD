@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/stormsilver_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4732440
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "#": "pipican:imperial_gold_ingot",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "#",
+    "/",
+    "/"
+  ],
+  "result": {
+    "id": "pipican:imperial_gold_shovel"
+  }
+}

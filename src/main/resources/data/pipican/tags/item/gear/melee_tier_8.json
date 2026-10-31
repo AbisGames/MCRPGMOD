@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantium_axe",
+    "pipican:adamantium_sword",
+    "pipican:draconium_axe",
+    "pipican:draconium_sword",
+    "pipican:luminite_axe",
+    "pipican:luminite_sword",
+    "pipican:phazon_axe",
+    "pipican:phazon_sword",
+    "pipican:uru_axe",
+    "pipican:uru_sword"
+  ]
+}

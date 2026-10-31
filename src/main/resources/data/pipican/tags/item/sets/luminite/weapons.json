@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:luminite_axe",
+    "pipican:luminite_hoe",
+    "pipican:luminite_pickaxe",
+    "pipican:luminite_shovel",
+    "pipican:luminite_spear",
+    "pipican:luminite_sword"
+  ]
+}

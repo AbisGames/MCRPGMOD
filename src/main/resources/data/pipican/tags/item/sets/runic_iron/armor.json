@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:runic_iron_boots",
+    "pipican:runic_iron_chestplate",
+    "pipican:runic_iron_helmet",
+    "pipican:runic_iron_leggings"
+  ]
+}

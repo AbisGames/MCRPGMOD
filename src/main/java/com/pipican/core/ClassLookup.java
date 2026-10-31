@@ -25,6 +25,10 @@ public final class ClassLookup {
         return access.lookupOrThrow(PipicanRegistries.CLASS);
     }
 
+    public static Registry<com.pipican.ore.GearSet> gearSets(RegistryAccess access) {
+        return access.lookupOrThrow(PipicanRegistries.GEAR_SET);
+    }
+
     public static Registry<StatDefinition> stats(RegistryAccess access) {
         return access.lookupOrThrow(PipicanRegistries.STAT);
     }

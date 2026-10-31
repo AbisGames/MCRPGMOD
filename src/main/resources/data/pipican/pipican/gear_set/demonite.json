@@ -1,0 +1,48 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/demonite/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "chance": 0.08
+        },
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "effects": [
+                {
+                  "effect": "minecraft:invisibility",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ],
+          "cooldown_ticks": 600
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/demonite/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.15
+        }
+      ]
+    }
+  ]
+}

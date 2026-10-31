@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:ardite_spear",
+    "pipican:cobalt_spear",
+    "pipican:dawnbronze_spear",
+    "pipican:dwemer_metal_spear",
+    "pipican:fel_iron_spear",
+    "pipican:hellstone_spear",
+    "pipican:malachite_spear",
+    "pipican:manasteel_spear",
+    "pipican:quicksilver_spear",
+    "pipican:royal_silver_spear",
+    "pipican:thaumium_spear",
+    "pipican:thorium_spear",
+    "pipican:wintersteel_spear"
+  ]
+}

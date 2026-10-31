@@ -1,0 +1,50 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/flametal/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 0.0
+        },
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:fire_resistance"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/flametal/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 0,
+              "fire_seconds": 5.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 1.25
+        }
+      ]
+    }
+  ]
+}

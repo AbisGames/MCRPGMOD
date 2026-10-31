@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:uru_axe",
+    "pipican:uru_hoe",
+    "pipican:uru_pickaxe",
+    "pipican:uru_shovel",
+    "pipican:uru_spear",
+    "pipican:uru_sword"
+  ]
+}

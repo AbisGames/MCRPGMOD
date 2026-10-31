@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:malachite_axe",
+    "pipican:malachite_hoe",
+    "pipican:malachite_pickaxe",
+    "pipican:malachite_shovel",
+    "pipican:malachite_spear",
+    "pipican:malachite_sword"
+  ]
+}

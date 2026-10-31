@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:beskar_axe",
+    "pipican:beskar_boots",
+    "pipican:beskar_chestplate",
+    "pipican:beskar_helmet",
+    "pipican:beskar_hoe",
+    "pipican:beskar_leggings",
+    "pipican:beskar_pickaxe",
+    "pipican:beskar_shovel",
+    "pipican:beskar_spear",
+    "pipican:beskar_sword",
+    "pipican:unobtanium_axe",
+    "pipican:unobtanium_boots",
+    "pipican:unobtanium_chestplate",
+    "pipican:unobtanium_helmet",
+    "pipican:unobtanium_hoe",
+    "pipican:unobtanium_leggings",
+    "pipican:unobtanium_pickaxe",
+    "pipican:unobtanium_shovel",
+    "pipican:unobtanium_spear",
+    "pipican:unobtanium_sword"
+  ]
+}

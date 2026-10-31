@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_axe",
+    "pipican:adamantine_sword",
+    "pipican:beskar_axe",
+    "pipican:beskar_sword",
+    "pipican:daedric_axe",
+    "pipican:daedric_sword",
+    "pipican:darksteel_axe",
+    "pipican:darksteel_sword",
+    "pipican:hihiirokane_axe",
+    "pipican:hihiirokane_sword",
+    "pipican:nth_metal_axe",
+    "pipican:nth_metal_sword",
+    "pipican:valyrian_steel_axe",
+    "pipican:valyrian_steel_sword",
+    "pipican:vibranium_axe",
+    "pipican:vibranium_sword"
+  ]
+}

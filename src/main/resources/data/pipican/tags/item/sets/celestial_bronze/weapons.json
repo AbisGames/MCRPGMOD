@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:celestial_bronze_axe",
+    "pipican:celestial_bronze_hoe",
+    "pipican:celestial_bronze_pickaxe",
+    "pipican:celestial_bronze_shovel",
+    "pipican:celestial_bronze_spear",
+    "pipican:celestial_bronze_sword"
+  ]
+}

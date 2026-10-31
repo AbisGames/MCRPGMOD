@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:nth_metal_boots",
+    "pipican:nth_metal_chestplate",
+    "pipican:nth_metal_helmet",
+    "pipican:nth_metal_leggings"
+  ]
+}

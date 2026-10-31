@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:imperial_gold_axe",
+    "pipican:imperial_gold_hoe",
+    "pipican:imperial_gold_pickaxe",
+    "pipican:imperial_gold_shovel",
+    "pipican:imperial_gold_spear",
+    "pipican:imperial_gold_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:gundanium_axe",
+    "pipican:gundanium_hoe",
+    "pipican:gundanium_pickaxe",
+    "pipican:gundanium_shovel",
+    "pipican:gundanium_spear",
+    "pipican:gundanium_sword"
+  ]
+}

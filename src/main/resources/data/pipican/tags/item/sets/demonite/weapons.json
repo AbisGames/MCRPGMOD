@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:demonite_axe",
+    "pipican:demonite_hoe",
+    "pipican:demonite_pickaxe",
+    "pipican:demonite_shovel",
+    "pipican:demonite_spear",
+    "pipican:demonite_sword"
+  ]
+}

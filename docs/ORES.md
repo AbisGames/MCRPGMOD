@@ -38,10 +38,33 @@ Each ore has: ore blocks, a raw item (metals, smelts and blasts into an ingot) o
 (`c:ores/<id>`, `c:ingots/<id>`, `c:gems/<id>`, ...). `pipican:ores/tier_N` and `pipican:materials/tier_N` group
 them by tier. Tooltips show the tier and what the ore is for. Names are in English and Turkish.
 
+## Gear sets (phase 2)
+
+86 sets (`tools/ore_builder/sets.py`): every set ore of the document, the T8/T9 sets and the alloy sets. Each has a
+helmet, chestplate, leggings, boots, sword, axe, spear, pickaxe, shovel and hoe (Valyrian steel: sword, axe and spear
+only, and no recipe - it is found, not forged).
+
+- **Numbers** come from the tier (T4 = diamond, T5 = netherite, higher tiers above) and the set's *style*: `fast`,
+  `light`, `magic`, `ranged`, `crit`, `sustain`, `balanced`, `tank`, `heavy`. A faster set protects less, a tank
+  set is tougher but its swing is slower - so sets of a tier are about equally strong overall.
+- **Mining**: T1-T2 tools mine like iron (up to T3 ores), T3 like diamond (T4), T4 like netherite (T5), T5 and up one
+  tier above their own. Adamantine and Unobtanium tools mine everything.
+- **Set bonuses** (`data/pipican/pipican/gear_set/<set>.json`): class effects while wearing all four pieces, while
+  holding one of the set's weapons or tools, and (Truesilver) while wearing the helmet. They're written in
+  `sets.py` as class-spec lines ("+25% damage against undead") and translated by the class builder, or as raw
+  effect JSON. They apply to players who have a class.
+- **Item traits**: `unbreakable` (Darksteel, Adamantine, Adamantium, Unobtanium), `self_repair` (Manasteel, Goblin
+  Silver, Void Metal), `autosmelt` (Dwemer), `area_mine` 3x3 (Iridium), `soulbound` kept on death (Beskar,
+  Unobtanium), `mine_all`, `fragile` / `durable` (half / double durability).
+- **Requirements**: tier gear needs Strength (weapons, armor) or Dexterity (spears): 2, 3, 5, 6, 9, 12, 15, 20, 25
+  points for T1-T9 - one affinity tier worse below it.
+- Textures: shared grayscale icons (wooden handle + tinted head) and three worn-armor weights (light, medium, heavy),
+  tinted with the ore's colour.
+
 ## Phases
 
 1. **Ores, worldgen, materials** — done.
-2. Armor, tools and weapons for every set ore (and the T8/T9 and alloy sets), with tier stats and set bonuses.
+2. **Armor, tools and weapons, set bonuses** — done.
 3. Special uses (fuel, currency, potion boosts, lightning cores, element ammo, class tokens ...).
 4. Alloys (Manyullyn, Arcanite, Terrasteel, Daedric, Malatium), Titanite upgrades, world events (meteor craters,
    growing Chlorophyte, spreading Tiberium, unstable Quantanium) and the limited T8/T9 sources.

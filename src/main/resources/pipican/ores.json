@@ -36,7 +36,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "fragile"
+      ],
+      "weight": "light",
+      "defense": [
+        2,
+        4,
+        3,
+        1
+      ],
+      "armor_durability": 6,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 110,
+      "speed": 5.5,
+      "damage": 1.5,
+      "swing": 0.0,
+      "enchantability": 22,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/electrum"
+    }
   },
   {
     "id": "cold_iron",
@@ -75,7 +109,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        5,
+        4,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 220,
+      "speed": 5.5,
+      "damage": 1.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/cold_iron"
+    }
   },
   {
     "id": "truesilver",
@@ -114,7 +180,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        5,
+        4,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 220,
+      "speed": 5.5,
+      "damage": 1.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/truesilver"
+    }
   },
   {
     "id": "corundum",
@@ -153,7 +251,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        5,
+        4,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 220,
+      "speed": 5.5,
+      "damage": 1.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/corundum"
+    }
   },
   {
     "id": "cinnabar",
@@ -351,7 +481,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        4,
+        3,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 220,
+      "speed": 7.15,
+      "damage": 1.5,
+      "swing": 0.3,
+      "enchantability": 14,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/stormsilver"
+    }
   },
   {
     "id": "runic_iron",
@@ -390,7 +552,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        4,
+        3,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 220,
+      "speed": 5.5,
+      "damage": 1.5,
+      "swing": 0.0,
+      "enchantability": 22,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/runic_iron"
+    }
   },
   {
     "id": "redrock_iron",
@@ -429,7 +623,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        2,
+        6,
+        5,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 1.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 220,
+      "speed": 4.95,
+      "damage": 1.5,
+      "swing": -0.2,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/redrock_iron"
+    }
   },
   {
     "id": "pearlsilver",
@@ -468,7 +694,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        4,
+        3,
+        1
+      ],
+      "armor_durability": 13,
+      "toughness": 0.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 220,
+      "speed": 6.05,
+      "damage": 1.5,
+      "swing": 0.2,
+      "enchantability": 16,
+      "incorrect": "pipican:incorrect_for_tier_1_tool",
+      "repair": "pipican:repairs/pearlsilver"
+    }
   },
   {
     "id": "frostcrystal",
@@ -623,7 +881,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        5,
+        4,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 0.5,
+      "knockback_resistance": 0.0,
+      "tool_durability": 300,
+      "speed": 7.8,
+      "damage": 2.0,
+      "swing": 0.3,
+      "enchantability": 14,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/moonstone"
+    }
   },
   {
     "id": "demonite",
@@ -662,7 +952,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        6,
+        5,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 0.5,
+      "knockback_resistance": 0.0,
+      "tool_durability": 300,
+      "speed": 6.0,
+      "damage": 2.0,
+      "swing": 0.1,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/demonite"
+    }
   },
   {
     "id": "crimtane",
@@ -697,7 +1019,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        6,
+        5,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 0.5,
+      "knockback_resistance": 0.0,
+      "tool_durability": 300,
+      "speed": 6.0,
+      "damage": 2.0,
+      "swing": 0.0,
+      "enchantability": 14,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/crimtane"
+    }
   },
   {
     "id": "machalite",
@@ -736,7 +1090,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        6,
+        5,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 0.5,
+      "knockback_resistance": 0.0,
+      "tool_durability": 300,
+      "speed": 6.0,
+      "damage": 2.0,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/machalite"
+    }
   },
   {
     "id": "bloodstone",
@@ -961,7 +1347,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        2,
+        7,
+        6,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 1.5,
+      "knockback_resistance": 0.1,
+      "tool_durability": 300,
+      "speed": 5.4,
+      "damage": 2.0,
+      "swing": -0.2,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/glacierite"
+    }
   },
   {
     "id": "cinderite",
@@ -996,7 +1414,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        6,
+        5,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 0.5,
+      "knockback_resistance": 0.0,
+      "tool_durability": 300,
+      "speed": 6.0,
+      "damage": 2.0,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/cinderite"
+    }
   },
   {
     "id": "tidalite",
@@ -1027,7 +1477,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        5,
+        4,
+        2
+      ],
+      "armor_durability": 15,
+      "toughness": 0.5,
+      "knockback_resistance": 0.0,
+      "tool_durability": 300,
+      "speed": 6.6,
+      "damage": 2.0,
+      "swing": 0.2,
+      "enchantability": 16,
+      "incorrect": "pipican:incorrect_for_tier_2_tool",
+      "repair": "pipican:repairs/tidalite"
+    }
   },
   {
     "id": "thunderbasalt",
@@ -1159,7 +1641,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        4,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 9.1,
+      "damage": 2.5,
+      "swing": 0.3,
+      "enchantability": 14,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/cobalt"
+    }
   },
   {
     "id": "ardite",
@@ -1194,7 +1708,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "durable"
+      ],
+      "weight": "heavy",
+      "defense": [
+        2,
+        8,
+        6,
+        2
+      ],
+      "armor_durability": 44,
+      "toughness": 2.5,
+      "knockback_resistance": 0.15,
+      "tool_durability": 1400,
+      "speed": 5.95,
+      "damage": 2.5,
+      "swing": -0.3,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/ardite"
+    }
   },
   {
     "id": "thorium",
@@ -1233,7 +1781,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        2,
+        8,
+        6,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 2.5,
+      "knockback_resistance": 0.15,
+      "tool_durability": 700,
+      "speed": 5.95,
+      "damage": 2.5,
+      "swing": -0.3,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/thorium"
+    }
   },
   {
     "id": "malachite",
@@ -1260,7 +1840,41 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "fragile"
+      ],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        4,
+        2
+      ],
+      "armor_durability": 11,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 350,
+      "speed": 7.7,
+      "damage": 2.5,
+      "swing": 0.2,
+      "enchantability": 16,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/malachite"
+    }
   },
   {
     "id": "quicksilver",
@@ -1299,7 +1913,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        4,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 9.1,
+      "damage": 2.5,
+      "swing": 0.3,
+      "enchantability": 14,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/quicksilver"
+    }
   },
   {
     "id": "hellstone",
@@ -1334,7 +1980,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        7,
+        5,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/hellstone"
+    }
   },
   {
     "id": "fel_iron",
@@ -1369,7 +2047,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        7,
+        5,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.1,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/fel_iron"
+    }
   },
   {
     "id": "dwemer_metal",
@@ -1408,7 +2118,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "autosmelt"
+      ],
+      "weight": "heavy",
+      "defense": [
+        2,
+        8,
+        6,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 2.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 700,
+      "speed": 6.3,
+      "damage": 2.5,
+      "swing": -0.2,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/dwemer_metal"
+    }
   },
   {
     "id": "thaumium",
@@ -1447,7 +2191,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        4,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.0,
+      "enchantability": 22,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/thaumium"
+    }
   },
   {
     "id": "manasteel",
@@ -1486,7 +2262,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "self_repair"
+      ],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        4,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.0,
+      "enchantability": 22,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/manasteel"
+    }
   },
   {
     "id": "dragonglass",
@@ -1711,7 +2521,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        7,
+        5,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/wintersteel"
+    }
   },
   {
     "id": "royal_silver",
@@ -1750,7 +2592,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        7,
+        5,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/royal_silver"
+    }
   },
   {
     "id": "dawnbronze",
@@ -1789,7 +2663,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        2,
+        7,
+        5,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.0,
+      "damage": 2.5,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/dawnbronze"
+    }
   },
   {
     "id": "mirestone",
@@ -1898,7 +2804,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/meteoric_iron"
+    }
   },
   {
     "id": "palladium",
@@ -1937,7 +2875,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 12,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/palladium"
+    }
   },
   {
     "id": "elementium",
@@ -1976,7 +2946,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        7,
+        5,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 20,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/elementium"
+    }
   },
   {
     "id": "iridium",
@@ -2015,7 +3017,42 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "area_mine",
+        "durable"
+      ],
+      "weight": "heavy",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 66,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 3122,
+      "speed": 7.2,
+      "damage": 3.0,
+      "swing": -0.2,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/iridium"
+    }
   },
   {
     "id": "carbalite",
@@ -2050,7 +3087,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 1561,
+      "speed": 7.2,
+      "damage": 3.0,
+      "swing": -0.2,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/carbalite"
+    }
   },
   {
     "id": "black_metal",
@@ -2089,7 +3158,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 1561,
+      "speed": 7.2,
+      "damage": 3.0,
+      "swing": -0.2,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/black_metal"
+    }
   },
   {
     "id": "starsilver",
@@ -2128,7 +3229,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/starsilver"
+    }
   },
   {
     "id": "celestial_bronze",
@@ -2167,7 +3300,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/celestial_bronze"
+    }
   },
   {
     "id": "imperial_gold",
@@ -2206,7 +3371,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/imperial_gold"
+    }
   },
   {
     "id": "goblin_silver",
@@ -2245,7 +3442,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "self_repair"
+      ],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/goblin_silver"
+    }
   },
   {
     "id": "dimeritium",
@@ -2284,7 +3515,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 1561,
+      "speed": 7.2,
+      "damage": 3.0,
+      "swing": -0.2,
+      "enchantability": 10,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/dimeritium"
+    }
   },
   {
     "id": "magisteel",
@@ -2323,7 +3586,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        7,
+        5,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 20,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/magisteel"
+    }
   },
   {
     "id": "kyanite",
@@ -2696,7 +3991,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        4,
+        10,
+        7,
+        4
+      ],
+      "armor_durability": 37,
+      "toughness": 4.5,
+      "knockback_resistance": 0.25,
+      "tool_durability": 2031,
+      "speed": 7.65,
+      "damage": 4.0,
+      "swing": -0.3,
+      "enchantability": 13,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/mithril"
+    }
   },
   {
     "id": "ebony",
@@ -2731,7 +4058,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/ebony"
+    }
   },
   {
     "id": "stalhrim",
@@ -2762,7 +4121,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        7,
+        5,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.0,
+      "enchantability": 25,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/stalhrim"
+    }
   },
   {
     "id": "eternium",
@@ -2801,7 +4192,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "durable"
+      ],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 74,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 4062,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/eternium"
+    }
   },
   {
     "id": "saronite",
@@ -2840,7 +4265,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/saronite"
+    }
   },
   {
     "id": "runite",
@@ -2875,7 +4332,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/runite"
+    }
   },
   {
     "id": "titanium",
@@ -2914,7 +4403,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 4.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 2031,
+      "speed": 8.1,
+      "damage": 4.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/titanium"
+    }
   },
   {
     "id": "hallowed",
@@ -2953,7 +4474,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/hallowed"
+    }
   },
   {
     "id": "stygian_iron",
@@ -2988,7 +4541,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/stygian_iron"
+    }
   },
   {
     "id": "luna_titanium",
@@ -3027,7 +4612,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        4,
+        10,
+        7,
+        4
+      ],
+      "armor_durability": 37,
+      "toughness": 4.5,
+      "knockback_resistance": 0.25,
+      "tool_durability": 2031,
+      "speed": 7.65,
+      "damage": 4.0,
+      "swing": -0.3,
+      "enchantability": 13,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/luna_titanium"
+    }
   },
   {
     "id": "dragonite",
@@ -3054,7 +4671,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/dragonite"
+    }
   },
   {
     "id": "scarlet",
@@ -3093,7 +4742,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/scarlet"
+    }
   },
   {
     "id": "crystallite",
@@ -3124,7 +4805,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        5,
+        2
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 11.7,
+      "damage": 4.0,
+      "swing": 0.3,
+      "enchantability": 17,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/crystallite"
+    }
   },
   {
     "id": "gromril",
@@ -3163,7 +4876,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        4,
+        10,
+        7,
+        4
+      ],
+      "armor_durability": 37,
+      "toughness": 4.5,
+      "knockback_resistance": 0.25,
+      "tool_durability": 2031,
+      "speed": 7.65,
+      "damage": 4.0,
+      "swing": -0.3,
+      "enchantability": 13,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/gromril"
+    }
   },
   {
     "id": "ithilmar",
@@ -3202,7 +4947,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        7,
+        5,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 19,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/ithilmar"
+    }
   },
   {
     "id": "carbonadium",
@@ -3241,7 +5018,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "durable"
+      ],
+      "weight": "heavy",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 74,
+      "toughness": 4.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 4062,
+      "speed": 8.1,
+      "damage": 4.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/carbonadium"
+    }
   },
   {
     "id": "octiron",
@@ -3602,7 +5413,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/umbrite"
+    }
   },
   {
     "id": "skycrystal",
@@ -3730,7 +5573,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/orichalcum"
+    }
   },
   {
     "id": "chlorophyte",
@@ -3769,7 +5644,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.0,
+      "enchantability": 17,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/chlorophyte"
+    }
   },
   {
     "id": "aetherium",
@@ -3796,7 +5703,39 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.0,
+      "enchantability": 25,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/aetherium"
+    }
   },
   {
     "id": "void_metal",
@@ -3831,7 +5770,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "self_repair"
+      ],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/void_metal"
+    }
   },
   {
     "id": "gundanium",
@@ -3866,7 +5839,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "durable"
+      ],
+      "weight": "heavy",
+      "defense": [
+        4,
+        11,
+        8,
+        4
+      ],
+      "armor_durability": 90,
+      "toughness": 5.5,
+      "knockback_resistance": 0.25,
+      "tool_durability": 5200,
+      "speed": 8.5,
+      "damage": 5.0,
+      "swing": -0.3,
+      "enchantability": 13,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/gundanium"
+    }
   },
   {
     "id": "inertron",
@@ -3905,7 +5912,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        4,
+        11,
+        8,
+        4
+      ],
+      "armor_durability": 45,
+      "toughness": 5.5,
+      "knockback_resistance": 0.25,
+      "tool_durability": 2600,
+      "speed": 8.5,
+      "damage": 5.0,
+      "swing": -0.3,
+      "enchantability": 13,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/inertron"
+    }
   },
   {
     "id": "sigmarite",
@@ -3944,7 +5983,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        3,
+        10,
+        8,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 5.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 2600,
+      "speed": 9.0,
+      "damage": 5.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/sigmarite"
+    }
   },
   {
     "id": "phrik",
@@ -3979,7 +6050,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        3,
+        10,
+        8,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 5.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 2600,
+      "speed": 9.0,
+      "damage": 5.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/phrik"
+    }
   },
   {
     "id": "trinium",
@@ -4014,7 +6117,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 11.0,
+      "damage": 5.0,
+      "swing": 0.2,
+      "enchantability": 19,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/trinium"
+    }
   },
   {
     "id": "dragon_metal",
@@ -4049,7 +6184,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/dragon_metal"
+    }
   },
   {
     "id": "flametal",
@@ -4084,7 +6251,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/flametal"
+    }
   },
   {
     "id": "allthemodium",
@@ -4123,7 +6322,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/allthemodium"
+    }
   },
   {
     "id": "kryptonite",
@@ -4476,7 +6707,42 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "unbreakable",
+        "mine_all"
+      ],
+      "weight": "heavy",
+      "defense": [
+        5,
+        10,
+        8,
+        5
+      ],
+      "armor_durability": 55,
+      "toughness": 6.0,
+      "knockback_resistance": 0.25,
+      "tool_durability": 3300,
+      "speed": 9.9,
+      "damage": 6.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_nothing",
+      "repair": "pipican:repairs/adamantine"
+    }
   },
   {
     "id": "hihiirokane",
@@ -4515,7 +6781,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        4,
+        9,
+        7,
+        4
+      ],
+      "armor_durability": 55,
+      "toughness": 5.0,
+      "knockback_resistance": 0.15,
+      "tool_durability": 3300,
+      "speed": 11.0,
+      "damage": 6.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/hihiirokane"
+    }
   },
   {
     "id": "darksteel",
@@ -4554,7 +6852,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "unbreakable"
+      ],
+      "weight": "medium",
+      "defense": [
+        4,
+        9,
+        7,
+        4
+      ],
+      "armor_durability": 55,
+      "toughness": 5.0,
+      "knockback_resistance": 0.15,
+      "tool_durability": 3300,
+      "speed": 11.0,
+      "damage": 6.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/darksteel"
+    }
   },
   {
     "id": "beskar",
@@ -4593,7 +6925,41 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "soulbound"
+      ],
+      "weight": "heavy",
+      "defense": [
+        5,
+        10,
+        8,
+        5
+      ],
+      "armor_durability": 55,
+      "toughness": 6.0,
+      "knockback_resistance": 0.25,
+      "tool_durability": 3300,
+      "speed": 9.9,
+      "damage": 6.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/beskar"
+    }
   },
   {
     "id": "nth_metal",
@@ -4632,7 +6998,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 55,
+      "toughness": 5.0,
+      "knockback_resistance": 0.15,
+      "tool_durability": 3300,
+      "speed": 12.1,
+      "damage": 6.0,
+      "swing": 0.2,
+      "enchantability": 19,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/nth_metal"
+    }
   },
   {
     "id": "vibranium",
@@ -4671,7 +7069,39 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "heavy",
+      "defense": [
+        5,
+        10,
+        8,
+        5
+      ],
+      "armor_durability": 55,
+      "toughness": 6.0,
+      "knockback_resistance": 0.25,
+      "tool_durability": 3300,
+      "speed": 9.9,
+      "damage": 6.0,
+      "swing": -0.2,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/vibranium"
+    }
   },
   {
     "id": "katchin",
@@ -4950,7 +7380,39 @@
         "id": "raw_uru_block",
         "kind": "raw"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        4,
+        10,
+        8,
+        4
+      ],
+      "armor_durability": 70,
+      "toughness": 6.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 4200,
+      "speed": 12.0,
+      "damage": 7.0,
+      "swing": 0.1,
+      "enchantability": 18,
+      "incorrect": "pipican:incorrect_for_tier_8_tool",
+      "repair": "pipican:repairs/uru"
+    }
   },
   {
     "id": "adamantium",
@@ -4988,7 +7450,41 @@
         "id": "raw_adamantium_block",
         "kind": "raw"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "unbreakable"
+      ],
+      "weight": "heavy",
+      "defense": [
+        5,
+        12,
+        10,
+        5
+      ],
+      "armor_durability": 70,
+      "toughness": 7.5,
+      "knockback_resistance": 0.35,
+      "tool_durability": 4200,
+      "speed": 10.2,
+      "damage": 7.0,
+      "swing": -0.3,
+      "enchantability": 16,
+      "incorrect": "pipican:incorrect_for_tier_8_tool",
+      "repair": "pipican:repairs/adamantium"
+    }
   },
   {
     "id": "draconium",
@@ -5026,7 +7522,39 @@
         "id": "raw_draconium_block",
         "kind": "raw"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        4,
+        10,
+        8,
+        4
+      ],
+      "armor_durability": 70,
+      "toughness": 6.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 4200,
+      "speed": 12.0,
+      "damage": 7.0,
+      "swing": 0.0,
+      "enchantability": 18,
+      "incorrect": "pipican:incorrect_for_tier_8_tool",
+      "repair": "pipican:repairs/draconium"
+    }
   },
   {
     "id": "luminite",
@@ -5064,7 +7592,39 @@
         "id": "raw_luminite_block",
         "kind": "raw"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        4,
+        10,
+        8,
+        4
+      ],
+      "armor_durability": 70,
+      "toughness": 6.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 4200,
+      "speed": 12.0,
+      "damage": 7.0,
+      "swing": 0.0,
+      "enchantability": 18,
+      "incorrect": "pipican:incorrect_for_tier_8_tool",
+      "repair": "pipican:repairs/luminite"
+    }
   },
   {
     "id": "phazon",
@@ -5094,7 +7654,39 @@
         "id": "phazon_block",
         "kind": "gem"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        4,
+        10,
+        8,
+        4
+      ],
+      "armor_durability": 70,
+      "toughness": 6.0,
+      "knockback_resistance": 0.2,
+      "tool_durability": 4200,
+      "speed": 12.0,
+      "damage": 7.0,
+      "swing": 0.1,
+      "enchantability": 18,
+      "incorrect": "pipican:incorrect_for_tier_8_tool",
+      "repair": "pipican:repairs/phazon"
+    }
   },
   {
     "id": "pale",
@@ -5238,7 +7830,43 @@
         "id": "raw_unobtanium_block",
         "kind": "raw"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [
+        "unbreakable",
+        "mine_all",
+        "soulbound"
+      ],
+      "weight": "medium",
+      "defense": [
+        5,
+        10,
+        8,
+        5
+      ],
+      "armor_durability": 90,
+      "toughness": 8.0,
+      "knockback_resistance": 0.25,
+      "tool_durability": 6000,
+      "speed": 14.0,
+      "damage": 9.0,
+      "swing": 0.0,
+      "enchantability": 20,
+      "incorrect": "pipican:incorrect_for_nothing",
+      "repair": "pipican:repairs/unobtanium"
+    }
   },
   {
     "id": "philosophers_stone",
@@ -5365,7 +7993,39 @@
         "id": "manyullyn_block",
         "kind": "metal"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        8,
+        6,
+        3
+      ],
+      "armor_durability": 37,
+      "toughness": 3.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2031,
+      "speed": 9.0,
+      "damage": 4.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_5_tool",
+      "repair": "pipican:repairs/manyullyn"
+    }
   },
   {
     "id": "arcanite",
@@ -5386,7 +8046,39 @@
         "id": "arcanite_block",
         "kind": "metal"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        7,
+        5,
+        3
+      ],
+      "armor_durability": 33,
+      "toughness": 2.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 1561,
+      "speed": 8.0,
+      "damage": 3.0,
+      "swing": 0.0,
+      "enchantability": 20,
+      "incorrect": "pipican:incorrect_for_tier_4_tool",
+      "repair": "pipican:repairs/arcanite"
+    }
   },
   {
     "id": "terrasteel",
@@ -5407,7 +8099,39 @@
         "id": "terrasteel_block",
         "kind": "metal"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        3,
+        9,
+        7,
+        3
+      ],
+      "armor_durability": 45,
+      "toughness": 4.0,
+      "knockback_resistance": 0.1,
+      "tool_durability": 2600,
+      "speed": 10.0,
+      "damage": 5.0,
+      "swing": 0.0,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_6_tool",
+      "repair": "pipican:repairs/terrasteel"
+    }
   },
   {
     "id": "daedric",
@@ -5428,7 +8152,39 @@
         "id": "daedric_block",
         "kind": "metal"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "medium",
+      "defense": [
+        4,
+        9,
+        7,
+        4
+      ],
+      "armor_durability": 55,
+      "toughness": 5.0,
+      "knockback_resistance": 0.15,
+      "tool_durability": 3300,
+      "speed": 11.0,
+      "damage": 6.0,
+      "swing": 0.1,
+      "enchantability": 15,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/daedric"
+    }
   },
   {
     "id": "malatium",
@@ -5470,7 +8226,32 @@
         "id": "valyrian_steel_block",
         "kind": "metal"
       }
-    ]
+    ],
+    "set": {
+      "kinds": [
+        "sword",
+        "axe",
+        "spear"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        3,
+        7,
+        6,
+        3
+      ],
+      "armor_durability": 55,
+      "toughness": 5.0,
+      "knockback_resistance": 0.15,
+      "tool_durability": 3300,
+      "speed": 14.3,
+      "damage": 6.0,
+      "swing": 0.3,
+      "enchantability": 17,
+      "incorrect": "pipican:incorrect_for_tier_7_tool",
+      "repair": "pipican:repairs/valyrian_steel"
+    }
   },
   {
     "id": "mega_stone",

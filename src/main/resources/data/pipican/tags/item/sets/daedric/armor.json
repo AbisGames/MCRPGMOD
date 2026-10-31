@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:daedric_boots",
+    "pipican:daedric_chestplate",
+    "pipican:daedric_helmet",
+    "pipican:daedric_leggings"
+  ]
+}

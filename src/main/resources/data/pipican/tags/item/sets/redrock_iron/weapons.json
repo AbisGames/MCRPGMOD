@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:redrock_iron_axe",
+    "pipican:redrock_iron_hoe",
+    "pipican:redrock_iron_pickaxe",
+    "pipican:redrock_iron_shovel",
+    "pipican:redrock_iron_spear",
+    "pipican:redrock_iron_sword"
+  ]
+}

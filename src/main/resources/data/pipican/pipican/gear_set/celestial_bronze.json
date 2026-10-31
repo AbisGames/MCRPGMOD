@@ -1,0 +1,40 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/celestial_bronze/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": "#minecraft:undead",
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/celestial_bronze/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/monsters",
+          "multiplier": 1.4
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/monsters",
+          "except": true,
+          "multiplier": 0.25
+        }
+      ]
+    }
+  ]
+}

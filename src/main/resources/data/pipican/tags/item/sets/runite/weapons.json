@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:runite_axe",
+    "pipican:runite_hoe",
+    "pipican:runite_pickaxe",
+    "pipican:runite_shovel",
+    "pipican:runite_spear",
+    "pipican:runite_sword"
+  ]
+}

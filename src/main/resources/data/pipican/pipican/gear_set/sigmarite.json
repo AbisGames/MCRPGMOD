@@ -1,0 +1,39 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/sigmarite/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": "#minecraft:undead",
+          "multiplier": 0.2
+        },
+        {
+          "type": "pipican:damage_taken",
+          "against": "#pipican:mobs/nether",
+          "multiplier": 0.4
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/sigmarite/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_demons_and_undead",
+          "multiplier": 1.3
+        }
+      ]
+    }
+  ]
+}

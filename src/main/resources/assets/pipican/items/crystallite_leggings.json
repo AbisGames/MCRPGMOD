@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/crystallite_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4656385
+      }
+    ]
+  }
+}

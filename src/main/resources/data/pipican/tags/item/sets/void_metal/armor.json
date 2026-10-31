@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:void_metal_boots",
+    "pipican:void_metal_chestplate",
+    "pipican:void_metal_helmet",
+    "pipican:void_metal_leggings"
+  ]
+}

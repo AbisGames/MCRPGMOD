@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/tidalite_boots",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13662539
+      }
+    ]
+  }
+}

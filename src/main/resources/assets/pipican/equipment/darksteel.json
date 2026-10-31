@@ -1,0 +1,20 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "pipican:plate_medium",
+        "dyeable": {
+          "color_when_undyed": 1776930
+        }
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "pipican:plate_medium",
+        "dyeable": {
+          "color_when_undyed": 1776930
+        }
+      }
+    ]
+  }
+}

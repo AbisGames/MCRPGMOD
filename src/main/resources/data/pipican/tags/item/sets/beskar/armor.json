@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:beskar_boots",
+    "pipican:beskar_chestplate",
+    "pipican:beskar_helmet",
+    "pipican:beskar_leggings"
+  ]
+}

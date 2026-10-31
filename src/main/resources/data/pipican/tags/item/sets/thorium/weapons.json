@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:thorium_axe",
+    "pipican:thorium_hoe",
+    "pipican:thorium_pickaxe",
+    "pipican:thorium_shovel",
+    "pipican:thorium_spear",
+    "pipican:thorium_sword"
+  ]
+}

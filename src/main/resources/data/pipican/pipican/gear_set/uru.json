@@ -1,0 +1,43 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/uru/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.3
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/uru/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.2,
+          "actions": [
+            {
+              "type": "pipican:lightning"
+            }
+          ],
+          "name": "lightning"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        }
+      ]
+    }
+  ]
+}

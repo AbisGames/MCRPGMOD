@@ -1,0 +1,46 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/hallowed/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 1.0,
+              "effects": [
+                {
+                  "type": "pipican:mob_effect",
+                  "effect": "minecraft:resistance",
+                  "amplifier": 3
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/hallowed/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.35
+        }
+      ]
+    }
+  ]
+}

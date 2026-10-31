@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:carbonadium_spear",
+    "pipican:crystallite_spear",
+    "pipican:dragonite_spear",
+    "pipican:ebony_spear",
+    "pipican:eternium_spear",
+    "pipican:gromril_spear",
+    "pipican:hallowed_spear",
+    "pipican:ithilmar_spear",
+    "pipican:luna_titanium_spear",
+    "pipican:manyullyn_spear",
+    "pipican:mithril_spear",
+    "pipican:runite_spear",
+    "pipican:saronite_spear",
+    "pipican:scarlet_spear",
+    "pipican:stalhrim_spear",
+    "pipican:stygian_iron_spear",
+    "pipican:titanium_spear",
+    "pipican:umbrite_spear"
+  ]
+}

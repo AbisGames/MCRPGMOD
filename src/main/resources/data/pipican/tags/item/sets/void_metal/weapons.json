@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:void_metal_axe",
+    "pipican:void_metal_hoe",
+    "pipican:void_metal_pickaxe",
+    "pipican:void_metal_shovel",
+    "pipican:void_metal_spear",
+    "pipican:void_metal_sword"
+  ]
+}

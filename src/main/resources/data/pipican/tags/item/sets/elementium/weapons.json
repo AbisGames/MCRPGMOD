@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:elementium_axe",
+    "pipican:elementium_hoe",
+    "pipican:elementium_pickaxe",
+    "pipican:elementium_shovel",
+    "pipican:elementium_spear",
+    "pipican:elementium_sword"
+  ]
+}

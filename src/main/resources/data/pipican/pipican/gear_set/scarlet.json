@@ -1,0 +1,23 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/scarlet/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_demons_and_undead",
+          "multiplier": 1.35
+        },
+        {
+          "type": "pipican:critical",
+          "damage": 0.1
+        }
+      ]
+    }
+  ]
+}

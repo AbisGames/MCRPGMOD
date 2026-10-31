@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:mithril_axe",
+    "pipican:mithril_hoe",
+    "pipican:mithril_pickaxe",
+    "pipican:mithril_shovel",
+    "pipican:mithril_spear",
+    "pipican:mithril_sword"
+  ]
+}

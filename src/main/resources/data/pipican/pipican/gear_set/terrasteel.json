@@ -1,0 +1,35 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/terrasteel/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:regeneration"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/terrasteel/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:cleave",
+          "fraction": 0.4,
+          "radius": 2.5,
+          "max_targets": 6,
+          "charged_only": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:stalhrim_axe",
+    "pipican:stalhrim_hoe",
+    "pipican:stalhrim_pickaxe",
+    "pipican:stalhrim_shovel",
+    "pipican:stalhrim_spear",
+    "pipican:stalhrim_sword"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:carbalite_axe",
+    "pipican:carbalite_hoe",
+    "pipican:carbalite_pickaxe",
+    "pipican:carbalite_shovel",
+    "pipican:carbalite_spear",
+    "pipican:carbalite_sword"
+  ]
+}

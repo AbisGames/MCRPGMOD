@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_axe",
+    "pipican:adamantine_boots",
+    "pipican:adamantine_chestplate",
+    "pipican:adamantine_helmet",
+    "pipican:adamantine_hoe",
+    "pipican:adamantine_leggings",
+    "pipican:adamantine_pickaxe",
+    "pipican:adamantine_shovel",
+    "pipican:adamantine_spear",
+    "pipican:adamantine_sword",
+    "pipican:unobtanium_axe",
+    "pipican:unobtanium_boots",
+    "pipican:unobtanium_chestplate",
+    "pipican:unobtanium_helmet",
+    "pipican:unobtanium_hoe",
+    "pipican:unobtanium_leggings",
+    "pipican:unobtanium_pickaxe",
+    "pipican:unobtanium_shovel",
+    "pipican:unobtanium_spear",
+    "pipican:unobtanium_sword"
+  ]
+}

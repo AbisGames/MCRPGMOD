@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/wintersteel_chestplate",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -6309687
+      }
+    ]
+  }
+}

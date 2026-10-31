@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:luna_titanium_axe",
+    "pipican:luna_titanium_hoe",
+    "pipican:luna_titanium_pickaxe",
+    "pipican:luna_titanium_shovel",
+    "pipican:luna_titanium_spear",
+    "pipican:luna_titanium_sword"
+  ]
+}

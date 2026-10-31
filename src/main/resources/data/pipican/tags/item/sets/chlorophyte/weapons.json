@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:chlorophyte_axe",
+    "pipican:chlorophyte_hoe",
+    "pipican:chlorophyte_pickaxe",
+    "pipican:chlorophyte_shovel",
+    "pipican:chlorophyte_spear",
+    "pipican:chlorophyte_sword"
+  ]
+}

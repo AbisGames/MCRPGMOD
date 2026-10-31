@@ -5,6 +5,10 @@
     "minecraft:leather_chestplate",
     "minecraft:leather_leggings",
     "minecraft:leather_boots",
-    "minecraft:turtle_helmet"
+    "minecraft:turtle_helmet",
+    {
+      "id": "#pipican:ore_gear/armor_light",
+      "required": false
+    }
   ]
 }

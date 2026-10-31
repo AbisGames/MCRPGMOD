@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:electrum_axe",
+    "pipican:electrum_hoe",
+    "pipican:electrum_pickaxe",
+    "pipican:electrum_shovel",
+    "pipican:electrum_spear",
+    "pipican:electrum_sword"
+  ]
+}

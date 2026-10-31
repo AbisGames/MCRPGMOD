@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:darksteel_axe",
+    "pipican:darksteel_hoe",
+    "pipican:darksteel_pickaxe",
+    "pipican:darksteel_shovel",
+    "pipican:darksteel_spear",
+    "pipican:darksteel_sword"
+  ]
+}

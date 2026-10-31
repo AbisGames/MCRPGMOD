@@ -10,6 +10,7 @@ Writes (all under the resources root):
   data/pipican/worldgen/...              one configured + placed feature per spawning ore
   data/pipican/neoforge/biome_modifier/  adds each ore to its biomes
   data/{minecraft,c,pipican}/tags/...    mining level, c:ores / c:ingots / c:gems ..., pipican tier tags
+  gear (gear.py)                         armor, tools and weapons of every set, and their set bonuses
 Generated files are rewritten on every run; files it no longer produces are removed (tracked in ores.json).
 """
 import json
@@ -19,6 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 import catalog  # noqa: E402
 import textures  # noqa: E402
+import gear  # noqa: E402
 
 NS = 'pipican'
 RARITY_EN = {1: 'Common', 2: 'Frequent', 3: 'Medium', 4: 'Rare', 5: 'Very Rare', 6: 'Epic', 7: 'Legendary', 8: 'Mythic', 9: 'Unique'}
@@ -200,6 +202,8 @@ def build(root):
         lang_en[f'{NS}.ore.tier.{tier}'] = f'T{tier} - {RARITY_EN[tier]}'
         lang_tr[f'{NS}.ore.tier.{tier}'] = f'T{tier} - {RARITY_TR[tier]}'
 
+    gear.build(out, catalog.ORES, tag, lang_en, lang_tr, runtime)
+    gear.mob_tags(out)
     for (reg, path), entries in sorted(tags.items()):
         ns, p = path.split(':')
         folder = {'block': 'block', 'item': 'item'}[reg]
@@ -209,12 +213,14 @@ def build(root):
     merge_lang(os.path.join(root, f'assets/{NS}/lang/en_us.json'), lang_en)
     merge_lang(os.path.join(root, f'assets/{NS}/lang/tr_tr.json'), lang_tr)
 
-    # Remove files an earlier run wrote that this one didn't.
+    # Remove files an earlier run wrote that this one didn't - except tags, which other generators and hand-written
+    # files share (an emptied tag file would be removed by hand).
     manifest = os.path.join(root, NS, 'ores_generated.txt')
     if os.path.exists(manifest):
         for rel in open(manifest).read().split():
-            if rel not in out.written and os.path.exists(os.path.join(root, rel)):
+            if rel not in out.written and '/tags/' not in rel and os.path.exists(os.path.join(root, rel)):
                 os.remove(os.path.join(root, rel))
+    gear.requirements(root)
     out.json(f'{NS}/ores.json', runtime)
     with open(manifest, 'w') as f:
         f.write('\n'.join(sorted(out.written)) + '\n')

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/black_metal_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13948112
+      }
+    ]
+  }
+}

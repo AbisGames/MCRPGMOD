@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/ebony_boots",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14015952
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/machalite/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/machalite/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": [
+            "minecraft:wither",
+            "minecraft:ender_dragon",
+            "minecraft:warden",
+            "minecraft:elder_guardian"
+          ],
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/large",
+          "multiplier": 1.15
+        }
+      ]
+    }
+  ]
+}

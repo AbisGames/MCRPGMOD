@@ -1,0 +1,32 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/malachite/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.12
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/malachite/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        }
+      ]
+    }
+  ]
+}

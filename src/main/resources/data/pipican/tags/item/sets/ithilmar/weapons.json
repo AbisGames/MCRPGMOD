@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:ithilmar_axe",
+    "pipican:ithilmar_hoe",
+    "pipican:ithilmar_pickaxe",
+    "pipican:ithilmar_shovel",
+    "pipican:ithilmar_spear",
+    "pipican:ithilmar_sword"
+  ]
+}

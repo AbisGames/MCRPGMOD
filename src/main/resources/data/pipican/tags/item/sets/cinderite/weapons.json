@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cinderite_axe",
+    "pipican:cinderite_hoe",
+    "pipican:cinderite_pickaxe",
+    "pipican:cinderite_shovel",
+    "pipican:cinderite_spear",
+    "pipican:cinderite_sword"
+  ]
+}

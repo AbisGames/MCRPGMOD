@@ -1,0 +1,45 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/vibranium/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.75
+        },
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "cooldown_ticks": 100,
+          "actions": [
+            {
+              "type": "pipican:push",
+              "target": "hostiles",
+              "radius": 5.0,
+              "strength": 1.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/vibranium/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:saronite_axe",
+    "pipican:saronite_hoe",
+    "pipican:saronite_pickaxe",
+    "pipican:saronite_shovel",
+    "pipican:saronite_spear",
+    "pipican:saronite_sword"
+  ]
+}

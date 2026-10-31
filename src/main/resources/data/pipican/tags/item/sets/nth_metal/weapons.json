@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:nth_metal_axe",
+    "pipican:nth_metal_hoe",
+    "pipican:nth_metal_pickaxe",
+    "pipican:nth_metal_shovel",
+    "pipican:nth_metal_spear",
+    "pipican:nth_metal_sword"
+  ]
+}

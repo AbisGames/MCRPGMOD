@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/carbonadium_helmet",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12959929
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:fel_iron_axe",
+    "pipican:fel_iron_hoe",
+    "pipican:fel_iron_pickaxe",
+    "pipican:fel_iron_shovel",
+    "pipican:fel_iron_spear",
+    "pipican:fel_iron_sword"
+  ]
+}

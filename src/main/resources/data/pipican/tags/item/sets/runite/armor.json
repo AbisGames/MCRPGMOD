@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:runite_boots",
+    "pipican:runite_chestplate",
+    "pipican:runite_helmet",
+    "pipican:runite_leggings"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/adamantine_chestplate",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -6538422
+      }
+    ]
+  }
+}

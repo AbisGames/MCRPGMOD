@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:arcanite_spear",
+    "pipican:black_metal_spear",
+    "pipican:carbalite_spear",
+    "pipican:celestial_bronze_spear",
+    "pipican:dimeritium_spear",
+    "pipican:elementium_spear",
+    "pipican:goblin_silver_spear",
+    "pipican:imperial_gold_spear",
+    "pipican:iridium_spear",
+    "pipican:magisteel_spear",
+    "pipican:meteoric_iron_spear",
+    "pipican:palladium_spear",
+    "pipican:starsilver_spear"
+  ]
+}

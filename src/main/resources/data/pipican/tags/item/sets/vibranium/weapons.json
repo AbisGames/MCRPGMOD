@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:vibranium_axe",
+    "pipican:vibranium_hoe",
+    "pipican:vibranium_pickaxe",
+    "pipican:vibranium_shovel",
+    "pipican:vibranium_spear",
+    "pipican:vibranium_sword"
+  ]
+}

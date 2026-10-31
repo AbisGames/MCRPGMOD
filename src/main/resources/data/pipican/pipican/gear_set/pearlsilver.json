@@ -1,0 +1,46 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/pearlsilver/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.2
+        },
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:water_breathing"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/pearlsilver/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "in_water"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

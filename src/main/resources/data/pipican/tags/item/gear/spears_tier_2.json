@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cinderite_spear",
+    "pipican:crimtane_spear",
+    "pipican:demonite_spear",
+    "pipican:glacierite_spear",
+    "pipican:machalite_spear",
+    "pipican:moonstone_spear",
+    "pipican:tidalite_spear"
+  ]
+}

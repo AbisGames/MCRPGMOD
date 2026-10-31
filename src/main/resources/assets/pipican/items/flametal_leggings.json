@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/flametal_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -34278
+      }
+    ]
+  }
+}

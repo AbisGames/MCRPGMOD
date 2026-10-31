@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cinderite_axe",
+    "pipican:cinderite_sword",
+    "pipican:crimtane_axe",
+    "pipican:crimtane_sword",
+    "pipican:demonite_axe",
+    "pipican:demonite_sword",
+    "pipican:glacierite_axe",
+    "pipican:glacierite_sword",
+    "pipican:machalite_axe",
+    "pipican:machalite_sword",
+    "pipican:moonstone_axe",
+    "pipican:moonstone_sword",
+    "pipican:tidalite_axe",
+    "pipican:tidalite_sword"
+  ]
+}

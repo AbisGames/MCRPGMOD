@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/darksteel_helmet",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -15000286
+      }
+    ]
+  }
+}

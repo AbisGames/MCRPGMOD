@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/umbrite_leggings",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12964526
+      }
+    ]
+  }
+}

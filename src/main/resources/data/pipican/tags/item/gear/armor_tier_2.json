@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:cinderite_boots",
+    "pipican:cinderite_chestplate",
+    "pipican:cinderite_helmet",
+    "pipican:cinderite_leggings",
+    "pipican:crimtane_boots",
+    "pipican:crimtane_chestplate",
+    "pipican:crimtane_helmet",
+    "pipican:crimtane_leggings",
+    "pipican:demonite_boots",
+    "pipican:demonite_chestplate",
+    "pipican:demonite_helmet",
+    "pipican:demonite_leggings",
+    "pipican:glacierite_boots",
+    "pipican:glacierite_chestplate",
+    "pipican:glacierite_helmet",
+    "pipican:glacierite_leggings",
+    "pipican:machalite_boots",
+    "pipican:machalite_chestplate",
+    "pipican:machalite_helmet",
+    "pipican:machalite_leggings",
+    "pipican:moonstone_boots",
+    "pipican:moonstone_chestplate",
+    "pipican:moonstone_helmet",
+    "pipican:moonstone_leggings",
+    "pipican:tidalite_boots",
+    "pipican:tidalite_chestplate",
+    "pipican:tidalite_helmet",
+    "pipican:tidalite_leggings"
+  ]
+}

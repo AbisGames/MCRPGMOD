@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:thorium_boots",
+    "pipican:thorium_chestplate",
+    "pipican:thorium_helmet",
+    "pipican:thorium_leggings"
+  ]
+}

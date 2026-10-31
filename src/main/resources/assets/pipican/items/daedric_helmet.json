@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/daedric_helmet",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10875118
+      }
+    ]
+  }
+}

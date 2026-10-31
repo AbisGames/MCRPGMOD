@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:phazon_axe",
+    "pipican:phazon_hoe",
+    "pipican:phazon_pickaxe",
+    "pipican:phazon_shovel",
+    "pipican:phazon_spear",
+    "pipican:phazon_sword"
+  ]
+}

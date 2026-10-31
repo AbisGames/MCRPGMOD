@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.CreativeModeTab;
@@ -119,6 +120,9 @@ public final class PipicanOres {
             TAB_ITEMS.add(item);
             BY_PATH.put(id, ore);
         }
+        if (json.has("set")) {
+            registerSet(ore, json.getAsJsonObject("set"), rarity);
+        }
         for (JsonElement e : json.getAsJsonArray("storage")) {
             JsonObject storage = e.getAsJsonObject();
             String id = storage.get("id").getAsString();
@@ -130,6 +134,61 @@ public final class PipicanOres {
                     .sound(raw ? SoundType.STONE : gem ? SoundType.AMETHYST : SoundType.METAL)
                     .lightLevel(state -> light));
             blockItem(ore, id, block, rarity);
+        }
+    }
+
+    /** Armor, weapons and tools of a set ore, with the tier's (and style's) numbers from the generator. */
+    private static void registerSet(Ore ore, JsonObject set, Rarity rarity) {
+        String id = ore.id();
+        java.util.Set<String> traits = new java.util.HashSet<>();
+        set.getAsJsonArray("traits").forEach(t -> traits.add(t.getAsString()));
+        net.minecraft.tags.TagKey<Item> repair = net.minecraft.tags.TagKey.create(Registries.ITEM, net.minecraft.resources.Identifier.parse(set.get("repair").getAsString()));
+        var tool = new net.minecraft.world.item.ToolMaterial(
+                net.minecraft.tags.TagKey.create(Registries.BLOCK, net.minecraft.resources.Identifier.parse(set.get("incorrect").getAsString())),
+                set.get("tool_durability").getAsInt(), set.get("speed").getAsFloat(), set.get("damage").getAsFloat(),
+                set.get("enchantability").getAsInt(), repair);
+        var defense = set.getAsJsonArray("defense");
+        var armor = new net.minecraft.world.item.equipment.ArmorMaterial(set.get("armor_durability").getAsInt(),
+                java.util.Map.of(net.minecraft.world.item.equipment.ArmorType.HELMET, defense.get(0).getAsInt(),
+                        net.minecraft.world.item.equipment.ArmorType.CHESTPLATE, defense.get(1).getAsInt(),
+                        net.minecraft.world.item.equipment.ArmorType.LEGGINGS, defense.get(2).getAsInt(),
+                        net.minecraft.world.item.equipment.ArmorType.BOOTS, defense.get(3).getAsInt(),
+                        net.minecraft.world.item.equipment.ArmorType.BODY, defense.get(1).getAsInt()),
+                set.get("enchantability").getAsInt(),
+                switch (set.get("weight").getAsString()) {
+                    case "light" -> net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_CHAIN;
+                    case "heavy" -> net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE;
+                    default -> net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON;
+                },
+                set.get("toughness").getAsFloat(), set.get("knockback_resistance").getAsFloat(), repair,
+                ResourceKey.create(net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID, Pipican.id(id)));
+        float swing = set.get("swing").getAsFloat();
+        float dmg = set.get("damage").getAsFloat();
+        for (JsonElement k : set.getAsJsonArray("kinds")) {
+            String kind = k.getAsString();
+            String name = id + "_" + kind;
+            java.util.function.UnaryOperator<Item.Properties> traitsOf = p -> {
+                p = itemProps(ore.tier(), rarity);
+                if (traits.contains("unbreakable")) {
+                    p = p.component(net.minecraft.core.component.DataComponents.UNBREAKABLE, net.minecraft.util.Unit.INSTANCE);
+                }
+                return p;
+            };
+            DeferredItem<? extends Item> item = switch (kind) {
+                case "helmet" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).humanoidArmor(armor, net.minecraft.world.item.equipment.ArmorType.HELMET));
+                case "chestplate" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).humanoidArmor(armor, net.minecraft.world.item.equipment.ArmorType.CHESTPLATE));
+                case "leggings" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).humanoidArmor(armor, net.minecraft.world.item.equipment.ArmorType.LEGGINGS));
+                case "boots" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).humanoidArmor(armor, net.minecraft.world.item.equipment.ArmorType.BOOTS));
+                case "sword" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).sword(tool, 3.0f, -2.4f + swing));
+                case "axe" -> ITEMS.registerItem(name, p -> new net.minecraft.world.item.AxeItem(tool, 5.5f, -3.0f + swing / 2, p), traitsOf);
+                case "spear" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).spear(tool, 1.0f, 1.0f, 0.5f, 2.75f, 10.5f, 6.5f, 5.1f, 10.5f, 4.6f));
+                case "pickaxe" -> ITEMS.registerItem(name, Item::new, p -> traitsOf.apply(p).pickaxe(tool, 1.0f, -2.8f));
+                case "shovel" -> ITEMS.registerItem(name, p -> new net.minecraft.world.item.ShovelItem(tool, 1.5f, -3.0f, p), traitsOf);
+                case "hoe" -> ITEMS.registerItem(name, p -> new net.minecraft.world.item.HoeItem(tool, -dmg, 0.0f, p), traitsOf);
+                default -> throw new IllegalStateException("unknown gear kind " + kind);
+            };
+            TAB_ITEMS.add(item);
+            BY_PATH.put(name, ore);
         }
     }
 

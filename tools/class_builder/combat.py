@@ -27,8 +27,23 @@ MOB_GROUPS = {
     'neutral mobs': ['#pipican:mobs/neutral'],
     'mindless mobs': ['#pipican:mobs/mindless'], 'armored mobs': ['#pipican:mobs/armored'],
     'mobs with natural armor': ['#pipican:mobs/armored'], 'bosses': ['minecraft:wither', 'minecraft:ender_dragon', 'minecraft:warden', 'minecraft:elder_guardian'],
+    # Gear set bonuses (tools/ore_builder/sets.py).
+    'monsters': ['#pipican:mobs/monsters'], 'hostile mobs': ['#pipican:mobs/monsters'],
+    'dragons': ['minecraft:ender_dragon'], 'the ender dragon': ['minecraft:ender_dragon'], 'wither': ['minecraft:wither'],
+    'large creatures': ['#pipican:mobs/large'], 'large mobs': ['#pipican:mobs/large'],
+    'fey and spirits': ['#pipican:mobs/spirits'], 'spirits': ['#pipican:mobs/spirits'],
+    'demons': ['#pipican:mobs/nether'], 'demons and undead': ['#pipican:mobs/nether', '#minecraft:undead'],
 }
 MOB_TAGS = {
+    'mobs/monsters': ['#minecraft:undead', '#minecraft:illager', '#minecraft:arthropod', 'minecraft:creeper', 'minecraft:witch',
+                      'minecraft:enderman', 'minecraft:endermite', 'minecraft:silverfish', 'minecraft:slime', 'minecraft:magma_cube',
+                      'minecraft:blaze', 'minecraft:ghast', 'minecraft:guardian', 'minecraft:elder_guardian', 'minecraft:shulker',
+                      'minecraft:vex', 'minecraft:phantom', 'minecraft:piglin_brute', 'minecraft:hoglin', 'minecraft:zoglin',
+                      'minecraft:ravager', 'minecraft:warden', 'minecraft:breeze', 'minecraft:creaking', 'minecraft:ender_dragon'],
+    'mobs/large': ['minecraft:iron_golem', 'minecraft:ravager', 'minecraft:warden', 'minecraft:wither', 'minecraft:ender_dragon',
+                   'minecraft:elder_guardian', 'minecraft:ghast', 'minecraft:hoglin', 'minecraft:zoglin', 'minecraft:sniffer',
+                   'minecraft:polar_bear', 'minecraft:giant'],
+    'mobs/spirits': ['minecraft:vex', 'minecraft:allay', 'minecraft:phantom', 'minecraft:ghast', 'minecraft:breeze', 'minecraft:creaking'],
     'mobs/nether': ['minecraft:blaze', 'minecraft:ghast', 'minecraft:magma_cube', 'minecraft:piglin', 'minecraft:piglin_brute',
                     'minecraft:zombified_piglin', 'minecraft:hoglin', 'minecraft:zoglin', 'minecraft:wither_skeleton', 'minecraft:strider',
                     'minecraft:wither'],

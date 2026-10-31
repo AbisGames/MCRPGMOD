@@ -12,6 +12,10 @@
     "minecraft:netherite_helmet",
     "minecraft:netherite_chestplate",
     "minecraft:netherite_leggings",
-    "minecraft:netherite_boots"
+    "minecraft:netherite_boots",
+    {
+      "id": "#pipican:ore_gear/armor_heavy",
+      "required": false
+    }
   ]
 }

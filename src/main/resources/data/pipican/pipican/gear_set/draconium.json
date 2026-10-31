@@ -1,0 +1,43 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/draconium/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:flight"
+        },
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "cooldown_ticks": 400,
+          "actions": [
+            {
+              "type": "pipican:absorb",
+              "amount": 8,
+              "seconds": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/draconium/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.3
+        }
+      ]
+    }
+  ]
+}

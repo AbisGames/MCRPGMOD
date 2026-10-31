@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:draconium_boots",
+    "pipican:draconium_chestplate",
+    "pipican:draconium_helmet",
+    "pipican:draconium_leggings"
+  ]
+}

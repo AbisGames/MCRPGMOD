@@ -113,6 +113,7 @@ public final class ClassSystemTests {
         TESTS.put("class_mechanics", ClassSystemTests::classMechanics);
         TESTS.put("stat_effects", ClassSystemTests::statEffects);
         TESTS.put("ores", ClassSystemTests::ores);
+        TESTS.put("gear_sets", ClassSystemTests::gearSets);
     }
 
     private ClassSystemTests() {}
@@ -318,6 +319,47 @@ public final class ClassSystemTests {
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
     /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    /** Gear sets: tier/style stats, mining levels, traits, recipes, stat requirements and set bonuses. */
+    private static void gearSets(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var access = helper.getLevel().registryAccess();
+        java.util.function.Function<String, net.minecraft.world.item.Item> item = path ->
+                net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Pipican.id(path));
+        java.util.function.Function<String, net.minecraft.world.level.block.state.BlockState> ore = path ->
+                net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Pipican.id(path)).defaultBlockState();
+        // Mining levels: T3 tools mine T4 but not T5; T5 tools mine T6 but not T7; Adamantine mines anything.
+        ItemStack cobalt = new ItemStack(item.apply("cobalt_pickaxe"));
+        helper.assertTrue(cobalt.isCorrectToolForDrops(ore.apply("iridium_ore")) && !cobalt.isCorrectToolForDrops(ore.apply("mithril_ore")), "T3 pickaxe: up to T4");
+        ItemStack mithril = new ItemStack(item.apply("mithril_pickaxe"));
+        helper.assertTrue(mithril.isCorrectToolForDrops(ore.apply("orichalcum_ore")) && !mithril.isCorrectToolForDrops(ore.apply("adamantine_ore")), "T5 pickaxe: up to T6");
+        helper.assertTrue(new ItemStack(item.apply("adamantine_pickaxe")).isCorrectToolForDrops(ore.apply("unobtanium_ore")), "Adamantine mines everything");
+        helper.assertTrue(new ItemStack(item.apply("darksteel_sword")).has(net.minecraft.core.component.DataComponents.UNBREAKABLE), "Darksteel never breaks");
+        helper.assertTrue(server.getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, Pipican.id("crimtane_chestplate"))).isPresent(), "crimtane chestplate recipe");
+        helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(Pipican.id("valyrian_steel_helmet")).isEmpty()
+                && item.apply("valyrian_steel_sword") != net.minecraft.world.item.Items.AIR, "Valyrian steel: weapons only");
+        // Mithril (T5, heavy style) needs 9 Strength.
+        helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(item.apply("mithril_chestplate")), k -> 8) == 1
+                && ClassEffectApplier.missedRequirements(access, new ItemStack(item.apply("mithril_chestplate")), k -> 9) == 0, "mithril needs 9 strength");
+        // Set bonuses: the full Crimtane set gives +2 max health; its sword adds the life-steal reaction.
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, TESTER, false, true).success(), "choose tester");
+        double before = player.getAttributeValue(Attributes.MAX_HEALTH);
+        int reactions = ClassEffectApplier.state(player).reactions().size();
+        for (var slot : List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS)) {
+            player.setItemSlot(slot, new ItemStack(item.apply("crimtane_" + switch (slot) {
+                case HEAD -> "helmet"; case CHEST -> "chestplate"; default -> "leggings"; })));
+        }
+        ClassEffectApplier.refresh(player);
+        assertNear(helper, before, player.getAttributeValue(Attributes.MAX_HEALTH), "three pieces: no set bonus yet");
+        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(item.apply("crimtane_boots")));
+        player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(item.apply("crimtane_sword")));
+        ClassEffectApplier.refresh(player);
+        assertNear(helper, before + 2, player.getAttributeValue(Attributes.MAX_HEALTH), "full set: +2 max health");
+        helper.assertTrue(ClassEffectApplier.state(player).reactions().size() == reactions + 1, "the sword adds its life steal");
+        helper.succeed();
+    }
+
     /** Ores: registered from ores.json, mining levels by tier, worldgen features, smelting and drops. */
     private static void ores(GameTestHelper helper) {
         var server = helper.getLevel().getServer();

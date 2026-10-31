@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/runite_chestplate",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12995147
+      }
+    ]
+  }
+}

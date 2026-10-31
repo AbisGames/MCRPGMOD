@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/glacierite_boots",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7352086
+      }
+    ]
+  }
+}

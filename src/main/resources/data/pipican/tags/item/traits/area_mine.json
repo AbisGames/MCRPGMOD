@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:iridium_axe",
+    "pipican:iridium_boots",
+    "pipican:iridium_chestplate",
+    "pipican:iridium_helmet",
+    "pipican:iridium_hoe",
+    "pipican:iridium_leggings",
+    "pipican:iridium_pickaxe",
+    "pipican:iridium_shovel",
+    "pipican:iridium_spear",
+    "pipican:iridium_sword"
+  ]
+}

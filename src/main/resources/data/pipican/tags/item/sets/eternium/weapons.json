@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:eternium_axe",
+    "pipican:eternium_hoe",
+    "pipican:eternium_pickaxe",
+    "pipican:eternium_shovel",
+    "pipican:eternium_spear",
+    "pipican:eternium_sword"
+  ]
+}

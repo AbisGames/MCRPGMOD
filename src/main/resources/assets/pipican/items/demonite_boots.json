@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/demonite_boots",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10797172
+      }
+    ]
+  }
+}

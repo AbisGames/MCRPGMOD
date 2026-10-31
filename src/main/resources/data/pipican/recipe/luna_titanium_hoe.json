@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "key": {
+    "#": "pipican:luna_titanium_ingot",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "##",
+    " /",
+    " /"
+  ],
+  "result": {
+    "id": "pipican:luna_titanium_hoe"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:flametal_axe",
+    "pipican:flametal_hoe",
+    "pipican:flametal_pickaxe",
+    "pipican:flametal_shovel",
+    "pipican:flametal_spear",
+    "pipican:flametal_sword"
+  ]
+}

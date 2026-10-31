@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:hellstone_axe",
+    "pipican:hellstone_hoe",
+    "pipican:hellstone_pickaxe",
+    "pipican:hellstone_shovel",
+    "pipican:hellstone_spear",
+    "pipican:hellstone_sword"
+  ]
+}

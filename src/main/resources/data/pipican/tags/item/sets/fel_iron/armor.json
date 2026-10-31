@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:fel_iron_boots",
+    "pipican:fel_iron_chestplate",
+    "pipican:fel_iron_helmet",
+    "pipican:fel_iron_leggings"
+  ]
+}

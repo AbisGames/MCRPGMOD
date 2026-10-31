@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:unobtanium_axe",
+    "pipican:unobtanium_hoe",
+    "pipican:unobtanium_pickaxe",
+    "pipican:unobtanium_shovel",
+    "pipican:unobtanium_spear",
+    "pipican:unobtanium_sword"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/black_metal/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "blocking"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.75
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/black_metal/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.25,
+          "weapons": "#pipican:weapons/axes"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.25,
+          "weapons": "#pipican:weapons/maces"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
+        }
+      ]
+    }
+  ]
+}

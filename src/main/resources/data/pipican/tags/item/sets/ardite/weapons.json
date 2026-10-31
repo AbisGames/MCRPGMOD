@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:ardite_axe",
+    "pipican:ardite_hoe",
+    "pipican:ardite_pickaxe",
+    "pipican:ardite_shovel",
+    "pipican:ardite_spear",
+    "pipican:ardite_sword"
+  ]
+}

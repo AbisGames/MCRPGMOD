@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:runic_iron_axe",
+    "pipican:runic_iron_hoe",
+    "pipican:runic_iron_pickaxe",
+    "pipican:runic_iron_shovel",
+    "pipican:runic_iron_spear",
+    "pipican:runic_iron_sword"
+  ]
+}

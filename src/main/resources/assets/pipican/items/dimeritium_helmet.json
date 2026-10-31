@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/dimeritium_helmet",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9541005
+      }
+    ]
+  }
+}

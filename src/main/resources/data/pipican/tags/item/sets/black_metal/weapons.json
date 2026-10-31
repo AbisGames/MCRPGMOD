@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:black_metal_axe",
+    "pipican:black_metal_hoe",
+    "pipican:black_metal_pickaxe",
+    "pipican:black_metal_shovel",
+    "pipican:black_metal_spear",
+    "pipican:black_metal_sword"
+  ]
+}

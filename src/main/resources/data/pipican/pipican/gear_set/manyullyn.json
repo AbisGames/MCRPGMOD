@@ -1,0 +1,32 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/manyullyn/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/manyullyn/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.4
+        }
+      ]
+    }
+  ]
+}
