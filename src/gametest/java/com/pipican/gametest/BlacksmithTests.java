@@ -108,7 +108,9 @@ public final class BlacksmithTests {
         helper.assertTrue(BlacksmithUpgrades.profiles().size()==27,"all regional blacksmith profiles must be active");
         for(var design:BossDesigns.all()){
             helper.assertTrue(BlacksmithUpgrades.profiles().contains(design.region()),"missing blacksmith profile: "+design.region());
-            helper.assertTrue(RegionalOreRegistries.MATERIALS.containsKey(design.loot().regional().getPath()),"regional reward material is not registered: "+design.id());
+            // Regional materials are ingots (metals) or gems of the tiered ore catalog: compare items, not names.
+            helper.assertTrue(RegionalOreRegistries.MATERIALS.values().stream().anyMatch(m->m.getId().equals(design.loot().regional())),
+                "regional reward material is not registered: "+design.id());
             helper.assertTrue(RegionalOreRegistries.BOSS_CORES.containsKey(design.region()),"trial boss-core catalyst is not registered: "+design.region());
             helper.assertTrue(BlacksmithTests.class.getResource("/data/pipican/loot_table/rewards/"+design.region()+"_trial.json")!=null,
                     "boss-core survival reward is missing for "+design.region());
