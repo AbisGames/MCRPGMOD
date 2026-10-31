@@ -1,0 +1,21 @@
+{
+  "name": "Ground Slam",
+  "description": "stun mobs within 3 blocks, 30 Might",
+  "icon": "minecraft:anvil",
+  "cost": 30,
+  "cooldown_ticks": 240,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 2,
+          "amplifier": 9
+        }
+      ],
+      "radius": 3
+    }
+  ]
+}

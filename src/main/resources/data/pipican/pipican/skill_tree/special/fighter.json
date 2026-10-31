@@ -1,0 +1,210 @@
+{
+  "name": "Fighter Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Fighting Style",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "two_weapons",
+      "name": "Fight with Two Weapons",
+      "description": "holding a weapon in your off-hand: +10% attack speed",
+      "type": "small",
+      "x": 210,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:attack_speed",
+              "amount": 0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "haft_attack",
+      "name": "Haft Attack",
+      "description": "spears/tridents: every 3rd hit strikes twice",
+      "type": "small",
+      "x": 140,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:nth_hit",
+          "every": 3,
+          "strike_twice": true,
+          "weapons": "#pipican:weapons/polearms"
+        }
+      ]
+    },
+    {
+      "id": "powerful_attack",
+      "name": "Powerful Attack",
+      "description": "axes/maces: fully charged hits +15% damage",
+      "type": "small",
+      "x": 70,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/axes_maces"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "victim": {
+                "charged_hit": true
+              },
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "precise_attack",
+      "name": "Precise Attack",
+      "description": "swords: your hits ignore 15% armor",
+      "type": "small",
+      "x": 0,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/swords"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "armor_pierce",
+              "amount": 0.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shield_bash",
+      "name": "Shield Bash",
+      "description": "blocking an attack makes your next hit within 3s deal +25% damage",
+      "type": "notable",
+      "x": -70,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "block",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.25,
+              "hits": 1,
+              "seconds": 3.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "swift_reload",
+      "name": "Swift Reload",
+      "description": "+25% crossbow reload speed",
+      "type": "notable",
+      "x": -140,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.25
+        }
+      ]
+    },
+    {
+      "id": "swift_shot",
+      "name": "Swift Shot",
+      "description": "+20% bow draw speed",
+      "type": "notable",
+      "x": -210,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "draw_speed",
+          "amount": 0.2
+        }
+      ]
+    },
+    {
+      "id": "weapon_mastery",
+      "name": "Weapon Mastery",
+      "description": "Weapon Mastery chance +15%; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 140,
+      "links": [
+        "precise_attack",
+        "powerful_attack"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "chance": 0.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

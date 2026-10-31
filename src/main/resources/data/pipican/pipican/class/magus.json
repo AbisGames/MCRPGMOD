@@ -1,0 +1,244 @@
+{
+  "name": "Magus",
+  "description": "A member of a secret cabal whose magic flows through a staff they built themselves.",
+  "icon": "minecraft:blaze_rod",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 2,
+    "pipican:dexterity": 2,
+    "pipican:agility": 2,
+    "pipican:intelligence": 8,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:magus_staffcraft": 10
+  },
+  "special_stat": {
+    "stat": "pipican:magus_staffcraft",
+    "resource": {
+      "name": "Staff Charge",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -5933506,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:blaze_rod"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "magus_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/magus",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "magus_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_damage",
+          "amount": 6.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.2
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.85
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/staff",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:special_stat",
+        "min": 10.0
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "melee_hit",
+          "weapons": "#pipican:weapons/staff",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 1.0,
+                  "amplifier": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "A magus without a staff is half a mage.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.75
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

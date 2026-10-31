@@ -53,6 +53,10 @@ An RPG overhaul: data-driven classes, skill trees and trinket slots.
 #file="META-INF/accesstransformer.cfg"
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+# Mixins: small patches to vanilla code where no NeoForge event fits (see com.pipican.mixin).
+[[mixins]]
+config="pipican.mixins.json"
+
 [[dependencies.${mod_id}]] #optional
     # the modid of the dependency
     modId="neoforge" #mandatory

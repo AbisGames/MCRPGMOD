@@ -1,0 +1,17 @@
+{
+  "name": "Warding",
+  "description": "The layered protections you keep around yourself at all times.",
+  "max": 100,
+  "exclusive": true,
+  "color": -2232321,
+  "per_point": [
+    {
+      "attribute": "minecraft:armor",
+      "amount": 0.1
+    },
+    {
+      "attribute": "minecraft:armor_toughness",
+      "amount": 0.05
+    }
+  ]
+}

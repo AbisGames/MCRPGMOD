@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "avenger_start",
+      "name": "Avenger",
+      "description": "+3% damage",
+      "type": "start",
+      "x": 1244,
+      "y": 123,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "avenger_grudge",
+      "name": "Grudge",
+      "description": "+6% damage to marked target",
+      "type": "small",
+      "x": 1316,
+      "y": 103,
+      "links": [
+        "avenger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "avenger_unyielding",
+      "name": "Unyielding",
+      "description": "+3 max health",
+      "type": "small",
+      "x": 1311,
+      "y": 158,
+      "links": [
+        "avenger_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "avenger_pursuit",
+      "name": "Pursuit",
+      "description": "+8% movement speed toward the marked target",
+      "type": "notable",
+      "x": 1386,
+      "y": 110,
+      "links": [
+        "avenger_grudge"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_pursuit",
+          "amount": 0.08
+        }
+      ]
+    },
+    {
+      "id": "avenger_righteous_fury",
+      "name": "Righteous Fury",
+      "description": "+1 armor per 25% missing health",
+      "type": "notable",
+      "x": 1380,
+      "y": 165,
+      "links": [
+        "avenger_unyielding"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "missing_health_percent",
+              "per": 0.04
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "avenger_blood_debt",
+      "name": "Blood Debt",
+      "description": "marks last until the target dies, but you can never mark a new one until it does",
+      "type": "keystone",
+      "x": 1453,
+      "y": 144,
+      "links": [
+        "avenger_pursuit",
+        "avenger_righteous_fury"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:quarry_mod",
+          "name": "vow of vengeance",
+          "forever": true
+        }
+      ]
+    }
+  ]
+}

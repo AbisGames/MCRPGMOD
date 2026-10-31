@@ -1,0 +1,174 @@
+{
+  "name": "Magician",
+  "description": "A student of raw magic. Fragile in a brawl, but with unmatched magical potential.",
+  "icon": "minecraft:enchanted_book",
+  "selectable": true,
+  "base_health": 18.0,
+  "base_stats": {
+    "pipican:vitality": 1,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 4,
+    "pipican:luck": 1,
+    "pipican:magician_power": 5
+  },
+  "special_stat": {
+    "stat": "pipican:magician_power",
+    "resource": {
+      "name": "Mana",
+      "base_max": 50.0,
+      "max_per_point": 5.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -12615681,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:wooden_sword"
+    },
+    {
+      "id": "minecraft:book"
+    },
+    {
+      "id": "minecraft:lapis_lazuli",
+      "count": 2
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "magician_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/magician",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "magician_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 1,
+    "starting_special_skill_points": 0
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "sense_magic",
+      "amount": 12.0
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 0.85
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "applied_duration",
+      "amount": 0.15
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "enchant_levels",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.04
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "enchant_lapis_keep",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "A frail scholar, not a fighter.",
+    "effects": [
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#pipican:is_melee",
+        "multiplier": 1.2
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": [
+          "minecraft:blaze_rod",
+          "minecraft:stick"
+        ],
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2
+  },
+  "abilities": [
+    "pipican:magician/spell_recovery"
+  ]
+}

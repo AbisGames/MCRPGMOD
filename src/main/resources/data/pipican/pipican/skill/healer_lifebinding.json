@@ -1,0 +1,66 @@
+{
+  "name": "Lifebinding",
+  "description": "Trained by healing other players.",
+  "icon": "minecraft:glistering_melon_slice",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "heal_other"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:healer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Vitality Flow",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:healer_vitality_flow",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Vitality Flow",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:healer_vitality_flow",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Lifeblood regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Vitality Flow",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:healer_vitality_flow",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Vitality Flow",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:healer_vitality_flow",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

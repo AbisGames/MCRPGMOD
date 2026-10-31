@@ -1,0 +1,129 @@
+{
+  "name": "Warlock Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Steal Spell",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "vanish",
+      "name": "Vanish",
+      "description": "+2 Larceny",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warlock_larceny",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "elude",
+      "name": "Elude Divination",
+      "description": "also immune to Darkness effect",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:darkness"
+        }
+      ]
+    },
+    {
+      "id": "expert_thief",
+      "name": "Expert Spell Thief",
+      "description": {
+        "text": "stolen effects can be re-applied (see section 12)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "vanish"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "vanishing_escape",
+      "name": "Vanishing Escape",
+      "description": "Vanish also teleports you up to 6 blocks away from the attacker",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "elude"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "vanish",
+          "actions": [
+            {
+              "type": "pipican:blink",
+              "distance": 6.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spell_thief_mastery",
+      "name": "Spell Thief Mastery",
+      "description": "Steal Spell also steals BENEFICIAL effects from mobs you hit (witches!), but -15% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "expert_thief",
+        "vanishing_escape"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.15,
+          "name": "steal spell",
+          "actions": [
+            {
+              "type": "pipican:steal_effects",
+              "target": "victim"
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

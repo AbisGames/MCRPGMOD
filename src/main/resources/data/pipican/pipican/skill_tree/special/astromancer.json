@@ -1,0 +1,127 @@
+{
+  "name": "Astromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Inner Radiance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "starfire",
+      "name": "Starfire",
+      "description": "+2 Radiance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:astromancer_radiance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "corona",
+      "name": "Corona",
+      "description": "Blindness chance +5%",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "blindness",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "intense_light",
+      "name": "Intense Light",
+      "description": "+10% more damage vs undead",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "starfire"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "blinding_corona",
+      "name": "Blinding Corona",
+      "description": "unlocks Corona Burst ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "corona"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:astromancer/corona_burst"
+      ]
+    },
+    {
+      "id": "living_star",
+      "name": "Living Star",
+      "description": "you glow and give Glowing to every mob within 10 blocks; mobs notice you from 50% farther",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "intense_light",
+        "blinding_corona"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:glowing"
+        },
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 10.0,
+              "effects": [
+                {
+                  "effect": "minecraft:glowing",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": 0.5
+        }
+      ]
+    }
+  ]
+}

@@ -2,21 +2,25 @@ package com.pipican.client;
 
 import com.pipican.Pipican;
 import com.pipican.core.ClassLookup;
+import com.pipican.entity.PipicanEntities;
 import com.pipican.network.OpenClassSelectionPayload;
 import com.pipican.network.OpenSkillTreePayload;
 import com.pipican.network.OpenTrinketsPayload;
+import com.pipican.network.UseAbilityPayload;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.trinket.PipicanMenus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.entity.IronGolemRenderer;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -36,7 +40,10 @@ public final class PipicanClient {
         modBus.addListener(PipicanClient::registerScreens);
         modBus.addListener(PipicanClient::registerKeys);
         modBus.addListener(PipicanClient::registerHud);
+        modBus.addListener(PipicanClient::registerRenderers);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onClientTick);
+        NeoForge.EVENT_BUS.addListener(MovementClient::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(MovementClient::onNameTag);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onTooltip);
         NeoForge.EVENT_BUS.addListener(PipicanClient::addInventoryButton);
     }
@@ -54,10 +61,19 @@ public final class PipicanClient {
         event.registerCategory(PipicanKeys.CATEGORY);
         event.register(PipicanKeys.TRINKETS);
         event.register(PipicanKeys.CLASS);
+        for (var key : PipicanKeys.ABILITIES) {
+            event.register(key);
+        }
+    }
+
+    private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        // The eidolon reuses the iron golem model and texture; its SCALE attribute makes it bigger.
+        event.registerEntityRenderer(PipicanEntities.EIDOLON.get(), IronGolemRenderer::new);
     }
 
     private static void registerHud(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, Pipican.id("resource_bar"), new ResourceHud());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, Pipican.id("abilities"), new AbilityHud());
     }
 
     private static void openClassSelection() {
@@ -74,6 +90,11 @@ public final class PipicanClient {
         }
         while (PipicanKeys.TRINKETS.consumeClick()) {
             ClientPacketDistributor.sendToServer(OpenTrinketsPayload.INSTANCE);
+        }
+        for (int i = 0; i < PipicanKeys.ABILITIES.length; i++) {
+            while (PipicanKeys.ABILITIES[i].consumeClick()) {
+                ClientPacketDistributor.sendToServer(new UseAbilityPayload(i));
+            }
         }
         while (PipicanKeys.CLASS.consumeClick()) {
             if (!mc.player.getData(PipicanAttachments.CLASS_DATA).hasClass()) {

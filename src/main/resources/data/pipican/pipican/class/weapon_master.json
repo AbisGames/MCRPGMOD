@@ -1,0 +1,241 @@
+{
+  "name": "Weapon Master",
+  "description": "A warrior who has devoted their life to one favored weapon - and is legendary with it.",
+  "icon": "minecraft:diamond_sword",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 7,
+    "pipican:dexterity": 6,
+    "pipican:agility": 2,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 4,
+    "pipican:luck": 1,
+    "pipican:weapon_master_mastery": 10
+  },
+  "special_stat": {
+    "stat": "pipican:weapon_master_mastery",
+    "resource": {
+      "name": "Focus",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -4668209,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "weapon_master_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/weapon_master",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "weapon_master_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:favored_weapon"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.2
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.006
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.006
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding_favored"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "weapon_durability",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.005
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Devotion to one weapon means neglect of the rest.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/melee"
+                },
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/ranged"
+                }
+              ]
+            },
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:holding_favored"
+              }
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

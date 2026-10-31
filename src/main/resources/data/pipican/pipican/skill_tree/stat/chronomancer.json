@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "chronomancer_stat_start",
+      "name": "Chronomancer",
+      "type": "start",
+      "x": 140,
+      "y": -737
+    },
+    {
+      "id": "chronomancer_quick_witted",
+      "name": "Quick-Witted",
+      "description": "+2 Intelligence, +1 Agility",
+      "type": "small",
+      "x": 151,
+      "y": -796,
+      "links": [
+        "chronomancer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "chronomancer_patient",
+      "name": "Patient",
+      "description": "+2 Wisdom, +1 Luck",
+      "type": "small",
+      "x": 162,
+      "y": -855,
+      "links": [
+        "chronomancer_quick_witted"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

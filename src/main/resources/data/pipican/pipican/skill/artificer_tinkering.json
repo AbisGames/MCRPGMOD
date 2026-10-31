@@ -1,0 +1,87 @@
+{
+  "name": "Tinkering",
+  "description": "Trained by crafting redstone components, rails and mechanisms.",
+  "icon": "minecraft:crafter",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "craft",
+    "items": [
+      "minecraft:repeater",
+      "minecraft:comparator",
+      "minecraft:piston",
+      "minecraft:sticky_piston",
+      "minecraft:observer",
+      "minecraft:dropper",
+      "minecraft:dispenser",
+      "minecraft:hopper",
+      "minecraft:redstone_torch",
+      "minecraft:lever",
+      "minecraft:daylight_detector",
+      "minecraft:target",
+      "minecraft:redstone_lamp",
+      "minecraft:note_block",
+      "minecraft:tnt",
+      "minecraft:rail",
+      "minecraft:powered_rail",
+      "minecraft:detector_rail",
+      "minecraft:activator_rail"
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:artificer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Spare Parts max",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Ingenuity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

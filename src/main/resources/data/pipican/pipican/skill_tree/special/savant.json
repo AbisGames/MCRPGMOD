@@ -1,0 +1,116 @@
+{
+  "name": "Savant Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Tradition Focus",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "annotations",
+      "name": "Annotations",
+      "description": "+2 Breadth",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:savant_breadth",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "second_focus",
+      "name": "Second Focus",
+      "description": "focus bonus +10%",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "focus_bonus",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "generalist",
+      "name": "Generalist",
+      "description": "non-focus schools get +10%",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "annotations"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "non_focus_bonus",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "encyclopedic",
+      "name": "Encyclopedic",
+      "description": "+10% potion duration",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "second_focus"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "grand_savant",
+      "name": "Grand Savant",
+      "description": "focus bonus doubled; -10% Insight regen",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "generalist",
+        "encyclopedic"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "focus_bonus",
+          "amount": 0.2
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

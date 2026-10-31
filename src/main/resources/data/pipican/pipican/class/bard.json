@@ -1,0 +1,222 @@
+{
+  "name": "Bard",
+  "description": "A performer whose Song magic inspires allies, demoralises foes and charms almost anyone.",
+  "icon": "minecraft:note_block",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 1,
+    "pipican:dexterity": 4,
+    "pipican:agility": 3,
+    "pipican:intelligence": 5,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 1,
+    "pipican:luck": 3,
+    "pipican:bard_resonance": 10
+  },
+  "special_stat": {
+    "stat": "pipican:bard_resonance",
+    "resource": {
+      "name": "Melody",
+      "base_max": 50.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -1021016,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:goat_horn"
+    },
+    {
+      "id": "minecraft:note_block"
+    },
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "bard_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/bard",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "bard_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:aura",
+      "radius": 10.0,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.05
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "name": "Inspiring Song",
+      "include_self": false
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "experience",
+      "amount": 0.2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "trade_price",
+      "amount": -0.15
+    },
+    {
+      "type": "pipican:on",
+      "event": "instrument",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 10.0
+        }
+      ],
+      "cooldown_ticks": 600
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:aura_mod",
+      "name": "song",
+      "strength_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:aura_mod",
+      "name": "inspiring song",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.0,
+      "name": "forget",
+      "actions": [
+        {
+          "type": "pipican:control",
+          "target": "victim",
+          "mode": "pacify",
+          "seconds": 5.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "forget",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "A bard's power is in an audience. Alone, the song falls flat.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 16.0,
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.5,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:aura_mod",
+            "name": "inspiring song",
+            "strength": -100.0
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:belt": 1,
+    "pipican:charm": 1
+  },
+  "abilities": [
+    "pipican:bard/charm"
+  ]
+}

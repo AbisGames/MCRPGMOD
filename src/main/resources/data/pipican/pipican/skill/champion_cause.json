@@ -1,0 +1,80 @@
+{
+  "name": "Cause",
+  "description": "Trained by fighting in Battle Stance.",
+  "icon": "minecraft:bell",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "when": {
+      "type": "pipican:all_of",
+      "conditions": [
+        {
+          "type": "pipican:state",
+          "state": "sneaking"
+        },
+        {
+          "type": "pipican:still"
+        }
+      ]
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:champion"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Resolve",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:champion_resolve",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Resolve",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:champion_resolve",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Valor regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Resolve",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:champion_resolve",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Resolve",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:champion_resolve",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "name": "Berserker Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Berserk",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "iron_hide",
+      "name": "Iron Hide",
+      "description": "+2 Fury; Iron Hide +1 armor",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:berserker_fury",
+          "amount": 2
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:wearing",
+                  "items": "#pipican:armor/medium"
+                },
+                {
+                  "type": "pipican:wearing",
+                  "items": "#pipican:armor/heavy"
+                }
+              ]
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frightful",
+      "name": "Frightful Wrath",
+      "description": "Frightful Wrath range +3 blocks",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "frightful wrath",
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "id": "ferocious",
+      "name": "Ferocious Wrath",
+      "description": "+15% movement speed while Berserk",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "iron_hide"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.75
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.15,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fury_unleashed",
+      "name": "Fury Unleashed",
+      "description": "once per rest, when you would die, go Berserk instead with 4 HP",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "frightful"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "death",
+          "actions": [
+            {
+              "type": "pipican:resource",
+              "percent": 1.0
+            },
+            {
+              "type": "pipican:cheat_death",
+              "health": 4.0
+            }
+          ],
+          "once_per_rest": true
+        }
+      ]
+    },
+    {
+      "id": "reckless",
+      "name": "Reckless Strike",
+      "description": "Berserk triggers at 50% Rage instead of 75%; fatigue lasts twice as long",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "ferocious",
+        "fury_unleashed"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "threshold_drop",
+          "amount": 0.25
+        },
+        {
+          "type": "pipican:reaction_mod",
+          "name": "berserk after-effects",
+          "duration": 1.0
+        }
+      ]
+    }
+  ]
+}

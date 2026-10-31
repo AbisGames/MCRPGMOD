@@ -1,0 +1,14 @@
+{
+  "name": "Invest Power",
+  "description": "+30% bound damage for 20s, 20 Charge",
+  "icon": "minecraft:enchanted_book",
+  "cost": 20,
+  "cooldown_ticks": 800,
+  "duration_ticks": 400,
+  "effects": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.3
+    }
+  ]
+}

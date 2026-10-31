@@ -1,0 +1,77 @@
+{
+  "name": "Axemanship",
+  "description": "Trained by hitting mobs with axes.",
+  "icon": "minecraft:iron_axe",
+  "trigger": {
+    "type": "pipican:melee_hit",
+    "items": "#pipican:weapons/axes"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:beastmaster",
+    "pipican:berserker",
+    "pipican:brute",
+    "pipican:death_dealer",
+    "pipican:dervish",
+    "pipican:executioner",
+    "pipican:fighter",
+    "pipican:marauder",
+    "pipican:ranger",
+    "pipican:runesmith",
+    "pipican:warrior",
+    "pipican:weapon_master",
+    "pipican:zealot"
+  ],
+  "tiers": [
+    {
+      "description": "+3% axe damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+3% axe damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+10% shield-disable time when you break a shield",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "shield_break_time",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "description": "+3% axe damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+6% axe damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/axes",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

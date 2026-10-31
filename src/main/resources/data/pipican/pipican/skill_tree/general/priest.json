@@ -1,0 +1,129 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "priest_start",
+      "name": "Priest",
+      "description": "+1 max health",
+      "type": "start",
+      "x": 300,
+      "y": 0,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "priest_blessed",
+      "name": "Blessed",
+      "description": "+5% healing received",
+      "type": "small",
+      "x": 370,
+      "y": -28,
+      "links": [
+        "priest_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "priest_smite",
+      "name": "Smite",
+      "description": "+6% damage to undead",
+      "type": "small",
+      "x": 370,
+      "y": 28,
+      "links": [
+        "priest_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "priest_vigil",
+      "name": "Vigil",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 440,
+      "y": -28,
+      "links": [
+        "priest_blessed"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "priest_sanctified",
+      "name": "Sanctified",
+      "description": "+10% natural regeneration, immune to Hunger effect",
+      "type": "notable",
+      "x": 440,
+      "y": 28,
+      "links": [
+        "priest_vigil",
+        "priest_smite"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "natural_regen",
+          "amount": 0.1
+        },
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:hunger"
+        }
+      ]
+    },
+    {
+      "id": "priest_martyr",
+      "name": "Martyr",
+      "description": "Prayer aura also gives allies +5% damage reduction, but you take 10% more damage",
+      "type": "keystone",
+      "x": 510,
+      "y": 0,
+      "links": [
+        "priest_sanctified"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.95
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.1
+        }
+      ]
+    }
+  ]
+}

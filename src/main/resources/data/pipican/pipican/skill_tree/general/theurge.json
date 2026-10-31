@@ -1,0 +1,139 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "theurge_start",
+      "name": "Theurge",
+      "description": "+5% healing",
+      "type": "start",
+      "x": 1478,
+      "y": -612,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "theurge_prayerful",
+      "name": "Prayerful",
+      "description": "+8% healing",
+      "type": "small",
+      "x": 1532,
+      "y": -664,
+      "links": [
+        "theurge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.08
+        }
+      ]
+    },
+    {
+      "id": "theurge_halo",
+      "name": "Halo",
+      "description": "-10% damage from undead",
+      "type": "small",
+      "x": 1553,
+      "y": -614,
+      "links": [
+        "theurge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": "#minecraft:undead",
+          "multiplier": 0.9
+        }
+      ]
+    },
+    {
+      "id": "theurge_pulse",
+      "name": "Pulse",
+      "description": "Invocation every 20s",
+      "type": "notable",
+      "x": 1597,
+      "y": -691,
+      "links": [
+        "theurge_prayerful"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "cooldown": -0.333333
+        }
+      ]
+    },
+    {
+      "id": "theurge_divine_aegis",
+      "name": "Divine Aegis",
+      "description": "+1 armor",
+      "type": "notable",
+      "x": 1618,
+      "y": -640,
+      "links": [
+        "theurge_halo"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "theurge_chosen",
+      "name": "Chosen",
+      "description": "Invocation stuns frightened (weakened) mobs for 1s, but -20% max health",
+      "type": "keystone",
+      "x": 1672,
+      "y": -693,
+      "links": [
+        "theurge_pulse",
+        "theurge_divine_aegis"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 1.0,
+                  "amplifier": 9
+                }
+              ],
+              "target": "hostiles",
+              "radius": 4.0,
+              "state": {
+                "effects": "minecraft:weakness"
+              }
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

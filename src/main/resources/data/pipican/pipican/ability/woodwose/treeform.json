@@ -1,0 +1,24 @@
+{
+  "name": "Treeform",
+  "description": "become a tree - fully hidden, heal all damage while resting, book level 10",
+  "icon": "minecraft:oak_sapling",
+  "cooldown_ticks": 200,
+  "toggle": true,
+  "drain_per_second": 0,
+  "effects": [
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:invisibility"
+    },
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:slowness",
+      "amplifier": 9
+    },
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:regeneration",
+      "amplifier": 1
+    }
+  ]
+}

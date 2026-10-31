@@ -1,0 +1,76 @@
+{
+  "name": "Undead Bane",
+  "description": "Trained by killing undead mobs (zombies, skeletons, phantoms, drowned, wither skeletons...).",
+  "icon": "minecraft:golden_apple",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victims": "#minecraft:undead"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:astromancer",
+    "pipican:cleric",
+    "pipican:exorcist",
+    "pipican:inquisitor",
+    "pipican:necromancer",
+    "pipican:paladin",
+    "pipican:priest",
+    "pipican:templar",
+    "pipican:theurge"
+  ],
+  "tiers": [
+    {
+      "description": "+3% damage to undead",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+3% damage to undead",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "-5% damage taken from undead",
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": "#minecraft:undead",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "description": "+3% damage to undead",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+6% damage to undead",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

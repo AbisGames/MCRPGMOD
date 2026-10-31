@@ -1,0 +1,126 @@
+{
+  "name": "Hydromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Flow",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "wave",
+      "name": "Wave",
+      "description": "+2 Tide",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hydromancer_tide",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "slippery",
+      "name": "Slippery",
+      "description": {
+        "text": "immune to being held (guardians' beam slow too)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "watery_form",
+      "name": "Watery Form",
+      "description": "unlocks Watery Form ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "wave"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:hydromancer/watery_form"
+      ]
+    },
+    {
+      "id": "tsunami",
+      "name": "Tsunami",
+      "description": "unlocks Wave ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "slippery"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:hydromancer/wave"
+      ]
+    },
+    {
+      "id": "ocean_s_heart",
+      "name": "Ocean's Heart",
+      "description": "drowned and guardians are neutral to you; -15% max health on land",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "watery_form",
+        "tsunami"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ignored_by",
+          "mobs": [
+            "minecraft:drowned",
+            "minecraft:guardian",
+            "minecraft:elder_guardian"
+          ],
+          "unless_attacked": true
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "in_water"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": -0.15,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

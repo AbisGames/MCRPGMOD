@@ -1,0 +1,142 @@
+{
+  "name": "Dervish Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Ambidexterity",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "flow",
+      "name": "Flow",
+      "description": "+2 Rhythm",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dervish_rhythm",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "counter",
+      "name": "Counter",
+      "description": "a successful parry makes your next hit a crit",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "dodge",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.5,
+              "hits": 1,
+              "seconds": 10.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "off_hand_parry",
+      "name": "Off-Hand Parry",
+      "description": "+1 armor while dual-wielding",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "flow"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:holding",
+                "items": "#pipican:weapons/melee",
+                "hand": "main"
+              },
+              {
+                "type": "pipican:holding",
+                "items": "#pipican:weapons/melee",
+                "hand": "off"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "two_weapon_mastery",
+      "name": "Two Weapon Mastery",
+      "description": "combo bonus +15%",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "counter"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "offhand_combo",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "whirling_death",
+      "name": "Whirling Death",
+      "description": "unlocks Whirl ability; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "off_hand_parry",
+        "two_weapon_mastery"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:dervish/whirl"
+      ]
+    }
+  ]
+}

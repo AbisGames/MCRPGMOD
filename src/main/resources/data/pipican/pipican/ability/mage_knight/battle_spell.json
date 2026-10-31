@@ -1,0 +1,23 @@
+{
+  "name": "Battle Spell",
+  "description": "a short-range blast that leads into Escalating Violence, 20 Warfire",
+  "icon": "minecraft:blaze_powder",
+  "cost": 20,
+  "cooldown_ticks": 120,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "hostiles",
+      "amount": 5,
+      "radius": 4,
+      "cone": 90
+    },
+    {
+      "type": "pipican:push",
+      "target": "hostiles",
+      "radius": 4,
+      "strength": 1.0,
+      "cone": 90
+    }
+  ]
+}

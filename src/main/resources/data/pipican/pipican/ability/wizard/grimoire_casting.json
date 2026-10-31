@@ -1,0 +1,26 @@
+{
+  "name": "Grimoire Casting",
+  "description": "cast spells written into a grimoire",
+  "icon": "minecraft:writable_book",
+  "cost": 10,
+  "cooldown_ticks": 40,
+  "actions": [
+    {
+      "type": "pipican:cast",
+      "spells": [
+        "pipican:arcanist/arcane_bolt",
+        "pipican:pyromancer/firebolt",
+        "pipican:magus/staff_bolt",
+        "pipican:astromancer/sunbeam",
+        "pipican:astromancer/corona_burst",
+        "pipican:aeromancer/gust",
+        "pipican:hydromancer/wave",
+        "pipican:abjurer/ward",
+        "pipican:chronomancer/haste",
+        "pipican:traveler/blink",
+        "pipican:stormbringer/lightning_bolt",
+        "pipican:healer/heal"
+      ]
+    }
+  ]
+}

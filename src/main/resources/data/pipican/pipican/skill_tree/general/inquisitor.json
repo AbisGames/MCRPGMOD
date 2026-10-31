@@ -1,0 +1,130 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "inquisitor_start",
+      "name": "Inquisitor",
+      "description": "+3% damage",
+      "type": "start",
+      "x": 1109,
+      "y": -577,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_piercing_gaze",
+      "name": "Piercing Gaze",
+      "description": "+5% damage to scrutinised",
+      "type": "small",
+      "x": 1158,
+      "y": -634,
+      "links": [
+        "inquisitor_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_skull_mask",
+      "name": "Skull Mask",
+      "description": "immune to Nausea and Blindness",
+      "type": "small",
+      "x": 1184,
+      "y": -585,
+      "links": [
+        "inquisitor_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:nausea",
+            "minecraft:blindness"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_heretic_hunter",
+      "name": "Heretic Hunter",
+      "description": "+10% damage to illagers and witches",
+      "type": "notable",
+      "x": 1220,
+      "y": -666,
+      "links": [
+        "inquisitor_piercing_gaze"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_illagers_witches",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_master_torturer",
+      "name": "Master Torturer",
+      "description": "scrutinised mobs drop +1 loot",
+      "type": "notable",
+      "x": 1246,
+      "y": -617,
+      "links": [
+        "inquisitor_skull_mask"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "marked_loot",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_witch_finder",
+      "name": "Witch-Finder",
+      "description": "+25% damage to scrutinised, but -15% to everything else",
+      "type": "keystone",
+      "x": 1295,
+      "y": -674,
+      "links": [
+        "inquisitor_heretic_hunter",
+        "inquisitor_master_torturer"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 0.85,
+          "except": true
+        }
+      ]
+    }
+  ]
+}

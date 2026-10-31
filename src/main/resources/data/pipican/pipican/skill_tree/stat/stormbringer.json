@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "stormbringer_stat_start",
+      "name": "Stormbringer",
+      "type": "start",
+      "x": -84,
+      "y": -956
+    },
+    {
+      "id": "stormbringer_electric_mind",
+      "name": "Electric Mind",
+      "description": "+2 Intelligence, +1 Agility",
+      "type": "small",
+      "x": -89,
+      "y": -1016,
+      "links": [
+        "stormbringer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "stormbringer_wild_will",
+      "name": "Wild Will",
+      "description": "+2 Wisdom, +1 Endurance",
+      "type": "small",
+      "x": -94,
+      "y": -1076,
+      "links": [
+        "stormbringer_electric_mind"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

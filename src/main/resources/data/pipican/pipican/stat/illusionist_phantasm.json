@@ -1,0 +1,7 @@
+{
+  "name": "Phantasm",
+  "description": "How real your illusions seem.",
+  "max": 100,
+  "exclusive": true,
+  "color": -29720
+}

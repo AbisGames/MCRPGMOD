@@ -1,0 +1,65 @@
+{
+  "name": "Gunsmithing",
+  "description": "Trained by modifying and repairing firearms.",
+  "icon": "minecraft:crossbow",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:gunslinger"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Trigger Finger",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gunslinger_trigger_finger",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Trigger Finger",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gunslinger_trigger_finger",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Grit regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Trigger Finger",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gunslinger_trigger_finger",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Trigger Finger",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:gunslinger_trigger_finger",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "Tidecalling",
+  "description": "Trained by killing mobs while wet.",
+  "icon": "minecraft:heart_of_the_sea",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:state",
+      "state": "wet"
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:hydromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Tide",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hydromancer_tide",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Tide",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hydromancer_tide",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Current regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Tide",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hydromancer_tide",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Tide",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:hydromancer_tide",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

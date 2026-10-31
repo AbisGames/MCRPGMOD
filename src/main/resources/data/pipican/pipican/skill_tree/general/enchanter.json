@@ -1,0 +1,134 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "enchanter_start",
+      "name": "Enchanter",
+      "description": "+3% charm chance",
+      "type": "start",
+      "x": 800,
+      "y": -1386,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "pacify",
+          "amount": 0.03
+        }
+      ]
+    },
+    {
+      "id": "enchanter_captivate",
+      "name": "Captivate",
+      "description": "+5% charm chance",
+      "type": "small",
+      "x": 811,
+      "y": -1460,
+      "links": [
+        "enchanter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "pacify",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "enchanter_spellwright",
+      "name": "Spellwright",
+      "description": "+10% extra-enchantment chance",
+      "type": "small",
+      "x": 859,
+      "y": -1433,
+      "links": [
+        "enchanter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_enchant",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "enchanter_countercharm",
+      "name": "Countercharm",
+      "description": "players near you are also immune to Nausea",
+      "type": "notable",
+      "x": 846,
+      "y": -1521,
+      "links": [
+        "enchanter_captivate"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:immune",
+              "effects": "minecraft:nausea"
+            }
+          ],
+          "include_self": false
+        }
+      ]
+    },
+    {
+      "id": "enchanter_puppeteer",
+      "name": "Puppeteer",
+      "description": "charmed mobs attack other hostile mobs",
+      "type": "notable",
+      "x": 894,
+      "y": -1493,
+      "links": [
+        "enchanter_spellwright"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "pacify",
+          "actions": [
+            {
+              "type": "pipican:control",
+              "target": "victim",
+              "mode": "ally",
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "enchanter_mind_thief",
+      "name": "Mind Thief",
+      "description": "charm chance doubled, but you deal -30% damage",
+      "type": "keystone",
+      "x": 905,
+      "y": -1568,
+      "links": [
+        "enchanter_countercharm",
+        "enchanter_puppeteer"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "pacify",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.7
+        }
+      ]
+    }
+  ]
+}

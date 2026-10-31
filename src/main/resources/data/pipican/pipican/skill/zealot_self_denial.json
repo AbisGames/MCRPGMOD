@@ -1,0 +1,65 @@
+{
+  "name": "Self-Denial",
+  "description": "Trained by surviving hits with Zeal.",
+  "icon": "minecraft:flint",
+  "trigger": {
+    "type": "pipican:reaction",
+    "name": "zeal"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:zealot"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Fervor",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:zealot_fervor",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Fervor",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:zealot_fervor",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+5 max Madness",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 5.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Fervor",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:zealot_fervor",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Fervor",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:zealot_fervor",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

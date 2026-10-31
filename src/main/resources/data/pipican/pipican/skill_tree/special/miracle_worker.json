@@ -1,0 +1,126 @@
+{
+  "name": "Miracle Worker Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Stigmata",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "conviction",
+      "name": "Conviction",
+      "description": "+2 Devotion",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:miracle_worker_devotion",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "booming_voice",
+      "name": "Booming Voice",
+      "description": "Tongues messages carry server-wide",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "worker_of_miracles",
+      "name": "Worker of Miracles",
+      "description": "heal amount 10",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "conviction"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "worker of miracles",
+          "heal": 4.0
+        }
+      ]
+    },
+    {
+      "id": "divine_visage",
+      "name": "Divine Visage",
+      "description": "Stigmata also gives Resistance I",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "booming_voice"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:miracle_worker/stigmata"
+          },
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:resistance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "living_god",
+      "name": "Living God",
+      "description": "Stigmata lasts twice as long; you can't sleep while it's active",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "worker_of_miracles",
+        "divine_visage"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:miracle_worker/stigmata",
+          "duration": 1.0,
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:miracle_worker/stigmata"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "no_sleep",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

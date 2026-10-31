@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "witch_stat_start",
+      "name": "Witch",
+      "type": "start",
+      "x": 225,
+      "y": -390
+    },
+    {
+      "id": "witch_wise",
+      "name": "Wise Woman",
+      "description": "+2 Wisdom, +1 Intelligence",
+      "type": "small",
+      "x": 255,
+      "y": -442,
+      "links": [
+        "witch_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "witch_wild",
+      "name": "Wildwood",
+      "description": "+2 Agility, +1 Luck",
+      "type": "small",
+      "x": 285,
+      "y": -494,
+      "links": [
+        "witch_wise"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

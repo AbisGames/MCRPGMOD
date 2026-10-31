@@ -1,0 +1,70 @@
+{
+  "name": "Retribution",
+  "description": "Trained by killing marked targets.",
+  "icon": "minecraft:crossbow",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "marked": true
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:avenger"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Vengeance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:avenger_vengeance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Vengeance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:avenger_vengeance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+5 max Retribution",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 5.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Vengeance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:avenger_vengeance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Vengeance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:avenger_vengeance",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

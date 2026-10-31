@@ -1,0 +1,75 @@
+{
+  "name": "Bartering",
+  "description": "Trained by trading with villagers, wandering traders and piglins.",
+  "icon": "minecraft:emerald",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "trade"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:diplomat"
+  ],
+  "tiers": [
+    {
+      "description": "-2% trade prices",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.02
+        }
+      ]
+    },
+    {
+      "description": "+1 villager restock",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_restock",
+          "amount": 0.5
+        }
+      ]
+    },
+    {
+      "description": "-3% trade prices",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.03
+        }
+      ]
+    },
+    {
+      "description": {
+        "text": "+5% piglin barter quality",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "effects": []
+    },
+    {
+      "description": "-5% trade prices",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
+      ]
+    }
+  ]
+}

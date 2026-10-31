@@ -1,0 +1,119 @@
+{
+  "name": "Myrmidon Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Shield Block",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "heavy_shield",
+      "name": "Heavy Shield",
+      "description": "+2 Shieldcraft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:myrmidon_shieldcraft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "forceful_shield",
+      "name": "Forceful Shield",
+      "description": "+2 knockback blocks",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "forceful shield",
+          "radius": 2.0
+        }
+      ]
+    },
+    {
+      "id": "shield_bash",
+      "name": "Shield Bash",
+      "description": "unlocks Shield Charge ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "heavy_shield"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:myrmidon/shield_charge"
+      ]
+    },
+    {
+      "id": "shield_mastery",
+      "name": "Shield Mastery",
+      "description": "+1 more armor with shield",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "forceful_shield"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/shields"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aspis",
+      "name": "Aspis",
+      "description": "players within 3 blocks behind you are protected from projectiles; -10% damage",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "shield_bash",
+        "shield_mastery"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "projectile_ward",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.9
+        }
+      ]
+    }
+  ]
+}

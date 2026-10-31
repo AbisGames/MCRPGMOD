@@ -1,0 +1,114 @@
+{
+  "name": "Sorcerer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Sorcery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "enlarged",
+      "name": "Enlarged Spell",
+      "description": "Outburst radius +1 block",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "sorcerous outburst",
+          "radius": 1.0
+        }
+      ]
+    },
+    {
+      "id": "potent",
+      "name": "Potent Spell",
+      "description": "+2 Potency",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sorcerer_potency",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "lasting",
+      "name": "Lasting Spell",
+      "description": "potion effects you apply last 30% longer",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "enlarged"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "applied_duration",
+          "amount": 0.3
+        }
+      ]
+    },
+    {
+      "id": "greater_sorcery",
+      "name": "Greater Sorcery",
+      "description": "Strain drains 50% faster",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "potent"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "sorcerous_blast",
+      "name": "Sorcerous Blast",
+      "description": "unlocks Sorcerous Blast (spend Strain as a ranged bolt); max Strain -2",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "lasting",
+        "greater_sorcery"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -2.0
+        }
+      ],
+      "grants": [
+        "pipican:sorcerer/sorcerous_blast"
+      ]
+    }
+  ]
+}

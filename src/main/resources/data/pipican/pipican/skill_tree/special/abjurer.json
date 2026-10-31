@@ -1,0 +1,137 @@
+{
+  "name": "Abjurer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Protection",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "layered_ward",
+      "name": "Layered Ward",
+      "description": "+2 Warding",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:abjurer_warding",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quick_ward",
+      "name": "Quick Ward",
+      "description": "Guarded Casting lasts 5s longer",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "guarded casting",
+          "seconds": 5.0
+        }
+      ]
+    },
+    {
+      "id": "warded",
+      "name": "Warded",
+      "description": "+5% less damage from mobs",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "layered_ward"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "id": "ward_allies",
+      "name": "Ward Allies",
+      "description": "Guarded Casting also gives +2 armor to players within 6 blocks",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quick_ward"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "guarded casting",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 10.0,
+              "others": 6.0,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:armor",
+                  "amount": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inviolable",
+      "name": "Inviolable",
+      "description": "immune to knockback while Ward is above half; -10% movement speed",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "warded",
+        "ward_allies"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

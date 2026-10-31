@@ -1,0 +1,87 @@
+{
+  "name": "Tinkerwork",
+  "description": "Trained by crafting and placing redstone components.",
+  "icon": "minecraft:observer",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "craft",
+    "items": [
+      "minecraft:repeater",
+      "minecraft:comparator",
+      "minecraft:piston",
+      "minecraft:sticky_piston",
+      "minecraft:observer",
+      "minecraft:dropper",
+      "minecraft:dispenser",
+      "minecraft:hopper",
+      "minecraft:redstone_torch",
+      "minecraft:lever",
+      "minecraft:daylight_detector",
+      "minecraft:target",
+      "minecraft:redstone_lamp",
+      "minecraft:note_block",
+      "minecraft:tnt",
+      "minecraft:rail",
+      "minecraft:powered_rail",
+      "minecraft:detector_rail",
+      "minecraft:activator_rail"
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:technomancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Voltage regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Circuitry",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

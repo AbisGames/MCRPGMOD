@@ -1,0 +1,96 @@
+{
+  "name": "Swimming",
+  "description": "Trained by swimming distance and fighting underwater.",
+  "icon": "minecraft:heart_of_the_sea",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:move",
+        "mode": "swim",
+        "per_blocks": 10
+      },
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:melee_hit"
+        },
+        "when": {
+          "type": "pipican:state",
+          "state": "underwater"
+        }
+      }
+    ]
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:hydromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+5% swim speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+10% oxygen",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:oxygen_bonus",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "description": "+5% swim speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+5% underwater damage",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "underwater"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "+10% swim speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Piety",
+  "description": "The directness of your connection to the divine.",
+  "max": 100,
+  "exclusive": true,
+  "color": -6774
+}

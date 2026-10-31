@@ -1,0 +1,16 @@
+{
+  "name": "Firebolt",
+  "description": "shoot a fireball, 15 Embers",
+  "icon": "minecraft:fire_charge",
+  "cost": 15,
+  "cooldown_ticks": 30,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 5,
+      "range": 24,
+      "fire_seconds": 4
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "artificer_start",
+      "name": "Artificer",
+      "description": "+10% durability on everything you wear",
+      "type": "start",
+      "x": -375,
+      "y": -650,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "armor_durability",
+          "amount": -0.090909
+        }
+      ]
+    },
+    {
+      "id": "artificer_rivets",
+      "name": "Rivets",
+      "description": "+1 armor",
+      "type": "small",
+      "x": -434,
+      "y": -696,
+      "links": [
+        "artificer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "artificer_gears",
+      "name": "Gears",
+      "description": "+8% crossbow reload speed",
+      "type": "small",
+      "x": -386,
+      "y": -724,
+      "links": [
+        "artificer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.08
+        }
+      ]
+    },
+    {
+      "id": "artificer_alloy",
+      "name": "Alloy Plating",
+      "description": "+1 armor toughness, +10% knockback resistance",
+      "type": "notable",
+      "x": -469,
+      "y": -757,
+      "links": [
+        "artificer_rivets"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "artificer_repeater",
+      "name": "Repeater",
+      "description": "+10% crossbow damage",
+      "type": "notable",
+      "x": -421,
+      "y": -785,
+      "links": [
+        "artificer_gears"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "artificer_overclock",
+      "name": "Overclock",
+      "description": "+20% attack speed and reload speed, but your gear loses durability 25% faster",
+      "type": "keystone",
+      "x": -480,
+      "y": -831,
+      "links": [
+        "artificer_alloy",
+        "artificer_repeater"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "durability",
+          "amount": 0.25
+        }
+      ]
+    }
+  ]
+}

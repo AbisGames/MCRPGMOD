@@ -1,0 +1,128 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "healer_start",
+      "name": "Healer",
+      "description": "+10% healing given",
+      "type": "start",
+      "x": 1249,
+      "y": -51,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "healer_gentle_hands",
+      "name": "Gentle Hands",
+      "description": "+10% healing given",
+      "type": "small",
+      "x": 1318,
+      "y": -81,
+      "links": [
+        "healer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "healer_physician",
+      "name": "Physician",
+      "description": "your potions last 20% longer",
+      "type": "small",
+      "x": 1320,
+      "y": -26,
+      "links": [
+        "healer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.2
+        }
+      ]
+    },
+    {
+      "id": "healer_triage",
+      "name": "Triage",
+      "description": "players below 30% health heal twice as fast from you",
+      "type": "notable",
+      "x": 1388,
+      "y": -84,
+      "links": [
+        "healer_gentle_hands"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "triage",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "healer_purify",
+      "name": "Purify",
+      "description": "players near you lose Poison twice as fast",
+      "type": "notable",
+      "x": 1390,
+      "y": -29,
+      "links": [
+        "healer_physician"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:effect_duration",
+              "effects": "minecraft:poison",
+              "multiplier": 0.5
+            }
+          ],
+          "include_self": false
+        }
+      ]
+    },
+    {
+      "id": "healer_saint",
+      "name": "Saint",
+      "description": "healing doubled, but you deal -30% damage",
+      "type": "keystone",
+      "x": 1459,
+      "y": -59,
+      "links": [
+        "healer_triage",
+        "healer_purify"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_given",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.7
+        }
+      ]
+    }
+  ]
+}

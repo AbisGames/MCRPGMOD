@@ -1,0 +1,28 @@
+{
+  "name": "Hex",
+  "description": "choose a curse and apply it to a target at range, 20 Spite",
+  "icon": "minecraft:fermented_spider_eye",
+  "cost": 20,
+  "cooldown_ticks": 160,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "look",
+      "effects": [
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 10
+        },
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 10
+        },
+        {
+          "effect": "minecraft:glowing",
+          "seconds": 10
+        }
+      ],
+      "range": 16
+    }
+  ]
+}

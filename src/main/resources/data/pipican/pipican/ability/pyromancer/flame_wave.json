@@ -1,0 +1,17 @@
+{
+  "name": "Flame Wave",
+  "description": "cone of fire, 35 Embers",
+  "icon": "minecraft:blaze_powder",
+  "cost": 35,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "hostiles",
+      "amount": 4,
+      "radius": 5,
+      "cone": 90,
+      "fire_seconds": 5
+    }
+  ]
+}

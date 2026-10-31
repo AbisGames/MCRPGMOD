@@ -11,7 +11,9 @@ public enum MoveMode implements StringRepresentable {
     SNEAK("sneak"),
     SWIM("swim"),
     CLIMB("climb"),
-    GLIDE("glide");
+    GLIDE("glide"),
+    /** On a horse, pig, boat... (distance the player is carried). */
+    RIDE("ride");
 
     public static final Codec<MoveMode> CODEC = StringRepresentable.fromEnum(MoveMode::values);
 

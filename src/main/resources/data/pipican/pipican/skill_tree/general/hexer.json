@@ -1,0 +1,146 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "hexer_start",
+      "name": "Hexer",
+      "description": "+3% curse chance",
+      "type": "start",
+      "x": 717,
+      "y": -1024,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "curse",
+          "amount": 0.03
+        }
+      ]
+    },
+    {
+      "id": "hexer_wicked",
+      "name": "Wicked",
+      "description": "+5% curse chance",
+      "type": "small",
+      "x": 735,
+      "y": -1097,
+      "links": [
+        "hexer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "curse",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "hexer_lingering_hate",
+      "name": "Lingering Hate",
+      "description": "curses last 3s longer",
+      "type": "small",
+      "x": 780,
+      "y": -1066,
+      "links": [
+        "hexer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "curse",
+          "seconds": 3.0
+        }
+      ]
+    },
+    {
+      "id": "hexer_withering_gaze",
+      "name": "Withering Gaze",
+      "description": "Pain curse also gives Weakness",
+      "type": "notable",
+      "x": 775,
+      "y": -1154,
+      "links": [
+        "hexer_wicked"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "curse",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "state": {
+                "bleeding": true
+              },
+              "effects": [
+                {
+                  "effect": "minecraft:weakness",
+                  "seconds": 8.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hexer_hex_ward",
+      "name": "Hex Ward",
+      "description": "you can't be hit by witches' potions",
+      "type": "notable",
+      "x": 820,
+      "y": -1123,
+      "links": [
+        "hexer_lingering_hate"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "witch_ward",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "hexer_doom_hex",
+      "name": "Doom Hex",
+      "description": "cursed mobs that die explode in a small Instant Damage cloud, but -15% max health",
+      "type": "keystone",
+      "x": 837,
+      "y": -1196,
+      "links": [
+        "hexer_withering_gaze",
+        "hexer_hex_ward"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "marked": true
+          },
+          "actions": [
+            {
+              "type": "pipican:cloud",
+              "effect": "minecraft:instant_damage",
+              "radius": 2.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

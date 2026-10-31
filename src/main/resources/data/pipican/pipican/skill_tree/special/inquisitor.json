@@ -1,0 +1,118 @@
+{
+  "name": "Inquisitor Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Scrutiny",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "cold_eyes",
+      "name": "Cold Eyes",
+      "description": "+2 Scrutiny",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:inquisitor_scrutiny",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "dreadful_threat",
+      "name": "Dreadful Threat",
+      "description": "Weakness II",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:inquisitor/dreadful_threat",
+          "amplify": {
+            "minecraft:weakness": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "inquisitor_s_judgment",
+      "name": "Inquisitor's Judgment",
+      "description": "+10% judgment damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "cold_eyes"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_illagers_witches_nether_mobs",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "expose",
+      "name": "Expose",
+      "description": "scrutinised mobs take +10% damage from everyone",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "dreadful_threat"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "scrutiny_expose",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "grand_inquisitor",
+      "name": "Grand Inquisitor",
+      "description": "scrutinise 2 mobs at once; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "inquisitor_s_judgment",
+        "expose"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "scrutiny_targets",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

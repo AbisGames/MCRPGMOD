@@ -1,0 +1,13 @@
+{
+  "name": "Smite",
+  "cooldown_ticks": 0,
+  "actions": [
+    {
+      "type": "pipican:empower",
+      "target": "self",
+      "bonus": 5,
+      "hits": 1,
+      "seconds": 10
+    }
+  ]
+}

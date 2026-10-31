@@ -1,0 +1,77 @@
+{
+  "name": "Alchemy",
+  "description": "Trained by brewing potions.",
+  "icon": "minecraft:enchanted_book",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "brew"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:apocalyptist",
+    "pipican:destroyer",
+    "pipican:healer",
+    "pipican:hexer",
+    "pipican:magician",
+    "pipican:poisoner",
+    "pipican:savant",
+    "pipican:sorcerer",
+    "pipican:thaumaturge",
+    "pipican:transmuter",
+    "pipican:warlock",
+    "pipican:witch",
+    "pipican:wizard"
+  ],
+  "tiers": [
+    {
+      "description": "+5% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+5% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "brewing is 10% faster",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "brew_speed",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "description": "+5% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+10% potion duration",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.1
+        }
+      ]
+    }
+  ]
+}

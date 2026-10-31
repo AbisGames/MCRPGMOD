@@ -1,0 +1,111 @@
+{
+  "name": "Sharpshooter Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Deadly Aim",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "calm",
+      "name": "Calm",
+      "description": "+2 Precision",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sharpshooter_precision",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quick_nock",
+      "name": "Quick Nock",
+      "description": "+15% draw speed",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "draw_speed",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "perfect_shot",
+      "name": "Perfect Shot",
+      "description": "armor ignore 35%",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "calm"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "ranged_armor_pierce",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "called_shot",
+      "name": "Called Shot",
+      "description": "unlocks Called Shot ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quick_nock"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:sharpshooter/called_shot"
+      ]
+    },
+    {
+      "id": "unerring",
+      "name": "Unerring",
+      "description": "Deadly Aim shots always crit; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "perfect_shot",
+        "called_shot"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:deadly_aim",
+          "crit": true
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

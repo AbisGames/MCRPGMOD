@@ -1,0 +1,247 @@
+{
+  "name": "Dervish",
+  "description": "A whirling two-weapon fighter who dances across the battlefield, parrying with one blade and striking with the other.",
+  "icon": "minecraft:golden_sword",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 4,
+    "pipican:dexterity": 7,
+    "pipican:agility": 6,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:dervish_rhythm": 10
+  },
+  "special_stat": {
+    "stat": "pipican:dervish_rhythm",
+    "resource": {
+      "name": "Whirl",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -874725,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "dervish_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/dervish",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "dervish_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "offhand_swing",
+      "amount": 0.5
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "main"
+          },
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:dodge",
+          "chance": 0.1,
+          "melee_only": true
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "offhand_combo",
+      "amount": 0.2
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "main"
+          },
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "melee_only": true,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "main"
+          },
+          {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/melee",
+            "hand": "off"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.003
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "No hand free for a shield or a bow.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "no_shield",
+        "amount": 1.0
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "weapons": "#pipican:weapons/bows",
+        "multiplier": 0.75
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "weapons": "#pipican:weapons/crossbows",
+        "multiplier": 0.75
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "forbidden"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

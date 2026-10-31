@@ -1,0 +1,194 @@
+{
+  "name": "Conjurer",
+  "description": "A summoner who pulls monsters out of nothing to fight on their behalf.",
+  "icon": "minecraft:zombie_spawn_egg",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 2,
+    "pipican:intelligence": 8,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 2,
+    "pipican:luck": 3,
+    "pipican:conjurer_summoning": 10
+  },
+  "special_stat": {
+    "stat": "pipican:conjurer_summoning",
+    "resource": {
+      "name": "Ether",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -14775156,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:ender_pearl",
+      "count": 4
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "conjurer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/conjurer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "conjurer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "in_combat",
+      "cooldown_ticks": 600,
+      "actions": [
+        {
+          "type": "pipican:summon",
+          "entity": "minecraft:vex",
+          "seconds": 15.0,
+          "ally": true
+        }
+      ],
+      "name": "conjure tiny monster"
+    },
+    {
+      "type": "pipican:on",
+      "event": "pet_hit",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:weakness",
+              "seconds": 3.0
+            }
+          ]
+        }
+      ],
+      "name": "frightening monsters"
+    },
+    {
+      "type": "pipican:on",
+      "event": "kill",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:experience",
+          "amount": 2
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:summon_mod",
+      "damage": 0.0,
+      "health": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:summon_mod",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:summon_mod",
+      "extra": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "All power, no personal combat skill.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.8
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 2,
+    "pipican:belt": 1
+  }
+}

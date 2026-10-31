@@ -1,0 +1,75 @@
+{
+  "name": "Negotiation",
+  "description": "Trained by cancelling attacks with Stay the Hand and trading.",
+  "icon": "minecraft:emerald",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:reaction",
+        "name": "stay the hand"
+      },
+      {
+        "type": "pipican:did",
+        "action": "trade"
+      }
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:diplomat"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Rapport",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diplomat_rapport",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Rapport",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diplomat_rapport",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Persuasion regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Rapport",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diplomat_rapport",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Rapport",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diplomat_rapport",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

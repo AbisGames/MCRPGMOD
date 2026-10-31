@@ -1,0 +1,112 @@
+{
+  "name": "Thaumaturge Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Seize Chaos",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "dice",
+      "name": "Dice",
+      "description": "+2 Entropy",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thaumaturge_entropy",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "reroll",
+      "name": "Reroll",
+      "description": "unlocks Reroll ability",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "grants": [
+        "pipican:thaumaturge/reroll"
+      ]
+    },
+    {
+      "id": "fluid_magic",
+      "name": "Fluid Magic",
+      "description": "random potion effect chance 35%",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "dice"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "fluid magic",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "pandemonium",
+      "name": "Pandemonium",
+      "description": "chaos outcomes can hit 2 mobs",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "reroll"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "chaos_double",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "lord_of_misrule",
+      "name": "Lord of Misrule",
+      "description": "you're immune to your own chaos backfires; -15% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "fluid_magic",
+        "pandemonium"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "self_blast_immune",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

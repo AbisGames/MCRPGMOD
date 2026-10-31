@@ -1,0 +1,30 @@
+{
+  "name": "Flying Broom",
+  "description": "hold a broom-like item - e.g. a renamed stick - and fly, drains Witchery",
+  "icon": "minecraft:stick",
+  "cooldown_ticks": 100,
+  "toggle": true,
+  "drain_per_second": 4,
+  "requires": {
+    "type": "pipican:holding",
+    "items": [
+      "minecraft:blaze_rod",
+      "minecraft:stick"
+    ]
+  },
+  "end_when": {
+    "type": "pipican:not",
+    "condition": {
+      "type": "pipican:holding",
+      "items": [
+        "minecraft:blaze_rod",
+        "minecraft:stick"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "type": "pipican:flight"
+    }
+  ]
+}

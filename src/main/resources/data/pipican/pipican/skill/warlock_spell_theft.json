@@ -1,0 +1,73 @@
+{
+  "name": "Spell Theft",
+  "description": "Trained by stealing effects with Steal Spell.",
+  "icon": "minecraft:ominous_bottle",
+  "trigger": {
+    "type": "pipican:reaction",
+    "name": "steal spell"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican:warlock"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Larceny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warlock_larceny",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Larceny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warlock_larceny",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% max Stolen Power",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Larceny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warlock_larceny",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Larceny",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:warlock_larceny",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

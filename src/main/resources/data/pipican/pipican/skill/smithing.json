@@ -1,0 +1,75 @@
+{
+  "name": "Smithing",
+  "description": "Trained by using anvils, grindstones and smithing tables.",
+  "icon": "minecraft:crafter",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "anvil"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:artificer",
+    "pipican:engineer",
+    "pipican:runesmith",
+    "pipican:technomancer"
+  ],
+  "tiers": [
+    {
+      "description": "-5% anvil cost",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "anvil_cost",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "description": "+5% durability on crafted tools",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "crafted_durability",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "-5% anvil cost",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "anvil_cost",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "description": "+5% durability on crafted tools",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "crafted_durability",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "anvils never break when you use them",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "anvil_safe",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

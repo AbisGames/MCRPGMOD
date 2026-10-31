@@ -1,0 +1,14 @@
+{
+  "name": "Awareness",
+  "description": "Sharp senses and good instincts.",
+  "max": 100,
+  "exclusive": true,
+  "color": -9648400,
+  "per_point": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.003,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "name": "Pyromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Flame Blessing",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "fan_the_flames",
+      "name": "Fan the Flames",
+      "description": "+2 Inferno",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:pyromancer_inferno",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "hotter",
+      "name": "Hotter",
+      "description": "burning mobs take +1 damage per second",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "hostiles",
+              "radius": 16.0,
+              "amount": 1.0,
+              "state": {
+                "on_fire": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "immolating_flames",
+      "name": "Immolating Flames",
+      "description": "ignite chance +10%",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "fan_the_flames"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "ignite",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "firebolt",
+      "name": "Firebolt",
+      "description": "unlocks Firebolt ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "hotter"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:pyromancer/firebolt"
+      ]
+    },
+    {
+      "id": "phoenix",
+      "name": "Phoenix",
+      "description": "once per day, when you'd die, explode in flame and heal 6 HP; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "immolating_flames",
+        "firebolt"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "death",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "hostiles",
+              "radius": 4.0,
+              "amount": 4.0,
+              "fire_seconds": 4.0
+            },
+            {
+              "type": "pipican:cheat_death",
+              "health": 6.0
+            }
+          ],
+          "cooldown_ticks": 24000
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

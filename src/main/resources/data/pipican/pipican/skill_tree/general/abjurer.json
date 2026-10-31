@@ -1,0 +1,128 @@
+{
+  "tree": "pipican:general",
+  "name": "Passive Tree",
+  "nodes": [
+    {
+      "id": "abjurer_start",
+      "name": "Abjurer",
+      "description": "-5% damage taken",
+      "type": "start",
+      "x": -114,
+      "y": -1245,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "id": "abjurer_thick_wards",
+      "name": "Thick Wards",
+      "description": "+2 armor",
+      "type": "small",
+      "x": -148,
+      "y": -1312,
+      "links": [
+        "abjurer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "abjurer_suspicion",
+      "name": "Suspicion",
+      "description": "+10% knockback resistance",
+      "type": "small",
+      "x": -93,
+      "y": -1317,
+      "links": [
+        "abjurer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "abjurer_spellguard",
+      "name": "Spellguard",
+      "description": "-15% magic damage taken",
+      "type": "notable",
+      "x": -155,
+      "y": -1382,
+      "links": [
+        "abjurer_thick_wards"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "id": "abjurer_sanctum",
+      "name": "Sanctum",
+      "description": "+20% regeneration while standing still",
+      "type": "notable",
+      "x": -100,
+      "y": -1387,
+      "links": [
+        "abjurer_suspicion"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:still"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "abjurer_fortress_of_one",
+      "name": "Fortress of One",
+      "description": "-25% damage taken, but -25% damage dealt",
+      "type": "keystone",
+      "x": -134,
+      "y": -1454,
+      "links": [
+        "abjurer_spellguard",
+        "abjurer_sanctum"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.75
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.75
+        }
+      ]
+    }
+  ]
+}

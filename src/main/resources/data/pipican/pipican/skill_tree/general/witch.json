@@ -1,0 +1,140 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "witch_start",
+      "name": "Witch",
+      "description": "+5% potion duration",
+      "type": "start",
+      "x": 375,
+      "y": -650,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "witch_hedge",
+      "name": "Hedge Lore",
+      "description": "+8% potion duration",
+      "type": "small",
+      "x": 386,
+      "y": -724,
+      "links": [
+        "witch_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.08
+        }
+      ]
+    },
+    {
+      "id": "witch_familiar",
+      "name": "Familiar",
+      "description": "tamed cats near you give +1 armor",
+      "type": "small",
+      "x": 434,
+      "y": -696,
+      "links": [
+        "witch_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:nearby",
+            "entities": "pets",
+            "entity": "minecraft:cat",
+            "radius": 8.0
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "witch_hex",
+      "name": "Hex",
+      "description": "harmful potion effects you apply last 20% longer",
+      "type": "notable",
+      "x": 421,
+      "y": -785,
+      "links": [
+        "witch_hedge"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "applied_harmful_duration",
+          "amount": 0.2
+        }
+      ]
+    },
+    {
+      "id": "witch_coven",
+      "name": "Coven",
+      "description": "+10% max Witchery, Guidance range +2",
+      "type": "notable",
+      "x": 469,
+      "y": -757,
+      "links": [
+        "witch_familiar",
+        "witch_hex"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:aura_mod",
+          "name": "guidance",
+          "radius": 2.0
+        }
+      ]
+    },
+    {
+      "id": "witch_crone",
+      "name": "Crone's Bargain",
+      "description": "all potions you drink last 50% longer, but -15% max health",
+      "type": "keystone",
+      "x": 480,
+      "y": -831,
+      "links": [
+        "witch_coven"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "drunk_potion_duration",
+          "amount": 0.5
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

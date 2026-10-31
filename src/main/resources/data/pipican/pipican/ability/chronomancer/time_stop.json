@@ -1,0 +1,31 @@
+{
+  "name": "Time Stop",
+  "description": "freeze mobs within 6 blocks for 3s, 60 Sands",
+  "icon": "minecraft:clock",
+  "cost": 60,
+  "cooldown_ticks": 1200,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 3,
+          "amplifier": 9
+        },
+        {
+          "effect": "minecraft:weakness",
+          "seconds": 3,
+          "amplifier": 9
+        },
+        {
+          "effect": "minecraft:mining_fatigue",
+          "seconds": 3,
+          "amplifier": 9
+        }
+      ],
+      "radius": 6
+    }
+  ]
+}

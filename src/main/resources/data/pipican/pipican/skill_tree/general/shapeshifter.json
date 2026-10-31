@@ -1,0 +1,221 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "shapeshifter_start",
+      "name": "Shapeshifter",
+      "description": "+5% unarmed damage",
+      "type": "start",
+      "x": 1311,
+      "y": 918,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:air"
+            ],
+            "hand": "main"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shapeshifter_wolf_heart",
+      "name": "Wolf Heart",
+      "description": "wolf form +10% damage",
+      "type": "small",
+      "x": 1384,
+      "y": 935,
+      "links": [
+        "shapeshifter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/wolf_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shapeshifter_bear_hide",
+      "name": "Bear Hide",
+      "description": "bear form +4 max health",
+      "type": "small",
+      "x": 1352,
+      "y": 980,
+      "links": [
+        "shapeshifter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/bear_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 4.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shapeshifter_cat_s_grace",
+      "name": "Cat's Grace",
+      "description": "cat form +10% speed",
+      "type": "notable",
+      "x": 1441,
+      "y": 975,
+      "links": [
+        "shapeshifter_wolf_heart"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/cat_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shapeshifter_seal_skin",
+      "name": "Seal Skin",
+      "description": "fish form +20% swim speed",
+      "type": "notable",
+      "x": 1410,
+      "y": 1021,
+      "links": [
+        "shapeshifter_bear_hide"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:ability_active",
+            "ability": "pipican:shapeshifter/fish_form"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:water_movement_efficiency",
+              "amount": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shapeshifter_feral_soul",
+      "name": "Feral Soul",
+      "description": "forms drain 50% slower, but in human form you deal -20% damage",
+      "type": "keystone",
+      "x": 1483,
+      "y": 1038,
+      "links": [
+        "shapeshifter_cat_s_grace",
+        "shapeshifter_seal_skin"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/wolf_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/bear_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/cat_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/fish_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:shapeshifter/bird_form",
+          "drain": -0.5
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/wolf_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/bear_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/cat_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/fish_form"
+                },
+                {
+                  "type": "pipican:ability_active",
+                  "ability": "pipican:shapeshifter/bird_form"
+                }
+              ]
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

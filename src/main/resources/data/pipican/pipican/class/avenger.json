@@ -1,0 +1,244 @@
+{
+  "name": "Avenger",
+  "description": "A sworn hunter of wrongdoers who marks whoever hurts them or their friends, and never lets it escape.",
+  "icon": "minecraft:crossbow",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 6,
+    "pipican:dexterity": 3,
+    "pipican:agility": 3,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 2,
+    "pipican:endurance": 5,
+    "pipican:luck": 1,
+    "pipican:avenger_vengeance": 10
+  },
+  "special_stat": {
+    "stat": "pipican:avenger_vengeance",
+    "resource": {
+      "name": "Retribution",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.05,
+      "color": -4058066,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "avenger_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/avenger",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "avenger_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:quarry",
+      "name": "vow of vengeance",
+      "pick": "hurt_by",
+      "seconds": 60.0,
+      "glow": true
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:on",
+      "event": "second",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "mobs",
+          "radius": 32.0,
+          "effects": [
+            {
+              "effect": "minecraft:glowing",
+              "seconds": 2.0
+            }
+          ],
+          "state": {
+            "marked": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "quarry_flee",
+      "name": "pursuit",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:speed",
+              "seconds": 2.0,
+              "amplifier": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hurt",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "ally_hurt",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 3.0
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "marked_weakness",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Avengers can't let go. Nothing else matters until the debt is paid.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:quarry",
+          "name": "vow of vengeance"
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "victim": {
+              "marked": true
+            },
+            "except": true,
+            "multiplier": 0.85
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:avenger/declare_vengeance"
+  ]
+}

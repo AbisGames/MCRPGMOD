@@ -1,0 +1,17 @@
+{
+  "name": "Reveal Weakness",
+  "description": "mark a mob: all players deal +15% damage to it for 6s, 15 Stride",
+  "icon": "minecraft:spyglass",
+  "cost": 15,
+  "cooldown_ticks": 240,
+  "actions": [
+    {
+      "type": "pipican:mark",
+      "target": "look",
+      "range": 48,
+      "seconds": 6,
+      "multiplier": 1.15,
+      "shared": true
+    }
+  ]
+}

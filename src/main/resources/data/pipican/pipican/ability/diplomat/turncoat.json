@@ -1,0 +1,16 @@
+{
+  "name": "Turncoat",
+  "description": "one mob fights for you for 15s, 50 Persuasion",
+  "icon": "minecraft:emerald",
+  "cost": 50,
+  "cooldown_ticks": 900,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "look",
+      "mode": "ally",
+      "seconds": 15,
+      "range": 16
+    }
+  ]
+}

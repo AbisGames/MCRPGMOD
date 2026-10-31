@@ -1,0 +1,524 @@
+{
+  "name": "Thaumaturge",
+  "description": "A slightly unhinged master of Chaos magic who rolls the dice on every spell - and usually wins.",
+  "icon": "minecraft:end_crystal",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 3,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 5,
+    "pipican:endurance": 1,
+    "pipican:luck": 5,
+    "pipican:thaumaturge_entropy": 10
+  },
+  "special_stat": {
+    "stat": "pipican:thaumaturge_entropy",
+    "resource": {
+      "name": "Chaos",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -49707,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:awkward"
+        }
+      }
+    },
+    {
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:awkward"
+        }
+      }
+    },
+    {
+      "id": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:awkward"
+        }
+      }
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "thaumaturge_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/thaumaturge",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "thaumaturge_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.1,
+      "name": "seize chaos",
+      "actions": [
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 5.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 0,
+                "fire_seconds": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:levitation",
+                    "seconds": 3.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:heal",
+                "target": "self",
+                "amount": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 5.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 0,
+                "fire_seconds": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:levitation",
+                    "seconds": 3.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:heal",
+                "target": "self",
+                "amount": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 5.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:damage",
+                "target": "victim",
+                "amount": 0,
+                "fire_seconds": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "victim",
+                "effects": [
+                  {
+                    "effect": "minecraft:levitation",
+                    "seconds": 3.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:heal",
+                "target": "self",
+                "amount": 4.0
+              }
+            ],
+            [
+              {
+                "type": "pipican:explode",
+                "power": 1.0
+              },
+              {
+                "type": "pipican:damage",
+                "target": "self",
+                "amount": 3.0
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "drink",
+      "chance": 0.2,
+      "actions": [
+        {
+          "type": "pipican:random",
+          "choices": [
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:speed",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:strength",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:regeneration",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:resistance",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:haste",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:jump_boost",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:fire_resistance",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "type": "pipican:effect",
+                "target": "self",
+                "effects": [
+                  {
+                    "effect": "minecraft:night_vision",
+                    "seconds": 30.0
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "name": "fluid magic"
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:luck",
+      "amount": 2
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "chaos_luck",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:critical",
+      "chance": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "extra_loot",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "seize chaos",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "chaos_luck",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Chaos is never fully tamed.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "in_combat",
+        "cooldown_ticks": 1200,
+        "actions": [
+          {
+            "type": "pipican:random",
+            "choices": [
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:poison",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:weakness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:blindness",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:nausea",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:hunger",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "pipican:effect",
+                  "target": "self",
+                  "effects": [
+                    {
+                      "effect": "minecraft:mining_fatigue",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:charm": 1
+  }
+}

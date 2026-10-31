@@ -1,0 +1,119 @@
+{
+  "name": "Death Dealer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Brutal Swing",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "heft",
+      "name": "Heft",
+      "description": "+2 Carnage",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:death_dealer_carnage",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "follow_through",
+      "name": "Follow-Through",
+      "description": "sweep damage 60%",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:cleave",
+          "fraction": 0.2
+        }
+      ]
+    },
+    {
+      "id": "mountains_of_the_dead",
+      "name": "Mountains of the Dead",
+      "description": "unlocks Whirlwind ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "heft"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:death_dealer/whirlwind"
+      ]
+    },
+    {
+      "id": "bloodsoaked",
+      "name": "Bloodsoaked",
+      "description": "full Bloodshed gives +15% damage",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "follow_through"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.999
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reaper",
+      "name": "Reaper",
+      "description": "mobs below 15% health that you sweep die instantly; -15% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mountains_of_the_dead",
+        "bloodsoaked"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "sweep_execute",
+          "amount": 0.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

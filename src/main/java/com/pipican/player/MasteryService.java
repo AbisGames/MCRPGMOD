@@ -1,9 +1,11 @@
 package com.pipican.player;
 
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.core.ClassLookup;
 import com.pipican.mastery.Skill;
 import com.pipican.mastery.SkillAction;
 import com.pipican.rpgclass.RpgClass;
+import com.pipican.skill.TreeKind;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +48,7 @@ public final class MasteryService {
             if (!skill.allowedFor(data.activeClass())) {
                 continue;
             }
-            double uses = skill.trigger().uses(action);
+            double uses = skill.trigger().uses(player, action);
             if (uses <= 0) {
                 continue;
             }
@@ -57,7 +59,7 @@ public final class MasteryService {
                 }
                 lastUse.put(entry.getKey(), now);
             }
-            double gain = uses * skill.gainPerUse();
+            double gain = uses * skill.gainPerUse() * ClassEffectApplier.state(player).bonus(BonusEffect.Kind.SKILL_TRAINING);
             if (skill.affinityScaled() && !action.item().isEmpty()) {
                 gain *= rpgClass.get().affinities().resolve(action.item()).tuning().mastery();
             }
@@ -70,6 +72,10 @@ public final class MasteryService {
         PlayerClassData data = ClassService.data(player);
         double before = data.mastery(key);
         double after = Math.max(0, before + amount);
+        if (amount > 0 && ClassEffectApplier.state(player).chance(BonusEffect.Kind.NO_TOP_TIER) > 0) {
+            // "You can never reach Tier V": mastery stops just short of the last threshold.
+            after = Math.min(after, Math.max(before, skill.thresholds().get(Skill.TIERS - 1) - 0.01));
+        }
         data.allMastery().put(key, after);
         int oldTier = skill.tierFor(before);
         int newTier = skill.tierFor(after);
@@ -93,10 +99,17 @@ public final class MasteryService {
         addMastery(player, key, skill, target - ClassService.data(player).mastery(key));
     }
 
-    /** Admin: clears all mastery, and with it every allocated node (their points are gone). */
+    /**
+     * Admin: clears all mastery, and with it the general and special trees (their points are gone).
+     * The stat tree is kept: it is paid with stat points, not mastery.
+     */
     public static void resetAll(ServerPlayer player) {
         ClassService.data(player).allMastery().clear();
-        ClassService.resetSkills(player, Optional.empty());
+        ClassService.data(player).activeProgress().ifPresent(progress -> {
+            progress.nodes(TreeKind.GENERAL).clear();
+            progress.nodes(TreeKind.SPECIAL).clear();
+        });
+        ClassService.changed(player);
     }
 
     /** Sends batched mastery changes to the client (once a second at most). Called every tick. */

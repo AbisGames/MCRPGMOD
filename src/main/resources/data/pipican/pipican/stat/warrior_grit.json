@@ -1,0 +1,7 @@
+{
+  "name": "Grit",
+  "description": "Stubborn battlefield toughness. Feeds the Warrior's weapon damage and Stamina.",
+  "max": 100,
+  "exclusive": true,
+  "color": -1537749
+}

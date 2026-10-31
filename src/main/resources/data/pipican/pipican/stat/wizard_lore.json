@@ -1,0 +1,7 @@
+{
+  "name": "Lore",
+  "description": "Accumulated arcane knowledge. Deepens the Aether pool and sharpens enchanting.",
+  "max": 100,
+  "exclusive": true,
+  "color": -13743144
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Ruin",
+  "description": "Destructive energy pent up in your body.",
+  "max": 100,
+  "exclusive": true,
+  "color": -42465
+}

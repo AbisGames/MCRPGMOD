@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "cleric_stat_start",
+      "name": "Cleric",
+      "type": "start",
+      "x": 390,
+      "y": -225
+    },
+    {
+      "id": "cleric_devout",
+      "name": "Devout",
+      "description": "+2 Wisdom, +1 Strength",
+      "type": "small",
+      "x": 442,
+      "y": -255,
+      "links": [
+        "cleric_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "cleric_armored",
+      "name": "Armored in Faith",
+      "description": "+2 Vitality, +1 Endurance",
+      "type": "small",
+      "x": 494,
+      "y": -285,
+      "links": [
+        "cleric_devout"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

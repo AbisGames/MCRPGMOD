@@ -1,0 +1,151 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "marauder_start",
+      "name": "Marauder",
+      "description": "+5% movement speed",
+      "type": "start",
+      "x": -1478,
+      "y": 612,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "marauder_bloodthirst",
+      "name": "Bloodthirst",
+      "description": "Bloodthirst lasts 2s longer",
+      "type": "small",
+      "x": -1532,
+      "y": 664,
+      "links": [
+        "marauder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "bloodthirst",
+          "seconds": 2.0
+        }
+      ]
+    },
+    {
+      "id": "marauder_howl",
+      "name": "Howl",
+      "description": "+6% damage while sprinting",
+      "type": "small",
+      "x": -1553,
+      "y": 614,
+      "links": [
+        "marauder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.06
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "marauder_rampage",
+      "name": "Rampage",
+      "description": "consecutive kills within 5s add +5% damage (stacks 5)",
+      "type": "notable",
+      "x": -1597,
+      "y": 691,
+      "links": [
+        "marauder_bloodthirst"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 5.0,
+              "effects": [
+                {
+                  "type": "pipican:damage_dealt",
+                  "multiplier": 1.05
+                }
+              ],
+              "max_stacks": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "marauder_scarred",
+      "name": "Scarred",
+      "description": "+3 max health",
+      "type": "notable",
+      "x": -1618,
+      "y": 640,
+      "links": [
+        "marauder_howl"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "marauder_valhalla_bound",
+      "name": "Valhalla Bound",
+      "description": "+30% damage below half health, but you can't eat while in combat",
+      "type": "keystone",
+      "x": -1672,
+      "y": 693,
+      "links": [
+        "marauder_rampage",
+        "marauder_scarred"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:health",
+            "max": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_eating_in_combat",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

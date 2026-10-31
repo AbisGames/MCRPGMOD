@@ -1,0 +1,71 @@
+{
+  "name": "Performance",
+  "description": "Trained by using goat horns, note blocks and jukeboxes near other players.",
+  "icon": "minecraft:note_block",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:bard"
+  ],
+  "tiers": [
+    {
+      "description": "+1 block Song range",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "radius": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+5% Song strength",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+1 block Song range",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "radius": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+5% Song strength",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+10% Song strength",
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 0.1
+        }
+      ]
+    }
+  ]
+}

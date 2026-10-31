@@ -19,7 +19,7 @@ How classes work, how to add one, and where everything lives in the code.
   player choices (saved on the player)   +   class data   ──►  ClassEffectApplier.refresh()
   - chosen class, class level & XP                              │
   - allocated passive-tree nodes, skill mastery                 ▼
-  - stat points bought with vanilla XP           attribute modifiers, potion effects,
+  - stats raised, lifetime kill XP               attribute modifiers, potion effects,
   - items in trinket slots                       damage multipliers, resource bar
 ```
 
@@ -32,9 +32,9 @@ How classes work, how to add one, and where everything lives in the code.
 
 | | Earned by | Gives |
 |---|---|---|
-| **Skill mastery** | *using* skills: hitting with swords, sprinting, blocking... (see [2.5](#25-skills--mastery--skillnamejson)) | 5 tiers per skill. Each tier = a bonus **and one passive-tree point**. This is where tree points come from. |
-| **Class XP / level** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | class level: gates tree nodes (`required_level`) and can scale effects. No points. |
-| **Vanilla XP levels** | normal Minecraft | buying **stat points** (`/pipican stat raise`, later a UI); paying for tree refunds |
+| **Skill mastery** | *using* skills: hitting with swords, sprinting, blocking... (see [2.5](#25-skills--mastery--skillnamejson)) | 5 tiers per skill. Each tier = a bonus **and one skill point** for the general or special tree. |
+| **Kill XP** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | two things at once: **class level** (gates tree nodes with `required_level`, can scale effects) and **stat points** (raise a stat with `/pipican stat raise`, or buy nodes in the stat tree). |
+| **Vanilla XP levels** | normal Minecraft | only paying for tree refunds |
 
 ---
 
@@ -49,6 +49,7 @@ The id of an entry is `<namespace>:<file name>`; e.g. `data/mypack/pipican/class
 | Trinket slot type | `data/<ns>/pipican/trinket_slot/<name>.json` | `trinket/TrinketSlotType` |
 | Passive tree (one or more files per tree) | `data/<ns>/pipican/skill_tree/<name>.json` | `skill/SkillTreeFile`, `skill/SkillNode` |
 | Masterable skill | `data/<ns>/pipican/skill/<name>.json` | `mastery/Skill` |
+| Active ability | `data/<ns>/pipican/ability/<name>.json` | `ability/Ability` |
 | Class | `data/<ns>/pipican/class/<name>.json` | `rpgclass/RpgClass` |
 
 These are **datapack registries**: they load when the world loads (not on `/reload`). Item tags *do* reload with `/reload`.
@@ -78,12 +79,22 @@ The number of stats is not fixed: each file is one stat.
 |---|---|---|
 | `name` | required | |
 | `description` | empty | |
-| `max` | 100 | Highest value players can **buy** up to (bonuses from skills/passives can exceed it). |
+| `max` | 100 | Highest value players can **raise** it to with stat points (bonuses from skills/passives can exceed it). |
 | `per_point` | none | Attribute modifiers applied once per point. `operation`: `add_value` (default), `add_multiplied_base`, `add_multiplied_total`. Any vanilla or modded attribute works. |
 | `exclusive` | false | If true, only classes whose **special stat** is this stat can buy points in it. Use it for signature stats like "Faith". |
 | `color` | white | ARGB int for UIs (`-1` = white). |
 
-A player's total in a stat = class `base_stats` + points bought with vanilla XP + `pipican:stat` effects (passives, skill nodes).
+A player's total in a stat = class `base_stats` + stat points put into it + `pipican:stat` effects (passives, tree nodes).
+
+**Stat points** come from lifetime kill XP (the same XP that levels the class). The Nth point needs
+`stats.first_point_xp + (N - 1) × stats.xp_step` more XP than the previous one; the defaults (100, 50) give points
+at 100, 250, 450, 700... XP. One pool of stat points pays for both raising stats and [stat-tree](#23-passive-trees--skill_treenamejson-path-of-exile-style) nodes.
+
+**Built-in stats.** The mod ships eight stats in the `pipican` namespace: `vitality` (+1 max health per point),
+`strength` (+0.1 attack damage), `dexterity` (+0.2% attack speed), `agility` (+0.5% movement speed),
+`intelligence`, `wisdom`, `endurance` and `luck`. The last four have no `per_point` bonuses yet: magic damage,
+healing power, health regen and crit chance have no vanilla attribute to hook into. Override any of them with a
+datapack file at the same path to change the numbers.
 
 ### 2.2 Trinket slot types — `trinket_slot/<name>.json`
 
@@ -117,12 +128,15 @@ A tree is a web of **nodes** joined by **links**. Rules, enforced on the server 
   (`skill_tree.refund_cost_levels`, default 1; free in creative) and gives the point back.
 * Other classes' start nodes can't be bought.
 
-Every class has two trees:
+Every class has up to three trees:
 
 * **General tree** (`skill_tree`) – normally **one big tree shared by all classes**, each starting in its own area.
 * **Special tree** (`special_skill_tree`) – a small class-only tree (like PoE's Ascendancy), built around the special stat.
+* **Stat tree** (`stat_tree`) – paid with **stat points** instead of skill points, so players choose between
+  raising a stat directly or buying a node. Can be shared like the general tree.
 
-Both use this format. Points come from skill mastery: each skill sends its tier-up points to one of the two trees.
+All three use this format. General and special points come from skill mastery: each skill sends its tier-up
+points to one of those two trees (`points_to` can't be `stat`). Stat-tree points are the player's stat points.
 
 ```json
 {
@@ -159,7 +173,7 @@ Without `"tree"`, a file is a tree of its own whose id is the file's id. Only on
 | `cost` | 1 | Points to allocate. |
 | `required_level` | 1 | Minimum class level. |
 | `effects` | none | [Effects](#3-effects) while the node is owned. A start node's effects apply too. |
-| `grants` | none | Ids of active abilities this node unlocks. Stored now; read by the ability system later. |
+| `grants` | none | Ids of [active abilities](#26-active-abilities--abilitynamejson) this node unlocks while owned. |
 
 Data mistakes (duplicate ids, links to missing nodes) are logged as errors and skipped, they don't crash the world.
 
@@ -179,13 +193,14 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 | `base_stats` | none | `{ "<stat id>": points }` starting points, including the special stat. |
 | `special_stat` | none | See below. |
 | `starting_kit` | none | Items given once when the class is chosen: `"minecraft:bread"` or `{ "id": "minecraft:bread", "count": 8, "components": { ... } }`. |
-| `skill_tree`, `special_skill_tree` | none | `{ "tree": "<tree id>", "start": "<start node id>" }`. Several classes can share a tree with different starts. |
+| `skill_tree`, `special_skill_tree`, `stat_tree` | none | `{ "tree": "<tree id>", "start": "<start node id>" }`. Several classes can share a tree with different starts. |
 | `progression` | 50 / 0 / 0 | `{ "max_level", "starting_skill_points", "starting_special_skill_points" }`. |
 | `passives` | none | Always-on [effects](#3-effects). |
 | `special_passives` | none | Always-on signature effects; usually scale with `special_stat`. |
 | `weakness` | none | `{ "description": "...", "effects": [ ... ] }` – text for players plus the effects that implement it. |
 | `affinities` | all neutral | Equipment rules, see [section 4](#4-equipment-rules-affinities). |
 | `trinket_slots` | none | `{ "<slot type id>": count }`, e.g. a mage `{ "pipican:ring": 2, "pipican:amulet": 1 }`, a fighter `{ "pipican:shoulderpad": 1 }`. |
+| `abilities` | none | [Active abilities](#26-active-abilities--abilitynamejson) the class always has, e.g. `[ "mypack:haste" ]`. Tree nodes can `grant` more. |
 
 **Special stat**
 
@@ -200,11 +215,13 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 }
 ```
 
-The special stat is a normal stat (it gives its `per_point` bonuses and can be bought with vanilla XP even if
+The special stat is a normal stat (it gives its `per_point` bonuses and can be raised with stat points even if
 `exclusive`), and it is the `special_stat` [scaling source](#scaling). `resource` is optional: when present the
 class gets a resource bar (mana, rage, energy...) next to the hotbar:
 max = `base_max + max_per_point × points`, regen/s = `regen_per_second + regen_per_point × points`.
-Spending the resource is up to the upcoming active-skill system.
+Abilities spend it (`cost`). A bar with negative regen drains instead and fills from `pipican:on` reactions with a
+`pipican:resource` action (Berserker Rage: +2 per hit taken, +1 per hit dealt); `"drains_in_combat": false` pauses
+the drain for 5 s after every hit dealt or taken.
 
 ### 2.5 Skills & mastery — `skill/<name>.json`
 
@@ -228,6 +245,8 @@ A **skill** is something the player gets better at by doing it. Each use adds ma
 }
 ```
 
+A tier can also unlock abilities while it is reached: `"grants": [ "pipican:knight/rally" ]`.
+
 | Field | Default | Meaning |
 |---|---|---|
 | `trigger` | required | What counts as a use (table below). |
@@ -246,9 +265,12 @@ A **skill** is something the player gets better at by doing it. Each use adds ma
 | `pipican:kill` | `items` (optional) | killing a mob with one of the items |
 | `pipican:block` | `items` (optional) | blocking an attack with a shield |
 | `pipican:hurt_wearing` | `items`, `min_pieces` (=1) | taking damage while wearing at least `min_pieces` of the items |
-| `pipican:move` | `mode`, `per_blocks` (=10) | every `per_blocks` blocks moved in `mode`: `walk`, `sprint`, `sneak`, `swim`, `climb`, `glide` |
+| `pipican:move` | `mode`, `per_blocks` (=10) | every `per_blocks` blocks moved in `mode`: `walk`, `sprint`, `sneak`, `swim`, `climb`, `glide`, `ride` (carried by a mount) |
 | `pipican:jump` | – | a jump |
-| `pipican:ability` | `ability` | using an active ability, e.g. a dodge roll. Nothing fires it yet: the ability system will. |
+| `pipican:ability` | `ability` | using that active ability |
+| `pipican:did` | `action`, `items`, `blocks` | `crit`, `bleed`, `dodge`, `spend` (an ability spent resource), `heal` (you were healed), `hurt` (any damage taken), `take_fall`, `teleport` (pearls, chorus fruit, blinks), `enchant`, `brew`, `craft`, `smelt`, `trade`, `tame`, `breed`, `mine`, `harvest` (fully grown crops, berries, flowers, mushrooms), `plant`, `bone_meal`, `anvil`, `level_up`, `drink` (a potion), `fish`, `pet_kill` (your pet or summon killed a mob). `items` / `blocks` narrow it (`"action": "mine", "blocks": "#c:ores"`). |
+| `pipican:filtered` | `trigger`, `when`, `victims`, `victim`, `min_amount` | another trigger, only in a [condition](#conditions) (`when`), against some mobs (`victims`), mobs in a [state](#3-effects) (`victim`: marked, bleeding, low health...), or with at least `min_amount` damage / spending / healing. |
+| `pipican:any` | `triggers` | the first of several triggers that matches ("brewing potions and drinking them"). |
 
 **Total points:** players get 5 points per skill they can train (plus the class's starting points), so the number
 of skills decides how much of the trees a character can fill. Keep that in mind when sizing trees.
@@ -258,6 +280,103 @@ of skills decides how much of the trees a character can fill. Keep that in mind 
 `event/MasteryEvents` (or from your own code via `MasteryService.onAction`).
 
 ---
+
+### 2.6 Active abilities — `ability/<name>.json`
+
+Something the player presses a key to do. A player's abilities are the class's `abilities` plus those
+`grant`ed by tree nodes they own. The first four (except `auto` ones) sit on the ability keys
+**Z X C V** (rebindable under Controls → Pipican), shown next to the hotbar with their cooldowns.
+
+```json
+{
+  "name": "Haste", "description": "Speed III + Haste II for 8s.", "icon": "minecraft:sugar",
+  "cost": 25, "cooldown_ticks": 600,
+  "actions": [ { "type": "pipican:effect", "target": "self",
+                 "effects": [ { "effect": "minecraft:speed", "seconds": 8, "amplifier": 2 },
+                              { "effect": "minecraft:haste", "seconds": 8, "amplifier": 1 } ] } ]
+}
+```
+
+| Field | Default | Meaning |
+|---|---|---|
+| `cost` | 0 | Resource spent on use. |
+| `cooldown_ticks` | 200 | Ticks until it can be used again (20 = 1 s). For a toggle it starts when the toggle ends. |
+| `duration_ticks` | 0 | > 0 makes it a **timed state**: `effects` count for that long. |
+| `toggle`, `drain_per_second` | false, 0 | A **toggle**: press to start/stop; drains the resource while on and stops when it runs out. |
+| `actions` | none | Run when used (table below). |
+| `end_actions` | none | Run when a state or toggle ends. |
+| `effects` | none | [Effects](#3-effects) that count while a state/toggle runs. Other bonuses can also check it with the `pipican:ability_active` [condition](#conditions). |
+| `requires` | none | A [condition](#conditions) that must hold to use it (e.g. holding a staff). |
+| `auto` | none | Starts by itself whenever this condition holds (and it's off cooldown and affordable). Auto abilities don't take a key. |
+| `end_when` | none | A running state/toggle stops early when this holds. |
+| `spend_all` | false | Spends the whole bar instead of `cost`; `empower` can scale with what was spent. |
+| `uses_per_rest` | 0 | > 0: only that many uses between sleeps (sleeping in a bed resets it). |
+| `pulse_ticks`, `pulse_actions` | 0, none | A state/toggle runs `pulse_actions` every `pulse_ticks`. |
+| `anchored` | false | Pulses stay where the ability was used instead of following the player. |
+
+If an action needs something that isn't there (no mob in the crosshair, no waypoint, no book), the use is
+**cancelled**: no cost, no cooldown, and the player is told why.
+
+Cooldowns and running states are saved on the player, so relogging doesn't reset them; running
+states end on death and when the class changes.
+
+**Actions.** Most take the target fields `target`, `radius` (=6), `range` (=16) and `cone` (degrees, =360):
+`self`, `allies` (you + players in radius), `players` (others in radius), `hostiles`, `mobs` (non-players in
+radius), `look` (the mob in your crosshair within range), `look_ally` (the player in your crosshair, else you),
+`victim` (in a `pipican:on` reaction: the mob hit/killed, or the attacker), `companions` (your summons, pets and
+eidolon). `entities` (`"#minecraft:undead"`, a list...) keeps only those kinds of mob. `look` with nothing in
+sight cancels the use unless `"required": false`.
+
+| Action | Fields | Does |
+|---|---|---|
+| `pipican:effect` | targets, `effects`: `[ { "effect", "seconds", "amplifier" } ]` | Potion effects. A "stun" is Slowness with amplifier 9 for a few seconds. |
+| `pipican:heal` | targets (=self), `amount`, `percent` (of max health) | Heals. |
+| `pipican:cleanse` | targets (=self), `effects` (optional) | Removes harmful effects (or only the listed ones). |
+| `pipican:damage` | targets (=hostiles), `amount`, `kind` (`magic`/`melee`/`fire`), `execute_below`, `fire_seconds` | Damages; class damage bonuses apply. `execute_below`: targets at or under that health die. |
+| `pipican:push` | targets (=hostiles), `strength` | Knocks targets away from you. |
+| `pipican:dash` | `strength`, `up` | Launches you (or your mount) where you look. |
+| `pipican:blink` | `distance` | Teleports you where you look, stopping short of walls. |
+| `pipican:lightning` | `range` | Lightning on the mob or block you look at. |
+| `pipican:summon` | `entity`, `count`, `seconds` | Temporary helpers; tameable mobs are tamed to you, iron golems are player-made. They vanish (no drops) when time runs out or you leave. |
+| `pipican:absorb` | targets (=self), `amount`, `seconds` | A damage shield (Absorption, in steps of 4). |
+| `pipican:explode` | `power`, `fire` | An explosion on you that never hurts you or breaks blocks. |
+| `pipican:weather` | `seconds`, `thunder` | Starts rain or a storm. |
+| `pipican:resource` | `amount`, `percent` | Refills (or drains) your resource bar. |
+| `pipican:mark` | targets (=look), `seconds`, `multiplier`, `shared`, `next_hit`, `projectile_only`, `glow` | Your damage to marked mobs is multiplied (`shared`: everyone's; `next_hit`: used up by one hit). |
+| `pipican:cheat_death` | `health` (=1) | In a `death` reaction: you live on at that health. Put it last. |
+| `pipican:random` | `choices` (lists of actions) | Runs one of the choices at random. |
+| `pipican:dot` | targets (=victim), `damage`, `seconds` | Damage over time, like bleeding: `damage` per second, credited to you. |
+| `pipican:stop` | `abilities` | Ends those running abilities (one form at a time). |
+| `pipican:shrug` | – | In a `low_health` reaction: the hit misses. Put it last. |
+| `pipican:boost` | `seconds`, `effects` (class effects) | Gives you those [effects](#3-effects) for a few seconds; the same boost again restarts the timer. Mostly in `pipican:on` ("+15% speed for 2s after you take damage"). |
+| `pipican:empower` | targets (=self), `multiplier`, `bonus`, `bonus_per_spent`, `hits`, `seconds`, `against`, `effects` | "Your next hit…": bigger damage and/or potion effects. |
+| `pipican:imbue` | `hits`, `seconds` | Uses up the off-hand potion: your next hits apply it. |
+| `pipican:control` | targets (=look), `mode` (`flee`/`pacify`/`ally`), `seconds` | Frighten, charm, or turn mobs to your side. |
+| `pipican:decoy` | `seconds`, `radius` | A fake of you that hostile mobs attack instead. |
+| `pipican:negate_hit` | targets (=look_ally), `seconds`, `guard` | The next attack on them misses (`guard`: you take it instead). |
+| `pipican:teleport_to` | targets (=look_ally) | Teleports you beside the target. |
+| `pipican:recall` | – | Sneak + use saves a waypoint; use returns to it. |
+| `pipican:recall_item` | `items`, `radius` | Pulls back the nearest item you dropped or threw (e.g. your weapon, a trident). |
+| `pipican:locate` | `structures` (tag, optional) | Tells you the direction and distance to your bed / the nearest structure. |
+| `pipican:scry` | `seconds`, `range` | See through another player's eyes. |
+| `pipican:give` | `item`, `sneak_item`, `seconds` | A temporary item that vanishes after `seconds` or when you sleep. |
+| `pipican:steal` | `range` | Takes the held item (or an armor piece) of the mob you look at. |
+| `pipican:transmute` | `pairs`: `[ { "from", "to" } ]` | Turns the held stack into another item. |
+| `pipican:transfer_effects` | targets (=look) | Moves your harmful effects onto the target. |
+| `pipican:cast` | `spells` (ability ids) | Casts the spell whose name is on the first page of a book in your hand. |
+| `pipican:eidolon` | `item`, `count`, `rebuild_ticks` | Builds your eidolon (or calls it to you). |
+| `pipican:mount` | `range` | Rides (or leaves) your eidolon. |
+| `pipican:bond` | `range` | Bonds you with the player you look at: each heals half of what the other heals within 32 blocks. |
+| `pipican:optimize` | – | Offers the Optimization choice again. |
+
+**The eidolon** (`pipican:eidolon` entity) is a big iron construct with an owner: it follows you, fights what
+hurts you or what you hit, never attacks players, sits on sneak + right-click, is repaired with iron ingots, can
+be ridden (`pipican:mount`) and is upgraded by your class through `pipican:eidolon` effects. When it is destroyed
+the ability that built it goes on its `rebuild_ticks` cooldown.
+
+The `pipican:flight` effect gives creative-style flight while it counts — put it in a toggle's `effects`.
+
+Adding an action type (Java): implement `ability/AbilityAction` and register it in `ability/AbilityActionTypes`.
 
 ## 3. Effects
 
@@ -269,14 +388,82 @@ picked by `"type"`:
 | `pipican:attribute` | `attribute`, `amount`, `operation` (=`add_value`), `scaling` | Modifies any attribute. |
 | `pipican:stat` | `stat`, `amount` | Adds points to a stat (applied before everything else). |
 | `pipican:mob_effect` | `effect`, `amplifier` (=0) | Permanent potion effect (re-applied if milk removes it). |
-| `pipican:damage_taken` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. |
-| `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords). |
+| `pipican:damage_taken` | `damage_types` (tag), `weapons` (items/tag), `against` (entity types/tag), `multiplier`, `scaling` | Multiplies incoming damage. >1 = weakness, <1 = resistance. `against` limits it to hits from those mobs. |
+| `pipican:damage_dealt` | `damage_types` (tag), `weapons` (items/tag), `against` (entity types/tag), `victim`, `multiplier`, `scaling` | Multiplies outgoing damage. `weapons` limits it to hits with those items (e.g. swords), `against` to those mobs (`#pipican:mobs/undead`), `victim` to mobs in a state (below). |
+| `pipican:critical` | `damage`, `chance`, `weapons`, `scaling` (damage), `chance_scaling` | Melee crits: `damage` 0.1 = crits deal +10%; `chance` = the chance a normal hit becomes a crit. Both add up. |
+| `pipican:dodge` | `chance`, `melee_only`, `ranged_only`, `scaling` | Chance to fully avoid a hit from a mob/player (not falls, fire...). Adds up, capped at 90%. |
+| `pipican:bonus` | `kind`, `amount`, `scaling` | A percentage (0.1 = +10%, amounts of one kind add up) to: `experience` (XP gained), `potion_duration` / `harmful_duration` / `beneficial_duration` (effects on you), `applied_duration` / `applied_harmful_duration` (effects you put on others), `hunger` (how fast you get hungry), `trade_price` (villagers and wandering traders), `ability_cooldown` (-0.15 = 15% shorter), `durability` / `armor_durability` / `weapon_durability` (how fast all gear / worn armor / the main-hand item wears down; -1 = never), `weapon_repair` (durability points the main-hand item regains every 10s), `armor_floor` (worn armor keeps at least this fraction of its durability), `no_sprint` (any amount: you can't sprint), `temple_radius` (blocks added to your temple), `healing_given` (healing your abilities and reactions do), `affinity_floor` (any amount: no gear is worse than neutral), `offhand_swing` (share of melee hits where the off-hand weapon also strikes: 0.5 = every 2nd), `no_shield` (any amount: you can't block), `healing_received` (healing from potions, effects, abilities and other players; natural regen isn't affected), `draw_speed` (bows, tridents), `reload_speed` (crossbows), `resource_gain` (how much `pipican:resource` actions fill), `ability_cost` (-0.1 = abilities cost 10% less), `natural_regen` (health regen from a full food bar), `detection_range` (how far mobs notice you), `skill_training` (mastery gain), `knockback` (how far your hits push mobs), and the chances `extra_loot` / `extra_ore` / `extra_crop` (0.1 = 10% chance of one more mob drop / double ore or mature crop drops). |
+| `pipican:bleed` | `damage`, `seconds`, `max_stacks`, `any_hit`, `slows`, `weapons`, `scaling` (seconds) | Crits (or every hit with `any_hit`) make mobs bleed: `damage` per second for `seconds`. Every bleed effect adds up, so upgrades are just `{ "seconds": 1 }`; `max_stacks` takes the highest. |
+| `pipican:execute` | `threshold`, `victims`, `scaling` | Your hits kill a mob they leave below `threshold` of its max health (never players or bosses). |
+| `pipican:aura` | `name`, `radius`, `include_self` (=true), `effects`, `scaling` (radius) | Other players within `radius` get those effects; several auras add up. Scaling inside them uses the aura owner's stats. |
+| `pipican:aura_mod` | `name` (part of an aura's name; empty = all), `radius`, `strength`, `include_self`, `effects`, `scaling` (radius), `strength_scaling` | Upgrades your auras: more range, stronger bonuses (`strength` 1 = doubled), extra effects, or also for you. |
+| `pipican:summon_mod` | `damage`, `health`, `seconds`, `count`, `scaling` | Your summons deal / have more (0.1 = +10%), last longer and come more at a time. |
+| `pipican:favored_weapon` | – | On waking, the weapon kind in your main hand (sword, axe, spear, mace, trident, bow, crossbow) becomes your favored weapon; use the `pipican:holding_favored` condition. |
+| `pipican:scrutiny` | `look_seconds`, `seconds`, `scaling` (look time) | A mob you keep looking at for `look_seconds` is marked (and glows) for `seconds`. |
+| `pipican:cleave` | `fraction`, `radius`, `max_targets`, `charged_only`, `weapons`, `scaling` (fraction) | Melee hits also hit mobs within `radius` of the target for `fraction` of the damage; values add up over effects. |
+| `pipican:reaction_chance` | `name`, `amount`, `multiplier`, `uses`, `scaling`, `uses_scaling` | Raises the chance of your `pipican:on` reactions with that `name` ("+5% ignite chance"): (chance + amounts) × multipliers. |
+| `pipican:immune` | `effects` (mob effects/tag) | Those potion effects can't be applied to you (and are removed if you have them). |
+| `pipican:resource` | `target` (`max` / `regen`), `amount`, `operation` (=`add_value`), `scaling` | Changes the resource bar. `add_value`: flat (regen per second); `add_multiplied_base`: a fraction of the class's own numbers (`-1` = no regen). Percentages add up, then apply once. |
+| `pipican:conditional` | `when` ([condition](#conditions)), `effects` | The inner effects only count while the condition holds. |
+| `pipican:flight` | – | Creative-style flight while it counts (usually in an ability toggle). Never touches creative/spectator players. |
+| `pipican:on` | `event` (`hit`/`melee_hit`/`ranged_hit`/`crit`/`kill`/`hurt`/`block`/`spend`/`wake`/`low_health`/`start`/`end`/`death`/`in_combat`/`second`/`teleport`/`instrument`/`lightning`/`attacked`), `chance`, `name`, `once_per_rest`, `uses_per_rest`, `cooldown_ticks`, `weapons`, `victims`, `actions` | Runs [ability actions](#26-active-abilities--abilitynamejson) when it happens ("10% chance your hits set mobs on fire", "kills give Speed"). `crit`: a critical hit landed; `low_health`: a hit is about to drop you below 2 hearts (the `pipican:shrug` action cancels it); `second`: every second (put it in a `pipican:conditional` for "while you sneak, nearby mobs glow"); `teleport`: you teleported (pearl, chorus fruit, blink); `instrument`: you played a goat horn or note block; `attacked`: a mob or player is about to hit you (`pipican:shrug` makes it miss: decoys, premonitions); `uses_per_rest`: the reaction works that many times between sleeps (`pipican:reaction_chance` `uses` adds more); `lightning`: lightning struck you (fires on several ticks: give it a short cooldown); `in_combat`: every second while in combat (give it a `cooldown_ticks` for "every 30s in combat"); `start` / `end`: inside a `pipican:conditional`, fires when the condition starts / stops holding ("when you go Berserk", "when Berserk ends"); `death`: you are about to die (`pipican:cheat_death` saves you); `once_per_rest`: at most once between sleeps (cooldowns and per-rest uses aren't saved across restarts); `spend`: an ability spent resource; `wake`: after sleeping. `name` lets `pipican:reaction_chance` change its chance. |
+| `pipican:eidolon` | `attribute`, `amount`, `operation`, `scaling` | Changes an attribute of your eidolon. |
+| `pipican:mount` | `attribute`, `amount`, `operation`, `scaling` | Changes an attribute of whatever you ride (max health, armor, toughness, speed, jump strength, attack damage); removed when you dismount. |
+| `pipican:spell_points` | `amount` | Spell points that refill on every sleep and pay for abilities instead of the resource. |
+| `pipican:optimization` | `amount`, `extra_loss`, `scaling` | After each sleep, pick a stat to raise by `amount` and one to lower by `amount + extra_loss` (clickable chat). |
+
+`victim` on `damage_dealt`: `{ "health": { "max": 0.5 }, "harmful_effect": true, "not_targeting_you": true,
+"marked": true, "on_fire": true, "bleeding": true, "charged_hit": true, "unarmored": true }` (`charged_hit`: your attack was fully charged) (every field optional; all given ones must hold). `health` is a fraction of max health.
 
 ```json
+{ "type": "pipican:damage_dealt", "against": "#pipican:mobs/undead", "multiplier": 1.2 }
+{ "type": "pipican:damage_dealt", "victim": { "health": { "max": 0.3 } }, "multiplier": 1.25 }
+{ "type": "pipican:immune", "effects": [ "minecraft:poison", "minecraft:wither" ] }
 { "type": "pipican:damage_taken", "damage_types": "#minecraft:is_fire", "multiplier": 1.5 }
 { "type": "pipican:mob_effect", "effect": "minecraft:night_vision" }
 { "type": "pipican:stat", "stat": "mypack:strength", "amount": 2 }
 ```
+
+### Conditions
+
+`pipican:conditional` effects switch on and off with the player's situation. Conditions are re-checked twice a
+second, and a player's bonuses are rebuilt only when an answer changes.
+
+```json
+{ "type": "pipican:conditional",
+  "when": { "type": "pipican:any_of", "conditions": [
+    { "type": "pipican:not", "condition": { "type": "pipican:state", "state": "sees_sky" } },
+    { "type": "pipican:state", "state": "underwater" } ] },
+  "effects": [
+    { "type": "pipican:damage_dealt", "multiplier": 0.8 },
+    { "type": "pipican:resource", "target": "regen", "amount": -1, "operation": "add_multiplied_base" } ] }
+```
+
+| Condition | Fields | True when |
+|---|---|---|
+| `pipican:state` | `state` | `wet` (water or rain), `in_water`, `underwater`, `in_lava`, `swimming`, `sprinting`, `sneaking`, `blocking`, `mounted`, `on_ground`, `in_combat` (hit or was hit by a mob/player in the last 5 s), `on_fire`, `night`, `day`, `raining`, `thundering`, `sees_sky` (outdoors; `not` it for underground) |
+| `pipican:health` | `min`, `max` (0–1) | Health ÷ max health is in range. `"max": 0.5` = below half health. |
+| `pipican:resource` | `min`, `max` (0–1) | Resource bar ÷ its max is in range. `"min": 1` = full. |
+| `pipican:light` | `min`, `max` (0–15) | Light level at the feet. `"max": 8` = level 7 or lower. |
+| `pipican:dimension` | `dimensions` (list) | In one of the dimensions. |
+| `pipican:biome` | `biomes` (id / list / `#tag`) | In one of the biomes. The mod ships `#pipican:natural` and `#pipican:cold`. |
+| `pipican:standing_on` | `blocks` (id / list / `#tag`) | On the ground, on one of the blocks. |
+| `pipican:holding` | `items`, `hand` (`main` / `off` / `either`=default) | Holding one of the items. |
+| `pipican:wearing` | `items`, `min` (=1), `max` | That many worn armor pieces are among the items. `"max": 0` = none. |
+| `pipican:nearby` | `entities` (`players` / `hostile_mobs`), `radius` (=8), `min` (=1), `max` | That many others are within the radius. `"max": 0` = alone. |
+| `pipican:effect` | `effects` (id / list / `#tag`) | The player has one of the potion effects. |
+| `pipican:ability_active` | `ability` | One of the player's ability states/toggles is running. |
+| `pipican:has_eidolon` | – | The player's eidolon exists. |
+| `pipican:holding_favored` | – | Your main hand holds your favored weapon kind. |
+| `pipican:item_rule` | `rule`, `min` (=1) | `bound_weapon` (holding the weapon from hotbar slot 1), `sigil_weapon` (holding a weapon renamed at an anvil), `sigil_armor` (wearing at least `min` trimmed armor pieces). |
+| `pipican:carrying` | `items` | One of the items is anywhere in your inventory. |
+| `pipican:temple` | `radius` | Within your temple: your respawn point (bed or anchor) in this dimension; 10 blocks plus `temple_radius` bonuses, or `radius` when given. |
+| `pipican:still` | `seconds` (=1) | Hasn't moved for that long. `not` it (with `seconds: 0.5`) for "while moving". |
+| `pipican:not` | `condition` | The condition is false. |
+| `pipican:all_of`, `pipican:any_of` | `conditions` (list) | All / at least one are true. |
+
+`min` is inclusive and `max` exclusive for fractions and light; both are inclusive for counts (`wearing`, `nearby`).
+Adding a condition type (Java): implement `condition/ClassCondition` and register it in `condition/ConditionTypes`.
 
 ### Scaling
 
@@ -287,7 +474,7 @@ picked by `"type"`:
   "scaling": [ { "source": "special_stat", "per": 0.25 }, { "source": "class_level", "per": 0.1 } ] }
 ```
 
-final amount = `amount + Σ(per × source)`. Sources: `class_level`, `special_stat`, or any stat id (`"mypack:strength"`).
+final amount = `amount + Σ(per × source)`. Sources: `class_level`, `special_stat`, `sigil_armor` (worn armor pieces with a trim), `heavy_armor` (worn heavy pieces), `missing_hearts` / `missing_health_percent` (whole hearts / percent of max health missing; bonuses refresh as health changes), or any stat id (`"mypack:strength"`).
 
 ### Adding a new effect type (Java, rare)
 
@@ -360,9 +547,10 @@ New weapons/armor (ours or other mods') only need to be added to these tags to b
    "Decide later" closes it; reopen with **J** or `/pipican class choose`.
 2. **Choosing** – sets the class, gives the starting kit, heals to full, fills the resource. Players can only
    choose once; admins can change it (respec).
-3. **Playing** – mob kills give class XP (`max health × leveling.kill_xp_per_max_health`). XP to go from level L to L+1 is
-   `xp_base × L^xp_exponent` (config). Using skills builds mastery; every tier-up gives a tree point.
-   Spend points in the **Passives** screen (button above the inventory).
+3. **Playing** – mob kills give kill XP (`max health × leveling.kill_xp_per_max_health`). It levels the class (XP to go
+   from level L to L+1 is `xp_base × L^xp_exponent`) and earns stat points (see [2.1](#21-stats--statnamejson)).
+   Using skills builds mastery; every tier-up gives a skill point. Spend points in the **Passives** screen
+   (button above the inventory; tabs General, Special, Stats, Mastery).
 4. **Trinkets** – press **G**. The screen shows exactly the slots the class has. Trinkets drop on death unless `keepInventory`.
    If the class changes and loses a slot, the item goes back to the inventory.
 5. **Death** – class, levels, tree nodes, mastery and stats are kept.
@@ -380,18 +568,22 @@ multiclass system can add classes without migrating saves. How it should work is
 | `/pipican class reset <players>` | admin | Remove class + class progress, reopen selection. |
 | `/pipican level set <players> <level>` | admin | |
 | `/pipican xp add <players> <amount>` | admin | Class XP. |
-| `/pipican tree reset <players> [general\|special]` | admin | Clears allocated nodes (points come back). |
+| `/pipican tree reset <players> [general\|special\|stat]` | admin | Clears allocated nodes (points come back). |
 | `/pipican mastery add <players> <skill> <amount>` | admin | |
 | `/pipican mastery set <players> <skill> <tier>` | admin | Sets a skill to the start of tier 0–5. |
-| `/pipican mastery reset <players>` | admin | Clears all mastery and the trees. |
-| `/pipican stat reset <players>` | admin | Refunds the vanilla levels spent. |
+| `/pipican mastery reset <players>` | admin | Clears all mastery and the general and special trees (the stat tree is kept). |
+| `/pipican stat reset <players>` | admin | Clears raised stats; the stat points come back. |
 | `/pipican class info [player]` | everyone | Class sheet: level, points, stats, resource. |
 | `/pipican class choose` | everyone | Reopen selection if you have no class. |
 | `/pipican tree` | everyone | Opens the passive-tree screen. |
-| `/pipican tree allocate\|refund <general\|special> <node>` | everyone | Same as clicking in the screen. |
+| `/pipican tree allocate\|refund <general\|special\|stat> <node>` | everyone | Same as clicking in the screen. |
 | `/pipican mastery list [player]` | everyone | Skills with tier and progress. |
-| `/pipican stat raise <stat>` | everyone | Costs vanilla levels: `stats.cost_base_levels`, +1 every `stats.cost_increase_every` points bought. Free in creative. |
+| `/pipican stat raise <stat>` | everyone | Costs one stat point (earned with kill XP). |
 | `/pipican trinkets` | everyone | Same as **G**. |
+| `/pipican ability use <ability>` | everyone | Same as pressing the ability's key. |
+| `/pipican ability force <players> <ability>` | admin | Uses any ability for free, ignoring cooldowns (for testing). |
+| `/pipican ability reset <players>` | admin | Clears ability cooldowns, per-rest uses and running abilities. |
+| `/pipican optimize <raise> <lower>` | everyone | The Optimization choice (the chat buttons run it). |
 
 ---
 
@@ -406,7 +598,7 @@ com.pipican
 │   └── ClassLookup           helpers to read the registries (server & client)
 ├── rpgclass/                 the class template: RpgClass, SpecialStat, Progression, Weakness,
 │                             Affinity (tiers), AffinityRules
-├── stat/StatDefinition
+├── stat/                     StatDefinition (JSON), StatPoints (stat points from kill XP)
 ├── skill/                    passive trees: SkillTreeFile (JSON) -> SkillTrees (merge) -> SkillTree
 │                             (adjacency rules), SkillNode, NodeType, TreeRef, TreePoints, TreeKind
 ├── mastery/                  Skill (JSON), SkillTrigger + SkillTriggerTypes, SkillAction, MoveMode
@@ -414,6 +606,12 @@ com.pipican
 ├── trinket/                  TrinketSlotType, TrinketLayout, TrinketMenu, PipicanMenus
 ├── effect/                   ClassEffect (interface), ClassEffectTypes (type registry),
 │   └── type/                 the built-in effect types
+├── ability/                  Ability (JSON), AbilityService (use/tick), AbilitySlots (keys), Targets, Summons,
+│                             MobControl, Marks, Empowers, HitShields, Reactions, Optimize, Bonds, Scry,
+│   └── action/               AbilityAction + AbilityActionTypes: the built-in action types
+├── entity/                   Eidolon (the Engineer's construct), PipicanEntities
+├── condition/                ClassCondition (interface), ConditionTypes (type registry), Bounds
+│   └── type/                 the built-in condition types (used by pipican:conditional)
 ├── player/
 │   ├── PlayerClassData       what is saved on the player (+ PipicanAttachments)
 │   ├── ClassProgress         level, XP, allocated nodes for one class

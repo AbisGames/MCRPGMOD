@@ -1,0 +1,93 @@
+{
+  "name": "Survival",
+  "description": "Trained by killing mobs outdoors at night.",
+  "icon": "minecraft:bow",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:all_of",
+      "conditions": [
+        {
+          "type": "pipican:state",
+          "state": "sees_sky"
+        },
+        {
+          "type": "pipican:state",
+          "state": "night"
+        }
+      ]
+    }
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:explorer",
+    "pipican:ranger"
+  ],
+  "tiers": [
+    {
+      "description": "-5% hunger drain",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "description": "+1 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "-5% hunger drain",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "description": "+1 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "eating cooked meat gives Regeneration I for 3s",
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "eat",
+          "weapons": "#pipican:food/cooked_meat",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:regeneration",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

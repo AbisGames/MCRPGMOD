@@ -1,0 +1,181 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "astromancer_start",
+      "name": "Astromancer",
+      "description": "+5% damage outdoors",
+      "type": "start",
+      "x": 1187,
+      "y": -393,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "astromancer_sunlit",
+      "name": "Sunlit",
+      "description": "+6% magic damage in daylight",
+      "type": "small",
+      "x": 1244,
+      "y": -441,
+      "links": [
+        "astromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "day"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "damage_types": "#pipican:is_magic",
+              "multiplier": 1.06
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "astromancer_moonlit",
+      "name": "Moonlit",
+      "description": "+6% magic damage at night",
+      "type": "small",
+      "x": 1262,
+      "y": -389,
+      "links": [
+        "astromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "night"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "damage_types": "#pipican:is_magic",
+              "multiplier": 1.06
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "astromancer_beacon",
+      "name": "Beacon",
+      "description": "players within 8 blocks get Night Vision",
+      "type": "notable",
+      "x": 1311,
+      "y": -463,
+      "links": [
+        "astromancer_sunlit"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:night_vision"
+            }
+          ],
+          "include_self": false
+        }
+      ]
+    },
+    {
+      "id": "astromancer_solar_flare",
+      "name": "Solar Flare",
+      "description": "mobs that hit you have 10% chance to be set on fire",
+      "type": "notable",
+      "x": 1328,
+      "y": -411,
+      "links": [
+        "astromancer_moonlit"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "chance": 0.1,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 0,
+              "fire_seconds": 4.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "astromancer_power_of_the_sun",
+      "name": "Power of the Sun",
+      "description": "+25% damage outdoors, but -25% damage underground",
+      "type": "keystone",
+      "x": 1386,
+      "y": -459,
+      "links": [
+        "astromancer_beacon",
+        "astromancer_solar_flare"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "sees_sky"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.75
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

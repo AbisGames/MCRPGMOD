@@ -1,0 +1,7 @@
+{
+  "name": "Edge",
+  "description": "Speed and precision with short blades.",
+  "max": 100,
+  "exclusive": true,
+  "color": -8515819
+}

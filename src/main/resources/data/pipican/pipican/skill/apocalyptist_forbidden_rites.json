@@ -1,0 +1,71 @@
+{
+  "name": "Forbidden Rites",
+  "description": "Trained by killing mobs while they have the Wither effect.",
+  "icon": "minecraft:wither_skeleton_skull",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "effects": "minecraft:wither"
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:apocalyptist"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Corruption",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:apocalyptist_corruption",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Corruption",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:apocalyptist_corruption",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Doom regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Corruption",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:apocalyptist_corruption",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Corruption",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:apocalyptist_corruption",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

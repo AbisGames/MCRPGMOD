@@ -1,0 +1,75 @@
+{
+  "name": "Cabal Lore",
+  "description": "Trained by fighting with your staff.",
+  "icon": "minecraft:blaze_rod",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "when": {
+      "type": "pipican:holding",
+      "items": [
+        "minecraft:blaze_rod",
+        "minecraft:stick"
+      ]
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:magus"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Staffcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magus_staffcraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Staffcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magus_staffcraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Staff Charge regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Staffcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magus_staffcraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Staffcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magus_staffcraft",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

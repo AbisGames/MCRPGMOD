@@ -1,0 +1,141 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "explorer_start",
+      "name": "Explorer",
+      "description": "-10% hunger drain",
+      "type": "start",
+      "x": -1195,
+      "y": 365,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "hunger",
+          "amount": -0.1
+        }
+      ]
+    },
+    {
+      "id": "explorer_trail_legs",
+      "name": "Trail Legs",
+      "description": "+5% movement speed outdoors",
+      "type": "small",
+      "x": -1254,
+      "y": 412,
+      "links": [
+        "explorer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.05,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "explorer_iron_stomach",
+      "name": "Iron Stomach",
+      "description": "immune to food poisoning effects",
+      "type": "small",
+      "x": -1270,
+      "y": 360,
+      "links": [
+        "explorer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "food_safe",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "explorer_pack_mule",
+      "name": "Pack Mule",
+      "description": "+10% knockback resistance",
+      "type": "notable",
+      "x": -1321,
+      "y": 433,
+      "links": [
+        "explorer_trail_legs"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "explorer_cartographer",
+      "name": "Cartographer",
+      "description": "maps you make explore 25% faster",
+      "type": "notable",
+      "x": -1337,
+      "y": 380,
+      "links": [
+        "explorer_iron_stomach"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "map_range",
+          "amount": 0.25
+        }
+      ]
+    },
+    {
+      "id": "explorer_far_horizon",
+      "name": "Far Horizon",
+      "description": "+15% movement speed outdoors, but -15% damage",
+      "type": "keystone",
+      "x": -1396,
+      "y": 427,
+      "links": [
+        "explorer_pack_mule",
+        "explorer_cartographer"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.15,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.85
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "name": "Marauder Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Powerful Charge",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "reaver",
+      "name": "Reaver",
+      "description": "+2 Savagery",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:marauder_savagery",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "trample",
+      "name": "Trample",
+      "description": "sprint-hits stun for 0.5s",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "melee_hit",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "victim",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 0.5,
+                      "amplifier": 9
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strength_from_pain",
+      "name": "Strength from Pain",
+      "description": "+10% more damage below half health",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "reaver"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:health",
+            "max": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warcry",
+      "name": "Warcry",
+      "description": "unlocks Warcry ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "trample"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:marauder/warcry"
+      ]
+    },
+    {
+      "id": "glorious_death",
+      "name": "Glorious Death",
+      "description": "when you'd die, you keep fighting for 5s at 1 HP, then die; once per day",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "strength_from_pain",
+        "warcry"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "glorious_death",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

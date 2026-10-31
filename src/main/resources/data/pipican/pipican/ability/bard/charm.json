@@ -1,0 +1,16 @@
+{
+  "name": "Charm",
+  "description": "one mob stops attacking you for 10s, 20 Melody",
+  "icon": "minecraft:poppy",
+  "cost": 20,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "look",
+      "mode": "pacify",
+      "seconds": 10,
+      "range": 16
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Charge",
+  "description": "mount dashes forward, first mob hit takes heavy damage + knockback, 25 Charge",
+  "icon": "minecraft:saddle",
+  "cost": 25,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:dash",
+      "strength": 1.8,
+      "up": 0.1
+    },
+    {
+      "type": "pipican:damage",
+      "target": "hostiles",
+      "amount": 8,
+      "radius": 3,
+      "cone": 60,
+      "kind": "melee"
+    },
+    {
+      "type": "pipican:push",
+      "target": "hostiles",
+      "radius": 3,
+      "strength": 1.5,
+      "cone": 60
+    }
+  ]
+}

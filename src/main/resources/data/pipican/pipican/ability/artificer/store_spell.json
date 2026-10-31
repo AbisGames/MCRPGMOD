@@ -1,0 +1,14 @@
+{
+  "name": "Store Spell",
+  "description": "load a potion effect into gear",
+  "icon": "minecraft:brewing_stand",
+  "cost": 15,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:imbue",
+      "hits": 5,
+      "seconds": 60
+    }
+  ]
+}

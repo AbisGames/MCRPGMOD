@@ -1,0 +1,236 @@
+{
+  "name": "Templar",
+  "description": "A holy guardian of sacred places who consecrates ground and strikes down anything that steps into it.",
+  "icon": "minecraft:lodestone",
+  "selectable": true,
+  "base_health": 32.0,
+  "base_stats": {
+    "pipican:vitality": 6,
+    "pipican:strength": 6,
+    "pipican:dexterity": 2,
+    "pipican:agility": 1,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 5,
+    "pipican:endurance": 4,
+    "pipican:luck": 1,
+    "pipican:templar_sanctum": 10
+  },
+  "special_stat": {
+    "stat": "pipican:templar_sanctum",
+    "resource": {
+      "name": "Consecration",
+      "base_max": 50.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -1778488,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:lodestone"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "templar_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/templar",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "templar_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:temple"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "temple_alarm",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:temple"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 2.0,
+                  "amplifier": 1
+                }
+              ]
+            }
+          ],
+          "name": "temple guardian"
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:temple"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "temple_radius",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.2
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:temple"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Templars are bound to their ground.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:temple",
+            "radius": 100.0
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:max_health",
+            "amount": -0.1,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

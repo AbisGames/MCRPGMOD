@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#pipican:mobs/animals",
+    "minecraft:spider",
+    "minecraft:cave_spider",
+    "#pipican:mobs/beasts"
+  ]
+}

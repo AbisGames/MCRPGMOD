@@ -1,0 +1,19 @@
+{
+  "name": "Soothe",
+  "description": "remove Nausea/Blindness/Weakness from a player, 15 Persuasion",
+  "icon": "minecraft:honey_bottle",
+  "cost": 15,
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:cleanse",
+      "target": "look_ally",
+      "effects": [
+        "minecraft:nausea",
+        "minecraft:blindness",
+        "minecraft:weakness"
+      ],
+      "range": 8
+    }
+  ]
+}

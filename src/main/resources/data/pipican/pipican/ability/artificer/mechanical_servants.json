@@ -1,0 +1,15 @@
+{
+  "name": "Mechanical Servants",
+  "description": "summon small temporary copper golems",
+  "icon": "minecraft:copper_block",
+  "cost": 40,
+  "cooldown_ticks": 1800,
+  "actions": [
+    {
+      "type": "pipican:summon",
+      "entity": "minecraft:iron_golem",
+      "count": 1,
+      "seconds": 30
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "name": "Fighter",
+  "description": "A master of arms who can fight with anything, and whose chosen fighting style makes them deadly.",
+  "icon": "minecraft:diamond_sword",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 5,
+    "pipican:dexterity": 3,
+    "pipican:agility": 1,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 4,
+    "pipican:luck": 1,
+    "pipican:fighter_discipline": 8
+  },
+  "special_stat": {
+    "stat": "pipican:fighter_discipline",
+    "resource": {
+      "name": "Momentum",
+      "base_max": 30.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.5,
+      "regen_per_point": 0.05,
+      "color": -6641740,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 16
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "fighter_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/fighter",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "fighter_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "affinity_floor",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "min_melee_damage",
+      "amount": 4.0
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:attack_damage",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "natural_regen",
+      "amount": 0.4
+    },
+    {
+      "type": "pipican:critical",
+      "chance": 0.15
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.004
+        }
+      ]
+    },
+    {
+      "type": "pipican:critical",
+      "chance": 0.0,
+      "chance_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.0025
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_taken",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.0025
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "A Fighter's whole life is the weapon. Nothing else gets practice.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "potion_duration",
+        "amount": -0.25
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "enchant_levels",
+        "amount": -1.0
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

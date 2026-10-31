@@ -1,0 +1,18 @@
+{
+  "name": "Bedrock",
+  "description": "How much of the stone has become part of you.",
+  "max": 100,
+  "exclusive": true,
+  "color": -9475490,
+  "per_point": [
+    {
+      "attribute": "minecraft:armor",
+      "amount": 0.1
+    },
+    {
+      "attribute": "minecraft:block_break_speed",
+      "amount": 0.005,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

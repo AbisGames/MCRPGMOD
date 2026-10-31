@@ -1,0 +1,7 @@
+{
+  "name": "Mastery",
+  "description": "Devotion to your favored weapon.",
+  "max": 100,
+  "exclusive": true,
+  "color": -4668209
+}

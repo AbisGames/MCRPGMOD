@@ -1,0 +1,14 @@
+{
+  "name": "Return to Sender",
+  "description": "spend Stolen Power to throw the last stolen effect at a mob as a splash, 10 Stolen Power",
+  "icon": "minecraft:splash_potion",
+  "cost": 10,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:transfer_effects",
+      "target": "look",
+      "range": 16
+    }
+  ]
+}

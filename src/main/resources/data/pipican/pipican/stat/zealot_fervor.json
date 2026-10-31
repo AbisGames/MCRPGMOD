@@ -1,0 +1,13 @@
+{
+  "name": "Fervor",
+  "description": "Burning, self-destructive faith.",
+  "max": 100,
+  "exclusive": true,
+  "color": -2541013,
+  "per_point": [
+    {
+      "attribute": "minecraft:knockback_resistance",
+      "amount": 0.003
+    }
+  ]
+}

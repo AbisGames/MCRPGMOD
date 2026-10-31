@@ -1,0 +1,21 @@
+{
+  "name": "Beast Within",
+  "description": "gain claws: +unarmed damage and speed, 20 Wild Spirit",
+  "icon": "minecraft:rabbit_hide",
+  "cost": 20,
+  "cooldown_ticks": 800,
+  "duration_ticks": 400,
+  "effects": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:attack_damage",
+      "amount": 2
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.15,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "marauder_stat_start",
+      "name": "Marauder",
+      "type": "start",
+      "x": -887,
+      "y": 367
+    },
+    {
+      "id": "marauder_wild",
+      "name": "Wild",
+      "description": "+2 Strength, +1 Agility",
+      "type": "small",
+      "x": -942,
+      "y": 390,
+      "links": [
+        "marauder_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "marauder_battle_scarred",
+      "name": "Battle-Scarred",
+      "description": "+2 Vitality, +1 Endurance",
+      "type": "small",
+      "x": -998,
+      "y": 413,
+      "links": [
+        "marauder_wild"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "name": "Executioner",
+  "description": "A master of the killing blow. Every swing can end a fight - at the cost of leaving themselves open.",
+  "icon": "minecraft:iron_axe",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 7,
+    "pipican:dexterity": 5,
+    "pipican:agility": 3,
+    "pipican:intelligence": 1,
+    "pipican:endurance": 4,
+    "pipican:luck": 2,
+    "pipican:executioner_severance": 10
+  },
+  "special_stat": {
+    "stat": "pipican:executioner_severance",
+    "resource": {
+      "name": "Dread",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.05,
+      "color": -14935012,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_axe"
+    },
+    {
+      "id": "minecraft:leather_helmet"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "executioner_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/executioner",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "executioner_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "charged_hit": true
+      },
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:execute",
+      "threshold": 0.15
+    },
+    {
+      "type": "pipican:critical",
+      "damage": 0.25
+    },
+    {
+      "type": "pipican:on",
+      "event": "execute",
+      "name": "execute aftermath",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "effects": [
+            {
+              "effect": "minecraft:weakness",
+              "seconds": 3.0
+            }
+          ],
+          "radius": 6.0
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:critical",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:execute",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.001
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "health": {
+          "max": 0.5
+        }
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "All-in swings leave you wide open.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "melee_hit",
+        "victim": {
+          "charged_hit": true
+        },
+        "actions": [
+          {
+            "type": "pipican:boost",
+            "seconds": 2.0,
+            "effects": [
+              {
+                "type": "pipican:damage_taken",
+                "multiplier": 1.2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

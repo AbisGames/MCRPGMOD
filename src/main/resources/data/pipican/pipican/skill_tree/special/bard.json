@@ -1,0 +1,131 @@
+{
+  "name": "Bard Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Song Magic",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "encore",
+      "name": "Encore",
+      "description": "+2 Resonance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:bard_resonance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "swift_song",
+      "name": "Swift Song",
+      "description": {
+        "text": "Inspiring Song refreshes twice as fast",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "disarming_charm",
+      "name": "Disarming Charm",
+      "description": "charmed mobs also get Weakness I",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "encore"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:bard/charm",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "look",
+              "effects": [
+                {
+                  "effect": "minecraft:weakness",
+                  "seconds": 3.0
+                }
+              ],
+              "range": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dirge",
+      "name": "Dirge",
+      "description": "unlocks Dirge ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "swift_song"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:bard/dirge"
+      ]
+    },
+    {
+      "id": "legend",
+      "name": "Legend",
+      "description": "everyone in your Song gets Regeneration I; your max health -10%",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "disarming_charm",
+        "dirge"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:regeneration"
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

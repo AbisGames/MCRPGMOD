@@ -1,0 +1,265 @@
+{
+  "name": "Champion",
+  "description": "A warrior who fights for a cause. Plants their feet, takes a stance and refuses to fall.",
+  "icon": "minecraft:bell",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 6,
+    "pipican:dexterity": 3,
+    "pipican:agility": 1,
+    "pipican:intelligence": 1,
+    "pipican:wisdom": 3,
+    "pipican:endurance": 6,
+    "pipican:luck": 1,
+    "pipican:champion_resolve": 10
+  },
+  "special_stat": {
+    "stat": "pipican:champion_resolve",
+    "resource": {
+      "name": "Valor",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.05,
+      "color": -3002577,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:white_banner"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "champion_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/champion",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "champion_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.2
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.8
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "low_health",
+      "cooldown_ticks": 6000,
+      "actions": [
+        {
+          "type": "pipican:heal",
+          "target": "self",
+          "amount": 6.0
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 5.0,
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            }
+          ]
+        }
+      ],
+      "name": "champion's resolve"
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:knockback_resistance",
+      "amount": 0.1
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.003
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.0025
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.0025
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "champion's resolve",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Champions plant their feet. Moving breaks their rhythm.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:state",
+          "state": "sprinting"
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.9
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

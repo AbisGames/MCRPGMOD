@@ -1,0 +1,185 @@
+{
+  "name": "Abjurer",
+  "description": "A paranoid master of Protection magic who wraps themself in wards. Very hard to hurt, slow to kill anything.",
+  "icon": "minecraft:shield",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 1,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 6,
+    "pipican:luck": 1,
+    "pipican:abjurer_warding": 10
+  },
+  "special_stat": {
+    "stat": "pipican:abjurer_warding",
+    "resource": {
+      "name": "Ward",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -2232321,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:splash_potion",
+      "count": 1,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:turtle_master"
+        }
+      }
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "abjurer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/abjurer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "abjurer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:boost",
+          "seconds": 10.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 3.0
+            }
+          ]
+        }
+      ],
+      "name": "guarded casting"
+    },
+    {
+      "type": "pipican:damage_taken",
+      "multiplier": 0.9
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "harmful_duration",
+      "amount": -0.2
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 0.85
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_taken",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.002
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "guarded casting",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.016667
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Abjurers trust nothing - not even their own blades.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "multiplier": 0.8
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:abjurer/ward",
+    "pipican:abjurer/sanctuary"
+  ]
+}

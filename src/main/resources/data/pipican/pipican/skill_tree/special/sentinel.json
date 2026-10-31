@@ -1,0 +1,134 @@
+{
+  "name": "Sentinel Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Perfect Awareness",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "keen",
+      "name": "Keen",
+      "description": "+2 Vigilance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:sentinel_vigilance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "no_hiding",
+      "name": "No Hiding",
+      "description": "mobs you see can't become invisible to anyone near you",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "no_hiding",
+          "amount": 16.0
+        }
+      ]
+    },
+    {
+      "id": "stand_guard",
+      "name": "Stand Guard",
+      "description": "Stand Guard triggers after 1s",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "keen"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:still",
+                "seconds": 1.0
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:still",
+                  "seconds": 3.0
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "description": "players within 8 blocks also see what glows for you",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "no_hiding"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "unsleeping",
+      "name": "Unsleeping",
+      "description": "you never need sleep to skip phantoms (no phantoms spawn for you); -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "stand_guard",
+        "sentry"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "no_phantoms",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

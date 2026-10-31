@@ -1,0 +1,119 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "beastmaster_start",
+      "name": "Beastmaster",
+      "description": "tamed animals +2 max health",
+      "type": "start",
+      "x": 1162,
+      "y": 462,
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "hearts": 1.0
+        }
+      ]
+    },
+    {
+      "id": "beastmaster_alpha",
+      "name": "Alpha",
+      "description": "tamed animals +5% damage",
+      "type": "small",
+      "x": 1237,
+      "y": 462,
+      "links": [
+        "beastmaster_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage": 0.05
+        }
+      ]
+    },
+    {
+      "id": "beastmaster_hide_like_leather",
+      "name": "Hide Like Leather",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 1217,
+      "y": 513,
+      "links": [
+        "beastmaster_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "beastmaster_pack_tactics",
+      "name": "Pack Tactics",
+      "description": "+10% damage to mobs your animals are attacking",
+      "type": "notable",
+      "x": 1302,
+      "y": 488,
+      "links": [
+        "beastmaster_alpha"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "pet_target": true
+          },
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "beastmaster_loyal_beasts",
+      "name": "Loyal Beasts",
+      "description": "tamed animals take -15% damage",
+      "type": "notable",
+      "x": 1282,
+      "y": 539,
+      "links": [
+        "beastmaster_hide_like_leather"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage_taken": -0.15
+        }
+      ]
+    },
+    {
+      "id": "beastmaster_one_with_the_pack",
+      "name": "One With the Pack",
+      "description": "your animals get +30% damage, but you deal -20% damage",
+      "type": "keystone",
+      "x": 1357,
+      "y": 539,
+      "links": [
+        "beastmaster_pack_tactics",
+        "beastmaster_loyal_beasts"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage": 0.3
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.8
+        }
+      ]
+    }
+  ]
+}

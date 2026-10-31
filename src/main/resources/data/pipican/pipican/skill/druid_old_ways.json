@@ -1,0 +1,76 @@
+{
+  "name": "Old Ways",
+  "description": "Trained by planting saplings and growing trees with bone meal.",
+  "icon": "minecraft:oak_sapling",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "plant",
+        "blocks": "#minecraft:saplings"
+      },
+      {
+        "type": "pipican:did",
+        "action": "bone_meal"
+      }
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:druid"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Wildness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:druid_wildness",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Wildness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:druid_wildness",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Verdance regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Wildness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:druid_wildness",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Wildness",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:druid_wildness",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

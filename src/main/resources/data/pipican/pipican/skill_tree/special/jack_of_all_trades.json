@@ -1,0 +1,123 @@
+{
+  "name": "Jack-of-All-Trades Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Aptitude",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "natural",
+      "name": "Natural",
+      "description": "+2 Aptitude",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:jack_of_all_trades_aptitude",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "magical_epiphany",
+      "name": "Magical Epiphany",
+      "description": "brewing and enchanting cost slightly less (-1 level, 10% faster brew)",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "enchant_levels",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "brew_speed",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "flexible_profession",
+      "name": "Flexible Profession",
+      "description": "skills train 15% faster",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "natural"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "skill_training",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "prodigy",
+      "name": "Prodigy",
+      "description": {
+        "text": "Prodigy picks the stat you most recently used",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "magical_epiphany"
+      ],
+      "cost": 2,
+      "required_level": 20
+    },
+    {
+      "id": "uncommon_ability",
+      "name": "Uncommon Ability",
+      "description": "Aptitude crit triggers every 30s; -10% max Knack",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "flexible_profession",
+        "prodigy"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "aptitude crit",
+          "cooldown": -0.5
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

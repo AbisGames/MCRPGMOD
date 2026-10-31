@@ -1,0 +1,169 @@
+{
+  "name": "Inquisitor",
+  "description": "A cold hunter of heretics and the corrupt. Scrutinises a target, sees every weakness and breaks their will.",
+  "icon": "minecraft:skeleton_skull",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 4,
+    "pipican:dexterity": 3,
+    "pipican:agility": 2,
+    "pipican:intelligence": 5,
+    "pipican:wisdom": 5,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:inquisitor_scrutiny": 10
+  },
+  "special_stat": {
+    "stat": "pipican:inquisitor_scrutiny",
+    "resource": {
+      "name": "Judgment",
+      "base_max": 50.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -1251626,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:skeleton_skull"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "inquisitor_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/inquisitor",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "inquisitor_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:scrutiny",
+      "look_seconds": 2.0,
+      "seconds": 30.0
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.15
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "scrutiny_weakness",
+      "amount": 6.0
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_illagers_witches_nether_mobs",
+      "multiplier": 1.15
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "marked": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:scrutiny",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "The Inquisition is feared, not loved.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "trade_price",
+        "amount": 0.15
+      },
+      {
+        "type": "pipican:immune",
+        "effects": [
+          "minecraft:hero_of_the_village"
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:inquisitor/dreadful_threat"
+  ]
+}

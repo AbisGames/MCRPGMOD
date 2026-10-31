@@ -1,0 +1,116 @@
+{
+  "name": "Arcanist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Arcana Mastery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "formulae",
+      "name": "Formulae",
+      "description": "+2 Arcana",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:arcanist_arcana",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "recycling",
+      "name": "Recycling",
+      "description": "Reclaim chance +5%",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "resource_refund",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "swift_arcana",
+      "name": "Swift Arcana",
+      "description": "abilities have 15% shorter cooldowns",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "formulae"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "ability_cooldown",
+          "amount": -0.15
+        }
+      ]
+    },
+    {
+      "id": "reclaim_arcana",
+      "name": "Reclaim Arcana",
+      "description": "Reclaim refunds go to 150%",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "recycling"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "refund_bonus",
+          "amount": 0.5
+        }
+      ]
+    },
+    {
+      "id": "archmage_s_insight",
+      "name": "Archmage's Insight",
+      "description": "every 3rd ability is free; -10% Flux regen",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "swift_arcana",
+        "reclaim_arcana"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "free_ability_every",
+          "amount": 3.0
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

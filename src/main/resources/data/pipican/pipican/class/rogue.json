@@ -1,0 +1,219 @@
+{
+  "name": "Rogue",
+  "description": "A cunning trickster who wins with dirty tricks, speed and luck instead of fair fights.",
+  "icon": "minecraft:leather_boots",
+  "selectable": true,
+  "base_health": 20.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:strength": 1,
+    "pipican:dexterity": 4,
+    "pipican:agility": 4,
+    "pipican:intelligence": 2,
+    "pipican:luck": 1,
+    "pipican:rogue_cunning": 5
+  },
+  "special_stat": {
+    "stat": "pipican:rogue_cunning",
+    "resource": {
+      "name": "Guile",
+      "base_max": 20.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.5,
+      "regen_per_point": 0.05,
+      "color": -12681926,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 16
+    },
+    {
+      "id": "minecraft:leather_boots"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "rogue_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/rogue",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "rogue_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 1,
+    "starting_special_skill_points": 0
+  },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.08,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_fall",
+      "multiplier": 0.8
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:not",
+        "condition": {
+          "type": "pipican:item_rule",
+          "rule": "heavy_armor",
+          "min": 2
+        }
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 80,
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.15,
+              "hits": 1,
+              "seconds": 4.0
+            }
+          ],
+          "name": "trickery"
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "crit",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:reset_attack"
+        }
+      ],
+      "name": "exploit opportunity"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "trickery",
+      "strength": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.066667
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "extra_loot",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Loud armor gives you away and slows your tricks.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:item_rule",
+          "rule": "heavy_armor",
+          "min": 2
+        },
+        "effects": [
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:movement_speed",
+            "amount": -0.15,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2
+  },
+  "abilities": [
+    "pipican:rogue/nimble_recovery",
+    "pipican:rogue/subterfuge"
+  ]
+}

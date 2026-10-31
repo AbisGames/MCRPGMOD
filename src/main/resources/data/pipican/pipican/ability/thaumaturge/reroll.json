@@ -1,0 +1,13 @@
+{
+  "name": "Reroll",
+  "description": "cancel the last harmful effect on you and roll a new random effect, 25 Chaos",
+  "icon": "minecraft:rabbit_foot",
+  "cost": 25,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:cleanse",
+      "target": "self"
+    }
+  ]
+}

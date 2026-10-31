@@ -1,0 +1,66 @@
+{
+  "name": "Coven Lore",
+  "description": "Trained by brewing potions and throwing them at mobs.",
+  "icon": "minecraft:cauldron",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "brew"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:witch"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Craft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:witch_craft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Craft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:witch_craft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Witchery regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Craft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:witch_craft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Craft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:witch_craft",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

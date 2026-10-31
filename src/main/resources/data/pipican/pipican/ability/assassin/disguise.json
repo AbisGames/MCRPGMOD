@@ -1,0 +1,19 @@
+{
+  "name": "Disguise",
+  "description": "mobs ignore you for 10s, 25 Shadow",
+  "icon": "minecraft:leather_helmet",
+  "cost": 25,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "self",
+      "effects": [
+        {
+          "effect": "minecraft:invisibility",
+          "seconds": 10
+        }
+      ]
+    }
+  ]
+}

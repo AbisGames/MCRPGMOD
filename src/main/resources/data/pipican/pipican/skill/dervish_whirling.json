@@ -1,0 +1,65 @@
+{
+  "name": "Whirling",
+  "description": "Trained by landing both-hand combos.",
+  "icon": "minecraft:golden_sword",
+  "trigger": {
+    "type": "pipican:melee_hit"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:dervish"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Rhythm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dervish_rhythm",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Rhythm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dervish_rhythm",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Whirl regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Rhythm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dervish_rhythm",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Rhythm",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dervish_rhythm",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

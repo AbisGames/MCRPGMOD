@@ -1,0 +1,66 @@
+{
+  "name": "Wayfaring",
+  "description": "Trained by teleporting with pearls and blinks.",
+  "icon": "minecraft:ender_pearl",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "teleport"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:traveler"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Displacement",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:traveler_displacement",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Displacement",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:traveler_displacement",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Waypoint regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Displacement",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:traveler_displacement",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Displacement",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:traveler_displacement",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

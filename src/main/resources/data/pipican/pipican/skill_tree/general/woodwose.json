@@ -1,0 +1,161 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "woodwose_start",
+      "name": "Woodwose",
+      "description": "+1 armor in forests",
+      "type": "start",
+      "x": 958,
+      "y": 803,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "woodwose_barkskin",
+      "name": "Barkskin",
+      "description": "+2 armor",
+      "type": "small",
+      "x": 1029,
+      "y": 827,
+      "links": [
+        "woodwose_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "woodwose_thorns",
+      "name": "Thorns",
+      "description": "mobs that melee you take 1 damage",
+      "type": "small",
+      "x": 994,
+      "y": 870,
+      "links": [
+        "woodwose_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "woodwose_deep_roots",
+      "name": "Deep Roots",
+      "description": "+20% knockback resistance on grass",
+      "type": "notable",
+      "x": 1082,
+      "y": 872,
+      "links": [
+        "woodwose_barkskin"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:standing_on",
+            "blocks": "#minecraft:dirt"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "woodwose_overgrowth",
+      "name": "Overgrowth",
+      "description": "crops grow 25% faster near you",
+      "type": "notable",
+      "x": 1047,
+      "y": 915,
+      "links": [
+        "woodwose_thorns"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "crop_growth",
+          "amount": 0.25
+        }
+      ]
+    },
+    {
+      "id": "woodwose_ent",
+      "name": "Ent",
+      "description": "+6 max health and +3 armor in forests, but -15% movement speed everywhere",
+      "type": "keystone",
+      "x": 1118,
+      "y": 938,
+      "links": [
+        "woodwose_deep_roots",
+        "woodwose_overgrowth"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 6.0
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 3.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

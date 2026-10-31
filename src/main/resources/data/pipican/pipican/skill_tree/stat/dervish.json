@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "dervish_stat_start",
+      "name": "Dervish",
+      "type": "start",
+      "x": -744,
+      "y": -91
+    },
+    {
+      "id": "dervish_graceful",
+      "name": "Graceful",
+      "description": "+2 Agility, +1 Dexterity",
+      "type": "small",
+      "x": -804,
+      "y": -99,
+      "links": [
+        "dervish_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "dervish_ambidextrous",
+      "name": "Ambidextrous",
+      "description": "+2 Dexterity, +1 Strength",
+      "type": "small",
+      "x": -864,
+      "y": -106,
+      "links": [
+        "dervish_graceful"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

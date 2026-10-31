@@ -1,0 +1,136 @@
+{
+  "name": "Magus Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Staff of Magic",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "carved_runes",
+      "name": "Carved Runes",
+      "description": "+2 Staffcraft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:magus_staffcraft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "long_reach",
+      "name": "Long Reach",
+      "description": "+0.5 reach with staff",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:entity_interaction_range",
+              "amount": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "staff_of_power",
+      "name": "Staff of Power",
+      "description": "+1 more armor with staff",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "carved_runes"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "staff_strike",
+      "name": "Staff Strike",
+      "description": "unlocks Staff Bolt ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "long_reach"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:magus/staff_bolt"
+      ]
+    },
+    {
+      "id": "living_staff",
+      "name": "Living Staff",
+      "description": "your staff returns to you if dropped and can't be destroyed; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "staff_of_power",
+        "staff_strike"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "staff_return",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

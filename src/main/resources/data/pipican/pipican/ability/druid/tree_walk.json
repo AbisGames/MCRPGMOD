@@ -1,0 +1,14 @@
+{
+  "name": "Tree Walk",
+  "description": "step into a log and come out of another log within 24 blocks, 10 Verdance",
+  "icon": "minecraft:oak_log",
+  "cost": 10,
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:blink",
+      "distance": 24,
+      "require_blocks": "#minecraft:logs"
+    }
+  ]
+}

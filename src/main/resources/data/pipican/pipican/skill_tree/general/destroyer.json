@@ -1,0 +1,138 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "destroyer_start",
+      "name": "Destroyer",
+      "description": "-10% explosion damage taken",
+      "type": "start",
+      "x": -414,
+      "y": -1545,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_explosion",
+          "multiplier": 0.9
+        }
+      ]
+    },
+    {
+      "id": "destroyer_volatile",
+      "name": "Volatile",
+      "description": "+8% explosion damage",
+      "type": "small",
+      "x": -459,
+      "y": -1606,
+      "links": [
+        "destroyer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_explosion",
+          "multiplier": 1.08
+        }
+      ]
+    },
+    {
+      "id": "destroyer_blast_shield",
+      "name": "Blast Shield",
+      "description": "-15% explosion damage taken",
+      "type": "small",
+      "x": -406,
+      "y": -1620,
+      "links": [
+        "destroyer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_explosion",
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "id": "destroyer_shrapnel",
+      "name": "Shrapnel",
+      "description": "explosions you cause give Slowness I",
+      "type": "notable",
+      "x": -477,
+      "y": -1674,
+      "links": [
+        "destroyer_volatile"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "explosion_hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "destroyer_bigger_booms",
+      "name": "Bigger Booms",
+      "description": "your TNT has +25% radius",
+      "type": "notable",
+      "x": -424,
+      "y": -1688,
+      "links": [
+        "destroyer_blast_shield"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "tnt_power",
+          "amount": 0.25
+        }
+      ]
+    },
+    {
+      "id": "destroyer_annihilator",
+      "name": "Annihilator",
+      "description": "+30% explosion and magic damage, but explosions you make damage blocks more",
+      "type": "keystone",
+      "x": -468,
+      "y": -1748,
+      "links": [
+        "destroyer_shrapnel",
+        "destroyer_bigger_booms"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_explosion",
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "blast_grief",
+          "amount": 0.3
+        }
+      ]
+    }
+  ]
+}

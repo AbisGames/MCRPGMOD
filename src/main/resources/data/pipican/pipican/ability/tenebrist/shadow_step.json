@@ -1,0 +1,17 @@
+{
+  "name": "Shadow Step",
+  "description": "teleport between shadows, 25 Shade",
+  "icon": "minecraft:ender_pearl",
+  "cost": 25,
+  "cooldown_ticks": 120,
+  "requires": {
+    "type": "pipican:light",
+    "max": 8
+  },
+  "actions": [
+    {
+      "type": "pipican:blink",
+      "distance": 12
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "name": "Dabbling",
+  "description": "Trained by using 4+ different item types in combat in one day.",
+  "icon": "minecraft:bundle",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:jack_of_all_trades"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Aptitude",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:jack_of_all_trades_aptitude",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Aptitude",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:jack_of_all_trades_aptitude",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Knack regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Aptitude",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:jack_of_all_trades_aptitude",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Aptitude",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:jack_of_all_trades_aptitude",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

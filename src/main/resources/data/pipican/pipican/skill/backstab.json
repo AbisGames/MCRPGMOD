@@ -1,0 +1,82 @@
+{
+  "name": "Backstab",
+  "description": "Trained by damaging mobs that are not targeting you.",
+  "icon": "minecraft:leather_boots",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:melee_hit"
+    },
+    "victim": {
+      "not_targeting_you": true
+    }
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:assassin",
+    "pipican:blade",
+    "pipican:executioner",
+    "pipican:infiltrator",
+    "pipican:rogue",
+    "pipican:thief"
+  ],
+  "tiers": [
+    {
+      "description": "+4% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.04
+        }
+      ]
+    },
+    {
+      "description": "+4% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.04
+        }
+      ]
+    },
+    {
+      "description": "+5% critical damage",
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+4% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.04
+        }
+      ]
+    },
+    {
+      "description": "+8% damage to unaware mobs",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.08
+        }
+      ]
+    }
+  ]
+}

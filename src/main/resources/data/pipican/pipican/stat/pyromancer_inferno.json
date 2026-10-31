@@ -1,0 +1,7 @@
+{
+  "name": "Inferno",
+  "description": "The heat of your genie's bond.",
+  "max": 100,
+  "exclusive": true,
+  "color": -34278
+}

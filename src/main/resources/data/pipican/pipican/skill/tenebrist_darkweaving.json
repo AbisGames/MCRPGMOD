@@ -1,0 +1,72 @@
+{
+  "name": "Darkweaving",
+  "description": "Trained by killing mobs in light level 7 or lower.",
+  "icon": "minecraft:black_dye",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:light",
+      "max": 8
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:tenebrist"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Umbra",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:tenebrist_umbra",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Umbra",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:tenebrist_umbra",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Shade regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Umbra",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:tenebrist_umbra",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Umbra",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:tenebrist_umbra",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

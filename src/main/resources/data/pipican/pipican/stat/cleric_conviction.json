@@ -1,0 +1,7 @@
+{
+  "name": "Conviction",
+  "description": "Unshakeable belief. Empowers holy strikes and steadies the mind.",
+  "max": 100,
+  "exclusive": true,
+  "color": -3656
+}

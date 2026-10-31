@@ -1,0 +1,65 @@
+{
+  "name": "Repertoire",
+  "description": "Trained by allies killing mobs inside your Song.",
+  "icon": "minecraft:note_block",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:bard"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Resonance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:bard_resonance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Resonance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:bard_resonance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Melody regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Resonance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:bard_resonance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Resonance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:bard_resonance",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

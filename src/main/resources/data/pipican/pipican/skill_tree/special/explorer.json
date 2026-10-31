@@ -1,0 +1,145 @@
+{
+  "name": "Explorer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Perseverance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "hardship",
+      "name": "Hardship",
+      "description": "+2 Wayfinding",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:explorer_wayfinding",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "respite",
+      "name": "Respite",
+      "description": "Respite also gives Regeneration I for 30s",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "respite",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "allies",
+              "effects": [
+                {
+                  "effect": "minecraft:regeneration",
+                  "seconds": 30.0
+                }
+              ],
+              "radius": 16.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "driven",
+      "name": "Driven",
+      "description": "Driven chance 20%",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "hardship"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "driven",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "survivor",
+      "name": "Survivor",
+      "description": "immune to freezing",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "respite"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_freezing",
+          "multiplier": 0.0
+        }
+      ]
+    },
+    {
+      "id": "trailblazer",
+      "name": "Trailblazer",
+      "description": "players within 16 blocks get +10% speed outdoors; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "driven",
+        "survivor"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 16.0,
+          "effects": [
+            {
+              "type": "pipican:conditional",
+              "when": {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              },
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.1,
+                  "operation": "add_multiplied_base"
+                }
+              ]
+            }
+          ],
+          "include_self": false
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

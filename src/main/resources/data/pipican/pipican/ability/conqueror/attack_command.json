@@ -1,0 +1,16 @@
+{
+  "name": "Attack Command",
+  "description": "target ally gets a free empowered hit",
+  "icon": "minecraft:goat_horn",
+  "cost": 20,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:empower",
+      "target": "look_ally",
+      "multiplier": 1.5,
+      "range": 24,
+      "seconds": 10
+    }
+  ]
+}

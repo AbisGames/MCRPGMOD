@@ -1,0 +1,137 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "apocalyptist_start",
+      "name": "Apocalyptist",
+      "description": "+5% magic damage",
+      "type": "start",
+      "x": 761,
+      "y": 992,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_dark_whispers",
+      "name": "Dark Whispers",
+      "description": "+6% magic damage",
+      "type": "small",
+      "x": 825,
+      "y": 1030,
+      "links": [
+        "apocalyptist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_blighted",
+      "name": "Blighted",
+      "description": "+10% Wither duration",
+      "type": "small",
+      "x": 782,
+      "y": 1064,
+      "links": [
+        "apocalyptist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:wither",
+          "duration": 0.1
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_harbinger",
+      "name": "Harbinger",
+      "description": "mobs near you take 1 damage every 3s",
+      "type": "notable",
+      "x": 868,
+      "y": 1086,
+      "links": [
+        "apocalyptist_dark_whispers"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 60,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "hostiles",
+              "radius": 4.0,
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_plague_bearer",
+      "name": "Plague Bearer",
+      "description": "your Wither is Wither II",
+      "type": "notable",
+      "x": 824,
+      "y": 1120,
+      "links": [
+        "apocalyptist_blighted"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:wither",
+          "min_amplifier": 1
+        }
+      ]
+    },
+    {
+      "id": "apocalyptist_end_of_days",
+      "name": "End of Days",
+      "description": "+25% magic damage, but you slowly take 1 damage every 10s",
+      "type": "keystone",
+      "x": 889,
+      "y": 1158,
+      "links": [
+        "apocalyptist_harbinger",
+        "apocalyptist_plague_bearer"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.25
+        },
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 200,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "self",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

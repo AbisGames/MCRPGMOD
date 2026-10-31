@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "illusionist_start",
+      "name": "Illusionist",
+      "description": "+3% decoy chance",
+      "type": "start",
+      "x": 860,
+      "y": 1349,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "decoy",
+          "amount": 0.03
+        }
+      ]
+    },
+    {
+      "id": "illusionist_mirror_image",
+      "name": "Mirror Image",
+      "description": "+5% decoy chance",
+      "type": "small",
+      "x": 920,
+      "y": 1394,
+      "links": [
+        "illusionist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "decoy",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "illusionist_smoke_and_mirrors",
+      "name": "Smoke and Mirrors",
+      "description": "+1 blink distance",
+      "type": "small",
+      "x": 874,
+      "y": 1423,
+      "links": [
+        "illusionist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "decoy",
+          "radius": 1.0
+        }
+      ]
+    },
+    {
+      "id": "illusionist_phantom_strike",
+      "name": "Phantom Strike",
+      "description": "first hit after a blink deals +25%",
+      "type": "notable",
+      "x": 958,
+      "y": 1453,
+      "links": [
+        "illusionist_mirror_image"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "teleport",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.25,
+              "hits": 1,
+              "seconds": 10.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "illusionist_veil",
+      "name": "Veil",
+      "description": "mobs 25% slower to notice you",
+      "type": "notable",
+      "x": 912,
+      "y": 1482,
+      "links": [
+        "illusionist_smoke_and_mirrors"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.25
+        }
+      ]
+    },
+    {
+      "id": "illusionist_hall_of_mirrors",
+      "name": "Hall of Mirrors",
+      "description": "decoy chance doubled, but -25% max health",
+      "type": "keystone",
+      "x": 973,
+      "y": 1527,
+      "links": [
+        "illusionist_phantom_strike",
+        "illusionist_veil"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "decoy",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

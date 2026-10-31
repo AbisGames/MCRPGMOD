@@ -1,0 +1,121 @@
+{
+  "name": "Destroyer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Destruction Released",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "fuse",
+      "name": "Fuse",
+      "description": "+2 Ruin",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:destroyer_ruin",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "shockwave",
+      "name": "Shockwave",
+      "description": "shockwave knocks mobs back",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "destruction released",
+          "actions": [
+            {
+              "type": "pipican:push",
+              "target": "hostiles",
+              "radius": 3.0,
+              "strength": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "controlled_burn",
+      "name": "Controlled Burn",
+      "description": "no self-damage when spending Devastation",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "fuse"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "backlash",
+          "damage": -1000.0
+        }
+      ]
+    },
+    {
+      "id": "utter_destruction",
+      "name": "Utter Destruction",
+      "description": "+15% explosion damage",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "shockwave"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_explosion",
+          "multiplier": 1.15
+        }
+      ]
+    },
+    {
+      "id": "cataclysm",
+      "name": "Cataclysm",
+      "description": "unlocks Cataclysm ability; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "controlled_burn",
+        "utter_destruction"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:destroyer/cataclysm"
+      ]
+    }
+  ]
+}

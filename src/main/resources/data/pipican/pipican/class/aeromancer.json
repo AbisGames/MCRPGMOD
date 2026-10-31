@@ -1,0 +1,232 @@
+{
+  "name": "Aeromancer",
+  "description": "Bonded to a wind genie, the aeromancer rides the air, throws gusts and eventually flies.",
+  "icon": "minecraft:wind_charge",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 4,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 2,
+    "pipican:luck": 2,
+    "pipican:aeromancer_gale": 10
+  },
+  "special_stat": {
+    "stat": "pipican:aeromancer_gale",
+    "resource": {
+      "name": "Breath of Wind",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -4200193,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:wind_charge",
+      "count": 8
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:feather",
+      "count": 2
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "aeromancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/aeromancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "aeromancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "use_item",
+      "weapons": "minecraft:wind_charge",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:slow_falling",
+              "seconds": 3.0
+            }
+          ]
+        }
+      ],
+      "name": "air walk"
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "wind_knockback",
+      "amount": 0.5
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.25
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.15,
+      "ranged_only": true
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "wind_knockback",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "ranged_only": true,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:jump_strength",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.0075
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Aeromancers belong to the open sky.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              }
+            },
+            {
+              "type": "pipican:state",
+              "state": "underwater"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:aeromancer/gust"
+  ]
+}

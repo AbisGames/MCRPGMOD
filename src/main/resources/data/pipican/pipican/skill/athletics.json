@@ -1,0 +1,120 @@
+{
+  "name": "Athletics",
+  "description": "Trained by sprinting.",
+  "icon": "minecraft:feather",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "sprint",
+    "per_blocks": 10
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:acrobat",
+    "pipican:aeromancer",
+    "pipican:berserker",
+    "pipican:explorer",
+    "pipican:marauder",
+    "pipican:scout",
+    "pipican:traveler"
+  ],
+  "tiers": [
+    {
+      "description": "+2% sprint speed",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.02,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "-5% hunger from sprinting",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "+2% sprint speed",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.02,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "-5% hunger from sprinting",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "+4% sprint speed",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.04,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

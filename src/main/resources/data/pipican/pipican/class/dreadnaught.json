@@ -1,0 +1,249 @@
+{
+  "name": "Dreadnaught",
+  "description": "A master of heavy armor - near invulnerable and impossible to shove around.",
+  "icon": "minecraft:netherite_chestplate",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 7,
+    "pipican:strength": 6,
+    "pipican:dexterity": 1,
+    "pipican:wisdom": 2,
+    "pipican:endurance": 9,
+    "pipican:luck": 1,
+    "pipican:dreadnaught_plate": 10
+  },
+  "special_stat": {
+    "stat": "pipican:dreadnaught_plate",
+    "resource": {
+      "name": "Fortitude",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.5,
+      "regen_per_point": 0.05,
+      "color": -9736331,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "minecraft:iron_helmet"
+    },
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "dreadnaught_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/dreadnaught",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "dreadnaught_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "heavy_armor",
+          "per": 1.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "on_ground"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "heavy_armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.8
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 0.8
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:armor/heavy"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "heavy_armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "armor_durability",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Plate is heavy. Water is deep.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:item_rule",
+          "rule": "heavy_armor",
+          "min": 3
+        },
+        "effects": [
+          {
+            "type": "pipican:bonus",
+            "kind": "sink",
+            "amount": 1.0
+          }
+        ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_drowning",
+        "multiplier": 1.25
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

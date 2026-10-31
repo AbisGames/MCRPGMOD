@@ -1,0 +1,102 @@
+{
+  "name": "Witch Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Guidance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "witch_fire",
+      "name": "Witch Fire",
+      "description": "+2 Craft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:witch_craft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "green_flame",
+      "name": "Green Flame",
+      "description": "your fire damage to mobs is +15%",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 1.15
+        }
+      ]
+    },
+    {
+      "id": "flying_broom",
+      "name": "Flying Broom",
+      "description": "unlocks the Flying Broom ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "witch_fire"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:witch/flying_broom"
+      ]
+    },
+    {
+      "id": "brewmistress",
+      "name": "Brewmistress",
+      "description": "brewing takes 25% less time",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "green_flame"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "brew_speed",
+          "amount": 0.333333
+        }
+      ]
+    },
+    {
+      "id": "lasting_bond",
+      "name": "Lasting Bond",
+      "description": "bond with one player: you each heal 50% of what the other heals while within 32 blocks; Guidance range -2",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "flying_broom",
+        "brewmistress"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "grants": [
+        "pipican:witch/lasting_bond"
+      ]
+    }
+  ]
+}

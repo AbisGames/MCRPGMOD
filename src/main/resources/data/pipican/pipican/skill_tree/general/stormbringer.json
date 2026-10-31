@@ -1,0 +1,192 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "stormbringer_start",
+      "name": "Stormbringer",
+      "description": "+5% damage in rain",
+      "type": "start",
+      "x": -139,
+      "y": -1594,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stormbringer_static",
+      "name": "Static",
+      "description": "your hits have 10% chance to chain 2 damage to a nearby mob",
+      "type": "small",
+      "x": -173,
+      "y": -1661,
+      "links": [
+        "stormbringer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.1,
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "near_victim",
+              "radius": 4.0,
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stormbringer_thunderhead",
+      "name": "Thunderhead",
+      "description": "+10% speed in rain",
+      "type": "small",
+      "x": -118,
+      "y": -1666,
+      "links": [
+        "stormbringer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": 0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stormbringer_conductor",
+      "name": "Conductor",
+      "description": "lightning chance doubled while holding a trident",
+      "type": "notable",
+      "x": -179,
+      "y": -1731,
+      "links": [
+        "stormbringer_static"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/tridents"
+          },
+          "effects": [
+            {
+              "type": "pipican:reaction_chance",
+              "name": "lightning",
+              "multiplier": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stormbringer_eye_of_the_storm",
+      "name": "Eye of the Storm",
+      "description": "-20% damage taken in thunderstorms",
+      "type": "notable",
+      "x": -124,
+      "y": -1736,
+      "links": [
+        "stormbringer_thunderhead"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "thundering"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "multiplier": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stormbringer_storm_avatar",
+      "name": "Storm Avatar",
+      "description": "your lightning chance works in any rain, but you take 25% more fire damage",
+      "type": "keystone",
+      "x": -158,
+      "y": -1803,
+      "links": [
+        "stormbringer_conductor",
+        "stormbringer_eye_of_the_storm"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "raining"
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:state",
+                  "state": "thundering"
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "hit",
+              "chance": 0.05,
+              "name": "lightning",
+              "actions": [
+                {
+                  "type": "pipican:lightning"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 1.25
+        }
+      ]
+    }
+  ]
+}

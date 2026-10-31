@@ -1,0 +1,204 @@
+{
+  "name": "Warlock",
+  "description": "An oath-breaker who steals magic from others, turning enemy potions and spells into their own power.",
+  "icon": "minecraft:ominous_bottle",
+  "selectable": true,
+  "base_health": 22.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:strength": 1,
+    "pipican:dexterity": 2,
+    "pipican:agility": 3,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 3,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:warlock_larceny": 8
+  },
+  "special_stat": {
+    "stat": "pipican:warlock_larceny",
+    "resource": {
+      "name": "Stolen Power",
+      "base_max": 20.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.2,
+      "regen_per_point": 0.02,
+      "color": -13913184,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:crossbow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 8
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:splash_potion",
+      "count": 1,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:weakness"
+        }
+      }
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "warlock_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/warlock",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "warlock_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "spell_ward",
+      "amount": 0.15
+    },
+    {
+      "type": "pipican:on",
+      "event": "ward",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 10.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hurt",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "effects": [
+            {
+              "effect": "minecraft:invisibility",
+              "seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "cooldown_ticks": 1200,
+      "name": "vanish"
+    },
+    {
+      "type": "pipican:immune",
+      "effects": "minecraft:glowing"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "spell_ward",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "vanish",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Stolen magic fights back against healing.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "healing_received",
+        "amount": -0.25
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1
+  },
+  "abilities": [
+    "pipican:warlock/return_to_sender"
+  ]
+}

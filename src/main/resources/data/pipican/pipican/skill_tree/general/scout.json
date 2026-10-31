@@ -1,0 +1,151 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "scout_start",
+      "name": "Scout",
+      "description": "+3% movement speed",
+      "type": "start",
+      "x": 130,
+      "y": 739,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "scout_light_feet",
+      "name": "Light Feet",
+      "description": "+4% movement speed",
+      "type": "small",
+      "x": 169,
+      "y": 803,
+      "links": [
+        "scout_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.04,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "scout_keen_eyes",
+      "name": "Keen Eyes",
+      "description": "+4 blocks Alertness range",
+      "type": "small",
+      "x": 115,
+      "y": 812,
+      "links": [
+        "scout_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "alertness",
+          "radius": 4.0
+        }
+      ]
+    },
+    {
+      "id": "scout_skirmisher",
+      "name": "Skirmisher",
+      "description": "+10% bow damage while moving",
+      "type": "notable",
+      "x": 182,
+      "y": 872,
+      "links": [
+        "scout_light_feet"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:still",
+              "seconds": 0.5
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "weapons": "#pipican:weapons/bows",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scout_lookout",
+      "name": "Lookout",
+      "description": "can't be hit by sneak-attack bonuses (you are never 'unaware')",
+      "type": "notable",
+      "x": 127,
+      "y": 881,
+      "links": [
+        "scout_keen_eyes"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "never_unaware",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "scout_pathfinder",
+      "name": "Pathfinder",
+      "description": "+15% movement speed and no hunger from sprinting, but -15% melee damage",
+      "type": "keystone",
+      "x": 167,
+      "y": 945,
+      "links": [
+        "scout_skirmisher",
+        "scout_lookout"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.15,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sprinting"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "hunger",
+              "amount": -1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.85
+        }
+      ]
+    }
+  ]
+}

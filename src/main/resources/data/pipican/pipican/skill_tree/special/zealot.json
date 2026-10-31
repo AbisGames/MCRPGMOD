@@ -1,0 +1,115 @@
+{
+  "name": "Zealot Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Zeal",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "burning_faith",
+      "name": "Burning Faith",
+      "description": "+2 Fervor",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:zealot_fervor",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "iron_conviction",
+      "name": "Iron Conviction",
+      "description": "post-Zeal immunity lasts 3s longer",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "zeal",
+          "seconds": 3.0
+        }
+      ]
+    },
+    {
+      "id": "divine_might",
+      "name": "Divine Might",
+      "description": "+10% more Divine Might damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "burning_faith"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "zeal",
+          "strength": 0.5
+        }
+      ]
+    },
+    {
+      "id": "violent_madness",
+      "name": "Violent Madness",
+      "description": "Violent Madness no longer targets players",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "iron_conviction"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "frenzy_spares_players",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "prophet_of_ruin",
+      "name": "Prophet of Ruin",
+      "description": "Zeal triggers at 3 hearts; Madness fills twice as fast",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "divine_might",
+        "violent_madness"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "low_health_extra",
+          "amount": 2.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "resource_gain",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Lightning Dash",
+  "description": "fly up to 10 blocks in a flash, 20 Charge",
+  "icon": "minecraft:trident",
+  "cost": 20,
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:blink",
+      "distance": 10
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "spellbinder_start",
+      "name": "Spellbinder",
+      "description": "+3% bound weapon damage",
+      "type": "start",
+      "x": -650,
+      "y": -375,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.03
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spellbinder_rune_edge",
+      "name": "Rune Edge",
+      "description": "+5% magic damage portion",
+      "type": "small",
+      "x": -724,
+      "y": -386,
+      "links": [
+        "spellbinder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "spellbinder_warded",
+      "name": "Warded",
+      "description": "-8% magic damage taken",
+      "type": "small",
+      "x": -696,
+      "y": -434,
+      "links": [
+        "spellbinder_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.92
+        }
+      ]
+    },
+    {
+      "id": "spellbinder_eldritch",
+      "name": "Eldritch Flames",
+      "description": "bound weapon hits set mobs on fire for 2s while Charge is above half",
+      "type": "notable",
+      "x": -785,
+      "y": -421,
+      "links": [
+        "spellbinder_rune_edge"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:item_rule",
+                "rule": "bound_weapon"
+              },
+              {
+                "type": "pipican:resource",
+                "min": 0.5
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "melee_hit",
+              "actions": [
+                {
+                  "type": "pipican:damage",
+                  "target": "victim",
+                  "amount": 0,
+                  "fire_seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spellbinder_battle_mage",
+      "name": "Battle Mage",
+      "description": "+1 armor, +5% attack speed",
+      "type": "notable",
+      "x": -757,
+      "y": -469,
+      "links": [
+        "spellbinder_warded"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "spellbinder_soulblade",
+      "name": "Soulblade",
+      "description": "bound weapon damage +20%, but you can't hold any other weapon in your main hand without -50% damage",
+      "type": "keystone",
+      "x": -831,
+      "y": -480,
+      "links": [
+        "spellbinder_eldritch",
+        "spellbinder_battle_mage"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:any_of",
+                "conditions": [
+                  {
+                    "type": "pipican:holding",
+                    "items": "#pipican:weapons/melee"
+                  },
+                  {
+                    "type": "pipican:holding",
+                    "items": "#pipican:weapons/ranged"
+                  }
+                ]
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:item_rule",
+                  "rule": "bound_weapon"
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

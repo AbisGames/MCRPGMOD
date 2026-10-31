@@ -1,5 +1,6 @@
 package com.pipican.mastery;
 
+import net.minecraft.server.level.ServerPlayer;
 import com.mojang.serialization.Codec;
 
 /**
@@ -15,4 +16,9 @@ public interface SkillTrigger {
 
     /** How many "uses" this action counts as (0 = doesn't match). Usually 0 or 1; movement gives fractions. */
     double uses(SkillAction action);
+
+    /** Like {@link #uses(SkillAction)}, for triggers that also look at the player (situation filters). */
+    default double uses(ServerPlayer player, SkillAction action) {
+        return uses(action);
+    }
 }

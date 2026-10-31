@@ -1,0 +1,16 @@
+{
+  "name": "Dreadful Threat",
+  "description": "frighten a scrutinised mob so it flees, 25 Judgment",
+  "icon": "minecraft:iron_bars",
+  "cost": 25,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "look",
+      "mode": "flee",
+      "seconds": 8,
+      "range": 24
+    }
+  ]
+}

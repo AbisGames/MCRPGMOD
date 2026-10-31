@@ -1,0 +1,15 @@
+{
+  "name": "Mass Heal",
+  "description": "all players within 8 blocks heal 6, 50 Lifeblood",
+  "icon": "minecraft:golden_apple",
+  "cost": 50,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:heal",
+      "target": "allies",
+      "amount": 6,
+      "radius": 8
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Gust",
+  "description": "cone knockback, 15 Breath",
+  "icon": "minecraft:wind_charge",
+  "cost": 15,
+  "cooldown_ticks": 80,
+  "actions": [
+    {
+      "type": "pipican:push",
+      "target": "hostiles",
+      "radius": 6,
+      "strength": 2.0,
+      "cone": 90
+    }
+  ]
+}

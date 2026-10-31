@@ -1,0 +1,136 @@
+{
+  "name": "Scout Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Alertness",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "forward_observer",
+      "name": "Forward Observer",
+      "description": "+2 Awareness",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:scout_awareness",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quick_reflexes",
+      "name": "Quick Reflexes",
+      "description": "after taking damage, +20% speed for 2s",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 2.0,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.2,
+                  "operation": "add_multiplied_base"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reveal_weakness",
+      "name": "Reveal Weakness",
+      "description": "unlocks Reveal Weakness ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "forward_observer"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:scout/reveal_weakness"
+      ]
+    },
+    {
+      "id": "trackless",
+      "name": "Ghost Trail",
+      "description": "mobs lose track of you 30% faster",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quick_reflexes"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "forget_faster",
+          "amount": 0.3
+        }
+      ]
+    },
+    {
+      "id": "low_blow",
+      "name": "Low Blow",
+      "description": "when a revealed mob takes damage from an ally, you get a free 50% damage hit on it; -10% max Stride",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "reveal_weakness",
+        "trackless"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "ally_hits_mob",
+          "victim": {
+            "marked": true
+          },
+          "cooldown_ticks": 10,
+          "name": "low blow",
+          "actions": [
+            {
+              "type": "pipican:counter",
+              "target": "victim",
+              "multiplier": 0.5
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

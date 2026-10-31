@@ -1,0 +1,13 @@
+{
+  "name": "Mend",
+  "icon": "minecraft:golden_apple",
+  "cost": 5,
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:heal",
+      "target": "self",
+      "amount": 4
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Haste",
+  "description": "Speed III + Haste II for 8s, 25 Sands",
+  "icon": "minecraft:sugar",
+  "cost": 25,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "self",
+      "effects": [
+        {
+          "effect": "minecraft:speed",
+          "seconds": 8,
+          "amplifier": 2
+        },
+        {
+          "effect": "minecraft:haste",
+          "seconds": 8,
+          "amplifier": 1
+        }
+      ]
+    }
+  ]
+}

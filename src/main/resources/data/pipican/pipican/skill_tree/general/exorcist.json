@@ -1,0 +1,134 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "exorcist_start",
+      "name": "Exorcist",
+      "description": "+5% damage to unclean mobs",
+      "type": "start",
+      "x": 1349,
+      "y": -860,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/unclean",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "exorcist_holy_water",
+      "name": "Holy Water",
+      "description": "splash potions you throw deal +2 damage to undead",
+      "type": "small",
+      "x": 1394,
+      "y": -920,
+      "links": [
+        "exorcist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "splash_undead",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "exorcist_litany",
+      "name": "Litany",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 1423,
+      "y": -874,
+      "links": [
+        "exorcist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "exorcist_banishing",
+      "name": "Banishing",
+      "description": "unclean mobs you hit are knocked back 50% farther",
+      "type": "notable",
+      "x": 1453,
+      "y": -958,
+      "links": [
+        "exorcist_holy_water"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "melee_hit",
+          "victims": "#pipican:mobs/unclean",
+          "actions": [
+            {
+              "type": "pipican:push",
+              "target": "victim",
+              "strength": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exorcist_iron_will",
+      "name": "Iron Will",
+      "description": "-20% damage from vexes, phantoms and endermen",
+      "type": "notable",
+      "x": 1482,
+      "y": -912,
+      "links": [
+        "exorcist_litany"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": [
+            "minecraft:vex",
+            "minecraft:phantom",
+            "minecraft:enderman"
+          ],
+          "multiplier": 0.8
+        }
+      ]
+    },
+    {
+      "id": "exorcist_inquisitor_s_fire",
+      "name": "Inquisitor's Fire",
+      "description": "+30% damage to unclean, but -30% to everything else",
+      "type": "keystone",
+      "x": 1527,
+      "y": -973,
+      "links": [
+        "exorcist_banishing",
+        "exorcist_iron_will"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/unclean",
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/unclean",
+          "multiplier": 0.7,
+          "except": true
+        }
+      ]
+    }
+  ]
+}

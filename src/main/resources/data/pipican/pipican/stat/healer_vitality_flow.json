@@ -1,0 +1,7 @@
+{
+  "name": "Vitality Flow",
+  "description": "The life energy you can pour into others.",
+  "max": 100,
+  "exclusive": true,
+  "color": -10755974
+}

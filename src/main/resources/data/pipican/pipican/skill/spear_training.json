@@ -1,0 +1,74 @@
+{
+  "name": "Spear Training",
+  "description": "Trained by hitting mobs with spears (or tridents in melee if spears aren't in the game).",
+  "icon": "minecraft:trident",
+  "trigger": {
+    "type": "pipican:melee_hit",
+    "items": "#pipican:weapons/spears"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:cavalier",
+    "pipican:druid",
+    "pipican:fighter",
+    "pipican:gladiator",
+    "pipican:hydromancer",
+    "pipican:magus",
+    "pipican:spellbinder",
+    "pipican:stormbringer",
+    "pipican:weapon_master"
+  ],
+  "tiers": [
+    {
+      "description": "+3% spear damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/spears",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+0.25 reach",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:entity_interaction_range",
+          "amount": 0.25
+        }
+      ]
+    },
+    {
+      "description": "+3% spear damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/spears",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+5% attack speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+6% spear damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/spears",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

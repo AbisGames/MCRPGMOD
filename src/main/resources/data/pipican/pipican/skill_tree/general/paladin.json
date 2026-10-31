@@ -1,0 +1,151 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "paladin_start",
+      "name": "Paladin",
+      "description": "+1 armor",
+      "type": "start",
+      "x": 739,
+      "y": 130,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "paladin_righteous",
+      "name": "Righteous",
+      "description": "+5% melee damage",
+      "type": "small",
+      "x": 812,
+      "y": 115,
+      "links": [
+        "paladin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "paladin_aegis",
+      "name": "Aegis",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 803,
+      "y": 169,
+      "links": [
+        "paladin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "paladin_sense",
+      "name": "Sense Enemies",
+      "description": "hostile mobs within 12 blocks glow when you hold a shield",
+      "type": "notable",
+      "x": 881,
+      "y": 127,
+      "links": [
+        "paladin_aegis"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/shields"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "second",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "hostiles",
+                  "radius": 12.0,
+                  "effects": [
+                    {
+                      "effect": "minecraft:glowing",
+                      "seconds": 2.0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paladin_zeal",
+      "name": "Holy Zeal",
+      "description": "+10% damage to undead and Nether mobs",
+      "type": "notable",
+      "x": 872,
+      "y": 182,
+      "links": [
+        "paladin_righteous"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#pipican:mobs/group_undead_nether_mobs",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "paladin_beacon",
+      "name": "Beacon of Hope",
+      "description": "other players within 8 blocks get +2 armor, but you get -10% movement speed",
+      "type": "keystone",
+      "x": 945,
+      "y": 167,
+      "links": [
+        "paladin_sense",
+        "paladin_zeal"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 8.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 2.0
+            }
+          ],
+          "include_self": false
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

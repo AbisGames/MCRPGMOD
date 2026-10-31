@@ -1,0 +1,15 @@
+{
+  "name": "Oak Hide",
+  "description": "+4 armor for 30s, 30 Sap",
+  "icon": "minecraft:oak_log",
+  "cost": 30,
+  "cooldown_ticks": 1200,
+  "duration_ticks": 600,
+  "effects": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 4
+    }
+  ]
+}

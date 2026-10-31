@@ -1,0 +1,81 @@
+{
+  "name": "Beast Bond",
+  "description": "Trained by taming and breeding animals.",
+  "icon": "minecraft:oak_sapling",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "tame"
+      },
+      {
+        "type": "pipican:did",
+        "action": "breed"
+      }
+    ]
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:beastmaster",
+    "pipican:druid",
+    "pipican:ranger",
+    "pipican:shapeshifter",
+    "pipican:woodwose"
+  ],
+  "tiers": [
+    {
+      "description": "tamed animals +2 max health",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "hearts": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+10% breeding speed",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "breeding_speed",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "description": "tamed animals +5% damage",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage": 0.05
+        }
+      ]
+    },
+    {
+      "description": "tamed animals +2 max health",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "hearts": 1.0
+        }
+      ]
+    },
+    {
+      "description": "tamed animals +10% damage",
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage": 0.1
+        }
+      ]
+    }
+  ]
+}

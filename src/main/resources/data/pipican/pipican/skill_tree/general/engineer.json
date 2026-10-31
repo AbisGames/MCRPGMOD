@@ -1,0 +1,144 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "engineer_start",
+      "name": "Engineer",
+      "description": "eidolon +10 max health",
+      "type": "start",
+      "x": -860,
+      "y": -1349,
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:max_health",
+          "amount": 10.0
+        }
+      ]
+    },
+    {
+      "id": "engineer_reinforced_frame",
+      "name": "Reinforced Frame",
+      "description": "eidolon +2 armor",
+      "type": "small",
+      "x": -920,
+      "y": -1394,
+      "links": [
+        "engineer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "engineer_pistons",
+      "name": "Pistons",
+      "description": "eidolon +10% damage",
+      "type": "small",
+      "x": -874,
+      "y": -1423,
+      "links": [
+        "engineer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:attack_damage",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "engineer_mighty_eidolon",
+      "name": "Mighty Eidolon",
+      "description": "eidolon +25 max health",
+      "type": "notable",
+      "x": -958,
+      "y": -1453,
+      "links": [
+        "engineer_reinforced_frame"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:max_health",
+          "amount": 25.0
+        }
+      ]
+    },
+    {
+      "id": "engineer_servo_speed",
+      "name": "Servo Speed",
+      "description": "eidolon +15% movement speed",
+      "type": "notable",
+      "x": -912,
+      "y": -1482,
+      "links": [
+        "engineer_pistons"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "engineer_iron_titan",
+      "name": "Iron Titan",
+      "description": "eidolon becomes Size 2 (bigger, +50% stats) but it moves 20% slower",
+      "type": "keystone",
+      "x": -973,
+      "y": -1527,
+      "links": [
+        "engineer_mighty_eidolon",
+        "engineer_servo_speed"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:scale",
+          "amount": 1.0,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:max_health",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:attack_damage",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:armor",
+          "amount": 0.5,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:eidolon",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

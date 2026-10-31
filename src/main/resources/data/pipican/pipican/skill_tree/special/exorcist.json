@@ -1,0 +1,124 @@
+{
+  "name": "Exorcist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Exorcism",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "rite",
+      "name": "Rite",
+      "description": "+2 Purity",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:exorcist_purity",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "cleanse",
+      "name": "Cleanse",
+      "description": "unlocks Exorcise ability",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "grants": [
+        "pipican:exorcist/exorcise"
+      ]
+    },
+    {
+      "id": "purge_the_unclean",
+      "name": "Purge the Unclean",
+      "description": "unclean mobs you hit can't teleport for 5s (endermen, shulkers)",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "rite"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "victims": "#pipican:mobs/unclean",
+          "actions": [
+            {
+              "type": "pipican:pin",
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "will_of_iron",
+      "name": "Will of Iron",
+      "description": "players within 6 blocks also immune to Bad Omen",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "cleanse"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 6.0,
+          "effects": [
+            {
+              "type": "pipican:immune",
+              "effects": "minecraft:bad_omen"
+            }
+          ],
+          "include_self": false
+        }
+      ]
+    },
+    {
+      "id": "hammer_of_the_gods",
+      "name": "Hammer of the Gods",
+      "description": "unclean mobs below 20% health die from your hits; Sanctification regen -25%",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "purge_the_unclean",
+        "will_of_iron"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:execute",
+          "threshold": 0.2,
+          "victims": "#pipican:mobs/unclean"
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Traveler Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Hasty Escape",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "fold_space",
+      "name": "Fold Space",
+      "description": "+2 Displacement",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:traveler_displacement",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "thunderclap",
+      "name": "Thunderclap",
+      "description": "arrivals knock mobs back",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "spatial disturbance",
+          "actions": [
+            {
+              "target": "hostiles",
+              "radius": 4.0,
+              "type": "pipican:push",
+              "strength": 0.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blink",
+      "name": "Blink",
+      "description": "unlocks Blink ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "fold_space"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:traveler/blink"
+      ]
+    },
+    {
+      "id": "recall",
+      "name": "Recall",
+      "description": "unlocks Recall ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "thunderclap"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:traveler/recall"
+      ]
+    },
+    {
+      "id": "gatekeeper",
+      "name": "Gatekeeper",
+      "description": "your pearls can carry a nearby player with you; +50% pearl cooldown",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "blink",
+        "recall"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_carry",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_cooldown",
+          "amount": 0.5
+        }
+      ]
+    }
+  ]
+}

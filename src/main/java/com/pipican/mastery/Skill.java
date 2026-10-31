@@ -12,6 +12,7 @@ import java.util.Optional;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -75,7 +76,9 @@ public record Skill(
             Codec.intRange(0, 72_000).optionalFieldOf("cooldown_ticks", 10).forGetter(Skill::cooldownTicks),
             Codec.INT.listOf().optionalFieldOf("thresholds", DEFAULT_THRESHOLDS).forGetter(Skill::thresholds),
             Tier.CODEC.listOf().optionalFieldOf("tiers", List.of()).forGetter(Skill::tiers),
-            TreeKind.CODEC.optionalFieldOf("points_to", TreeKind.GENERAL).forGetter(Skill::pointsTo),
+            TreeKind.CODEC.validate(k -> k == TreeKind.STAT
+                    ? DataResult.error(() -> "points_to must be general or special: the stat tree is paid with stat points")
+                    : DataResult.success(k)).optionalFieldOf("points_to", TreeKind.GENERAL).forGetter(Skill::pointsTo),
             ResourceKey.codec(PipicanRegistries.CLASS).listOf().optionalFieldOf("classes", List.of()).forGetter(Skill::classes),
             Codec.BOOL.optionalFieldOf("affinity_scaled", true).forGetter(Skill::affinityScaled)
     ).apply(i, Skill::new)).validate(Skill::validate);
@@ -110,10 +113,12 @@ public record Skill(
     }
 
     /** One mastery tier's bonus. {@code description} is shown to players. */
-    public record Tier(Component description, List<ClassEffect> effects) {
+    /** One mastery tier: its bonus, and any abilities it unlocks ({@code grants}, ability ids). */
+    public record Tier(Component description, List<ClassEffect> effects, List<Identifier> grants) {
         public static final Codec<Tier> CODEC = RecordCodecBuilder.create(i -> i.group(
                 ComponentSerialization.CODEC.optionalFieldOf("description", Component.empty()).forGetter(Tier::description),
-                ClassEffect.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(Tier::effects)
+                ClassEffect.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(Tier::effects),
+                Identifier.CODEC.listOf().optionalFieldOf("grants", List.of()).forGetter(Tier::grants)
         ).apply(i, Tier::new));
     }
 }

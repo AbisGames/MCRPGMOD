@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "avenger_stat_start",
+      "name": "Avenger",
+      "type": "start",
+      "x": 746,
+      "y": 74
+    },
+    {
+      "id": "avenger_relentless",
+      "name": "Relentless",
+      "description": "+2 Strength, +1 Endurance",
+      "type": "small",
+      "x": 806,
+      "y": 80,
+      "links": [
+        "avenger_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "avenger_iron_oath",
+      "name": "Iron Oath",
+      "description": "+2 Vitality, +1 Wisdom",
+      "type": "small",
+      "x": 866,
+      "y": 86,
+      "links": [
+        "avenger_relentless"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

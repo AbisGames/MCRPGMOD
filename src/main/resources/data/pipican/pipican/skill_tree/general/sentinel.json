@@ -1,0 +1,153 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "sentinel_start",
+      "name": "Sentinel",
+      "description": "+4 blocks detection range",
+      "type": "start",
+      "x": 163,
+      "y": 1239,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "perfect awareness",
+          "radius": 4.0
+        }
+      ]
+    },
+    {
+      "id": "sentinel_eagle_eyes",
+      "name": "Eagle Eyes",
+      "description": "+8 blocks glow range",
+      "type": "small",
+      "x": 200,
+      "y": 1305,
+      "links": [
+        "sentinel_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "perfect awareness",
+          "radius": 8.0
+        }
+      ]
+    },
+    {
+      "id": "sentinel_unflinching",
+      "name": "Unflinching",
+      "description": "+15% knockback resistance",
+      "type": "small",
+      "x": 145,
+      "y": 1312,
+      "links": [
+        "sentinel_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "sentinel_watchtower",
+      "name": "Watchtower",
+      "description": "Stand Guard +10% damage",
+      "type": "notable",
+      "x": 209,
+      "y": 1375,
+      "links": [
+        "sentinel_eagle_eyes"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:still",
+            "seconds": 3.0
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sentinel_night_watch",
+      "name": "Night Watch",
+      "description": "permanent Night Vision",
+      "type": "notable",
+      "x": 154,
+      "y": 1382,
+      "links": [
+        "sentinel_unflinching"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:night_vision"
+        }
+      ]
+    },
+    {
+      "id": "sentinel_post_holder",
+      "name": "Post Holder",
+      "description": "Stand Guard bonuses doubled, but -15% damage while moving",
+      "type": "keystone",
+      "x": 191,
+      "y": 1448,
+      "links": [
+        "sentinel_watchtower",
+        "sentinel_night_watch"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:still",
+            "seconds": 3.0
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.166667
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:still",
+              "seconds": 0.5
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.85
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

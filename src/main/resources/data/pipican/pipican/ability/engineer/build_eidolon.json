@@ -1,0 +1,13 @@
+{
+  "name": "Build Eidolon",
+  "icon": "minecraft:iron_block",
+  "cooldown_ticks": 100,
+  "actions": [
+    {
+      "type": "pipican:eidolon",
+      "item": "minecraft:iron_block",
+      "count": 4,
+      "rebuild_ticks": 8000
+    }
+  ]
+}

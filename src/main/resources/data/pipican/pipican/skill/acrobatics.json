@@ -1,0 +1,88 @@
+{
+  "name": "Acrobatics",
+  "description": "Trained by taking fall damage and sprint-jumping.",
+  "icon": "minecraft:leather_boots",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "take_fall"
+      },
+      {
+        "type": "pipican:jump"
+      }
+    ]
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:acrobat",
+    "pipican:aeromancer",
+    "pipican:dervish",
+    "pipican:duelist",
+    "pipican:rogue",
+    "pipican:scout",
+    "pipican:thief"
+  ],
+  "tiers": [
+    {
+      "description": "-5% fall damage",
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "description": "+2% movement speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.02,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "-5% fall damage",
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "description": "+0.5 safe fall distance (blocks)",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:safe_fall_distance",
+          "amount": 0.5
+        }
+      ]
+    },
+    {
+      "description": "+3% movement speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Binding",
+  "description": "The strength of the bond between you and your weapon.",
+  "max": 100,
+  "exclusive": true,
+  "color": -12590880
+}

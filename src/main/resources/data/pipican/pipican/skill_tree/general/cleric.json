@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "cleric_start",
+      "name": "Cleric",
+      "description": "+5% damage to undead",
+      "type": "start",
+      "x": 650,
+      "y": -375,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "cleric_scripture",
+      "name": "Scripture",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 696,
+      "y": -434,
+      "links": [
+        "cleric_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "cleric_censure",
+      "name": "Censure",
+      "description": "+8% damage to undead",
+      "type": "small",
+      "x": 724,
+      "y": -386,
+      "links": [
+        "cleric_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.08
+        }
+      ]
+    },
+    {
+      "id": "cleric_bulwark",
+      "name": "Bulwark of Faith",
+      "description": "-10% damage taken from undead",
+      "type": "notable",
+      "x": 757,
+      "y": -469,
+      "links": [
+        "cleric_scripture"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "against": "#minecraft:undead",
+          "multiplier": 0.9
+        }
+      ]
+    },
+    {
+      "id": "cleric_holy_wrath",
+      "name": "Holy Wrath",
+      "description": "undead you hit are set on fire for 2s",
+      "type": "notable",
+      "x": 785,
+      "y": -421,
+      "links": [
+        "cleric_censure"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "victims": "#minecraft:undead",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 0,
+              "fire_seconds": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleric_crusader",
+      "name": "Crusader",
+      "description": "+30% damage to undead, but -10% damage to everything else",
+      "type": "keystone",
+      "x": 831,
+      "y": -480,
+      "links": [
+        "cleric_bulwark",
+        "cleric_holy_wrath"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 1.3
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "against": "#minecraft:undead",
+          "multiplier": 0.9,
+          "except": true
+        }
+      ]
+    }
+  ]
+}

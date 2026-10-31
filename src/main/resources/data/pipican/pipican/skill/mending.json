@@ -1,0 +1,71 @@
+{
+  "name": "Mending",
+  "description": "Trained by healing damage (any source).",
+  "icon": "minecraft:golden_apple",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "heal"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:chaplain",
+    "pipican:cleric",
+    "pipican:healer",
+    "pipican:miracle_worker",
+    "pipican:oracle",
+    "pipican:priest",
+    "pipican:theurge"
+  ],
+  "tiers": [
+    {
+      "description": "+3% healing received",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.03
+        }
+      ]
+    },
+    {
+      "description": "+0.5 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 0.5
+        }
+      ]
+    },
+    {
+      "description": "+3% healing received",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.03
+        }
+      ]
+    },
+    {
+      "description": "+1 max health",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+6% healing received",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": 0.06
+        }
+      ]
+    }
+  ]
+}

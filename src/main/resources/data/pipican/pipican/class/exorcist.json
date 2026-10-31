@@ -1,0 +1,168 @@
+{
+  "name": "Exorcist",
+  "description": "A hunter of demons, wicked spirits and the undead who drives possessing horrors out and burns them down.",
+  "icon": "minecraft:totem_of_undying",
+  "selectable": true,
+  "base_health": 32.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 1,
+    "pipican:intelligence": 4,
+    "pipican:wisdom": 8,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:exorcist_purity": 10
+  },
+  "special_stat": {
+    "stat": "pipican:exorcist_purity",
+    "resource": {
+      "name": "Sanctification",
+      "base_max": 50.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -1642766,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:book"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:golden_apple"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "exorcist_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/exorcist",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "exorcist_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms_endermen_the_wither",
+      "multiplier": 1.25
+    },
+    {
+      "type": "pipican:immune",
+      "effects": [
+        "minecraft:nausea",
+        "minecraft:darkness",
+        "minecraft:blindness",
+        "minecraft:bad_omen"
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "victims": "minecraft:zombie_villager",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:cure"
+        }
+      ],
+      "name": "exorcism"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_nether_mobs_vexes_phantoms_endermen_the_wither",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_taken",
+      "against": "#pipican:mobs/unclean",
+      "multiplier": 0.97
+    }
+  ],
+  "weakness": {
+    "description": "Exorcists are trained against the unclean - not ordinary beasts.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "against": "#pipican:mobs/unclean",
+        "except": true,
+        "multiplier": 0.85
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "name": "Engineer",
+  "description": "Builder of the eidolon: a giant mechanical servant that fights at their side - and eventually carries them inside.",
+  "icon": "minecraft:iron_block",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 3,
+    "pipican:dexterity": 4,
+    "pipican:agility": 1,
+    "pipican:intelligence": 8,
+    "pipican:wisdom": 2,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:engineer_engineering": 10
+  },
+  "special_stat": {
+    "stat": "pipican:engineer_engineering",
+    "resource": {
+      "name": "Fuel",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -3563206,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_block"
+    },
+    {
+      "id": "minecraft:redstone",
+      "count": 4
+    },
+    {
+      "id": "minecraft:crossbow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 8
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "engineer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/engineer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "engineer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/crossbows",
+      "multiplier": 1.1
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:attack_damage",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:max_health",
+      "amount": 0.0,
+      "operation": "add_multiplied_base",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:armor",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:eidolon",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.05,
+      "operation": "add_multiplied_base"
+    }
+  ],
+  "weakness": {
+    "description": "Without the machine, an engineer is a nerd with a crossbow.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:has_eidolon"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:armor",
+            "amount": -2.0
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1,
+    "pipican:charm": 1
+  },
+  "abilities": [
+    "pipican:engineer/build_eidolon"
+  ]
+}

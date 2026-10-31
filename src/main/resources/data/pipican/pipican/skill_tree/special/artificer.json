@@ -1,0 +1,117 @@
+{
+  "name": "Artificer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Artificer's Bag",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "bigger_bag",
+      "name": "Bigger Bag",
+      "description": "+2 Ingenuity",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:artificer_ingenuity",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "quick_assembly",
+      "name": "Quick Assembly",
+      "description": "+25% Spare Parts regen",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "store_spell",
+      "name": "Store Spell",
+      "description": {
+        "text": "potions you brew can be loaded into crafted gear (see section 12)",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "bigger_bag"
+      ],
+      "cost": 2,
+      "required_level": 15
+    },
+    {
+      "id": "copper_heart",
+      "name": "Copper Heart",
+      "description": "copper golems near you move and work 25% faster",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "quick_assembly"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "copper_heart",
+          "amount": 0.25
+        }
+      ]
+    },
+    {
+      "id": "mechanical_servants",
+      "name": "Mechanical Servants",
+      "description": "unlocks the Mechanical Servants ability; -15% max Spare Parts",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "store_spell",
+        "copper_heart"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:artificer/mechanical_servants"
+      ]
+    }
+  ]
+}

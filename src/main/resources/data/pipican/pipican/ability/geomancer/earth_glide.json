@@ -1,0 +1,14 @@
+{
+  "name": "Earth Glide",
+  "description": "walk through stone for 3s, 40 Earthen Defense",
+  "icon": "minecraft:stone",
+  "cost": 40,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:blink",
+      "distance": 8,
+      "through_walls": true
+    }
+  ]
+}

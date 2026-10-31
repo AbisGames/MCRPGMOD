@@ -1,0 +1,7 @@
+{
+  "name": "Staffcraft",
+  "description": "Your bond with the staff.",
+  "max": 100,
+  "exclusive": true,
+  "color": -5933506
+}

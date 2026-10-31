@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "fighter_start",
+      "name": "Fighter",
+      "description": "+1 attack damage",
+      "type": "start",
+      "x": -739,
+      "y": -130,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_damage",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "fighter_conditioning",
+      "name": "Conditioning",
+      "description": "+3 max health",
+      "type": "small",
+      "x": -812,
+      "y": -115,
+      "links": [
+        "fighter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "fighter_technique",
+      "name": "Technique",
+      "description": "+5% weapon damage",
+      "type": "small",
+      "x": -803,
+      "y": -169,
+      "links": [
+        "fighter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "fighter_battle_rhythm",
+      "name": "Battle Rhythm",
+      "description": "+8% attack speed",
+      "type": "notable",
+      "x": -881,
+      "y": -127,
+      "links": [
+        "fighter_technique"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.08,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "fighter_iron_will",
+      "name": "Fighter's Resolve",
+      "description": "-8% damage taken",
+      "type": "notable",
+      "x": -872,
+      "y": -182,
+      "links": [
+        "fighter_conditioning"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.92
+        }
+      ]
+    },
+    {
+      "id": "fighter_champion",
+      "name": "Living Weapon",
+      "description": "+15% weapon damage and attack speed, but -30% magic damage and potion strength",
+      "type": "keystone",
+      "x": -945,
+      "y": -167,
+      "links": [
+        "fighter_battle_rhythm",
+        "fighter_iron_will"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.15,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.7
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "drunk_potion_strength",
+          "amount": -0.3
+        }
+      ]
+    }
+  ]
+}

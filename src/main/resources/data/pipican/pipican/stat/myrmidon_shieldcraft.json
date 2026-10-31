@@ -1,0 +1,7 @@
+{
+  "name": "Shieldcraft",
+  "description": "Mastery of shield fighting.",
+  "max": 100,
+  "exclusive": true,
+  "color": -5211588
+}

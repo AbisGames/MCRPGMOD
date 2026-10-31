@@ -1,0 +1,103 @@
+{
+  "name": "Stealth",
+  "description": "Trained by sneaking within 8 blocks of a hostile mob without being targeted.",
+  "icon": "minecraft:leather_boots",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:acrobat",
+    "pipican:assassin",
+    "pipican:diplomat",
+    "pipican:illusionist",
+    "pipican:infiltrator",
+    "pipican:jack_of_all_trades",
+    "pipican:rogue",
+    "pipican:scout",
+    "pipican:tenebrist",
+    "pipican:thief",
+    "pipican:warlock"
+  ],
+  "tiers": [
+    {
+      "description": "-10% mob detection range while sneaking",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "+5% sneaking speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "-10% mob detection range while sneaking",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "+5% sneaking speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "-15% mob detection range while sneaking",
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "detection_range",
+              "amount": -0.15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

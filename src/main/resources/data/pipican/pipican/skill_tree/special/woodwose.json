@@ -1,0 +1,135 @@
+{
+  "name": "Woodwose Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Forest Hide",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "green_blood",
+      "name": "Green Blood",
+      "description": "+2 Verdure",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "oak_hide",
+      "name": "Oak Hide",
+      "description": "unlocks Oak Hide ability",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "grants": [
+        "pipican:woodwose/oak_hide"
+      ]
+    },
+    {
+      "id": "nature_s_resilience",
+      "name": "Nature's Resilience",
+      "description": "absorption +2 more hearts",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "green_blood"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "nature's resilience",
+          "amplify": {
+            "minecraft:absorption": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "nature_bond",
+      "name": "Nature Bond",
+      "description": "unlocks Treeform ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "oak_hide"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:woodwose/treeform"
+      ]
+    },
+    {
+      "id": "green_man",
+      "name": "Green Man",
+      "description": "passive animals follow you and hostile spiders ignore you; -10% max health outside forests",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "nature_s_resilience",
+        "nature_bond"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "animals_follow",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:ignored_by",
+          "mobs": [
+            "minecraft:spider",
+            "minecraft:cave_spider"
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              },
+              {
+                "type": "pipican:biome",
+                "biomes": "#minecraft:is_forest"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": -0.1,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

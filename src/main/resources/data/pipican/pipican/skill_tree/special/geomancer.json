@@ -1,0 +1,144 @@
+{
+  "name": "Geomancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Earthen Defense",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "rooted",
+      "name": "Rooted",
+      "description": "+2 Bedrock",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:geomancer_bedrock",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "stone_fist",
+      "name": "Stone Fist",
+      "description": "unarmed and pickaxe hits +20% damage",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:air"
+            ],
+            "hand": "main"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.2
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#minecraft:pickaxes",
+          "multiplier": 1.2
+        }
+      ]
+    },
+    {
+      "id": "earth_walker",
+      "name": "Earth Walker",
+      "description": "unlocks Earth Glide ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "rooted"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:geomancer/earth_glide"
+      ]
+    },
+    {
+      "id": "quake",
+      "name": "Quake",
+      "description": "unlocks Quake ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "stone_fist"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:geomancer/quake"
+      ]
+    },
+    {
+      "id": "avatar_of_earth",
+      "name": "Avatar of Earth",
+      "description": "Earthen Defense works anywhere; -20% movement speed in water and air",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "earth_walker",
+        "quake"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:resource_shield",
+          "absorb": 1.0
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:state",
+                "state": "in_water"
+              },
+              {
+                "type": "pipican:not",
+                "condition": {
+                  "type": "pipican:state",
+                  "state": "on_ground"
+                }
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:movement_speed",
+              "amount": -0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

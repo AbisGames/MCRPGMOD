@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A player's progress in one class: class level, class XP and allocated passive-tree nodes.
+ * A player's progress in one class: class level, class XP and allocated nodes in its three trees.
  *
  * <p>Kept per class (inside {@link PlayerClassData}) so a future multiclass system can store
  * progress for several classes at once without changing the save format.
@@ -19,7 +19,8 @@ public final class ClassProgress {
             Codec.INT.optionalFieldOf("level", 1).forGetter(p -> p.level),
             Codec.LONG.optionalFieldOf("xp", 0L).forGetter(p -> p.xp),
             Codec.STRING.listOf().optionalFieldOf("general_nodes", List.of()).forGetter(p -> List.copyOf(p.generalNodes)),
-            Codec.STRING.listOf().optionalFieldOf("special_nodes", List.of()).forGetter(p -> List.copyOf(p.specialNodes))
+            Codec.STRING.listOf().optionalFieldOf("special_nodes", List.of()).forGetter(p -> List.copyOf(p.specialNodes)),
+            Codec.STRING.listOf().optionalFieldOf("stat_nodes", List.of()).forGetter(p -> List.copyOf(p.statNodes))
     ).apply(i, ClassProgress::new));
 
     private int level;
@@ -27,16 +28,18 @@ public final class ClassProgress {
     private long xp;
     private final Set<String> generalNodes;
     private final Set<String> specialNodes;
+    private final Set<String> statNodes;
 
     public ClassProgress() {
-        this(1, 0, List.of(), List.of());
+        this(1, 0, List.of(), List.of(), List.of());
     }
 
-    private ClassProgress(int level, long xp, List<String> generalNodes, List<String> specialNodes) {
+    private ClassProgress(int level, long xp, List<String> generalNodes, List<String> specialNodes, List<String> statNodes) {
         this.level = level;
         this.xp = xp;
         this.generalNodes = new HashSet<>(generalNodes);
         this.specialNodes = new HashSet<>(specialNodes);
+        this.statNodes = new HashSet<>(statNodes);
     }
 
     public int level() {
@@ -57,6 +60,10 @@ public final class ClassProgress {
 
     /** Allocated node ids in the given tree (the free start node is not included). Mutable. */
     public Set<String> nodes(TreeKind kind) {
-        return kind == TreeKind.GENERAL ? generalNodes : specialNodes;
+        return switch (kind) {
+            case GENERAL -> generalNodes;
+            case SPECIAL -> specialNodes;
+            case STAT -> statNodes;
+        };
     }
 }

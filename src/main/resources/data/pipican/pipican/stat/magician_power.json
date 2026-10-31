@@ -1,0 +1,7 @@
+{
+  "name": "Power",
+  "description": "How much magical energy you can safely channel. The heart of every Magician.",
+  "max": 100,
+  "exclusive": true,
+  "color": -12615681
+}

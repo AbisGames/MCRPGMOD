@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "mage_knight_stat_start",
+      "name": "Mage Knight",
+      "type": "start",
+      "x": -639,
+      "y": -392
+    },
+    {
+      "id": "mage_knight_martial_mind",
+      "name": "Martial Mind",
+      "description": "+2 Strength, +1 Intelligence",
+      "type": "small",
+      "x": -691,
+      "y": -423,
+      "links": [
+        "mage_knight_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "mage_knight_spellsword",
+      "name": "Spellsword",
+      "description": "+2 Intelligence, +1 Dexterity",
+      "type": "small",
+      "x": -742,
+      "y": -455,
+      "links": [
+        "mage_knight_martial_mind"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

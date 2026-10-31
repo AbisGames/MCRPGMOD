@@ -11,7 +11,7 @@ import net.minecraft.network.chat.ComponentSerialization;
  * A stat such as "Strength" or "Faith", loaded from {@code data/<ns>/pipican/stat/<name>.json}.
  *
  * <p>The number of stats is not fixed: every JSON file is one stat. Points in a stat come from
- * the class's {@code base_stats}, from points the player buys with vanilla XP levels, and from
+ * the class's {@code base_stats}, from stat points the player earns with kill XP, and from
  * skill-tree / passive effects of type {@code pipican:stat}.
  *
  * <p>Example:
@@ -28,7 +28,7 @@ import net.minecraft.network.chat.ComponentSerialization;
  *
  * @param name        display name
  * @param description tooltip text
- * @param max         highest value players can reach by spending vanilla XP (bonuses may exceed it)
+ * @param max         highest value players can reach by spending stat points (bonuses may exceed it)
  * @param perPoint    attribute modifiers applied once per point in this stat
  * @param exclusive   if true, players can only raise this stat when it is their class's special stat
  *                    (use this for signature stats like "Faith" that only one class should own)

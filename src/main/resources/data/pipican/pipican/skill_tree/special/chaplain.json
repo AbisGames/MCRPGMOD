@@ -1,0 +1,136 @@
+{
+  "name": "Chaplain Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Battle Chant",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "hymn",
+      "name": "Hymn",
+      "description": "+2 Sermon",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:chaplain_sermon",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "choir",
+      "name": "Choir",
+      "description": "+3 blocks chant range",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "id": "emboldening_chant",
+      "name": "Emboldening Chant",
+      "description": "+5% more damage in chant",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "hymn"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "succor",
+      "name": "Succor",
+      "description": "Succor also removes Poison and Wither",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "choir"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "succor",
+          "actions": [
+            {
+              "type": "pipican:cleanse",
+              "target": "players",
+              "effects": [
+                "minecraft:poison",
+                "minecraft:wither"
+              ],
+              "radius": 2.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "voice_of_god",
+      "name": "Voice of God",
+      "description": "chant also gives Resistance I; Chant regen -25%",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "emboldening_chant",
+        "succor"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:mob_effect",
+              "effect": "minecraft:resistance"
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.25,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

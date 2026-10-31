@@ -1,0 +1,65 @@
+{
+  "name": "Phalanx",
+  "description": "Trained by blocking attacks.",
+  "icon": "minecraft:shield",
+  "trigger": {
+    "type": "pipican:block"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:myrmidon"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Shieldcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:myrmidon_shieldcraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Shieldcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:myrmidon_shieldcraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Bulwark regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Shieldcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:myrmidon_shieldcraft",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Shieldcraft",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:myrmidon_shieldcraft",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

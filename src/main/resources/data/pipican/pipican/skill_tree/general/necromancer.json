@@ -1,0 +1,134 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "necromancer_start",
+      "name": "Necromancer",
+      "description": "+5% servant damage",
+      "type": "start",
+      "x": 577,
+      "y": 1109,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.05
+        }
+      ]
+    },
+    {
+      "id": "necromancer_grave_dust",
+      "name": "Grave Dust",
+      "description": "+5% command chance",
+      "type": "small",
+      "x": 634,
+      "y": 1158,
+      "links": [
+        "necromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "command",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "necromancer_bone_armor",
+      "name": "Bone Armor",
+      "description": "+2 armor",
+      "type": "small",
+      "x": 585,
+      "y": 1184,
+      "links": [
+        "necromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "necromancer_master_of_undeath",
+      "name": "Master of Undeath",
+      "description": "servants +20% damage",
+      "type": "notable",
+      "x": 666,
+      "y": 1220,
+      "links": [
+        "necromancer_grave_dust"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.2
+        }
+      ]
+    },
+    {
+      "id": "necromancer_lich_touch",
+      "name": "Lich Touch",
+      "description": "your hits give Wither I for 2s",
+      "type": "notable",
+      "x": 617,
+      "y": 1246,
+      "links": [
+        "necromancer_bone_armor"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:wither",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "necromancer_lichdom",
+      "name": "Lichdom",
+      "description": "+1 servant and +20% servant damage, but sunlight burns you like a zombie",
+      "type": "keystone",
+      "x": 674,
+      "y": 1295,
+      "links": [
+        "necromancer_master_of_undeath",
+        "necromancer_lich_touch"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "count": 1
+        },
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "sun_burn",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

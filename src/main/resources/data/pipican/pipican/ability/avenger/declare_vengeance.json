@@ -1,0 +1,16 @@
+{
+  "name": "Declare Vengeance",
+  "description": "mark any mob you can see, 20 Retribution",
+  "icon": "minecraft:redstone",
+  "cost": 20,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:mark",
+      "target": "look",
+      "range": 64,
+      "seconds": 60,
+      "multiplier": 1.25
+    }
+  ]
+}

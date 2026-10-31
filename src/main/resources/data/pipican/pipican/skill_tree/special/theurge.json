@@ -1,0 +1,119 @@
+{
+  "name": "Theurge Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Invocation",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "devotions",
+      "name": "Devotions",
+      "description": "+2 Piety",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:theurge_piety",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "pious_restoration",
+      "name": "Pious Restoration",
+      "description": "heal 3 HP",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "pious restoration",
+          "heal": 1.0
+        }
+      ]
+    },
+    {
+      "id": "invocation",
+      "name": "Invocation",
+      "description": "Invocation radius +2",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "devotions"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "radius": 2.0
+        }
+      ]
+    },
+    {
+      "id": "holy_word",
+      "name": "Holy Word",
+      "description": "unlocks Holy Word ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "pious_restoration"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:theurge/holy_word"
+      ]
+    },
+    {
+      "id": "saint_of_the_new_god",
+      "name": "Saint of the New God",
+      "description": "Invocation also heals players within its radius by 2; -15% Divinity regen",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "invocation",
+        "holy_word"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "invocation",
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "allies",
+              "radius": 4.0,
+              "amount": 2.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

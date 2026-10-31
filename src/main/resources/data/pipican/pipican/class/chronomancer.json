@@ -1,0 +1,184 @@
+{
+  "name": "Chronomancer",
+  "description": "A master of Time magic who slips between seconds, moves faster than anyone and glimpses what's coming.",
+  "icon": "minecraft:clock",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 4,
+    "pipican:intelligence": 8,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 1,
+    "pipican:luck": 2,
+    "pipican:chronomancer_tempo": 10
+  },
+  "special_stat": {
+    "stat": "pipican:chronomancer_tempo",
+    "resource": {
+      "name": "Sands",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -2509734,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:clock"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "chronomancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/chronomancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "chronomancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:speed",
+              "seconds": 3.0,
+              "amplifier": 1
+            }
+          ]
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 3.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:knockback_resistance",
+              "amount": 1.0
+            }
+          ]
+        }
+      ],
+      "name": "quickening"
+    },
+    {
+      "type": "pipican:dodge",
+      "chance": 0.1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "potion_duration",
+      "amount": 0.25
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:dodge",
+      "chance": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "harmful_duration",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.003
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Time takes its toll on those who bend it.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "hunger",
+        "amount": 0.3
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:chronomancer/haste"
+  ]
+}

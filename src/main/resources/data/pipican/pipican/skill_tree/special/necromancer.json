@@ -1,0 +1,109 @@
+{
+  "name": "Necromancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Command Undead",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "death_s_whisper",
+      "name": "Death's Whisper",
+      "description": "+2 Deathgrip",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:necromancer_deathgrip",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "long_leash",
+      "name": "Long Leash",
+      "description": "servants last 30s longer",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "seconds": 30.0
+        }
+      ]
+    },
+    {
+      "id": "master_of_undeath",
+      "name": "Master of Undeath",
+      "description": "double servant cap",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "death_s_whisper"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "cap_multiplier": 1.0
+        }
+      ]
+    },
+    {
+      "id": "raise_dead",
+      "name": "Raise Dead",
+      "description": "unlocks Raise Dead ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "long_leash"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:necromancer/raise_dead"
+      ]
+    },
+    {
+      "id": "lord_of_bones",
+      "name": "Lord of Bones",
+      "description": "servants never expire until killed; -15% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "master_of_undeath",
+        "raise_dead"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "seconds": 86400.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

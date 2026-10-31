@@ -1,0 +1,169 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "magus_start",
+      "name": "Magus",
+      "description": "+3% staff damage",
+      "type": "start",
+      "x": 346,
+      "y": -1562,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.03
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magus_ironwood",
+      "name": "Ironwood",
+      "description": "+5% staff damage",
+      "type": "small",
+      "x": 335,
+      "y": -1636,
+      "links": [
+        "magus_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magus_focus_crystal",
+      "name": "Focus Crystal",
+      "description": "+5% magic damage",
+      "type": "small",
+      "x": 388,
+      "y": -1624,
+      "links": [
+        "magus_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "magus_sweeping_staff",
+      "name": "Sweeping Staff",
+      "description": "staff hits sweep 1 extra mob",
+      "type": "notable",
+      "x": 350,
+      "y": -1705,
+      "links": [
+        "magus_ironwood"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:cleave",
+          "fraction": 0.5,
+          "radius": 2.5,
+          "max_targets": 1,
+          "weapons": "#pipican:weapons/staff"
+        }
+      ]
+    },
+    {
+      "id": "magus_spellguard_staff",
+      "name": "Spellguard Staff",
+      "description": "+1 armor with staff",
+      "type": "notable",
+      "x": 403,
+      "y": -1693,
+      "links": [
+        "magus_focus_crystal"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magus_staff_of_the_archmagus",
+      "name": "Staff of the Archmagus",
+      "description": "+25% staff damage, but you can't use any other weapon at better than clumsy",
+      "type": "keystone",
+      "x": 392,
+      "y": -1767,
+      "links": [
+        "magus_sweeping_staff",
+        "magus_spellguard_staff"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": [
+              "minecraft:blaze_rod",
+              "minecraft:stick"
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "staff_only",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

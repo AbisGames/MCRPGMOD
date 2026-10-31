@@ -1,0 +1,124 @@
+{
+  "name": "Conjurer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Conjure Tiny Monster",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "gate",
+      "name": "Gate",
+      "description": "+2 Summoning",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conjurer_summoning",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "fearsome",
+      "name": "Fearsome",
+      "description": "minions also apply Slowness",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "pet_hit",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "powerful_monsters",
+      "name": "Powerful Monsters",
+      "description": "minions +20% damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "gate"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "damage": 0.2
+        }
+      ]
+    },
+    {
+      "id": "steady_gate",
+      "name": "Steady Gate",
+      "description": "minion spawn every 20s",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "fearsome"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "conjure tiny monster",
+          "cooldown": -0.333333
+        }
+      ]
+    },
+    {
+      "id": "conjure_horror",
+      "name": "Conjure Horror",
+      "description": "unlocks Conjure Horror ability; -15% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "powerful_monsters",
+        "steady_gate"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ],
+      "grants": [
+        "pipican:conjurer/conjure_horror"
+      ]
+    }
+  ]
+}

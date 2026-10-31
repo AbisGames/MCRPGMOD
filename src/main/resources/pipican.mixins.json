@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.pipican.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BasePressurePlateBlockMixin",
+    "EntityMixin",
+    "MapItemMixin",
+    "TridentItemMixin",
+    "TripWireBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

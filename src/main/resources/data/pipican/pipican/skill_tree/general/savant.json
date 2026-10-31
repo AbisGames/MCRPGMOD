@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "savant_start",
+      "name": "Savant",
+      "description": "+5% experience",
+      "type": "start",
+      "x": 402,
+      "y": -1184,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "savant_bookish",
+      "name": "Bookish",
+      "description": "+10% experience",
+      "type": "small",
+      "x": 398,
+      "y": -1259,
+      "links": [
+        "savant_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "savant_cross_discipline",
+      "name": "Cross-Discipline",
+      "description": "+5% magic damage",
+      "type": "small",
+      "x": 450,
+      "y": -1241,
+      "links": [
+        "savant_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "savant_library_mind",
+      "name": "Library Mind",
+      "description": "+20% max Insight",
+      "type": "notable",
+      "x": 421,
+      "y": -1325,
+      "links": [
+        "savant_bookish"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "savant_fast_learner",
+      "name": "Fast Learner",
+      "description": "skills train 15% faster",
+      "type": "notable",
+      "x": 473,
+      "y": -1307,
+      "links": [
+        "savant_cross_discipline"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "skill_training",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "savant_omniscient",
+      "name": "Omniscient",
+      "description": "+1 more focus school, but -15% max health",
+      "type": "keystone",
+      "x": 469,
+      "y": -1383,
+      "links": [
+        "savant_library_mind",
+        "savant_fast_learner"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "focus_slots",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

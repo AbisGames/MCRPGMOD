@@ -1,0 +1,19 @@
+{
+  "name": "TODO Stat Tree",
+  "nodes": [
+    { "id": "example_stat_start", "name": "TODO Stat Start", "type": "start", "icon": "minecraft:experience_bottle" },
+    {
+      "id": "hardy",
+      "name": "TODO Hardy",
+      "description": "+4 max health. Costs 2 stat points.",
+      "type": "small",
+      "icon": "minecraft:golden_apple",
+      "x": 0, "y": 60,
+      "cost": 2,
+      "links": [ "example_stat_start" ],
+      "effects": [
+        { "type": "pipican:attribute", "attribute": "minecraft:max_health", "amount": 4 }
+      ]
+    }
+  ]
+}

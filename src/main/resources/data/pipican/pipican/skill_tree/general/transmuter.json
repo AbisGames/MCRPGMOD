@@ -1,0 +1,191 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "transmuter_start",
+      "name": "Transmuter",
+      "description": "+1 to every stat",
+      "type": "start",
+      "x": 612,
+      "y": -1478,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 1
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "transmuter_malleable",
+      "name": "Malleable",
+      "description": "+2 Optimization amount",
+      "type": "small",
+      "x": 614,
+      "y": -1553,
+      "links": [
+        "transmuter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:optimization",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "transmuter_stable_form",
+      "name": "Stable Form",
+      "description": "Optimization no longer resets on death",
+      "type": "small",
+      "x": 664,
+      "y": -1532,
+      "links": [
+        "transmuter_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "keep_optimization",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "transmuter_iron_gut",
+      "name": "Iron Gut",
+      "description": "harmful potions last 30% shorter",
+      "type": "notable",
+      "x": 640,
+      "y": -1618,
+      "links": [
+        "transmuter_malleable"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "harmful_duration",
+          "amount": -0.3
+        }
+      ]
+    },
+    {
+      "id": "transmuter_rapid_shift",
+      "name": "Rapid Shift",
+      "description": "you can re-Optimize once per day without sleeping",
+      "type": "notable",
+      "x": 691,
+      "y": -1597,
+      "links": [
+        "transmuter_stable_form"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reoptimize",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "transmuter_perfected",
+      "name": "Perfected",
+      "description": "+2 to every stat, but potions last 30% shorter",
+      "type": "keystone",
+      "x": 693,
+      "y": -1672,
+      "links": [
+        "transmuter_iron_gut",
+        "transmuter_rapid_shift"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:strength",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:endurance",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": -0.3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Healer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Far Healing",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "lifespring",
+      "name": "Lifespring",
+      "description": "+2 Vitality Flow",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:healer_vitality_flow",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "wide_mend",
+      "name": "Wide Mend",
+      "description": "+3 blocks healing range",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:healer/mass_heal",
+          "radius": 3.0
+        }
+      ]
+    },
+    {
+      "id": "empowered_healing",
+      "name": "Empowered Healing",
+      "description": "unlocks Mass Heal ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "lifespring"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:healer/mass_heal"
+      ]
+    },
+    {
+      "id": "unassailable_vitality",
+      "name": "Unassailable Vitality",
+      "description": "also immune to Nausea and Slowness",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "wide_mend"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:nausea",
+            "minecraft:slowness"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "resurrection",
+      "name": "Resurrection",
+      "description": "once per day, a player who dies near you is saved at 4 HP; -20% max Lifeblood",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "empowered_healing",
+        "unassailable_vitality"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "save_ally",
+          "amount": 4.0
+        },
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

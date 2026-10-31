@@ -1,0 +1,130 @@
+{
+  "name": "Dreadnaught Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Iron Clad",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "heavy_plate",
+      "name": "Heavy Plate",
+      "description": "+2 Plate",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dreadnaught_plate",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "immovable",
+      "name": "Immovable",
+      "description": "also immune to wind charges and explosions' knockback",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:explosion_knockback_resistance",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "weapon_resistance",
+      "name": "Weapon Resistance",
+      "description": "+10% more weapon resistance",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "heavy_plate"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "heavy_armor",
+            "min": 4
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_taken",
+              "damage_types": "#pipican:is_melee",
+              "multiplier": 0.9
+            },
+            {
+              "type": "pipican:damage_taken",
+              "damage_types": "#minecraft:is_projectile",
+              "multiplier": 0.9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unbreakable",
+      "name": "Unbreakable",
+      "description": "armor never drops below 10% durability while worn",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "immovable"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "armor_floor",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "colossus",
+      "name": "Colossus",
+      "description": "+4 armor, but you can't sprint",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "weapon_resistance",
+        "unbreakable"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 4.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_sprint",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

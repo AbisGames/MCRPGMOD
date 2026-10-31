@@ -1,0 +1,107 @@
+{
+  "name": "Transmuter Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Optimization",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "transmute",
+      "name": "Transmute",
+      "description": "+2 Flux",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:transmuter_flux",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "alchemical_body",
+      "name": "Alchemical Body",
+      "description": "+10% potion duration",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "potion_duration",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "alter_self",
+      "name": "Alter Self",
+      "description": "unlocks Alter Self ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "transmute"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:transmuter/alter_self"
+      ]
+    },
+    {
+      "id": "transmute_matter",
+      "name": "Transmute Matter",
+      "description": "unlocks Transmute ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "alchemical_body"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:transmuter/transmute"
+      ]
+    },
+    {
+      "id": "philosopher",
+      "name": "Philosopher",
+      "description": "Optimization amount doubled; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "alter_self",
+        "transmute_matter"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:optimization",
+          "amount": 3.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

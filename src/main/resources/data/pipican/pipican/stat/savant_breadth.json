@@ -1,0 +1,7 @@
+{
+  "name": "Breadth",
+  "description": "Range of magical knowledge.",
+  "max": 100,
+  "exclusive": true,
+  "color": -1451866
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Last Stand",
+  "cooldown_ticks": 200,
+  "auto": {
+    "type": "pipican:health",
+    "max": 0.5
+  },
+  "actions": [
+    {
+      "type": "pipican:absorb",
+      "amount": 4
+    }
+  ]
+}

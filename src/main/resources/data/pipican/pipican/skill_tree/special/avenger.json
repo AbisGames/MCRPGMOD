@@ -1,0 +1,130 @@
+{
+  "name": "Avenger Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Vow of Vengeance",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "sworn",
+      "name": "Sworn",
+      "description": "+2 Vengeance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:avenger_vengeance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "hound",
+      "name": "Hound",
+      "description": "Speed boost lasts 2s longer",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "pursuit",
+          "seconds": 2.0
+        }
+      ]
+    },
+    {
+      "id": "frightening_glare",
+      "name": "Frightening Glare",
+      "description": "marked targets within your reach deal 15% less damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "sworn"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "victim": {
+            "marked": true,
+            "within": 4.5
+          },
+          "multiplier": 0.85
+        }
+      ]
+    },
+    {
+      "id": "avenger_s_wrath",
+      "name": "Avenger's Wrath",
+      "description": "+10% damage to marked target",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "hound"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "unending_vendetta",
+      "name": "Unending Vendetta",
+      "description": "killing a marked target heals you 25%; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "frightening_glare",
+        "avenger_s_wrath"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "marked": true
+          },
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "percent": 0.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "acrobat_start",
+      "name": "Acrobat",
+      "description": "+5% movement speed",
+      "type": "start",
+      "x": 376,
+      "y": 1192,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "acrobat_light_landing",
+      "name": "Light Landing",
+      "description": "-20% fall damage",
+      "type": "small",
+      "x": 423,
+      "y": 1251,
+      "links": [
+        "acrobat_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fall",
+          "multiplier": 0.8
+        }
+      ]
+    },
+    {
+      "id": "acrobat_fleet",
+      "name": "Fleet",
+      "description": "+5% movement speed",
+      "type": "small",
+      "x": 371,
+      "y": 1267,
+      "links": [
+        "acrobat_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "acrobat_wall_run",
+      "name": "Wall Run",
+      "description": "sprinting into a wall lets you run up it for 2 blocks",
+      "type": "notable",
+      "x": 444,
+      "y": 1317,
+      "links": [
+        "acrobat_light_landing"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "wall_run",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "acrobat_untouchable",
+      "name": "Untouchable",
+      "description": "+8% dodge chance",
+      "type": "notable",
+      "x": 392,
+      "y": 1334,
+      "links": [
+        "acrobat_fleet"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.08
+        }
+      ]
+    },
+    {
+      "id": "acrobat_wind_dancer",
+      "name": "Wind Dancer",
+      "description": "double-jump in mid-air once per 5s, but -2 armor",
+      "type": "keystone",
+      "x": 439,
+      "y": 1392,
+      "links": [
+        "acrobat_wall_run",
+        "acrobat_untouchable"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "double_jump",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": -2.0
+        }
+      ]
+    }
+  ]
+}

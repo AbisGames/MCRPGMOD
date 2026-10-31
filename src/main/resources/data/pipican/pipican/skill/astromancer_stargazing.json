@@ -1,0 +1,65 @@
+{
+  "name": "Stargazing",
+  "description": "Trained by spending time outdoors at night and killing mobs while glowing.",
+  "icon": "minecraft:glowstone_dust",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:astromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Radiance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:astromancer_radiance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Radiance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:astromancer_radiance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Starlight regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Radiance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:astromancer_radiance",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Radiance",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:astromancer_radiance",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

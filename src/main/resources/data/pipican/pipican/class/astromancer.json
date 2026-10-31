@@ -1,0 +1,261 @@
+{
+  "name": "Astromancer",
+  "description": "A wielder of sun, moon and starlight who blazes like a beacon and blinds foes.",
+  "icon": "minecraft:glowstone_dust",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 1,
+    "pipican:dexterity": 2,
+    "pipican:agility": 2,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 7,
+    "pipican:endurance": 2,
+    "pipican:luck": 2,
+    "pipican:astromancer_radiance": 10
+  },
+  "special_stat": {
+    "stat": "pipican:astromancer_radiance",
+    "resource": {
+      "name": "Starlight",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -7558,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:spyglass"
+    },
+    {
+      "id": "minecraft:glowstone_dust",
+      "count": 4
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "astromancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/astromancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "astromancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "emit_light",
+          "amount": 12.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "against": "#pipican:mobs/group_undead_mobs_that_burn_in_daylight",
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sees_sky"
+      },
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 1.0,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sees_sky"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.0,
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:blindness",
+              "seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "name": "blindness"
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "blindness",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "emit_light",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Starlight fades in deep places.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:state",
+                "state": "sees_sky"
+              }
+            },
+            {
+              "type": "pipican:dimension",
+              "dimensions": [
+                "minecraft:the_nether"
+              ]
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          },
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:astromancer/sunbeam"
+  ]
+}

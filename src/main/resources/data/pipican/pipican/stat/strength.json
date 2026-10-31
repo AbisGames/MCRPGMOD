@@ -1,0 +1,11 @@
+{
+  "name": "Strength",
+  "description": "Raw physical power. Each point adds melee damage.",
+  "max": 100,
+  "per_point": [
+    {
+      "attribute": "minecraft:attack_damage",
+      "amount": 0.1
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "brute_start",
+      "name": "Brute",
+      "description": "+3 max health",
+      "type": "start",
+      "x": -992,
+      "y": 761,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 3.0
+        }
+      ]
+    },
+    {
+      "id": "brute_thick_neck",
+      "name": "Thick Neck",
+      "description": "+4 max health",
+      "type": "small",
+      "x": -1030,
+      "y": 825,
+      "links": [
+        "brute_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 4.0
+        }
+      ]
+    },
+    {
+      "id": "brute_heavy_hands",
+      "name": "Heavy Hands",
+      "description": "+6% melee damage",
+      "type": "small",
+      "x": -1064,
+      "y": 782,
+      "links": [
+        "brute_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "brute_stonewall",
+      "name": "Stonewall",
+      "description": "+15% knockback resistance",
+      "type": "notable",
+      "x": -1086,
+      "y": 868,
+      "links": [
+        "brute_thick_neck"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "id": "brute_crusher",
+      "name": "Crusher",
+      "description": "+10% damage against shields and armored mobs",
+      "type": "notable",
+      "x": -1120,
+      "y": 824,
+      "links": [
+        "brute_heavy_hands"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "armored": true
+          },
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "brute_juggernaut",
+      "name": "Juggernaut",
+      "description": "+30% max health, but -15% movement speed",
+      "type": "keystone",
+      "x": -1158,
+      "y": 889,
+      "links": [
+        "brute_stonewall",
+        "brute_crusher"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 0.3,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "cavalier_start",
+      "name": "Cavalier",
+      "description": "+5% mount speed",
+      "type": "start",
+      "x": -1235,
+      "y": 196,
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "cavalier_saddle_born",
+      "name": "Saddle-Born",
+      "description": "+5% mounted damage",
+      "type": "small",
+      "x": -1299,
+      "y": 234,
+      "links": [
+        "cavalier_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cavalier_barding",
+      "name": "Barding",
+      "description": "mount +2 armor",
+      "type": "small",
+      "x": -1308,
+      "y": 179,
+      "links": [
+        "cavalier_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "cavalier_lance_charge",
+      "name": "Lance Charge",
+      "description": "spears deal +15% damage while mounted",
+      "type": "notable",
+      "x": -1369,
+      "y": 245,
+      "links": [
+        "cavalier_saddle_born"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "weapons": "#pipican:weapons/spears",
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cavalier_warhorse",
+      "name": "Warhorse",
+      "description": "mount +6 max health",
+      "type": "notable",
+      "x": -1377,
+      "y": 190,
+      "links": [
+        "cavalier_barding"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:max_health",
+          "amount": 6.0
+        }
+      ]
+    },
+    {
+      "id": "cavalier_knight_errant",
+      "name": "Knight Errant",
+      "description": "mounted damage +25%, but -25% damage on foot",
+      "type": "keystone",
+      "x": -1442,
+      "y": 228,
+      "links": [
+        "cavalier_lance_charge",
+        "cavalier_warhorse"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.25
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "mounted"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.75
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "rogue_stat_start",
+      "name": "Rogue",
+      "type": "start",
+      "x": 0,
+      "y": 180
+    },
+    {
+      "id": "rogue_nimble",
+      "name": "Nimble",
+      "description": "+2 Agility, +1 Dexterity",
+      "type": "small",
+      "x": 0,
+      "y": 240,
+      "links": [
+        "rogue_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "rogue_lucky",
+      "name": "Lucky Break",
+      "description": "+2 Luck",
+      "type": "small",
+      "x": 0,
+      "y": 300,
+      "links": [
+        "rogue_nimble"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

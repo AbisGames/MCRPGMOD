@@ -1,0 +1,308 @@
+{
+  "name": "Woodwose",
+  "description": "A wild guardian of the land, slowly turning into a plant - bark skin, emerald eyes, leaves in the hair.",
+  "icon": "minecraft:oak_leaves",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 5,
+    "pipican:strength": 3,
+    "pipican:dexterity": 2,
+    "pipican:agility": 2,
+    "pipican:intelligence": 3,
+    "pipican:wisdom": 7,
+    "pipican:endurance": 3,
+    "pipican:luck": 1,
+    "pipican:woodwose_verdure": 10
+  },
+  "special_stat": {
+    "stat": "pipican:woodwose_verdure",
+    "resource": {
+      "name": "Sap",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -11630033,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:wooden_axe"
+    },
+    {
+      "id": "minecraft:oak_sapling",
+      "count": 8
+    },
+    {
+      "id": "minecraft:bone_meal",
+      "count": 4
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:apple",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "woodwose_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/woodwose",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "woodwose_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:state",
+            "state": "in_foliage"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:invisibility"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": [
+          "minecraft:leather_helmet",
+          "minecraft:leather_chestplate",
+          "minecraft:leather_leggings",
+          "minecraft:leather_boots"
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 0.5
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:biome",
+        "biomes": "#minecraft:is_forest"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:on",
+      "event": "bone_meal",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "self",
+          "effects": [
+            {
+              "effect": "minecraft:absorption",
+              "seconds": 30.0,
+              "amplifier": 0
+            }
+          ]
+        }
+      ],
+      "cooldown_ticks": 1200,
+      "name": "nature's resilience"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "sneaking"
+          },
+          {
+            "type": "pipican:still",
+            "seconds": 10.0
+          },
+          {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "cooldown_ticks": 40,
+          "actions": [
+            {
+              "type": "pipican:heal",
+              "target": "self",
+              "amount": 1.0
+            }
+          ],
+          "name": "nature bond"
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:biome",
+        "biomes": "#pipican:natural"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "natural_regen",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:biome",
+        "biomes": "#minecraft:is_forest"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "nature bond",
+      "cooldown": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Woodwoses are part plant now. Fire is their worst fear.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:wearing",
+          "items": [
+            "minecraft:leather_helmet",
+            "minecraft:leather_chestplate",
+            "minecraft:leather_leggings",
+            "minecraft:leather_boots"
+          ],
+          "min": 0,
+          "max": 0
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_taken",
+            "damage_types": "#minecraft:is_fire",
+            "multiplier": 1.25
+          }
+        ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "weapons": "#pipican:weapons/axes",
+        "multiplier": 1.2
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

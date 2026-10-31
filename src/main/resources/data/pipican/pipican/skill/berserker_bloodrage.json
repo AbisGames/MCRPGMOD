@@ -1,0 +1,72 @@
+{
+  "name": "Bloodrage",
+  "description": "Trained by taking damage while Berserk.",
+  "icon": "minecraft:netherite_axe",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "hurt"
+    },
+    "when": {
+      "type": "pipican:resource",
+      "min": 0.75
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:berserker"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Fury",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:berserker_fury",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Fury",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:berserker_fury",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+5 max Rage",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 5.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Fury",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:berserker_fury",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Fury",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:berserker_fury",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

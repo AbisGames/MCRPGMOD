@@ -1,0 +1,66 @@
+{
+  "name": "Necromancy",
+  "description": "Trained by your undead servants killing mobs.",
+  "icon": "minecraft:skeleton_skull",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "pet_kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:necromancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Deathgrip",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:necromancer_deathgrip",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Deathgrip",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:necromancer_deathgrip",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Necrosis regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Deathgrip",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:necromancer_deathgrip",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Deathgrip",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:necromancer_deathgrip",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Cunning",
+  "description": "Knack for finding the opening. Boosts Trickery damage and the Guile bar.",
+  "max": 100,
+  "exclusive": true,
+  "color": -12681926
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Fury",
+  "description": "The rage that is always rattling its cage.",
+  "max": 100,
+  "exclusive": true,
+  "color": -5040354
+}

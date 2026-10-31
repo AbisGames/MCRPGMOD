@@ -1,0 +1,7 @@
+{
+  "name": "Umbra",
+  "description": "The darkness infecting you.",
+  "max": 100,
+  "exclusive": true,
+  "color": -12965035
+}

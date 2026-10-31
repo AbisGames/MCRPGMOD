@@ -1,0 +1,132 @@
+{
+  "name": "Cavalier Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Combat Riding",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "spurs",
+      "name": "Spurs",
+      "description": "+2 Horsemanship",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:cavalier_horsemanship",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "trample",
+      "name": "Trample",
+      "description": "your mount damages small mobs it runs into",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trample",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "devastating_charge",
+      "name": "Devastating Charge",
+      "description": "unlocks Charge ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "spurs"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:cavalier/charge"
+      ]
+    },
+    {
+      "id": "master_rider",
+      "name": "Master Rider",
+      "description": "mount gets Regeneration I while you ride",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "trample"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "second",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "mount",
+                  "effects": [
+                    {
+                      "effect": "minecraft:regeneration",
+                      "seconds": 3.0
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bonded_steed",
+      "name": "Bonded Steed",
+      "description": "your mount respawns at your bed a day after dying; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "devastating_charge",
+        "master_rider"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "mount_return",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

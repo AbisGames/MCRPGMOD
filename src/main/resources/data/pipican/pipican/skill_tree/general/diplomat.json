@@ -1,0 +1,128 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "diplomat_start",
+      "name": "Diplomat",
+      "description": "-5% trade prices",
+      "type": "start",
+      "x": -163,
+      "y": 1239,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "id": "diplomat_charming",
+      "name": "Charming",
+      "description": "-5% trade prices",
+      "type": "small",
+      "x": -145,
+      "y": 1312,
+      "links": [
+        "diplomat_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "id": "diplomat_calm_words",
+      "name": "Calm Words",
+      "description": "+5% Stay the Hand",
+      "type": "small",
+      "x": -200,
+      "y": 1305,
+      "links": [
+        "diplomat_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "stay the hand",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "diplomat_unexpected_alliances",
+      "name": "Unexpected Alliances",
+      "description": "hostile mobs you cancel with Stay the Hand fight other mobs for 5s",
+      "type": "notable",
+      "x": -154,
+      "y": 1382,
+      "links": [
+        "diplomat_charming"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "stay the hand",
+          "actions": [
+            {
+              "type": "pipican:control",
+              "target": "victim",
+              "mode": "ally",
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "diplomat_envoy",
+      "name": "Envoy",
+      "description": "Hero of the Village lasts twice as long",
+      "type": "notable",
+      "x": -209,
+      "y": 1375,
+      "links": [
+        "diplomat_calm_words"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:effect_duration",
+          "effects": "minecraft:hero_of_the_village",
+          "multiplier": 2
+        }
+      ]
+    },
+    {
+      "id": "diplomat_peacemaker",
+      "name": "Peacemaker",
+      "description": "Stay the Hand 30%, but -40% damage",
+      "type": "keystone",
+      "x": -191,
+      "y": 1448,
+      "links": [
+        "diplomat_unexpected_alliances",
+        "diplomat_envoy"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "stay the hand",
+          "amount": 0.15
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.6
+        }
+      ]
+    }
+  ]
+}

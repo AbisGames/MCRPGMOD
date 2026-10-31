@@ -1,0 +1,13 @@
+{
+  "name": "Bulwark",
+  "cost": 0,
+  "cooldown_ticks": 60,
+  "duration_ticks": 40,
+  "effects": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:armor",
+      "amount": 4
+    }
+  ]
+}

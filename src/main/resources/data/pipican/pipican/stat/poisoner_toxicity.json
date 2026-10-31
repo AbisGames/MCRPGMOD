@@ -1,0 +1,7 @@
+{
+  "name": "Toxicity",
+  "description": "Your mastery of venoms.",
+  "max": 100,
+  "exclusive": true,
+  "color": -6561745
+}

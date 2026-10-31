@@ -1,0 +1,227 @@
+{
+  "name": "Transmuter",
+  "description": "A changeable master of Alteration who reshapes their own body each day and eventually improves everything.",
+  "icon": "minecraft:brewing_stand",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 3,
+    "pipican:dexterity": 3,
+    "pipican:agility": 3,
+    "pipican:intelligence": 4,
+    "pipican:wisdom": 4,
+    "pipican:endurance": 3,
+    "pipican:luck": 2,
+    "pipican:transmuter_flux": 10
+  },
+  "special_stat": {
+    "stat": "pipican:transmuter_flux",
+    "resource": {
+      "name": "Alteration",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -11159392,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:brewing_stand"
+    },
+    {
+      "id": "minecraft:glass_bottle",
+      "count": 2
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "transmuter_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/transmuter",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "transmuter_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:optimization",
+      "amount": 3,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "drunk_potion_duration",
+      "amount": 0.2
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:vitality",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:strength",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:dexterity",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:agility",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:intelligence",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:wisdom",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:endurance",
+      "amount": 1
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:luck",
+      "amount": 1
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:vitality",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:strength",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:dexterity",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:agility",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:intelligence",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:wisdom",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:endurance",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:luck",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:optimization",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "potion_duration",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Never quite the same twice.",
+    "effects": [
+      {
+        "type": "pipican:optimization",
+        "extra_loss": 3
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

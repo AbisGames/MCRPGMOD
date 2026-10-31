@@ -1,0 +1,71 @@
+{
+  "name": "Devout",
+  "description": "Trained by other players within 8 blocks killing mobs while your Prayer aura is active.",
+  "icon": "minecraft:golden_apple",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "thresholds": [
+    200,
+    800,
+    2400,
+    6000,
+    14000
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican:priest"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Faith",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:priest_faith",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Faith",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:priest_faith",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Devotion regen per 10s",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "description": "+1 Faith",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:priest_faith",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Faith",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:priest_faith",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

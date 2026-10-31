@@ -1,0 +1,187 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "hydromancer_start",
+      "name": "Hydromancer",
+      "description": "+10% swim speed",
+      "type": "start",
+      "x": 1083,
+      "y": 625,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_gills",
+      "name": "Gills",
+      "description": "+5% underwater damage",
+      "type": "small",
+      "x": 1157,
+      "y": 636,
+      "links": [
+        "hydromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "underwater"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_riptide",
+      "name": "Riptide",
+      "description": "tridents with Riptide work without rain while Current is above half",
+      "type": "small",
+      "x": 1129,
+      "y": 684,
+      "links": [
+        "hydromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "dry_riptide",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_undertow",
+      "name": "Undertow",
+      "description": "mobs you hit in water get Slowness II",
+      "type": "notable",
+      "x": 1218,
+      "y": 671,
+      "links": [
+        "hydromancer_gills"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "in_water"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "hit",
+              "actions": [
+                {
+                  "type": "pipican:effect",
+                  "target": "victim",
+                  "effects": [
+                    {
+                      "effect": "minecraft:slowness",
+                      "seconds": 3.0,
+                      "amplifier": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_mist",
+      "name": "Mist",
+      "description": "+10% dodge in rain",
+      "type": "notable",
+      "x": 1190,
+      "y": 719,
+      "links": [
+        "hydromancer_riptide"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          "effects": [
+            {
+              "type": "pipican:dodge",
+              "chance": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hydromancer_child_of_the_sea",
+      "name": "Child of the Sea",
+      "description": "+30% damage in water, but -20% damage on dry land",
+      "type": "keystone",
+      "x": 1264,
+      "y": 730,
+      "links": [
+        "hydromancer_undertow",
+        "hydromancer_mist"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "in_water"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "in_water"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 0.8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

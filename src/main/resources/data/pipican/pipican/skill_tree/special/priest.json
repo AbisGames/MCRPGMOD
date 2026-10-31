@@ -1,0 +1,122 @@
+{
+  "name": "Priest Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Shared Recovery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "prayer",
+      "name": "Prayer",
+      "description": "+2 Faith",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:priest_faith",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "divine_strike",
+      "name": "Divine Strike",
+      "description": "allies in your Prayer aura deal +5% more damage",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inspiring",
+      "name": "Inspiring Prayer",
+      "description": "you also gain your own Prayer bonus",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "prayer",
+        "divine_strike"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "include_self": true
+        }
+      ]
+    },
+    {
+      "id": "tradition",
+      "name": "Sacred Tradition",
+      "description": "+20% max Devotion",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "prayer"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "improved_recovery",
+      "name": "Improved Shared Recovery",
+      "description": "Shared Recovery can be used twice per rest; Prayer aura range -2 blocks",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "inspiring",
+        "tradition"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:priest/shared_recovery",
+          "uses": 1
+        },
+        {
+          "type": "pipican:aura_mod",
+          "name": "prayer",
+          "radius": -2.0
+        }
+      ]
+    }
+  ]
+}

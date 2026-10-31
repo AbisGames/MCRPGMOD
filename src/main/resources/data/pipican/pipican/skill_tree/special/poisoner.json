@@ -1,0 +1,128 @@
+{
+  "name": "Poisoner Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Poison Mastery",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "distillation",
+      "name": "Distillation",
+      "description": "+2 Toxicity",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:poisoner_toxicity",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "antidote",
+      "name": "Antidote",
+      "description": "players within 6 blocks also immune to Poison",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:aura",
+          "radius": 6.0,
+          "effects": [
+            {
+              "type": "pipican:immune",
+              "effects": "minecraft:poison"
+            }
+          ],
+          "include_self": false
+        }
+      ]
+    },
+    {
+      "id": "poisonous_touch",
+      "name": "Poisonous Touch",
+      "description": "unlocks Poison Needle ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "distillation"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:poisoner/poison_needle"
+      ]
+    },
+    {
+      "id": "lethal_dose",
+      "name": "Lethal Dose",
+      "description": "Poison II always",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "antidote"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "min_amplifier": 1
+        }
+      ]
+    },
+    {
+      "id": "toxic_blood",
+      "name": "Toxic Blood",
+      "description": "mobs that hit you are poisoned; healing on you is 15% weaker",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "poisonous_touch",
+        "lethal_dose"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "victim",
+              "effects": [
+                {
+                  "effect": "minecraft:poison",
+                  "seconds": 3.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "healing_received",
+          "amount": -0.15
+        }
+      ]
+    }
+  ]
+}

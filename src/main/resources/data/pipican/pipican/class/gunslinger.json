@@ -1,0 +1,182 @@
+{
+  "name": "Gunslinger",
+  "description": "A firearms expert and gunsmith who modifies pistols into six-shooters and never misses at close range.",
+  "icon": "minecraft:crossbow",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 2,
+    "pipican:dexterity": 9,
+    "pipican:agility": 5,
+    "pipican:intelligence": 3,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:gunslinger_trigger_finger": 10
+  },
+  "special_stat": {
+    "stat": "pipican:gunslinger_trigger_finger",
+    "resource": {
+      "name": "Grit",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -11841448,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:crossbow",
+      "count": 1
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 24
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "gunslinger_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/gunslinger",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "gunslinger_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "cylinder",
+      "amount": 6.0
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/crossbows",
+      "multiplier": 1.2
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "accuracy",
+      "amount": 0.15
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "reload_speed",
+      "amount": 0.4
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "weapons": "#pipican:weapons/crossbows",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "reload_speed",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:critical",
+      "weapons": "#pipican:weapons/crossbows",
+      "chance": 0.0,
+      "chance_scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "cylinder",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Guns are loud and need reloading.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "shot_alert",
+        "amount": 24.0
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "damage_types": "#pipican:is_melee",
+        "multiplier": 0.8
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "name": "Shield Wall",
+  "description": "Trained by blocking attacks with a shield.",
+  "icon": "minecraft:shield",
+  "trigger": {
+    "type": "pipican:block"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:abjurer",
+    "pipican:avenger",
+    "pipican:cavalier",
+    "pipican:champion",
+    "pipican:chaplain",
+    "pipican:cleric",
+    "pipican:conqueror",
+    "pipican:defender",
+    "pipican:dreadnaught",
+    "pipican:fighter",
+    "pipican:gladiator",
+    "pipican:myrmidon",
+    "pipican:paladin",
+    "pipican:priest",
+    "pipican:sentinel",
+    "pipican:templar",
+    "pipican:warrior"
+  ],
+  "tiers": [
+    {
+      "description": "+1 armor",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+1 armor",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "-5% damage taken",
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "description": "+1 armor toughness",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor_toughness",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "-5% damage taken",
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 0.95
+        }
+      ]
+    }
+  ]
+}

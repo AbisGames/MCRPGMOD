@@ -1,0 +1,32 @@
+{
+  "name": "Bird Form",
+  "description": "Bird form (drains Change): slow fall, -50% max health.",
+  "icon": "minecraft:feather",
+  "cooldown_ticks": 60,
+  "toggle": true,
+  "drain_per_second": 2,
+  "actions": [
+    {
+      "type": "pipican:stop",
+      "abilities": [
+        "pipican:shapeshifter/wolf_form",
+        "pipican:shapeshifter/bear_form",
+        "pipican:shapeshifter/cat_form",
+        "pipican:shapeshifter/fish_form",
+        "pipican:shapeshifter/bird_form"
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:slow_falling"
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:max_health",
+      "amount": -0.5,
+      "operation": "add_multiplied_base"
+    }
+  ]
+}

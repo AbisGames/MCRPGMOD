@@ -1,0 +1,21 @@
+{
+  "name": "Escape",
+  "description": "break free of slowness/cobweb/being held, 10 Nerve",
+  "icon": "minecraft:string",
+  "cost": 10,
+  "cooldown_ticks": 200,
+  "actions": [
+    {
+      "type": "pipican:cleanse",
+      "target": "self",
+      "effects": [
+        "minecraft:slowness"
+      ]
+    },
+    {
+      "type": "pipican:dash",
+      "strength": 0.6,
+      "up": 0.4
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Technomancer Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Invention",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "wiring",
+      "name": "Wiring",
+      "description": "+2 Circuitry",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:technomancer_circuitry",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "pocket_gadget",
+      "name": "Pocket Gadget",
+      "description": "+1 gadget charge",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "empower_charges",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "animate_object",
+      "name": "Animate Object",
+      "description": "unlocks Animate Object ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "wiring"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:technomancer/animate_object"
+      ]
+    },
+    {
+      "id": "tesla_coil",
+      "name": "Tesla Coil",
+      "description": "mobs that hit you take 2 lightning damage",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "pocket_gadget"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "clockwork_legion",
+      "name": "Clockwork Legion",
+      "description": {
+        "text": "Animate Object can keep 3 at once; -15% max health",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "animate_object",
+        "tesla_coil"
+      ],
+      "cost": 3,
+      "required_level": 35
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Guard",
+  "cooldown_ticks": 0,
+  "actions": [
+    {
+      "type": "pipican:negate_hit",
+      "target": "self",
+      "seconds": 10
+    }
+  ]
+}

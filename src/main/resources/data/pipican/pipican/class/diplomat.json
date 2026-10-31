@@ -1,0 +1,202 @@
+{
+  "name": "Diplomat",
+  "description": "A silver-tongued negotiator who turns enemies into allies and talks their way out of death.",
+  "icon": "minecraft:emerald",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 1,
+    "pipican:dexterity": 3,
+    "pipican:agility": 3,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 1,
+    "pipican:luck": 2,
+    "pipican:diplomat_rapport": 10
+  },
+  "special_stat": {
+    "stat": "pipican:diplomat_rapport",
+    "resource": {
+      "name": "Persuasion",
+      "base_max": 50.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.08,
+      "color": -13842584,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:emerald",
+      "count": 8
+    },
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "diplomat_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/diplomat",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "diplomat_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "trade_price",
+      "amount": -0.25
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "extra_restock",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:on",
+      "event": "attacked_melee",
+      "chance": 0.15,
+      "actions": [
+        {
+          "type": "pipican:control",
+          "target": "victim",
+          "mode": "pacify",
+          "seconds": 3.0
+        },
+        {
+          "type": "pipican:shrug"
+        }
+      ],
+      "name": "stay the hand"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#minecraft:piglin_loved"
+      },
+      "effects": [
+        {
+          "type": "pipican:ignored_by",
+          "mobs": [
+            "minecraft:piglin",
+            "minecraft:piglin_brute"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "illager_detection",
+      "amount": -0.3
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "trade_price",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "stay the hand",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "wandering_trades",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Diplomats win with words, not blades.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "damage_types": "#pipican:is_melee",
+        "multiplier": 0.75
+      },
+      {
+        "type": "pipican:damage_dealt",
+        "weapons": "#pipican:weapons/ranged",
+        "multiplier": 0.75
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

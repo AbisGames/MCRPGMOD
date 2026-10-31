@@ -1,0 +1,67 @@
+{
+  "name": "Protector",
+  "description": "Trained by blocking hits aimed at mobs targeting other players / taking damage near allies.",
+  "icon": "minecraft:shield",
+  "trigger": {
+    "type": "pipican:hurt_wearing",
+    "items": "#pipican:armor/any",
+    "min_pieces": 1
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:defender"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Bulwark",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:defender_bulwark",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Bulwark",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:defender_bulwark",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Guard regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Bulwark",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:defender_bulwark",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Bulwark",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:defender_bulwark",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

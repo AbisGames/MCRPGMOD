@@ -1,0 +1,82 @@
+{
+  "name": "Wildwood",
+  "description": "Trained by planting trees and fighting in forests.",
+  "icon": "minecraft:oak_leaves",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "plant",
+        "blocks": "#minecraft:saplings"
+      },
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:melee_hit"
+        },
+        "when": {
+          "type": "pipican:biome",
+          "biomes": "#minecraft:is_forest"
+        }
+      }
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:woodwose"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Sap regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Verdure",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:woodwose_verdure",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

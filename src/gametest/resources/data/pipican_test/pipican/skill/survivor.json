@@ -1,0 +1,15 @@
+{
+  "name": "Test Survivor",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      { "type": "pipican:filtered", "trigger": { "type": "pipican:did", "action": "hurt" }, "min_amount": 5 },
+      { "type": "pipican:filtered", "trigger": { "type": "pipican:kill" }, "victims": "#minecraft:undead" },
+      { "type": "pipican:did", "action": "mine", "blocks": "#minecraft:base_stone_overworld" }
+    ]
+  },
+  "cooldown_ticks": 0,
+  "thresholds": [100, 200, 300, 400, 500],
+  "points_to": "general",
+  "classes": ["pipican_test:bonus_tester"]
+}

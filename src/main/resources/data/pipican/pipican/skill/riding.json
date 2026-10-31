@@ -1,0 +1,69 @@
+{
+  "name": "Riding",
+  "description": "Trained by travelling on horses, camels, donkeys, pigs and striders.",
+  "icon": "minecraft:feather",
+  "trigger": {
+    "type": "pipican:move",
+    "mode": "ride",
+    "per_blocks": 20
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:cavalier"
+  ],
+  "tiers": [
+    {
+      "description": "+5% mount speed",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+2 mount max health",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "description": "+5% mount jump",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:jump_strength",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+2 mount max health",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "description": "+10% mount speed",
+      "effects": [
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

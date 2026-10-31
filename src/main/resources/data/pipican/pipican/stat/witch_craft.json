@@ -1,0 +1,7 @@
+{
+  "name": "Craft",
+  "description": "Mastery of the old ways - herbs, hexes and green fire.",
+  "max": 100,
+  "exclusive": true,
+  "color": -10764486
+}

@@ -1,0 +1,315 @@
+{
+  "name": "Stormbringer",
+  "description": "A master of Storm magic who hurls lightning and rides the thunder.",
+  "icon": "minecraft:lightning_rod",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 1,
+    "pipican:dexterity": 2,
+    "pipican:agility": 3,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 7,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:stormbringer_tempest": 10
+  },
+  "special_stat": {
+    "stat": "pipican:stormbringer_tempest",
+    "resource": {
+      "name": "Charge",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -3510,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:lightning_rod"
+    },
+    {
+      "id": "minecraft:trident"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "stormbringer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/stormbringer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "stormbringer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_lightning",
+      "multiplier": 0.0
+    },
+    {
+      "type": "pipican:on",
+      "event": "lightning",
+      "name": "struck by lightning",
+      "cooldown_ticks": 40,
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "percent": 1.0
+        },
+        {
+          "type": "pipican:boost",
+          "seconds": 60.0,
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 6.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:effect",
+          "effects": [
+            {
+              "effect": "minecraft:strength",
+              "seconds": 60.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:any_of",
+        "conditions": [
+          {
+            "type": "pipican:state",
+            "state": "raining"
+          },
+          {
+            "type": "pipican:state",
+            "state": "thundering"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.15
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "thundering"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "chance": 0.05,
+          "actions": [
+            {
+              "type": "pipican:lightning"
+            }
+          ],
+          "name": "lightning"
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "raining"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_lightning",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.003
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "struck by lightning",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.002
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:state",
+                  "state": "raining"
+                },
+                {
+                  "type": "pipican:state",
+                  "state": "thundering"
+                }
+              ]
+            }
+          },
+          {
+            "type": "pipican:special_stat",
+            "min": 10.0
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.075
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "The storm doesn't follow you underground.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.85
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -1.0,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:stormbringer/lightning_bolt"
+  ]
+}

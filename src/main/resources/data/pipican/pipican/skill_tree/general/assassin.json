@@ -1,0 +1,144 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "assassin_start",
+      "name": "Assassin",
+      "description": "+5% damage to unaware mobs",
+      "type": "start",
+      "x": -375,
+      "y": 650,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "assassin_garrote",
+      "name": "Garrote",
+      "description": "+8% damage to unaware mobs",
+      "type": "small",
+      "x": -386,
+      "y": 724,
+      "links": [
+        "assassin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "not_targeting_you": true
+          },
+          "multiplier": 1.08
+        }
+      ]
+    },
+    {
+      "id": "assassin_soft_soles",
+      "name": "Soft Soles",
+      "description": "+10% sneaking speed",
+      "type": "small",
+      "x": -434,
+      "y": 696,
+      "links": [
+        "assassin_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:sneaking_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "assassin_venom",
+      "name": "Venom",
+      "description": "your poison also gives Slowness I",
+      "type": "notable",
+      "x": -421,
+      "y": 785,
+      "links": [
+        "assassin_garrote"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "also": {
+            "minecraft:slowness": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "assassin_shadowstep",
+      "name": "Shadowstep",
+      "description": "after a kill, Invisibility for 2s",
+      "type": "notable",
+      "x": -469,
+      "y": 757,
+      "links": [
+        "assassin_soft_soles"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "self",
+              "effects": [
+                {
+                  "effect": "minecraft:invisibility",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "assassin_death_mark",
+      "name": "Death Mark",
+      "description": "Assassinate threshold rises to 30% health, but -20% damage to mobs that are targeting you",
+      "type": "keystone",
+      "x": -480,
+      "y": 831,
+      "links": [
+        "assassin_venom",
+        "assassin_shadowstep"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:execute",
+          "threshold": 0.3,
+          "victim": {
+            "not_targeting_you": true
+          }
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "targeting_you": true
+          },
+          "multiplier": 0.8
+        }
+      ]
+    }
+  ]
+}

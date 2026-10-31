@@ -1,0 +1,65 @@
+{
+  "name": "Thievery",
+  "description": "Trained by opening naturally generated loot chests for the first time and killing mobs with Looting.",
+  "icon": "minecraft:chest",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:thief"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thief_finesse",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thief_finesse",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Nerve regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thief_finesse",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:thief_finesse",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

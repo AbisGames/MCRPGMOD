@@ -1,0 +1,71 @@
+{
+  "name": "Tracking",
+  "description": "Trained by killing your marked prey.",
+  "icon": "minecraft:bow",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "marked": true
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:ranger"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Instinct",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:ranger_instinct",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Instinct",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:ranger_instinct",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Quarry regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Instinct",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:ranger_instinct",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Instinct",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:ranger_instinct",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

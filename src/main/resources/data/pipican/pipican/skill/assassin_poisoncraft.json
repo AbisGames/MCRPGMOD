@@ -1,0 +1,74 @@
+{
+  "name": "Poisoncraft",
+  "description": "Trained by poisoning mobs and brewing poison potions.",
+  "icon": "minecraft:wither_rose",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "poison"
+      },
+      {
+        "type": "pipican:did",
+        "action": "brew"
+      }
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:assassin"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Lethality",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:assassin_lethality",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Lethality",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:assassin_lethality",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1s poison duration",
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "seconds": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Lethality",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:assassin_lethality",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Lethality",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:assassin_lethality",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

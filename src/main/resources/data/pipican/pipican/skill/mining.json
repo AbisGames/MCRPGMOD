@@ -1,0 +1,86 @@
+{
+  "name": "Mining",
+  "description": "Trained by mining ores and stone.",
+  "icon": "minecraft:cobblestone",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "mine",
+        "blocks": "#c:ores"
+      },
+      {
+        "type": "pipican:did",
+        "action": "mine",
+        "blocks": "#minecraft:base_stone_overworld"
+      }
+    ]
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:geomancer"
+  ],
+  "tiers": [
+    {
+      "description": "+3% mining speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:block_break_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+3% mining speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:block_break_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+5% chance of extra ore drop",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_ore",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+3% mining speed",
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:block_break_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+10% chance of extra ore drop",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_ore",
+          "amount": 0.1
+        }
+      ]
+    }
+  ]
+}

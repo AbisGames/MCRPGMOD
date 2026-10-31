@@ -11,6 +11,7 @@
   "starting_kit": [ { "id": "minecraft:stone_sword" } ],
   "skill_tree": { "tree": "pipican_test:main", "start": "start_a" },
   "special_skill_tree": { "tree": "pipican_test:special", "start": "s_start" },
+  "stat_tree": { "tree": "pipican_test:stat", "start": "st_start" },
   "progression": { "max_level": 10 },
   "passives": [ { "type": "pipican:attribute", "attribute": "minecraft:armor", "amount": 3 } ],
   "special_passives": [

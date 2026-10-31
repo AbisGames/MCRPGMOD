@@ -1,0 +1,122 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "thaumaturge_start",
+      "name": "Thaumaturge",
+      "description": "+1 Luck",
+      "type": "start",
+      "x": 60,
+      "y": -1249,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_lucky_streak",
+      "name": "Lucky Streak",
+      "description": "+1 Luck",
+      "type": "small",
+      "x": 36,
+      "y": -1320,
+      "links": [
+        "thaumaturge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_wild_magic",
+      "name": "Wild Magic",
+      "description": "+5% Seize Chaos chance",
+      "type": "small",
+      "x": 91,
+      "y": -1317,
+      "links": [
+        "thaumaturge_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "seize chaos",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_probability_bend",
+      "name": "Probability Bend",
+      "description": "bad outcomes 20% rarer",
+      "type": "notable",
+      "x": 39,
+      "y": -1390,
+      "links": [
+        "thaumaturge_lucky_streak"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "chaos_luck",
+          "amount": 0.2
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_chaos_shield",
+      "name": "Chaos Shield",
+      "description": "10% chance an incoming hit is redirected to a random nearby mob",
+      "type": "notable",
+      "x": 94,
+      "y": -1387,
+      "links": [
+        "thaumaturge_wild_magic"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "redirect_hit",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "thaumaturge_agent_of_chaos",
+      "name": "Agent of Chaos",
+      "description": "Seize Chaos chance doubled, but outcomes are fully random",
+      "type": "keystone",
+      "x": 70,
+      "y": -1458,
+      "links": [
+        "thaumaturge_probability_bend",
+        "thaumaturge_chaos_shield"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "seize chaos",
+          "multiplier": 2.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "chaos_luck",
+          "amount": -10.0
+        }
+      ]
+    }
+  ]
+}

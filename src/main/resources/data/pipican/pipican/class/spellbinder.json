@@ -1,0 +1,267 @@
+{
+  "name": "Spellbinder",
+  "description": "A warrior-mage who binds magic into one weapon - it can't be lost, burns with eldritch fire and hits like a spell.",
+  "icon": "minecraft:amethyst_shard",
+  "selectable": true,
+  "base_health": 24.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 4,
+    "pipican:dexterity": 3,
+    "pipican:agility": 2,
+    "pipican:intelligence": 4,
+    "pipican:wisdom": 2,
+    "pipican:endurance": 2,
+    "pipican:spellbinder_binding": 8
+  },
+  "special_stat": {
+    "stat": "pipican:spellbinder_binding",
+    "resource": {
+      "name": "Eldritch Charge",
+      "base_max": 30.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.06,
+      "color": -12590880,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:lapis_lazuli",
+      "count": 4
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "spellbinder_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/spellbinder",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "spellbinder_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "keep_hotbar_weapon",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "weapon_durability",
+          "amount": -0.5
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "magic_portion",
+          "amount": 0.15
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:all_of",
+        "conditions": [
+          {
+            "type": "pipican:resource",
+            "min": 0.999
+          },
+          {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          }
+        ]
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "emit_light",
+          "amount": 15.0
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.006
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "weapon_durability",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:item_rule",
+        "rule": "bound_weapon"
+      },
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.002
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "A spellbinder's magic only lives in one blade.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:any_of",
+              "conditions": [
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/melee"
+                },
+                {
+                  "type": "pipican:holding",
+                  "items": "#pipican:weapons/ranged"
+                }
+              ]
+            },
+            {
+              "type": "pipican:not",
+              "condition": {
+                "type": "pipican:item_rule",
+                "rule": "bound_weapon"
+              }
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:charm": 1
+  }
+}

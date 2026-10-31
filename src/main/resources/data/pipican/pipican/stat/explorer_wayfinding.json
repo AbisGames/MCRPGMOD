@@ -1,0 +1,7 @@
+{
+  "name": "Wayfinding",
+  "description": "Endurance and experience from far journeys.",
+  "max": 100,
+  "exclusive": true,
+  "color": -3626901
+}

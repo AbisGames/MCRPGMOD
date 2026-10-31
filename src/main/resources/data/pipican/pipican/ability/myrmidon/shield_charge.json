@@ -1,0 +1,25 @@
+{
+  "name": "Shield Charge",
+  "description": "dash forward with shield raised, knocking mobs aside, 25 Bulwark",
+  "icon": "minecraft:shield",
+  "cost": 25,
+  "cooldown_ticks": 160,
+  "requires": {
+    "type": "pipican:holding",
+    "items": "#pipican:weapons/shields"
+  },
+  "actions": [
+    {
+      "type": "pipican:dash",
+      "strength": 1.4,
+      "up": 0.1
+    },
+    {
+      "type": "pipican:push",
+      "target": "hostiles",
+      "radius": 3,
+      "strength": 1.5,
+      "cone": 90
+    }
+  ]
+}

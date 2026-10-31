@@ -1,0 +1,208 @@
+{
+  "name": "Traveler",
+  "description": "A master of Teleportation who blinks across the battlefield and arrives with a thunderclap.",
+  "icon": "minecraft:ender_pearl",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:dexterity": 3,
+    "pipican:agility": 5,
+    "pipican:intelligence": 7,
+    "pipican:wisdom": 5,
+    "pipican:endurance": 1,
+    "pipican:luck": 2,
+    "pipican:traveler_displacement": 10
+  },
+  "special_stat": {
+    "stat": "pipican:traveler_displacement",
+    "resource": {
+      "name": "Waypoint",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -14699622,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:ender_pearl",
+      "count": 8
+    },
+    {
+      "id": "minecraft:leather_boots"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "traveler_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/traveler",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "traveler_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:health",
+        "max": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hurt",
+          "chance": 0.25,
+          "cooldown_ticks": 400,
+          "actions": [
+            {
+              "type": "pipican:blink",
+              "distance": 6.0
+            }
+          ],
+          "name": "hasty escape"
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#pipican:is_ender_pearl",
+      "multiplier": 0.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "pearl_cooldown",
+      "amount": -0.3
+    },
+    {
+      "type": "pipican:on",
+      "event": "teleport",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "radius": 4.0,
+          "effects": [
+            {
+              "effect": "minecraft:slowness",
+              "seconds": 2.0
+            }
+          ]
+        }
+      ],
+      "name": "spatial disturbance"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "pearl_range",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "hasty escape",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "hasty escape",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Teleporting scatters your senses.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "teleport",
+        "actions": [
+          {
+            "type": "pipican:effect",
+            "effects": [
+              {
+                "effect": "minecraft:nausea",
+                "seconds": 2.0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

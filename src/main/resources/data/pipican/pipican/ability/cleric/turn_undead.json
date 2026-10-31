@@ -1,0 +1,17 @@
+{
+  "name": "Turn Undead",
+  "description": "undead within 8 blocks flee, 20 Grace",
+  "icon": "minecraft:golden_apple",
+  "cost": 20,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "hostiles",
+      "mode": "flee",
+      "seconds": 10,
+      "radius": 8,
+      "entities": "#minecraft:undead"
+    }
+  ]
+}

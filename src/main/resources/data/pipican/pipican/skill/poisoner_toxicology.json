@@ -1,0 +1,75 @@
+{
+  "name": "Toxicology",
+  "description": "Trained by poisoning mobs and brewing poison.",
+  "icon": "minecraft:pufferfish",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "poison"
+      },
+      {
+        "type": "pipican:did",
+        "action": "brew"
+      }
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:poisoner"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Toxicity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:poisoner_toxicity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Toxicity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:poisoner_toxicity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Venom regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Toxicity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:poisoner_toxicity",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Toxicity",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:poisoner_toxicity",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

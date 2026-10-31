@@ -1,0 +1,81 @@
+{
+  "name": "Enchanting",
+  "description": "Trained by enchanting items at an enchanting table.",
+  "icon": "minecraft:enchanted_book",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "enchant"
+  },
+  "thresholds": [
+    50,
+    200,
+    600,
+    1500,
+    3500
+  ],
+  "points_to": "general",
+  "classes": [
+    "pipican:abjurer",
+    "pipican:arcanist",
+    "pipican:enchanter",
+    "pipican:mage_knight",
+    "pipican:magician",
+    "pipican:magus",
+    "pipican:savant",
+    "pipican:spellbinder",
+    "pipican:witch",
+    "pipican:wizard"
+  ],
+  "tiers": [
+    {
+      "description": "+5% chance of a better enchantment roll",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "better_roll",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "-1 lapis cost on level-3 enchants",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "enchant_lapis_top",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+5% chance of a better enchantment roll",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "better_roll",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+1 bookshelf counted around your table",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "bookshelf_bonus",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "description": "+10% chance of a better enchantment roll",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "better_roll",
+          "amount": 0.1
+        }
+      ]
+    }
+  ]
+}

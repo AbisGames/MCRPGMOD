@@ -1,0 +1,253 @@
+{
+  "name": "Myrmidon",
+  "description": "A shield-fighter who uses the shield as both wall and weapon - deflecting, bashing and shoving foes away.",
+  "icon": "minecraft:shield",
+  "selectable": true,
+  "base_health": 34.0,
+  "base_stats": {
+    "pipican:vitality": 6,
+    "pipican:strength": 6,
+    "pipican:dexterity": 3,
+    "pipican:agility": 1,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 8,
+    "pipican:luck": 1,
+    "pipican:myrmidon_shieldcraft": 10
+  },
+  "special_stat": {
+    "stat": "pipican:myrmidon_shieldcraft",
+    "resource": {
+      "name": "Bulwark",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.6,
+      "regen_per_point": 0.05,
+      "color": -5211588,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:shield"
+    },
+    {
+      "id": "minecraft:chainmail_chestplate"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "myrmidon_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/myrmidon",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "myrmidon_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "shield_disable",
+      "amount": -0.5
+    },
+    {
+      "type": "pipican:on",
+      "event": "block",
+      "actions": [
+        {
+          "type": "pipican:push",
+          "target": "victim",
+          "strength": 1.0
+        }
+      ],
+      "name": "forceful shield"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:weapons/shields"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "sneaking"
+      },
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "block",
+          "name": "shield bash",
+          "actions": [
+            {
+              "type": "pipican:damage",
+              "target": "victim",
+              "amount": 4.0,
+              "kind": "melee"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:reaction_mod",
+      "name": "shield bash",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.02
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "blocking"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "forceful shield",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:weapons/shields"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "The shield is a myrmidon's whole style.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/shields"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:attribute",
+            "attribute": "minecraft:armor",
+            "amount": -2.0
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "mastery"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

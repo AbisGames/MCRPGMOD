@@ -1,0 +1,106 @@
+{
+  "name": "Diplomat Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Stay the Hand",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "parley",
+      "name": "Parley",
+      "description": "+2 Rapport",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:diplomat_rapport",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "soothing_words",
+      "name": "Soothing Words",
+      "description": "unlocks Soothe ability",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "grants": [
+        "pipican:diplomat/soothe"
+      ]
+    },
+    {
+      "id": "silver_tongue",
+      "name": "Silver Tongue",
+      "description": "first trade with a new villager is 50% off",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "parley"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "first_trade_discount",
+          "amount": 0.5
+        }
+      ]
+    },
+    {
+      "id": "unexpected_alliances",
+      "name": "Unexpected Alliances",
+      "description": "unlocks Turncoat ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "soothing_words"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:diplomat/turncoat"
+      ]
+    },
+    {
+      "id": "grand_ambassador",
+      "name": "Grand Ambassador",
+      "description": "neutral mobs never turn hostile on you; you deal -10% more damage",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "silver_tongue",
+        "unexpected_alliances"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:ignored_by",
+          "mobs": "#pipican:mobs/neutral",
+          "unless_attacked": true
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.9
+        }
+      ]
+    }
+  ]
+}

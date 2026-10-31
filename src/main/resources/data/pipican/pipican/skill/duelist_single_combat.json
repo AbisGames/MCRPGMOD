@@ -1,0 +1,71 @@
+{
+  "name": "Single Combat",
+  "description": "Trained by killing challenged foes.",
+  "icon": "minecraft:iron_sword",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "victim": {
+      "marked": true
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:duelist"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:duelist_finesse",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:duelist_finesse",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Panache regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:duelist_finesse",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Finesse",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:duelist_finesse",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

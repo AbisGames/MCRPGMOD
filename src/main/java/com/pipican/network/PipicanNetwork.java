@@ -1,5 +1,6 @@
 package com.pipican.network;
 
+import com.pipican.ability.AbilityService;
 import com.pipican.player.ClassService;
 import com.pipican.trinket.TrinketMenu;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,6 +36,8 @@ public final class PipicanNetwork {
             ServerPlayer player = (ServerPlayer) ctx.player();
             player.sendSystemMessage(ClassService.raiseStat(player, payload.stat()).message());
         });
+        r.playToServer(UseAbilityPayload.TYPE, UseAbilityPayload.STREAM_CODEC,
+                (payload, ctx) -> AbilityService.useSlot((ServerPlayer) ctx.player(), payload.slot()));
         r.playToServer(NodePayload.TYPE, NodePayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
             ClassService.Result result = payload.refund()

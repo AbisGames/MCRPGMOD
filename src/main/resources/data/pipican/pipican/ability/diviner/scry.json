@@ -1,0 +1,12 @@
+{
+  "name": "Scry",
+  "description": "see through a player's eyes for 5s",
+  "icon": "minecraft:ender_eye",
+  "cooldown_ticks": 1200,
+  "actions": [
+    {
+      "type": "pipican:scry",
+      "seconds": 5
+    }
+  ]
+}

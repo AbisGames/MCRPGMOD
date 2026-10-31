@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "healer_stat_start",
+      "name": "Healer",
+      "type": "start",
+      "x": 749,
+      "y": -31
+    },
+    {
+      "id": "healer_compassionate",
+      "name": "Compassionate",
+      "description": "+2 Wisdom, +1 Vitality",
+      "type": "small",
+      "x": 809,
+      "y": -33,
+      "links": [
+        "healer_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:vitality",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "healer_learned_healer",
+      "name": "Learned Healer",
+      "description": "+2 Intelligence, +1 Wisdom",
+      "type": "small",
+      "x": 869,
+      "y": -35,
+      "links": [
+        "healer_compassionate"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:intelligence",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wisdom",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

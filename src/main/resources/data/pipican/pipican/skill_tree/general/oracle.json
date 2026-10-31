@@ -1,0 +1,121 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "oracle_start",
+      "name": "Oracle",
+      "description": "+1 max health",
+      "type": "start",
+      "x": 739,
+      "y": -130,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "oracle_vessel",
+      "name": "Vessel",
+      "description": "+2 max health",
+      "type": "small",
+      "x": 803,
+      "y": -169,
+      "links": [
+        "oracle_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 2.0
+        }
+      ]
+    },
+    {
+      "id": "oracle_whispers",
+      "name": "Whispers",
+      "description": "glow range of The Sight +8 blocks",
+      "type": "small",
+      "x": 812,
+      "y": -115,
+      "links": [
+        "oracle_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "the sight",
+          "radius": 8.0
+        }
+      ]
+    },
+    {
+      "id": "oracle_steady_mind",
+      "name": "Steady Mind",
+      "description": "the after-effects of Ecstasy last half as long",
+      "type": "notable",
+      "x": 872,
+      "y": -182,
+      "links": [
+        "oracle_vessel"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "divine ecstasy after-effects",
+          "duration": -0.5
+        }
+      ]
+    },
+    {
+      "id": "oracle_prophet",
+      "name": "Prophet",
+      "description": "+10% damage to mobs that glow for you",
+      "type": "notable",
+      "x": 881,
+      "y": -127,
+      "links": [
+        "oracle_whispers"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "effects": "minecraft:glowing"
+          },
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "oracle_avatar",
+      "name": "Living Avatar",
+      "description": "Divine Ecstasy bonuses +50%, but you can't leave it early and it drains 50% faster",
+      "type": "keystone",
+      "x": 945,
+      "y": -167,
+      "links": [
+        "oracle_steady_mind",
+        "oracle_prophet"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:oracle/divine_ecstasy",
+          "strength": 0.5,
+          "drain": 0.5,
+          "locked": true
+        }
+      ]
+    }
+  ]
+}

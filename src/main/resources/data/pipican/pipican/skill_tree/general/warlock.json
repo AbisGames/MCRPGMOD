@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "warlock_start",
+      "name": "Warlock",
+      "description": "-5% magic damage taken",
+      "type": "start",
+      "x": 375,
+      "y": 650,
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.95
+        }
+      ]
+    },
+    {
+      "id": "warlock_filch",
+      "name": "Filch",
+      "description": "+5% Steal Spell chance",
+      "type": "small",
+      "x": 434,
+      "y": 696,
+      "links": [
+        "warlock_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "spell_ward",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "warlock_slip",
+      "name": "Slip Away",
+      "description": "Vanish lasts +1s",
+      "type": "small",
+      "x": 386,
+      "y": 724,
+      "links": [
+        "warlock_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "vanish",
+          "seconds": 1.0
+        }
+      ]
+    },
+    {
+      "id": "warlock_pact",
+      "name": "Dark Pact",
+      "description": "+12% magic damage",
+      "type": "notable",
+      "x": 469,
+      "y": 757,
+      "links": [
+        "warlock_filch"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.12
+        }
+      ]
+    },
+    {
+      "id": "warlock_shroud",
+      "name": "Shroud",
+      "description": "Vanish also clears Slowness and Weakness",
+      "type": "notable",
+      "x": 421,
+      "y": 785,
+      "links": [
+        "warlock_slip"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "vanish",
+          "actions": [
+            {
+              "type": "pipican:cleanse",
+              "target": "self",
+              "effects": [
+                "minecraft:slowness",
+                "minecraft:weakness"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warlock_oathbreaker",
+      "name": "Oathbreaker",
+      "description": "Steal Spell chance doubles, but you can no longer benefit from beacons",
+      "type": "keystone",
+      "x": 480,
+      "y": 831,
+      "links": [
+        "warlock_pact",
+        "warlock_shroud"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "spell_ward",
+          "amount": 0.15
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_beacon",
+          "amount": 1.0
+        }
+      ]
+    }
+  ]
+}

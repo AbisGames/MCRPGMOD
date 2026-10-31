@@ -1,0 +1,13 @@
+{
+  "name": "Devotion",
+  "description": "Absolute conviction.",
+  "max": 100,
+  "exclusive": true,
+  "color": -536,
+  "per_point": [
+    {
+      "attribute": "minecraft:max_health",
+      "amount": 0.1
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "name": "Gunplay",
+  "description": "Trained by hitting mobs with firearms.",
+  "icon": "minecraft:crossbow",
+  "trigger": {
+    "type": "pipican:ranged_hit",
+    "items": "#pipican:weapons/crossbows"
+  },
+  "points_to": "general",
+  "classes": [
+    "pipican:gunslinger"
+  ],
+  "tiers": [
+    {
+      "description": "+3% firearm damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+5% reload speed",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+3% firearm damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "description": "+5% reload speed",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "reload_speed",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "description": "+6% firearm damage",
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/crossbows",
+          "multiplier": 1.06
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "name": "Sorcerer",
+  "description": "Seizes far more magic than is safe. Hits incredibly hard, but the leftover energy can explode out of them.",
+  "icon": "minecraft:fire_charge",
+  "selectable": true,
+  "base_health": 22.0,
+  "base_stats": {
+    "pipican:vitality": 2,
+    "pipican:dexterity": 1,
+    "pipican:agility": 2,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:sorcerer_potency": 8
+  },
+  "special_stat": {
+    "stat": "pipican:sorcerer_potency",
+    "resource": {
+      "name": "Strain",
+      "base_max": 10.0,
+      "max_per_point": 0.2,
+      "regen_per_second": -0.2,
+      "regen_per_point": 0.0,
+      "color": -3137125,
+      "starts_full": false
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:wooden_sword"
+    },
+    {
+      "id": "minecraft:fire_charge",
+      "count": 2
+    },
+    {
+      "id": "minecraft:book"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "sorcerer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/sorcerer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "sorcerer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 1.15
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "magic_armor_pierce",
+      "amount": 0.2
+    },
+    {
+      "type": "pipican:on",
+      "event": "magic_hit",
+      "actions": [
+        {
+          "type": "pipican:resource",
+          "amount": 1.0
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.015
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "sorcerous outburst",
+      "damage": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.5
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:resource",
+        "min": 0.5
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.0025
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Bottled power always wants out.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "resource_full",
+        "name": "sorcerous outburst",
+        "actions": [
+          {
+            "type": "pipican:explode",
+            "power": 2.0
+          },
+          {
+            "type": "pipican:resource",
+            "percent": -1.0
+          }
+        ]
+      },
+      {
+        "type": "pipican:reaction_mod",
+        "name": "sorcerous outburst",
+        "radius": 0.0,
+        "scaling": [
+          {
+            "source": "special_stat",
+            "per": 0.04
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Sorcerous Blast",
+  "description": "spend 1 Strain: magic bolt, 6 damage",
+  "icon": "minecraft:amethyst_cluster",
+  "cooldown_ticks": 30,
+  "actions": [
+    {
+      "type": "pipican:damage",
+      "target": "look",
+      "amount": 6,
+      "range": 24
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "Beguiling",
+  "description": "Trained by charming mobs.",
+  "icon": "minecraft:enchanted_book",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "charm"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:enchanter"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Glamour",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:enchanter_glamour",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Glamour",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:enchanter_glamour",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Allure regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Glamour",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:enchanter_glamour",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Glamour",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:enchanter_glamour",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

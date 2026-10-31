@@ -1,0 +1,72 @@
+{
+  "name": "Raiding",
+  "description": "Trained by killing mobs with sprint-hits.",
+  "icon": "minecraft:iron_axe",
+  "trigger": {
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:kill"
+    },
+    "when": {
+      "type": "pipican:state",
+      "state": "sprinting"
+    }
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:marauder"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Savagery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:marauder_savagery",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Savagery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:marauder_savagery",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Warcry regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Savagery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:marauder_savagery",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Savagery",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:marauder_savagery",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

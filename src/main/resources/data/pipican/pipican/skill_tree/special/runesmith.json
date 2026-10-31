@@ -1,0 +1,146 @@
+{
+  "name": "Runesmith Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Sigils of Power",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "chisel",
+      "name": "Chisel",
+      "description": "+2 Runecraft",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:runesmith_runecraft",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "fire_rune",
+      "name": "Fire Rune",
+      "description": "sigil weapon hits ignite for 2s",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "sigil_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:on",
+              "event": "melee_hit",
+              "actions": [
+                {
+                  "type": "pipican:damage",
+                  "target": "victim",
+                  "amount": 0,
+                  "fire_seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mighty_sigils",
+      "name": "Mighty Sigils",
+      "description": "Mighty Sigils triggers at 75% Rune Power",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "chisel"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:resource",
+                "min": 0.75,
+                "max": 0.9999
+              },
+              {
+                "type": "pipican:item_rule",
+                "rule": "sigil_weapon"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thunder_rune",
+      "name": "Thunder Rune",
+      "description": "unlocks Rune Blast ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "fire_rune"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:runesmith/rune_blast"
+      ]
+    },
+    {
+      "id": "dwarfen_mastery",
+      "name": "Dwarfen Mastery",
+      "description": "anvil costs halved for you; -10% movement speed",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "mighty_sigils",
+        "thunder_rune"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "anvil_cost",
+          "amount": -0.5
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

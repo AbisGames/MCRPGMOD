@@ -1,0 +1,144 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "bard_start",
+      "name": "Bard",
+      "description": "+5% experience gained",
+      "type": "start",
+      "x": 563,
+      "y": -1116,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "bard_rousing_verse",
+      "name": "Rousing Verse",
+      "description": "+3% Song damage bonus",
+      "type": "small",
+      "x": 570,
+      "y": -1191,
+      "links": [
+        "bard_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.03
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bard_silver_tongue",
+      "name": "Silver Tongue",
+      "description": "-5% villager prices",
+      "type": "small",
+      "x": 619,
+      "y": -1166,
+      "links": [
+        "bard_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "trade_price",
+          "amount": -0.05
+        }
+      ]
+    },
+    {
+      "id": "bard_ballad_of_heroes",
+      "name": "Ballad of Heroes",
+      "description": "Song also gives +1 armor",
+      "type": "notable",
+      "x": 601,
+      "y": -1254,
+      "links": [
+        "bard_rousing_verse"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bard_lullaby",
+      "name": "Lullaby",
+      "description": "mobs within 6 blocks of you move 10% slower",
+      "type": "notable",
+      "x": 650,
+      "y": -1229,
+      "links": [
+        "bard_silver_tongue"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "second",
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 6.0,
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 2.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bard_virtuoso",
+      "name": "Virtuoso",
+      "description": "Song bonuses doubled, but you deal -20% damage yourself",
+      "type": "keystone",
+      "x": 657,
+      "y": -1304,
+      "links": [
+        "bard_ballad_of_heroes",
+        "bard_lullaby"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "song",
+          "strength": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.8
+        }
+      ]
+    }
+  ]
+}

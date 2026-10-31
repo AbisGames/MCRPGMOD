@@ -1,0 +1,66 @@
+{
+  "name": "Conjuration",
+  "description": "Trained by your minions killing mobs.",
+  "icon": "minecraft:zombie_spawn_egg",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "pet_kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:conjurer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Summoning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conjurer_summoning",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Summoning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conjurer_summoning",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Ether regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Summoning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conjurer_summoning",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Summoning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:conjurer_summoning",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Brand",
+  "cooldown_ticks": 0,
+  "actions": [
+    {
+      "type": "pipican:mark",
+      "target": "look",
+      "range": 8,
+      "seconds": 30,
+      "multiplier": 2.0,
+      "next_hit": true
+    }
+  ]
+}

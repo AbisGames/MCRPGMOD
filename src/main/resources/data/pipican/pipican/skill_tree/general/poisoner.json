@@ -1,0 +1,142 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "poisoner_start",
+      "name": "Poisoner",
+      "description": "+5% poison duration",
+      "type": "start",
+      "x": -717,
+      "y": 1024,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "duration": 0.05
+        }
+      ]
+    },
+    {
+      "id": "poisoner_virulent",
+      "name": "Virulent",
+      "description": "+10% poison damage",
+      "type": "small",
+      "x": -735,
+      "y": 1097,
+      "links": [
+        "poisoner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "poisoner_tipped_arrows",
+      "name": "Tipped Arrows",
+      "description": "crafting tipped arrows gives double",
+      "type": "small",
+      "x": -780,
+      "y": 1066,
+      "links": [
+        "poisoner_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:craft_bonus",
+          "items": "minecraft:tipped_arrow",
+          "chance": 1.0
+        }
+      ]
+    },
+    {
+      "id": "poisoner_paralytic",
+      "name": "Paralytic",
+      "description": "poisoned mobs also get Slowness I",
+      "type": "notable",
+      "x": -775,
+      "y": 1154,
+      "links": [
+        "poisoner_virulent"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "also": {
+            "minecraft:slowness": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "poisoner_neurotoxin",
+      "name": "Neurotoxin",
+      "description": "poisoned mobs also get Weakness I",
+      "type": "notable",
+      "x": -820,
+      "y": 1123,
+      "links": [
+        "poisoner_tipped_arrows"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:applied_effect",
+          "effect": "minecraft:poison",
+          "also": {
+            "minecraft:weakness": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "poisoner_plague_doctor",
+      "name": "Plague Doctor",
+      "description": "poison spreads to mobs within 2 blocks on death, but -15% max health",
+      "type": "keystone",
+      "x": -837,
+      "y": 1196,
+      "links": [
+        "poisoner_paralytic",
+        "poisoner_neurotoxin"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "victim": {
+            "effects": "minecraft:poison"
+          },
+          "actions": [
+            {
+              "type": "pipican:effect",
+              "target": "hostiles",
+              "radius": 2.0,
+              "effects": [
+                {
+                  "effect": "minecraft:poison",
+                  "seconds": 5.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "dervish_start",
+      "name": "Dervish",
+      "description": "+3% attack speed",
+      "type": "start",
+      "x": -1241,
+      "y": -152,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "dervish_twin_strike",
+      "name": "Twin Strike",
+      "description": "+5% damage while dual-wielding",
+      "type": "small",
+      "x": -1314,
+      "y": -134,
+      "links": [
+        "dervish_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:all_of",
+            "conditions": [
+              {
+                "type": "pipican:holding",
+                "items": "#pipican:weapons/melee",
+                "hand": "main"
+              },
+              {
+                "type": "pipican:holding",
+                "items": "#pipican:weapons/melee",
+                "hand": "off"
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dervish_light_feet",
+      "name": "Light Feet",
+      "description": "+5% movement speed",
+      "type": "small",
+      "x": -1307,
+      "y": -188,
+      "links": [
+        "dervish_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "dervish_blade_dance",
+      "name": "Blade Dance",
+      "description": "each hit gives +1% speed for 3s (stacks 10)",
+      "type": "notable",
+      "x": -1383,
+      "y": -142,
+      "links": [
+        "dervish_twin_strike"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "hit",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 3.0,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:movement_speed",
+                  "amount": 0.01,
+                  "operation": "add_multiplied_base"
+                }
+              ],
+              "max_stacks": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dervish_deflect",
+      "name": "Deflect",
+      "description": "+5% parry chance",
+      "type": "notable",
+      "x": -1376,
+      "y": -197,
+      "links": [
+        "dervish_light_feet"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.05,
+          "melee_only": true
+        }
+      ]
+    },
+    {
+      "id": "dervish_storm_of_steel",
+      "name": "Storm of Steel",
+      "description": "off-hand swings every attack, but -3 armor",
+      "type": "keystone",
+      "x": -1449,
+      "y": -178,
+      "links": [
+        "dervish_blade_dance",
+        "dervish_deflect"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "offhand_swing",
+          "amount": 0.5
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": -3.0
+        }
+      ]
+    }
+  ]
+}

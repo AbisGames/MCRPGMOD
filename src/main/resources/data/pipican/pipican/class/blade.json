@@ -1,0 +1,201 @@
+{
+  "name": "Blade",
+  "description": "A master knife-fighter whose quick, precise strikes leave bleeding wounds.",
+  "icon": "minecraft:iron_sword",
+  "selectable": true,
+  "base_health": 32.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 3,
+    "pipican:dexterity": 8,
+    "pipican:agility": 6,
+    "pipican:intelligence": 1,
+    "pipican:endurance": 2,
+    "pipican:luck": 2,
+    "pipican:blade_edge": 10
+  },
+  "special_stat": {
+    "stat": "pipican:blade_edge",
+    "resource": {
+      "name": "Bloodletting",
+      "base_max": 40.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -8515819,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:iron_sword"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:leather_boots"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "blade_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/blade",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "blade_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bleed",
+      "damage": 1.0,
+      "seconds": 4.0,
+      "weapons": "#pipican:weapons/swords"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:weapons/swords"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "offhand_swing",
+      "amount": 0.5
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:weapons/swords"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.0,
+          "operation": "add_multiplied_base",
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:bleed",
+      "seconds": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.05
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "bleeding": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.0025
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Knives are poor against armor and size.",
+    "effects": [
+      {
+        "type": "pipican:damage_dealt",
+        "against": [
+          "minecraft:iron_golem",
+          "minecraft:ravager",
+          "minecraft:warden",
+          "minecraft:wither"
+        ],
+        "multiplier": 0.8
+      },
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:not",
+          "condition": {
+            "type": "pipican:holding",
+            "items": "#minecraft:swords"
+          }
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

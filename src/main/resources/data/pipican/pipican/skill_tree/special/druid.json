@@ -1,0 +1,164 @@
+{
+  "name": "Druid Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Druid Mysteries",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "weather_eye",
+      "name": "Weather Eye",
+      "description": "+2 Wildness; you get a warning message 30s before rain/thunder starts",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:druid_wildness",
+          "amount": 2
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "weather_warning",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "trackless",
+      "name": "Trackless",
+      "description": "your steps never trigger sculk sensors or pressure plates",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "no_sculk_steps",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_plates",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "tree_walker",
+      "name": "Tree Walker",
+      "description": "unlocks Tree Walk ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "weather_eye"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:druid/tree_walk"
+      ]
+    },
+    {
+      "id": "resist_elements",
+      "name": "Resist Elements",
+      "description": "-25% fire, freezing and lightning damage",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "trackless"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_fire",
+          "multiplier": 0.75
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_freezing",
+          "multiplier": 0.75
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#minecraft:is_lightning",
+          "multiplier": 0.75
+        }
+      ]
+    },
+    {
+      "id": "grand_druid",
+      "name": "Grand Druid",
+      "description": "Verdance regen doubles in forests; it stops completely in the Nether and the End",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "tree_walker",
+        "resist_elements"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#minecraft:is_forest"
+          },
+          "effects": [
+            {
+              "type": "pipican:resource",
+              "target": "regen",
+              "amount": 1.0,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:any_of",
+            "conditions": [
+              {
+                "type": "pipican:dimension",
+                "dimensions": [
+                  "minecraft:the_nether"
+                ]
+              },
+              {
+                "type": "pipican:dimension",
+                "dimensions": [
+                  "minecraft:the_end"
+                ]
+              }
+            ]
+          },
+          "effects": [
+            {
+              "type": "pipican:resource",
+              "target": "regen",
+              "amount": -1.0,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

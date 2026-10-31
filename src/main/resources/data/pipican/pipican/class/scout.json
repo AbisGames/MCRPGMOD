@@ -1,0 +1,219 @@
+{
+  "name": "Scout",
+  "description": "A fast, watchful pathfinder who ranges ahead, is never caught off guard and exposes enemies' weak spots.",
+  "icon": "minecraft:spyglass",
+  "selectable": true,
+  "base_health": 24.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 1,
+    "pipican:dexterity": 4,
+    "pipican:agility": 6,
+    "pipican:intelligence": 2,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 2,
+    "pipican:luck": 1,
+    "pipican:scout_awareness": 8
+  },
+  "special_stat": {
+    "stat": "pipican:scout_awareness",
+    "resource": {
+      "name": "Stride",
+      "base_max": 30.0,
+      "max_per_point": 2.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.05,
+      "color": -9648400,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:bow"
+    },
+    {
+      "id": "minecraft:arrow",
+      "count": 24
+    },
+    {
+      "id": "minecraft:spyglass"
+    },
+    {
+      "id": "minecraft:leather_boots"
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "scout_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/scout",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "scout_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 2,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:movement_speed",
+      "amount": 0.12,
+      "operation": "add_multiplied_base"
+    },
+    {
+      "type": "pipican:on",
+      "event": "second",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "radius": 10.0,
+          "effects": [
+            {
+              "effect": "minecraft:glowing",
+              "seconds": 2.0
+            }
+          ],
+          "state": {
+            "targeting_you": true
+          }
+        }
+      ],
+      "name": "alertness"
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_sculk_steps",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_tripwires",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:nearby",
+        "entities": "players",
+        "radius": 16.0,
+        "min": 0,
+        "max": 0
+      },
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "detection_range",
+          "amount": -0.2
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:reaction_mod",
+      "name": "alertness",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.2
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_taken",
+      "damage_types": "#minecraft:is_fall",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.01
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Scouts travel light - armor just gets in the way.",
+    "effects": [
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:armor",
+        "amount": 0.0,
+        "scaling": [
+          {
+            "source": "heavy_armor",
+            "per": -1.0
+          }
+        ]
+      },
+      {
+        "type": "pipican:attribute",
+        "attribute": "minecraft:movement_speed",
+        "amount": 0.0,
+        "operation": "add_multiplied_base",
+        "scaling": [
+          {
+            "source": "heavy_armor",
+            "per": -0.04
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  },
+  "abilities": [
+    "pipican:scout/dash"
+  ]
+}

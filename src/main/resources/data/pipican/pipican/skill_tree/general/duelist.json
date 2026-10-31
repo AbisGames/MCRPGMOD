@@ -1,0 +1,127 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "duelist_start",
+      "name": "Duelist",
+      "description": "+3% sword damage",
+      "type": "start",
+      "x": -1207,
+      "y": -324,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "duelist_en_garde",
+      "name": "En Garde",
+      "description": "+5% damage to challenged foe",
+      "type": "small",
+      "x": -1282,
+      "y": -315,
+      "links": [
+        "duelist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "marked": true
+          },
+          "multiplier": 1.05
+        }
+      ]
+    },
+    {
+      "id": "duelist_footwork",
+      "name": "Footwork",
+      "description": "+5% movement speed",
+      "type": "small",
+      "x": -1268,
+      "y": -368,
+      "links": [
+        "duelist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "duelist_bind",
+      "name": "Bind",
+      "description": "challenged foe gets Slowness I",
+      "type": "notable",
+      "x": -1350,
+      "y": -333,
+      "links": [
+        "duelist_en_garde"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:quarry_mod",
+          "name": "challenge",
+          "effects": {
+            "minecraft:slowness": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "duelist_parry",
+      "name": "Parry",
+      "description": "10% chance to parry melee hits",
+      "type": "notable",
+      "x": -1336,
+      "y": -386,
+      "links": [
+        "duelist_footwork"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:dodge",
+          "chance": 0.1,
+          "melee_only": true
+        }
+      ]
+    },
+    {
+      "id": "duelist_lone_wolf",
+      "name": "Lone Wolf",
+      "description": "Duel bonuses doubled, but you can't damage non-challenged mobs for 3s after challenging",
+      "type": "keystone",
+      "x": -1410,
+      "y": -378,
+      "links": [
+        "duelist_bind",
+        "duelist_parry"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_double",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "quarry_lockout",
+          "amount": 3.0
+        }
+      ]
+    }
+  ]
+}

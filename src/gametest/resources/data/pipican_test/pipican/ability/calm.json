@@ -1,0 +1,13 @@
+{
+  "name": "Calm",
+  "cooldown_ticks": 0,
+  "actions": [
+    {
+      "type": "pipican:control",
+      "target": "hostiles",
+      "radius": 8,
+      "mode": "pacify",
+      "seconds": 10
+    }
+  ]
+}

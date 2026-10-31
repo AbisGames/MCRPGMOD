@@ -1,0 +1,8 @@
+{
+  "name": "Test Stat Tree",
+  "nodes": [
+    { "id": "st_start", "name": "Stat Start", "type": "start" },
+    { "id": "sturdy", "name": "Sturdy", "x": 0, "y": 40, "cost": 2, "links": [ "st_start" ],
+      "effects": [ { "type": "pipican:attribute", "attribute": "minecraft:max_health", "amount": 4 } ] }
+  ]
+}

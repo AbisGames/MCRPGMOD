@@ -1,9 +1,21 @@
 package com.pipican.player;
 
+import net.minecraft.world.entity.EntityType;
+import com.pipican.ability.Reactions;
+import com.pipican.ability.Auras;
+import java.util.LinkedHashSet;
+import com.pipican.ability.Boosts;
+import com.pipican.effect.type.BonusEffect;
 import com.pipican.Pipican;
+import com.pipican.ability.Ability;
+import com.pipican.condition.ClassCondition;
 import com.pipican.core.ClassLookup;
 import com.pipican.effect.ClassEffect;
 import com.pipican.effect.EffectContext;
+import com.pipican.effect.Scaling;
+import com.pipican.effect.type.OptimizationEffect;
+import com.pipican.effect.type.ReactionEffect;
+import com.pipican.effect.type.ResourceEffect;
 import com.pipican.mastery.Skill;
 import com.pipican.rpgclass.Affinity;
 import com.pipican.rpgclass.RpgClass;
@@ -13,8 +25,10 @@ import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
 import com.pipican.trinket.TrinketSlotType;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -70,6 +84,19 @@ public final class ClassEffectApplier {
     private ClassEffectApplier() {}
 
     /** Last computed state for a player (empty if they have no class or were never refreshed). */
+    /** A {@link Scaling} source value for {@code player} from their current bonuses (for auras they give others). */
+    public static double sourceValue(ServerPlayer player, String source) {
+        ClassState state = state(player);
+        return switch (source) {
+            case "class_level" -> ClassService.data(player).activeProgress().map(ClassProgress::level).orElse(0);
+            case "special_stat" -> state.rpgClass().flatMap(RpgClass::specialStat).map(s -> state.stat(s.stat())).orElse(0.0);
+            default -> {
+                Identifier id = Identifier.tryParse(source);
+                yield id == null ? 0 : state.stat(ResourceKey.create(com.pipican.core.PipicanRegistries.STAT, id));
+            }
+        };
+    }
+
     public static ClassState state(ServerPlayer player) {
         return STATES.getOrDefault(player.getUUID(), ClassState.EMPTY);
     }
@@ -90,8 +117,20 @@ public final class ClassEffectApplier {
 
         ClassState next = compute(player);
         STATES.put(player.getUUID(), next);
+        // "When you go Berserk": start reactions inside a conditional fire when it starts to count.
+        List<ReactionEffect> started = next.reactions().stream()
+                .filter(r -> r.event() == ReactionEffect.Event.START && !old.reactions().contains(r)).toList();
+        List<ReactionEffect> ended = old.reactions().stream()
+                .filter(r -> r.event() == ReactionEffect.Event.END && !next.reactions().contains(r)).toList();
 
         applyMobEffects(player, old.mobEffects(), next.mobEffects());
+        applyFlight(player, old.flight(), next.flight());
+        for (Holder<MobEffect> immune : next.immunities()) {
+            MobEffectInstance active = player.getEffect(immune);
+            if (active != null && !active.isInfiniteDuration()) {
+                player.removeEffect(immune);
+            }
+        }
 
         if (player.getHealth() > player.getMaxHealth()) {
             player.setHealth(player.getMaxHealth());
@@ -101,6 +140,24 @@ public final class ClassEffectApplier {
         data.setResourceMax(next.resourceMax());
         data.setResource(Math.min(data.resource(), next.resourceMax()));
         player.syncData(PipicanAttachments.CLASS_DATA);
+        if (!started.isEmpty()) {
+            Reactions.fireAll(player, started);
+        }
+        if (!ended.isEmpty() && player.isAlive()) {
+            Reactions.fireAll(player, ended);
+        }
+    }
+
+    /** Grants or removes class flight. Creative and spectator players keep their own flight rules. */
+    private static void applyFlight(ServerPlayer player, boolean had, boolean has) {
+        if (had == has || player.isCreative() || player.isSpectator()) {
+            return;
+        }
+        player.getAbilities().mayfly = has;
+        if (!has) {
+            player.getAbilities().flying = false;
+        }
+        player.onUpdateAbilities();
     }
 
     /** Re-adds class potion effects that were removed (milk, /effect clear...). Called periodically. */
@@ -140,12 +197,17 @@ public final class ClassEffectApplier {
         }
         RpgClass rpgClass = maybeClass.get();
         ClassProgress progress = data.activeProgress().orElseThrow();
-        Collector c = new Collector(rpgClass, progress.level());
+        Collector c = new Collector(rpgClass, progress.level(), player);
 
         // Every effect source with the rank it applies at.
         List<Map.Entry<ClassEffect, Integer>> effects = new ArrayList<>();
-        rpgClass.passives().forEach(e -> effects.add(Map.entry(e, 1)));
-        rpgClass.specialPassives().forEach(e -> effects.add(Map.entry(e, 1)));
+        // temple_only_passives (Fortress Temple): outside the temple the class passives are off.
+        boolean passives = state(player).chance(com.pipican.effect.type.BonusEffect.Kind.TEMPLE_ONLY_PASSIVES) <= 0
+                || c.test(new com.pipican.condition.type.TempleCondition(Optional.empty()));
+        if (passives) {
+            rpgClass.passives().forEach(e -> effects.add(Map.entry(e, 1)));
+            rpgClass.specialPassives().forEach(e -> effects.add(Map.entry(e, 1)));
+        }
         rpgClass.weakness().ifPresent(w -> w.effects().forEach(e -> effects.add(Map.entry(e, 1))));
         for (TreeKind kind : TreeKind.values()) {
             Optional<SkillTree> tree = ClassLookup.tree(access, rpgClass, kind);
@@ -159,6 +221,19 @@ public final class ClassEffectApplier {
                 tree.get().node(nodeId).ifPresent(node -> node.effects().forEach(e -> effects.add(Map.entry(e, 1))));
             }
         }
+        // Running ability states (timed states and toggles).
+        var abilities = ClassLookup.abilities(access);
+        data.abilityActive().keySet().forEach(key -> {
+            Ability ability = abilities.getValue(key);
+            if (ability != null) {
+                double strength = 1 + state(player).abilityMod(key).strength();
+                ability.effects().forEach(e -> effects.add(Map.entry(strength == 1 ? e : new com.pipican.effect.ScaledEffect(e, strength, null), 1)));
+            }
+        });
+        // Short boosts from reactions ("+15% speed for 2s after you take damage").
+        Boosts.effects(player).forEach(e -> effects.add(Map.entry(e, 1)));
+        // Auras of nearby players ("players within 10 blocks get +5% damage").
+        Auras.effects(player).forEach(e -> effects.add(Map.entry(e, 1)));
         // Skill mastery: every reached tier's effects (tiers stack).
         ClassLookup.skills(access).entrySet().forEach(entry -> {
             Skill skill = entry.getValue();
@@ -178,6 +253,31 @@ public final class ClassEffectApplier {
             c.rank = e.getValue();
             e.getKey().collectStats(c);
         }
+        // Stats that grow with the special stat (Transmuter: "+0.2 to every stat per 10 points").
+        double specialPoints = c.sourceValue("special_stat");
+        for (Map.Entry<ClassEffect, Integer> e : effects) {
+            if (e.getKey() instanceof com.pipican.effect.type.StatEffect s && s.perSpecial() != 0) {
+                s.collectSpecial(c, specialPoints);
+            }
+        }
+
+        // Optimization (Transmuter): one stat up, one down, sized by stats counted so far.
+        double optimization = 0;
+        double extraLoss = 0;
+        for (Map.Entry<ClassEffect, Integer> e : effects) {
+            if (e.getKey() instanceof OptimizationEffect o) {
+                optimization += Scaling.evaluate(o.amount(), o.scaling(), c) * e.getValue();
+                extraLoss += o.extraLoss() * e.getValue();
+            }
+        }
+        double optimizationAmount = Math.floor(optimization);
+        if (optimizationAmount > 0) {
+            double loss = optimizationAmount + extraLoss;
+            data.extras().optimization.ifPresent(o -> {
+                o.raise().ifPresent(stat -> c.addStat(stat, optimizationAmount));
+                o.lower().ifPresent(stat -> c.addStat(stat, -loss));
+            });
+        }
 
         // Pass 2: everything else.
         c.addAttribute(Attributes.MAX_HEALTH, rpgClass.baseHealth() - VANILLA_BASE_HEALTH, AttributeModifier.Operation.ADD_VALUE);
@@ -190,6 +290,11 @@ public final class ClassEffectApplier {
         for (Map.Entry<ClassEffect, Integer> e : effects) {
             c.rank = e.getValue();
             e.getKey().apply(c);
+        }
+        // Your own auras (with their upgrades) when they include you.
+        c.rank = 1;
+        for (ClassState.Aura aura : c.finishAuras()) {
+            c.scaled(aura.strength(), null, () -> aura.effects().forEach(e -> e.apply(c)));
         }
         applyEquipmentAffinity(player, rpgClass, data, c);
 
@@ -213,12 +318,95 @@ public final class ClassEffectApplier {
         if (rpgClass.specialStat().flatMap(SpecialStat::resource).isPresent()) {
             SpecialStat.Resource resource = rpgClass.specialStat().get().resource().get();
             double points = c.sourceValue("special_stat");
-            resourceMax = resource.max(points);
-            regenPerTick = resource.regenPerSecond(points) / 20.0;
+            resourceMax = Math.max(0, (resource.max(points) + c.resourceFlat.get(ResourceEffect.Target.MAX))
+                    * (1 + c.resourcePercent.get(ResourceEffect.Target.MAX)));
+            regenPerTick = (resource.regenPerSecond(points) + c.resourceFlat.get(ResourceEffect.Target.REGEN))
+                    * Math.max(0, 1 + c.resourcePercent.get(ResourceEffect.Target.REGEN)) / 20.0;
         }
 
-        return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(c.dealt),
-                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick);
+        List<ClassState.ConditionCheck> checks = new ArrayList<>();
+        c.conditions.forEach((condition, result) -> checks.add(new ClassState.ConditionCheck(condition, result)));
+        // quarry_double: damage bonuses against marked mobs grow.
+        double duel = c.bonuses.getOrDefault(BonusEffect.Kind.QUARRY_DOUBLE, 0.0);
+        List<ClassState.DamageRule> dealt = duel <= 0 ? c.dealt : c.dealt.stream().map(r -> r.victim().filter(v -> v.marked()).isEmpty() ? r
+                : new ClassState.DamageRule(r.types(), r.weapons(), r.against(), r.victim(), 1 + (r.multiplier() - 1) * (1 + duel), r.except())).toList();
+        return new ClassState(Optional.of(rpgClass), Map.copyOf(c.stats), List.copyOf(c.taken), List.copyOf(dealt),
+                Map.copyOf(c.mobEffects), touched, resourceMax, regenPerTick, List.copyOf(checks), c.flight,
+                List.copyOf(c.reactions), Map.copyOf(c.eidolon), c.spellPoints, optimizationAmount,
+                List.copyOf(c.criticals), Math.min(0.9, c.dodge), Math.min(0.9, c.meleeDodge), Set.copyOf(c.immunities), Map.copyOf(c.bonuses), Map.copyOf(c.mount),
+                new ClassState.Bleed(c.bleedDamage, c.bleedSeconds, Math.max(1, c.bleedStacks), c.bleedAnyHit, c.bleedSlows,
+                        c.bleedWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.bleedWeapons)))),
+                Map.copyOf(c.reactionChances), Math.min(0.9, c.rangedDodge), List.copyOf(c.executes), List.copyOf(c.auras),
+                c.scrutinySeconds > 0 ? new ClassState.Scrutiny(c.scrutinyLook, c.scrutinySeconds) : ClassState.Scrutiny.NONE, c.favoredWeapon,
+                new ClassState.SummonMods(c.summonDamage, c.summonHealth, c.summonSeconds, c.summonCount, c.summonHearts, c.summonCap, c.summonCapMultiplier),
+                new ClassState.Cleave(c.cleaveFraction, c.cleaveRadius, c.cleaveTargets, c.cleaveCharged,
+                        c.cleaveWeapons.isEmpty() ? Optional.empty() : Optional.of(HolderSet.direct(List.copyOf(c.cleaveWeapons)))), c.petMods, Map.copyOf(c.appliedRules), Map.copyOf(c.effectDurations), List.copyOf(c.ignoredBy), Map.copyOf(c.abilityMods), Map.copyOf(c.reactionMods),
+                new ClassState.Shield(c.shieldAbsorb * Math.max(0, 1 + c.shieldEfficiency)),
+                new ClassState.DeadlyAim(c.aimOn, c.aimHold, c.aimDamage, c.aimCrit), List.copyOf(c.craftBonuses),
+                c.quarries(), List.copyOf(c.nthHits));
+    }
+
+    /**
+     * Re-tests every condition the last refresh depended on, and refreshes if any answer changed.
+     * Called twice a second per player. Returns true if it refreshed.
+     */
+    /** Missing-health scaling sources: whole missing hearts, or whole missing percent of max health. */
+    static double healthSource(ServerPlayer player, String source) {
+        double missing = Math.max(0, player.getMaxHealth() - player.getHealth());
+        return source.equals("missing_hearts") ? Math.floor(missing / 2)
+                : player.getMaxHealth() <= 0 ? 0 : Math.floor(missing / player.getMaxHealth() * 100);
+    }
+
+    /** A runtime-only "condition": holds while a health-based scaling source still has the value bonuses were built with. */
+    record SourceCheck(String source, double value) implements com.pipican.condition.ClassCondition {
+        @Override
+        public com.pipican.condition.ConditionTypes.Type type() {
+            return com.pipican.condition.ConditionTypes.HEALTH;
+        }
+
+        @Override
+        public boolean test(ServerPlayer player) {
+            return healthSource(player, source) == value;
+        }
+    }
+
+    public static boolean recheckConditions(ServerPlayer player) {
+        for (ClassState.ConditionCheck check : state(player).conditions()) {
+            if (check.condition().test(player) != check.result()) {
+                refresh(player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Class upgrades that make some gear worse: unmarked gear forbidden (Runelord), weapons other than a staff at best
+     * clumsy (Staff of the Archmagus), weapons other than the favored kind forbidden (One True Weapon).
+     */
+    public static Affinity capped(ServerPlayer player, ItemStack stack, Affinity affinity, java.util.function.Function<BonusEffect.Kind, Double> bonus) {
+        if (stack.isEmpty()) {
+            return affinity;
+        }
+        boolean weapon = com.pipican.ability.SpecialItems.isWeapon(stack);
+        boolean gear = weapon || stack.has(net.minecraft.core.component.DataComponents.EQUIPPABLE) && !com.pipican.ability.SpecialItems.isStaff(stack);
+        Affinity out = affinity;
+        if (bonus.apply(BonusEffect.Kind.UNMARKED_FORBIDDEN) > 0 && gear && !com.pipican.ability.SpecialItems.isSigil(stack)) {
+            out = Affinity.FORBIDDEN;
+        }
+        if (bonus.apply(BonusEffect.Kind.STAFF_ONLY) > 0 && weapon && !com.pipican.ability.SpecialItems.isStaff(stack) && out.ordinal() < Affinity.CLUMSY.ordinal()) {
+            out = Affinity.CLUMSY;
+        }
+        if (bonus.apply(BonusEffect.Kind.FAVORED_ONLY) > 0 && weapon && !com.pipican.ability.FavoredWeapon.isFavored(player, stack)) {
+            out = Affinity.FORBIDDEN;
+        }
+        if (bonus.apply(BonusEffect.Kind.NO_METAL_ARMOR) > 0 && !weapon && stack.has(net.minecraft.core.component.DataComponents.EQUIPPABLE)) {
+            String path = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
+            if (path.startsWith("iron_") || path.startsWith("netherite_")) {
+                out = Affinity.FORBIDDEN;
+            }
+        }
+        return out;
     }
 
     /**
@@ -228,7 +416,8 @@ public final class ClassEffectApplier {
     private static void applyEquipmentAffinity(ServerPlayer player, RpgClass rpgClass, PlayerClassData data, Collector c) {
         // Held item: attack speed.
         ItemStack mainHand = player.getMainHandItem();
-        Affinity held = rpgClass.affinities().resolve(mainHand);
+        boolean floor = c.bonuses.getOrDefault(BonusEffect.Kind.AFFINITY_FLOOR, 0.0) > 0;
+        Affinity held = capped(player, mainHand, rpgClass.affinities().resolve(mainHand).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0));
         c.addAttribute(Attributes.ATTACK_SPEED, held.tuning().attackSpeed() - 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
         // Armor: scale the armor/toughness each piece gives, and slow the player per bad piece.
@@ -238,7 +427,7 @@ public final class ClassEffectApplier {
             if (stack.isEmpty()) {
                 continue;
             }
-            var tier = rpgClass.affinities().resolve(stack).tuning();
+            var tier = capped(player, stack, rpgClass.affinities().resolve(stack).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0)).tuning();
             double[] armor = new double[2];
             stack.forEachModifier(slot, (attribute, modifier) -> {
                 if (modifier.operation() != AttributeModifier.Operation.ADD_VALUE) {
@@ -277,23 +466,257 @@ public final class ClassEffectApplier {
     private static final class Collector implements EffectContext {
         private final RpgClass rpgClass;
         private final int level;
+        private final ServerPlayer player;
         int rank = 1;
+        boolean flight;
+        int spellPoints;
+        double dodge;
+        double rangedDodge;
+        final List<ClassState.Execute> executes = new ArrayList<>();
+        final List<ClassState.Aura> auras = new ArrayList<>();
+        record RawAura(String name, double radius, boolean includeSelf, List<ClassEffect> effects) {}
+        record AuraMod(String name, double radius, double strength, boolean includeSelf, List<ClassEffect> effects) {}
+        final List<RawAura> rawAuras = new ArrayList<>();
+        final List<AuraMod> auraMods = new ArrayList<>();
+        double strength = 1;
+        double cleaveFraction;
+        double cleaveRadius;
+        int cleaveTargets;
+        boolean cleaveCharged;
+        final Set<Holder<Item>> cleaveWeapons = new LinkedHashSet<>();
+        double summonDamage;
+        double summonHealth;
+        double summonSeconds;
+        int summonCount;
+        double summonHearts;
+        double summonCap;
+        double summonCapMultiplier;
+        ClassState.PetMods petMods = ClassState.PetMods.NONE;
+        final Map<Holder<MobEffect>, ClassState.AppliedRule> appliedRules = new java.util.HashMap<>();
+        final Map<Holder<MobEffect>, Double> effectDurations = new java.util.HashMap<>();
+        final List<com.pipican.effect.type.IgnoredByEffect> ignoredBy = new ArrayList<>();
+        final Map<ResourceKey<Ability>, ClassState.AbilityMod> abilityMods = new java.util.HashMap<>();
+        final Map<String, ClassState.ReactionMod> reactionMods = new java.util.HashMap<>();
+        double shieldAbsorb;
+        final List<ClassState.CraftBonus> craftBonuses = new ArrayList<>();
+        final Map<String, ClassState.Quarry> quarryBases = new HashMap<>();
+        final Map<String, ClassState.QuarryMod> quarryMods = new HashMap<>();
+        final List<ClassState.NthHit> nthHits = new ArrayList<>();
+
+        Map<String, ClassState.Quarry> quarries() {
+            Map<String, ClassState.Quarry> out = new HashMap<>();
+            quarryBases.forEach((name, q) -> out.put(name, quarryMods.containsKey(name) ? q.with(quarryMods.get(name)) : q));
+            return Map.copyOf(out);
+        }
+
+        @Override
+        public void addQuarry(String name, ClassState.Quarry quarry) {
+            quarryBases.putIfAbsent(name, quarry);
+        }
+
+        @Override
+        public void addQuarryMod(String name, ClassState.QuarryMod mod) {
+            quarryMods.merge(name, mod, ClassState.QuarryMod::plus);
+        }
+
+        @Override
+        public void addNthHit(ClassState.NthHit hit) {
+            nthHits.add(hit);
+        }
+        double shieldEfficiency;
+        boolean aimOn;
+        double aimHold;
+        double aimDamage;
+        boolean aimCrit;
+
+        /** Combines auras with their upgrades; returns the ones that also apply to the player themself. */
+        List<ClassState.Aura> finishAuras() {
+            List<ClassState.Aura> self = new ArrayList<>();
+            for (RawAura a : rawAuras) {
+                double radius = a.radius();
+                double k = 1;
+                boolean includeSelf = a.includeSelf();
+                List<ClassEffect> effects = new ArrayList<>(a.effects());
+                for (AuraMod m : auraMods) {
+                    if (m.name().isEmpty() || a.name().toLowerCase(java.util.Locale.ROOT).contains(m.name().toLowerCase(java.util.Locale.ROOT))) {
+                        radius += m.radius();
+                        k += m.strength();
+                        includeSelf |= m.includeSelf();
+                        effects.addAll(m.effects());
+                    }
+                }
+                if (k <= 1.0e-9) {
+                    continue;  // switched off ("Inspiring Song is disabled when...")
+                }
+                ClassState.Aura aura = new ClassState.Aura(Math.max(0, radius), List.copyOf(effects), Math.max(0, k));
+                auras.add(aura);
+                if (includeSelf) {
+                    self.add(aura);
+                }
+            }
+            return self;
+        }
+
+        /** While applying another player's aura: their stats drive its scaling. */
+        java.util.function.@org.jspecify.annotations.Nullable ToDoubleFunction<String> sourceOverride;
+
+        @Override
+        public void scaled(double k, java.util.function.@org.jspecify.annotations.Nullable ToDoubleFunction<String> source, Runnable apply) {
+            double before = strength;
+            var beforeSource = sourceOverride;
+            strength = before * k;
+            if (source != null) {
+                sourceOverride = source;
+            }
+            try {
+                apply.run();
+            } finally {
+                strength = before;
+                sourceOverride = beforeSource;
+            }
+        }
+
+        private ClassState.DamageRule scale(ClassState.DamageRule rule) {
+            return strength == 1 ? rule : new ClassState.DamageRule(rule.types(), rule.weapons(), rule.against(), rule.victim(),
+                    1 + (rule.multiplier() - 1) * strength, rule.except());
+        }
+
+        @Override
+        public void addAuraMod(String name, double radius, double k, boolean includeSelf, List<ClassEffect> effects) {
+            auraMods.add(new AuraMod(name, radius, k, includeSelf, effects));
+        }
+
+        @Override
+        public void addCleave(double fraction, double radius, int maxTargets, boolean chargedOnly, Optional<HolderSet<Item>> weapons) {
+            cleaveFraction += fraction;
+            cleaveRadius += radius;
+            cleaveTargets = Math.max(cleaveTargets, maxTargets);
+            cleaveCharged |= chargedOnly;
+            weapons.ifPresent(set -> set.forEach(cleaveWeapons::add));
+        }
+
+        @Override
+        public void addSummonMod(double damage, double health, double seconds, int count, double hearts, double cap, double capMultiplier) {
+            summonCap += cap;
+            summonCapMultiplier += capMultiplier;
+            summonHearts += hearts;
+            summonDamage += damage;
+            summonHealth += health;
+            summonSeconds += seconds;
+            summonCount += count;
+        }
+
+        @Override
+        public void addPetMod(ClassState.PetMods mods) {
+            petMods = petMods.plus(mods);
+        }
+
+        @Override
+        public void addAppliedRule(Holder<MobEffect> effect, ClassState.AppliedRule rule) {
+            appliedRules.merge(effect, rule, ClassState.AppliedRule::plus);
+        }
+
+        @Override
+        public void addEffectDuration(Holder<MobEffect> effect, double multiplier) {
+            effectDurations.merge(effect, multiplier, (a, b) -> a * b);
+        }
+
+        @Override
+        public void addCraftBonus(HolderSet<Item> items, double chance) {
+            craftBonuses.add(new ClassState.CraftBonus(items, chance));
+        }
+
+        @Override
+        public void addResourceShield(double absorb, double efficiency) {
+            shieldAbsorb = Math.max(shieldAbsorb, absorb);
+            shieldEfficiency += efficiency;
+        }
+
+        @Override
+        public void addDeadlyAim(boolean base, double holdSeconds, double damage, boolean crit) {
+            aimOn |= base;
+            aimHold += holdSeconds;
+            aimDamage += damage;
+            aimCrit |= crit;
+        }
+
+        @Override
+        public void addReactionMod(String name, ClassState.ReactionMod mod) {
+            reactionMods.merge(name, mod, ClassState.ReactionMod::plus);
+        }
+
+        @Override
+        public void addAbilityMod(ResourceKey<Ability> ability, ClassState.AbilityMod mod) {
+            abilityMods.merge(ability, mod, ClassState.AbilityMod::plus);
+        }
+
+        @Override
+        public void addIgnoredBy(com.pipican.effect.type.IgnoredByEffect ignore) {
+            ignoredBy.add(ignore);
+        }
+        double scrutinyLook = Double.MAX_VALUE;
+        double scrutinySeconds;
+        boolean favoredWeapon;
+        double bleedDamage;
+        double bleedSeconds;
+        int bleedStacks;
+        boolean bleedAnyHit;
+        boolean bleedSlows;
+        final Set<Holder<Item>> bleedWeapons = new LinkedHashSet<>();
+        final Map<String, ClassState.ReactionChance> reactionChances = new HashMap<>();
+        double meleeDodge;
+        final List<ClassState.Critical> criticals = new ArrayList<>();
+        final Set<Holder<MobEffect>> immunities = new HashSet<>();
+        final Map<BonusEffect.Kind, Double> bonuses = new EnumMap<>(BonusEffect.Kind.class);
+        final List<ReactionEffect> reactions = new ArrayList<>();
+        final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> eidolon = new HashMap<>();
+        final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> mount = new HashMap<>();
+        /** Every condition tested during this refresh and its answer (identity: the same JSON object). */
+        final Map<ClassCondition, Boolean> conditions = new IdentityHashMap<>();
+        final Map<ResourceEffect.Target, Double> resourceFlat = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
+        final Map<ResourceEffect.Target, Double> resourcePercent = new EnumMap<>(Map.of(ResourceEffect.Target.MAX, 0.0, ResourceEffect.Target.REGEN, 0.0));
         final Map<ResourceKey<StatDefinition>, Double> stats = new HashMap<>();
         final Map<Holder<Attribute>, Map<AttributeModifier.Operation, Double>> attributes = new HashMap<>();
         final Map<Holder<MobEffect>, Integer> mobEffects = new HashMap<>();
         final List<ClassState.DamageRule> taken = new ArrayList<>();
         final List<ClassState.DamageRule> dealt = new ArrayList<>();
 
-        Collector(RpgClass rpgClass, int level) {
+        Collector(RpgClass rpgClass, int level, ServerPlayer player) {
             this.rpgClass = rpgClass;
             this.level = level;
+            this.player = player;
+        }
+
+        @Override
+        public double templeStrength() {
+            return com.pipican.ability.Temples.strength(player);
         }
 
         @Override
         public double sourceValue(String source) {
+            if (sourceOverride != null) {
+                return sourceOverride.applyAsDouble(source);
+            }
             return switch (source) {
                 case "class_level" -> level;
                 case "special_stat" -> rpgClass.specialStat().map(s -> stats.getOrDefault(s.stat(), 0.0)).orElse(0.0);
+                case "sigil_armor" -> com.pipican.ability.SpecialItems.sigilArmor(player);
+                case "unmarked_armor" -> com.pipican.ability.SpecialItems.unmarkedArmor(player);
+                case "extra_hostiles" -> {
+                    // Hostile mobs within 6 blocks beyond the first; rebuilt when the count changes.
+                    double value = Math.max(0, player.level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class,
+                            player.getBoundingBox().inflate(6), e -> e instanceof net.minecraft.world.entity.monster.Enemy && e.isAlive()
+                                    && e.distanceToSqr(player) <= 36).size() - 1);
+                    conditions.put(new SourceCheck(source, value), true);
+                    yield value;
+                }
+                case "heavy_armor" -> com.pipican.ability.SpecialItems.heavyArmor(player);
+                case "missing_hearts", "missing_health_percent" -> {
+                    double value = healthSource(player, source);
+                    // Rebuild the bonuses when this value changes (checked with the conditions).
+                    conditions.put(new SourceCheck(source, value), true);
+                    yield value;
+                }
                 default -> {
                     Identifier id = Identifier.tryParse(source);
                     yield id == null ? 0 : stats.getOrDefault(ResourceKey.create(com.pipican.core.PipicanRegistries.STAT, id), 0.0);
@@ -308,11 +731,12 @@ public final class ClassEffectApplier {
 
         @Override
         public void addStat(ResourceKey<StatDefinition> stat, double amount) {
-            stats.merge(stat, amount, Double::sum);
+            stats.merge(stat, amount * strength, Double::sum);
         }
 
         @Override
         public void addAttribute(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
+            amount *= strength;
             if (amount != 0) {
                 attributes.computeIfAbsent(attribute, a -> new HashMap<>()).merge(operation, amount, Double::sum);
             }
@@ -324,13 +748,125 @@ public final class ClassEffectApplier {
         }
 
         @Override
-        public void addDamageTakenMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
-            taken.add(new ClassState.DamageRule(types, weapons, multiplier));
+        public void addDamageTaken(ClassState.DamageRule rule) {
+            taken.add(scale(rule));
         }
 
         @Override
-        public void addDamageDealtMultiplier(Optional<TagKey<DamageType>> types, Optional<HolderSet<Item>> weapons, double multiplier) {
-            dealt.add(new ClassState.DamageRule(types, weapons, multiplier));
+        public void addDamageDealt(ClassState.DamageRule rule) {
+            dealt.add(scale(rule));
+        }
+
+        @Override
+        public void addCritical(double damage, double chance, Optional<HolderSet<Item>> weapons, Optional<com.pipican.effect.VictimState> victim) {
+            criticals.add(new ClassState.Critical(damage, chance, weapons, victim));
+        }
+
+        @Override
+        public void addDodge(double chance, boolean meleeOnly) {
+            if (meleeOnly) {
+                meleeDodge += chance;
+            } else {
+                dodge += chance;
+            }
+        }
+
+        @Override
+        public void addBonus(BonusEffect.Kind kind, double amount) {
+            bonuses.merge(kind, amount, Double::sum);
+        }
+
+        @Override
+        public void addImmunity(HolderSet<MobEffect> effects) {
+            effects.forEach(immunities::add);
+        }
+
+        @Override
+        public void addResource(ResourceEffect.Target target, double amount, AttributeModifier.Operation operation) {
+            // add_multiplied_total is treated like add_multiplied_base: there is only one resource "base".
+            (operation == AttributeModifier.Operation.ADD_VALUE ? resourceFlat : resourcePercent).merge(target, amount, Double::sum);
+        }
+
+        @Override
+        public void addReaction(ReactionEffect reaction) {
+            reactions.add(reaction);
+        }
+
+        @Override
+        public void addBleed(double damage, double seconds, int maxStacks, boolean anyHit, boolean slows, Optional<HolderSet<Item>> weapons) {
+            bleedDamage += damage;
+            bleedSeconds += seconds;
+            bleedStacks = Math.max(bleedStacks, maxStacks);
+            bleedAnyHit |= anyHit;
+            bleedSlows |= slows;
+            weapons.ifPresent(set -> set.forEach(bleedWeapons::add));
+        }
+
+        @Override
+        public void addReactionChance(String name, double amount, double multiplier, double uses) {
+            reactionChances.merge(name, new ClassState.ReactionChance(amount, multiplier, uses),
+                    (a, b) -> new ClassState.ReactionChance(a.add() + b.add(), a.multiplier() * b.multiplier(), a.uses() + b.uses()));
+        }
+
+        @Override
+        public void addExecute(double threshold, Optional<HolderSet<EntityType<?>>> victims, Optional<com.pipican.effect.VictimState> victim) {
+            if (threshold > 0) {
+                executes.add(new ClassState.Execute(Math.min(threshold, 0.9), victims, victim));
+            }
+        }
+
+        @Override
+        public void addAura(String name, double radius, boolean includeSelf, List<ClassEffect> effects) {
+            if (radius > 0) {
+                rawAuras.add(new RawAura(name, radius, includeSelf, effects));
+            }
+        }
+
+        @Override
+        public void enableFavoredWeapon() {
+            favoredWeapon = true;
+        }
+
+        @Override
+        public void addScrutiny(double lookSeconds, double seconds) {
+            if (lookSeconds > 0) {
+                scrutinyLook = Math.min(scrutinyLook, lookSeconds);
+            }
+            scrutinySeconds = Math.max(scrutinySeconds, seconds);
+        }
+
+        @Override
+        public void addRangedDodge(double chance) {
+            rangedDodge += chance;
+        }
+
+        @Override
+        public void addMountUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
+            if (amount != 0) {
+                mount.computeIfAbsent(attribute, a -> new HashMap<>()).merge(operation, amount, Double::sum);
+            }
+        }
+
+        @Override
+        public void addEidolonUpgrade(Holder<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
+            if (amount != 0) {
+                eidolon.computeIfAbsent(attribute, a -> new HashMap<>()).merge(operation, amount, Double::sum);
+            }
+        }
+
+        @Override
+        public void addSpellPoints(int amount) {
+            spellPoints += amount;
+        }
+
+        @Override
+        public void grantFlight() {
+            flight = true;
+        }
+
+        @Override
+        public boolean test(ClassCondition condition) {
+            return conditions.computeIfAbsent(condition, c -> c.test(player));
         }
     }
 }

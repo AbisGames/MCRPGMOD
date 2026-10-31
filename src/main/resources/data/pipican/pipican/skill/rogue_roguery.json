@@ -1,0 +1,72 @@
+{
+  "name": "Roguery",
+  "description": "Trained by landing Trickery hits.",
+  "icon": "minecraft:leather_boots",
+  "trigger": {
+    "type": "pipican:reaction",
+    "name": "trickery"
+  },
+  "thresholds": [
+    200,
+    800,
+    2400,
+    6000,
+    14000
+  ],
+  "points_to": "special",
+  "classes": [
+    "pipican:rogue"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Cunning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:rogue_cunning",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Cunning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:rogue_cunning",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+5% Trickery damage",
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "trickery",
+          "strength": 0.333333
+        }
+      ]
+    },
+    {
+      "description": "+1 Cunning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:rogue_cunning",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Cunning",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:rogue_cunning",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Arcana",
+  "description": "Command of magic's underlying structure.",
+  "max": 100,
+  "exclusive": true,
+  "color": -8761857
+}

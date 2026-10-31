@@ -1,0 +1,208 @@
+{
+  "name": "Infiltrator",
+  "description": "A master spy who can hide in plain sight, be forgotten moments later and strike from nowhere.",
+  "icon": "minecraft:leather_helmet",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 2,
+    "pipican:dexterity": 6,
+    "pipican:agility": 6,
+    "pipican:intelligence": 4,
+    "pipican:wisdom": 1,
+    "pipican:endurance": 1,
+    "pipican:luck": 3,
+    "pipican:infiltrator_subtlety": 10
+  },
+  "special_stat": {
+    "stat": "pipican:infiltrator_subtlety",
+    "resource": {
+      "name": "Cover",
+      "base_max": 50.0,
+      "max_per_point": 3.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.06,
+      "color": -13420997,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:leather_helmet"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:potion",
+      "count": 1,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:invisibility"
+        }
+      }
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "infiltrator_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/infiltrator",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "infiltrator_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "faceless_range",
+      "amount": 4.0
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.4
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "forget_delay_max",
+      "amount": 2.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "hide_nameplate",
+      "amount": 1.0
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:bonus",
+      "kind": "detection_range",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.004
+        }
+      ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "faceless_range",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": -0.05
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "victim": {
+        "not_targeting_you": true
+      },
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Infiltrators avoid notice - and avoid armor that clanks.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:wearing",
+              "items": "#pipican:armor/medium"
+            },
+            {
+              "type": "pipican:wearing",
+              "items": "#pipican:armor/heavy"
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:bonus",
+            "kind": "faceless_range",
+            "amount": -100.0
+          }
+        ]
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:shoulderpad": 1,
+    "pipican:belt": 1
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "name": "Weapon Master Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Favored Weapon",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "practice",
+      "name": "Practice",
+      "description": "+2 Mastery",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:weapon_master_mastery",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "swift_change",
+      "name": "Swift Change",
+      "description": "you can change favored weapon once per day without sleeping",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "swap_favored",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "weapon_specialization",
+      "name": "Weapon Specialization",
+      "description": "+10% favored crit damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "practice"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:critical",
+              "damage": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "masterstroke",
+      "name": "Masterstroke",
+      "description": "unlocks Masterstroke ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "swift_change"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:weapon_master/masterstroke"
+      ]
+    },
+    {
+      "id": "living_legend",
+      "name": "Living Legend",
+      "description": "favored weapon can't break; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "weapon_specialization",
+        "masterstroke"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding_favored"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "weapon_durability",
+              "amount": -1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

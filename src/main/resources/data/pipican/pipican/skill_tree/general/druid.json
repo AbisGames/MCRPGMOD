@@ -1,0 +1,153 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "druid_start",
+      "name": "Druid",
+      "description": "+3% movement speed",
+      "type": "start",
+      "x": 650,
+      "y": 375,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.03,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "druid_bark",
+      "name": "Barkskin",
+      "description": "+1 armor",
+      "type": "small",
+      "x": 724,
+      "y": 386,
+      "links": [
+        "druid_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "druid_green",
+      "name": "Green Thumb",
+      "description": "+10% chance of double crop drops",
+      "type": "small",
+      "x": 696,
+      "y": 434,
+      "links": [
+        "druid_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "extra_crop",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "druid_wild_heart",
+      "name": "Wild Heart",
+      "description": "+2 max health in natural biomes",
+      "type": "notable",
+      "x": 785,
+      "y": 421,
+      "links": [
+        "druid_bark"
+      ],
+      "cost": 2,
+      "required_level": 10,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:biome",
+            "biomes": "#pipican:natural"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "druid_herd",
+      "name": "Herd Warden",
+      "description": "tamed animals near you take -15% damage",
+      "type": "notable",
+      "x": 757,
+      "y": 469,
+      "links": [
+        "druid_green"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:pet_mod",
+          "damage_taken": -0.15
+        }
+      ]
+    },
+    {
+      "id": "druid_circle",
+      "name": "Stone Circle",
+      "description": "+30% regeneration outdoors, but -20% max health underground (no sky)",
+      "type": "keystone",
+      "x": 831,
+      "y": 480,
+      "links": [
+        "druid_wild_heart",
+        "druid_herd"
+      ],
+      "cost": 3,
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "sees_sky"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": 0.3
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:state",
+              "state": "sees_sky"
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:max_health",
+              "amount": -0.2,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

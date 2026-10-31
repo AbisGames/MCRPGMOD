@@ -1,0 +1,7 @@
+{
+  "name": "Lethality",
+  "description": "Knowing exactly where to put the knife.",
+  "max": 100,
+  "exclusive": true,
+  "color": -10855826
+}

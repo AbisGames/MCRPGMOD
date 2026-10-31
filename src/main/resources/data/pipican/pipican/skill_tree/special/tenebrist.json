@@ -1,0 +1,134 @@
+{
+  "name": "Tenebrist Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Cloak of Shadows",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "darkness_within",
+      "name": "Darkness Within",
+      "description": "+2 Umbra",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:tenebrist_umbra",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "snuff",
+      "name": "Snuff",
+      "description": {
+        "text": "torches within 4 blocks flicker - mobs near you can't see you",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "shadow_form",
+      "name": "Shadow Form",
+      "description": "unlocks Shadow Form ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "darkness_within"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:tenebrist/shadow_form"
+      ]
+    },
+    {
+      "id": "shadow_step",
+      "name": "Shadow Step",
+      "description": "unlocks Shadow Step ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "snuff"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:tenebrist/shadow_step"
+      ]
+    },
+    {
+      "id": "void_touched",
+      "name": "Void-Touched",
+      "description": "Shadow Form works in any light; -15% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "shadow_form",
+        "shadow_step"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:not",
+            "condition": {
+              "type": "pipican:light",
+              "max": 8
+            }
+          },
+          "effects": [
+            {
+              "type": "pipican:conditional",
+              "when": {
+                "type": "pipican:state",
+                "state": "sneaking"
+              },
+              "effects": [
+                {
+                  "type": "pipican:mob_effect",
+                  "effect": "minecraft:invisibility"
+                }
+              ]
+            },
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.15
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "name": "Spellbinder Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Spellbound Weapon",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "recall",
+      "name": "Recall",
+      "description": "+2 Binding; unlocks Recall Weapon ability",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:spellbinder_binding",
+          "amount": 2
+        }
+      ],
+      "grants": [
+        "pipican:spellbinder/recall_weapon"
+      ]
+    },
+    {
+      "id": "mend",
+      "name": "Mend",
+      "description": "bound weapon slowly repairs 1 durability every 10s",
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "weapon_repair",
+              "amount": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invest_power",
+      "name": "Invest Power",
+      "description": "unlocks Invest Power ability",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "recall"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "grants": [
+        "pipican:spellbinder/invest_power"
+      ]
+    },
+    {
+      "id": "sacrifice",
+      "name": "Sacrifice",
+      "description": "unlocks Sacrifice ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "mend"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:spellbinder/sacrifice"
+      ]
+    },
+    {
+      "id": "magic_weapon",
+      "name": "Magic Weapon",
+      "description": "the magic damage portion of your hits rises to 35%; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "invest_power",
+        "sacrifice"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "bound_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "magic_portion",
+              "amount": 0.2
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

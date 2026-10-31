@@ -1,0 +1,7 @@
+{
+  "name": "Battle Arcana",
+  "description": "Magic trained for war.",
+  "max": 100,
+  "exclusive": true,
+  "color": -1545705
+}

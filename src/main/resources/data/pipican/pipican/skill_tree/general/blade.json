@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "blade_start",
+      "name": "Blade",
+      "description": "+3% sword damage",
+      "type": "start",
+      "x": -528,
+      "y": 1133,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 1.03
+        }
+      ]
+    },
+    {
+      "id": "blade_quick_cuts",
+      "name": "Quick Cuts",
+      "description": "+6% sword attack speed",
+      "type": "small",
+      "x": -533,
+      "y": 1208,
+      "links": [
+        "blade_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:holding",
+            "items": "#pipican:weapons/swords"
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:attack_speed",
+              "amount": 0.06,
+              "operation": "add_multiplied_base"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blade_serrated",
+      "name": "Serrated",
+      "description": "+1 bleed damage per tick on criticals",
+      "type": "small",
+      "x": -583,
+      "y": 1185,
+      "links": [
+        "blade_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "damage": 1.0
+        }
+      ]
+    },
+    {
+      "id": "blade_arterial_strike",
+      "name": "Arterial Strike",
+      "description": "bleeding mobs are Slowed",
+      "type": "notable",
+      "x": -563,
+      "y": 1271,
+      "links": [
+        "blade_quick_cuts"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "slows": true
+        }
+      ]
+    },
+    {
+      "id": "blade_close_quarters",
+      "name": "Close Quarters",
+      "description": "+10% damage to mobs within 2 blocks",
+      "type": "notable",
+      "x": -612,
+      "y": 1248,
+      "links": [
+        "blade_serrated"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "victim": {
+            "within": 2.0
+          },
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "id": "blade_thousand_cuts",
+      "name": "Thousand Cuts",
+      "description": "every hit (not just crits) causes bleeding, but -20% sword damage",
+      "type": "keystone",
+      "x": -617,
+      "y": 1323,
+      "links": [
+        "blade_arterial_strike",
+        "blade_close_quarters"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bleed",
+          "any_hit": true
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "weapons": "#pipican:weapons/swords",
+          "multiplier": 0.8
+        }
+      ]
+    }
+  ]
+}

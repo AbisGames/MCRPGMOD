@@ -1,0 +1,124 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "traveler_start",
+      "name": "Traveler",
+      "description": "+5% movement speed",
+      "type": "start",
+      "x": 70,
+      "y": 1598,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "traveler_light_traveller",
+      "name": "Light Traveller",
+      "description": "pearl cooldown -10%",
+      "type": "small",
+      "x": 100,
+      "y": 1667,
+      "links": [
+        "traveler_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_cooldown",
+          "amount": -0.1
+        }
+      ]
+    },
+    {
+      "id": "traveler_fleetfoot",
+      "name": "Fleetfoot",
+      "description": "+5% movement speed",
+      "type": "small",
+      "x": 45,
+      "y": 1670,
+      "links": [
+        "traveler_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.05,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "traveler_far_traveler",
+      "name": "Far Traveler",
+      "description": "+30% pearl range",
+      "type": "notable",
+      "x": 103,
+      "y": 1737,
+      "links": [
+        "traveler_light_traveller"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "pearl_range",
+          "amount": 0.3
+        }
+      ]
+    },
+    {
+      "id": "traveler_steady_arrival",
+      "name": "Steady Arrival",
+      "description": "no Nausea after teleporting",
+      "type": "notable",
+      "x": 48,
+      "y": 1740,
+      "links": [
+        "traveler_fleetfoot"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": "minecraft:nausea"
+        }
+      ]
+    },
+    {
+      "id": "traveler_planeswalker",
+      "name": "Planeswalker",
+      "description": "Hasty Escape always triggers, but -20% max health",
+      "type": "keystone",
+      "x": 79,
+      "y": 1808,
+      "links": [
+        "traveler_far_traveler",
+        "traveler_steady_arrival"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:reaction_chance",
+          "name": "hasty escape",
+          "amount": 0.75
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

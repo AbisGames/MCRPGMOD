@@ -1,0 +1,13 @@
+{
+  "name": "Summon Storm",
+  "description": "start rain for 2 minutes, 100 Charge",
+  "icon": "minecraft:lightning_rod",
+  "cost": 100,
+  "cooldown_ticks": 6000,
+  "actions": [
+    {
+      "type": "pipican:weather",
+      "seconds": 120
+    }
+  ]
+}

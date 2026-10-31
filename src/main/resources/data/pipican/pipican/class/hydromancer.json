@@ -1,0 +1,286 @@
+{
+  "name": "Hydromancer",
+  "description": "Bonded to a water genie, the hydromancer flows out of grapples, swims like a dolphin and becomes water itself.",
+  "icon": "minecraft:heart_of_the_sea",
+  "selectable": true,
+  "base_health": 30.0,
+  "base_stats": {
+    "pipican:vitality": 4,
+    "pipican:strength": 1,
+    "pipican:dexterity": 2,
+    "pipican:agility": 5,
+    "pipican:intelligence": 6,
+    "pipican:wisdom": 6,
+    "pipican:endurance": 1,
+    "pipican:luck": 1,
+    "pipican:hydromancer_tide": 10
+  },
+  "special_stat": {
+    "stat": "pipican:hydromancer_tide",
+    "resource": {
+      "name": "Current",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 1.0,
+      "regen_per_point": 0.1,
+      "color": -14716975,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:trident"
+    },
+    {
+      "id": "minecraft:turtle_helmet"
+    },
+    {
+      "id": "minecraft:water_bucket"
+    },
+    {
+      "id": "minecraft:cooked_salmon",
+      "count": 6
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "hydromancer_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/hydromancer",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "hydromancer_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:water_breathing"
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:water_movement_efficiency",
+      "amount": 0.4
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:submerged_mining_speed",
+      "amount": 0.8
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "wet"
+      },
+      "effects": [
+        {
+          "type": "pipican:immune",
+          "effects": [
+            "minecraft:slowness"
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_cobweb",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "no_powder_snow",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "in_water"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 0.8
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 0.8
+        }
+      ]
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "wet"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:water_movement_efficiency",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.01
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.005
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "in_water"
+      },
+      "effects": [
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#pipican:is_melee",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        },
+        {
+          "type": "pipican:damage_taken",
+          "damage_types": "#minecraft:is_projectile",
+          "multiplier": 1.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": -0.002
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "raining"
+      },
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "special_stat",
+              "per": 0.1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Hydromancers dry out.",
+    "effects": [
+      {
+        "type": "pipican:conditional",
+        "when": {
+          "type": "pipican:any_of",
+          "conditions": [
+            {
+              "type": "pipican:dimension",
+              "dimensions": [
+                "minecraft:the_nether"
+              ]
+            },
+            {
+              "type": "pipican:biome",
+              "biomes": [
+                "minecraft:desert"
+              ]
+            }
+          ]
+        },
+        "effects": [
+          {
+            "type": "pipican:damage_dealt",
+            "multiplier": 0.8
+          },
+          {
+            "type": "pipican:resource",
+            "target": "regen",
+            "amount": -0.2,
+            "operation": "add_multiplied_base"
+          }
+        ]
+      },
+      {
+        "type": "pipican:damage_taken",
+        "damage_types": "#minecraft:is_fire",
+        "multiplier": 1.25
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/tridents",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:weapons/bows",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "mastery"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "clumsy"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 1,
+    "pipican:ring": 2,
+    "pipican:cloak": 1,
+    "pipican:belt": 1
+  }
+}

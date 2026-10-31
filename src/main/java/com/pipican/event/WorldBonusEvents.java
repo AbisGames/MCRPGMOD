@@ -1,0 +1,760 @@
+package com.pipican.event;
+
+import com.pipican.Pipican;
+import com.pipican.ability.Pets;
+import com.pipican.ability.Reactions;
+import com.pipican.effect.type.BonusEffect.Kind;
+import com.pipican.effect.type.ReactionEffect;
+import com.pipican.player.ClassEffectApplier;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.Containers;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.hurtingprojectile.Fireball;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.AbstractThrownPotion;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
+import net.neoforged.neoforge.event.entity.living.AnimalTameEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+
+/** Bonus kinds hooked into thrown potions, brewing stands, loot chests, taming and mob attacks. */
+@EventBusSubscriber(modid = Pipican.MOD_ID)
+public final class WorldBonusEvents {
+
+    /** Brewing stands by position, with the player who last opened them (for {@code brew_speed}). */
+    private static final Map<ResourceKey<Level>, Map<BlockPos, UUID>> BREWERS = new ConcurrentHashMap<>();
+    private static final Map<BlockPos, Double> BREW_PROGRESS = new ConcurrentHashMap<>();
+    private static final Map<BlockPos, Integer> LAST_BREW = new ConcurrentHashMap<>();
+
+    private WorldBonusEvents() {}
+
+    @SubscribeEvent
+    static void onThrown(EntityJoinLevelEvent event) {
+        if (event.loadedFromDisk() || event.getLevel().isClientSide()) {
+            return;
+        }
+        var entity = event.getEntity();
+        var owner = entity instanceof AbstractThrownPotion potion ? potion.getOwner() : entity instanceof Fireball fireball ? fireball.getOwner() : null;
+        if (owner instanceof ServerPlayer player && entity.tickCount == 0) {
+            double speed = ClassEffectApplier.state(player).bonus(Kind.THROWN_SPEED);
+            if (speed != 1) {
+                entity.setDeltaMovement(entity.getDeltaMovement().scale(speed));
+            }
+        }
+    }
+
+    /** {@code splash_undead}: the potion also hurts undead around where it breaks. */
+    @SubscribeEvent
+    static void onPotionImpact(ProjectileImpactEvent event) {
+        if (!(event.getProjectile() instanceof AbstractThrownPotion potion) || !(potion.getOwner() instanceof ServerPlayer player)
+                || !(potion.level() instanceof ServerLevel level)) {
+            return;
+        }
+        double damage = ClassEffectApplier.state(player).chance(Kind.SPLASH_UNDEAD);
+        if (damage <= 0) {
+            return;
+        }
+        for (LivingEntity undead : level.getEntitiesOfClass(LivingEntity.class, potion.getBoundingBox().inflate(AbstractThrownPotion.SPLASH_RANGE),
+                e -> e.is(EntityTypeTags.UNDEAD) && e.distanceToSqr(potion) <= 16)) {
+            undead.hurtServer(level, level.damageSources().indirectMagic(potion, player), (float) damage);
+        }
+    }
+
+    /** {@code share_drink}: effects from a drunk potion also go to the nearest tamed animal. */
+    @SubscribeEvent
+    static void onDrink(LivingEntityUseItemEvent.Finish event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || ClassEffectApplier.state(player).chance(Kind.SHARE_DRINK) <= 0) {
+            return;
+        }
+        PotionContents contents = event.getItem().get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+        if (contents == null) {
+            return;
+        }
+        player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(16), e -> Pets.owner(e) == player)
+                .stream().min((a, b) -> Double.compare(a.distanceToSqr(player), b.distanceToSqr(player)))
+                .ifPresent(pet -> contents.forEachEffect(e -> pet.addEffect(new MobEffectInstance(e), player), 1));
+    }
+
+    @SubscribeEvent
+    static void onPetDeath(LivingDeathEvent event) {
+        if (event.getEntity() instanceof OwnableEntity) {
+            ServerPlayer owner = Pets.owner(event.getEntity());
+            if (owner != null) {
+                Reactions.fire(owner, event.getEntity(), ItemStack.EMPTY, ReactionEffect.Event.PET_DEATH);
+            }
+        }
+    }
+
+    /** {@code max_wolves}: no more wolves once that many of yours are around. */
+    @SubscribeEvent
+    static void onTame(AnimalTameEvent event) {
+        if (event.getAnimal().getType() != EntityType.WOLF || !(event.getTamer() instanceof ServerPlayer player)
+                || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        int max = (int) Math.round(ClassEffectApplier.state(player).chance(Kind.MAX_WOLVES));
+        if (max > 0 && level.getEntities(EntityType.WOLF, w -> w.isTame() && Pets.owner(w) == player).size() >= max) {
+            event.setCanceled(true);
+            player.sendOverlayMessage(Component.translatable("pipican.max_wolves", max));
+        }
+    }
+
+    /** {@code redirect_hit} and {@code ill_fortune}: mob hits that miss or land on another mob. */
+    @SubscribeEvent
+    static void onMobHit(LivingIncomingDamageEvent event) {
+        if (!(event.getSource().getEntity() instanceof Mob attacker) || !(attacker instanceof Enemy) || !(attacker.level() instanceof ServerLevel level)) {
+            return;
+        }
+        LivingEntity victim = event.getEntity();
+        double fortune = 0;
+        for (Player p : level.getEntitiesOfClass(Player.class, attacker.getBoundingBox().inflate(8), p -> p.distanceToSqr(attacker) <= 64)) {
+            if (p instanceof ServerPlayer sp) {
+                fortune = Math.max(fortune, ClassEffectApplier.state(sp).chance(Kind.ILL_FORTUNE));
+            }
+        }
+        if (fortune > 0 && attacker.getRandom().nextDouble() < fortune) {
+            event.setCanceled(true);
+            return;
+        }
+        if (victim instanceof ServerPlayer player && player.getRandom().nextDouble() < ClassEffectApplier.state(player).chance(Kind.REDIRECT_HIT)) {
+            List<Mob> others = level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(6),
+                    m -> m != attacker && m.isAlive() && Pets.owner(m) != player);
+            if (!others.isEmpty()) {
+                event.setCanceled(true);
+                others.get(player.getRandom().nextInt(others.size())).hurtServer(level, level.damageSources().mobAttack(attacker), event.getAmount());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    static void onOpen(PlayerInteractEvent.RightClickBlock event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+        var be = level.getBlockEntity(event.getPos());
+        if (be instanceof BrewingStandBlockEntity) {
+            BREWERS.computeIfAbsent(level.dimension(), k -> new ConcurrentHashMap<>()).put(event.getPos().immutable(), player.getUUID());
+        }
+        // Open Locks: one extra roll of a loot chest's table, added once vanilla has filled it.
+        if (be instanceof RandomizableContainerBlockEntity chest && chest.getLootTable() != null
+                && player.getRandom().nextDouble() < ClassEffectApplier.state(player).chance(Kind.OPEN_LOCKS)) {
+            ResourceKey<LootTable> key = chest.getLootTable();
+            BlockPos pos = event.getPos().immutable();
+            level.getServer().execute(() -> {
+                LootTable table = level.getServer().reloadableRegistries().getLootTable(key);
+                LootParams params = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+                        .withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player).create(LootContextParamSets.CHEST);
+                for (ItemStack stack : table.getRandomItems(params)) {
+                    for (int slot = 0; slot < chest.getContainerSize() && !stack.isEmpty(); slot++) {
+                        if (chest.getItem(slot).isEmpty()) {
+                            chest.setItem(slot, stack.copy());
+                            stack.setCount(0);
+                        }
+                    }
+                    if (!stack.isEmpty()) {
+                        Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                    }
+                }
+                player.sendOverlayMessage(Component.translatable("pipican.open_locks"));
+            });
+        }
+    }
+
+    /** {@code brew_speed}: extra brewing progress on stands the player last opened. */
+    @SubscribeEvent
+    static void onLevelTick(LevelTickEvent.Post event) {
+        if (!(event.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+        Map<BlockPos, UUID> stands = BREWERS.get(level.dimension());
+        if (stands == null) {
+            return;
+        }
+        stands.entrySet().removeIf(entry -> {
+            BlockPos pos = entry.getKey();
+            if (!level.isLoaded(pos)) {
+                return false;
+            }
+            if (!(level.getBlockEntity(pos) instanceof BrewingStandBlockEntity stand)) {
+                BREW_PROGRESS.remove(pos);
+                return true;
+            }
+            ServerPlayer player = level.getServer().getPlayerList().getPlayer(entry.getValue());
+            // Extra brew: when a brew finishes, sometimes one more potion drops out.
+            Integer was = LAST_BREW.put(pos, stand.brewTime);
+            if (player != null && was != null && was == 1 && stand.brewTime == 0 && !stand.getItem(0).isEmpty()
+                    && player.getRandom().nextDouble() < ClassEffectApplier.state(player).chance(Kind.EXTRA_BREW)) {
+                Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stand.getItem(0).copyWithCount(1));
+            }
+            if (player == null || stand.brewTime <= 1) {
+                return false;
+            }
+            double extra = ClassEffectApplier.state(player).chance(Kind.BREW_SPEED);
+            if (stand.getItem(3).is(net.minecraft.world.item.Items.SPIDER_EYE)) {
+                extra += ClassEffectApplier.state(player).chance(Kind.POISON_BREW_SPEED);
+            }
+            if (extra <= 0) {
+                return false;
+            }
+            double progress = BREW_PROGRESS.getOrDefault(pos, 0.0) + extra;
+            int skip = (int) Math.min(progress, stand.brewTime - 1);
+            BREW_PROGRESS.put(pos, progress - skip);
+            stand.brewTime -= skip;
+            return false;
+        });
+    }
+
+    /** Players in their Glorious Death window: when it ends. */
+    private static final Map<UUID, Long> GLORIOUS = new ConcurrentHashMap<>();
+    private static final String GLORIOUS_DAY = "pipican_glorious_day";
+    private static boolean sharing;
+    private static final Map<UUID, Integer> FIRE = new ConcurrentHashMap<>();
+    /** Players whose resource bar is full (to fire resource_full once per filling). */
+    private static final java.util.Set<UUID> FULL = ConcurrentHashMap.newKeySet();
+
+    /** {@code glorious_death}: once per day the killing blow leaves you at 1 HP for 5s; then you die. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
+    static void onPlayerDeath(LivingDeathEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || ClassEffectApplier.state(player).chance(Kind.GLORIOUS_DEATH) <= 0
+                || event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+        long now = player.level().getGameTime();
+        Long ends = GLORIOUS.get(player.getUUID());
+        long day = player.level().getOverworldClockTime() / 24000;
+        if (ends == null && player.getPersistentData().getLongOr(GLORIOUS_DAY, -1) == day) {
+            return;
+        }
+        if (ends == null) {
+            GLORIOUS.put(player.getUUID(), now + 100);
+            player.getPersistentData().putLong(GLORIOUS_DAY, day);
+            player.sendOverlayMessage(Component.translatable("pipican.glorious_death"));
+        }
+        event.setCanceled(true);
+        player.setHealth(1);
+    }
+
+    @SubscribeEvent
+    static void onPlayerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        if (player.tickCount % 5 == 0) {
+            com.pipican.ability.Quarries.playerTick(player);
+        }
+        if (player.tickCount % 600 == 0 && com.pipican.ability.Focus.chosen(player).size() < com.pipican.ability.Focus.slots(player)) {
+            player.sendSystemMessage(Component.translatable("pipican.focus.choose", com.pipican.ability.Focus.slots(player) - com.pipican.ability.Focus.chosen(player).size(),
+                    String.join(", ", com.pipican.ability.Focus.SCHOOLS)));
+        }
+        if (player.tickCount % 5 == 0) {
+            fireLonger(player, level);
+        }
+        if (player.tickCount % 100 == 0) {
+            petRegen(player, level);
+        }
+        if (player.tickCount % 20 == 0) {
+            markedWeakness(player, level);
+            templeAlarm(player, level);
+            taunt(player, level);
+            trample(player, level);
+            wildfire(player, level);
+            animals(player, level);
+        }
+        // Burn longer: a fresh fire on you lasts longer.
+        double burn = ClassEffectApplier.state(player).chance(Kind.BURN_LONGER);
+        int fire = player.getRemainingFireTicks();
+        Integer before = FIRE.put(player.getUUID(), fire);
+        if (burn > 0 && before != null && fire > before + 1) {
+            int longer = before + (int) Math.round((fire - before) * (1 + burn));
+            player.setRemainingFireTicks(longer);
+            FIRE.put(player.getUUID(), longer);
+        }
+        // Resource bar filled up: "when Strain reaches max".
+        var data = com.pipican.player.ClassService.data(player);
+        boolean full = data.resourceMax() > 0 && data.resource() >= data.resourceMax() - 1.0e-6;
+        if (full && FULL.add(player.getUUID())) {
+            Reactions.fire(player, null, ItemStack.EMPTY, ReactionEffect.Event.RESOURCE_FULL);
+        } else if (!full) {
+            FULL.remove(player.getUUID());
+        }
+        Long ends = GLORIOUS.get(player.getUUID());
+        if (ends != null && level.getGameTime() >= ends) {
+            GLORIOUS.remove(player.getUUID());
+            player.hurtServer(level, level.damageSources().genericKill(), Float.MAX_VALUE);
+        }
+        if (player.tickCount % 20 == 0 && ClassEffectApplier.state(player).chance(Kind.WEATHER_WARNING) > 0 && level.canHaveWeather()) {
+            var weather = level.getWeatherData();
+            if (weather.getClearWeatherTime() <= 0 && level.getGameRules().get(net.minecraft.world.level.gamerules.GameRules.ADVANCE_WEATHER)) {
+                // The timers count down by one a tick; warn once, when 30s (600 ticks) are left.
+                if (!weather.isRaining() && weather.getRainTime() > 580 && weather.getRainTime() <= 600) {
+                    player.sendSystemMessage(Component.translatable("pipican.weather_warning.rain"));
+                }
+                if (!weather.isThundering() && weather.getThunderTime() > 580 && weather.getThunderTime() <= 600
+                        && (weather.isRaining() || weather.getRainTime() < weather.getThunderTime())) {
+                    player.sendSystemMessage(Component.translatable("pipican.weather_warning.thunder"));
+                }
+            }
+        }
+    }
+
+    /** Guard allies, projectile cover, fire / wind charge damage and long-range shots. */
+    @SubscribeEvent
+    static void onIncoming(LivingIncomingDamageEvent event) {
+        LivingEntity victim = event.getEntity();
+        if (!(victim.level() instanceof ServerLevel level)) {
+            return;
+        }
+        var source = event.getSource();
+        if (source.getEntity() instanceof ServerPlayer owner && source.getDirectEntity() != owner && source.getDirectEntity() != null) {
+            var state = ClassEffectApplier.state(owner);
+            if (source.getDirectEntity() instanceof Fireball) {
+                event.setAmount((float) (event.getAmount() * state.bonus(Kind.FIRE_CHARGE_DAMAGE)));
+            }
+            if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.WindCharge) {
+                event.setAmount((float) (event.getAmount() + state.chance(Kind.WIND_CHARGE_DAMAGE)));
+            }
+            if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile && state.chance(Kind.DISTANCE_DAMAGE) > 0) {
+                int steps = (int) (owner.distanceTo(victim) / 16);
+                event.setAmount((float) (event.getAmount() * (1 + state.chance(Kind.DISTANCE_DAMAGE) * steps)));
+            }
+        }
+        if (!(victim instanceof ServerPlayer player) || source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+        if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile projectile) {
+            Vec3 flying = projectile.getDeltaMovement().multiply(1, 0, 1);
+            for (ServerPlayer guard : level.getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(3),
+                    g -> g != player && g.isAlive() && g.distanceToSqr(player) <= 9 && ClassEffectApplier.state(g).chance(Kind.PROJECTILE_WARD) > 0)) {
+                Vec3 facing = Vec3.directionFromRotation(0, guard.getYRot());
+                Vec3 behind = player.position().subtract(guard.position()).multiply(1, 0, 1);
+                if (flying.lengthSqr() > 1.0e-4 && facing.dot(flying) < 0 && facing.dot(behind) < 0) {
+                    event.setCanceled(true);
+                    return;
+                }
+            }
+        }
+        if (sharing || event.getAmount() <= 0) {
+            return;
+        }
+        for (ServerPlayer guard : level.getEntitiesOfClass(ServerPlayer.class, player.getBoundingBox().inflate(8),
+                g -> g != player && g.isAlive() && g.distanceToSqr(player) <= 64)) {
+            double share = Math.min(1, ClassEffectApplier.state(guard).chance(Kind.GUARD_ALLIES));
+            if (share > 0) {
+                float taken = (float) (event.getAmount() * share);
+                event.setAmount(event.getAmount() - taken);
+                sharing = true;
+                try {
+                    guard.hurtServer(level, level.damageSources().generic(), taken);
+                } finally {
+                    sharing = false;
+                }
+                return;
+            }
+        }
+    }
+
+    /** {@code sure_tame}: the first bone, fish or seeds tames the animal. */
+    @SubscribeEvent
+    static void onTameAttempt(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getTarget() instanceof net.minecraft.world.entity.TamableAnimal animal)
+                || animal.isTame() || ClassEffectApplier.state(player).chance(Kind.SURE_TAME) <= 0) {
+            return;
+        }
+        ItemStack stack = event.getItemStack();
+        boolean food = animal instanceof net.minecraft.world.entity.animal.wolf.Wolf wolf ? stack.is(net.minecraft.world.item.Items.BONE) && !wolf.isAngry()
+                : animal instanceof net.minecraft.world.entity.animal.feline.Cat ? stack.is(net.minecraft.tags.ItemTags.CAT_FOOD)
+                : animal instanceof net.minecraft.world.entity.animal.parrot.Parrot && stack.is(net.minecraft.tags.ItemTags.PARROT_FOOD);
+        if (!food) {
+            return;
+        }
+        event.setCanceled(true);
+        event.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        stack.consume(1, player);
+        if (net.neoforged.neoforge.event.EventHooks.onAnimalTame(animal, player)) {
+            return;
+        }
+        animal.tame(player);
+        animal.getNavigation().stop();
+        animal.setTarget(null);
+        animal.setOrderedToSit(true);
+        animal.level().broadcastEntityEvent(animal, (byte) 7);
+    }
+
+    /** Hotbar slot 1 items kept through death ({@code keep_hotbar_weapon}), until the player respawns. */
+    private static final Map<UUID, ItemStack> KEPT = new ConcurrentHashMap<>();
+
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
+    static void onDeathKeep(LivingDeathEvent event) {
+        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer player)
+                || player.level().getGameRules().get(net.minecraft.world.level.gamerules.GameRules.KEEP_INVENTORY)
+                || ClassEffectApplier.state(player).chance(Kind.KEEP_HOTBAR_WEAPON) <= 0) {
+            return;
+        }
+        ItemStack kept = player.getInventory().getItem(0);
+        if (!kept.isEmpty()) {
+            KEPT.put(player.getUUID(), kept.copy());
+            player.getInventory().setItem(0, ItemStack.EMPTY);
+        }
+    }
+
+    @SubscribeEvent
+    static void onRespawnKeep(net.neoforged.neoforge.event.entity.player.PlayerEvent.Clone event) {
+        ItemStack kept = event.isWasDeath() ? KEPT.remove(event.getOriginal().getUUID()) : null;
+        if (kept != null && !event.getEntity().getInventory().add(0, kept)) {
+            event.getEntity().getInventory().add(kept);
+        }
+    }
+
+    /** {@code grindstone_xp}: extra experience for disenchanting, from the enchantments removed. */
+    @SubscribeEvent
+    static void onGrindstone(net.neoforged.neoforge.event.GrindstoneEvent.OnTakeItem event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player)) {
+            return;
+        }
+        double bonus = ClassEffectApplier.state(player).chance(Kind.GRINDSTONE_XP);
+        if (bonus <= 0) {
+            return;
+        }
+        int[] base = {0};
+        for (ItemStack stack : List.of(event.getTopItem(), event.getBottomItem())) {
+            net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().forEach(e -> {
+                if (!e.getKey().is(net.minecraft.tags.EnchantmentTags.CURSE)) {
+                    base[0] += e.getKey().value().getMinCost(e.getIntValue());
+                }
+            });
+        }
+        // Vanilla gives between half and all of that; the bonus is on the average, rounded at random.
+        double extra = base[0] * 0.75 * bonus;
+        int orbs = (int) extra + (player.getRandom().nextDouble() < extra - (int) extra ? 1 : 0);
+        if (orbs > 0) {
+            net.minecraft.world.entity.ExperienceOrb.award((ServerLevel) player.level(), player.position(), orbs);
+        }
+    }
+
+    /** {@code taunt_radius}: hostile mobs near you that target another player switch to you. */
+    private static void taunt(ServerPlayer player, ServerLevel level) {
+        double r = ClassEffectApplier.state(player).chance(Kind.TAUNT_RADIUS);
+        if (r <= 0 || player.isSpectator() || player.isCreative()) {
+            return;
+        }
+        for (Mob mob : level.getEntitiesOfClass(Mob.class, player.getBoundingBox().inflate(r),
+                m -> m instanceof Enemy && m.distanceToSqr(player) <= r * r && m.getTarget() instanceof Player other && other != player)) {
+            mob.setTarget(player);
+        }
+    }
+
+    /** {@code wildfire}: burning mobs you hurt set mobs next to them on fire. */
+    private static void wildfire(ServerPlayer player, ServerLevel level) {
+        if (ClassEffectApplier.state(player).chance(Kind.WILDFIRE) <= 0) {
+            return;
+        }
+        for (LivingEntity burning : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(16),
+                e -> e.isOnFire() && !(e instanceof Player) && e.getLastHurtByMob() == player)) {
+            for (LivingEntity next : level.getEntitiesOfClass(LivingEntity.class, burning.getBoundingBox().inflate(1.5),
+                    e -> e != burning && !e.isOnFire() && !(e instanceof Player) && Pets.owner(e) != player && !com.pipican.ability.Summons.isSummonOf(e, player))) {
+                next.igniteForSeconds(4);
+            }
+        }
+    }
+
+    /** {@code animals_flee} / {@code animals_follow}: passive animals near you run off or trail after you. */
+    private static void animals(ServerPlayer player, ServerLevel level) {
+        var state = ClassEffectApplier.state(player);
+        boolean flee = state.chance(Kind.ANIMALS_FLEE) > 0;
+        boolean follow = state.chance(Kind.ANIMALS_FOLLOW) > 0;
+        if (!flee && !follow) {
+            return;
+        }
+        for (var animal : level.getEntitiesOfClass(net.minecraft.world.entity.animal.Animal.class, player.getBoundingBox().inflate(10),
+                a -> !(a instanceof OwnableEntity o && o.getOwnerReference() != null) && a.distanceToSqr(player) <= 100)) {
+            if (flee) {
+                com.pipican.ability.MobControl.control(animal, player, com.pipican.ability.MobControl.Mode.FLEE, 40);
+            } else if (animal.distanceToSqr(player) > 9) {
+                animal.getNavigation().moveTo(player, 1.0);
+            }
+        }
+    }
+
+    /** {@code golem_chest}: opening a chest inside a village where an iron golem can see you. */
+    @SubscribeEvent
+    static void onChestOpen(PlayerInteractEvent.RightClickBlock event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getLevel() instanceof ServerLevel level)
+                || ClassEffectApplier.state(player).chance(Kind.GOLEM_CHEST) <= 0 || !level.isVillage(event.getPos())
+                || !(level.getBlockEntity(event.getPos()) instanceof net.minecraft.world.level.block.entity.ChestBlockEntity)) {
+            return;
+        }
+        for (var golem : level.getEntitiesOfClass(net.minecraft.world.entity.animal.golem.IronGolem.class, player.getBoundingBox().inflate(16),
+                g -> !g.isPlayerCreated() && g.hasLineOfSight(player))) {
+            golem.setPersistentAngerTarget(net.minecraft.world.entity.EntityReference.of(player));
+            golem.startPersistentAngerTimer();
+            golem.setTarget(player);
+        }
+    }
+
+    /** {@code bare_handed}: while it holds, only empty-handed hits land and items can't be used. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
+    static void onBareHanded(LivingIncomingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.BARE_HANDED) > 0
+                && (event.getSource().getDirectEntity() != player || !player.getMainHandItem().isEmpty())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    static void onBareHandedUse(PlayerInteractEvent.RightClickItem event) {
+        if (event.getEntity() instanceof ServerPlayer player && ClassEffectApplier.state(player).chance(Kind.BARE_HANDED) > 0) {
+            event.setCanceled(true);
+        }
+    }
+
+    /** {@code trample}: small mobs in the way of your moving mount get hurt. */
+    private static void trample(ServerPlayer player, ServerLevel level) {
+        double damage = ClassEffectApplier.state(player).chance(Kind.TRAMPLE);
+        if (damage <= 0 || !(player.getVehicle() instanceof LivingEntity mount) || (mount.getX() - mount.xo) * (mount.getX() - mount.xo) + (mount.getZ() - mount.zo) * (mount.getZ() - mount.zo) < 0.0025) {
+            return;
+        }
+        for (LivingEntity small : level.getEntitiesOfClass(LivingEntity.class, mount.getBoundingBox().inflate(0.5),
+                e -> e != mount && e != player && e.isAlive() && e.getBbHeight() < 1.0 && !(e instanceof Player) && Pets.owner(e) != player)) {
+            small.hurtServer(level, level.damageSources().mobAttack(mount), (float) damage);
+        }
+    }
+
+    /** {@code fall_floor} / {@code fall_safe_ground}: softer landings. */
+    @SubscribeEvent
+    static void onFall(LivingIncomingDamageEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_FALL)) {
+            return;
+        }
+        var state = ClassEffectApplier.state(player);
+        if (state.chance(Kind.FALL_SAFE_GROUND) > 0) {
+            var below = player.level().getBlockState(player.blockPosition().below());
+            var at = player.level().getBlockState(player.blockPosition());
+            if (below.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD) || below.is(net.minecraft.tags.BlockTags.DIRT)
+                    || at.is(net.minecraft.tags.BlockTags.BASE_STONE_OVERWORLD) || at.is(net.minecraft.tags.BlockTags.DIRT)) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+        double floor = state.chance(Kind.FALL_FLOOR);
+        if (floor > 0 && player.getHealth() > floor) {
+            event.setAmount((float) Math.min(event.getAmount(), player.getHealth() - floor));
+        }
+    }
+
+    /** {@code wind_knockback}: your wind charges throw others farther. */
+    @SubscribeEvent
+    static void onWindKnockback(net.neoforged.neoforge.event.level.ExplosionKnockbackEvent event) {
+        if (event.getExplosion().getDirectSourceEntity() instanceof net.minecraft.world.entity.projectile.hurtingprojectile.windcharge.WindCharge charge
+                && charge.getOwner() instanceof ServerPlayer player && event.getAffectedEntity() != player) {
+            double more = ClassEffectApplier.state(player).bonus(Kind.WIND_KNOCKBACK);
+            if (more != 1) {
+                event.setKnockbackVelocity(event.getKnockbackVelocity().scale(more));
+            }
+        }
+    }
+
+    /** {@code save_ally}: once per day, a player dying near you is saved. */
+    @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.HIGH)
+    static void onAllyDeath(LivingDeathEvent event) {
+        if (event.isCanceled() || !(event.getEntity() instanceof ServerPlayer dying) || event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            return;
+        }
+        long day = dying.level().getOverworldClockTime() / 24000;
+        for (ServerPlayer healer : dying.level().getEntitiesOfClass(ServerPlayer.class, dying.getBoundingBox().inflate(16), p -> p != dying && p.isAlive())) {
+            double hp = ClassEffectApplier.state(healer).chance(Kind.SAVE_ALLY);
+            if (hp > 0 && healer.getPersistentData().getLongOr("pipican_saved_ally_day", -1) != day) {
+                healer.getPersistentData().putLong("pipican_saved_ally_day", day);
+                event.setCanceled(true);
+                dying.setHealth((float) hp);
+                dying.sendOverlayMessage(Component.translatable("pipican.saved_by", healer.getDisplayName()));
+                return;
+            }
+        }
+    }
+
+    /** {@code tnt_power}: TNT you light explodes harder. */
+    @SubscribeEvent
+    static void onTnt(EntityJoinLevelEvent event) {
+        if (!event.loadedFromDisk() && event.getEntity() instanceof net.minecraft.world.entity.item.PrimedTnt tnt && tnt.getOwner() instanceof ServerPlayer player) {
+            double more = ClassEffectApplier.state(player).bonus(Kind.TNT_POWER);
+            if (more != 1) {
+                tnt.explosionPower = (float) Math.min(16, tnt.explosionPower * more);
+            }
+        }
+    }
+
+    /** {@code extra_restock}: villagers you trade with restock more often (checked when you open their trades). */
+    @SubscribeEvent
+    static void onVillager(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getTarget() instanceof net.minecraft.world.entity.npc.villager.Villager villager)) {
+            return;
+        }
+        double more = ClassEffectApplier.state(player).chance(Kind.EXTRA_RESTOCK);
+        if (more <= 0 || villager.getOffers().stream().noneMatch(net.minecraft.world.item.trading.MerchantOffer::isOutOfStock)) {
+            return;
+        }
+        // Villagers restock about twice a day; this adds restocks at that pace times the bonus.
+        long now = villager.level().getGameTime();
+        long gap = (long) (12000 / more);
+        long last = villager.getPersistentData().getLongOr("pipican_restocked", -gap);
+        if (now - last >= gap) {
+            villager.getPersistentData().putLong("pipican_restocked", now);
+            villager.restock();
+        }
+    }
+
+    private static final Map<UUID, Integer> MOB_FIRE = new ConcurrentHashMap<>();
+
+    /** {@code fire_longer}: a fire you just started on a mob burns longer. */
+    private static void fireLonger(ServerPlayer player, ServerLevel level) {
+        double longer = ClassEffectApplier.state(player).chance(Kind.FIRE_LONGER);
+        if (longer <= 0) {
+            return;
+        }
+        for (LivingEntity mob : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(24),
+                e -> !(e instanceof Player) && e.getLastHurtByMob() == player && e.tickCount - e.getLastHurtByMobTimestamp() <= 5)) {
+            int fire = mob.getRemainingFireTicks();
+            Integer before = MOB_FIRE.put(mob.getUUID(), fire);
+            if (before != null && fire > before + 1) {
+                int boosted = before + (int) Math.round((fire - before) * (1 + longer));
+                mob.setRemainingFireTicks(boosted);
+                MOB_FIRE.put(mob.getUUID(), boosted);
+            }
+        }
+        MOB_FIRE.keySet().removeIf(id -> level.getEntity(id) == null);
+    }
+
+    /** {@code pet_regen}: tamed animals near you heal over time. */
+    private static void petRegen(ServerPlayer player, ServerLevel level) {
+        double hp = ClassEffectApplier.state(player).chance(Kind.PET_REGEN);
+        if (hp > 0) {
+            for (LivingEntity pet : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(32), e -> Pets.owner(e) == player)) {
+                pet.heal((float) hp);
+            }
+        }
+    }
+
+    /** {@code marked_weakness}: mobs you've marked close to you are weakened. */
+    private static void markedWeakness(ServerPlayer player, ServerLevel level) {
+        int level0 = (int) Math.floor(ClassEffectApplier.state(player).chance(Kind.MARKED_WEAKNESS) + 1e-9);
+        if (level0 <= 0) {
+            return;
+        }
+        for (LivingEntity mob : level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(4),
+                e -> !(e instanceof Player) && e.distanceToSqr(player) <= 16 && com.pipican.ability.Marks.isMarkedBy(e, player))) {
+            mob.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 30, Math.min(2, level0 - 1), false, true), player);
+        }
+    }
+
+    /** Wandering traders -> extra offers already added to them (for {@code wandering_trades}). */
+    private static final Map<UUID, Integer> TRADER_EXTRAS = new ConcurrentHashMap<>();
+
+    /** {@code wandering_trades}: a wandering trader you talk to rolls that many more offers from its common trades (once each). */
+    @SubscribeEvent
+    static void onTraderInteract(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getTarget() instanceof net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader trader)
+                || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        int want = (int) Math.floor(ClassEffectApplier.state(player).chance(Kind.WANDERING_TRADES) + 1e-9);
+        int had = TRADER_EXTRAS.getOrDefault(trader.getUUID(), 0);
+        if (want <= had) {
+            return;
+        }
+        var offers = trader.getOffers();
+        var set = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.TRADE_SET)
+                .getOptional(net.minecraft.world.item.trading.TradeSets.WANDERING_TRADER_COMMON);
+        if (set.isEmpty()) {
+            return;
+        }
+        var ctx = new net.minecraft.world.level.storage.loot.LootContext.Builder(new net.minecraft.world.level.storage.loot.LootParams.Builder(level)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, trader.position())
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.THIS_ENTITY, trader)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ADDITIONAL_COST_COMPONENT_ALLOWED, net.minecraft.util.Unit.INSTANCE)
+                .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.VILLAGER_TRADE)).create(java.util.Optional.empty());
+        java.util.List<net.minecraft.core.Holder<net.minecraft.world.item.trading.VillagerTrade>> pool = new java.util.ArrayList<>();
+        set.get().getTrades().forEach(pool::add);
+        int added = 0;
+        while (had + added < want && !pool.isEmpty()) {
+            var offer = pool.remove(trader.getRandom().nextInt(pool.size())).value().getOffer(ctx);
+            if (offer != null && offers.stream().noneMatch(o -> ItemStack.isSameItemSameComponents(o.getResult(), offer.getResult()))) {
+                offers.add(offer);
+                added++;
+            }
+        }
+        TRADER_EXTRAS.put(trader.getUUID(), had + added);
+    }
+
+    /** {@code temple_healing} (Sacred Ground): players inside a Templar's temple heal more - the Templar too. */
+    @SubscribeEvent
+    static void onTempleHeal(net.neoforged.neoforge.event.entity.living.LivingHealEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer healed) || !(healed.level() instanceof ServerLevel level)) {
+            return;
+        }
+        double more = 0;
+        for (ServerPlayer templar : level.players()) {
+            double k = ClassEffectApplier.state(templar).chance(Kind.TEMPLE_HEALING);
+            if (k > 0 && com.pipican.ability.Temples.contains(templar, healed.position())) {
+                more = Math.max(more, k);
+            }
+        }
+        if (more > 0) {
+            event.setAmount((float) (event.getAmount() * (1 + more)));
+        }
+    }
+
+    private static final Map<UUID, java.util.Set<UUID>> IN_TEMPLE = new ConcurrentHashMap<>();
+
+    /** {@code temple_alarm}: a hostile mob stepping into your temple gives you Speed II for 2s. */
+    private static void templeAlarm(ServerPlayer player, ServerLevel level) {
+        if (ClassEffectApplier.state(player).chance(Kind.TEMPLE_ALARM) <= 0) {
+            return;
+        }
+        var center = com.pipican.ability.Temples.center(player);
+        if (center.isEmpty()) {
+            return;
+        }
+        BlockPos temple = BlockPos.containing(center.get());
+        double r = com.pipican.ability.Temples.radius(player);
+        java.util.Set<UUID> before = IN_TEMPLE.getOrDefault(player.getUUID(), java.util.Set.of());
+        java.util.Set<UUID> now = new java.util.HashSet<>();
+        for (LivingEntity mob : level.getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(temple).inflate(r),
+                e -> e instanceof Enemy && e.isAlive() && e.blockPosition().distSqr(temple) <= r * r)) {
+            now.add(mob.getUUID());
+        }
+        if (now.stream().anyMatch(id -> !before.contains(id))) {
+            player.addEffect(new MobEffectInstance(net.minecraft.world.effect.MobEffects.SPEED, 40, 1), player);
+        }
+        IN_TEMPLE.put(player.getUUID(), now);
+    }
+}

@@ -1,0 +1,125 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "arcanist_start",
+      "name": "Arcanist",
+      "description": "+5% experience gained",
+      "type": "start",
+      "x": 70,
+      "y": -1598,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.05
+        }
+      ]
+    },
+    {
+      "id": "arcanist_theory",
+      "name": "Theory",
+      "description": "+6% magic damage",
+      "type": "small",
+      "x": 45,
+      "y": -1670,
+      "links": [
+        "arcanist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 1.06
+        }
+      ]
+    },
+    {
+      "id": "arcanist_practice",
+      "name": "Practice",
+      "description": "+10% experience gained",
+      "type": "small",
+      "x": 100,
+      "y": -1667,
+      "links": [
+        "arcanist_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "experience",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "arcanist_swift_arcana",
+      "name": "Swift Arcana",
+      "description": "abilities cost 10% less Flux",
+      "type": "notable",
+      "x": 48,
+      "y": -1740,
+      "links": [
+        "arcanist_theory"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "ability_cost",
+          "amount": -0.1
+        }
+      ]
+    },
+    {
+      "id": "arcanist_deep_reserves",
+      "name": "Deep Reserves",
+      "description": "+20% max Mystic Flux",
+      "type": "notable",
+      "x": 103,
+      "y": -1737,
+      "links": [
+        "arcanist_practice"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "id": "arcanist_unbound_mind",
+      "name": "Unbound Mind",
+      "description": "+30% max Mystic Flux, but -20% max health",
+      "type": "keystone",
+      "x": 79,
+      "y": -1808,
+      "links": [
+        "arcanist_swift_arcana",
+        "arcanist_deep_reserves"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.3,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.2,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

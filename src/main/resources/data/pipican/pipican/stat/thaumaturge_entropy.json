@@ -1,0 +1,7 @@
+{
+  "name": "Entropy",
+  "description": "How much chaos you can ride without falling off.",
+  "max": 100,
+  "exclusive": true,
+  "color": -49707
+}

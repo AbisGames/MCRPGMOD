@@ -1,0 +1,233 @@
+{
+  "name": "Apocalyptist",
+  "description": "A delver into Forbidden magic who spreads fear and ruin. Immensely dangerous, corrupted by their own power.",
+  "icon": "minecraft:wither_skeleton_skull",
+  "selectable": true,
+  "base_health": 28.0,
+  "base_stats": {
+    "pipican:vitality": 3,
+    "pipican:strength": 1,
+    "pipican:dexterity": 1,
+    "pipican:agility": 1,
+    "pipican:intelligence": 8,
+    "pipican:wisdom": 7,
+    "pipican:endurance": 3,
+    "pipican:luck": 2,
+    "pipican:apocalyptist_corruption": 10
+  },
+  "special_stat": {
+    "stat": "pipican:apocalyptist_corruption",
+    "resource": {
+      "name": "Doom",
+      "base_max": 60.0,
+      "max_per_point": 4.0,
+      "regen_per_second": 0.8,
+      "regen_per_point": 0.1,
+      "color": -11634146,
+      "starts_full": true
+    }
+  },
+  "starting_kit": [
+    {
+      "id": "minecraft:stone_sword"
+    },
+    {
+      "id": "minecraft:wither_rose"
+    },
+    {
+      "id": "minecraft:leather_chestplate"
+    },
+    {
+      "id": "minecraft:rotten_flesh",
+      "count": 4
+    },
+    {
+      "id": "minecraft:bread",
+      "count": 4
+    }
+  ],
+  "skill_tree": {
+    "tree": "pipican:general",
+    "start": "apocalyptist_start"
+  },
+  "special_skill_tree": {
+    "tree": "pipican:special/apocalyptist",
+    "start": "start"
+  },
+  "stat_tree": {
+    "tree": "pipican:stat",
+    "start": "apocalyptist_stat_start"
+  },
+  "progression": {
+    "max_level": 50,
+    "starting_skill_points": 3,
+    "starting_special_skill_points": 1
+  },
+  "passives": [
+    {
+      "type": "pipican:on",
+      "event": "spend",
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "hostiles",
+          "effects": [
+            {
+              "effect": "minecraft:weakness",
+              "seconds": 4.0
+            }
+          ],
+          "radius": 8.0
+        }
+      ],
+      "name": "fearsome casting"
+    },
+    {
+      "type": "pipican:on",
+      "event": "hit",
+      "chance": 0.15,
+      "actions": [
+        {
+          "type": "pipican:effect",
+          "target": "victim",
+          "effects": [
+            {
+              "effect": "minecraft:wither",
+              "seconds": 3.0
+            }
+          ]
+        }
+      ],
+      "name": "wither"
+    },
+    {
+      "type": "pipican:immune",
+      "effects": "minecraft:wither"
+    },
+    {
+      "type": "pipican:on",
+      "event": "kill",
+      "chance": 0.1,
+      "actions": [
+        {
+          "type": "pipican:cloud",
+          "effect": "minecraft:instant_damage"
+        }
+      ],
+      "name": "hasten the apocalypse"
+    }
+  ],
+  "special_passives": [
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_magic",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ]
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "damage_types": "#pipican:is_wither",
+      "multiplier": 1.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.005
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_chance",
+      "name": "wither",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.003
+        }
+      ]
+    },
+    {
+      "type": "pipican:reaction_mod",
+      "name": "fearsome casting",
+      "radius": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
+    }
+  ],
+  "weakness": {
+    "description": "Corruption marks you. The living recoil.",
+    "effects": [
+      {
+        "type": "pipican:bonus",
+        "kind": "no_trade",
+        "amount": 1.0
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "animals_flee",
+        "amount": 1.0
+      },
+      {
+        "type": "pipican:bonus",
+        "kind": "healing_received",
+        "amount": -0.25
+      }
+    ]
+  },
+  "affinities": {
+    "default": "neutral",
+    "rules": [
+      {
+        "items": "#pipican:weapons/swords",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/axes",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/spears",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:weapons/maces",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/crossbows",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:weapons/shields",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/light",
+        "tier": "proficient"
+      },
+      {
+        "items": "#pipican:armor/medium",
+        "tier": "clumsy"
+      },
+      {
+        "items": "#pipican:armor/heavy",
+        "tier": "forbidden"
+      }
+    ]
+  },
+  "trinket_slots": {
+    "pipican:amulet": 2,
+    "pipican:ring": 1,
+    "pipican:cloak": 1,
+    "pipican:charm": 1
+  }
+}

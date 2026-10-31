@@ -1,0 +1,75 @@
+{
+  "name": "Scholarship",
+  "description": "Trained by enchanting items and using enchanted books on an anvil.",
+  "icon": "minecraft:writable_book",
+  "trigger": {
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "enchant"
+      },
+      {
+        "type": "pipican:did",
+        "action": "anvil"
+      }
+    ]
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:wizard"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Lore",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wizard_lore",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Lore",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wizard_lore",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Aether max",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Lore",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wizard_lore",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Lore",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:wizard_lore",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

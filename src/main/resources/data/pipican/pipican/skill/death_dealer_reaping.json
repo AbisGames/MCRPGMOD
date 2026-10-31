@@ -1,0 +1,64 @@
+{
+  "name": "Reaping",
+  "description": "Trained by killing 3+ mobs within 10s.",
+  "icon": "minecraft:netherite_axe",
+  "trigger": {
+    "type": "pipican:kill"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:death_dealer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Carnage",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:death_dealer_carnage",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Carnage",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:death_dealer_carnage",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10 max Bloodshed",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "max",
+          "amount": 10.0
+        }
+      ]
+    },
+    {
+      "description": "+1 Carnage",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:death_dealer_carnage",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Carnage",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:death_dealer_carnage",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}

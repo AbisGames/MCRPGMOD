@@ -1,0 +1,131 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "myrmidon_start",
+      "name": "Myrmidon",
+      "description": "+1 armor",
+      "type": "start",
+      "x": -1504,
+      "y": -547,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "myrmidon_brace",
+      "name": "Brace",
+      "description": "+10% knockback resistance",
+      "type": "small",
+      "x": -1579,
+      "y": -545,
+      "links": [
+        "myrmidon_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:knockback_resistance",
+          "amount": 0.1
+        }
+      ]
+    },
+    {
+      "id": "myrmidon_boss_strike",
+      "name": "Boss Strike",
+      "description": "shield bash +2 damage",
+      "type": "small",
+      "x": -1560,
+      "y": -597,
+      "links": [
+        "myrmidon_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "shield bash",
+          "damage": 2.0
+        }
+      ]
+    },
+    {
+      "id": "myrmidon_turtle",
+      "name": "Turtle",
+      "description": "blocking also stops arrows from the sides",
+      "type": "notable",
+      "x": -1644,
+      "y": -569,
+      "links": [
+        "myrmidon_brace"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "side_block",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "myrmidon_counterbash",
+      "name": "Counterbash",
+      "description": "after a block, next hit +20%",
+      "type": "notable",
+      "x": -1626,
+      "y": -621,
+      "links": [
+        "myrmidon_boss_strike"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "block",
+          "actions": [
+            {
+              "type": "pipican:empower",
+              "target": "self",
+              "multiplier": 1.2,
+              "hits": 1,
+              "seconds": 5.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "myrmidon_living_wall",
+      "name": "Living Wall",
+      "description": "shields can't be disabled, but -10% movement speed",
+      "type": "keystone",
+      "x": -1701,
+      "y": -619,
+      "links": [
+        "myrmidon_turtle",
+        "myrmidon_counterbash"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "shield_disable",
+          "amount": -1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

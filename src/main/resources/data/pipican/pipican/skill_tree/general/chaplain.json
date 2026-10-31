@@ -1,0 +1,132 @@
+{
+  "tree": "pipican:general",
+  "nodes": [
+    {
+      "id": "chaplain_start",
+      "name": "Chaplain",
+      "description": "+1 max health",
+      "type": "start",
+      "x": 992,
+      "y": -761,
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": 1.0
+        }
+      ]
+    },
+    {
+      "id": "chaplain_psalm",
+      "name": "Psalm",
+      "description": "+5% Chant damage bonus",
+      "type": "small",
+      "x": 1030,
+      "y": -825,
+      "links": [
+        "chaplain_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.05
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chaplain_steady_voice",
+      "name": "Steady Voice",
+      "description": "Battle Chant no longer stops from big hits below 10 damage",
+      "type": "small",
+      "x": 1064,
+      "y": -782,
+      "links": [
+        "chaplain_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "aura_break_at",
+          "amount": 4.0
+        }
+      ]
+    },
+    {
+      "id": "chaplain_field_medic",
+      "name": "Field Medic",
+      "description": "Succor cooldown -20s",
+      "type": "notable",
+      "x": 1086,
+      "y": -868,
+      "links": [
+        "chaplain_psalm"
+      ],
+      "cost": 2,
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:reaction_mod",
+          "name": "succor",
+          "cooldown": -0.333333
+        }
+      ]
+    },
+    {
+      "id": "chaplain_litany",
+      "name": "Litany",
+      "description": "players in your chant regenerate +10% faster",
+      "type": "notable",
+      "x": 1120,
+      "y": -824,
+      "links": [
+        "chaplain_steady_voice"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "natural_regen",
+              "amount": 0.1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chaplain_holy_war",
+      "name": "Holy War",
+      "description": "chant bonuses +50%, but you deal -15% damage",
+      "type": "keystone",
+      "x": 1158,
+      "y": -889,
+      "links": [
+        "chaplain_field_medic",
+        "chaplain_litany"
+      ],
+      "cost": 3,
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:aura_mod",
+          "name": "chant",
+          "strength": 0.5
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.85
+        }
+      ]
+    }
+  ]
+}

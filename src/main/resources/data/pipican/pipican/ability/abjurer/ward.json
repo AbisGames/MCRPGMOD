@@ -1,0 +1,14 @@
+{
+  "name": "Ward",
+  "description": "absorb the next 8 damage, 20 Ward",
+  "icon": "minecraft:shield",
+  "cost": 20,
+  "cooldown_ticks": 300,
+  "actions": [
+    {
+      "type": "pipican:absorb",
+      "amount": 8,
+      "seconds": 30
+    }
+  ]
+}

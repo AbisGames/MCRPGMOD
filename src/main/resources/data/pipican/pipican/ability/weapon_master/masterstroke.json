@@ -1,0 +1,15 @@
+{
+  "name": "Masterstroke",
+  "description": "a guaranteed max-damage critical with the favored weapon, 30 Focus",
+  "icon": "minecraft:netherite_sword",
+  "cost": 30,
+  "cooldown_ticks": 400,
+  "actions": [
+    {
+      "type": "pipican:empower",
+      "target": "self",
+      "multiplier": 2.0,
+      "seconds": 10
+    }
+  ]
+}

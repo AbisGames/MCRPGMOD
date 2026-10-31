@@ -1,0 +1,7 @@
+{
+  "name": "Trigger Finger",
+  "description": "Speed and accuracy with firearms.",
+  "max": 100,
+  "exclusive": true,
+  "color": -11841448
+}

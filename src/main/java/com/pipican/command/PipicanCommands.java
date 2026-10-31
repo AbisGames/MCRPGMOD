@@ -1,5 +1,7 @@
 package com.pipican.command;
 
+import com.pipican.ability.AbilityService;
+import com.pipican.ability.Optimize;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -25,6 +27,7 @@ import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.RpgClass;
 import com.pipican.skill.TreeKind;
 import com.pipican.stat.StatDefinition;
+import com.pipican.stat.StatPoints;
 import com.pipican.trinket.TrinketMenu;
 import java.util.Collection;
 import java.util.Optional;
@@ -52,18 +55,22 @@ import net.neoforged.neoforge.network.PacketDistributor;
  *   /pipican class reset &lt;players&gt;               full respec, re-opens class selection
  *   /pipican level set &lt;players&gt; &lt;level&gt;
  *   /pipican xp add &lt;players&gt; &lt;amount&gt;
- *   /pipican tree reset &lt;players&gt; [general|special]
+ *   /pipican tree reset &lt;players&gt; [general|special|stat]
  *   /pipican mastery add &lt;players&gt; &lt;skill&gt; &lt;amount&gt;
  *   /pipican mastery set &lt;players&gt; &lt;skill&gt; &lt;tier 0-5&gt;
- *   /pipican mastery reset &lt;players&gt;           also resets the trees
- *   /pipican stat reset &lt;players&gt;                refunds vanilla levels
+ *   /pipican mastery reset &lt;players&gt;           also resets the general and special trees
+ *   /pipican stat reset &lt;players&gt;                gives the stat points back
+ *   /pipican ability force &lt;players&gt; &lt;ability&gt;   use any ability, free and ignoring cooldowns (testing)
+ *   /pipican ability reset &lt;players&gt;             clear cooldowns and running abilities
  * Everyone:
  *   /pipican class info [player]
  *   /pipican class choose                         re-opens selection if you have no class
  *   /pipican tree                                 opens the passive-tree screen
- *   /pipican tree allocate|refund &lt;general|special&gt; &lt;node&gt;
+ *   /pipican tree allocate|refund &lt;general|special|stat&gt; &lt;node&gt;
  *   /pipican mastery list [player]
- *   /pipican stat raise &lt;stat&gt;                   costs vanilla XP levels
+ *   /pipican stat raise &lt;stat&gt;                   costs one stat point (earned with kill XP)
+ *   /pipican ability use &lt;ability&gt;               same as pressing its key (keys Z X C V use slots 1-4)
+ *   /pipican optimize &lt;raise&gt; &lt;lower&gt;            Transmuter's Optimization choice (the chat buttons run this)
  *   /pipican trinkets
  * </pre>
  * Stat raising is a stand-in until the character screen exists.
@@ -73,6 +80,7 @@ public final class PipicanCommands {
 
     private static final DynamicCommandExceptionType UNKNOWN_CLASS = new DynamicCommandExceptionType(id -> Component.translatable("pipican.class.unknown", String.valueOf(id)));
     private static final DynamicCommandExceptionType UNKNOWN_SKILL = new DynamicCommandExceptionType(id -> Component.translatable("pipican.mastery.unknown", String.valueOf(id)));
+    private static final DynamicCommandExceptionType UNKNOWN_ABILITY = new DynamicCommandExceptionType(id -> Component.translatable("pipican.ability.unknown", String.valueOf(id)));
     private static final DynamicCommandExceptionType UNKNOWN_STAT = new DynamicCommandExceptionType(id -> Component.translatable("pipican.stat.unknown", String.valueOf(id)));
 
     private PipicanCommands() {}
@@ -122,14 +130,17 @@ public final class PipicanCommands {
                         })
                         .then(Commands.literal("allocate")
                                 .then(nodeCommand(TreeKind.GENERAL, false))
-                                .then(nodeCommand(TreeKind.SPECIAL, false)))
+                                .then(nodeCommand(TreeKind.SPECIAL, false))
+                                .then(nodeCommand(TreeKind.STAT, false)))
                         .then(Commands.literal("refund")
                                 .then(nodeCommand(TreeKind.GENERAL, true))
-                                .then(nodeCommand(TreeKind.SPECIAL, true)))
+                                .then(nodeCommand(TreeKind.SPECIAL, true))
+                                .then(nodeCommand(TreeKind.STAT, true)))
                         .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
                                 .executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.empty())))
                                 .then(Commands.literal("general").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.GENERAL)))))
-                                .then(Commands.literal("special").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.SPECIAL))))))))
+                                .then(Commands.literal("special").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.SPECIAL)))))
+                                .then(Commands.literal("stat").executes(c -> forEach(c, p -> ClassService.resetSkills(p, Optional.of(TreeKind.STAT))))))))
                 .then(Commands.literal("mastery")
                         .then(Commands.literal("list")
                                 .executes(c -> masteryList(c.getSource(), c.getSource().getPlayerOrException()))
@@ -156,6 +167,48 @@ public final class PipicanCommands {
                                 })))
                         .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
                                 .executes(c -> forEach(c, ClassService::resetStats)))))
+                .then(Commands.literal("optimize").then(Commands.argument("raise", ResourceKeyArgument.key(PipicanRegistries.STAT))
+                        .then(Commands.argument("lower", ResourceKeyArgument.key(PipicanRegistries.STAT))
+                                .executes(c -> report(c.getSource(), Optimize.choose(c.getSource().getPlayerOrException(),
+                                        ResourceKeyArgument.getRegistryKey(c, "raise", PipicanRegistries.STAT, UNKNOWN_STAT),
+                                        ResourceKeyArgument.getRegistryKey(c, "lower", PipicanRegistries.STAT, UNKNOWN_STAT)))))))
+                .then(Commands.literal("favored").executes(c -> {
+                    // Swift Change: once per day, the weapon in hand becomes the favored kind without sleeping.
+                    var p = c.getSource().getPlayerOrException();
+                    long day = p.level().getOverworldClockTime() / 24000;
+                    if (com.pipican.player.ClassEffectApplier.state(p).chance(com.pipican.effect.type.BonusEffect.Kind.SWAP_FAVORED) <= 0
+                            || p.getPersistentData().getLongOr("pipican_favored_swap", -1) == day) {
+                        c.getSource().sendFailure(Component.translatable("pipican.favored.no_swap"));
+                        return 0;
+                    }
+                    p.getPersistentData().putLong("pipican_favored_swap", day);
+                    com.pipican.ability.FavoredWeapon.choose(p);
+                    com.pipican.player.ClassService.changed(p);
+                    return 1;
+                }))
+                .then(Commands.literal("focus")
+                        .executes(c -> {
+                            var p = c.getSource().getPlayerOrException();
+                            c.getSource().sendSuccess(() -> Component.translatable("pipican.focus.list", String.join(", ", com.pipican.ability.Focus.chosen(p)),
+                                    com.pipican.ability.Focus.slots(p), String.join(", ", com.pipican.ability.Focus.SCHOOLS)), false);
+                            return 1;
+                        })
+                        .then(Commands.argument("school", com.mojang.brigadier.arguments.StringArgumentType.word())
+                                .suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(com.pipican.ability.Focus.SCHOOLS, b))
+                                .executes(c -> report(c.getSource(), com.pipican.ability.Focus.choose(c.getSource().getPlayerOrException(),
+                                        com.mojang.brigadier.arguments.StringArgumentType.getString(c, "school"))))))
+                .then(Commands.literal("ability")
+                        .then(Commands.literal("use").then(Commands.argument("ability", ResourceKeyArgument.key(PipicanRegistries.ABILITY))
+                                .executes(c -> report(c.getSource(), AbilityService.use(c.getSource().getPlayerOrException(),
+                                        ResourceKeyArgument.getRegistryKey(c, "ability", PipicanRegistries.ABILITY, UNKNOWN_ABILITY))))))
+                        .then(admin("force").then(Commands.argument("targets", EntityArgument.players())
+                                .then(Commands.argument("ability", ResourceKeyArgument.key(PipicanRegistries.ABILITY))
+                                        .executes(c -> {
+                                            var key = ResourceKeyArgument.getRegistryKey(c, "ability", PipicanRegistries.ABILITY, UNKNOWN_ABILITY);
+                                            return forEach(c, p -> AbilityService.force(p, key));
+                                        }))))
+                        .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
+                                .executes(c -> forEach(c, AbilityService::reset)))))
                 .then(Commands.literal("trinkets").executes(c -> {
                     TrinketMenu.open(c.getSource().getPlayerOrException());
                     return 1;
@@ -259,6 +312,8 @@ public final class PipicanCommands {
                 progress.xp(), PipicanConfig.xpToNextLevel(progress.level())), false);
         source.sendSuccess(() -> Component.translatable("pipican.info.points",
                 ClassService.availablePoints(player, TreeKind.GENERAL), ClassService.availablePoints(player, TreeKind.SPECIAL)), false);
+        source.sendSuccess(() -> Component.translatable("pipican.info.stat_points",
+                ClassService.availableStatPoints(player), StatPoints.xpToNextPoint(data)), false);
         ClassLookup.stats(access).entrySet().stream()
                 .filter(e -> state.stat(e.getKey()) != 0 || ClassService.canRaise(cls, e.getKey(), e.getValue()))
                 .sorted(java.util.Comparator.comparing(e -> e.getKey().identifier().toString()))
@@ -272,7 +327,6 @@ public final class PipicanCommands {
             Component name = cls.specialStat().flatMap(s -> s.resource()).map(r -> r.name()).orElse(Component.empty());
             source.sendSuccess(() -> Component.translatable("pipican.info.resource", name, (int) data.resource(), (int) data.resourceMax()), false);
         }
-        source.sendSuccess(() -> Component.translatable("pipican.info.next_stat_cost", PipicanConfig.statPointCost(data.totalBoughtStats())), false);
         return 1;
     }
 

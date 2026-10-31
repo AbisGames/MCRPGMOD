@@ -1,0 +1,31 @@
+{
+  "name": "Watery Form",
+  "description": "become water: half weapon damage, slip through 1-block gaps, invisible underwater, 40 Current",
+  "icon": "minecraft:water_bucket",
+  "cost": 40,
+  "cooldown_ticks": 800,
+  "duration_ticks": 200,
+  "effects": [
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 0.5
+    },
+    {
+      "type": "pipican:mob_effect",
+      "effect": "minecraft:dolphins_grace"
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:state",
+        "state": "underwater"
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:invisibility"
+        }
+      ]
+    }
+  ]
+}

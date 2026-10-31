@@ -1,0 +1,12 @@
+{
+  "name": "Recall",
+  "description": "return to a marked spot, 60 Waypoint",
+  "icon": "minecraft:recovery_compass",
+  "cost": 60,
+  "cooldown_ticks": 600,
+  "actions": [
+    {
+      "type": "pipican:recall"
+    }
+  ]
+}

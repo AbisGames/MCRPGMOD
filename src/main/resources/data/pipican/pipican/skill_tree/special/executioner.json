@@ -1,0 +1,113 @@
+{
+  "name": "Executioner Tree",
+  "nodes": [
+    {
+      "id": "start",
+      "name": "Execute",
+      "type": "start",
+      "x": 0,
+      "y": 0
+    },
+    {
+      "id": "anatomy",
+      "name": "Anatomy",
+      "description": "+2 Severance",
+      "type": "small",
+      "x": 35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:executioner_severance",
+          "amount": 2
+        }
+      ]
+    },
+    {
+      "id": "steady",
+      "name": "Steady",
+      "description": {
+        "text": "exposure after charged hits lasts 1s",
+        "extra": [
+          {
+            "text": " (not in game yet)",
+            "color": "dark_gray",
+            "italic": true
+          }
+        ]
+      },
+      "type": "small",
+      "x": -35,
+      "y": 70,
+      "links": [
+        "start"
+      ],
+      "required_level": 5
+    },
+    {
+      "id": "exacting_strike",
+      "name": "Exacting Strike",
+      "description": "+10% critical damage",
+      "type": "notable",
+      "x": 35,
+      "y": 140,
+      "links": [
+        "anatomy"
+      ],
+      "cost": 2,
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:critical",
+          "damage": 0.1
+        }
+      ]
+    },
+    {
+      "id": "death_sentence",
+      "name": "Death Sentence",
+      "description": "unlocks Sentence ability",
+      "type": "notable",
+      "x": -35,
+      "y": 140,
+      "links": [
+        "steady"
+      ],
+      "cost": 2,
+      "required_level": 20,
+      "grants": [
+        "pipican:executioner/sentence"
+      ]
+    },
+    {
+      "id": "inevitable",
+      "name": "Inevitable",
+      "description": "executed mobs drop +1 Looting; -10% max health",
+      "type": "keystone",
+      "x": 0,
+      "y": 210,
+      "links": [
+        "exacting_strike",
+        "death_sentence"
+      ],
+      "cost": 3,
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "execute_looting",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Mutability",
+  "description": "How freely your body changes.",
+  "max": 100,
+  "exclusive": true,
+  "color": -2519494
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Animate Object",
+  "description": "turn a placed block - e.g. an anvil or cauldron - into a temporary friendly construct for 60s, 50 Voltage",
+  "icon": "minecraft:anvil",
+  "cost": 50,
+  "cooldown_ticks": 1200,
+  "actions": [
+    {
+      "type": "pipican:summon",
+      "entity": "minecraft:iron_golem",
+      "count": 1,
+      "seconds": 60,
+      "ally": true
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "tree": "pipican:stat",
+  "nodes": [
+    {
+      "id": "thief_stat_start",
+      "name": "Thief",
+      "type": "start",
+      "x": -78,
+      "y": 443
+    },
+    {
+      "id": "thief_deft",
+      "name": "Deft",
+      "description": "+2 Dexterity, +1 Agility",
+      "type": "small",
+      "x": -89,
+      "y": 502,
+      "links": [
+        "thief_stat_start"
+      ],
+      "cost": 2,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:dexterity",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "id": "thief_fortune",
+      "name": "Fortune",
+      "description": "+2 Luck, +1 Agility",
+      "type": "small",
+      "x": -99,
+      "y": 561,
+      "links": [
+        "thief_deft"
+      ],
+      "cost": 2,
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:luck",
+          "amount": 2
+        },
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:agility",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Purity",
+  "description": "The holy power you wield against the unclean.",
+  "max": 100,
+  "exclusive": true,
+  "color": -1642766
+}

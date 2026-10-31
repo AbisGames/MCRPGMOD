@@ -1,0 +1,66 @@
+{
+  "name": "Stoneheart",
+  "description": "Trained by absorbing damage with Earthen Defense.",
+  "icon": "minecraft:cobblestone",
+  "trigger": {
+    "type": "pipican:did",
+    "action": "absorb"
+  },
+  "points_to": "special",
+  "classes": [
+    "pipican:geomancer"
+  ],
+  "tiers": [
+    {
+      "description": "+1 Bedrock",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:geomancer_bedrock",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+1 Bedrock",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:geomancer_bedrock",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+10% Earthen Defense regen",
+      "effects": [
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "description": "+1 Bedrock",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:geomancer_bedrock",
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "description": "+2 Bedrock",
+      "effects": [
+        {
+          "type": "pipican:stat",
+          "stat": "pipican:geomancer_bedrock",
+          "amount": 2
+        }
+      ]
+    }
+  ]
+}
