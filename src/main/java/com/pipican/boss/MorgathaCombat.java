@@ -32,7 +32,7 @@ public final class MorgathaCombat {
     private static RegionalCombatClock.Timing time(BossDesigns.Design d,int i){var a=d.abilities().get(i);return new RegionalCombatClock.Timing(a.windup(),a.recovery(),a.cooldown());}
     public RegionalCombatClock clock(){return clock;}
     public int phaseWaveDelay(){return phaseWaveDelay;}
-    public Vec3 phaseWaveTarget(){return waveOrigin.add(Math.cos(heading)*6,0,Math.sin(heading)*6);}
+    public Vec3 phaseWaveTarget(){return waveOrigin.add(Math.cos(heading)*3.36,0,Math.sin(heading)*3.36);}
     public boolean begin(String id,LivingEntity target){if(target==null||!target.isAlive()||!boss.insideArena(target.position())||!clock.begin(id))return false;
         origin=boss.position();mark=target.position();heading=Math.atan2(mark.z-origin.z,mark.x-origin.x);phase=clock.phase();
         if(id.equals(BUBBLES)){Vec3 side=new Vec3(-Math.sin(heading),0,Math.cos(heading));bubbles=List.of(mark,mark.add(side.scale(3.2)),mark.subtract(side.scale(3.2)));burst=List.of(false,false,false);}

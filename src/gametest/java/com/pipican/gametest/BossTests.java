@@ -40,7 +40,9 @@ public final class BossTests {
         Map.entry("akhmar_sun_encounter",BossTests::akhmarSunEncounter),
         Map.entry("akhmar_combat",BossTests::akhmarCombat),
         Map.entry("netharis_river_encounter",BossTests::netharisRiverEncounter),
-        Map.entry("netharis_combat",BossTests::netharisCombat));
+        Map.entry("netharis_combat",BossTests::netharisCombat),
+        Map.entry("zahira_spice_encounter",BossTests::zahiraSpiceEncounter),
+        Map.entry("zahira_combat",BossTests::zahiraCombat));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -51,7 +53,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==15,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==16,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -102,6 +104,8 @@ public final class BossTests {
         helper.assertTrue(akhmar.functional()&&akhmar.sigil().registered()&&akhmar.loot().trophyItem().equals("pipican:akhmar_sand_emperor_trophy"),"Akhmar sand emperor metadata is incomplete");
         var netharis=BossDesigns.require("netharis_river_guardian");
         helper.assertTrue(netharis.functional()&&netharis.sigil().registered()&&netharis.loot().trophyItem().equals("pipican:netharis_river_guardian_trophy"),"Netharis river guardian metadata is incomplete");
+        var zahira=BossDesigns.require("zahira_crimson_corsair");
+        helper.assertTrue(zahira.functional()&&zahira.sigil().registered()&&zahira.loot().trophyItem().equals("pipican:zahira_crimson_corsair_trophy"),"Zahira crimson corsair metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -114,7 +118,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil","netharis_river_guardian_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil","netharis_river_guardian_sigil","zahira_crimson_corsair_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -155,6 +159,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("riverlands").get(),BossContent.CORE.get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunstone").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("riverlands").get(),net.minecraft.world.item.Items.GLOW_INK_SAC));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("spice_coast").get(),BossContent.CORE.get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("spice_coast").get(),net.minecraft.world.item.Items.FIRE_CHARGE));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -554,6 +561,46 @@ public final class BossTests {
             interrupted.tick(level);helper.assertTrue(interrupted.brokenAnchors()==3,"projectiles did not interrupt all tributary anchors");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());interrupted.save(saved);
             var reloaded=new NetharisCombat(boss);reloaded.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));for(int i=0;i<59;i++)reloaded.tick(level);
             helper.assertTrue(reloaded.clock().phase()==2&&reloaded.brokenAnchors()==3&&front.getHealth()==20&&reloaded.exposureTicks()>0,"phase-two interrupted surge or anchor exposure did not persist");helper.succeed();
+        }finally{front.discard();refuge.discard();boss.discard();}
+    }
+    private static void zahiraSpiceEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(5120,32,5120));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.ZAHIRA_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,"Zahira altar accepted a non-Spice Coast biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/spice_coast")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Spice Coast biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Zahira spawn consumed its sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Spice Coast altar summon failed");
+            var boss=level.getEntitiesOfClass(ZahiraEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Zahira spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("zahira_crimson_corsair"),"Zahira encounter type was not saved");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.ZAHIRA_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Zahira trophy/Saffron Gold rewards missing");helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void zahiraCombat(GameTestHelper helper){
+        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(57000,30,57000));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.CUT_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(front);level.addFreshEntity(refuge);
+        var boss=BossRegistries.ZAHIRA.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
+        try{
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+12,origin.getY(),origin.getZ());var boarding=new ZahiraCombat(boss);helper.assertTrue(boarding.begin(ZahiraCombat.BOARDING,front),"Zahira boarding lines failed to begin");var landing=boarding.boardingLandingPosition(0);front.snapTo(landing.x,landing.y,landing.z);refuge.snapTo(origin.getX()+7,origin.getY(),origin.getZ()-2.4);
+            for(int i=0;i<40;i++)boarding.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()==20,"Zahira boarding route landed before warning");boarding.tick(level);boarding.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20&&boarding.boardingProgress()==1,"marked boarding landing or sidestep counterplay failed");
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+4,origin.getY(),origin.getZ());refuge.setHealth(20);refuge.invulnerableTime=0;refuge.snapTo(origin.getX()+4,origin.getY(),origin.getZ()+2.4);
+            var broadside=new ZahiraCombat(boss);helper.assertTrue(broadside.begin(ZahiraCombat.BROADSIDE,front),"Zahira broadside failed to start");var shot=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(shot!=null,"Zahira cannon interrupt arrow failed to create");var gun=broadside.cannonPosition(0);shot.setPos(gun.x,gun.y,gun.z);shot.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);shot.setNoGravity(true);level.addFreshEntity(shot);broadside.tick(level);helper.assertTrue(broadside.disabledCannons()==1&&!shot.isAlive(),"lit broadside cannon was not interruptible");
+            for(int i=0;i<48;i++)broadside.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()==20,"Zahira broadside fired before the lane warning");broadside.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20,"Zahira interrupted cannon lane or between-barrel refuge failed");
+            front.setHealth(20);front.invulnerableTime=0;var fuses=new ZahiraCombat(boss);helper.assertTrue(fuses.begin(ZahiraCombat.FUSES,front),"Zahira fuse dance failed to start");var bomb=fuses.bombPosition(0);front.snapTo(bomb.x,bomb.y,bomb.z);refuge.setHealth(20);refuge.invulnerableTime=0;refuge.snapTo(bomb.x+4.2,bomb.y,bomb.z+2);
+            for(int i=0;i<60;i++)fuses.tick(level);helper.assertTrue(fuses.fuse(0)==16&&front.getHealth()==20,"Zahira fuse did not start at the announced detonation time");for(int i=0;i<15;i++)fuses.tick(level);helper.assertTrue(front.getHealth()==20,"Zahira first bomb exploded before its individual fuse ended");fuses.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20&&fuses.activeBombs()==2,"fixed bomb circle or independent fuse timing failed");
+            var kicked=new ZahiraCombat(boss);helper.assertTrue(kicked.updatePhase(350,700)&&kicked.begin(ZahiraCombat.FUSES,front),"Zahira phase-two fuse attack failed");for(int i=0;i<60;i++)kicked.tick(level);net.minecraft.world.phys.Vec3 original=kicked.bombPosition(0);var kick=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(kick!=null,"Zahira bomb-kick projectile failed to create");kick.setPos(original.x,original.y,original.z);kick.setDeltaMovement(new net.minecraft.world.phys.Vec3(0,0,1));kick.setNoGravity(true);level.addFreshEntity(kick);kicked.tick(level);
+            helper.assertTrue(kicked.bombPosition(0).distanceToSqr(original)>9&&kicked.fuse(0)==15,"bomb kick failed to redirect the marked explosion");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());kicked.save(saved);var restored=new ZahiraCombat(boss);restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));
+            helper.assertTrue(restored.clock().phase()==2&&restored.bombPosition(0).distanceToSqr(original)>9&&restored.fuse(0)==15,"phase, kicked bomb location or fuse clock was lost on reload");helper.succeed();
         }finally{front.discard();refuge.discard();boss.discard();}
     }
     private static void realAttacks(GameTestHelper helper){

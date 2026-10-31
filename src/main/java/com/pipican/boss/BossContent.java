@@ -40,6 +40,8 @@ public final class BossContent {
     public static final DeferredItem<Item> AKHMAR_TROPHY=ITEMS.registerSimpleItem("akhmar_sand_emperor_trophy");
     public static final DeferredItem<Item> NETHARIS_SIGIL=ITEMS.registerSimpleItem("netharis_river_guardian_sigil");
     public static final DeferredItem<Item> NETHARIS_TROPHY=ITEMS.registerSimpleItem("netharis_river_guardian_trophy");
+    public static final DeferredItem<Item> ZAHIRA_SIGIL=ITEMS.registerSimpleItem("zahira_crimson_corsair_sigil");
+    public static final DeferredItem<Item> ZAHIRA_TROPHY=ITEMS.registerSimpleItem("zahira_crimson_corsair_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

@@ -388,5 +388,8 @@
   "entity.pipican.akhmar_sand_emperor": "Akhmar, Sand Emperor",
   "item.pipican.netharis_river_guardian_sigil": "Netharis' River Sigil",
   "item.pipican.netharis_river_guardian_trophy": "River Guardian's Crest",
-  "entity.pipican.netharis_river_guardian": "Netharis, River Guardian"
+  "entity.pipican.netharis_river_guardian": "Netharis, River Guardian",
+  "item.pipican.zahira_crimson_corsair_sigil": "Zahira's Corsair Sigil",
+  "item.pipican.zahira_crimson_corsair_trophy": "Corsair's Crimson Cutlass",
+  "entity.pipican.zahira_crimson_corsair": "Zahira, Crimson Corsair"
 }

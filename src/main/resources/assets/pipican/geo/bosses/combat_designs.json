@@ -1457,12 +1457,12 @@
   {
     "id": "zahira_crimson_corsair",
     "region": "spice_coast",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 700,
     "damage": 14,
     "sigil": {
-      "planned_item_id": "pipican:zahira_crimson_corsair_sigil",
+      "item": "pipican:zahira_crimson_corsair_sigil",
       "regional_material": "pipican:saffron_gold",
       "regional_count": 5,
       "dungeon_material": "pipican:spice_coast_boss_core",
@@ -1475,33 +1475,33 @@
     "abilities": [
       {
         "id": "boarding_lines",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Spectral grappling lines preview the corsair boarding route.",
         "counterplay": "Move away from the rope landing or punish the boarding recovery.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:zahira_crimson_corsair/boarding_lines"
+        "animation": "zahira_crimson_corsair/boarding_lines"
       },
       {
         "id": "broadside",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Side cannons light their barrels before firing straight lanes.",
         "counterplay": "Use gaps between barrels or interrupt the lit cannon.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:zahira_crimson_corsair/broadside"
+        "animation": "zahira_crimson_corsair/broadside"
       },
       {
         "id": "fuse_dance",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Rolling bombs display individual fuses and fixed detonation circles.",
         "counterplay": "Kick or leave a bomb before its own fuse expires.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:zahira_crimson_corsair/fuse_dance"
+        "animation": "zahira_crimson_corsair/fuse_dance"
       }
     ],
     "phase_two": {
@@ -1512,7 +1512,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:saffron_gold",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:zahira_crimson_corsair_trophy",
       "planned_trophy_name": "Zahira Crimson Corsair Trophy",
       "xp": 175
     },
@@ -1520,16 +1520,16 @@
       "geometry": "geometry.pipican.zahira_crimson_corsair",
       "file": "geo/bosses/zahira_crimson_corsair.geo.json",
       "animation_mapping": {
-        "idle": "planned:zahira_crimson_corsair/idle",
-        "walk": "planned:zahira_crimson_corsair/walk",
-        "basic_attack": "planned:zahira_crimson_corsair/basic_attack",
-        "hurt": "planned:zahira_crimson_corsair/hurt",
-        "phase_transition": "planned:zahira_crimson_corsair/phase_transition",
-        "summoning": "planned:zahira_crimson_corsair/summoning",
-        "death": "planned:zahira_crimson_corsair/death",
-        "boarding_lines": "planned:zahira_crimson_corsair/boarding_lines",
-        "broadside": "planned:zahira_crimson_corsair/broadside",
-        "fuse_dance": "planned:zahira_crimson_corsair/fuse_dance"
+        "idle": "zahira_crimson_corsair/idle",
+        "walk": "zahira_crimson_corsair/walk",
+        "basic_attack": "zahira_crimson_corsair/basic_attack",
+        "hurt": "zahira_crimson_corsair/hurt",
+        "phase_transition": "zahira_crimson_corsair/phase_transition",
+        "summoning": "zahira_crimson_corsair/summoning",
+        "death": "zahira_crimson_corsair/death",
+        "boarding_lines": "zahira_crimson_corsair/boarding_lines",
+        "broadside": "zahira_crimson_corsair/broadside",
+        "fuse_dance": "zahira_crimson_corsair/fuse_dance"
       }
     },
     "arena": {

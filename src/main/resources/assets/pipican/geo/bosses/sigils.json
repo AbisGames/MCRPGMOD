@@ -88,5 +88,11 @@
     "boss": "netharis_river_guardian",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:zahira_crimson_corsair_sigil",
+    "boss": "zahira_crimson_corsair",
+    "min_y": -64,
+    "max_y": 448
   }
 ]
