@@ -26,6 +26,19 @@
       {
         "id": "electrum_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "electrum_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_electrum",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:electrum:45",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -457,6 +470,149 @@
       {
         "id": "tin_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "iron_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_iron",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:iron:60",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "steel_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_steel",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:steel:60",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "tin_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_tin",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:tin:90",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "pewter_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_pewter",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:pewter:60",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "copper_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_copper",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:copper:90",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "bronze_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_bronze",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:bronze:90",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "brass_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_brass",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:brass:45",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "bendalloy_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_bendalloy",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:bendalloy:30",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "gold_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_gold",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:gold:45",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "nicrosil_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_nicrosil",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:nicrosil:45",
+          "animation": "drink"
+        }
+      },
+      {
+        "id": "duralumin_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_duralumin",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:duralumin:1",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -1378,6 +1534,19 @@
       {
         "id": "zinc_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "zinc_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_zinc",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:zinc:45",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -2624,6 +2793,19 @@
       {
         "id": "cadmium_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "cadmium_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_cadmium",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:cadmium:30",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -4274,6 +4456,19 @@
       {
         "id": "chromium_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "chromium_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_chromium",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:chromium:45",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -4315,6 +4510,10 @@
       {
         "id": "nickel_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "nickel_flakes",
+        "kind": "extra"
       }
     ],
     "storage": [
@@ -5912,6 +6111,19 @@
       {
         "id": "aluminum_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "aluminum_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_aluminum",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:aluminum:1",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -8076,6 +8288,19 @@
       {
         "id": "atium_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "atium_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_atium",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:atium:20",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -8612,6 +8837,19 @@
       {
         "id": "trellium_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "trellium_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_trellium",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:trellium:60",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [
@@ -8759,7 +8997,12 @@
       },
       {
         "id": "lerasium_ingot",
-        "kind": "ingot"
+        "kind": "ingot",
+        "consume": {
+          "effects": [],
+          "action": "mistborn",
+          "animation": "eat"
+        }
       }
     ],
     "storage": [
@@ -9037,6 +9280,19 @@
       {
         "id": "malatium_ingot",
         "kind": "ingot"
+      },
+      {
+        "id": "malatium_flakes",
+        "kind": "extra"
+      },
+      {
+        "id": "vial_of_malatium",
+        "kind": "extra",
+        "consume": {
+          "effects": [],
+          "action": "burn:malatium:60",
+          "animation": "drink"
+        }
       }
     ],
     "storage": [

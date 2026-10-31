@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:nickel_flakes",
+    "pipican:chromium_flakes"
+  ],
+  "result": {
+    "id": "pipican:nicrosil_flakes",
+    "count": 2
+  }
+}

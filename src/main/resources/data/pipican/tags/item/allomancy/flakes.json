@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:aluminum_flakes",
+    "pipican:atium_flakes",
+    "pipican:bendalloy_flakes",
+    "pipican:brass_flakes",
+    "pipican:bronze_flakes",
+    "pipican:cadmium_flakes",
+    "pipican:chromium_flakes",
+    "pipican:copper_flakes",
+    "pipican:duralumin_flakes",
+    "pipican:electrum_flakes",
+    "pipican:gold_flakes",
+    "pipican:iron_flakes",
+    "pipican:malatium_flakes",
+    "pipican:nickel_flakes",
+    "pipican:nicrosil_flakes",
+    "pipican:pewter_flakes",
+    "pipican:steel_flakes",
+    "pipican:tin_flakes",
+    "pipican:trellium_flakes",
+    "pipican:zinc_flakes"
+  ]
+}

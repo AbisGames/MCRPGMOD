@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:copper_flakes",
+    "pipican:copper_flakes",
+    "pipican:tin_flakes"
+  ],
+  "result": {
+    "id": "pipican:bronze_flakes",
+    "count": 3
+  }
+}

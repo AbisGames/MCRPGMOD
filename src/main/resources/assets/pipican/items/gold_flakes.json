@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/gold_flakes",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -866752
+      }
+    ]
+  }
+}

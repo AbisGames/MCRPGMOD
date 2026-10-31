@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:cadmium_ingot"
+  ],
+  "result": {
+    "id": "pipican:cadmium_flakes",
+    "count": 4
+  }
+}

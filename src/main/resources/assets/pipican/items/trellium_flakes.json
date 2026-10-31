@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/trellium_flakes",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8758132
+      }
+    ]
+  }
+}

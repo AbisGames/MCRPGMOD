@@ -26,6 +26,19 @@ final class MovementClient {
         }
     }
 
+    private static long lastSteelPush;
+    private static final net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> METAL_BLOCKS =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, com.pipican.Pipican.id("allomancy/metal_blocks"));
+
+    private static boolean metalBelow(net.minecraft.world.level.Level level, BlockPos feet) {
+        for (int d = 1; d <= 5; d++) {
+            if (level.getBlockState(feet.below(d)).is(METAL_BLOCKS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     static void onPlayerTick(PlayerTickEvent.Pre event) {
         if (!(event.getEntity() instanceof LocalPlayer player) || player != Minecraft.getInstance().player) {
             return;
@@ -63,6 +76,12 @@ final class MovementClient {
             return;
         }
         long now = level.getGameTime();
+        // Steel (Allomancy): jump in mid-air with metal up to 5 blocks below to push off it.
+        if (pressed && flags.has("steel_push") && now - lastSteelPush >= 20 && metalBelow(level, player.blockPosition())) {
+            player.setDeltaMovement(v.x, 1.0, v.z);
+            lastSteelPush = now;
+            return;
+        }
         if (pressed && flags.has("double_jump") && !airJumpUsed && now - lastAirJump >= 100) {
             player.setDeltaMovement(v.x, 0.42 + player.getJumpBoostPower(), v.z);
             airJumpUsed = true;

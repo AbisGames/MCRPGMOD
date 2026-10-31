@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/nickel_flakes",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4869990
+      }
+    ]
+  }
+}

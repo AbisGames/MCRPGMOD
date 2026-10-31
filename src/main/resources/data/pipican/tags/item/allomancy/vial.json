@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:vial_of_aluminum",
+    "pipican:vial_of_atium",
+    "pipican:vial_of_bendalloy",
+    "pipican:vial_of_brass",
+    "pipican:vial_of_bronze",
+    "pipican:vial_of_cadmium",
+    "pipican:vial_of_chromium",
+    "pipican:vial_of_copper",
+    "pipican:vial_of_duralumin",
+    "pipican:vial_of_electrum",
+    "pipican:vial_of_gold",
+    "pipican:vial_of_iron",
+    "pipican:vial_of_malatium",
+    "pipican:vial_of_nicrosil",
+    "pipican:vial_of_pewter",
+    "pipican:vial_of_steel",
+    "pipican:vial_of_tin",
+    "pipican:vial_of_trellium",
+    "pipican:vial_of_zinc"
+  ]
+}

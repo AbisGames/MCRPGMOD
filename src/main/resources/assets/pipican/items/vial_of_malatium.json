@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/vial_of_malatium",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5201286
+      }
+    ]
+  }
+}

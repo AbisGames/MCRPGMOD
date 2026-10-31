@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:tin_flakes",
+    "pipican:tin_flakes",
+    "pipican:iron_flakes"
+  ],
+  "result": {
+    "id": "pipican:pewter_flakes",
+    "count": 3
+  }
+}

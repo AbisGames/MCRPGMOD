@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/pewter_flakes",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7432807
+      }
+    ]
+  }
+}

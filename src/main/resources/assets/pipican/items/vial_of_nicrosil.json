@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/vial_of_nicrosil",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5654862
+      }
+    ]
+  }
+}

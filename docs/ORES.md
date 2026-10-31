@@ -118,13 +118,46 @@ Allomancy metals come in phase 5, Tamashigane in phase 6.
 - **Chaos Emeralds**: with all seven, right-click for a 30-second super form (flight, Strength III, Resistance III,
   Speed II; 10-minute cooldown).
 
+## Allomancy (phase 5)
+
+`tools/ore_builder/mistborn.py` (data) and `com.pipican.ore.Allomancy` (effects). Grind an ingot into 4 **flakes**
+(alloy flakes are mixed: steel = 2 iron + coal, pewter = 2 tin + iron, bronze = 2 copper + tin, brass = copper + zinc,
+bendalloy = cadmium + tin, duralumin = aluminum + copper, nicrosil = nickel + chromium); a glass bottle and 2 flakes
+make a **vial**; drink it to **burn** the metal. A player burns one metal at a time - a new vial replaces the old burn -
+unless they ate **Lerasium** (only one exists per world) and are **Mistborn**: then any number at once. The action bar
+shows what burns and for how long.
+
+| Metal | While burning |
+|---|---|
+| Iron | metal items and metal-armored creatures are pulled toward you |
+| Steel | jump in mid-air with metal up to 5 blocks below to launch upward; your arrows hit 30% harder |
+| Tin | night vision; creatures within 24 blocks glow |
+| Pewter | Strength, Resistance, Haste |
+| Copper | your burning is hidden from Bronze; creatures beyond 8 blocks can't target you |
+| Bronze | tells you how many Allomancers burn within 48 blocks |
+| Zinc | hostile creatures within 12 blocks turn on each other |
+| Brass | creatures within 12 blocks lose interest in you |
+| Cadmium | a slow-time bubble: everything within 6 blocks slowed |
+| Bendalloy | a speed bubble: you and players within 4 blocks fast, quick-handed and healing |
+| Gold | shows where you last died |
+| Electrum | 25% dodge |
+| Chromium | your hits strip the target's buffs - and a player's burning metals |
+| Nicrosil | right-click an ally: Strength and Speed, and their burns last 30 s longer |
+| Aluminum | drinking it wipes every burn and every effect on you |
+| Duralumin | drinking it flares everything you burn at triple strength for 5 s, then burns it out |
+| Malatium | hitting a creature reveals its health and armor; you deal 20% more damage to it after |
+| Atium | 85% dodge (20 s) |
+| Trellium | creatures beyond 4 blocks can't find you |
+
+**Harmonium** explodes when it touches water.
+
 ## Phases
 
 1. **Ores, worldgen, materials** — done.
 2. **Armor, tools and weapons, set bonuses** — done.
 3. **Special uses** — done.
 4. **Alloys, upgrades, world mechanics, limited ores** — done.
-5. Mistborn Allomancy.
+5. **Mistborn Allomancy** — done.
 6. Tamashigane.
 
 ## Regional mines

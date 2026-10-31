@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/tin_flakes",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3551533
+      }
+    ]
+  }
+}

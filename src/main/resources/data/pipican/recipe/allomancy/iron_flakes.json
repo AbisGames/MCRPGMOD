@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:iron_ingot"
+  ],
+  "result": {
+    "id": "pipican:iron_flakes",
+    "count": 4
+  }
+}

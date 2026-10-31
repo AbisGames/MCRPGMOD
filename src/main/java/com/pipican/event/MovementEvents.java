@@ -37,6 +37,10 @@ public final class MovementEvents {
                     flags.add(kind.name().toLowerCase(Locale.ROOT));
                 }
             }
+            // Allomancy: burning Steel lets the client push off metal below.
+            if (com.pipican.ore.Allomancy.burning(player, "steel")) {
+                flags.add("steel_push");
+            }
             if (!flags.equals(player.getData(PipicanAttachments.MOVE_FLAGS).flags())) {
                 player.setData(PipicanAttachments.MOVE_FLAGS, new PipicanAttachments.MoveFlags(List.copyOf(flags)));
                 player.syncData(PipicanAttachments.MOVE_FLAGS);
@@ -46,6 +50,10 @@ public final class MovementEvents {
             return;
         }
         double dy = player.getY() - player.yo;
+        if (dy > 0 && com.pipican.ore.Allomancy.burning(player, "steel")) {
+            player.resetFallDistance();
+            player.connection.aboveGroundTickCount = 0;
+        }
         boolean glide = state.chance(Kind.GLIDE) > 0 && dy > -0.6 && dy < 0;
         boolean climb = (state.chance(Kind.WALL_CLIMB) > 0 || state.chance(Kind.WALL_RUN) > 0) && player.horizontalCollision;
         if (glide || climb) {

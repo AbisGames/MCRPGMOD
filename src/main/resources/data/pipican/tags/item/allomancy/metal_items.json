@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ingots",
+    "#c:nuggets",
+    "#c:raw_materials",
+    "#minecraft:chains",
+    "minecraft:anvil",
+    "minecraft:bucket",
+    "minecraft:chainmail_boots",
+    "minecraft:chainmail_chestplate",
+    "minecraft:chainmail_helmet",
+    "minecraft:chainmail_leggings",
+    "minecraft:golden_boots",
+    "minecraft:golden_chestplate",
+    "minecraft:golden_helmet",
+    "minecraft:golden_leggings",
+    "minecraft:golden_sword",
+    "minecraft:iron_axe",
+    "minecraft:iron_boots",
+    "minecraft:iron_chestplate",
+    "minecraft:iron_helmet",
+    "minecraft:iron_hoe",
+    "minecraft:iron_leggings",
+    "minecraft:iron_pickaxe",
+    "minecraft:iron_shovel",
+    "minecraft:iron_sword",
+    "minecraft:minecart",
+    "minecraft:shears"
+  ]
+}

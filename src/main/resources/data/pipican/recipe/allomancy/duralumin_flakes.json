@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:aluminum_flakes",
+    "pipican:copper_flakes"
+  ],
+  "result": {
+    "id": "pipican:duralumin_flakes",
+    "count": 2
+  }
+}

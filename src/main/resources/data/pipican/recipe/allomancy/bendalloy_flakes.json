@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:cadmium_flakes",
+    "pipican:tin_flakes"
+  ],
+  "result": {
+    "id": "pipican:bendalloy_flakes",
+    "count": 2
+  }
+}

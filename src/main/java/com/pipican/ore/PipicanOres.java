@@ -58,6 +58,8 @@ public final class PipicanOres {
     private static final Map<String, DeferredItem<? extends Item>> ITEMS_BY_PATH = new HashMap<>();
     /** Each ore's special uses (phase 3; tools/ore_builder/specials.py): brew, consume, coating, block. Empty when none. */
     private static final Map<String, JsonObject> SPECIAL = new HashMap<>();
+    /** Item path -> what using it up does ("burn:tin:90", "mistborn", "refill_resource"...). */
+    private static final Map<String, String> ACTIONS = new HashMap<>();
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = TABS.register("ores", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.pipican.ores"))
@@ -126,11 +128,16 @@ public final class PipicanOres {
             blockItem(ore, id, block, rarity);
         }
         for (JsonElement e : json.getAsJsonArray("items")) {
-            String id = e.getAsJsonObject().get("id").getAsString();
-            // A gem with a "consume" use is used up on right-click (its effects are applied; Java actions in SpecialOreEvents).
-            boolean consumable = special.has("consume") && id.equals(ore.id());
-            DeferredItem<Item> item = ITEMS.registerSimpleItem(id, () -> consumable
-                    ? itemProps(tier, rarity).component(net.minecraft.core.component.DataComponents.CONSUMABLE, consumable(special.getAsJsonObject("consume")))
+            JsonObject entry = e.getAsJsonObject();
+            String id = entry.get("id").getAsString();
+            // Used up on right-click: a gem with a "consume" use, or an item with its own (Allomancy vials, Lerasium).
+            JsonObject consume = entry.has("consume") ? entry.getAsJsonObject("consume")
+                    : special.has("consume") && id.equals(ore.id()) ? special.getAsJsonObject("consume") : null;
+            if (consume != null && consume.has("action") && !consume.get("action").getAsString().isEmpty()) {
+                ACTIONS.put(id, consume.get("action").getAsString());
+            }
+            DeferredItem<Item> item = ITEMS.registerSimpleItem(id, () -> consume != null
+                    ? itemProps(tier, rarity).component(net.minecraft.core.component.DataComponents.CONSUMABLE, consumable(consume))
                     : itemProps(tier, rarity));
             TAB_ITEMS.add(item);
             ITEMS_BY_PATH.put(id, item);
@@ -227,6 +234,11 @@ public final class PipicanOres {
     }
 
 
+    /** What using up this item (by registry path) does, or "" (handled in SpecialOreEvents / Allomancy). */
+    public static String action(String path) {
+        return ACTIONS.getOrDefault(path, "");
+    }
+
     public static JsonObject special(String oreId) {
         return SPECIAL.getOrDefault(oreId, new JsonObject());
     }
@@ -239,8 +251,13 @@ public final class PipicanOres {
                     .orElseThrow(() -> new IllegalStateException("unknown effect " + effect));
             effects.add(new net.minecraft.world.effect.MobEffectInstance(holder, Math.max(1, effect.get("seconds").getAsInt() * 20), effect.get("amplifier").getAsInt()));
         }
-        var builder = net.minecraft.world.item.component.Consumable.builder().consumeSeconds(0.8f)
-                .animation(net.minecraft.world.item.ItemUseAnimation.BRUSH)
+        String animation = consume.has("animation") ? consume.get("animation").getAsString() : "brush";
+        var builder = net.minecraft.world.item.component.Consumable.builder().consumeSeconds(animation.equals("brush") ? 0.8f : 1.2f)
+                .animation(switch (animation) {
+                    case "drink" -> net.minecraft.world.item.ItemUseAnimation.DRINK;
+                    case "eat" -> net.minecraft.world.item.ItemUseAnimation.EAT;
+                    default -> net.minecraft.world.item.ItemUseAnimation.BRUSH;
+                })
                 .sound(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME)).hasConsumeParticles(false);
         if (!effects.isEmpty()) {
             builder.onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(effects));

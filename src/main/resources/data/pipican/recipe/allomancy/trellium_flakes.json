@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:trellium_ingot"
+  ],
+  "result": {
+    "id": "pipican:trellium_flakes",
+    "count": 4
+  }
+}

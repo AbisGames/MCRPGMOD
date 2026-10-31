@@ -99,11 +99,14 @@ public final class SpecialOreEvents {
         if (!key.getNamespace().equals(Pipican.MOD_ID)) {
             return;
         }
-        var special = PipicanOres.special(key.getPath());
-        if (!special.has("consume")) {
+        String action = PipicanOres.action(key.getPath());
+        if (action.startsWith("burn:")) {
+            String[] parts = action.split(":");
+            Allomancy.drink(player, parts[1], Integer.parseInt(parts[2]));
             return;
         }
-        switch (special.getAsJsonObject("consume").get("action").getAsString()) {
+        switch (action) {
+            case "mistborn" -> Allomancy.becomeMistborn(player);
             case "cure_poison" -> {
                 player.removeEffect(MobEffects.POISON);
                 player.removeEffect(MobEffects.WITHER);

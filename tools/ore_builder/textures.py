@@ -295,6 +295,28 @@ for _w in ('light', 'medium', 'heavy'):
     GEAR[f'entity/equipment/humanoid_leggings/plate_{_w}'] = (lambda w: lambda: armor_layer(w, True))(_w)
 
 
+def flakes():
+    """Metal flakes: small scattered shards."""
+    im = _img()
+    for x, y, v in [(4, 5, 250), (5, 5, 200), (9, 4, 230), (10, 5, 170), (6, 9, 240), (7, 9, 190), (7, 10, 150), (11, 9, 220),
+                    (12, 10, 160), (4, 12, 210), (5, 12, 150), (10, 13, 235), (11, 13, 175), (8, 7, 200), (13, 6, 190)]:
+        im.putpixel((x, y), _g(v))
+    return im
+
+
+def vial():
+    """A small stoppered vial; the liquid (light) takes the metal's colour, the glass and cork stay pale."""
+    im = _img()
+    d = ImageDraw.Draw(im)
+    d.rectangle([7, 2, 8, 3], fill=_g(150))            # cork
+    d.rectangle([6, 4, 9, 4], fill=_g(230))            # neck
+    d.rectangle([5, 5, 10, 13], fill=_g(235))          # glass
+    d.rectangle([6, 8, 9, 12], fill=_g(255))           # liquid
+    d.line([(6, 6), (6, 12)], fill=_g(250))            # glint
+    d.line([(5, 13), (10, 13)], fill=_g(170))
+    return im
+
+
 TEXTURES = {
     'block/ore_overlay_metal': ore_overlay_metal,
     'block/ore_overlay_gem': ore_overlay_gem,
@@ -304,6 +326,8 @@ TEXTURES = {
     'item/ingot': ingot,
     'item/raw_ore': raw,
     'item/gem': gem,
+    'item/flakes': flakes,
+    'item/vial': vial,
 }
 
 

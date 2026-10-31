@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "brewing",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "pipican:aluminum_flakes",
+    "pipican:aluminum_flakes"
+  ],
+  "result": {
+    "id": "pipican:vial_of_aluminum"
+  }
+}

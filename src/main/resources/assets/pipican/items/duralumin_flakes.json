@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/duralumin_flakes",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4143412
+      }
+    ]
+  }
+}

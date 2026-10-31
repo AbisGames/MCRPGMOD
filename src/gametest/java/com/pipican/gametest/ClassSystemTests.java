@@ -116,6 +116,7 @@ public final class ClassSystemTests {
         TESTS.put("gear_sets", ClassSystemTests::gearSets);
         TESTS.put("special_ores", ClassSystemTests::specialOres);
         TESTS.put("ore_mechanics", ClassSystemTests::oreMechanics);
+        TESTS.put("allomancy", ClassSystemTests::allomancy);
     }
 
     private ClassSystemTests() {}
@@ -333,6 +334,31 @@ public final class ClassSystemTests {
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
     /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    /** Phase 5: flakes and vials; a Misting burns one metal at a time, a Mistborn (Lerasium) every metal; Aluminum wipes. */
+    private static void allomancy(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        for (String recipe : List.of("allomancy/iron_flakes", "allomancy/steel_flakes", "allomancy/vial_of_pewter", "allomancy/nickel_flakes")) {
+            helper.assertTrue(server.getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, Pipican.id(recipe))).isPresent(), "recipe " + recipe);
+        }
+        var vial = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Pipican.id("vial_of_tin"));
+        helper.assertTrue(new ItemStack(vial).has(net.minecraft.core.component.DataComponents.CONSUMABLE), "vials can be drunk");
+        helper.assertTrue(com.pipican.ore.PipicanOres.action("vial_of_tin").startsWith("burn:tin:"), "a vial burns its metal");
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        com.pipican.ore.Allomancy.drink(player, "tin", 60);
+        com.pipican.ore.Allomancy.drink(player, "pewter", 60);
+        helper.assertTrue(!com.pipican.ore.Allomancy.burning(player, "tin") && com.pipican.ore.Allomancy.burning(player, "pewter"),
+                "a Misting burns one metal at a time");
+        helper.assertTrue(!com.pipican.ore.Allomancy.isMistborn(player), "not Mistborn yet");
+        com.pipican.ore.Allomancy.becomeMistborn(player);
+        com.pipican.ore.Allomancy.drink(player, "tin", 60);
+        helper.assertTrue(com.pipican.ore.Allomancy.burning(player, "tin") && com.pipican.ore.Allomancy.burning(player, "pewter"),
+                "a Mistborn burns several at once");
+        com.pipican.ore.Allomancy.drink(player, "aluminum", 1);
+        helper.assertTrue(!com.pipican.ore.Allomancy.burning(player, "tin") && !com.pipican.ore.Allomancy.burning(player, "pewter"), "aluminum wipes them");
+        helper.succeed();
+    }
+
     /** Phase 4: alloys, blacksmith substitutes, meteors, spreading ores, Quantanium, transmutation, mutation. */
     private static void oreMechanics(GameTestHelper helper) {
         var level = helper.getLevel();
