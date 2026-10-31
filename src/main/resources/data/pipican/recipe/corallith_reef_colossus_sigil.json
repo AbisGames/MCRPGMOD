@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SCR",
+    "SCB"
+  ],
+  "key": {
+    "S": "pipican:tidalite",
+    "C": "pipican:coral_isles_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:tube_coral"
+  },
+  "result": {
+    "id": "pipican:corallith_reef_colossus_sigil",
+    "count": 1
+  }
+}

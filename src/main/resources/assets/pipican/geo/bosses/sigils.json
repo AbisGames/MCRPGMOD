@@ -100,5 +100,11 @@
     "boss": "xaltek_emerald_devourer",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:corallith_reef_colossus_sigil",
+    "boss": "corallith_reef_colossus",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

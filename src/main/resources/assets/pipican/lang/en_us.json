@@ -394,5 +394,8 @@
   "entity.pipican.zahira_crimson_corsair": "Zahira, Crimson Corsair",
   "item.pipican.xaltek_emerald_devourer_sigil": "Xaltek's Verdant Sigil",
   "item.pipican.xaltek_emerald_devourer_trophy": "Emerald Devourer Crest",
-  "entity.pipican.xaltek_emerald_devourer": "Xaltek, Emerald Devourer"
+  "entity.pipican.xaltek_emerald_devourer": "Xaltek, Emerald Devourer",
+  "item.pipican.corallith_reef_colossus_sigil": "Corallith Reef Sigil",
+  "item.pipican.corallith_reef_colossus_trophy": "Colossus Coral Crown",
+  "entity.pipican.corallith_reef_colossus": "Corallith, Reef Colossus"
 }

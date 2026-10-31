@@ -1627,12 +1627,11 @@
   {
     "id": "corallith_reef_colossus",
     "region": "coral_isles",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1000,
     "damage": 16,
     "sigil": {
-      "planned_item_id": "pipican:corallith_reef_colossus_sigil",
       "regional_material": "pipican:tidalite",
       "regional_count": 5,
       "dungeon_material": "pipican:coral_isles_boss_core",
@@ -1640,38 +1639,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:tube_coral",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:corallith_reef_colossus_sigil"
     },
     "abilities": [
       {
         "id": "coral_gates",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Temporary coral silhouettes form an advancing broken ring.",
         "counterplay": "Use its clearly unoccupied gate; no permanent coral blocks are placed.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:corallith_reef_colossus/coral_gates"
+        "animation": "corallith_reef_colossus/coral_gates"
       },
       {
         "id": "reef_echo",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A sonar sector repeats once with a separate warning.",
         "counterplay": "Dodge the first sector and its announced echo direction.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:corallith_reef_colossus/reef_echo"
+        "animation": "corallith_reef_colossus/reef_echo"
       },
       {
         "id": "urchin_fan",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Slow urchins spread from previewed sockets.",
         "counterplay": "Move between sockets or destroy the slow urchin before contact.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:corallith_reef_colossus/urchin_fan"
+        "animation": "corallith_reef_colossus/urchin_fan"
       }
     ],
     "phase_two": {
@@ -1682,7 +1682,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:tidalite",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:corallith_reef_colossus_trophy",
       "planned_trophy_name": "Corallith Reef Colossus Trophy",
       "xp": 250
     },
@@ -1690,16 +1690,16 @@
       "geometry": "geometry.pipican.corallith_reef_colossus",
       "file": "geo/bosses/corallith_reef_colossus.geo.json",
       "animation_mapping": {
-        "idle": "planned:corallith_reef_colossus/idle",
-        "walk": "planned:corallith_reef_colossus/walk",
-        "basic_attack": "planned:corallith_reef_colossus/basic_attack",
-        "hurt": "planned:corallith_reef_colossus/hurt",
-        "phase_transition": "planned:corallith_reef_colossus/phase_transition",
-        "summoning": "planned:corallith_reef_colossus/summoning",
-        "death": "planned:corallith_reef_colossus/death",
-        "coral_gates": "planned:corallith_reef_colossus/coral_gates",
-        "reef_echo": "planned:corallith_reef_colossus/reef_echo",
-        "urchin_fan": "planned:corallith_reef_colossus/urchin_fan"
+        "idle": "corallith_reef_colossus/idle",
+        "walk": "corallith_reef_colossus/walk",
+        "basic_attack": "corallith_reef_colossus/basic_attack",
+        "hurt": "corallith_reef_colossus/hurt",
+        "phase_transition": "corallith_reef_colossus/phase_transition",
+        "summoning": "corallith_reef_colossus/summoning",
+        "death": "corallith_reef_colossus/death",
+        "coral_gates": "corallith_reef_colossus/coral_gates",
+        "reef_echo": "corallith_reef_colossus/reef_echo",
+        "urchin_fan": "corallith_reef_colossus/urchin_fan"
       }
     },
     "arena": {

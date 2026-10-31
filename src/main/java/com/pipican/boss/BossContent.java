@@ -44,6 +44,8 @@ public final class BossContent {
     public static final DeferredItem<Item> ZAHIRA_TROPHY=ITEMS.registerSimpleItem("zahira_crimson_corsair_trophy");
     public static final DeferredItem<Item> XALTEK_SIGIL=ITEMS.registerSimpleItem("xaltek_emerald_devourer_sigil");
     public static final DeferredItem<Item> XALTEK_TROPHY=ITEMS.registerSimpleItem("xaltek_emerald_devourer_trophy");
+    public static final DeferredItem<Item> CORALLITH_SIGIL=ITEMS.registerSimpleItem("corallith_reef_colossus_sigil");
+    public static final DeferredItem<Item> CORALLITH_TROPHY=ITEMS.registerSimpleItem("corallith_reef_colossus_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

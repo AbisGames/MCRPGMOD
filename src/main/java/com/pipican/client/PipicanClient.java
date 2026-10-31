@@ -65,6 +65,7 @@ public final class PipicanClient {
           event.registerEntityRenderer(com.pipican.boss.BossRegistries.NETHARIS.get(),com.pipican.client.boss.NetharisRenderer::new);
           event.registerEntityRenderer(com.pipican.boss.BossRegistries.ZAHIRA.get(),com.pipican.client.boss.ZahiraRenderer::new);
           event.registerEntityRenderer(com.pipican.boss.BossRegistries.XALTEK.get(),com.pipican.client.boss.XaltekRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.CORALLITH.get(),com.pipican.client.boss.CorallithRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {
