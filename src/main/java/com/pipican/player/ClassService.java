@@ -282,6 +282,49 @@ public final class ClassService {
         return Result.ok(Component.translatable("pipican.stat.raised", stat.name(), current + 1, availableStatPoints(player)));
     }
 
+    /**
+     * Puts several stat points in at once (the level-up screen's "Accept"). All or nothing: if any stat can't take
+     * its points, or the total is more than the player has, nothing changes.
+     */
+    public static Result raiseStats(ServerPlayer player, Map<ResourceKey<StatDefinition>, Integer> points) {
+        Optional<RpgClass> rpgClass = activeClass(player);
+        if (rpgClass.isEmpty()) {
+            return Result.fail(Component.translatable("pipican.class.none"));
+        }
+        PlayerClassData data = data(player);
+        long total = 0;
+        for (Map.Entry<ResourceKey<StatDefinition>, Integer> e : points.entrySet()) {
+            int amount = e.getValue();
+            if (amount <= 0) {
+                continue;
+            }
+            StatDefinition stat = ClassLookup.stats(player.level().registryAccess()).getValue(e.getKey());
+            if (stat == null) {
+                return Result.fail(Component.translatable("pipican.stat.unknown", e.getKey().identifier().toString()));
+            }
+            if (!canRaise(rpgClass.get(), e.getKey(), stat)) {
+                return Result.fail(Component.translatable("pipican.stat.exclusive", stat.name()));
+            }
+            if ((long) rpgClass.get().baseStat(e.getKey()) + data.boughtStat(e.getKey()) + amount > stat.max()) {
+                return Result.fail(Component.translatable("pipican.stat.maxed", stat.name()));
+            }
+            total += amount;
+        }
+        if (total == 0) {
+            return Result.fail(Component.translatable("pipican.stat.nothing"));
+        }
+        if (availableStatPoints(player) < total) {
+            return Result.fail(Component.translatable("pipican.stat.no_points"));
+        }
+        points.forEach((key, amount) -> {
+            if (amount > 0) {
+                data.boughtStats().merge(key, amount, Integer::sum);
+            }
+        });
+        changed(player);
+        return Result.ok(Component.translatable("pipican.stat.level_up", total, availableStatPoints(player)));
+    }
+
     /** Admin respec of stats put in directly; the points come back automatically (they are derived). */
     public static void resetStats(ServerPlayer player) {
         data(player).boughtStats().clear();

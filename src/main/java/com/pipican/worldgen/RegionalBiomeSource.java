@@ -103,14 +103,11 @@ public final class RegionalBiomeSource extends BiomeSource {
         }
         // A 320-block border buffer also avoids jigsaw collisions between
         // adjacent regional grids; regional sanctuary biomes keep their theme.
-        var authored=WorldLayout.authoredRegionAt(x,z);
-        if(authored.isPresent()) {
-            var r=authored.get();
-            int border=Math.min(Math.min(x-r.minX(),r.maxX()-x),
-                Math.min(z-r.minZ(),r.maxZ()-z));
-            if(border<320)
-                return byId.getOrDefault("pipican:protected/"+r.id(),fallback);
-        }
+        // It is measured along the *warped* border (the same one the
+        // subregion sampler uses), so region edges do not come out straight.
+        var warped=WorldLayout.warpedAt(seed,x,z);
+        if(warped.isPresent()&&warped.get().borderDistance()<320)
+            return byId.getOrDefault("pipican:protected/"+warped.get().region().id(),fallback);
         Optional<SubregionSampler.Subregion> sub=sampler.at(seed,x,z);
         if(sub.isEmpty())return fallback;
         SubregionSampler.Subregion region=sub.get();

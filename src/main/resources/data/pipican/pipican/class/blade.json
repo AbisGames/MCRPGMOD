@@ -57,10 +57,6 @@
     "tree": "pipican:special/blade",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "blade_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 3,

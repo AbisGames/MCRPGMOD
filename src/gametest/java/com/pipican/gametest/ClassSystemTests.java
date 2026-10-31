@@ -314,6 +314,18 @@ public final class ClassSystemTests {
         ClassService.resetStats(player);
         helper.assertTrue(ClassService.availableStatPoints(player) == 1, "stat reset gives the point back");
 
+        // Level-up screen's Accept: several points at once, all or nothing.
+        ClassService.addXp(player, StatPoints.threshold(3) - ClassService.data(player).statXp());
+        helper.assertTrue(ClassService.availableStatPoints(player) == 3, "three stat points to plan");
+        helper.assertTrue(!ClassService.raiseStats(player, Map.of(FOCUS, 4)).success(), "can't accept more than you have");
+        helper.assertTrue(!ClassService.raiseStats(player, Map.of(FOCUS, 1, MIGHT, 1)).success(), "one bad stat cancels the batch");
+        helper.assertTrue(ClassService.availableStatPoints(player) == 3, "a refused batch spends nothing");
+        helper.assertTrue(!ClassService.raiseStats(player, Map.of()).success(), "empty batch is refused");
+        helper.assertTrue(ClassService.raiseStats(player, Map.of(FOCUS, 3)).success(), "batch raise");
+        assertNear(helper, 8, ClassEffectApplier.state(player).stat(FOCUS), "batch put three points into focus");
+        helper.assertTrue(ClassService.availableStatPoints(player) == 0, "batch spent all three");
+        ClassService.resetStats(player);
+
         ClassService.setLevel(player, 999);
         helper.assertTrue(ClassService.data(player).activeProgress().orElseThrow().level() == 10, "clamped to max_level");
         helper.succeed();
@@ -1304,7 +1316,9 @@ public final class ClassSystemTests {
             count++;
             RpgClass cls = entry.getValue();
             String id = key.identifier().toString();
-            for (TreeKind kind : TreeKind.values()) {
+            // Shipped classes spend stat points in the level-up screen, not a stat tree.
+            helper.assertTrue(cls.tree(TreeKind.STAT).isEmpty(), id + " still has a stat tree");
+            for (TreeKind kind : List.of(TreeKind.GENERAL, TreeKind.SPECIAL)) {
                 var ref = cls.tree(kind);
                 helper.assertTrue(ref.isPresent(), id + " has no " + kind.getSerializedName() + " tree");
                 var tree = ClassLookup.tree(access, cls, kind);

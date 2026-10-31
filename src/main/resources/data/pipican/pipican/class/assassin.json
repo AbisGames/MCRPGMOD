@@ -70,10 +70,6 @@
     "tree": "pipican:special/assassin",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "assassin_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 2,

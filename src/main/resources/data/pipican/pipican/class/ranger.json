@@ -64,10 +64,6 @@
     "tree": "pipican:special/ranger",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "ranger_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 2,

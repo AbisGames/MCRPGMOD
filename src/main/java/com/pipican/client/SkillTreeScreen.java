@@ -34,7 +34,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 /**
- * Path-of-Exile-style passive tree screen (general, special and stat trees), plus a mastery tab.
+ * Path-of-Exile-style passive tree screen (general and special trees), a Dark-Souls-style level-up sheet for stats
+ * ({@link LevelUpPanel}) and a mastery tab.
  *
  * <ul>
  *   <li>Drag to pan, scroll to zoom (around the cursor).</li>
@@ -75,6 +76,9 @@ public class SkillTreeScreen extends Screen {
     private EditBox search;
     private String query = "";
     private int masteryScroll;
+    private LevelUpPanel levelUp;
+    private Button acceptButton;
+    private Button resetButton;
 
     public SkillTreeScreen() {
         super(Component.translatable("pipican.tree.title"));
@@ -97,7 +101,6 @@ public class SkillTreeScreen extends Screen {
     private TreeKind kind() {
         return switch (tab) {
             case SPECIAL -> TreeKind.SPECIAL;
-            case STAT -> TreeKind.STAT;
             default -> TreeKind.GENERAL;
         };
     }
@@ -136,14 +139,33 @@ public class SkillTreeScreen extends Screen {
         search = new EditBox(font, width - 128, 6, 120, 16, search, Component.translatable("pipican.tree.search"));
         search.setHint(Component.translatable("pipican.tree.search").withStyle(ChatFormatting.DARK_GRAY));
         search.setResponder(text -> query = text.toLowerCase(Locale.ROOT));
-        search.visible = tab != Tab.MASTERY;
+        search.visible = isTreeTab();
         addRenderableWidget(search);
+        if (levelUp == null) {
+            levelUp = new LevelUpPanel(minecraft);
+        }
+        if (tab == Tab.STAT) {
+            levelUp.layout(width, height, TOP_BAR);
+            int bw = (levelUp.leftWidth - 18) / 2;
+            int by = levelUp.bottomOfLeft;
+            acceptButton = addRenderableWidget(Button.builder(Component.translatable("pipican.levelup.accept"), b -> levelUp.accept())
+                    .bounds(levelUp.left + 6, by, bw, 18).build());
+            resetButton = addRenderableWidget(Button.builder(Component.translatable("pipican.levelup.reset"), b -> levelUp.reset())
+                    .bounds(levelUp.left + 12 + bw, by, bw, 18).build());
+        }
         if (!centred) {
             centreOnStart();
         }
     }
 
+    private boolean isTreeTab() {
+        return tab == Tab.GENERAL || tab == Tab.SPECIAL;
+    }
+
     private void switchTab(Tab t) {
+        if (levelUp != null && t != tab) {
+            levelUp.reset();
+        }
         tab = t;
         centred = false;
         masteryScroll = 0;
@@ -185,9 +207,12 @@ public class SkillTreeScreen extends Screen {
         if (super.mouseClicked(event, doubleClick)) {
             return true;
         }
+        if (tab == Tab.STAT) {
+            return levelUp.mouseClicked(event.x(), event.y(), event.hasShiftDown());
+        }
         pressX = event.x();
         pressY = event.y();
-        pressedInTree = tab != Tab.MASTERY && event.y() >= TOP_BAR;
+        pressedInTree = isTreeTab() && event.y() >= TOP_BAR;
         return pressedInTree;
     }
 
@@ -222,6 +247,9 @@ public class SkillTreeScreen extends Screen {
         if (tab == Tab.MASTERY) {
             masteryScroll = Math.max(0, masteryScroll - (int) Math.signum(scrollY) * 12);
             return true;
+        }
+        if (tab == Tab.STAT) {
+            return false;
         }
         float old = zoom;
         zoom = Math.clamp(zoom * (scrollY > 0 ? 1.15f : 1 / 1.15f), MIN_ZOOM, MAX_ZOOM);
@@ -263,6 +291,10 @@ public class SkillTreeScreen extends Screen {
     @Override
     public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
         g.fill(0, 0, width, height, COLOR_BG);
+        // Drawn under the widgets so the Accept / Reset buttons sit on top of the sheet.
+        if (tab == Tab.STAT && rpgClass().isPresent()) {
+            extractLevelUp(g, mouseX, mouseY);
+        }
     }
 
     @Override
@@ -274,6 +306,8 @@ public class SkillTreeScreen extends Screen {
         }
         if (tab == Tab.MASTERY) {
             extractMastery(g, mouseX, mouseY);
+        } else if (tab == Tab.STAT) {
+            // Drawn in extractBackground, under the buttons.
         } else if (tree().isEmpty() || treeRef().isEmpty()) {
             g.centeredText(font, Component.translatable("pipican.tree.none"), width / 2, height / 2, 0xFFAAAAAA);
         } else {
@@ -287,7 +321,7 @@ public class SkillTreeScreen extends Screen {
 
     private void extractHeader(GuiGraphicsExtractor g) {
         g.fill(0, TOP_BAR - 1, width, TOP_BAR, 0xFF404048);
-        if (tab == Tab.MASTERY) {
+        if (!isTreeTab()) {
             return;
         }
         // Points / level sit just under the tab bar so they never collide with the search box.
@@ -410,6 +444,22 @@ public class SkillTreeScreen extends Screen {
             lines.add(Component.translatable("pipican.tree.no_points").withStyle(ChatFormatting.DARK_GRAY));
         }
         return lines;
+    }
+
+    // ------------------------------------------------------------------ stats tab
+
+    private void extractLevelUp(GuiGraphicsExtractor g, int mouseX, int mouseY) {
+        levelUp.render(g, font, width, height, mouseX, mouseY);
+        // The stat list can grow (new stat bonus, pack reload): keep Accept/Reset under it.
+        int by = levelUp.bottomOfLeft;
+        if (acceptButton != null && acceptButton.getY() != by) {
+            acceptButton.setY(by);
+            resetButton.setY(by);
+        }
+        if (acceptButton != null) {
+            acceptButton.active = levelUp.hasPending();
+            resetButton.active = levelUp.hasPending();
+        }
     }
 
     // ------------------------------------------------------------------ mastery tab

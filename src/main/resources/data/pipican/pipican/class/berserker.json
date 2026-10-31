@@ -54,10 +54,6 @@
     "tree": "pipican:special/berserker",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "berserker_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 2,

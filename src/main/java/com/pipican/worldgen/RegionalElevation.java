@@ -136,9 +136,9 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         if(y>=SkyIslandLayout.FOUNDATION_Y && SkyIslandLayout.themedSkyAt(x,y,z))
             return -4.0*Math.abs(strength);
         if(y<=32 || y>430)return 0.0;
-        var reg=WorldLayout.regionAt(0L,x,z);
-        if(reg.isEmpty())return 0.0;
-        var r=reg.get();
+        var warped=WorldLayout.warpedAt(0L,x,z);
+        if(warped.isEmpty())return 0.0;
+        var r=warped.get().region();
         double target=switch(r.id()){
             case "greyspine_mountains" -> 210.0;
             case "jade_empire","whitecrown_icecap" -> 135.0;
@@ -152,9 +152,8 @@ public record RegionalElevation(double strength) implements DensityFunction.Simp
         };
 
         // Avoid perfectly sharp macro borders: density contribution smoothly
-        // attenuates over the last 500 blocks of a rectangular territory.
-        double edge=Math.max(0,Math.min(Math.min(x-r.minX(),r.maxX()-x),
-            Math.min(z-r.minZ(),r.maxZ()-z)));
+        // attenuates over the last 500 blocks before the warped border.
+        double edge=Math.max(0,warped.get().borderDistance());
         double t=Math.min(1.0,edge/500.0);
         double blend=t*t*(3-2*t);
 

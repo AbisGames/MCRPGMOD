@@ -29,6 +29,7 @@ public final class WorldgenTests {
         Map.entry("nature_features_loaded", WorldgenTests::natureFeaturesLoaded),
         Map.entry("ore_restoration", WorldgenTests::oreRestoration),
         Map.entry("sky_island_geometry", WorldgenTests::skyIslandGeometry),
+        Map.entry("warped_region_borders", WorldgenTests::warpedRegionBorders),
         Map.entry("vanilla_structure_exclusion", WorldgenTests::vanillaStructureExclusion),
         Map.entry("regional_ore_harvest", WorldgenTests::regionalOreHarvest),
         Map.entry("expedition_access_safety", ExpeditionProcessorTests::verify)
@@ -410,6 +411,30 @@ public final class WorldgenTests {
         helper.assertTrue(RegionalMineEvents.restoreDue(level,now,1)==0,
             "player-modified position became a renewable ore node");
         helper.assertTrue(level.getBlockState(occupied).isAir(),"renewal replaced protected air");
+        helper.succeed();
+    }
+
+    /** Border buffers and terrain edge blends must follow the warped region
+     * border, not the straight authored rectangle edge. */
+    private static void warpedRegionBorders(GameTestHelper helper) {
+        // Heartlands | Greyspine share the straight authored edge x=0.
+        int minShift=Integer.MAX_VALUE,maxShift=Integer.MIN_VALUE;
+        for(int z=-8000;z<-500;z+=16){
+            int firstGreyspine=Integer.MIN_VALUE;
+            for(int x=-400;x<=400;x+=2){
+                var w=WorldLayout.warpedAt(0L,x,z).orElseThrow();
+                helper.assertTrue(w.region().id().equals(WorldLayout.regionAt(0L,x,z).orElseThrow().id()),
+                    "warpedAt and regionAt disagree at "+x+","+z);
+                helper.assertTrue(w.borderDistance()>=0,"warped point outside its region");
+                if(firstGreyspine==Integer.MIN_VALUE&&w.region().id().equals("greyspine_mountains"))
+                    firstGreyspine=x;
+            }
+            helper.assertTrue(firstGreyspine!=Integer.MIN_VALUE,"border not found at z="+z);
+            minShift=Math.min(minShift,firstGreyspine);
+            maxShift=Math.max(maxShift,firstGreyspine);
+        }
+        helper.assertTrue(maxShift-minShift>=40,
+            "region border is still straight: x range "+minShift+".."+maxShift);
         helper.succeed();
     }
 
