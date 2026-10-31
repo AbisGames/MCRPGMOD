@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.75,
+  "group": "silversheen_ingot",
+  "ingredient": "#c:ores/silversheen",
+  "result": {
+    "id": "pipican:silversheen_ingot"
+  }
+}

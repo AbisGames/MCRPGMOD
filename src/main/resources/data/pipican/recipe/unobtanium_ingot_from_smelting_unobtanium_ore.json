@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.75,
+  "group": "unobtanium_ingot",
+  "ingredient": "#c:ores/unobtanium",
+  "result": {
+    "id": "pipican:unobtanium_ingot"
+  }
+}

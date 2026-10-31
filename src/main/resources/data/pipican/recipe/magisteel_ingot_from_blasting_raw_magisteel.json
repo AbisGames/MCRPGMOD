@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.5,
+  "group": "magisteel_ingot",
+  "ingredient": "pipican:raw_magisteel",
+  "result": {
+    "id": "pipican:magisteel_ingot"
+  }
+}

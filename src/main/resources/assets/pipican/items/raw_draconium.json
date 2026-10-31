@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_draconium",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7455786
+      }
+    ]
+  }
+}

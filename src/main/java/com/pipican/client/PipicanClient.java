@@ -41,11 +41,20 @@ public final class PipicanClient {
         modBus.addListener(PipicanClient::registerKeys);
         modBus.addListener(PipicanClient::registerHud);
         modBus.addListener(PipicanClient::registerRenderers);
+        modBus.addListener(PipicanClient::registerBlockTints);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onClientTick);
         NeoForge.EVENT_BUS.addListener(MovementClient::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(MovementClient::onNameTag);
         NeoForge.EVENT_BUS.addListener(PipicanClient::onTooltip);
         NeoForge.EVENT_BUS.addListener(PipicanClient::addInventoryButton);
+    }
+
+    /** Ore blocks are grayscale; each is tinted with its ore's colour (tint index 0). */
+    private static void registerBlockTints(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.BlockTintSources event) {
+        for (var entry : com.pipican.ore.PipicanOres.TINTED) {
+            int color = entry.getValue();
+            event.register(java.util.List.of(state -> color), entry.getKey().get());
+        }
     }
 
     private static void registerPayloadHandlers(RegisterClientPayloadHandlersEvent event) {
@@ -116,6 +125,14 @@ public final class PipicanClient {
     private static void onTooltip(ItemTooltipEvent event) {
         if (event.getEntity() == null || event.getItemStack().isEmpty()) {
             return;
+        }
+        // Ores: their tier and what they're for.
+        var itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(event.getItemStack().getItem());
+        if (itemId.getNamespace().equals(com.pipican.Pipican.MOD_ID)) {
+            com.pipican.ore.PipicanOres.of(itemId.getPath()).ifPresent(ore -> {
+                event.getToolTip().add(Component.translatable("pipican.ore.tier." + ore.tier()).withStyle(net.minecraft.ChatFormatting.GOLD));
+                event.getToolTip().add(Component.translatable("pipican.ore." + ore.id() + ".note").withStyle(net.minecraft.ChatFormatting.GRAY));
+            });
         }
         for (var stat : ClassLookup.stats(event.getEntity().level().registryAccess())) {
             for (var req : stat.gear()) {

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "saronite_ingot",
+  "ingredient": "pipican:raw_saronite",
+  "result": {
+    "id": "pipican:saronite_ingot"
+  }
+}

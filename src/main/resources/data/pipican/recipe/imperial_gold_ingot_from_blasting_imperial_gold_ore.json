@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.5,
+  "group": "imperial_gold_ingot",
+  "ingredient": "#c:ores/imperial_gold",
+  "result": {
+    "id": "pipican:imperial_gold_ingot"
+  }
+}

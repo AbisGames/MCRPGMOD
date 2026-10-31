@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "saffron_gold_ingot",
+  "ingredient": "pipican:raw_saffron_gold",
+  "result": {
+    "id": "pipican:saffron_gold_ingot"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:certus_quartz_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:certus_quartz"
+  }
+}

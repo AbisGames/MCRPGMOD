@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:deepslate_lerasium_ore",
+    "pipican:deepslate_philosophers_stone_ore",
+    "pipican:deepslate_tamashigane_ore",
+    "pipican:deepslate_unobtanium_ore",
+    "pipican:lerasium_ore",
+    "pipican:philosophers_stone_ore",
+    "pipican:tamashigane_ore",
+    "pipican:unobtanium_ore"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/sam_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5223681
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_royal_silver",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1775371
+      }
+    ]
+  }
+}

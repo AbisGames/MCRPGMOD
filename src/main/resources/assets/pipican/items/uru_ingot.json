@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/uru_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9537918
+      }
+    ]
+  }
+}

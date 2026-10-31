@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:end_aetherium_ore",
+    "pipican:end_cortosis_ore",
+    "pipican:end_dragon_metal_ore",
+    "pipican:end_dragonite_ore",
+    "pipican:end_gundanium_ore",
+    "pipican:end_khaydarin_ore",
+    "pipican:end_naquadah_ore",
+    "pipican:end_phrik_ore",
+    "pipican:end_sam_ore",
+    "pipican:end_skycrystal_ore",
+    "pipican:end_trinium_ore",
+    "pipican:end_void_metal_ore",
+    "pipican:end_zonaite_ore"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.5,
+  "group": "elementium_ingot",
+  "ingredient": "#c:ores/elementium",
+  "result": {
+    "id": "pipican:elementium_ingot"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "group": "imperial_gold_ingot",
+  "ingredient": "pipican:raw_imperial_gold",
+  "result": {
+    "id": "pipican:imperial_gold_ingot"
+  }
+}

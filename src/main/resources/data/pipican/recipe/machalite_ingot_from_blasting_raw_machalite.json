@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "machalite_ingot",
+  "ingredient": "pipican:raw_machalite",
+  "result": {
+    "id": "pipican:machalite_ingot"
+  }
+}

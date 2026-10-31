@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_dawnbronze",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2517942
+      }
+    ]
+  }
+}

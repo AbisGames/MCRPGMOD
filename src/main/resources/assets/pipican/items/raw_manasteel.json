@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_manasteel",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -11825688
+      }
+    ]
+  }
+}

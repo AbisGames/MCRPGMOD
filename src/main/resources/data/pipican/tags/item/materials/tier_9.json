@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:lerasium_ingot",
+    "pipican:philosophers_stone",
+    "pipican:raw_lerasium",
+    "pipican:raw_tamashigane",
+    "pipican:raw_unobtanium",
+    "pipican:tamashigane_ingot",
+    "pipican:unobtanium_ingot"
+  ]
+}

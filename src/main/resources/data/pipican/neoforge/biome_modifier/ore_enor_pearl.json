@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:dripstone_caves",
+    "minecraft:lush_caves"
+  ],
+  "features": "pipican:ore_enor_pearl",
+  "step": "underground_ores"
+}

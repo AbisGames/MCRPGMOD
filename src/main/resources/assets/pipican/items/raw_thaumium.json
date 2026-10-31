@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_thaumium",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9810000
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.75,
+  "group": "stormsilver_ingot",
+  "ingredient": "pipican:raw_stormsilver",
+  "result": {
+    "id": "pipican:stormsilver_ingot"
+  }
+}

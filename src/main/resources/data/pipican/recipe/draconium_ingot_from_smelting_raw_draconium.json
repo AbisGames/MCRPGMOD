@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.5,
+  "group": "draconium_ingot",
+  "ingredient": "pipican:raw_draconium",
+  "result": {
+    "id": "pipican:draconium_ingot"
+  }
+}

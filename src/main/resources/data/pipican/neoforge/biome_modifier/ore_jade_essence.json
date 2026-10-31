@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_jungle",
+  "features": "pipican:ore_jade_essence",
+  "step": "underground_ores"
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.5,
+  "group": "trellium_ingot",
+  "ingredient": "#c:ores/trellium",
+  "result": {
+    "id": "pipican:trellium_ingot"
+  }
+}

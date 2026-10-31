@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.25,
+  "group": "darksteel_ingot",
+  "ingredient": "pipican:raw_darksteel",
+  "result": {
+    "id": "pipican:darksteel_ingot"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "cinderite_ingot",
+  "ingredient": "#c:ores/cinderite",
+  "result": {
+    "id": "pipican:cinderite_ingot"
+  }
+}

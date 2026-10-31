@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_promethium",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -49920
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "fel_iron_ingot",
+  "ingredient": "pipican:raw_fel_iron",
+  "result": {
+    "id": "pipican:fel_iron_ingot"
+  }
+}

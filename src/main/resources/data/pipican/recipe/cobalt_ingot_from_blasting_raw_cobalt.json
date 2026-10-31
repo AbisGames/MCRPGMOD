@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.25,
+  "group": "cobalt_ingot",
+  "ingredient": "pipican:raw_cobalt",
+  "result": {
+    "id": "pipican:cobalt_ingot"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/lifebloom_crystal_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -25899
+      }
+    ]
+  }
+}

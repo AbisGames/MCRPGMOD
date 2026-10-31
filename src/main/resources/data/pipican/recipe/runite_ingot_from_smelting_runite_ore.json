@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.75,
+  "group": "runite_ingot",
+  "ingredient": "#c:ores/runite",
+  "result": {
+    "id": "pipican:runite_ingot"
+  }
+}

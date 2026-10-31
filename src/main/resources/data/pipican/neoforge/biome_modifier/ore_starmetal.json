@@ -1,0 +1,15 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_spooky",
+      "#c:is_dark_forest",
+      [
+        "minecraft:pale_garden"
+      ]
+    ]
+  },
+  "features": "pipican:ore_starmetal",
+  "step": "underground_ores"
+}

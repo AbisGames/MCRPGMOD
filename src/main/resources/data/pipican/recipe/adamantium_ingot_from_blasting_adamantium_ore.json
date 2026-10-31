@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.5,
+  "group": "adamantium_ingot",
+  "ingredient": "#c:ores/adamantium",
+  "result": {
+    "id": "pipican:adamantium_ingot"
+  }
+}

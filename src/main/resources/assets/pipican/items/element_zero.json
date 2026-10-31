@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/element_zero",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12747777
+      }
+    ]
+  }
+}

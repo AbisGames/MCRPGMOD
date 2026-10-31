@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/mega_stone_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -34080
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.25,
+  "group": "dwemer_metal_ingot",
+  "ingredient": "pipican:raw_dwemer_metal",
+  "result": {
+    "id": "pipican:dwemer_metal_ingot"
+  }
+}

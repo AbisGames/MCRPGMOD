@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:enor_pearl_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:enor_pearl"
+  }
+}

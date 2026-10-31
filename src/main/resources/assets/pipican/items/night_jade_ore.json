@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/night_jade_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13726866
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_celestial_bronze",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1855413
+      }
+    ]
+  }
+}

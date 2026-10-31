@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_ore",
+    "pipican:atium_ore",
+    "pipican:beskar_ore",
+    "pipican:darksteel_ore",
+    "pipican:deepslate_adamantine_ore",
+    "pipican:deepslate_atium_ore",
+    "pipican:deepslate_beskar_ore",
+    "pipican:deepslate_darksteel_ore",
+    "pipican:deepslate_elerium_ore",
+    "pipican:deepslate_harmonium_ore",
+    "pipican:deepslate_hihiirokane_ore",
+    "pipican:deepslate_katchin_ore",
+    "pipican:deepslate_nth_metal_ore",
+    "pipican:deepslate_prismatic_shard_ore",
+    "pipican:deepslate_vibranium_ore",
+    "pipican:elerium_ore",
+    "pipican:end_sam_ore",
+    "pipican:harmonium_ore",
+    "pipican:hihiirokane_ore",
+    "pipican:katchin_ore",
+    "pipican:nether_promethium_ore",
+    "pipican:nth_metal_ore",
+    "pipican:prismatic_shard_ore",
+    "pipican:vibranium_ore"
+  ]
+}

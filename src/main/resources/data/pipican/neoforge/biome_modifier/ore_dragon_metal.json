@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_end",
+  "features": "pipican:ore_dragon_metal",
+  "step": "underground_ores"
+}

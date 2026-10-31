@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_phrik",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10722960
+      }
+    ]
+  }
+}

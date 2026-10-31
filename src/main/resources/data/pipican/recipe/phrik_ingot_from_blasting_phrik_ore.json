@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.0,
+  "group": "phrik_ingot",
+  "ingredient": "#c:ores/phrik",
+  "result": {
+    "id": "pipican:phrik_ingot"
+  }
+}

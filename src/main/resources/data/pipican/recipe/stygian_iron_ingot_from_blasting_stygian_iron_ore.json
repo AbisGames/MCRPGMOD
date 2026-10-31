@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "stygian_iron_ingot",
+  "ingredient": "#c:ores/stygian_iron",
+  "result": {
+    "id": "pipican:stygian_iron_ingot"
+  }
+}

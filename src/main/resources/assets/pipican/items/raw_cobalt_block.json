@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/raw_cobalt_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13672496
+      }
+    ]
+  }
+}

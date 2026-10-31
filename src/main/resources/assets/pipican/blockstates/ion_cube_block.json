@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/ion_cube_block"
+    }
+  }
+}

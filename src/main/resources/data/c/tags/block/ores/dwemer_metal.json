@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:deepslate_dwemer_metal_ore",
+    "pipican:dwemer_metal_ore"
+  ]
+}

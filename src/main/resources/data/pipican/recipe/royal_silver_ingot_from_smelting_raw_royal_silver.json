@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "royal_silver_ingot",
+  "ingredient": "pipican:raw_royal_silver",
+  "result": {
+    "id": "pipican:royal_silver_ingot"
+  }
+}

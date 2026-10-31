@@ -1,0 +1,15 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_icy",
+      [
+        "minecraft:frozen_peaks",
+        "minecraft:ice_spikes"
+      ]
+    ]
+  },
+  "features": "pipican:ore_saronite",
+  "step": "underground_ores"
+}

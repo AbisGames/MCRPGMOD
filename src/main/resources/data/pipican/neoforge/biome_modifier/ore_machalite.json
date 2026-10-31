@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_mountain",
+  "features": "pipican:ore_machalite",
+  "step": "underground_ores"
+}

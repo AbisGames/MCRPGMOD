@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/zonaite_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12593498
+      }
+    ]
+  }
+}

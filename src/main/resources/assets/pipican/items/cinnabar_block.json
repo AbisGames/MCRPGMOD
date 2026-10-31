@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/cinnabar_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4181974
+      }
+    ]
+  }
+}

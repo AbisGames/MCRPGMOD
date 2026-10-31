@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:valyrian_steel_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:valyrian_steel_ingot"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/sunglass",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -865972
+      }
+    ]
+  }
+}

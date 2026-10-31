@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/elerium_block"
+    }
+  }
+}

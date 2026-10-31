@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/nether_stygian_iron_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14804444
+      }
+    ]
+  }
+}

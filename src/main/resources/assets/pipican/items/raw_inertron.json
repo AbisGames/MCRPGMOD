@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_inertron",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7696487
+      }
+    ]
+  }
+}

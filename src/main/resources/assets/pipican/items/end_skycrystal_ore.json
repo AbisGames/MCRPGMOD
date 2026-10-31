@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/end_skycrystal_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -6301441
+      }
+    ]
+  }
+}

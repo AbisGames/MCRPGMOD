@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/atium_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -6381922
+      }
+    ]
+  }
+}

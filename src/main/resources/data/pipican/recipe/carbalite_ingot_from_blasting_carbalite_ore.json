@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.5,
+  "group": "carbalite_ingot",
+  "ingredient": "#c:ores/carbalite",
+  "result": {
+    "id": "pipican:carbalite_ingot"
+  }
+}

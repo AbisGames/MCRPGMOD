@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:cherry_grove",
+    "minecraft:meadow",
+    "minecraft:sunflower_plains"
+  ],
+  "features": "pipican:ore_silversheen",
+  "step": "underground_ores"
+}

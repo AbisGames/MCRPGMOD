@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "runite_ingot",
+  "ingredient": "pipican:raw_runite",
+  "result": {
+    "id": "pipican:runite_ingot"
+  }
+}

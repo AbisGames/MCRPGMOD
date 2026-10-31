@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.25,
+  "group": "saffron_gold_ingot",
+  "ingredient": "#c:ores/saffron_gold",
+  "result": {
+    "id": "pipican:saffron_gold_ingot"
+  }
+}

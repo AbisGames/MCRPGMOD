@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:soul_sand_valley"
+  ],
+  "features": "pipican:ore_stygian_iron",
+  "step": "underground_ores"
+}

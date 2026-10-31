@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.5,
+  "group": "chromium_ingot",
+  "ingredient": "pipican:raw_chromium",
+  "result": {
+    "id": "pipican:chromium_ingot"
+  }
+}

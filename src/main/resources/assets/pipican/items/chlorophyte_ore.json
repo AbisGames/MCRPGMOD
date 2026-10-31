@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/chlorophyte_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12856977
+      }
+    ]
+  }
+}

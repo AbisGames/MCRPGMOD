@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_vibranium_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9470552
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_beskar",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5787462
+      }
+    ]
+  }
+}

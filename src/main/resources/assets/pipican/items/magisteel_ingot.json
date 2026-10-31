@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/magisteel_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10850344
+      }
+    ]
+  }
+}

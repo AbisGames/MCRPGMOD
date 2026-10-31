@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:aquamarine",
+    "pipican:bloodstone",
+    "pipican:certus_quartz",
+    "pipican:cinderite_ingot",
+    "pipican:crimtane_ingot",
+    "pipican:demonite_ingot",
+    "pipican:glacierite",
+    "pipican:jade_essence",
+    "pipican:machalite_ingot",
+    "pipican:mooncrystal",
+    "pipican:moonstone",
+    "pipican:night_jade",
+    "pipican:raw_cinderite",
+    "pipican:raw_crimtane",
+    "pipican:raw_demonite",
+    "pipican:raw_machalite",
+    "pipican:raw_zinc",
+    "pipican:sunstone",
+    "pipican:thunderbasalt",
+    "pipican:tidalite",
+    "pipican:zinc_ingot"
+  ]
+}

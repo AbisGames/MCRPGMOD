@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_hihiirokane",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -42442
+      }
+    ]
+  }
+}

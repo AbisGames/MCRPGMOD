@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/nether_ebony_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14015952
+      }
+    ]
+  }
+}

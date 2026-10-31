@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/certus_quartz",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4201486
+      }
+    ]
+  }
+}

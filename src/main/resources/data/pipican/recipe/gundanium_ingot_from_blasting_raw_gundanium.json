@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.0,
+  "group": "gundanium_ingot",
+  "ingredient": "pipican:raw_gundanium",
+  "result": {
+    "id": "pipican:gundanium_ingot"
+  }
+}

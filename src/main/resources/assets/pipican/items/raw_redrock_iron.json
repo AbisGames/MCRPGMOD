@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_redrock_iron",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5946066
+      }
+    ]
+  }
+}

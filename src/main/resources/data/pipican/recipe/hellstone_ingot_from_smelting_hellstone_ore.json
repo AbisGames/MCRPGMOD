@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "hellstone_ingot",
+  "ingredient": "#c:ores/hellstone",
+  "result": {
+    "id": "pipican:hellstone_ingot"
+  }
+}

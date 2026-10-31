@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "group": "goblin_silver_ingot",
+  "ingredient": "pipican:raw_goblin_silver",
+  "result": {
+    "id": "pipican:goblin_silver_ingot"
+  }
+}

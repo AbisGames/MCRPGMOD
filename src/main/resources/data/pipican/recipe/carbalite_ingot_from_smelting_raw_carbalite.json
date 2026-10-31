@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "group": "carbalite_ingot",
+  "ingredient": "pipican:raw_carbalite",
+  "result": {
+    "id": "pipican:carbalite_ingot"
+  }
+}

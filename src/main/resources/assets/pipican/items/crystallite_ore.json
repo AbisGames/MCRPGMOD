@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/crystallite_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4656385
+      }
+    ]
+  }
+}

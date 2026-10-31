@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/bloodstone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8776666
+      }
+    ]
+  }
+}

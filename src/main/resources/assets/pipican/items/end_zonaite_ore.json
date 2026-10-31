@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/end_zonaite_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12593498
+      }
+    ]
+  }
+}

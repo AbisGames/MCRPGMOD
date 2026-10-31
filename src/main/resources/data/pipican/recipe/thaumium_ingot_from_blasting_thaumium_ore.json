@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.25,
+  "group": "thaumium_ingot",
+  "ingredient": "#c:ores/thaumium",
+  "result": {
+    "id": "pipican:thaumium_ingot"
+  }
+}

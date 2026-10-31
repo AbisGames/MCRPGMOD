@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.5,
+  "group": "pale_ingot",
+  "ingredient": "pipican:raw_pale",
+  "result": {
+    "id": "pipican:pale_ingot"
+  }
+}

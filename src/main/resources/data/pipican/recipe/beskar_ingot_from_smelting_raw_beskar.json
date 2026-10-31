@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.25,
+  "group": "beskar_ingot",
+  "ingredient": "pipican:raw_beskar",
+  "result": {
+    "id": "pipican:beskar_ingot"
+  }
+}

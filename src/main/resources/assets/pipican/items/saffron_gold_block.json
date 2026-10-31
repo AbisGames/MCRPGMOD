@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/saffron_gold_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1007586
+      }
+    ]
+  }
+}

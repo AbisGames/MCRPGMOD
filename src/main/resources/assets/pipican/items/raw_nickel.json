@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_nickel",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4869990
+      }
+    ]
+  }
+}

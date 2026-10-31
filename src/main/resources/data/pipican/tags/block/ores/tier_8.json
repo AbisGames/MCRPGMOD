@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantium_ore",
+    "pipican:chaos_emerald_ore",
+    "pipican:deepslate_adamantium_ore",
+    "pipican:deepslate_chaos_emerald_ore",
+    "pipican:deepslate_draconium_ore",
+    "pipican:deepslate_luminite_ore",
+    "pipican:deepslate_pale_ore",
+    "pipican:deepslate_phazon_ore",
+    "pipican:deepslate_trellium_ore",
+    "pipican:deepslate_uru_ore",
+    "pipican:draconium_ore",
+    "pipican:luminite_ore",
+    "pipican:pale_ore",
+    "pipican:phazon_ore",
+    "pipican:trellium_ore",
+    "pipican:uru_ore"
+  ]
+}

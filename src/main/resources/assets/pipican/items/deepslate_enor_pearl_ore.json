@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_enor_pearl_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -924732
+      }
+    ]
+  }
+}

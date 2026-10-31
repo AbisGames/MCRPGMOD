@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantium_ingot",
+    "pipican:chaos_emerald",
+    "pipican:draconium_ingot",
+    "pipican:luminite_ingot",
+    "pipican:pale_ingot",
+    "pipican:phazon",
+    "pipican:raw_adamantium",
+    "pipican:raw_draconium",
+    "pipican:raw_luminite",
+    "pipican:raw_pale",
+    "pipican:raw_trellium",
+    "pipican:raw_uru",
+    "pipican:trellium_ingot",
+    "pipican:uru_ingot"
+  ]
+}

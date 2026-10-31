@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/chaos_emerald_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13710223
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/tidalite_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13662539
+      }
+    ]
+  }
+}

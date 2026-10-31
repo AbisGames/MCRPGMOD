@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.75,
+  "group": "lerasium_ingot",
+  "ingredient": "#c:ores/lerasium",
+  "result": {
+    "id": "pipican:lerasium_ingot"
+  }
+}

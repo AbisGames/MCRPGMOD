@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.75,
+  "group": "cold_iron_ingot",
+  "ingredient": "#c:ores/cold_iron",
+  "result": {
+    "id": "pipican:cold_iron_ingot"
+  }
+}

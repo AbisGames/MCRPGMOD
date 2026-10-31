@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "ardite_ingot",
+  "ingredient": "pipican:raw_ardite",
+  "result": {
+    "id": "pipican:ardite_ingot"
+  }
+}

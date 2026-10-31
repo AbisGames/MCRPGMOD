@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.0,
+  "group": "dragon_metal_ingot",
+  "ingredient": "#c:ores/dragon_metal",
+  "result": {
+    "id": "pipican:dragon_metal_ingot"
+  }
+}

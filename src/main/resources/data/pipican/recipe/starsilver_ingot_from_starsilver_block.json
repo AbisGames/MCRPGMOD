@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:starsilver_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:starsilver_ingot"
+  }
+}

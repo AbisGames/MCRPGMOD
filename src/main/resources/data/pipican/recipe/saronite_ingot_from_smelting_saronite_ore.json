@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.75,
+  "group": "saronite_ingot",
+  "ingredient": "#c:ores/saronite",
+  "result": {
+    "id": "pipican:saronite_ingot"
+  }
+}

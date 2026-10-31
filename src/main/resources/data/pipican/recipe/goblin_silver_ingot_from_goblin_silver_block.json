@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:goblin_silver_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:goblin_silver_ingot"
+  }
+}

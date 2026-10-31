@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_lifebloom_crystal_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -25899
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.75,
+  "group": "lerasium_ingot",
+  "ingredient": "pipican:raw_lerasium",
+  "result": {
+    "id": "pipican:lerasium_ingot"
+  }
+}

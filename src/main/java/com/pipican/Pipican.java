@@ -36,6 +36,9 @@ public final class Pipican {
         PipicanAttachments.REGISTER.register(modBus);
         PipicanMenus.REGISTER.register(modBus);
         PipicanEntities.REGISTER.register(modBus);
+        com.pipican.ore.PipicanOres.BLOCKS.register(modBus);
+        com.pipican.ore.PipicanOres.ITEMS.register(modBus);
+        com.pipican.ore.PipicanOres.TABS.register(modBus);
         modBus.addListener(PipicanEntities::registerAttributes);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);

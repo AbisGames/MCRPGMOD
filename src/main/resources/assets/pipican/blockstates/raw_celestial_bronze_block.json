@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/raw_celestial_bronze_block"
+    }
+  }
+}

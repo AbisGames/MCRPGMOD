@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/evolution_stone_block"
+    }
+  }
+}

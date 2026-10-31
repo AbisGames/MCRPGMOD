@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_mooncrystal_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2824961
+      }
+    ]
+  }
+}

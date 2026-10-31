@@ -1,0 +1,8 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:warped_forest"
+  ],
+  "features": "pipican:ore_vespene",
+  "step": "underground_ores"
+}

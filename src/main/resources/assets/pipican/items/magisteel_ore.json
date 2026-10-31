@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/magisteel_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10850344
+      }
+    ]
+  }
+}

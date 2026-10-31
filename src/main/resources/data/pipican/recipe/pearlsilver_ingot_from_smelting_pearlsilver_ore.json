@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.75,
+  "group": "pearlsilver_ingot",
+  "ingredient": "#c:ores/pearlsilver",
+  "result": {
+    "id": "pipican:pearlsilver_ingot"
+  }
+}

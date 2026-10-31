@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "gromril_ingot",
+  "ingredient": "pipican:raw_gromril",
+  "result": {
+    "id": "pipican:gromril_ingot"
+  }
+}

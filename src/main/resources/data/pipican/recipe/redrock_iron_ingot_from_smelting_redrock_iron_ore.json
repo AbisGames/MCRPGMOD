@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.75,
+  "group": "redrock_iron_ingot",
+  "ingredient": "#c:ores/redrock_iron",
+  "result": {
+    "id": "pipican:redrock_iron_ingot"
+  }
+}

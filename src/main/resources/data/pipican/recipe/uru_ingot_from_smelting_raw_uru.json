@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.5,
+  "group": "uru_ingot",
+  "ingredient": "pipican:raw_uru",
+  "result": {
+    "id": "pipican:uru_ingot"
+  }
+}

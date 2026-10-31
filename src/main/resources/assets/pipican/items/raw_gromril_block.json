@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/raw_gromril_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -9537663
+      }
+    ]
+  }
+}

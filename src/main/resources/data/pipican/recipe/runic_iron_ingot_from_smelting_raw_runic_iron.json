@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.75,
+  "group": "runic_iron_ingot",
+  "ingredient": "pipican:raw_runic_iron",
+  "result": {
+    "id": "pipican:runic_iron_ingot"
+  }
+}

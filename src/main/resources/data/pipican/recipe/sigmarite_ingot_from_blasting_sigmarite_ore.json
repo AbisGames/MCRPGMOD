@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.0,
+  "group": "sigmarite_ingot",
+  "ingredient": "#c:ores/sigmarite",
+  "result": {
+    "id": "pipican:sigmarite_ingot"
+  }
+}

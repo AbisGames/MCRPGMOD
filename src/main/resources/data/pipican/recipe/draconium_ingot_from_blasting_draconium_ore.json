@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.5,
+  "group": "draconium_ingot",
+  "ingredient": "#c:ores/draconium",
+  "result": {
+    "id": "pipican:draconium_ingot"
+  }
+}

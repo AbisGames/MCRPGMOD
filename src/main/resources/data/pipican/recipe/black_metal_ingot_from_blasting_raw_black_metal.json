@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.5,
+  "group": "black_metal_ingot",
+  "ingredient": "pipican:raw_black_metal",
+  "result": {
+    "id": "pipican:black_metal_ingot"
+  }
+}

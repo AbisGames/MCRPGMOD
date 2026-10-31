@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_aluminum",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2762016
+      }
+    ]
+  }
+}

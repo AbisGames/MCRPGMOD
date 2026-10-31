@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/eco",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8585365
+      }
+    ]
+  }
+}

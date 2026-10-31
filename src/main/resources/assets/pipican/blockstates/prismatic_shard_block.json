@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/prismatic_shard_block"
+    }
+  }
+}

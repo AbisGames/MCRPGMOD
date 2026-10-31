@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_naquadah",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13877680
+      }
+    ]
+  }
+}

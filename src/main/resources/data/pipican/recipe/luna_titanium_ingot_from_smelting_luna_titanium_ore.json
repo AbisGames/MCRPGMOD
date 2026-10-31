@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.75,
+  "group": "luna_titanium_ingot",
+  "ingredient": "#c:ores/luna_titanium",
+  "result": {
+    "id": "pipican:luna_titanium_ingot"
+  }
+}

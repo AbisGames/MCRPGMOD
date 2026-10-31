@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/ion_cube_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10817336
+      }
+    ]
+  }
+}

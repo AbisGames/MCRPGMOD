@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/saffron_gold_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1007586
+      }
+    ]
+  }
+}

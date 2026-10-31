@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/raw_tin_block"
+    }
+  }
+}

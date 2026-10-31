@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "group": "starmetal_ingot",
+  "ingredient": "pipican:raw_starmetal",
+  "result": {
+    "id": "pipican:starmetal_ingot"
+  }
+}

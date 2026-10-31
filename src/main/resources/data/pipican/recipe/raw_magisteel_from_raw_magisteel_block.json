@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:raw_magisteel_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:raw_magisteel"
+  }
+}

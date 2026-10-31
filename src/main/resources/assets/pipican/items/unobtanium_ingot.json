@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/unobtanium_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -6596097
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "group": "starsilver_ingot",
+  "ingredient": "#c:ores/starsilver",
+  "result": {
+    "id": "pipican:starsilver_ingot"
+  }
+}

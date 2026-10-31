@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:tamashigane_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:tamashigane_ingot"
+  }
+}

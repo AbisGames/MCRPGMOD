@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/warpstone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8586240
+      }
+    ]
+  }
+}

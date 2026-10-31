@@ -1,0 +1,7 @@
+{
+  "parent": "pipican:block/tinted_ore",
+  "textures": {
+    "base": "minecraft:block/deepslate",
+    "overlay": "pipican:block/ore_overlay_gem"
+  }
+}

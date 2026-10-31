@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:jade_essence_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:jade_essence"
+  }
+}

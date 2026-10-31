@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "dawnbronze_ingot",
+  "ingredient": "pipican:raw_dawnbronze",
+  "result": {
+    "id": "pipican:dawnbronze_ingot"
+  }
+}

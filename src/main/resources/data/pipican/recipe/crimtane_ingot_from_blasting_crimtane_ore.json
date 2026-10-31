@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "crimtane_ingot",
+  "ingredient": "#c:ores/crimtane",
+  "result": {
+    "id": "pipican:crimtane_ingot"
+  }
+}

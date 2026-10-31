@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.75,
+  "group": "gromril_ingot",
+  "ingredient": "#c:ores/gromril",
+  "result": {
+    "id": "pipican:gromril_ingot"
+  }
+}

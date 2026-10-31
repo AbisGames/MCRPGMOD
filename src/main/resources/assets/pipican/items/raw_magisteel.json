@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_magisteel",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10850344
+      }
+    ]
+  }
+}

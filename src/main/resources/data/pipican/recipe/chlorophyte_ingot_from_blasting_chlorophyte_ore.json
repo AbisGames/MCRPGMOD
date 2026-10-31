@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.0,
+  "group": "chlorophyte_ingot",
+  "ingredient": "#c:ores/chlorophyte",
+  "result": {
+    "id": "pipican:chlorophyte_ingot"
+  }
+}

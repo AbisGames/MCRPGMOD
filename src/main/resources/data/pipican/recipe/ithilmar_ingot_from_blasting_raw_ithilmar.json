@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "ithilmar_ingot",
+  "ingredient": "pipican:raw_ithilmar",
+  "result": {
+    "id": "pipican:ithilmar_ingot"
+  }
+}

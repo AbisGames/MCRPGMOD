@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "aluminum_ingot",
+  "ingredient": "pipican:raw_aluminum",
+  "result": {
+    "id": "pipican:aluminum_ingot"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.25,
+  "group": "hellstone_ingot",
+  "ingredient": "#c:ores/hellstone",
+  "result": {
+    "id": "pipican:hellstone_ingot"
+  }
+}

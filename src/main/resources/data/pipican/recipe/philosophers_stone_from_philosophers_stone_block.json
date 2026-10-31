@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:philosophers_stone_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:philosophers_stone"
+  }
+}

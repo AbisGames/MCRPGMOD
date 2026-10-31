@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/manyullyn_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7453523
+      }
+    ]
+  }
+}

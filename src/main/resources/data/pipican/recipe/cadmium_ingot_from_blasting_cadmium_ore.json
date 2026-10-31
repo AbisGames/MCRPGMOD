@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.25,
+  "group": "cadmium_ingot",
+  "ingredient": "#c:ores/cadmium",
+  "result": {
+    "id": "pipican:cadmium_ingot"
+  }
+}

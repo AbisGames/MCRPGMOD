@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "demonite_ingot",
+  "ingredient": "#c:ores/demonite",
+  "result": {
+    "id": "pipican:demonite_ingot"
+  }
+}

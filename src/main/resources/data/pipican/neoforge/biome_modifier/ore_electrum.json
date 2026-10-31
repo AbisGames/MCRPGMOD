@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_river",
+      "#c:is_plains"
+    ]
+  },
+  "features": "pipican:ore_electrum",
+  "step": "underground_ores"
+}

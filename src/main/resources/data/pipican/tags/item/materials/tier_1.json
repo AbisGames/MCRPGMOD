@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:amber",
+    "pipican:cinnabar",
+    "pipican:cold_iron_ingot",
+    "pipican:corundum_ingot",
+    "pipican:electrum_ingot",
+    "pipican:frostcrystal",
+    "pipican:morkite",
+    "pipican:nitre",
+    "pipican:pearlsilver_ingot",
+    "pipican:raw_cold_iron",
+    "pipican:raw_corundum",
+    "pipican:raw_electrum",
+    "pipican:raw_pearlsilver",
+    "pipican:raw_redrock_iron",
+    "pipican:raw_runic_iron",
+    "pipican:raw_stormsilver",
+    "pipican:raw_tin",
+    "pipican:raw_truesilver",
+    "pipican:redrock_iron_ingot",
+    "pipican:runic_iron_ingot",
+    "pipican:stormsilver_ingot",
+    "pipican:sunglass",
+    "pipican:tideglass",
+    "pipican:tin_ingot",
+    "pipican:truesilver_ingot",
+    "pipican:verdantite"
+  ]
+}

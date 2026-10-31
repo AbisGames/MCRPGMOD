@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:malatium_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:malatium_ingot"
+  }
+}

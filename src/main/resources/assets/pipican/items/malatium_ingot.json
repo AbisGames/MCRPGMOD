@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/malatium_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5201286
+      }
+    ]
+  }
+}

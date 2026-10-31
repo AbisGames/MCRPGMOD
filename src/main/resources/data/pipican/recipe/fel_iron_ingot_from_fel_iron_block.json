@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:fel_iron_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:fel_iron_ingot"
+  }
+}

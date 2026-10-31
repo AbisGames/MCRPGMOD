@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.75,
+  "group": "carbonadium_ingot",
+  "ingredient": "#c:ores/carbonadium",
+  "result": {
+    "id": "pipican:carbonadium_ingot"
+  }
+}

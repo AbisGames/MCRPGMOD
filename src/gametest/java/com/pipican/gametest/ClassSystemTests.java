@@ -112,6 +112,7 @@ public final class ClassSystemTests {
         TESTS.put("bonuses", ClassSystemTests::bonuses);
         TESTS.put("class_mechanics", ClassSystemTests::classMechanics);
         TESTS.put("stat_effects", ClassSystemTests::statEffects);
+        TESTS.put("ores", ClassSystemTests::ores);
     }
 
     private ClassSystemTests() {}
@@ -317,6 +318,54 @@ public final class ClassSystemTests {
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
     /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    /** Ores: registered from ores.json, mining levels by tier, worldgen features, smelting and drops. */
+    private static void ores(GameTestHelper helper) {
+        var server = helper.getLevel().getServer();
+        var access = helper.getLevel().registryAccess();
+        helper.assertTrue(com.pipican.ore.PipicanOres.ORES.size() == 160, "160 ores: " + com.pipican.ore.PipicanOres.ORES.size());
+        java.util.function.Function<String, net.minecraft.world.level.block.Block> block = path ->
+                net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Pipican.id(path));
+        for (String path : List.of("electrum_ore", "deepslate_electrum_ore", "nether_hellstone_ore", "end_dragonite_ore", "mithril_block", "raw_mithril_block")) {
+            helper.assertTrue(block.apply(path) != net.minecraft.world.level.block.Blocks.AIR, path + " is registered");
+        }
+        // Mining level by tier: T1 a stone pickaxe, T4 diamond, T5 netherite, T6+ none of vanilla's.
+        helper.assertTrue(block.apply("electrum_ore").defaultBlockState().is(net.minecraft.tags.BlockTags.NEEDS_STONE_TOOL), "T1 needs stone");
+        helper.assertTrue(block.apply("iridium_ore").defaultBlockState().is(net.minecraft.tags.BlockTags.NEEDS_DIAMOND_TOOL), "T4 needs diamond");
+        helper.assertTrue(block.apply("mithril_ore").defaultBlockState().is(net.minecraft.tags.BlockTags.INCORRECT_FOR_DIAMOND_TOOL)
+                && !block.apply("mithril_ore").defaultBlockState().is(net.minecraft.tags.BlockTags.INCORRECT_FOR_NETHERITE_TOOL), "T5 needs netherite");
+        helper.assertTrue(block.apply("deepslate_adamantine_ore").defaultBlockState().is(net.minecraft.tags.BlockTags.INCORRECT_FOR_NETHERITE_TOOL), "T7 beyond netherite");
+        // Worldgen: T1-T7 ores spawn; T8/T9 don't (they come from limited sources).
+        var placed = access.lookupOrThrow(Registries.PLACED_FEATURE);
+        helper.assertTrue(placed.get(ResourceKey.create(Registries.PLACED_FEATURE, Pipican.id("ore_electrum"))).isPresent(), "electrum spawns");
+        helper.assertTrue(placed.get(ResourceKey.create(Registries.PLACED_FEATURE, Pipican.id("ore_adamantine"))).isPresent(), "adamantine spawns");
+        helper.assertTrue(placed.get(ResourceKey.create(Registries.PLACED_FEATURE, Pipican.id("ore_unobtanium"))).isEmpty(), "unobtanium doesn't");
+        var modifiers = access.lookupOrThrow(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS);
+        helper.assertTrue(modifiers.get(ResourceKey.create(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS, Pipican.id("ore_hellstone"))).isPresent(),
+                "hellstone is added to its biomes");
+        // Smelting and drops.
+        helper.assertTrue(server.getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, Pipican.id("electrum_ingot_from_smelting_raw_electrum"))).isPresent(),
+                "raw electrum smelts");
+        var loot = server.reloadableRegistries().getLootTable(ResourceKey.create(Registries.LOOT_TABLE, Pipican.id("blocks/electrum_ore")));
+        helper.assertTrue(loot != net.minecraft.world.level.storage.loot.LootTable.EMPTY, "electrum ore has drops");
+        // A vein really places: fill a stone cube, run the configured feature in it, count the ore.
+        BlockPos center = helper.absolutePos(new BlockPos(3, 4, 3));
+        for (BlockPos p : BlockPos.betweenClosed(center.offset(-3, -3, -3), center.offset(3, 3, 3))) {
+            helper.getLevel().setBlock(p, net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 2);
+        }
+        var feature = access.lookupOrThrow(Registries.CONFIGURED_FEATURE).getOrThrow(ResourceKey.create(Registries.CONFIGURED_FEATURE, Pipican.id("ore_electrum")));
+        int placedOres = 0;
+        for (int attempt = 0; attempt < 8 && placedOres == 0; attempt++) {
+            feature.value().place(helper.getLevel(), helper.getLevel().getChunkSource().getGenerator(), helper.getLevel().getRandom(), center);
+            for (BlockPos p : BlockPos.betweenClosed(center.offset(-3, -3, -3), center.offset(3, 3, 3))) {
+                if (helper.getLevel().getBlockState(p).is(block.apply("electrum_ore"))) {
+                    placedOres++;
+                }
+            }
+        }
+        helper.assertTrue(placedOres > 0, "an electrum vein replaces stone");
+        helper.succeed();
+    }
+
     /** Stats' own effects ("points" scaling), a class's stat_growth, and stat requirements on gear. */
     private static void statEffects(GameTestHelper helper) {
         @SuppressWarnings("removal")

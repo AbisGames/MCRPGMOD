@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_deep_ocean",
+  "features": "pipican:ore_orichalcum",
+  "step": "underground_ores"
+}

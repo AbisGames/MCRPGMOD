@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/raw_void_metal_block"
+    }
+  }
+}

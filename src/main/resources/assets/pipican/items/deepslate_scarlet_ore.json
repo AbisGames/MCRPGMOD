@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_scarlet_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2611154
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:adamantine_ingot",
+    "pipican:atium_ingot",
+    "pipican:beskar_ingot",
+    "pipican:daedric_ingot",
+    "pipican:darksteel_ingot",
+    "pipican:elerium",
+    "pipican:harmonium_ingot",
+    "pipican:hihiirokane_ingot",
+    "pipican:katchin_ingot",
+    "pipican:nth_metal_ingot",
+    "pipican:prismatic_shard",
+    "pipican:promethium_ingot",
+    "pipican:raw_adamantine",
+    "pipican:raw_atium",
+    "pipican:raw_beskar",
+    "pipican:raw_darksteel",
+    "pipican:raw_harmonium",
+    "pipican:raw_hihiirokane",
+    "pipican:raw_katchin",
+    "pipican:raw_nth_metal",
+    "pipican:raw_promethium",
+    "pipican:raw_vibranium",
+    "pipican:sam",
+    "pipican:valyrian_steel_ingot",
+    "pipican:vibranium_ingot"
+  ]
+}

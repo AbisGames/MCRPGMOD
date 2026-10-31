@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_chlorophyte",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12856977
+      }
+    ]
+  }
+}

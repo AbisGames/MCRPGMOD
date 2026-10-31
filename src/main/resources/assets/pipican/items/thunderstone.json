@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/thunderstone",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7362305
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_hextech_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -11546113
+      }
+    ]
+  }
+}

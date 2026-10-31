@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/amber",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -2057684
+      }
+    ]
+  }
+}

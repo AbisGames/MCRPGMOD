@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.0,
+  "group": "flametal_ingot",
+  "ingredient": "#c:ores/flametal",
+  "result": {
+    "id": "pipican:flametal_ingot"
+  }
+}

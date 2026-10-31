@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/cortosis_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8622502
+      }
+    ]
+  }
+}

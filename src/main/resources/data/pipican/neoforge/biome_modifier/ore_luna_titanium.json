@@ -1,0 +1,14 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_plains",
+      "#c:is_desert",
+      "#c:is_savanna",
+      "#c:is_badlands"
+    ]
+  },
+  "features": "pipican:ore_luna_titanium",
+  "step": "underground_ores"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "random_sequence": "pipican:blocks/royal_silver_block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pipican:royal_silver_block"
+        }
+      ]
+    }
+  ]
+}

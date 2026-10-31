@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/deepslate_trellium_ore",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8758132
+      }
+    ]
+  }
+}

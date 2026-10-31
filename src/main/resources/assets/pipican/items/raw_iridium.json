@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_iridium",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -4743968
+      }
+    ]
+  }
+}

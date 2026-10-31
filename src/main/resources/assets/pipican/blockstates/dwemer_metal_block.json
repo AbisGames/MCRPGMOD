@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pipican:block/dwemer_metal_block"
+    }
+  }
+}

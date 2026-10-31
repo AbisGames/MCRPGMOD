@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_tamashigane",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -15724524
+      }
+    ]
+  }
+}

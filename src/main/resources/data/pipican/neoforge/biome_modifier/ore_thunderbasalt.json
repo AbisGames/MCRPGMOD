@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_hill",
+      "#c:is_windswept"
+    ]
+  },
+  "features": "pipican:ore_thunderbasalt",
+  "step": "underground_ores"
+}

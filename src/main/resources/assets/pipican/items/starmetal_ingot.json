@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/starmetal_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12894306
+      }
+    ]
+  }
+}

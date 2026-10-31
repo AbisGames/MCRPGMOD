@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_octiron",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13821106
+      }
+    ]
+  }
+}

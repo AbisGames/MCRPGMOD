@@ -1,0 +1,16 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_flower_forest",
+      "#c:is_magical",
+      [
+        "minecraft:cherry_grove",
+        "minecraft:mushroom_fields"
+      ]
+    ]
+  },
+  "features": "pipican:ore_thaumium",
+  "step": "underground_ores"
+}

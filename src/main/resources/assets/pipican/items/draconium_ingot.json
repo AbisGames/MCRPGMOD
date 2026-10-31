@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/draconium_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7455786
+      }
+    ]
+  }
+}

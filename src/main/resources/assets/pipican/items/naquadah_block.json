@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/naquadah_block",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13877680
+      }
+    ]
+  }
+}

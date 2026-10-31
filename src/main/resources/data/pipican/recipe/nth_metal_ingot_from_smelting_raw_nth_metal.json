@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.25,
+  "group": "nth_metal_ingot",
+  "ingredient": "pipican:raw_nth_metal",
+  "result": {
+    "id": "pipican:nth_metal_ingot"
+  }
+}

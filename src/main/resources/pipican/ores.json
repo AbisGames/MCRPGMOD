@@ -1,0 +1,5496 @@
+[
+  {
+    "id": "electrum",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4293317754,
+    "light": 0,
+    "ores": [
+      {
+        "id": "electrum_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_electrum_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_electrum",
+        "kind": "raw"
+      },
+      {
+        "id": "electrum_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "electrum_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_electrum_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "cold_iron",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4287404710,
+    "light": 0,
+    "ores": [
+      {
+        "id": "cold_iron_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_cold_iron_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_cold_iron",
+        "kind": "raw"
+      },
+      {
+        "id": "cold_iron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "cold_iron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_cold_iron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "truesilver",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4292403948,
+    "light": 0,
+    "ores": [
+      {
+        "id": "truesilver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_truesilver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_truesilver",
+        "kind": "raw"
+      },
+      {
+        "id": "truesilver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "truesilver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_truesilver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "corundum",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4290008894,
+    "light": 0,
+    "ores": [
+      {
+        "id": "corundum_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_corundum_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_corundum",
+        "kind": "raw"
+      },
+      {
+        "id": "corundum_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "corundum_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_corundum_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "cinnabar",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4290785322,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_cinnabar_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "cinnabar",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "cinnabar_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "nitre",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4293453010,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nitre_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_nitre_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "nitre",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "nitre_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "amber",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4292909612,
+    "light": 0,
+    "ores": [
+      {
+        "id": "amber_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_amber_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "amber",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "amber_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "morkite",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4283409351,
+    "light": 0,
+    "ores": [
+      {
+        "id": "morkite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_morkite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "morkite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "morkite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "tin",
+    "tier": 1,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4291415763,
+    "light": 0,
+    "ores": [
+      {
+        "id": "tin_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_tin_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_tin",
+        "kind": "raw"
+      },
+      {
+        "id": "tin_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "tin_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_tin_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "stormsilver",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4290234856,
+    "light": 0,
+    "ores": [
+      {
+        "id": "stormsilver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_stormsilver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_stormsilver",
+        "kind": "raw"
+      },
+      {
+        "id": "stormsilver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "stormsilver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_stormsilver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "runic_iron",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4286418856,
+    "light": 0,
+    "ores": [
+      {
+        "id": "runic_iron_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_runic_iron_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_runic_iron",
+        "kind": "raw"
+      },
+      {
+        "id": "runic_iron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "runic_iron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_runic_iron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "redrock_iron",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4289021230,
+    "light": 0,
+    "ores": [
+      {
+        "id": "redrock_iron_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_redrock_iron_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_redrock_iron",
+        "kind": "raw"
+      },
+      {
+        "id": "redrock_iron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "redrock_iron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_redrock_iron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "pearlsilver",
+    "tier": 1,
+    "form": "metal",
+    "use": "set",
+    "color": 4293519090,
+    "light": 0,
+    "ores": [
+      {
+        "id": "pearlsilver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_pearlsilver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_pearlsilver",
+        "kind": "raw"
+      },
+      {
+        "id": "pearlsilver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "pearlsilver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_pearlsilver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "frostcrystal",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4289258485,
+    "light": 0,
+    "ores": [
+      {
+        "id": "frostcrystal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_frostcrystal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "frostcrystal",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "frostcrystal_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "tideglass",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4284269764,
+    "light": 0,
+    "ores": [
+      {
+        "id": "tideglass_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_tideglass_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "tideglass",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "tideglass_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sunglass",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4294101324,
+    "light": 0,
+    "ores": [
+      {
+        "id": "sunglass_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_sunglass_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "sunglass",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sunglass_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "verdantite",
+    "tier": 1,
+    "form": "gem",
+    "use": "special",
+    "color": 4283215696,
+    "light": 0,
+    "ores": [
+      {
+        "id": "verdantite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_verdantite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "verdantite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "verdantite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "moonstone",
+    "tier": 2,
+    "form": "gem",
+    "use": "set",
+    "color": 4291417840,
+    "light": 0,
+    "ores": [
+      {
+        "id": "moonstone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_moonstone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "moonstone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "moonstone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "demonite",
+    "tier": 2,
+    "form": "metal",
+    "use": "set",
+    "color": 4284170124,
+    "light": 0,
+    "ores": [
+      {
+        "id": "demonite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_demonite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_demonite",
+        "kind": "raw"
+      },
+      {
+        "id": "demonite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "demonite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_demonite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "crimtane",
+    "tier": 2,
+    "form": "metal",
+    "use": "set",
+    "color": 4289733686,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_crimtane_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_crimtane",
+        "kind": "raw"
+      },
+      {
+        "id": "crimtane_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "crimtane_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_crimtane_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "machalite",
+    "tier": 2,
+    "form": "metal",
+    "use": "set",
+    "color": 4282286003,
+    "light": 0,
+    "ores": [
+      {
+        "id": "machalite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_machalite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_machalite",
+        "kind": "raw"
+      },
+      {
+        "id": "machalite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "machalite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_machalite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "bloodstone",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4286190630,
+    "light": 0,
+    "ores": [
+      {
+        "id": "bloodstone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_bloodstone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "bloodstone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "bloodstone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sunstone",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4294419761,
+    "light": 10,
+    "ores": [
+      {
+        "id": "sunstone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_sunstone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "sunstone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sunstone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "aquamarine",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4285518816,
+    "light": 0,
+    "ores": [
+      {
+        "id": "aquamarine_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_aquamarine_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "aquamarine",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "aquamarine_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "certus_quartz",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4290765810,
+    "light": 0,
+    "ores": [
+      {
+        "id": "certus_quartz_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_certus_quartz_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "certus_quartz",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "certus_quartz_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "night_jade",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4281240430,
+    "light": 7,
+    "ores": [
+      {
+        "id": "night_jade_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_night_jade_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "night_jade",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "night_jade_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "zinc",
+    "tier": 2,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4288325032,
+    "light": 0,
+    "ores": [
+      {
+        "id": "zinc_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_zinc_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_zinc",
+        "kind": "raw"
+      },
+      {
+        "id": "zinc_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "zinc_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_zinc_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "glacierite",
+    "tier": 2,
+    "form": "gem",
+    "use": "set",
+    "color": 4287615210,
+    "light": 0,
+    "ores": [
+      {
+        "id": "glacierite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_glacierite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "glacierite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "glacierite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "cinderite",
+    "tier": 2,
+    "form": "metal",
+    "use": "set",
+    "color": 4292436523,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_cinderite_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_cinderite",
+        "kind": "raw"
+      },
+      {
+        "id": "cinderite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "cinderite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_cinderite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "tidalite",
+    "tier": 2,
+    "form": "gem",
+    "use": "set",
+    "color": 4281304757,
+    "light": 0,
+    "ores": [
+      {
+        "id": "tidalite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_tidalite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "tidalite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "tidalite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "thunderbasalt",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4283059819,
+    "light": 0,
+    "ores": [
+      {
+        "id": "thunderbasalt_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_thunderbasalt_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "thunderbasalt",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "thunderbasalt_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "mooncrystal",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4292142335,
+    "light": 0,
+    "ores": [
+      {
+        "id": "mooncrystal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_mooncrystal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "mooncrystal",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "mooncrystal_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "jade_essence",
+    "tier": 2,
+    "form": "gem",
+    "use": "special",
+    "color": 4284006538,
+    "light": 0,
+    "ores": [
+      {
+        "id": "jade_essence_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_jade_essence_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "jade_essence",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "jade_essence_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "cobalt",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4281294800,
+    "light": 0,
+    "ores": [
+      {
+        "id": "cobalt_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_cobalt_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_cobalt",
+        "kind": "raw"
+      },
+      {
+        "id": "cobalt_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "cobalt_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_cobalt_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "ardite",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4290928670,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_ardite_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_ardite",
+        "kind": "raw"
+      },
+      {
+        "id": "ardite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "ardite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_ardite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "thorium",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4285234778,
+    "light": 0,
+    "ores": [
+      {
+        "id": "thorium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_thorium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_thorium",
+        "kind": "raw"
+      },
+      {
+        "id": "thorium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "thorium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_thorium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "malachite",
+    "tier": 3,
+    "form": "gem",
+    "use": "set",
+    "color": 4281312107,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_malachite_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "malachite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "malachite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "quicksilver",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4290298572,
+    "light": 0,
+    "ores": [
+      {
+        "id": "quicksilver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_quicksilver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_quicksilver",
+        "kind": "raw"
+      },
+      {
+        "id": "quicksilver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "quicksilver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_quicksilver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "hellstone",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4292888092,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_hellstone_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_hellstone",
+        "kind": "raw"
+      },
+      {
+        "id": "hellstone_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "hellstone_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_hellstone_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "fel_iron",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4285316922,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_fel_iron_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_fel_iron",
+        "kind": "raw"
+      },
+      {
+        "id": "fel_iron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "fel_iron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_fel_iron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dwemer_metal",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4290939451,
+    "light": 0,
+    "ores": [
+      {
+        "id": "dwemer_metal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_dwemer_metal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_dwemer_metal",
+        "kind": "raw"
+      },
+      {
+        "id": "dwemer_metal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dwemer_metal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_dwemer_metal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "thaumium",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4285157296,
+    "light": 0,
+    "ores": [
+      {
+        "id": "thaumium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_thaumium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_thaumium",
+        "kind": "raw"
+      },
+      {
+        "id": "thaumium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "thaumium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_thaumium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "manasteel",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4283141608,
+    "light": 0,
+    "ores": [
+      {
+        "id": "manasteel_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_manasteel_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_manasteel",
+        "kind": "raw"
+      },
+      {
+        "id": "manasteel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "manasteel_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_manasteel_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dragonglass",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4280950330,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_dragonglass_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "dragonglass",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dragonglass_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "thunderstone",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4287604991,
+    "light": 5,
+    "ores": [
+      {
+        "id": "thunderstone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_thunderstone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "thunderstone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "thunderstone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "lacrima",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4288604159,
+    "light": 6,
+    "ores": [
+      {
+        "id": "lacrima_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_lacrima_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "lacrima",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "lacrima_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "enor_pearl",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4294042564,
+    "light": 0,
+    "ores": [
+      {
+        "id": "enor_pearl_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_enor_pearl_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "enor_pearl",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "enor_pearl_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "vespene",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4284210027,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_vespene_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "vespene",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "vespene_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "cadmium",
+    "tier": 3,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4292461178,
+    "light": 0,
+    "ores": [
+      {
+        "id": "cadmium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_cadmium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_cadmium",
+        "kind": "raw"
+      },
+      {
+        "id": "cadmium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "cadmium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_cadmium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "wintersteel",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4288657609,
+    "light": 0,
+    "ores": [
+      {
+        "id": "wintersteel_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_wintersteel_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_wintersteel",
+        "kind": "raw"
+      },
+      {
+        "id": "wintersteel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "wintersteel_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_wintersteel_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "royal_silver",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4293191925,
+    "light": 0,
+    "ores": [
+      {
+        "id": "royal_silver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_royal_silver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_royal_silver",
+        "kind": "raw"
+      },
+      {
+        "id": "royal_silver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "royal_silver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_royal_silver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dawnbronze",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4292449354,
+    "light": 0,
+    "ores": [
+      {
+        "id": "dawnbronze_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_dawnbronze_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_dawnbronze",
+        "kind": "raw"
+      },
+      {
+        "id": "dawnbronze_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dawnbronze_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_dawnbronze_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "mirestone",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4284377916,
+    "light": 0,
+    "ores": [
+      {
+        "id": "mirestone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_mirestone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "mirestone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "mirestone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "saffron_gold",
+    "tier": 3,
+    "form": "metal",
+    "use": "special",
+    "color": 4293959710,
+    "light": 0,
+    "ores": [
+      {
+        "id": "saffron_gold_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_saffron_gold_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_saffron_gold",
+        "kind": "raw"
+      },
+      {
+        "id": "saffron_gold_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "saffron_gold_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_saffron_gold_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "meteoric_iron",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4284112750,
+    "light": 0,
+    "ores": [
+      {
+        "id": "meteoric_iron_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_meteoric_iron_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_meteoric_iron",
+        "kind": "raw"
+      },
+      {
+        "id": "meteoric_iron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "meteoric_iron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_meteoric_iron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "palladium",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4292901722,
+    "light": 0,
+    "ores": [
+      {
+        "id": "palladium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_palladium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_palladium",
+        "kind": "raw"
+      },
+      {
+        "id": "palladium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "palladium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_palladium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "elementium",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4293233622,
+    "light": 0,
+    "ores": [
+      {
+        "id": "elementium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_elementium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_elementium",
+        "kind": "raw"
+      },
+      {
+        "id": "elementium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "elementium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_elementium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "iridium",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4290223328,
+    "light": 0,
+    "ores": [
+      {
+        "id": "iridium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_iridium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_iridium",
+        "kind": "raw"
+      },
+      {
+        "id": "iridium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "iridium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_iridium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "carbalite",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4286200926,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_carbalite_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_carbalite",
+        "kind": "raw"
+      },
+      {
+        "id": "carbalite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "carbalite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_carbalite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "black_metal",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4281019184,
+    "light": 0,
+    "ores": [
+      {
+        "id": "black_metal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_black_metal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_black_metal",
+        "kind": "raw"
+      },
+      {
+        "id": "black_metal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "black_metal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_black_metal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "starsilver",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4291815167,
+    "light": 0,
+    "ores": [
+      {
+        "id": "starsilver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_starsilver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_starsilver",
+        "kind": "raw"
+      },
+      {
+        "id": "starsilver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "starsilver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_starsilver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "celestial_bronze",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4293111883,
+    "light": 0,
+    "ores": [
+      {
+        "id": "celestial_bronze_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_celestial_bronze_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_celestial_bronze",
+        "kind": "raw"
+      },
+      {
+        "id": "celestial_bronze_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "celestial_bronze_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_celestial_bronze_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "imperial_gold",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4294296898,
+    "light": 0,
+    "ores": [
+      {
+        "id": "imperial_gold_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_imperial_gold_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_imperial_gold",
+        "kind": "raw"
+      },
+      {
+        "id": "imperial_gold_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "imperial_gold_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_imperial_gold_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "goblin_silver",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4291285977,
+    "light": 0,
+    "ores": [
+      {
+        "id": "goblin_silver_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_goblin_silver_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_goblin_silver",
+        "kind": "raw"
+      },
+      {
+        "id": "goblin_silver_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "goblin_silver_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_goblin_silver_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dimeritium",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4285426291,
+    "light": 0,
+    "ores": [
+      {
+        "id": "dimeritium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_dimeritium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_dimeritium",
+        "kind": "raw"
+      },
+      {
+        "id": "dimeritium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dimeritium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_dimeritium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "magisteel",
+    "tier": 4,
+    "form": "metal",
+    "use": "set",
+    "color": 4284116952,
+    "light": 0,
+    "ores": [
+      {
+        "id": "magisteel_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_magisteel_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_magisteel",
+        "kind": "raw"
+      },
+      {
+        "id": "magisteel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "magisteel_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_magisteel_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "kyanite",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4282216409,
+    "light": 0,
+    "ores": [
+      {
+        "id": "kyanite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_kyanite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "kyanite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "kyanite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "starmetal",
+    "tier": 4,
+    "form": "metal",
+    "use": "special",
+    "color": 4282072990,
+    "light": 0,
+    "ores": [
+      {
+        "id": "starmetal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_starmetal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_starmetal",
+        "kind": "raw"
+      },
+      {
+        "id": "starmetal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "starmetal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_starmetal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "kairoseki",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4285497210,
+    "light": 0,
+    "ores": [
+      {
+        "id": "kairoseki_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_kairoseki_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "kairoseki",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "kairoseki_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sekkiseki",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4293781206,
+    "light": 0,
+    "ores": [
+      {
+        "id": "sekkiseki_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_sekkiseki_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "sekkiseki",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sekkiseki_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dust",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4294929213,
+    "light": 0,
+    "ores": [
+      {
+        "id": "dust_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_dust_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "dust",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dust_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "eco",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4286381931,
+    "light": 6,
+    "ores": [
+      {
+        "id": "eco_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_eco_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "eco",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "eco_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "raritanium",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4287323382,
+    "light": 0,
+    "ores": [
+      {
+        "id": "raritanium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_raritanium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raritanium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "raritanium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "evolution_stone",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4294234974,
+    "light": 0,
+    "ores": [
+      {
+        "id": "evolution_stone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_evolution_stone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "evolution_stone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "evolution_stone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "chromium",
+    "tier": 4,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4291350744,
+    "light": 0,
+    "ores": [
+      {
+        "id": "chromium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_chromium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_chromium",
+        "kind": "raw"
+      },
+      {
+        "id": "chromium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "chromium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_chromium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "nickel",
+    "tier": 4,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4290097306,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nickel_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_nickel_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_nickel",
+        "kind": "raw"
+      },
+      {
+        "id": "nickel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "nickel_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_nickel_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "mithril",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4291815925,
+    "light": 0,
+    "ores": [
+      {
+        "id": "mithril_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_mithril_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_mithril",
+        "kind": "raw"
+      },
+      {
+        "id": "mithril_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "mithril_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_mithril_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "ebony",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4280951344,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_ebony_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_ebony",
+        "kind": "raw"
+      },
+      {
+        "id": "ebony_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "ebony_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_ebony_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "stalhrim",
+    "tier": 5,
+    "form": "gem",
+    "use": "set",
+    "color": 4288338416,
+    "light": 0,
+    "ores": [
+      {
+        "id": "stalhrim_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_stalhrim_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "stalhrim",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "stalhrim_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "eternium",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4287144136,
+    "light": 0,
+    "ores": [
+      {
+        "id": "eternium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_eternium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_eternium",
+        "kind": "raw"
+      },
+      {
+        "id": "eternium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "eternium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_eternium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "saronite",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4283394906,
+    "light": 0,
+    "ores": [
+      {
+        "id": "saronite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_saronite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_saronite",
+        "kind": "raw"
+      },
+      {
+        "id": "saronite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "saronite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_saronite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "runite",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4281972149,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_runite_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_runite",
+        "kind": "raw"
+      },
+      {
+        "id": "runite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "runite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_runite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "titanium",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4289311680,
+    "light": 0,
+    "ores": [
+      {
+        "id": "titanium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_titanium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_titanium",
+        "kind": "raw"
+      },
+      {
+        "id": "titanium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "titanium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_titanium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "hallowed",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4294305448,
+    "light": 0,
+    "ores": [
+      {
+        "id": "hallowed_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_hallowed_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_hallowed",
+        "kind": "raw"
+      },
+      {
+        "id": "hallowed_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "hallowed_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_hallowed_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "stygian_iron",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4280162852,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_stygian_iron_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_stygian_iron",
+        "kind": "raw"
+      },
+      {
+        "id": "stygian_iron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "stygian_iron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_stygian_iron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "luna_titanium",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4292533734,
+    "light": 0,
+    "ores": [
+      {
+        "id": "luna_titanium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_luna_titanium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_luna_titanium",
+        "kind": "raw"
+      },
+      {
+        "id": "luna_titanium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "luna_titanium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_luna_titanium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dragonite",
+    "tier": 5,
+    "form": "gem",
+    "use": "set",
+    "color": 4285214348,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_dragonite_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "dragonite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dragonite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "scarlet",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4292356142,
+    "light": 0,
+    "ores": [
+      {
+        "id": "scarlet_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_scarlet_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_scarlet",
+        "kind": "raw"
+      },
+      {
+        "id": "scarlet_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "scarlet_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_scarlet_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "crystallite",
+    "tier": 5,
+    "form": "gem",
+    "use": "set",
+    "color": 4290310911,
+    "light": 0,
+    "ores": [
+      {
+        "id": "crystallite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_crystallite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "crystallite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "crystallite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "gromril",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4285429633,
+    "light": 0,
+    "ores": [
+      {
+        "id": "gromril_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_gromril_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_gromril",
+        "kind": "raw"
+      },
+      {
+        "id": "gromril_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "gromril_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_gromril_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "ithilmar",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4293457136,
+    "light": 0,
+    "ores": [
+      {
+        "id": "ithilmar_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_ithilmar_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_ithilmar",
+        "kind": "raw"
+      },
+      {
+        "id": "ithilmar_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "ithilmar_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_ithilmar_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "carbonadium",
+    "tier": 5,
+    "form": "metal",
+    "use": "set",
+    "color": 4282007367,
+    "light": 0,
+    "ores": [
+      {
+        "id": "carbonadium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_carbonadium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_carbonadium",
+        "kind": "raw"
+      },
+      {
+        "id": "carbonadium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "carbonadium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_carbonadium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "octiron",
+    "tier": 5,
+    "form": "metal",
+    "use": "special",
+    "color": 4281146190,
+    "light": 0,
+    "ores": [
+      {
+        "id": "octiron_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_octiron_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_octiron",
+        "kind": "raw"
+      },
+      {
+        "id": "octiron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "octiron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_octiron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "titanite",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4289116354,
+    "light": 0,
+    "ores": [
+      {
+        "id": "titanite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_titanite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "titanite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "titanite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "zonaite",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4282373798,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_zonaite_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "zonaite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "zonaite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "hextech",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4283421183,
+    "light": 7,
+    "ores": [
+      {
+        "id": "hextech_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_hextech_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "hextech",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "hextech_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "warpstone",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4286381056,
+    "light": 6,
+    "ores": [
+      {
+        "id": "warpstone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_warpstone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "warpstone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "warpstone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "tiberium",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4284284730,
+    "light": 7,
+    "ores": [
+      {
+        "id": "tiberium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_tiberium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "tiberium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "tiberium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "silversheen",
+    "tier": 5,
+    "form": "metal",
+    "use": "special",
+    "color": 4293981434,
+    "light": 0,
+    "ores": [
+      {
+        "id": "silversheen_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_silversheen_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_silversheen",
+        "kind": "raw"
+      },
+      {
+        "id": "silversheen_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "silversheen_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_silversheen_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sakuradite",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4294938552,
+    "light": 0,
+    "ores": [
+      {
+        "id": "sakuradite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_sakuradite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "sakuradite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sakuradite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "energon",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4282245631,
+    "light": 8,
+    "ores": [
+      {
+        "id": "energon_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_energon_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "energon",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "energon_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "aluminum",
+    "tier": 5,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4292205280,
+    "light": 0,
+    "ores": [
+      {
+        "id": "aluminum_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_aluminum_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_aluminum",
+        "kind": "raw"
+      },
+      {
+        "id": "aluminum_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "aluminum_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_aluminum_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "umbrite",
+    "tier": 5,
+    "form": "gem",
+    "use": "set",
+    "color": 4282002770,
+    "light": 0,
+    "ores": [
+      {
+        "id": "umbrite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_umbrite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "umbrite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "umbrite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "skycrystal",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4288665855,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_skycrystal_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "skycrystal",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "skycrystal_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "lifebloom_crystal",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4294941397,
+    "light": 0,
+    "ores": [
+      {
+        "id": "lifebloom_crystal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_lifebloom_crystal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "lifebloom_crystal",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "lifebloom_crystal_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "abyssal_shard",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4280430686,
+    "light": 0,
+    "ores": [
+      {
+        "id": "abyssal_shard_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_abyssal_shard_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "abyssal_shard",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "abyssal_shard_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "orichalcum",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4293434191,
+    "light": 0,
+    "ores": [
+      {
+        "id": "orichalcum_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_orichalcum_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_orichalcum",
+        "kind": "raw"
+      },
+      {
+        "id": "orichalcum_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "orichalcum_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_orichalcum_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "chlorophyte",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4282110319,
+    "light": 0,
+    "ores": [
+      {
+        "id": "chlorophyte_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_chlorophyte_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_chlorophyte",
+        "kind": "raw"
+      },
+      {
+        "id": "chlorophyte_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "chlorophyte_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_chlorophyte_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "aetherium",
+    "tier": 6,
+    "form": "gem",
+    "use": "set",
+    "color": 4286571519,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_aetherium_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "aetherium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "aetherium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "void_metal",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4280556083,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_void_metal_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_void_metal",
+        "kind": "raw"
+      },
+      {
+        "id": "void_metal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "void_metal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_void_metal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "gundanium",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4293322990,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_gundanium_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_gundanium",
+        "kind": "raw"
+      },
+      {
+        "id": "gundanium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "gundanium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_gundanium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "inertron",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4287270809,
+    "light": 0,
+    "ores": [
+      {
+        "id": "inertron_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_inertron_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_inertron",
+        "kind": "raw"
+      },
+      {
+        "id": "inertron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "inertron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_inertron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sigmarite",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4294963640,
+    "light": 0,
+    "ores": [
+      {
+        "id": "sigmarite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_sigmarite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_sigmarite",
+        "kind": "raw"
+      },
+      {
+        "id": "sigmarite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sigmarite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_sigmarite_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "phrik",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4284244336,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_phrik_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_phrik",
+        "kind": "raw"
+      },
+      {
+        "id": "phrik_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "phrik_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_phrik_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "trinium",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4290298064,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_trinium_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_trinium",
+        "kind": "raw"
+      },
+      {
+        "id": "trinium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "trinium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_trinium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dragon_metal",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4290913850,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_dragon_metal_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_dragon_metal",
+        "kind": "raw"
+      },
+      {
+        "id": "dragon_metal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dragon_metal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_dragon_metal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "flametal",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4294933018,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nether_flametal_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_flametal",
+        "kind": "raw"
+      },
+      {
+        "id": "flametal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "flametal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_flametal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "allthemodium",
+    "tier": 6,
+    "form": "metal",
+    "use": "set",
+    "color": 4294103114,
+    "light": 0,
+    "ores": [
+      {
+        "id": "allthemodium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_allthemodium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_allthemodium",
+        "kind": "raw"
+      },
+      {
+        "id": "allthemodium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "allthemodium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_allthemodium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "kryptonite",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4282971458,
+    "light": 0,
+    "ores": [
+      {
+        "id": "kryptonite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_kryptonite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "kryptonite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "kryptonite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "cortosis",
+    "tier": 6,
+    "form": "metal",
+    "use": "special",
+    "color": 4286344794,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_cortosis_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_cortosis",
+        "kind": "raw"
+      },
+      {
+        "id": "cortosis_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "cortosis_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_cortosis_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "element_zero",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4282219519,
+    "light": 4,
+    "ores": [
+      {
+        "id": "element_zero_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_element_zero_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "element_zero",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "element_zero_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "ion_cube",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4284149960,
+    "light": 0,
+    "ores": [
+      {
+        "id": "ion_cube_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_ion_cube_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "ion_cube",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "ion_cube_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "naquadah",
+    "tier": 6,
+    "form": "metal",
+    "use": "special",
+    "color": 4281089616,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_naquadah_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_naquadah",
+        "kind": "raw"
+      },
+      {
+        "id": "naquadah_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "naquadah_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_naquadah_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "dilithium",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4293426175,
+    "light": 5,
+    "ores": [
+      {
+        "id": "dilithium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_dilithium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "dilithium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "dilithium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "quantanium",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4294922200,
+    "light": 0,
+    "ores": [
+      {
+        "id": "quantanium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_quantanium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "quantanium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "quantanium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "eridium",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4289084927,
+    "light": 0,
+    "ores": [
+      {
+        "id": "eridium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_eridium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "eridium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "eridium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "khaydarin",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4284475592,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_khaydarin_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "khaydarin",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "khaydarin_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "materia",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4282908572,
+    "light": 0,
+    "ores": [
+      {
+        "id": "materia_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_materia_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "materia",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "materia_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "adamantine",
+    "tier": 7,
+    "form": "metal",
+    "use": "set",
+    "color": 4288428874,
+    "light": 0,
+    "ores": [
+      {
+        "id": "adamantine_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_adamantine_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_adamantine",
+        "kind": "raw"
+      },
+      {
+        "id": "adamantine_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "adamantine_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_adamantine_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "hihiirokane",
+    "tier": 7,
+    "form": "metal",
+    "use": "set",
+    "color": 4294924854,
+    "light": 12,
+    "ores": [
+      {
+        "id": "hihiirokane_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_hihiirokane_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_hihiirokane",
+        "kind": "raw"
+      },
+      {
+        "id": "hihiirokane_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "hihiirokane_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_hihiirokane_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "darksteel",
+    "tier": 7,
+    "form": "metal",
+    "use": "set",
+    "color": 4279967010,
+    "light": 0,
+    "ores": [
+      {
+        "id": "darksteel_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_darksteel_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_darksteel",
+        "kind": "raw"
+      },
+      {
+        "id": "darksteel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "darksteel_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_darksteel_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "beskar",
+    "tier": 7,
+    "form": "metal",
+    "use": "set",
+    "color": 4289179834,
+    "light": 0,
+    "ores": [
+      {
+        "id": "beskar_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_beskar_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_beskar",
+        "kind": "raw"
+      },
+      {
+        "id": "beskar_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "beskar_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_beskar_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "nth_metal",
+    "tier": 7,
+    "form": "metal",
+    "use": "set",
+    "color": 4287401891,
+    "light": 0,
+    "ores": [
+      {
+        "id": "nth_metal_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_nth_metal_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_nth_metal",
+        "kind": "raw"
+      },
+      {
+        "id": "nth_metal_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "nth_metal_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_nth_metal_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "vibranium",
+    "tier": 7,
+    "form": "metal",
+    "use": "set",
+    "color": 4285496744,
+    "light": 0,
+    "ores": [
+      {
+        "id": "vibranium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_vibranium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_vibranium",
+        "kind": "raw"
+      },
+      {
+        "id": "vibranium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "vibranium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_vibranium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "katchin",
+    "tier": 7,
+    "form": "metal",
+    "use": "special",
+    "color": 4283059538,
+    "light": 0,
+    "ores": [
+      {
+        "id": "katchin_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_katchin_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_katchin",
+        "kind": "raw"
+      },
+      {
+        "id": "katchin_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "katchin_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_katchin_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sam",
+    "tier": 7,
+    "form": "gem",
+    "use": "special",
+    "color": 4289743615,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_sam_ore",
+        "base": "end"
+      }
+    ],
+    "items": [
+      {
+        "id": "sam",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sam_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "elerium",
+    "tier": 7,
+    "form": "gem",
+    "use": "special",
+    "color": 4294916971,
+    "light": 0,
+    "ores": [
+      {
+        "id": "elerium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_elerium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "elerium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "elerium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "prismatic_shard",
+    "tier": 7,
+    "form": "gem",
+    "use": "special",
+    "color": 4294967295,
+    "light": 9,
+    "ores": [
+      {
+        "id": "prismatic_shard_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_prismatic_shard_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "prismatic_shard",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "prismatic_shard_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "promethium",
+    "tier": 7,
+    "form": "metal",
+    "use": "special",
+    "color": 4294917376,
+    "light": 11,
+    "ores": [
+      {
+        "id": "nether_promethium_ore",
+        "base": "nether"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_promethium",
+        "kind": "raw"
+      },
+      {
+        "id": "promethium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "promethium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_promethium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "atium",
+    "tier": 7,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4288585374,
+    "light": 0,
+    "ores": [
+      {
+        "id": "atium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_atium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_atium",
+        "kind": "raw"
+      },
+      {
+        "id": "atium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "atium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_atium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "harmonium",
+    "tier": 7,
+    "form": "metal",
+    "use": "mistborn",
+    "color": 4293976758,
+    "light": 0,
+    "ores": [
+      {
+        "id": "harmonium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_harmonium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_harmonium",
+        "kind": "raw"
+      },
+      {
+        "id": "harmonium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "harmonium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_harmonium_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "uru",
+    "tier": 8,
+    "form": "metal",
+    "use": "limited",
+    "color": 4285429378,
+    "light": 0,
+    "ores": [
+      {
+        "id": "uru_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_uru_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_uru",
+        "kind": "raw"
+      },
+      {
+        "id": "uru_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "uru_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_uru_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "adamantium",
+    "tier": 8,
+    "form": "metal",
+    "use": "limited",
+    "color": 4290297028,
+    "light": 0,
+    "ores": [
+      {
+        "id": "adamantium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_adamantium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_adamantium",
+        "kind": "raw"
+      },
+      {
+        "id": "adamantium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "adamantium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_adamantium_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "draconium",
+    "tier": 8,
+    "form": "metal",
+    "use": "limited",
+    "color": 4287511510,
+    "light": 0,
+    "ores": [
+      {
+        "id": "draconium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_draconium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_draconium",
+        "kind": "raw"
+      },
+      {
+        "id": "draconium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "draconium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_draconium_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "luminite",
+    "tier": 8,
+    "form": "metal",
+    "use": "limited",
+    "color": 4283432912,
+    "light": 10,
+    "ores": [
+      {
+        "id": "luminite_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_luminite_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_luminite",
+        "kind": "raw"
+      },
+      {
+        "id": "luminite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "luminite_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_luminite_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "phazon",
+    "tier": 8,
+    "form": "gem",
+    "use": "limited",
+    "color": 4280199167,
+    "light": 9,
+    "ores": [
+      {
+        "id": "phazon_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_phazon_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "phazon",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "phazon_block",
+        "kind": "gem"
+      }
+    ]
+  },
+  {
+    "id": "pale",
+    "tier": 8,
+    "form": "metal",
+    "use": "limited",
+    "color": 4293454056,
+    "light": 0,
+    "ores": [
+      {
+        "id": "pale_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_pale_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_pale",
+        "kind": "raw"
+      },
+      {
+        "id": "pale_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "pale_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_pale_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "chaos_emerald",
+    "tier": 8,
+    "form": "gem",
+    "use": "limited",
+    "color": 4281257073,
+    "light": 8,
+    "ores": [
+      {
+        "id": "chaos_emerald_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_chaos_emerald_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "chaos_emerald",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "chaos_emerald_block",
+        "kind": "gem"
+      }
+    ]
+  },
+  {
+    "id": "trellium",
+    "tier": 8,
+    "form": "metal",
+    "use": "limited",
+    "color": 4286209164,
+    "light": 0,
+    "ores": [
+      {
+        "id": "trellium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_trellium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_trellium",
+        "kind": "raw"
+      },
+      {
+        "id": "trellium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "trellium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_trellium_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "unobtanium",
+    "tier": 9,
+    "form": "metal",
+    "use": "limited",
+    "color": 4288371199,
+    "light": 0,
+    "ores": [
+      {
+        "id": "unobtanium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_unobtanium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_unobtanium",
+        "kind": "raw"
+      },
+      {
+        "id": "unobtanium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "unobtanium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_unobtanium_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "philosophers_stone",
+    "tier": 9,
+    "form": "gem",
+    "use": "limited",
+    "color": 4290778172,
+    "light": 0,
+    "ores": [
+      {
+        "id": "philosophers_stone_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_philosophers_stone_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "philosophers_stone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "philosophers_stone_block",
+        "kind": "gem"
+      }
+    ]
+  },
+  {
+    "id": "lerasium",
+    "tier": 9,
+    "form": "metal",
+    "use": "limited",
+    "color": 4294959226,
+    "light": 0,
+    "ores": [
+      {
+        "id": "lerasium_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_lerasium_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_lerasium",
+        "kind": "raw"
+      },
+      {
+        "id": "lerasium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "lerasium_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_lerasium_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "tamashigane",
+    "tier": 9,
+    "form": "metal",
+    "use": "limited",
+    "color": 4279242772,
+    "light": 0,
+    "ores": [
+      {
+        "id": "tamashigane_ore",
+        "base": "stone"
+      },
+      {
+        "id": "deepslate_tamashigane_ore",
+        "base": "deepslate"
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_tamashigane",
+        "kind": "raw"
+      },
+      {
+        "id": "tamashigane_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "tamashigane_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_tamashigane_block",
+        "kind": "raw"
+      }
+    ]
+  },
+  {
+    "id": "manyullyn",
+    "tier": 5,
+    "form": "metal",
+    "use": "alloy",
+    "color": 4287513773,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "manyullyn_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "manyullyn_block",
+        "kind": "metal"
+      }
+    ]
+  },
+  {
+    "id": "arcanite",
+    "tier": 4,
+    "form": "metal",
+    "use": "alloy",
+    "color": 4281317560,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "arcanite_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "arcanite_block",
+        "kind": "metal"
+      }
+    ]
+  },
+  {
+    "id": "terrasteel",
+    "tier": 6,
+    "form": "metal",
+    "use": "alloy",
+    "color": 4283880555,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "terrasteel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "terrasteel_block",
+        "kind": "metal"
+      }
+    ]
+  },
+  {
+    "id": "daedric",
+    "tier": 7,
+    "form": "metal",
+    "use": "alloy",
+    "color": 4284092178,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "daedric_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "daedric_block",
+        "kind": "metal"
+      }
+    ]
+  },
+  {
+    "id": "malatium",
+    "tier": 6,
+    "form": "metal",
+    "use": "alloy",
+    "color": 4289766010,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "malatium_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "malatium_block",
+        "kind": "metal"
+      }
+    ]
+  },
+  {
+    "id": "valyrian_steel",
+    "tier": 7,
+    "form": "metal",
+    "use": "relic",
+    "color": 4283125592,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "valyrian_steel_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "valyrian_steel_block",
+        "kind": "metal"
+      }
+    ]
+  },
+  {
+    "id": "mega_stone",
+    "tier": 6,
+    "form": "gem",
+    "use": "relic",
+    "color": 4294933216,
+    "light": 0,
+    "ores": [],
+    "items": [
+      {
+        "id": "mega_stone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "mega_stone_block",
+        "kind": "gem"
+      }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:quantanium_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "pipican:quantanium"
+  }
+}

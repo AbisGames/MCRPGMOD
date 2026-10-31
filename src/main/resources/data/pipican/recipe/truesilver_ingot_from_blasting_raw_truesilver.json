@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.75,
+  "group": "truesilver_ingot",
+  "ingredient": "pipican:raw_truesilver",
+  "result": {
+    "id": "pipican:truesilver_ingot"
+  }
+}

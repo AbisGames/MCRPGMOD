@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/machalite_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12681293
+      }
+    ]
+  }
+}

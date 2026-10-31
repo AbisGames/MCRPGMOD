@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/raw_stygian_iron",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14804444
+      }
+    ]
+  }
+}

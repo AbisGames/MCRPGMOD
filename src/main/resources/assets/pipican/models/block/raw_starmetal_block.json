@@ -1,0 +1,6 @@
+{
+  "parent": "pipican:block/tinted_cube",
+  "textures": {
+    "all": "pipican:block/raw_ore_block"
+  }
+}

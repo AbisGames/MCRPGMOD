@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/khaydarin",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -10491704
+      }
+    ]
+  }
+}

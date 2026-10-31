@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.5,
+  "group": "iridium_ingot",
+  "ingredient": "#c:ores/iridium",
+  "result": {
+    "id": "pipican:iridium_ingot"
+  }
+}

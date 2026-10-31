@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.75,
+  "group": "carbonadium_ingot",
+  "ingredient": "pipican:raw_carbonadium",
+  "result": {
+    "id": "pipican:carbonadium_ingot"
+  }
+}

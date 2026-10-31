@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": [
+    "minecraft:cherry_grove",
+    "minecraft:meadow",
+    "minecraft:sunflower_plains"
+  ],
+  "features": "pipican:ore_celestial_bronze",
+  "step": "underground_ores"
+}
