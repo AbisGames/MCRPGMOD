@@ -62,10 +62,27 @@ public final class WorldLayout {
      * The 180-block warp must be disabled near protected landmark centres.
      */
     public static Optional<Region> regionAt(long seed,int x,int z){
+        return warpedAt(seed,x,z).map(WarpedSample::region);
+    }
+    /**
+     * A block position after the border warp, with the region it lands in.
+     * Anything measured against region bounds (border buffers, edge blends)
+     * must use these warped coordinates, or it follows the straight authored
+     * edge instead of the warped border that {@link #regionAt} produces.
+     */
+    public record WarpedSample(Region region,int x,int z) {
+        /** Distance in blocks from the warped point to its region's nearest edge. */
+        public int borderDistance(){
+            return Math.min(Math.min(x-region.minX(),region.maxX()-x),
+                Math.min(z-region.minZ(),region.maxZ()-z));
+        }
+    }
+    public static Optional<WarpedSample> warpedAt(long seed,int x,int z){
         if(Math.abs(x)>HALF_SIZE||Math.abs(z)>HALF_SIZE)return Optional.empty();
         double dx=fractal(seed,x,z,4100)*180;
         double dz=fractal(seed^0x6a09e667f3bcc909L,x,z,4100)*180;
-        return authoredRegionAt((int)Math.floor(x+dx),(int)Math.floor(z+dz));
+        int wx=(int)Math.floor(x+dx),wz=(int)Math.floor(z+dz);
+        return authoredRegionAt(wx,wz).map(r->new WarpedSample(r,wx,wz));
     }
     /** Smooth value noise; pure and repeatable across chunks. */
     public static double fractal(long seed,int x,int z,int period) {
