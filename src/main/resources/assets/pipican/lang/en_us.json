@@ -400,5 +400,8 @@
   "entity.pipican.corallith_reef_colossus": "Corallith, Reef Colossus",
   "item.pipican.azhar_golden_behemoth_sigil": "Azhar's Sun Sigil",
   "item.pipican.azhar_golden_behemoth_trophy": "Gilded Savanna Crown",
-  "entity.pipican.azhar_golden_behemoth": "Azhar, Golden Behemoth"
+  "entity.pipican.azhar_golden_behemoth": "Azhar, Golden Behemoth",
+  "item.pipican.nhalkorr_leviathan_sigil": "Nhalkorr's Tide Sigil",
+  "item.pipican.nhalkorr_leviathan_trophy": "Leviathan's Frozen Fang",
+  "entity.pipican.nhalkorr_leviathan": "Nhalkorr, the Leviathan"
 }

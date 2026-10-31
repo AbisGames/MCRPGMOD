@@ -89,6 +89,10 @@ public final class BossRegistries {
         "azhar_golden_behemoth",()->EntityType.Builder.<AzharEntity>of(AzharEntity::new,MobCategory.MONSTER)
             .sized(2.4f,3.4f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("azhar_golden_behemoth"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<NhalkorrEntity>> NHALKORR=ENTITIES.register(
+        "nhalkorr_leviathan",()->EntityType.Builder.<NhalkorrEntity>of(NhalkorrEntity::new,MobCategory.MONSTER)
+            .sized(3.4f,2.8f).clientTrackingRange(16).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("nhalkorr_leviathan"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -111,5 +115,6 @@ public final class BossRegistries {
         event.put(XALTEK.get(),XaltekEntity.attributes().build());
         event.put(CORALLITH.get(),CorallithEntity.attributes().build());
         event.put(AZHAR.get(),AzharEntity.attributes().build());
+        event.put(NHALKORR.get(),NhalkorrEntity.attributes().build());
     }
 }

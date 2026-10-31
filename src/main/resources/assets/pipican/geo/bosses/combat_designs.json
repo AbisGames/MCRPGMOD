@@ -87,12 +87,12 @@
   {
     "id": "nhalkorr_leviathan",
     "region": "northern_ice_sea",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1100,
     "damage": 18,
     "sigil": {
-      "planned_item_id": "pipican:nhalkorr_leviathan_sigil",
+      "item": "pipican:nhalkorr_leviathan_sigil",
       "regional_material": "pipican:glacierite",
       "regional_count": 5,
       "dungeon_material": "pipican:northern_ice_sea_boss_core",
@@ -105,44 +105,44 @@
     "abilities": [
       {
         "id": "anchor_current",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A water-current anchor pulls along a single marked lane.",
         "counterplay": "Move perpendicular to the lane or destroy the exposed anchor.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:nhalkorr_leviathan/anchor_current"
+        "animation": "nhalkorr_leviathan/anchor_current"
       },
       {
         "id": "undertow_loop",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Three vortices orbit and converge on fixed endpoints.",
         "counterplay": "Use the displayed safe current between vortices.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:nhalkorr_leviathan/undertow_loop"
+        "animation": "nhalkorr_leviathan/undertow_loop"
       },
       {
         "id": "ink_breaches",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Submerged silhouettes predict staggered surface breaches.",
         "counterplay": "Leave the silhouettes; each breach locks its destination early.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:nhalkorr_leviathan/ink_breaches"
+        "animation": "nhalkorr_leviathan/ink_breaches"
       }
     ],
     "phase_two": {
       "health_fraction": 0.5,
       "once_only": true,
-      "behavior": "Two current anchors alternate; breaking either gives a recovery window."
+      "behavior": "Current safe lanes rotate; the marked anchor and each delayed breach remain locked through phase changes."
     },
     "loot": {
       "guaranteed_regional_material": "pipican:glacierite",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:nhalkorr_leviathan_trophy",
       "planned_trophy_name": "Nhalkorr Leviathan Trophy",
       "xp": 275
     },
@@ -150,16 +150,16 @@
       "geometry": "geometry.pipican.nhalkorr_leviathan",
       "file": "geo/bosses/nhalkorr_leviathan.geo.json",
       "animation_mapping": {
-        "idle": "planned:nhalkorr_leviathan/idle",
-        "walk": "planned:nhalkorr_leviathan/walk",
-        "basic_attack": "planned:nhalkorr_leviathan/basic_attack",
-        "hurt": "planned:nhalkorr_leviathan/hurt",
-        "phase_transition": "planned:nhalkorr_leviathan/phase_transition",
-        "summoning": "planned:nhalkorr_leviathan/summoning",
-        "death": "planned:nhalkorr_leviathan/death",
-        "anchor_current": "planned:nhalkorr_leviathan/anchor_current",
-        "undertow_loop": "planned:nhalkorr_leviathan/undertow_loop",
-        "ink_breaches": "planned:nhalkorr_leviathan/ink_breaches"
+        "idle": "nhalkorr_leviathan/idle",
+        "walk": "nhalkorr_leviathan/walk",
+        "basic_attack": "nhalkorr_leviathan/basic_attack",
+        "hurt": "nhalkorr_leviathan/hurt",
+        "phase_transition": "nhalkorr_leviathan/phase_transition",
+        "summoning": "nhalkorr_leviathan/summoning",
+        "death": "nhalkorr_leviathan/death",
+        "anchor_current": "nhalkorr_leviathan/anchor_current",
+        "undertow_loop": "nhalkorr_leviathan/undertow_loop",
+        "ink_breaches": "nhalkorr_leviathan/ink_breaches"
       }
     },
     "arena": {

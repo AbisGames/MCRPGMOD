@@ -5,7 +5,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | Boss | Entity | Geometry | Textures | Animations | Combat | Phase 2 | Summoning | Loot | GameTests | Client QA |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | frostbound_colossus | complete | prototype | partial | partial | complete | complete | complete | complete | passed | pending |
-| nhalkorr_leviathan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| nhalkorr_leviathan | implemented | prototype + native tail poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | skollvar_winterfang | partial | prototype | partial | partial | partial | partial | complete | complete | partial | pending |
 | hrothgar_drowned_jarl | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | valthor_stormbringer | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -71,3 +71,5 @@ Xaltek now has a registered emerald-jungle encounter using its retained frog-lik
 Corallith is a registered coral-isles encounter with retained shell geometry, reef/undertow atlases and a renderer for the shell, sonar and rolling urchin actions. Its broken-ring attack always leaves a safe gate, phase two separately warns and rotates a second sonar sector, and players can shoot the spreading urchins. The exact Tidalite/coral-core recipe, rejected-spawn rollback, trophy/material rewards and attack/reload counterplay pass in the complete 52-test server suite. Client appearance QA remains pending for the target version.
 
 Azhar is a registered Golden Behemoth with retained source geometry, native refraction/stampede/kneel poses and paired golden/sunheart atlases. Three shootable plates can cancel their reflected rays, the stampede locks three lanes and rotates its safe lane in phase two, and staggered ground lobes preserve an inner refuge while delayed follow-up impacts serialize. Goldgrass Savanna altar rollback, the Dawnbronze/core/blaze-powder recipe and trophy/material rewards pass with the complete 54-test server suite. Client appearance QA remains pending for the target version.
+
+Nhalkorr is a registered ice-sea leviathan with preserved geometry, articulated tail poses and glacial/abyssal atlases. Its locked current follows a shootable anchor lane, phase two shifts the displayed safe current through three moving undertow vortices, and three ink-marked surface breaches resolve at saved staggered intervals. The Glacierite/northern-sea-core/nautilus-shell sigil, biome-gated transactional altar and unique trophy/material rewards are covered by GameTests. Client appearance QA remains pending for the target version.

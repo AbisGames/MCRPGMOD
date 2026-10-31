@@ -112,5 +112,11 @@
     "boss": "azhar_golden_behemoth",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:nhalkorr_leviathan_sigil",
+    "boss": "nhalkorr_leviathan",
+    "min_y": -64,
+    "max_y": 448
   }
 ]
