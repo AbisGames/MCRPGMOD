@@ -10,7 +10,7 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** Only implemented bosses are registered. The other 26 geometry files remain prototypes. */
+/** Server entity types and per-entity attributes for the complete regional boss roster. */
 public final class BossRegistries {
     private static final DeferredRegister<EntityType<?>> ENTITIES=DeferredRegister.create(Registries.ENTITY_TYPE,Pipican.MOD_ID);
     public static final DeferredHolder<EntityType<?>,EntityType<RegionalBossEntity>> MORVATH=ENTITIES.register(

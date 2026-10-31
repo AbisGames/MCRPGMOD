@@ -1,7 +1,10 @@
 # Morvath development playtest
 
 Minecraft 26.1.2 / NeoForge 26.1.2.124 / Java 25. Use a separate test world.
-Verified worldgen was preserved. The other 26 bosses are not registered as finished encounters.
+This guide records the original Morvath-specific encounter walkthrough. The complete
+regional roster is now implemented; current coverage and verification are tracked in
+[BOSS_PROGRESS.md](BOSS_PROGRESS.md). This guide does not claim visual or animation
+verification for all regional bosses.
 
 ## Crafting
 

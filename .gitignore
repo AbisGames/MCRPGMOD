@@ -46,3 +46,4 @@ tools/worldgen/output/
 
 # Isolated Morvath client QA
 run-client-boss/
+run-client-regional-qa/

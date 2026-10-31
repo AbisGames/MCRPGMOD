@@ -1,4 +1,8 @@
-# Biome bosses and progression checkpoint
+# Historical biome-boss and progression checkpoint
+
+This file records an earlier checkpoint at `cdf1e56`, before regional boss
+implementation. For current implementation and QA status, see
+[BOSS_PROGRESS.md](BOSS_PROGRESS.md). Statements below describe that historical state.
 
 Branch `biome-bosses`; current implementation checkpoint `cdf1e56`.
 Work is only in `48018390/MCRPGMOD-Development`. The old repository, `main` and
@@ -36,10 +40,11 @@ rewrite is introduced. See [backend contract](BLACKSMITH_UPGRADES.md).
 
 All 27 bosses have distinct design metadata: stats, sigil, three mechanics/counterplay,
 phase behavior, rewards and model/animation mapping. The other 26 remain disabled
-plans; only Morvath has a functional entity/ability binding. Runtime loading now rejects
-duplicate sigils, invalid ingredient totals/heights, fake implementation markers,
-incomplete/planned animations presented as live, and mismatched reward state. See
-[design catalog](BOSS_DESIGNS.md).
+plans; only Morvath has a functional entity/ability binding at this historical checkpoint.
+Runtime loading rejects duplicate sigils, invalid ingredient totals/heights, fake
+implementation markers, incomplete/planned animations presented as live, and mismatched
+reward state. Current implementation and client QA scope are tracked in
+[BOSS_PROGRESS.md](BOSS_PROGRESS.md) and the [design catalog](BOSS_DESIGNS.md).
 
 ## Verification
 

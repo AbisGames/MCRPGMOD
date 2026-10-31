@@ -37,6 +37,27 @@ def validate(path):
         if 'com/pipican/boss/BossDesigns.class' in names:
             designs=json.loads(jar.read('assets/pipican/geo/bosses/combat_designs.json'))
             assert len(designs)==27 and sum(design['functional'] for design in designs)==27
+            profiles=json.loads(jar.read('data/pipican/blacksmith_profiles.json'))
+            assert len(profiles)==27 and {profile['id'] for profile in profiles}=={design['region'] for design in designs}
+            for design in designs:
+                assert len(design['model']['animation_mapping'])==10,design['id']
+                assert jar.read('assets/pipican/'+design['model']['file'])
+                for item in [design['sigil']['item'],design['loot']['trophy_item']]:
+                    item_id=item.split(':',1)[1]
+                    item_definition=f'assets/pipican/items/{item_id}.json'
+                    assert item_definition in names,item_definition
+                    definition=json.loads(jar.read(item_definition))
+                    namespace,model=definition['model']['model'].split(':',1)
+                    assert f'assets/{namespace}/models/{model}.json' in names,(item_id,model)
+                    assert f'assets/pipican/models/item/{item_id}.json' in names,item_id
+                    texture=f'assets/pipican/textures/item/{item_id}.png'
+                    data=jar.read(texture)
+                    width,height=int.from_bytes(data[16:20],'big'),int.from_bytes(data[20:24],'big')
+                    assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and width>=16 and height>=16 and width==height,texture
+                recipe=f"data/pipican/recipe/{design['sigil']['item'].split(':',1)[1]}.json"
+                assert recipe in names,recipe
+            for name in ['BlacksmithScreen','BlacksmithSetBonuses']:
+                assert f'com/pipican/'+('client/' if name=='BlacksmithScreen' else 'blacksmith/')+name+'.class' in names,name
             assert 'com/pipican/boss/FrostboundEntity.class' in names
             assert 'com/pipican/boss/SkollvarEntity.class' in names
             assert 'com/pipican/boss/EldarothEntity.class' in names

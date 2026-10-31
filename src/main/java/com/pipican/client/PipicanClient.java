@@ -5,6 +5,8 @@ import com.pipican.core.ClassLookup;
 import com.pipican.network.OpenClassSelectionPayload;
 import com.pipican.network.OpenSkillTreePayload;
 import com.pipican.network.OpenTrinketsPayload;
+import com.pipican.network.OpenBlacksmithPayload;
+import com.pipican.network.RequestOpenBlacksmithPayload;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
@@ -45,6 +47,7 @@ public final class PipicanClient {
     private static void registerPayloadHandlers(RegisterClientPayloadHandlersEvent event) {
         event.register(OpenClassSelectionPayload.TYPE, (payload, ctx) -> openClassSelection());
         event.register(OpenSkillTreePayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new SkillTreeScreen()));
+        event.register(OpenBlacksmithPayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new BlacksmithScreen()));
     }
 
     private static void registerBossRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
@@ -116,8 +119,12 @@ public final class PipicanClient {
     /** A "Passive Tree" button above the survival inventory, the way into the tree screen (no keybind yet). */
     private static void addInventoryButton(ScreenEvent.Init.Post event) {
         if (event.getScreen() instanceof InventoryScreen screen) {
+            event.addListener(Button.builder(Component.translatable("blacksmith.pipican.button"), b ->
+                            ClientPacketDistributor.sendToServer(RequestOpenBlacksmithPayload.INSTANCE))
+                    .bounds(screen.getLeftPos() + 4, screen.getTopPos() - 18, 72, 16)
+                    .build());
             event.addListener(Button.builder(Component.translatable("pipican.tree.button"), b -> Minecraft.getInstance().setScreen(new SkillTreeScreen()))
-                    .bounds(screen.getGuiLeft() + screen.getImageWidth() - 60, screen.getGuiTop() - 18, 60, 16)
+                    .bounds(screen.getLeftPos() + screen.getImageWidth() - 60, screen.getTopPos() - 18, 60, 16)
                     .build());
         }
     }

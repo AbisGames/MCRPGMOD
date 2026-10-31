@@ -54,12 +54,17 @@ public final class BlacksmithUpgrades {
     public static List<Cost> costs(String profile,State state,Action action){
         var definition=PROFILES.get(profile); if(definition==null) return List.of();
         int scale=1<<state.tier().ordinal();
-        if(action==Action.EVOLVE) return List.of(new Cost(definition.regional(),32*scale),new Cost(definition.boss(),2*scale),new Cost(definition.rare(),2*scale));
+        if(action==Action.EVOLVE) return combine(List.of(new Cost(definition.regional(),32*scale),new Cost(definition.boss(),2*scale),new Cost(definition.rare(),2*scale)));
         int next=state.level()+1; var costs=new ArrayList<Cost>();
         costs.add(new Cost(definition.regional(),(2+next)*scale));
         if(next>=6) costs.add(new Cost(definition.boss(),1+state.tier().ordinal()));
         if(next>=8) costs.add(new Cost(definition.rare(),scale));
-        return List.copyOf(costs);
+        return combine(costs);
+    }
+    private static List<Cost> combine(List<Cost> costs){
+        var combined=new LinkedHashMap<Identifier,Integer>();
+        for(var cost:costs)combined.merge(cost.item(),cost.count(),Integer::sum);
+        return combined.entrySet().stream().map(entry->new Cost(entry.getKey(),entry.getValue())).toList();
     }
     public static Result execute(ServerPlayer player,Request request){
         if(!player.level().getServer().isSameThread()) return Result.WRONG_THREAD;
@@ -107,7 +112,7 @@ public final class BlacksmithUpgrades {
             Pipican.LOGGER.error("Blacksmith transaction rolled back",error); return Result.INTERNAL_ERROR;
         }
     }
-    private static boolean supported(ItemStack stack){
+    public static boolean supported(ItemStack stack){
         if(stack.get(DataComponents.WEAPON)!=null || stack.get(DataComponents.TOOL)!=null) return true;
         return stack.get(DataComponents.EQUIPPABLE)!=null && stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS,ItemAttributeModifiers.EMPTY)
             .modifiers().stream().anyMatch(entry->entry.attribute().equals(Attributes.ARMOR));

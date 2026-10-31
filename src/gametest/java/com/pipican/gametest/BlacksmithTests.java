@@ -3,7 +3,9 @@ package com.pipican.gametest;
 import com.pipican.Pipican;
 import com.pipican.blacksmith.BlacksmithUpgrades;
 import com.pipican.blacksmith.BlacksmithUpgrades.*;
+import com.pipican.blacksmith.BlacksmithSetBonuses;
 import com.pipican.boss.BossContent;
+import com.pipican.boss.BossDesigns;
 import com.pipican.worldgen.RegionalOreRegistries;
 import java.util.*;
 import java.util.function.Consumer;
@@ -23,7 +25,8 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class BlacksmithTests {
     private static final Map<String,Consumer<GameTestHelper>> TESTS=Map.of("blacksmith_transaction",BlacksmithTests::transaction,
-        "blacksmith_failures",BlacksmithTests::failures,"blacksmith_evolution",BlacksmithTests::evolution);
+        "blacksmith_failures",BlacksmithTests::failures,"blacksmith_evolution",BlacksmithTests::evolution,
+        "blacksmith_regional_profiles",BlacksmithTests::regionalProfiles,"blacksmith_set_bonuses",BlacksmithTests::setBonuses);
     @SubscribeEvent public static void functions(RegisterEvent event){ event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn))); }
     @SubscribeEvent public static void tests(RegisterGameTestsEvent event){
         Holder<TestEnvironmentDefinition<?>> env=event.registerEnvironment(Pipican.id("blacksmith_test"),new TestEnvironmentDefinition.AllOf(List.of()));
@@ -98,6 +101,54 @@ public final class BlacksmithTests {
         helper.assertTrue(BlacksmithUpgrades.execute(player,request(player,Action.EVOLVE))==Result.EVOLUTION_UNAVAILABLE,"Mythic evolution cap bypass");
         helper.assertTrue(ItemStack.matches(completed,inventory.getItem(0)) && ItemStack.matches(materials,inventory.getItem(1)),"capped request consumed materials or gear");
         helper.assertTrue(State.read(completed).revision()==43,"revision reset across evolution; old requests could replay");
+        helper.succeed();
+    }
+
+    private static void regionalProfiles(GameTestHelper helper){
+        helper.assertTrue(BlacksmithUpgrades.profiles().size()==27,"all regional blacksmith profiles must be active");
+        for(var design:BossDesigns.all()){
+            helper.assertTrue(BlacksmithUpgrades.profiles().contains(design.region()),"missing blacksmith profile: "+design.region());
+            helper.assertTrue(RegionalOreRegistries.MATERIALS.containsKey(design.loot().regional().getPath()),"regional reward material is not registered: "+design.id());
+            helper.assertTrue(RegionalOreRegistries.BOSS_CORES.containsKey(design.region()),"trial boss-core catalyst is not registered: "+design.region());
+            helper.assertTrue(BlacksmithTests.class.getResource("/data/pipican/loot_table/rewards/"+design.region()+"_trial.json")!=null,
+                    "boss-core survival reward is missing for "+design.region());
+            helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(net.minecraft.resources.Identifier.parse(design.loot().trophyItem())),
+                    "guaranteed boss catalyst is not registered: "+design.id());
+            var cost=BlacksmithUpgrades.costs(design.region(),new State(10,Tier.LEGENDARY,"",0,""),Action.EVOLVE);
+            helper.assertTrue(cost.size()==3 && cost.stream().mapToInt(Cost::count).allMatch(n->n>0),"regional evolution costs are missing: "+design.region());
+        }
+        helper.succeed();
+    }
+
+    private static void tag(ItemStack stack,String region,Tier tier){
+        var root=stack.getOrDefault(DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+        var tag=new net.minecraft.nbt.CompoundTag();tag.putInt("level",0);tag.putString("tier",tier.name());tag.putString("region",region);tag.putLong("revision",1);tag.putString("set",region+"/"+tier.name());
+        root.put("pipican_blacksmith",tag);stack.set(DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(root));
+    }
+
+    private static void setBonuses(GameTestHelper helper){
+        var player=player(helper);
+        var classModifier=new net.minecraft.world.entity.ai.attributes.AttributeModifier(
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("classmod","speed"),0.12,
+                net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE);
+        player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).addTransientModifier(classModifier);
+        var head=new ItemStack(Items.IRON_HELMET);tag(head,"ashlands",Tier.REGIONAL);player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD,head);
+        var chest=new ItemStack(Items.IRON_CHESTPLATE);tag(chest,"ashlands",Tier.ELITE);player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST,chest);
+        BlacksmithSetBonuses.refresh(player);
+        var two=net.minecraft.resources.Identifier.fromNamespaceAndPath("pipican","blacksmith/set/two_piece");
+        var four=net.minecraft.resources.Identifier.fromNamespaceAndPath("pipican","blacksmith/set/four_piece");
+        helper.assertTrue(player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE).hasModifier(two),"two-piece regional set bonus missing");
+        helper.assertTrue(!player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).hasModifier(four),"two pieces unlocked the four-piece bonus");
+        var legs=new ItemStack(Items.IRON_LEGGINGS);tag(legs,"ashlands",Tier.LEGENDARY);player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS,legs);
+        var feet=new ItemStack(Items.IRON_BOOTS);tag(feet,"ashlands",Tier.MYTHIC);player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.FEET,feet);
+        BlacksmithSetBonuses.refresh(player);
+        helper.assertTrue(player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).hasModifier(four),"four-piece regional set bonus missing for mixed progression tiers");
+        helper.assertTrue(player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).hasModifier(classModifier.id()),"set bonus replaced class-system modifiers");
+        tag(feet,"heartlands",Tier.MYTHIC);BlacksmithSetBonuses.refresh(player);
+        helper.assertTrue(!player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED).hasModifier(four),"mixed-region armor incorrectly unlocked a full set");
+        player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS,ItemStack.EMPTY);
+        player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST,ItemStack.EMPTY);BlacksmithSetBonuses.refresh(player);
+        helper.assertTrue(!player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE).hasModifier(two),"incomplete set retained its transient bonus");
         helper.succeed();
     }
 }

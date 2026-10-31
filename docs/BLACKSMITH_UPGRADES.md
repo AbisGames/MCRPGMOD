@@ -1,46 +1,32 @@
-# Blacksmith upgrade backend
+# Blacksmith progression
 
-`BlacksmithUpgrades.execute(ServerPlayer, Request)` is a server-only inventory API.
-No NPC entity, screen, class-system file or custom network handler is introduced.
-The later NPC interface must derive the player from its authenticated server context,
-quote server costs, and submit the slot, full expected item snapshot, expected revision,
-a fresh request UUID and the selected active profile.
+The regional blacksmith backend is server authoritative and has an inventory screen available from the Survival inventory. No NPC entity architecture exists in the project; a future compatible NPC can open the same screen by sending `OpenBlacksmithPayload` to the interacting player.
 
-Profiles live in `data/pipican/blacksmith_profiles.json`. Ashlands is the first active
-profile: Cinderite / Ashen King's Heart / Infernium. Unfinished boss materials are not
-used in active upgrade profiles. More profiles use the same backend once their rewards
-and equipment progression are playable.
+## Profiles and survival materials
 
-Supports vanilla/modded armor with an armor attribute, weapons and tools. The first
-upgrade binds the equipment to its profile; it cannot switch regions afterward.
-Non-equipment, stacked equipment, unknown profiles, stale snapshots/revisions,
-insufficient materials and capped requests are rejected without changing gear/materials.
+`data/pipican/blacksmith_profiles.json` contains one active profile for each of the 27 catalog regions. Each profile is derived from that boss's guaranteed regional material, its existing trial boss-core catalyst (except Ashlands, which keeps the existing Ashen King's Heart progression), and its listed rare reward where present. Other regions use their guaranteed boss trophy as the rare-tier catalyst. Regional materials and boss cores retain their existing mine/trial loot sources, while trophies and listed rare drops come from the corresponding encounter rewards.
 
-Each tier has +1..+10: Regional, Elite, Legendary, Mythic. At +10 an evolution consumes
-materials and advances tier at +0; total progression points are retained, so evolution
-does not weaken equipment. The item ID/appearance stays intact. Set-group metadata
-is stored for later set-bonus integration; this backend does not invent class passives
-or implement an NPC interface/set effect.
+## Transactions and screen
 
-Costs use existing main-inventory materials, excluding the upgraded slot:
-- Upgrade to n: (2+n) regional materials times 1/2/4/8 by tier.
-- From +6: 1/2/3/4 boss hearts by tier.
-- From +8: 1/2/4/8 Infernium by tier.
-- Evolution: 32 regional +2 boss +2 rare, times the current tier multiplier.
+The screen displays the selected inventory item, its current level/tier and bound region, the chosen region before binding, required item costs and the resulting armor or attack modifier. It supports armor, weapons and tools in inventory slots 0–35. Once bound, a piece stays in that region and the region selector locks.
 
-Armor bonus: 0.05 per total progression point, up to +2 armor per piece.
-Weapon/tool attack bonus: 0.2 per point, up to +8. Existing native/class modifiers
-remain, and only the unique `pipican:blacksmith/*` modifier is replaced each time.
-The native equipment slot group is retained. These are initial balance numbers.
+Every upgrade payload includes a fresh nonce, slot, full expected item snapshot, expected revision, action and profile. `BlacksmithUpgrades.execute` revalidates all fields, materials and caps on the server thread. Failed requests leave gear and materials unchanged; duplicate/stale requests are rejected. The server remains authoritative if the client changes any displayed value.
 
-Transactions run only on the owning server thread. Inventory material plans and output
-are prepared before mutation. Runtime failure restores involved snapshots. All unrelated
-data components, enchantments, custom names, durability, trims and contributor custom
-data remain on the copy. Request nonces block duplicate handling; monotonic item revisions
-persist through evolution/reload so old requests cannot become valid when a level resets.
+## Tiers, costs and attributes
 
-GameTests cover exact material spending, repeat/stale requests, insufficient ingredients,
-invalid items, early/maximum evolution, all forty upgrade levels and three evolutions,
-metadata/set groups and preservation of enchantments/name/damage/custom data/other modifiers.
-Runtime at `27f951a`: run41068590614 passed 34/34 focused tests and 35/35 with
-native resource generation, including all three blacksmith transaction tests.
+Four tiers each support +1 through +10: Regional, Elite, Legendary and Mythic. At +10, evolution consumes materials and advances one tier at +0; total progression points are retained, so evolution does not weaken gear. The item identity, appearance and all unrelated components/modifiers remain intact.
+
+- Upgrade to +n: `(2+n)` regional materials, multiplied by 1/2/4/8 for the current tier.
+- From +6: 1/2/3/4 regional boss catalysts by tier.
+- From +8: 1/2/4/8 rare catalysts by tier.
+- Evolution: 32 regional +2 boss +2 rare catalysts, multiplied by the current tier.
+- Armor: +0.05 armor per progression point, up to +2 per piece.
+- Weapons/tools: +0.2 attack damage per progression point, up to +8.
+
+## Set bonuses and compatibility
+
+Two or more armor pieces bound to the same region grant a small knockback-resistance bonus (2%–2.75%, scaled by tier). Four pieces also grant 1.5%–3% base movement speed. Mixed progression tiers still count; mixed regions do not. These are unique transient modifiers, recalculated from equipped armor and removed when the set is broken. Existing class/skill attributes are left untouched.
+
+## Tests
+
+GameTests cover all 27 profiles and their trial-catalyst loot sources, transaction spending, stale/duplicate and invalid requests, metadata preservation, all 40 level steps, three tier evolutions, caps, mixed-tier set activation, mixed-region rejection, and preservation of class modifiers. The target-version client screen still requires interactive visual QA.

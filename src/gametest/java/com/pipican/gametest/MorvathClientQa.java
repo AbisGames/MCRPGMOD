@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.*;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -25,7 +26,15 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class MorvathClientQa {
     private static final Map<MinecraftServer,Session> SESSIONS=new WeakHashMap<>();
-    private static final class Session { boolean prepared; int lastSlot=-1,angle; final Set<UUID> seen=new HashSet<>(); }
+    private static final List<java.util.function.Supplier<net.minecraft.world.entity.EntityType<?>>> VISUAL_BOSSES=List.of(
+        ()->BossRegistries.FROSTBOUND.get(),()->BossRegistries.NHALKORR.get(),()->BossRegistries.SKOLLVAR.get(),()->BossRegistries.HROTHGAR.get(),
+        ()->BossRegistries.VALTHOR.get(),()->BossRegistries.TENGRI.get(),()->BossRegistries.THALASSOR.get(),()->BossRegistries.ELDAROTH.get(),
+        ()->BossRegistries.FALLEN_KING.get(),()->BossRegistries.DURMAGON.get(),()->BossRegistries.LONGWEI.get(),()->BossRegistries.MORGATHA.get(),
+        ()->BossRegistries.AURELIOS.get(),()->BossRegistries.LIANHUA.get(),()->BossRegistries.AKHMAR.get(),()->BossRegistries.NETHARIS.get(),
+        ()->BossRegistries.ZAHIRA.get(),()->BossRegistries.XALTEK.get(),()->BossRegistries.CORALLITH.get(),()->BossRegistries.AZHAR.get(),
+        ()->BossRegistries.KRAGMOR.get(),()->BossRegistries.AETHERION.get(),()->BossRegistries.SYLTHERA.get(),()->BossRegistries.NOCTHAR.get(),
+        ()->BossRegistries.VERMILLION.get(),()->BossRegistries.LUMYNARA.get());
+    private static final class Session { boolean prepared; int lastSlot=-1,angle,nextBoss; final Set<UUID> seen=new HashSet<>(); }
     @SubscribeEvent public static void tick(ServerTickEvent.Post event){
         if(!Boolean.getBoolean("pipican.clientQa")) return;
         var server=event.getServer(); if(!server.isSingleplayer() || server.getPlayerList().getPlayers().isEmpty()) return;
@@ -50,25 +59,38 @@ public final class MorvathClientQa {
             player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,360000,0,false,false));
             player.getInventory().setItem(0,new ItemStack(BossContent.MORVATH_SIGIL.get(),4));
             player.getInventory().setItem(1,new ItemStack(Items.NETHERITE_SWORD));
+            player.getInventory().setItem(4,new ItemStack(Items.SPYGLASS));
             player.getInventory().setItem(7,new ItemStack(Items.BLAZE_POWDER));
             player.getInventory().setItem(8,new ItemStack(Items.CLOCK)); player.getInventory().setSelectedSlot(0);
             player.teleportTo(0.5,65,3.5); player.resetFallDistance();
             player.lookAt(EntityAnchorArgument.Anchor.EYES,new Vec3(0.5,65.7,0.5));
             player.containerMenu.broadcastChanges();
-            player.sendSystemMessage(Component.literal("QA ready: use sigil on altar. Boss starts paused. Hotbar 6: finish; 7: hurt; 8: phase two; 9: pause/resume AI. Visual immunity is active."));
+            player.sendSystemMessage(Component.literal("QA ready: use sigil on altar. Boss starts paused. Hotbar 5: next boss model (26 remaining); 6: finish; 7: hurt; 8: phase two; 9: pause/resume AI. Visual immunity is active."));
             Pipican.LOGGER.info("CLIENT QA READY world={} altar=0,65,0 boss=0,65,-6 visualImmunity=true",server.getWorldPath(LevelResource.ROOT));
             session.prepared=true;
         }
         var bosses=level.getEntitiesOfClass(RegionalBossEntity.class,new AABB(-24,60,-24,24,90,24),RegionalBossEntity::isAlive);
         for(var boss:bosses) if(session.seen.add(boss.getUUID())){
             boss.setNoAi(true); boss.setTarget(null);
-            boss.tickCombat(level); // Publish and pause the real summoning pose instead of skipping it.
+            boss.tickCombat(level); // Advance one server-authoritative combat tick before the model preview.
             boss.setYRot(0); boss.yBodyRot=0;
             player.lookAt(EntityAnchorArgument.Anchor.EYES,boss.position().add(0,boss.getBbHeight()*0.5,0));
             Pipican.LOGGER.info("CLIENT QA BOSS spawned={} sigils={} phase={} paused=true",boss.getUUID(),player.getInventory().getItem(0).getCount(),boss.phase());
         }
         int slot=player.getInventory().getSelectedSlot();
         if(slot!=session.lastSlot){
+            if(slot==4){
+                for(var previous:level.getEntitiesOfClass(RegionalBossEntity.class,new AABB(-24,60,-24,24,90,24))) previous.discard();
+                if(session.nextBoss<VISUAL_BOSSES.size()){
+                    var entityType=VISUAL_BOSSES.get(session.nextBoss++).get();
+                    var spawned=entityType.create(level,net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                    if(spawned instanceof RegionalBossEntity boss){
+                        boss.teleportTo(0.5,65,-5.5);
+                        if(level.addFreshEntity(boss)) Pipican.LOGGER.info("CLIENT QA MODEL QUEUED index={} id={}",session.nextBoss,BuiltInRegistries.ENTITY_TYPE.getKey(boss.getType()));
+                        else Pipican.LOGGER.error("CLIENT QA MODEL SPAWN REJECTED index={} id={}",session.nextBoss,BuiltInRegistries.ENTITY_TYPE.getKey(boss.getType()));
+                    } else throw new IllegalStateException("QA visual boss is not a RegionalBossEntity: "+entityType);
+                } else player.sendSystemMessage(Component.literal("All 26 regional boss models have been cycled."));
+            }
             for(var boss:bosses){
                 if(slot==1 || slot==2 || slot==3){
                     boss.setNoAi(true); boss.setTarget(null); boss.getNavigation().stop();
