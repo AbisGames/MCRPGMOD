@@ -11,7 +11,7 @@ def validate(path):
         assert not any(n.startswith(('com/pipican/gametest/','data/pipican_test/')) for n in names),'Test content shipped'
         for name,digest in expected.items():
             assert hashlib.sha256(jar.read('assets/pipican/geo/bosses/'+name).replace(b'\r\n',b'\n')).hexdigest()==digest,name
-        for name in ['RegionalBossEntity','MorvathCombat','FrostboundEntity','FrostboundCombat','SkollvarEntity','SkollvarCombat','EldarothEntity','EldarothCombat','FallenKingEntity','FallenKingCombat','KragmorEntity','KragmorCombat','NoctharEntity','NoctharCombat','AetherionEntity','AetherionCombat','VermillionEntity','VermillionCombat','LongweiEntity','LongweiCombat','MorgathaEntity','MorgathaCombat','AureliosEntity','AureliosCombat','LianhuaEntity','LianhuaCombat','AkhmarEntity','AkhmarCombat','RitualAltarBlock','RitualSigils','BossContent','XaltekEntity','XaltekCombat','CorallithEntity','CorallithCombat','AzharEntity','AzharCombat','NhalkorrEntity','NhalkorrCombat']:
+        for name in ['RegionalBossEntity','MorvathCombat','FrostboundEntity','FrostboundCombat','SkollvarEntity','SkollvarCombat','EldarothEntity','EldarothCombat','FallenKingEntity','FallenKingCombat','KragmorEntity','KragmorCombat','NoctharEntity','NoctharCombat','AetherionEntity','AetherionCombat','VermillionEntity','VermillionCombat','LongweiEntity','LongweiCombat','MorgathaEntity','MorgathaCombat','AureliosEntity','AureliosCombat','LianhuaEntity','LianhuaCombat','AkhmarEntity','AkhmarCombat','RitualAltarBlock','RitualSigils','BossContent','XaltekEntity','XaltekCombat','CorallithEntity','CorallithCombat','AzharEntity','AzharCombat','NhalkorrEntity','NhalkorrCombat','HrothgarEntity','HrothgarCombat']:
             assert 'com/pipican/boss/'+name+'.class' in names,name
         for phase in ['armored','enraged']:
             for suffix in ['', '_glow']:
@@ -36,7 +36,7 @@ def validate(path):
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
         if 'com/pipican/boss/BossDesigns.class' in names:
             designs=json.loads(jar.read('assets/pipican/geo/bosses/combat_designs.json'))
-            assert len(designs)==27 and sum(design['functional'] for design in designs)==20
+            assert len(designs)==27 and sum(design['functional'] for design in designs)==21
             assert 'com/pipican/boss/FrostboundEntity.class' in names
             assert 'com/pipican/boss/SkollvarEntity.class' in names
             assert 'com/pipican/boss/EldarothEntity.class' in names
@@ -72,6 +72,7 @@ def validate(path):
             assert 'com/pipican/client/boss/CorallithRenderer.class' in names
             assert 'com/pipican/client/boss/AzharRenderer.class' in names
             assert 'com/pipican/client/boss/NhalkorrRenderer.class' in names
+            assert 'com/pipican/client/boss/HrothgarRenderer.class' in names
             for phase in ['dormant','awakened']:
                 data=jar.read(f'assets/pipican/textures/entity/boss/frostbound_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
@@ -160,6 +161,16 @@ def validate(path):
                 data=jar.read(f'assets/pipican/textures/entity/boss/nhalkorr_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
             for item in ['nhalkorr_leviathan_sigil','nhalkorr_leviathan_trophy']:
+                assert f'assets/pipican/models/item/{item}.json' in names
+                assert f'assets/pipican/textures/item/{item}.png' in names
+            assert 'data/pipican/recipe/hrothgar_drowned_jarl_sigil.json' in names
+            recipe=json.loads(jar.read('data/pipican/recipe/hrothgar_drowned_jarl_sigil.json'))
+            counts=Counter(recipe['key'][symbol] for row in recipe['pattern'] for symbol in row)
+            assert counts=={'pipican:stormsilver':5,'pipican:fjordmark_boss_core':2,'pipican:ritual_core':1,'minecraft:rotten_flesh':1},counts
+            for phase in ['jarl','drowned']:
+                data=jar.read(f'assets/pipican/textures/entity/boss/hrothgar_{phase}.png')
+                assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
+            for item in ['hrothgar_drowned_jarl_sigil','hrothgar_drowned_jarl_trophy']:
                 assert f'assets/pipican/models/item/{item}.json' in names
                 assert f'assets/pipican/textures/item/{item}.png' in names
             for phase in ['heartwood','awakened']:

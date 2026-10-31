@@ -403,5 +403,8 @@
   "entity.pipican.azhar_golden_behemoth": "Azhar, Golden Behemoth",
   "item.pipican.nhalkorr_leviathan_sigil": "Nhalkorr's Tide Sigil",
   "item.pipican.nhalkorr_leviathan_trophy": "Leviathan's Frozen Fang",
-  "entity.pipican.nhalkorr_leviathan": "Nhalkorr, the Leviathan"
+  "entity.pipican.nhalkorr_leviathan": "Nhalkorr, the Leviathan",
+  "item.pipican.hrothgar_drowned_jarl_sigil": "Hrothgar's Drowned Oath",
+  "item.pipican.hrothgar_drowned_jarl_trophy": "Jarl's Salt-Iron Axe",
+  "entity.pipican.hrothgar_drowned_jarl": "Hrothgar, Drowned Jarl"
 }

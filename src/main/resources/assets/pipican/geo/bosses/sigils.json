@@ -118,5 +118,11 @@
     "boss": "nhalkorr_leviathan",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:hrothgar_drowned_jarl_sigil",
+    "boss": "hrothgar_drowned_jarl",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

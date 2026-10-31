@@ -93,6 +93,10 @@ public final class BossRegistries {
         "nhalkorr_leviathan",()->EntityType.Builder.<NhalkorrEntity>of(NhalkorrEntity::new,MobCategory.MONSTER)
             .sized(3.4f,2.8f).clientTrackingRange(16).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("nhalkorr_leviathan"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<HrothgarEntity>> HROTHGAR=ENTITIES.register(
+        "hrothgar_drowned_jarl",()->EntityType.Builder.<HrothgarEntity>of(HrothgarEntity::new,MobCategory.MONSTER)
+            .sized(1.9f,3.6f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("hrothgar_drowned_jarl"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -116,5 +120,6 @@ public final class BossRegistries {
         event.put(CORALLITH.get(),CorallithEntity.attributes().build());
         event.put(AZHAR.get(),AzharEntity.attributes().build());
         event.put(NHALKORR.get(),NhalkorrEntity.attributes().build());
+        event.put(HROTHGAR.get(),HrothgarEntity.attributes().build());
     }
 }

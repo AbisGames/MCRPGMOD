@@ -7,7 +7,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | frostbound_colossus | complete | prototype | partial | partial | complete | complete | complete | complete | passed | pending |
 | nhalkorr_leviathan | implemented | prototype + native tail poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | skollvar_winterfang | partial | prototype | partial | partial | partial | partial | complete | complete | partial | pending |
-| hrothgar_drowned_jarl | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| hrothgar_drowned_jarl | implemented | prototype + native axe/crest poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | valthor_stormbringer | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | tengri_champion | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | thalassor_deep_tyrant | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -73,3 +73,5 @@ Corallith is a registered coral-isles encounter with retained shell geometry, re
 Azhar is a registered Golden Behemoth with retained source geometry, native refraction/stampede/kneel poses and paired golden/sunheart atlases. Three shootable plates can cancel their reflected rays, the stampede locks three lanes and rotates its safe lane in phase two, and staggered ground lobes preserve an inner refuge while delayed follow-up impacts serialize. Goldgrass Savanna altar rollback, the Dawnbronze/core/blaze-powder recipe and trophy/material rewards pass with the complete 54-test server suite. Client appearance QA remains pending for the target version.
 
 Nhalkorr is a registered ice-sea leviathan with preserved geometry, articulated tail poses and glacial/abyssal atlases. Its locked current follows a shootable anchor lane, phase two shifts the displayed safe current through three moving undertow vortices, and three ink-marked surface breaches resolve at saved staggered intervals. The Glacierite/northern-sea-core/nautilus-shell sigil, biome-gated transactional altar and unique trophy/material rewards are covered by GameTests. Client appearance QA remains pending for the target version.
+
+Hrothgar is a registered Fjordmark jarl with native axe, shield and crest poses and jarl/drowned atlases. His marked curved oath returns after a separate delay, four visible chain links can be shot to interrupt their spans, and four rower lanes resolve sequentially around a rotating missing-row refuge; rower sources can also be interrupted. The Stormsilver/fjord-core/rotten-flesh sigil, transactional Fjordmark altar, trophy and material rewards are covered by GameTests. Client visual QA remains pending for the target version.

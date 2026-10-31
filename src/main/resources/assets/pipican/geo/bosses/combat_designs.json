@@ -257,12 +257,12 @@
   {
     "id": "hrothgar_drowned_jarl",
     "region": "fjordmark",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 700,
     "damage": 14,
     "sigil": {
-      "planned_item_id": "pipican:hrothgar_drowned_jarl_sigil",
+      "item": "pipican:hrothgar_drowned_jarl_sigil",
       "regional_material": "pipican:stormsilver",
       "regional_count": 5,
       "dungeon_material": "pipican:fjordmark_boss_core",
@@ -275,44 +275,44 @@
     "abilities": [
       {
         "id": "returning_oath",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A thrown axe follows a curved outbound and returning path.",
         "counterplay": "Dodge across the marked curve after its outbound pass.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:hrothgar_drowned_jarl/returning_oath"
+        "animation": "hrothgar_drowned_jarl/returning_oath"
       },
       {
         "id": "drowned_chains",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Visible chains connect summoned anchors before tightening.",
         "counterplay": "Break a highlighted weak link or move outside its span.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:hrothgar_drowned_jarl/drowned_chains"
+        "animation": "hrothgar_drowned_jarl/drowned_chains"
       },
       {
         "id": "rowing_dead",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Spectral rowers launch staggered rectangular surges.",
         "counterplay": "Use the missing-row gap; the rowers can be interrupted.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:hrothgar_drowned_jarl/rowing_dead"
+        "animation": "hrothgar_drowned_jarl/rowing_dead"
       }
     ],
     "phase_two": {
       "health_fraction": 0.5,
       "once_only": true,
-      "behavior": "Returning axe paths cross once; chain weak links remain attackable."
+      "behavior": "Phase two shifts the returning oath curve and rotating missing-row gap while chain anchors remain shootable."
     },
     "loot": {
       "guaranteed_regional_material": "pipican:stormsilver",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:hrothgar_drowned_jarl_trophy",
       "planned_trophy_name": "Hrothgar Drowned Jarl Trophy",
       "xp": 175
     },
@@ -320,16 +320,16 @@
       "geometry": "geometry.pipican.hrothgar_drowned_jarl",
       "file": "geo/bosses/hrothgar_drowned_jarl.geo.json",
       "animation_mapping": {
-        "idle": "planned:hrothgar_drowned_jarl/idle",
-        "walk": "planned:hrothgar_drowned_jarl/walk",
-        "basic_attack": "planned:hrothgar_drowned_jarl/basic_attack",
-        "hurt": "planned:hrothgar_drowned_jarl/hurt",
-        "phase_transition": "planned:hrothgar_drowned_jarl/phase_transition",
-        "summoning": "planned:hrothgar_drowned_jarl/summoning",
-        "death": "planned:hrothgar_drowned_jarl/death",
-        "returning_oath": "planned:hrothgar_drowned_jarl/returning_oath",
-        "drowned_chains": "planned:hrothgar_drowned_jarl/drowned_chains",
-        "rowing_dead": "planned:hrothgar_drowned_jarl/rowing_dead"
+        "idle": "hrothgar_drowned_jarl/idle",
+        "walk": "hrothgar_drowned_jarl/walk",
+        "basic_attack": "hrothgar_drowned_jarl/basic_attack",
+        "hurt": "hrothgar_drowned_jarl/hurt",
+        "phase_transition": "hrothgar_drowned_jarl/phase_transition",
+        "summoning": "hrothgar_drowned_jarl/summoning",
+        "death": "hrothgar_drowned_jarl/death",
+        "returning_oath": "hrothgar_drowned_jarl/returning_oath",
+        "drowned_chains": "hrothgar_drowned_jarl/drowned_chains",
+        "rowing_dead": "hrothgar_drowned_jarl/rowing_dead"
       }
     },
     "arena": {

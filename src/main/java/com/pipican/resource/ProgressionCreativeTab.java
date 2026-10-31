@@ -35,6 +35,7 @@ public final class ProgressionCreativeTab {
                 output.accept(BossContent.CORALLITH_SIGIL.get()); output.accept(BossContent.CORALLITH_TROPHY.get());
                 output.accept(BossContent.AZHAR_SIGIL.get()); output.accept(BossContent.AZHAR_TROPHY.get());
                 output.accept(BossContent.NHALKORR_SIGIL.get()); output.accept(BossContent.NHALKORR_TROPHY.get());
+                output.accept(BossContent.HROTHGAR_SIGIL.get()); output.accept(BossContent.HROTHGAR_TROPHY.get());
                 RareResources.MATERIALS.values().forEach(item->output.accept(item.get()));
                 RareResources.ORES.values().forEach(block->output.accept(block.get()));
                 RareResources.PICKAXES.values().forEach(item->output.accept(item.get()));
