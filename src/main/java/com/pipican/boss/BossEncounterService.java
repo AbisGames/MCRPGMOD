@@ -29,7 +29,8 @@ public final class BossEncounterService {
         Map.entry("lianhua_lotus_serpent",new Binding(BossCatalog.require("lianhua_lotus_serpent"),BossRegistries.LIANHUA::get)),
         Map.entry("akhmar_sand_emperor",new Binding(BossCatalog.require("akhmar_sand_emperor"),BossRegistries.AKHMAR::get)),
         Map.entry("netharis_river_guardian",new Binding(BossCatalog.require("netharis_river_guardian"),BossRegistries.NETHARIS::get)),
-        Map.entry("zahira_crimson_corsair",new Binding(BossCatalog.require("zahira_crimson_corsair"),BossRegistries.ZAHIRA::get)));
+        Map.entry("zahira_crimson_corsair",new Binding(BossCatalog.require("zahira_crimson_corsair"),BossRegistries.ZAHIRA::get)),
+        Map.entry("xaltek_emerald_devourer",new Binding(BossCatalog.require("xaltek_emerald_devourer"),BossRegistries.XALTEK::get)));
     private BossEncounterService(){}
     public static boolean morvathBiome(ServerLevel level,BlockPos pos){
         return matchesBiome(level,pos,BossCatalog.MORVATH.id());

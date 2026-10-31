@@ -94,5 +94,11 @@
     "boss": "zahira_crimson_corsair",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:xaltek_emerald_devourer_sigil",
+    "boss": "xaltek_emerald_devourer",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

@@ -310,7 +310,7 @@
   "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
   "ritual.pipican.failed": "Ritual rejected: %s",
   "ritual.pipican.summoned": "The Ashen King awakens.",
-  "ritual.pipican.instructions": "Prepare a solid 13×13 floor and 11×11×5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
+  "ritual.pipican.instructions": "Prepare a solid 13\u00d713 floor and 11\u00d711\u00d75 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
   "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted.",
   "ritual.pipican.result.invalid_player": "Stand near the altar while alive to summon.",
   "ritual.pipican.result.invalid_height": "Leave at least five blocks below the world ceiling.",
@@ -353,7 +353,7 @@
   "item.pipican.frostbound_colossus_sigil": "Frostbound Sigil",
   "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy",
   "item.pipican.skollvar_winterfang_sigil": "Winterfang Sigil",
-  "item.pipican.skollvar_winterfang_trophy": "Sköllvar Trophy",
+  "item.pipican.skollvar_winterfang_trophy": "Sk\u00f6llvar Trophy",
   "item.pipican.eldaroth_treant_sigil": "Eldaroth Sigil",
   "item.pipican.eldaroth_treant_trophy": "Ancient Treant Trophy",
   "item.pipican.fallen_king_sigil": "Fallen King Sigil",
@@ -391,5 +391,8 @@
   "entity.pipican.netharis_river_guardian": "Netharis, River Guardian",
   "item.pipican.zahira_crimson_corsair_sigil": "Zahira's Corsair Sigil",
   "item.pipican.zahira_crimson_corsair_trophy": "Corsair's Crimson Cutlass",
-  "entity.pipican.zahira_crimson_corsair": "Zahira, Crimson Corsair"
+  "entity.pipican.zahira_crimson_corsair": "Zahira, Crimson Corsair",
+  "item.pipican.xaltek_emerald_devourer_sigil": "Xaltek's Verdant Sigil",
+  "item.pipican.xaltek_emerald_devourer_trophy": "Emerald Devourer Crest",
+  "entity.pipican.xaltek_emerald_devourer": "Xaltek, Emerald Devourer"
 }

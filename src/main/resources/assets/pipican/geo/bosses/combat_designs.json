@@ -1542,12 +1542,11 @@
   {
     "id": "xaltek_emerald_devourer",
     "region": "emerald_jungle",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 950,
     "damage": 17,
     "sigil": {
-      "planned_item_id": "pipican:xaltek_emerald_devourer_sigil",
       "regional_material": "pipican:verdantite",
       "regional_count": 5,
       "dungeon_material": "pipican:emerald_jungle_boss_core",
@@ -1555,38 +1554,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:fermented_spider_eye",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:xaltek_emerald_devourer_sigil"
     },
     "abilities": [
       {
         "id": "thorn_snares",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Seed pods draw triangular vine snares before tightening.",
         "counterplay": "Escape an open triangle edge or destroy a pod.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:xaltek_emerald_devourer/thorn_snares"
+        "animation": "xaltek_emerald_devourer/thorn_snares"
       },
       {
         "id": "tongue_line",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A straight tongue lash marks its line before a pull attempt.",
         "counterplay": "Sidestep the line or interrupt the exposed tongue tip.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:xaltek_emerald_devourer/tongue_line"
+        "animation": "xaltek_emerald_devourer/tongue_line"
       },
       {
         "id": "canopy_pounce",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Foliage shadows reveal a chosen landing before the leap.",
         "counterplay": "Leave the locked shadow, then attack during landing recovery.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:xaltek_emerald_devourer/canopy_pounce"
+        "animation": "xaltek_emerald_devourer/canopy_pounce"
       }
     ],
     "phase_two": {
@@ -1597,24 +1597,24 @@
     "loot": {
       "guaranteed_regional_material": "pipican:verdantite",
       "regional_count": 8,
-      "trophy_item": null,
-      "planned_trophy_name": "Xaltek Emerald Devourer Trophy",
-      "xp": 238
+      "trophy_item": "pipican:xaltek_emerald_devourer_trophy",
+      "xp": 238,
+      "planned_trophy_name": "Xaltek Emerald Devourer Trophy"
     },
     "model": {
       "geometry": "geometry.pipican.xaltek_emerald_devourer",
       "file": "geo/bosses/xaltek_emerald_devourer.geo.json",
       "animation_mapping": {
-        "idle": "planned:xaltek_emerald_devourer/idle",
-        "walk": "planned:xaltek_emerald_devourer/walk",
-        "basic_attack": "planned:xaltek_emerald_devourer/basic_attack",
-        "hurt": "planned:xaltek_emerald_devourer/hurt",
-        "phase_transition": "planned:xaltek_emerald_devourer/phase_transition",
-        "summoning": "planned:xaltek_emerald_devourer/summoning",
-        "death": "planned:xaltek_emerald_devourer/death",
-        "thorn_snares": "planned:xaltek_emerald_devourer/thorn_snares",
-        "tongue_line": "planned:xaltek_emerald_devourer/tongue_line",
-        "canopy_pounce": "planned:xaltek_emerald_devourer/canopy_pounce"
+        "idle": "xaltek_emerald_devourer/idle",
+        "walk": "xaltek_emerald_devourer/walk",
+        "basic_attack": "xaltek_emerald_devourer/basic_attack",
+        "hurt": "xaltek_emerald_devourer/hurt",
+        "phase_transition": "xaltek_emerald_devourer/phase_transition",
+        "summoning": "xaltek_emerald_devourer/summoning",
+        "death": "xaltek_emerald_devourer/death",
+        "thorn_snares": "xaltek_emerald_devourer/thorn_snares",
+        "tongue_line": "xaltek_emerald_devourer/tongue_line",
+        "canopy_pounce": "xaltek_emerald_devourer/canopy_pounce"
       }
     },
     "arena": {

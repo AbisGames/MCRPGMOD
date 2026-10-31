@@ -42,7 +42,9 @@ public final class BossTests {
         Map.entry("netharis_river_encounter",BossTests::netharisRiverEncounter),
         Map.entry("netharis_combat",BossTests::netharisCombat),
         Map.entry("zahira_spice_encounter",BossTests::zahiraSpiceEncounter),
-        Map.entry("zahira_combat",BossTests::zahiraCombat));
+        Map.entry("zahira_combat",BossTests::zahiraCombat),
+        Map.entry("xaltek_combat",BossTests::xaltekCombat),
+        Map.entry("xaltek_encounter",BossTests::xaltekEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -53,7 +55,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==16,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==17,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -106,6 +108,8 @@ public final class BossTests {
         helper.assertTrue(netharis.functional()&&netharis.sigil().registered()&&netharis.loot().trophyItem().equals("pipican:netharis_river_guardian_trophy"),"Netharis river guardian metadata is incomplete");
         var zahira=BossDesigns.require("zahira_crimson_corsair");
         helper.assertTrue(zahira.functional()&&zahira.sigil().registered()&&zahira.loot().trophyItem().equals("pipican:zahira_crimson_corsair_trophy"),"Zahira crimson corsair metadata is incomplete");
+        var xaltek=BossDesigns.require("xaltek_emerald_devourer");
+        helper.assertTrue(xaltek.functional()&&xaltek.sigil().registered()&&xaltek.loot().trophyItem().equals("pipican:xaltek_emerald_devourer_trophy"),"Xaltek emerald devourer metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -118,7 +122,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil","netharis_river_guardian_sigil","zahira_crimson_corsair_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil","netharis_river_guardian_sigil","zahira_crimson_corsair_sigil","xaltek_emerald_devourer_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -162,6 +166,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("spice_coast").get(),BossContent.CORE.get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("saffron_gold").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("spice_coast").get(),net.minecraft.world.item.Items.FIRE_CHARGE));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("verdantite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("verdantite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("verdantite").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("verdantite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("emerald_jungle").get(),BossContent.CORE.get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("verdantite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("emerald_jungle").get(),net.minecraft.world.item.Items.FERMENTED_SPIDER_EYE));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -601,6 +608,39 @@ public final class BossTests {
             var kicked=new ZahiraCombat(boss);helper.assertTrue(kicked.updatePhase(350,700)&&kicked.begin(ZahiraCombat.FUSES,front),"Zahira phase-two fuse attack failed");for(int i=0;i<60;i++)kicked.tick(level);net.minecraft.world.phys.Vec3 original=kicked.bombPosition(0);var kick=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(kick!=null,"Zahira bomb-kick projectile failed to create");kick.setPos(original.x,original.y,original.z);kick.setDeltaMovement(new net.minecraft.world.phys.Vec3(0,0,1));kick.setNoGravity(true);level.addFreshEntity(kick);kicked.tick(level);
             helper.assertTrue(kicked.bombPosition(0).distanceToSqr(original)>9&&kicked.fuse(0)==15,"bomb kick failed to redirect the marked explosion");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());kicked.save(saved);var restored=new ZahiraCombat(boss);restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));
             helper.assertTrue(restored.clock().phase()==2&&restored.bombPosition(0).distanceToSqr(original)>9&&restored.fuse(0)==15,"phase, kicked bomb location or fuse clock was lost on reload");helper.succeed();
+        }finally{front.discard();refuge.discard();boss.discard();}
+    }
+    private static void xaltekEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(6400,32,6400));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.XALTEK_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/emerald_jungle")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"emerald jungle biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Xaltek spawn consumed the sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"emerald jungle altar summon failed");
+            var boss=level.getEntitiesOfClass(XaltekEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Xaltek spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("xaltek_emerald_devourer"),"Xaltek encounter type not persisted");boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.XALTEK_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("verdantite").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Xaltek trophy/Verdantite rewards missing");helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void xaltekCombat(GameTestHelper helper){
+        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(59000,30,59000));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(front);level.addFreshEntity(refuge);
+        var boss=BossRegistries.XALTEK.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
+        try{
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());var tongue=new XaltekCombat(boss);helper.assertTrue(tongue.begin(XaltekCombat.TONGUE,front),"Xaltek tongue line did not start");
+            for(int i=0;i<49;i++)tongue.tick(level);helper.assertTrue(front.getHealth()==20,"Xaltek tongue struck before its warning");var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Xaltek tongue interrupt projectile missing");arrow.setPos(front.getX(),front.getY()+0.5,front.getZ());arrow.setNoGravity(true);level.addFreshEntity(arrow);tongue.tick(level);helper.assertTrue(front.getHealth()==20&&!arrow.isAlive(),"exposed Xaltek tongue tip was not interruptible");
+            var phase=new XaltekCombat(boss);helper.assertTrue(phase.updatePhase(475,950)&&phase.begin(XaltekCombat.SNARES,front),"Xaltek phase-two snare failed to begin");
+            for(int i=0;i<3;i++){var pod=phase.podPosition(i);var shot=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(shot!=null,"Xaltek seed pod projectile missing");shot.setPos(pod.x,pod.y,pod.z);shot.setNoGravity(true);level.addFreshEntity(shot);}
+            phase.tick(level);helper.assertTrue(phase.brokenPods()==3,"Xaltek phase-two seed pods could not be broken");for(int i=0;i<38;i++)phase.tick(level);helper.assertTrue(front.getHealth()==20,"Xaltek snare struck before its telegraph ended");phase.tick(level);
+            helper.assertTrue(front.getHealth()==20&&phase.exposureTicks()==70&&phase.damageMultiplier()>1f,"broken snare counterplay did not expose Xaltek's phase-two weak spot: hp="+front.getHealth()+", exposed="+phase.exposureTicks()+", multiplier="+phase.damageMultiplier()+", broken="+phase.brokenPods()+", phase="+phase.clock().phase()+", active="+phase.clock().active()+", remaining="+phase.clock().remaining());
+            front.snapTo(origin.getX()+12,origin.getY(),origin.getZ()+3);refuge.snapTo(origin.getX()+2,origin.getY(),origin.getZ()+1);var pounce=new XaltekCombat(boss);helper.assertTrue(pounce.begin(XaltekCombat.POUNCE,front),"Xaltek canopy pounce failed to start");var landing=pounce.landing();front.snapTo(landing.x+3.2,landing.y,landing.z+2.4);front.setHealth(20);front.invulnerableTime=0;refuge.setHealth(20);refuge.invulnerableTime=0;refuge.snapTo(landing.x,landing.y,landing.z);
+            for(int i=0;i<59;i++)pounce.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()==20,"Xaltek canopy pounce resolved before the shadow warning");pounce.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()<20,"Xaltek locked landing circle or sidestep counterplay failed");
+            var save=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());phase.save(save);var restored=new XaltekCombat(boss);restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(save.buildResult())));helper.assertTrue(restored.clock().phase()==2&&restored.exposureTicks()==70&&restored.brokenPods()==3,"Xaltek phase-two pod exposure was lost on reload");helper.succeed();
         }finally{front.discard();refuge.discard();boss.discard();}
     }
     private static void realAttacks(GameTestHelper helper){

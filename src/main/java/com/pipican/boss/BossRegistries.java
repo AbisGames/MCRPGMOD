@@ -77,6 +77,10 @@ public final class BossRegistries {
         "zahira_crimson_corsair",()->EntityType.Builder.<ZahiraEntity>of(ZahiraEntity::new,MobCategory.MONSTER)
             .sized(1.7f,3.3f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("zahira_crimson_corsair"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<XaltekEntity>> XALTEK=ENTITIES.register(
+        "xaltek_emerald_devourer",()->EntityType.Builder.<XaltekEntity>of(XaltekEntity::new,MobCategory.MONSTER)
+            .sized(2.1f,3.1f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("xaltek_emerald_devourer"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -96,5 +100,6 @@ public final class BossRegistries {
         event.put(AKHMAR.get(),AkhmarEntity.attributes().build());
         event.put(NETHARIS.get(),NetharisEntity.attributes().build());
         event.put(ZAHIRA.get(),ZahiraEntity.attributes().build());
+        event.put(XALTEK.get(),XaltekEntity.attributes().build());
     }
 }
