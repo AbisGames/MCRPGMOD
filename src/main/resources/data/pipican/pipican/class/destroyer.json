@@ -59,10 +59,6 @@
     "tree": "pipican:special/destroyer",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "destroyer_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 3,

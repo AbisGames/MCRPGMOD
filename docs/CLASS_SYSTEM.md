@@ -33,7 +33,7 @@ How classes work, how to add one, and where everything lives in the code.
 | | Earned by | Gives |
 |---|---|---|
 | **Skill mastery** | *using* skills: hitting with swords, sprinting, blocking... (see [2.5](#25-skills--mastery--skillnamejson)) | 5 tiers per skill. Each tier = a bonus **and one skill point** for the general or special tree. |
-| **Kill XP** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | two things at once: **class level** (gates tree nodes with `required_level`, can scale effects) and **stat points** (raise a stat with `/pipican stat raise`, or buy nodes in the stat tree). |
+| **Kill XP** (separate from vanilla) | killing mobs (more for tougher mobs), `/pipican xp add` | two things at once: **class level** (gates tree nodes with `required_level`, can scale effects) and **stat points** (spent freely in the Dark-Souls-style **Stats** tab, or with `/pipican stat raise`). |
 | **Vanilla XP levels** | normal Minecraft | only paying for tree refunds |
 
 ---
@@ -90,7 +90,18 @@ A player's total in a stat = class `base_stats` + stat points put into it + `pip
 
 **Stat points** come from lifetime kill XP (the same XP that levels the class). The Nth point needs
 `stats.first_point_xp + (N - 1) × stats.xp_step` more XP than the previous one; the defaults (100, 50) give points
-at 100, 250, 450, 700... XP. One pool of stat points pays for both raising stats and [stat-tree](#23-passive-trees--skill_treenamejson-path-of-exile-style) nodes.
+at 100, 250, 450, 700... XP. One pool of stat points pays for raising stats (and for stat-tree nodes, if a pack
+gives a class a `stat_tree`; the shipped classes don't).
+
+**Level-up screen (Stats tab).** Like Dark Souls' level-up menu: every stat the class can train is listed with its
+total, and players plan points with `+`/`-` (shift: 5 at a time) before pressing **Accept**, which spends them all at
+once (`RaiseStatPayload`, all or nothing). Every stat is open to every class (except `exclusive` ones); what differs
+per class is **scaling**: next to each stat is a letter from the class's `stat_growth` (S ≥ 1.4, A ≥ 1.25, B ≥ 1.1,
+C ≥ 0.9, D ≥ 0.75, E below), so a Berserker gets far more out of a point of Strength than a Wizard does. The middle
+column previews the attributes the planned points change (max health, attack damage, attack/movement speed, the
+class resource), the right column the stat bonuses (magic damage, healing, crit chance, regen), old value then new
+value in blue. Hovering a stat shows its per-point value for your class and where its points come from. A stat's
+bonus label in that column is the lang key `pipican.levelup.bonus.<namespace>.<path>`.
 
 **Built-in stats.** The mod ships eight stats in the `pipican` namespace: `vitality` (+1 max health per point),
 `strength` (+0.1 attack damage), `dexterity` (+0.2% attack speed), `agility` (+0.5% movement speed),
@@ -146,8 +157,9 @@ Every class has up to three trees:
 
 * **General tree** (`skill_tree`) – normally **one big tree shared by all classes**, each starting in its own area.
 * **Special tree** (`special_skill_tree`) – a small class-only tree (like PoE's Ascendancy), built around the special stat.
-* **Stat tree** (`stat_tree`) – paid with **stat points** instead of skill points, so players choose between
-  raising a stat directly or buying a node. Can be shared like the general tree.
+* **Stat tree** (`stat_tree`, optional) – paid with **stat points** instead of skill points. The shipped classes have
+  none (stat points go into the level-up screen); the engine still supports it for packs, through
+  `/pipican tree allocate|refund stat <node>`, but the screen's Stats tab shows the level-up sheet, not this tree.
 
 All three use this format. General and special points come from skill mastery: each skill sends its tier-up
 points to one of those two trees (`points_to` can't be `stat`). Stat-tree points are the player's stat points.

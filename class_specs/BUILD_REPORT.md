@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2228**, partly working: **1**, not yet: **21**
+- Bonus phrases: **2082**. Fully working: **2060**, partly working: **1**, not yet: **21**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 

@@ -64,10 +64,6 @@
     "tree": "pipican:special/thief",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "thief_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 2,

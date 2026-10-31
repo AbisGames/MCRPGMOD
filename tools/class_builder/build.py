@@ -615,12 +615,9 @@ def main(spec_dir, res_dir, report_path):
             if n['id'] in stat_ids:
                 notes[cid].append(f'stat-tree node id "{n["id"]}" also used by {stat_ids[n["id"]]}')
             stat_ids[n['id']] = cid
-        stat_tree_id = f'{NS}:stat' if trees['stat']['shared'] else f'{NS}:stat/{cid}'
-        tfile = {'tree': stat_tree_id, 'nodes': build_nodes('stat', tnodes, place_region(tnodes, start_of(tnodes), angle, radius * 0.6, 60, 50))}
-        if first_stat or not trees['stat']['shared']:
-            tfile = {'tree': stat_tree_id, 'name': 'Stat Tree', 'nodes': tfile['nodes']}
-            first_stat = first_stat and not trees['stat']['shared']
-        write(f'{NS}/{NS}/skill_tree/stat/{cid}.json', tfile)
+        # Stat trees are no longer shipped: stat points are spent freely in the Dark-Souls-style level-up screen
+        # (Stats tab), and each class's stat_growth decides how much it gets out of each point. The spec's stat-tree
+        # section is still parsed and link-checked so old specs keep validating.
 
         for kind, tn in (('general', gnodes), ('special', snodes), ('stat', tnodes)):
             ids = {n['id'] for n in tn}
@@ -636,7 +633,6 @@ def main(spec_dir, res_dir, report_path):
             'special_stat': special_stat, 'starting_kit': kit,
             'skill_tree': {'tree': f'{NS}:general', 'start': start_of(gnodes)},
             'special_skill_tree': {'tree': f'{NS}:special/{cid}', 'start': start_of(snodes)},
-            'stat_tree': {'tree': stat_tree_id, 'start': start_of(tnodes)},
             'progression': {'max_level': c['max_level'], 'starting_skill_points': c['free_general'],
                             'starting_special_skill_points': c['free_special']},
         }

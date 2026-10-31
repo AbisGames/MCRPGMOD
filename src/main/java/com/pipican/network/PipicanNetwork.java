@@ -27,6 +27,7 @@ public final class PipicanNetwork {
         r.playToClient(OpenClassSelectionPayload.TYPE, OpenClassSelectionPayload.STREAM_CODEC);
         r.playToClient(OpenSkillTreePayload.TYPE, OpenSkillTreePayload.STREAM_CODEC);
         r.playToClient(OpenBlacksmithPayload.TYPE, OpenBlacksmithPayload.STREAM_CODEC);
+        r.playToClient(StatTotalsPayload.TYPE, StatTotalsPayload.STREAM_CODEC);
 
         r.playToServer(ChooseClassPayload.TYPE, ChooseClassPayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
@@ -50,7 +51,8 @@ public final class PipicanNetwork {
         });
         r.playToServer(RaiseStatPayload.TYPE, RaiseStatPayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
-            player.sendSystemMessage(ClassService.raiseStat(player, payload.stat()).message());
+            ClassService.Result result = ClassService.raiseStats(player, payload.points());
+            player.sendOverlayMessage(result.message());
         });
         r.playToServer(UseAbilityPayload.TYPE, UseAbilityPayload.STREAM_CODEC,
                 (payload, ctx) -> AbilityService.useSlot((ServerPlayer) ctx.player(), payload.slot()));

@@ -64,6 +64,7 @@ public final class PipicanClient {
         event.register(OpenClassSelectionPayload.TYPE, (payload, ctx) -> openClassSelection());
         event.register(OpenSkillTreePayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new SkillTreeScreen()));
         event.register(OpenBlacksmithPayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new BlacksmithScreen()));
+        event.register(com.pipican.network.StatTotalsPayload.TYPE, (payload, ctx) -> LevelUpPanel.setTotals(payload.totals()));
     }
 
     private static void registerBossRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {

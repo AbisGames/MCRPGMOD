@@ -57,10 +57,6 @@
     "tree": "pipican:special/chronomancer",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "chronomancer_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 3,

@@ -58,10 +58,6 @@
     "tree": "pipican:special/oracle",
     "start": "start"
   },
-  "stat_tree": {
-    "tree": "pipican:stat",
-    "start": "oracle_stat_start"
-  },
   "progression": {
     "max_level": 50,
     "starting_skill_points": 2,
