@@ -364,6 +364,11 @@
       "type": "pipican:bonus",
       "kind": "temple_mobile",
       "amount": 6
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_plates",
+      "amount": 1
     }
   ]
 }

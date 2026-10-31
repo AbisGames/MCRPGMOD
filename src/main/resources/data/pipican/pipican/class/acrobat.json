@@ -77,6 +77,11 @@
       "amount": 4.0
     },
     {
+      "type": "pipican:bonus",
+      "kind": "unpushable",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:attribute",
       "attribute": "minecraft:movement_efficiency",
       "amount": 1.0

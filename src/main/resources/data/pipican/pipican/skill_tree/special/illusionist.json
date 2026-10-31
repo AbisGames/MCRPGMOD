@@ -91,16 +91,7 @@
     {
       "id": "unreal",
       "name": "Unreal",
-      "description": {
-        "text": "you can pass through mobs and they lose track every 10s; -10% damage",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "you can pass through mobs and they lose track every 10s; -10% damage",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -109,7 +100,23 @@
         "phantasmal_killer"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "unpushable",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "lose_track",
+          "amount": 10.0
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 0.9
+        }
+      ]
     }
   ]
 }

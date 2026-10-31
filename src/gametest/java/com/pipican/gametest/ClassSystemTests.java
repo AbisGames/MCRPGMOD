@@ -724,6 +724,19 @@ public final class ClassSystemTests {
         helper.assertTrue(new com.pipican.condition.type.TempleCondition(Optional.empty()).test(player), "inside a moving temple");
         helper.assertTrue(com.pipican.ability.Temples.contains(player, player.position().add(5, 0, 0))
                 && !com.pipican.ability.Temples.contains(player, player.position().add(7, 0, 0)), "6 blocks wide");
+
+        // Trackless: the mixed-in pressure plate count skips a player with no_plates (but not one without tripwire immunity).
+        helper.assertTrue(com.pipican.ability.Trackless.ignoresPlates(player) && !com.pipican.ability.Trackless.ignoresTripwires(player), "plates only");
+        var plate = player.getBoundingBox().inflate(0.5);
+        try {
+            var count = net.minecraft.world.level.block.BasePressurePlateBlock.class.getDeclaredMethod("getEntityCount",
+                    net.minecraft.world.level.Level.class, net.minecraft.world.phys.AABB.class, Class.class);
+            count.setAccessible(true);
+            int counted = (int) count.invoke(null, level, plate, net.minecraft.world.entity.player.Player.class);
+            helper.assertTrue(counted == 0, "pressure plate doesn't count the player: " + counted);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException(e);
+        }
         helper.succeed();
     }
 

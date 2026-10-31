@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2219**, partly working: **2**, not yet: **29**
+- Bonus phrases: **2250**. Fully working: **2228**, partly working: **1**, not yet: **21**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,12 +13,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 12 |
+| [Other mechanics](#other-mechanics) | 9 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 5 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 5 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 4 |
-| [Immunities](#immunities) | 4 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 3 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 1 |
+| [Immunities](#immunities) | 1 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 1 |
 
 ## Skill trigger approximated
@@ -80,14 +80,8 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Other mechanics
 
-- **destroyer**
-  - general tree: Annihilator: +30% explosion and magic damage, but explosions you make damage blocks more
 - **executioner**
   - special tree: Steady: exposure after charged hits lasts 1s
-- **explorer**
-  - general tree: Cartographer: maps you make explore 25% faster
-- **illusionist**
-  - special tree: Unreal: you can pass through mobs and they lose track every 10s; -10% damage
 - **inquisitor**
   - special passive: Scrutiny bonus +0.5% per point
 - **jack_of_all_trades**
@@ -129,28 +123,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **shapeshifter**
   - special passive: Form bonuses +1% per Mutability
 
-## Conditional bonus (while / when / where)
-
-- **acrobat**
-  - passive: You can walk through other players and pass by mobs without being pushed
-- **aeromancer**
-  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **engineer**
-  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
-- **hydromancer**
-  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
-
-## Immunities
-
-- **druid**
-  - special tree: Trackless: your steps never trigger sculk sensors or pressure plates
-- **hydromancer**
-  - special tree: Slippery: immune to being held (guardians' beam slow too)
-- **scout**
-  - passive: Trackless: your footsteps never trigger sculk sensors, shriekers or tripwires
-- **thief**
-  - passive: you never trigger tripwires or pressure plates
-
 ## Potions, XP, loot, trading, crafting, food
 
 - **artificer**
@@ -159,6 +131,16 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Bartering: +5% piglin barter quality
 - **diviner**
   - general tree: Read the Signs: loot chests show their contents' rarity colour
+
+## Conditional bonus (while / when / where)
+
+- **engineer**
+  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
+
+## Immunities
+
+- **hydromancer**
+  - special tree: Slippery: immune to being held (guardians' beam slow too)
 
 ## Bonus against a kind of mob / marked target
 

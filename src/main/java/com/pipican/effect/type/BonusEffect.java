@@ -199,6 +199,15 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code drunk_potion_strength}: potions you drink are this much stronger (-0.3 = 30% weaker: levels round to the nearest,
  *       never below I; Instant Health heals 30% less)</li>
  *   <li>{@code frenzy_spares_players}: any amount above 0 = a frenzy (the {@code frenzy} flag: you swing at whatever is nearest) leaves players alone</li>
+ *   <li>Trackless (any amount above 0): {@code no_tripwires} / {@code no_plates} - you don't set off tripwires / press pressure
+ *       plates; {@code no_sculk_steps} - your steps, landings and swimming make no vibrations</li>
+ *   <li>{@code unpushable}: any amount above 0 = you and the creatures around you don't push each other</li>
+ *   <li>{@code dry_riptide}: any amount above 0 = Riptide tridents work out of water and rain</li>
+ *   <li>{@code map_range}: maps you carry fill in a circle this much wider (0.25 = +25%)</li>
+ *   <li>{@code lose_track}: every this many seconds, mobs targeting you lose track of you</li>
+ *   <li>{@code wind_pull}: any amount above 0 = your wind charges pull light mobs (20 max health or less) in, then push them out
+ *       half a second later</li>
+ *   <li>{@code blast_grief}: explosions you set off break blocks in a radius this much wider (0.3 = +30%)</li>
  *   <li>{@code magic_armor_pierce}: the share of armor your magic damage ignores</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
@@ -241,7 +250,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE,
         HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
         POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK,
-        TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH, FRENZY_SPARES_PLAYERS;
+        TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH, FRENZY_SPARES_PLAYERS,
+        NO_TRIPWIRES, NO_PLATES, NO_SCULK_STEPS, UNPUSHABLE, DRY_RIPTIDE, MAP_RANGE, LOSE_TRACK, WIND_PULL, BLAST_GRIEF;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

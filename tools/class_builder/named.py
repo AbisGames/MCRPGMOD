@@ -2345,6 +2345,38 @@ def world(low, ctx):
     m = re.fullmatch(rf'per {N} ([a-z]+),? wandering traders offer {N} extra trades?', low)
     if m and m.group(2) == sp:
         return bonus_kind('wandering_trades', 0.0, round(float(m.group(3)) / float(m.group(1)), 6))
+    # --- Bulk 51: things that need small patches to vanilla (com.pipican.mixin) or its events.
+    m = re.fullmatch(r"(?:your (?:foot)?steps|you) never triggers? ((?:sculk sensors|shriekers|tripwires|pressure plates)(?:(?:, |,? or )(?:sculk sensors|shriekers|tripwires|pressure plates))*)", low)
+    if m:
+        out = []
+        for part in re.split(r',\s*(?:or\s+)?|\s+or\s+', m.group(1)):
+            kind = {'sculk sensors': 'no_sculk_steps', 'shriekers': 'no_sculk_steps', 'tripwires': 'no_tripwires', 'pressure plates': 'no_plates'}[part]
+            if not any(e['kind'] == kind for e in out):
+                out += bonus_kind(kind, 1.0)
+        return out
+    if re.fullmatch(r'(?:you can )?walk through other players(?: and pass by mobs without being pushed)?|pass by mobs without being pushed', low):
+        return bonus_kind('unpushable', 1.0)
+    m = re.fullmatch(rf'you can pass through mobs and they lose track every {N}s(?:; (.+))?', low)
+    if m:
+        rest = _rest(m.group(2), ctx) if m.group(2) else []
+        if rest is not None:
+            return bonus_kind('unpushable', 1.0) + bonus_kind('lose_track', float(m.group(1))) + rest
+    m = re.fullmatch(r'tridents with riptide work without rain while (.+)', low)
+    if m:
+        when = cond.parse(m.group(1), ctx) if hasattr(cond, 'parse') else None
+        if when:
+            return [{'type': 'pipican:conditional', 'when': when, 'effects': bonus_kind('dry_riptide', 1.0)}]
+    if re.fullmatch(r'wind charges pull light mobs in before pushing them out', low):
+        return bonus_kind('wind_pull', 1.0)
+    m = re.fullmatch(rf'maps you make explore {N}% faster', low)
+    if m:
+        return bonus_kind('map_range', pct(m.group(1)))
+    m = re.fullmatch(rf'(\+{N}% explosion and magic damage), but explosions you make damage blocks more', low)
+    if m:
+        up = _rest(m.group(1), ctx)
+        if up:
+            # "More" isn't a number: the blast reaches as much farther into blocks as its damage went up.
+            return up + bonus_kind('blast_grief', pct(m.group(2)))
     # Violent Madness (zealot): a frenzy when the bar fills, then it empties.
     m = re.fullmatch(rf'when ([a-z ]+) is full: violent madness - for {N}s you attack anything near you \(including allies\), \+{N}% damage, then \1 resets', low)
     if m and m.group(1) == rn:

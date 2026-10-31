@@ -45,21 +45,28 @@
     {
       "id": "hydromancer_riptide",
       "name": "Riptide",
-      "description": {
-        "text": "tridents with Riptide work without rain while Current is above half",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "tridents with Riptide work without rain while Current is above half",
       "type": "small",
       "x": 1129,
       "y": 684,
       "links": [
         "hydromancer_start"
+      ],
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.5
+          },
+          "effects": [
+            {
+              "type": "pipican:bonus",
+              "kind": "dry_riptide",
+              "amount": 1.0
+            }
+          ]
+        }
       ]
     },
     {

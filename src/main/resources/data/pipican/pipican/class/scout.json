@@ -95,6 +95,16 @@
       "name": "alertness"
     },
     {
+      "type": "pipican:bonus",
+      "kind": "no_sculk_steps",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_tripwires",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:conditional",
       "when": {
         "type": "pipican:nearby",

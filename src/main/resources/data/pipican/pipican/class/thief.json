@@ -77,6 +77,16 @@
       "amount": 0.15
     },
     {
+      "type": "pipican:bonus",
+      "kind": "no_tripwires",
+      "amount": 1.0
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "no_plates",
+      "amount": 1.0
+    },
+    {
       "type": "pipican:damage_taken",
       "damage_types": "#minecraft:is_explosion",
       "multiplier": 0.5

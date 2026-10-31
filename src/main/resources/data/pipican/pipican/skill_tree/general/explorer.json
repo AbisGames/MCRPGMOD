@@ -85,16 +85,7 @@
     {
       "id": "explorer_cartographer",
       "name": "Cartographer",
-      "description": {
-        "text": "maps you make explore 25% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "maps you make explore 25% faster",
       "type": "notable",
       "x": -1337,
       "y": 380,
@@ -102,7 +93,14 @@
         "explorer_iron_stomach"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "map_range",
+          "amount": 0.25
+        }
+      ]
     },
     {
       "id": "explorer_far_horizon",
