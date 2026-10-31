@@ -131,17 +131,35 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Zeal cracks the mind.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Zeal cracks the mind.",
+    "effects": [
+      {
+        "type": "pipican:on",
+        "event": "resource_full",
+        "name": "violent madness",
+        "actions": [
+          {
+            "type": "pipican:flag",
+            "name": "frenzy",
+            "seconds": 10.0
+          },
+          {
+            "type": "pipican:boost",
+            "seconds": 10.0,
+            "effects": [
+              {
+                "type": "pipican:damage_dealt",
+                "multiplier": 1.3
+              }
+            ]
+          },
+          {
+            "type": "pipican:resource",
+            "percent": -1.0
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

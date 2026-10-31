@@ -139,6 +139,7 @@ public final class AfflictionEvents {
         if (!(event.getEntity() instanceof ServerPlayer player) || player.tickCount % 20 != 0) {
             return;
         }
+        frenzy(player);
         ClassState state = ClassEffectApplier.state(player);
         double faster = state.chance(Kind.COPPER_HEART);
         if (faster <= 0) {
@@ -153,6 +154,25 @@ public final class AfflictionEvents {
                 BOOSTED.put(golem.getUUID(), until);
             }
         }
+    }
+
+    /**
+     * While the {@code frenzy} flag runs (Violent Madness), the player swings at the nearest creature within 4 blocks once a
+     * second - allies too, players included unless {@code frenzy_spares_players}.
+     */
+    private static void frenzy(ServerPlayer player) {
+        if (!com.pipican.ability.Flags.has(player, "frenzy") || player.isSpectator() || !player.isAlive()) {
+            return;
+        }
+        boolean spare = ClassEffectApplier.state(player).chance(Kind.FRENZY_SPARES_PLAYERS) > 0;
+        var near = player.level().getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, player.getBoundingBox().inflate(4),
+                e -> e != player && e.isAlive() && !(e instanceof net.minecraft.world.entity.decoration.ArmorStand)
+                        && !(e instanceof Player p && (spare || p.isSpectator() || p.isCreative())) && e.distanceToSqr(player) <= 16);
+        near.stream().min(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(player))).ifPresent(target -> {
+            player.attack(target);
+            player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+            player.resetAttackStrengthTicker();
+        });
     }
 
     /** Golem -> game time its Copper Heart boost runs out. */

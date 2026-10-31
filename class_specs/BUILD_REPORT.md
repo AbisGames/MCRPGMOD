@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2217**, partly working: **2**, not yet: **31**
+- Bonus phrases: **2250**. Fully working: **2219**, partly working: **2**, not yet: **29**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,13 +13,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 13 |
-| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 5 |
+| [Other mechanics](#other-mechanics) | 12 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 5 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 5 |
+| [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 4 |
 | [Immunities](#immunities) | 4 |
 | [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 3 |
-| [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 1 |
 
 ## Skill trigger approximated
@@ -103,21 +102,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
 - **warlock**
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
-- **zealot**
-  - special tree: Violent Madness: Violent Madness no longer targets players
-
-## Conditional bonus (while / when / where)
-
-- **acrobat**
-  - passive: You can walk through other players and pass by mobs without being pushed
-- **aeromancer**
-  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
-- **engineer**
-  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
-- **hydromancer**
-  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
-- **zealot**
-  - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
 ## Resource bar: filling, refills, spending
 
@@ -145,6 +129,17 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **shapeshifter**
   - special passive: Form bonuses +1% per Mutability
 
+## Conditional bonus (while / when / where)
+
+- **acrobat**
+  - passive: You can walk through other players and pass by mobs without being pushed
+- **aeromancer**
+  - special tree: Cyclone: wind charges pull light mobs in before pushing them out
+- **engineer**
+  - special tree: Mecha: you can't use your own weapons outside it for 10s after leaving
+- **hydromancer**
+  - general tree: Riptide: tridents with Riptide work without rain while Current is above half
+
 ## Immunities
 
 - **druid**
@@ -164,13 +159,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - skill Bartering: +5% piglin barter quality
 - **diviner**
   - general tree: Read the Signs: loot chests show their contents' rarity colour
-
-## Resource bar that fills from use (only the drain works)
-
-- **sorcerer**
-  - resource: Strain drains 0.2/s; filling it from fighting needs the active-skill system
-- **zealot**
-  - resource: Madness drains 0.3/s; filling it from fighting needs the active-skill system
 
 ## Bonus against a kind of mob / marked target
 

@@ -503,9 +503,7 @@ def main(spec_dir, res_dir, report_path):
             if out_of_combat:
                 special_stat['resource']['drains_in_combat'] = False
             passives += fills
-            if res['regen_per_second'] < 0 and not fills:
-                report['Resource bar that fills from use (only the drain works)'].append(
-                    (cid, 'resource', f'{res["name"]} drains {abs(res["regen_per_second"])}/s; filling it from fighting needs the active-skill system'))
+            drain_only = res['regen_per_second'] < 0 and not fills
 
         kit = []
         for n, i, x in c['kit']:
@@ -661,6 +659,10 @@ def main(spec_dir, res_dir, report_path):
             rpg['abilities'] = own
         for patch in named.PATCHES.get(cid, []):
             patch(rpg)
+        # A draining bar is only a problem when nothing in the class fills it.
+        if res and drain_only and not re.search(r'"type": "pipican:resource", "amount": [1-9]', json.dumps(rpg)):
+            report['Resource bar that fills from use (only the drain works)'].append(
+                (cid, 'resource', f'{res["name"]} drains {abs(res["regen_per_second"])}/s; filling it from fighting needs the active-skill system'))
         write(f'{NS}/{NS}/class/{cid}.json', rpg)
 
     # --- skills

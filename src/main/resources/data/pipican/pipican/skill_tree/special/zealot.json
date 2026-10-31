@@ -68,16 +68,7 @@
     {
       "id": "violent_madness",
       "name": "Violent Madness",
-      "description": {
-        "text": "Violent Madness no longer targets players",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Violent Madness no longer targets players",
       "type": "notable",
       "x": -35,
       "y": 140,
@@ -85,7 +76,14 @@
         "iron_conviction"
       ],
       "cost": 2,
-      "required_level": 20
+      "required_level": 20,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "frenzy_spares_players",
+          "amount": 1.0
+        }
+      ]
     },
     {
       "id": "prophet_of_ruin",

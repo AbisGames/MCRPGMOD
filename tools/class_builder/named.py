@@ -2345,6 +2345,16 @@ def world(low, ctx):
     m = re.fullmatch(rf'per {N} ([a-z]+),? wandering traders offer {N} extra trades?', low)
     if m and m.group(2) == sp:
         return bonus_kind('wandering_trades', 0.0, round(float(m.group(3)) / float(m.group(1)), 6))
+    # Violent Madness (zealot): a frenzy when the bar fills, then it empties.
+    m = re.fullmatch(rf'when ([a-z ]+) is full: violent madness - for {N}s you attack anything near you \(including allies\), \+{N}% damage, then \1 resets', low)
+    if m and m.group(1) == rn:
+        secs = float(m.group(2))
+        return [{'type': 'pipican:on', 'event': 'resource_full', 'name': 'violent madness', 'actions': [
+            {'type': 'pipican:flag', 'name': 'frenzy', 'seconds': secs},
+            {'type': 'pipican:boost', 'seconds': secs, 'effects': [{'type': 'pipican:damage_dealt', 'multiplier': round(1 + pct(m.group(3)), 6)}]},
+            {'type': 'pipican:resource', 'percent': -1.0}]}]
+    if re.fullmatch(r'violent madness no longer targets players', low):
+        return bonus_kind('frenzy_spares_players', 1.0)
     # Low Blow (scout): "revealed" mobs are the ones you marked with Reveal Weakness.
     m = re.fullmatch(rf'when a revealed mob takes damage from an ally, you get a free {N}% damage hit on it(?:; (.+))?', low)
     if m:

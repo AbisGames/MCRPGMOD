@@ -198,6 +198,7 @@ import net.minecraft.util.StringRepresentable;
  *   <li>{@code wandering_trades}: whole extra offers a wandering trader rolls when you talk to it (once per trader; everyone sees them)</li>
  *   <li>{@code drunk_potion_strength}: potions you drink are this much stronger (-0.3 = 30% weaker: levels round to the nearest,
  *       never below I; Instant Health heals 30% less)</li>
+ *   <li>{@code frenzy_spares_players}: any amount above 0 = a frenzy (the {@code frenzy} flag: you swing at whatever is nearest) leaves players alone</li>
  *   <li>{@code magic_armor_pierce}: the share of armor your magic damage ignores</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
@@ -240,7 +241,7 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE,
         HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
         POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK,
-        TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH;
+        TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH, FRENZY_SPARES_PLAYERS;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 
