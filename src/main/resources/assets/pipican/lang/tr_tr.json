@@ -1755,5 +1755,8 @@
   "item.pipican.mercury": "Cıva",
   "pipican.coating.tooltip": "Kaplama: %s",
   "pipican.ore.class_levels": "+%s sınıf seviyesi!",
-  "pipican.ability.suppressed": "Yakındaki Kairoseki yeteneklerini bastırıyor."
+  "pipican.ability.suppressed": "Yakındaki Kairoseki yeteneklerini bastırıyor.",
+  "item.pipican.refined_quantanium": "Arıtılmış Quantanium",
+  "pipican.ore.meteor": "Gece göğünde bir göktaşı parlayıp yakına düşüyor!",
+  "pipican.ore.chaos.super": "Yedi Kaos Zümrüdü süper formunu açığa çıkarıyor!"
 }

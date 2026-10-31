@@ -159,6 +159,7 @@ public final class SpecialOreEvents {
             case "helmet" -> gear.is(ItemTags.HEAD_ARMOR);
             case "armor" -> gear.is(ItemTags.HEAD_ARMOR) || gear.is(ItemTags.CHEST_ARMOR) || gear.is(ItemTags.LEG_ARMOR) || gear.is(ItemTags.FOOT_ARMOR);
             case "shield" -> gear.getItem() instanceof net.minecraft.world.item.ShieldItem;
+            case "tool" -> gear.is(ItemTags.PICKAXES) || gear.is(ItemTags.AXES) || gear.is(ItemTags.SHOVELS) || gear.is(ItemTags.HOES);
             default -> false;
         };
         if (!fits) {

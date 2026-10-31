@@ -92,6 +92,8 @@ public final class PipicanOres {
         int light = json.get("light").getAsInt();
         boolean gem = ore.form().equals("gem");
         Rarity rarity = tier >= 8 ? Rarity.EPIC : tier >= 6 ? Rarity.RARE : tier >= 4 ? Rarity.UNCOMMON : Rarity.COMMON;
+        JsonObject special = json.has("special") ? json.getAsJsonObject("special") : new JsonObject();
+        SPECIAL.put(ore.id(), special);
 
         for (JsonElement e : json.getAsJsonArray("ores")) {
             JsonObject variant = e.getAsJsonObject();
@@ -115,13 +117,14 @@ public final class PipicanOres {
                     })
                     .lightLevel(state -> light);
             // Gem ores give experience when mined (like diamonds); metal ores when their raw ore is smelted.
-            DeferredBlock<Block> block = gem
-                    ? BLOCKS.registerBlock(id, p -> new DropExperienceBlock(UniformInt.of(tier, 2 + 2 * tier), p), props)
+            var xp = gem ? UniformInt.of(tier, 2 + 2 * tier) : net.minecraft.util.valueproviders.ConstantInt.of(0);
+            // Chlorophyte and Tiberium grow into the stone around them (Tiberium is toxic too).
+            DeferredBlock<Block> block = special.has("spread")
+                    ? BLOCKS.registerBlock(id, p -> new SpreadingOreBlock(xp, special.getAsJsonObject("spread"), p.randomTicks()), props)
+                    : gem ? BLOCKS.registerBlock(id, p -> new DropExperienceBlock(xp, p), props)
                     : BLOCKS.registerBlock(id, Block::new, props);
             blockItem(ore, id, block, rarity);
         }
-        JsonObject special = json.has("special") ? json.getAsJsonObject("special") : new JsonObject();
-        SPECIAL.put(ore.id(), special);
         for (JsonElement e : json.getAsJsonArray("items")) {
             String id = e.getAsJsonObject().get("id").getAsString();
             // A gem with a "consume" use is used up on right-click (its effects are applied; Java actions in SpecialOreEvents).
@@ -267,6 +270,11 @@ public final class PipicanOres {
     /** An ore's material: its ingot (metals) or the gem itself. */
     public static DeferredItem<Item> material(String oreId) {
         return ITEMS_BY_PATH.containsKey(oreId + "_ingot") ? item(oreId + "_ingot") : item(oreId);
+    }
+
+    /** An ore by its id ("electrum"), if any. */
+    public static Optional<Ore> byId(String id) {
+        return ORES.stream().filter(o -> o.id().equals(id)).findFirst();
     }
 
     /** The ore a block or item of this mod belongs to (by registry path), if any. */

@@ -32,7 +32,7 @@ public final class BlacksmithUpgrades {
         public Request { Objects.requireNonNull(nonce); Objects.requireNonNull(action); Objects.requireNonNull(profile); expected=Objects.requireNonNull(expected).copy(); }
     }
     public record Cost(Identifier item,int count){}
-    private record Profile(String id,Identifier regional,Identifier boss,Identifier rare){}
+    public record Profile(String id,Identifier regional,Identifier boss,Identifier rare){}
     private static final Map<String,Profile> PROFILES=loadProfiles();
     private static final Map<ServerPlayer,LinkedHashSet<UUID>> REQUESTS=Collections.synchronizedMap(new WeakHashMap<>());
     private static final Identifier ARMOR_MOD=Pipican.id("blacksmith/armor"), WEAPON_MOD=Pipican.id("blacksmith/weapon");
@@ -84,13 +84,15 @@ public final class BlacksmithUpgrades {
         if(request.action()==Action.UPGRADE && state.level()>=10) return Result.MAX_LEVEL;
         if(request.action()==Action.EVOLVE && (state.level()!=10 || state.tier()==Tier.MYTHIC)) return Result.EVOLUTION_UNAVAILABLE;
         var plan=new LinkedHashMap<Integer,Integer>();
+        var definition=PROFILES.get(request.profile());
         for(var cost:costs(request.profile(),state,request.action())){
             int remaining=cost.count();
+            var accepted=substitutes(definition,cost.item());
             // Spend main-inventory materials; never touch equipped/offhand items or the upgraded slot.
             for(int slot=0;slot<36 && remaining>0;slot++){
                 if(slot==request.slot()) continue;
                 var stack=inventory.getItem(slot);
-                if(!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).equals(cost.item())) continue;
+                if(!accepted.contains(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()))) continue;
                 int available=stack.getCount()-plan.getOrDefault(slot,0), spend=Math.min(available,remaining);
                 if(spend>0){ plan.merge(slot,spend,Integer::sum); remaining-=spend; }
             }
@@ -111,6 +113,20 @@ public final class BlacksmithUpgrades {
             snapshots.forEach(inventory::setItem); inventory.setChanged();
             Pipican.LOGGER.error("Blacksmith transaction rolled back",error); return Result.INTERNAL_ERROR;
         }
+    }
+    /**
+     * Universal upgrade materials from the ore catalog, usable at any region's blacksmith: Titanite for the regional
+     * material, Raritanium for the boss core, Eridium for the rare trophy, and Pale Ore (the final upgrade) for any.
+     */
+    public static Set<Identifier> substitutes(Profile definition,Identifier item){
+        var accepted=new LinkedHashSet<Identifier>(); accepted.add(item);
+        if(definition!=null){
+            if(item.equals(definition.regional())) accepted.add(Pipican.id("titanite"));
+            if(item.equals(definition.boss())) accepted.add(Pipican.id("raritanium"));
+            if(item.equals(definition.rare())) accepted.add(Pipican.id("eridium"));
+        }
+        accepted.add(Pipican.id("pale_ingot"));
+        return accepted;
     }
     public static boolean supported(ItemStack stack){
         if(stack.get(DataComponents.WEAPON)!=null || stack.get(DataComponents.TOOL)!=null) return true;

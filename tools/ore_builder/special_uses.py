@@ -47,7 +47,7 @@ def build(out, ores, tag, lang_en, lang_tr, runtime):
         rt[ore].setdefault('special', {})['coating'] = slot
         lang_en[f'{NS}.coating.{ore}'] = text
         lang_en[f'{NS}.coating.{ore}.slot'] = {'weapon': 'Coats a weapon', 'helmet': 'Coats a helmet', 'armor': 'Coats armor',
-                                               'shield': 'Coats a shield'}[slot] + ' at an anvil'
+                                               'shield': 'Coats a shield', 'tool': 'Fuses onto a tool'}[slot] + ' at an anvil'
     for ore, kind in specials.BLOCKS.items():
         rt[ore].setdefault('special', {})['block'] = kind
     lang_en[f'{NS}.coating.tooltip'] = 'Coated: %s'
@@ -70,6 +70,13 @@ def build(out, ores, tag, lang_en, lang_tr, runtime):
             data = {'type': f'minecraft:{kind}', 'category': 'misc', 'cookingtime': 200, 'experience': 0.5, 'ingredient': ingredients,
                     'result': {'id': result}}
         out.json(f'data/{NS}/recipe/{name}.json', data)
+
+    # Valyrian steel weapons, reforged from found ingots.
+    for kind, pattern in specials.VALYRIAN_RECIPES.items():
+        out.json(f'data/{NS}/recipe/valyrian_steel_{kind}.json', {'type': 'minecraft:crafting_shaped', 'category': 'combat', 'pattern': pattern,
+                 'key': {'#': f'{NS}:valyrian_steel_ingot', '/': 'minecraft:stick'}, 'result': {'id': f'{NS}:valyrian_steel_{kind}'}})
+    for ore, spread in specials.SPREAD.items():
+        rt[ore].setdefault('special', {})['spread'] = spread
 
     # Trades: the wandering trader and one profession buy each trade good.
     for item, (count, emeralds, profession) in specials.TRADES.items():

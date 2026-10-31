@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:atium_ingot",
+    "minecraft:gold_ingot"
+  ],
+  "result": {
+    "id": "pipican:malatium_ingot",
+    "count": 1
+  }
+}

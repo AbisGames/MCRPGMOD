@@ -115,6 +115,7 @@ public final class ClassSystemTests {
         TESTS.put("ores", ClassSystemTests::ores);
         TESTS.put("gear_sets", ClassSystemTests::gearSets);
         TESTS.put("special_ores", ClassSystemTests::specialOres);
+        TESTS.put("ore_mechanics", ClassSystemTests::oreMechanics);
     }
 
     private ClassSystemTests() {}
@@ -320,6 +321,74 @@ public final class ClassSystemTests {
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
     /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    /** Phase 4: alloys, blacksmith substitutes, meteors, spreading ores, Quantanium, transmutation, mutation. */
+    private static void oreMechanics(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var server = level.getServer();
+        java.util.function.Function<String, net.minecraft.world.item.Item> item = path ->
+                net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Pipican.id(path));
+        java.util.function.Function<String, net.minecraft.world.level.block.Block> block = path ->
+                net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Pipican.id(path));
+        for (String recipe : List.of("special/manyullyn_ingot_from_cobalt_ingot", "special/daedric_ingot_from_ebony_ingot", "valyrian_steel_sword",
+                "special/tnt_from_refined_quantanium")) {
+            helper.assertTrue(server.getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE, Pipican.id(recipe))).isPresent(), "recipe " + recipe);
+        }
+        // Universal upgrade materials stand in at any blacksmith.
+        var profile = new com.pipican.blacksmith.BlacksmithUpgrades.Profile("x", Pipican.id("frostcrystal"), Pipican.id("x_boss_core"), Pipican.id("x_trophy"));
+        helper.assertTrue(com.pipican.blacksmith.BlacksmithUpgrades.substitutes(profile, Pipican.id("frostcrystal")).contains(Pipican.id("titanite"))
+                && com.pipican.blacksmith.BlacksmithUpgrades.substitutes(profile, Pipican.id("x_boss_core")).contains(Pipican.id("raritanium"))
+                && com.pipican.blacksmith.BlacksmithUpgrades.substitutes(profile, Pipican.id("x_trophy")).contains(Pipican.id("eridium")), "substitutes");
+        // A meteor leaves Meteoric Iron under the impact.
+        BlockPos ground = helper.absolutePos(new BlockPos(4, 8, 4));
+        for (BlockPos p : BlockPos.betweenClosed(ground.offset(-4, -7, -4), ground.offset(4, -1, 4))) {
+            level.setBlock(p, net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 2);
+        }
+        com.pipican.ore.OreWorldEvents.meteor(level, ground);
+        int iron = 0;
+        for (BlockPos p : BlockPos.betweenClosed(ground.offset(-4, -7, -4), ground.offset(4, 0, 4))) {
+            if (level.getBlockState(p).is(block.apply("meteoric_iron_ore"))) {
+                iron++;
+            }
+        }
+        helper.assertTrue(iron > 0, "the meteor left meteoric iron");
+        // Tiberium spreads into the stone around it.
+        BlockPos tib = helper.absolutePos(new BlockPos(1, 2, 1));
+        for (BlockPos p : BlockPos.betweenClosed(tib.offset(-1, -1, -1), tib.offset(1, 1, 1))) {
+            level.setBlock(p, net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(), 2);
+        }
+        var tiberium = block.apply("tiberium_ore").defaultBlockState();
+        level.setBlock(tib, tiberium, 2);
+        boolean spread = false;
+        for (int i = 0; i < 400 && !spread; i++) {
+            spread = ((com.pipican.ore.SpreadingOreBlock) tiberium.getBlock()).spread(tiberium, level, tib, level.getRandom());
+        }
+        helper.assertTrue(spread, "tiberium spreads");
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        // Quantanium: stamped when carried; harmless until its fuse runs out.
+        player.getInventory().setItem(3, new ItemStack(item.apply("quantanium"), 2));
+        helper.assertTrue(!com.pipican.ore.OreWorldEvents.quantanium(player, level), "fresh quantanium is calm");
+        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, player.getInventory().getItem(3),
+                tag -> tag.putLong("pipican_unstable_since", level.getGameTime() - com.pipican.ore.OreWorldEvents.QUANTANIUM_FUSE));
+        var stamped = player.getInventory().getItem(3).get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        boolean exploded = com.pipican.ore.OreWorldEvents.quantanium(player, level);
+        helper.assertTrue(exploded && player.getInventory().getItem(3).isEmpty(), "old quantanium explodes: " + exploded + " " + stamped
+                + " now=" + level.getGameTime() + " left=" + player.getInventory().getItem(3));
+        // The Philosopher's Stone: an off-hand T1 material becomes a T2 one; 2 max health, for good.
+        double health = player.getAttributeValue(Attributes.MAX_HEALTH);
+        player.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, new ItemStack(item.apply("electrum_ingot"), 3));
+        var result = com.pipican.ore.OreItemUses.transmute(player, level);
+        var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(result);
+        helper.assertTrue(result != null && player.getOffhandItem().getCount() == 3
+                && com.pipican.ore.PipicanOres.of(key.getPath()).map(o -> o.tier() == 2).orElse(false), "transmuted to a T2 material: " + key);
+        assertNear(helper, health - 2, player.getAttributeValue(Attributes.MAX_HEALTH), "the stone's price");
+        // Warpstone mutation: half again the health.
+        var zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(6, 2, 6));
+        com.pipican.ore.OreWorldEvents.mutate(zombie);
+        assertNear(helper, 30, zombie.getMaxHealth(), "a mutated zombie");
+        helper.succeed();
+    }
+
     /** Phase 3: brewing, fuel, consumables, anvil coatings, special blocks, trades and off-hand focuses. */
     private static void specialOres(GameTestHelper helper) {
         var level = helper.getLevel();

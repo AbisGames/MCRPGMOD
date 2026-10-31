@@ -89,16 +89,41 @@ only, and no recipe - it is found, not forged).
 - **Trade goods**: wandering traders (and one profession each) buy Morkite, Night Jade, Enor Pearl, Saffron Gold,
   Lotus Opal and Certus Quartz for emeralds.
 
-Left for phase 4 and later: upgrade materials (Titanite, Raritanium, Eridium, Zonaite), world mechanics (Tiberium,
-Warpstone mutation, Quantanium, Element Zero, Dilithium, SAM), Allomancy metals, the limited T8/T9 materials.
+Allomancy metals come in phase 5, Tamashigane in phase 6.
+
+## Alloys, upgrades, world mechanics, limited ores (phase 4)
+
+- **Alloys** (crafted, never mined): Cobalt + Ardite → Manyullyn; Thorium + Lacrima → Arcanite; Manasteel + Elementium
+  → Terrasteel; 2 Ebony + Infernium (a boss material, the "demon heart") → Daedric; Atium + gold → Malatium.
+- **Valyrian Steel** is found, never made: 1-3 ingots in 12% of ancient city, bastion, end city, stronghold library and
+  mansion chests (and rare trail-ruin finds); they reforge into a sword, axe or spear.
+- **Blacksmith**: Titanite stands in for any region's material, Raritanium for a boss core, Eridium for a rare trophy,
+  and Pale Ore for any of them - at every region's blacksmith (`BlacksmithUpgrades.substitutes`).
+- **Meteors**: on overworld nights a meteor now and then strikes near a player: a blast, then a ball of blackstone,
+  magma and Meteoric Iron, with a chance of Raritanium, Luna Titanium, Element Zero, Kryptonite, Elerium, Nth Metal,
+  Vibranium, and rarely Phazon or Uru.
+- **Growing ores** (`SpreadingOreBlock`): Chlorophyte slowly grows into nearby stone and mud; Tiberium spreads faster,
+  into stone and soil, and poisons whatever stands on it or near it.
+- **Quantanium** is unstable: raw, it explodes 5 minutes after you pick it up. Refine it in a blast furnace; refined, it
+  makes six TNT.
+- **Warpstone**: carry it and hostile mobs near you mutate (half again the health, a quarter bigger, stronger).
+- **Item uses**: Element Zero - a gravity well; Dilithium - travel to your respawn point; SAM - your ender chest
+  anywhere; Zonaite - fused onto a tool, +25% mining speed.
+- **Limited ores** (`LimitedOres`, counts saved with the world): one Unobtanium vein of exactly 24 ore (one full armor
+  set) under the world's centre; 6 Pale Ore, 7 Chaos Emeralds, 12 Trellium deep down; one Lerasium (2000+ blocks out)
+  and one Philosopher's Stone (3000+). Fortune doesn't multiply them. From bosses: Adamantium (regional bosses 15%,
+  the Warden 50%), Luminite (the Wither), Draconium (the Ender Dragon), Mega Stone (regional bosses 25%, the Wither 20%).
+- **Philosopher's Stone**: right-click to transmute the ore material in your off hand into one a tier higher; it costs
+  2 max health each time, for good (kept through death).
+- **Chaos Emeralds**: with all seven, right-click for a 30-second super form (flight, Strength III, Resistance III,
+  Speed II; 10-minute cooldown).
 
 ## Phases
 
 1. **Ores, worldgen, materials** — done.
 2. **Armor, tools and weapons, set bonuses** — done.
 3. **Special uses** — done.
-4. Alloys (Manyullyn, Arcanite, Terrasteel, Daedric, Malatium), Titanite upgrades, world events (meteor craters,
-   growing Chlorophyte, spreading Tiberium, unstable Quantanium) and the limited T8/T9 sources.
+4. **Alloys, upgrades, world mechanics, limited ores** — done.
 5. Mistborn Allomancy.
 6. Tamashigane.
 

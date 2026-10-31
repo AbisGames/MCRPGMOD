@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:manasteel_ingot",
+    "pipican:elementium_ingot"
+  ],
+  "result": {
+    "id": "pipican:terrasteel_ingot",
+    "count": 1
+  }
+}

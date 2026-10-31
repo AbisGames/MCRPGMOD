@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:cobalt_ingot",
+    "pipican:ardite_ingot"
+  ],
+  "result": {
+    "id": "pipican:manyullyn_ingot",
+    "count": 1
+  }
+}

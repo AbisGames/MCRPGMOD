@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "pipican:ebony_ingot",
+    "pipican:ebony_ingot",
+    "pipican:infernium"
+  ],
+  "result": {
+    "id": "pipican:daedric_ingot",
+    "count": 1
+  }
+}

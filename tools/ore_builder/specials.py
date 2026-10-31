@@ -58,6 +58,7 @@ COATINGS = {
     'kyanite': ('helmet', 'Water breathing while worn'),
     'starmetal': ('armor', '+2 points of your class\'s special stat per coated piece'),
     'cortosis': ('shield', 'Blocking takes 50% less magic damage'),
+    'zonaite': ('tool', 'Fused: +25% mining speed'),
 }
 
 # Held in the off hand.
@@ -85,7 +86,26 @@ RECIPES = [
     ('shaped', (['C', 'T', 'C'], {'C': 'minecraft:copper_ingot', 'T': 'pipican:thunderbasalt'}), 'minecraft:lightning_rod', 3),
     ('shapeless', ['pipican:verdantite'], 'minecraft:bone_meal', 6),
     ('smelting', 'pipican:cinnabar', 'pipican:mercury', 1),
+    # Phase 4 - alloys (not mined: made from their parts)
+    ('shapeless', ['pipican:cobalt_ingot', 'pipican:ardite_ingot'], 'pipican:manyullyn_ingot', 1),
+    ('shapeless', ['pipican:thorium_ingot', 'pipican:lacrima'], 'pipican:arcanite_ingot', 1),
+    ('shapeless', ['pipican:manasteel_ingot', 'pipican:elementium_ingot'], 'pipican:terrasteel_ingot', 1),
+    ('shapeless', ['pipican:ebony_ingot', 'pipican:ebony_ingot', 'pipican:infernium'], 'pipican:daedric_ingot', 1),
+    ('shapeless', ['pipican:atium_ingot', 'minecraft:gold_ingot'], 'pipican:malatium_ingot', 1),
+    # Quantanium: refine it (blast furnace) before it blows up; refined, it makes strong TNT.
+    ('blasting', 'pipican:quantanium', 'pipican:refined_quantanium', 1),
+    ('shaped', (['GSG', 'SQS', 'GSG'], {'G': 'minecraft:gunpowder', 'S': 'minecraft:sand', 'Q': 'pipican:refined_quantanium'}), 'minecraft:tnt', 6),
 ]
+
+# Valyrian steel is found, never made: its ingots turn up in ruins (SpecialOreEvents loot), and can be reforged into weapons.
+VALYRIAN_RECIPES = {'sword': ['#', '#', '/'], 'axe': ['##', '#/', ' /'], 'spear': ['  #', ' / ', '/  ']}
+
+# Ores that spread into the stone (or dirt) around them on random ticks: chance per tick, what they grow into.
+SPREAD = {
+    'chlorophyte': {'chance': 0.05, 'into': ['minecraft:stone', 'minecraft:deepslate', 'minecraft:mud', 'minecraft:moss_block']},
+    'tiberium': {'chance': 0.15, 'into': ['minecraft:stone', 'minecraft:deepslate', 'minecraft:dirt', 'minecraft:grass_block',
+                                           'minecraft:andesite', 'minecraft:granite', 'minecraft:diorite'], 'toxic': True},
+}
 
 # (ore item, how many) -> emeralds. Wandering traders buy all of them; the named profession buys it too.
 TRADES = {
@@ -94,6 +114,8 @@ TRADES = {
 }
 
 EXTRA_ITEMS = {
+    'refined_quantanium': {'en': 'Refined Quantanium', 'tr': 'Arıtılmış Quantanium', 'color': 0xFF8AE6, 'tier': 6, 'from': 'quantanium',
+                           'note': 'Stable now: a powerful explosive (six TNT per piece).'},
     'mercury': {'en': 'Mercury', 'tr': 'Cıva', 'color': 0xC8CDD2, 'tier': 1, 'from': 'cinnabar',
                 'note': 'Alchemy reagent: brewed into a potion, it makes the potion stronger (like glowstone).'},
 }

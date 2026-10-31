@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/refined_quantanium",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -29978
+      }
+    ]
+  }
+}

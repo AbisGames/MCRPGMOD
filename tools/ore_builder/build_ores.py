@@ -141,7 +141,8 @@ def build(root):
             entry['ores'][-1]['tinted'] = bool(block_tint)
             out.json(f'assets/{NS}/blockstates/{block}.json', {'variants': {'': {'model': f'{NS}:block/{block}'}}})
             out.json(f'assets/{NS}/items/{block}.json', {'model': {'type': 'minecraft:model', 'model': f'{NS}:block/{block}', 'tints': block_tint}})
-            out.json(f'data/{NS}/loot_table/blocks/{block}.json', ore_loot(block, drop_item, o['form']))
+            # Limited (T8/T9) ores are about scarcity: Fortune doesn't multiply them.
+            out.json(f'data/{NS}/loot_table/blocks/{block}.json', ore_loot(block, drop_item, o['form'], fortune=o['use'] != 'limited'))
             prefix = {'stone': '', 'deepslate': 'Deepslate ', 'nether': 'Nether ', 'end': 'End '}[base]
             prefix_tr = {'stone': '', 'deepslate': 'Derin Kayrak ', 'nether': 'Nether ', 'end': 'End '}[base]
             lang_en[f'block.{NS}.{block}'] = f'{prefix}{o["en"]} Ore'
@@ -260,14 +261,14 @@ def mining_tags(tier):
     return out
 
 
-def ore_loot(block, drop, form):
+def ore_loot(block, drop, form, fortune=True):
     silk = {'condition': 'minecraft:match_tool', 'predicate': {'predicates': {'minecraft:enchantments': [
         {'enchantments': 'minecraft:silk_touch', 'levels': {'min': 1}}]}}}
     return {'type': 'minecraft:block', 'random_sequence': f'{NS}:blocks/{block}', 'pools': [{
         'rolls': 1.0, 'bonus_rolls': 0.0, 'entries': [{'type': 'minecraft:alternatives', 'children': [
             {'type': 'minecraft:item', 'conditions': [silk], 'name': f'{NS}:{block}'},
-            {'type': 'minecraft:item', 'name': drop, 'functions': [
-                {'function': 'minecraft:apply_bonus', 'enchantment': 'minecraft:fortune', 'formula': 'minecraft:ore_drops'},
+            {'type': 'minecraft:item', 'name': drop, 'functions': ([
+                {'function': 'minecraft:apply_bonus', 'enchantment': 'minecraft:fortune', 'formula': 'minecraft:ore_drops'}] if fortune else []) + [
                 {'function': 'minecraft:explosion_decay'}]}]}]}]}
 
 

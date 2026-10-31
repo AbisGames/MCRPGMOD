@@ -5656,7 +5656,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "tool"
+    }
   },
   {
     "id": "hextech",
@@ -5755,7 +5758,22 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "spread": {
+        "chance": 0.15,
+        "into": [
+          "minecraft:stone",
+          "minecraft:deepslate",
+          "minecraft:dirt",
+          "minecraft:grass_block",
+          "minecraft:andesite",
+          "minecraft:granite",
+          "minecraft:diorite"
+        ],
+        "toxic": true
+      }
+    }
   },
   {
     "id": "silversheen",
@@ -6331,6 +6349,17 @@
       "enchantability": 17,
       "incorrect": "pipican:incorrect_for_tier_6_tool",
       "repair": "pipican:repairs/chlorophyte"
+    },
+    "special": {
+      "spread": {
+        "chance": 0.05,
+        "into": [
+          "minecraft:stone",
+          "minecraft:deepslate",
+          "minecraft:mud",
+          "minecraft:moss_block"
+        ]
+      }
     }
   },
   {
@@ -7254,6 +7283,10 @@
       {
         "id": "quantanium",
         "kind": "gem"
+      },
+      {
+        "id": "refined_quantanium",
+        "kind": "extra"
       }
     ],
     "storage": [

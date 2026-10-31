@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    "##",
+    "#/",
+    " /"
+  ],
+  "key": {
+    "#": "pipican:valyrian_steel_ingot",
+    "/": "minecraft:stick"
+  },
+  "result": {
+    "id": "pipican:valyrian_steel_axe"
+  }
+}
