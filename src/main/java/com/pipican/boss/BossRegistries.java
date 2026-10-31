@@ -85,6 +85,10 @@ public final class BossRegistries {
         "corallith_reef_colossus",()->EntityType.Builder.<CorallithEntity>of(CorallithEntity::new,MobCategory.MONSTER)
             .sized(2.8f,3.7f).clientTrackingRange(14).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("corallith_reef_colossus"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<AzharEntity>> AZHAR=ENTITIES.register(
+        "azhar_golden_behemoth",()->EntityType.Builder.<AzharEntity>of(AzharEntity::new,MobCategory.MONSTER)
+            .sized(2.4f,3.4f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("azhar_golden_behemoth"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -106,5 +110,6 @@ public final class BossRegistries {
         event.put(ZAHIRA.get(),ZahiraEntity.attributes().build());
         event.put(XALTEK.get(),XaltekEntity.attributes().build());
         event.put(CORALLITH.get(),CorallithEntity.attributes().build());
+        event.put(AZHAR.get(),AzharEntity.attributes().build());
     }
 }

@@ -397,5 +397,8 @@
   "entity.pipican.xaltek_emerald_devourer": "Xaltek, Emerald Devourer",
   "item.pipican.corallith_reef_colossus_sigil": "Corallith Reef Sigil",
   "item.pipican.corallith_reef_colossus_trophy": "Colossus Coral Crown",
-  "entity.pipican.corallith_reef_colossus": "Corallith, Reef Colossus"
+  "entity.pipican.corallith_reef_colossus": "Corallith, Reef Colossus",
+  "item.pipican.azhar_golden_behemoth_sigil": "Azhar's Sun Sigil",
+  "item.pipican.azhar_golden_behemoth_trophy": "Gilded Savanna Crown",
+  "entity.pipican.azhar_golden_behemoth": "Azhar, Golden Behemoth"
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SCR",
+    "SCB"
+  ],
+  "key": {
+    "S": "pipican:dawnbronze",
+    "C": "pipican:goldgrass_savanna_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:blaze_powder"
+  },
+  "result": {
+    "id": "pipican:azhar_golden_behemoth_sigil",
+    "count": 1
+  }
+}

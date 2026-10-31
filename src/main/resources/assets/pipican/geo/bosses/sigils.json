@@ -106,5 +106,11 @@
     "boss": "corallith_reef_colossus",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:azhar_golden_behemoth_sigil",
+    "boss": "azhar_golden_behemoth",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

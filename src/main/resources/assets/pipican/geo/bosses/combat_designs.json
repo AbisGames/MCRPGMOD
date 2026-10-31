@@ -1712,12 +1712,11 @@
   {
     "id": "azhar_golden_behemoth",
     "region": "goldgrass_savanna",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1100,
     "damage": 18,
     "sigil": {
-      "planned_item_id": "pipican:azhar_golden_behemoth_sigil",
       "regional_material": "pipican:dawnbronze",
       "regional_count": 5,
       "dungeon_material": "pipican:goldgrass_savanna_boss_core",
@@ -1725,38 +1724,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:blaze_powder",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:azhar_golden_behemoth_sigil"
     },
     "abilities": [
       {
         "id": "sun_refraction",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Golden plates preview a reflected sunlight path.",
         "counterplay": "Cross behind the announced reflection or interrupt the plate.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:azhar_golden_behemoth/sun_refraction"
+        "animation": "azhar_golden_behemoth/sun_refraction"
       },
       {
         "id": "savanna_stampede",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Dust lanes reveal a limited spectral stampede.",
         "counterplay": "Move into a clear lane instead of racing along the charge.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:azhar_golden_behemoth/savanna_stampede"
+        "animation": "azhar_golden_behemoth/savanna_stampede"
       },
       {
         "id": "gilded_kneel",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A charged kneel sends staggered ground lobes with inner refuges.",
         "counterplay": "Use an inner refuge or leave the next marked lobe.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:azhar_golden_behemoth/gilded_kneel"
+        "animation": "azhar_golden_behemoth/gilded_kneel"
       }
     ],
     "phase_two": {
@@ -1767,7 +1767,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:dawnbronze",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:azhar_golden_behemoth_trophy",
       "planned_trophy_name": "Azhar Golden Behemoth Trophy",
       "xp": 275
     },
@@ -1775,16 +1775,16 @@
       "geometry": "geometry.pipican.azhar_golden_behemoth",
       "file": "geo/bosses/azhar_golden_behemoth.geo.json",
       "animation_mapping": {
-        "idle": "planned:azhar_golden_behemoth/idle",
-        "walk": "planned:azhar_golden_behemoth/walk",
-        "basic_attack": "planned:azhar_golden_behemoth/basic_attack",
-        "hurt": "planned:azhar_golden_behemoth/hurt",
-        "phase_transition": "planned:azhar_golden_behemoth/phase_transition",
-        "summoning": "planned:azhar_golden_behemoth/summoning",
-        "death": "planned:azhar_golden_behemoth/death",
-        "sun_refraction": "planned:azhar_golden_behemoth/sun_refraction",
-        "savanna_stampede": "planned:azhar_golden_behemoth/savanna_stampede",
-        "gilded_kneel": "planned:azhar_golden_behemoth/gilded_kneel"
+        "idle": "azhar_golden_behemoth/idle",
+        "walk": "azhar_golden_behemoth/walk",
+        "basic_attack": "azhar_golden_behemoth/basic_attack",
+        "hurt": "azhar_golden_behemoth/hurt",
+        "phase_transition": "azhar_golden_behemoth/phase_transition",
+        "summoning": "azhar_golden_behemoth/summoning",
+        "death": "azhar_golden_behemoth/death",
+        "sun_refraction": "azhar_golden_behemoth/sun_refraction",
+        "savanna_stampede": "azhar_golden_behemoth/savanna_stampede",
+        "gilded_kneel": "azhar_golden_behemoth/gilded_kneel"
       }
     },
     "arena": {
