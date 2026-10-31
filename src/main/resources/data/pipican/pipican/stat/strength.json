@@ -7,5 +7,82 @@
       "attribute": "minecraft:attack_damage",
       "amount": 0.1
     }
+  ],
+  "gear": [
+    {
+      "items": [
+        "minecraft:copper_sword",
+        "minecraft:copper_axe"
+      ],
+      "min": 2
+    },
+    {
+      "items": "minecraft:iron_sword",
+      "min": 3
+    },
+    {
+      "items": "minecraft:diamond_sword",
+      "min": 6
+    },
+    {
+      "items": "minecraft:netherite_sword",
+      "min": 9
+    },
+    {
+      "items": "minecraft:iron_axe",
+      "min": 4
+    },
+    {
+      "items": "minecraft:diamond_axe",
+      "min": 7
+    },
+    {
+      "items": "minecraft:netherite_axe",
+      "min": 10
+    },
+    {
+      "items": "minecraft:mace",
+      "min": 8
+    },
+    {
+      "items": "minecraft:trident",
+      "min": 5
+    },
+    {
+      "items": [
+        "minecraft:copper_helmet",
+        "minecraft:copper_chestplate",
+        "minecraft:copper_leggings",
+        "minecraft:copper_boots"
+      ],
+      "min": 2
+    },
+    {
+      "items": [
+        "minecraft:iron_helmet",
+        "minecraft:iron_chestplate",
+        "minecraft:iron_leggings",
+        "minecraft:iron_boots"
+      ],
+      "min": 3
+    },
+    {
+      "items": [
+        "minecraft:diamond_helmet",
+        "minecraft:diamond_chestplate",
+        "minecraft:diamond_leggings",
+        "minecraft:diamond_boots"
+      ],
+      "min": 6
+    },
+    {
+      "items": [
+        "minecraft:netherite_helmet",
+        "minecraft:netherite_chestplate",
+        "minecraft:netherite_leggings",
+        "minecraft:netherite_boots"
+      ],
+      "min": 9
+    }
   ]
 }

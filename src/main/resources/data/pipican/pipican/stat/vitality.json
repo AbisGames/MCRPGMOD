@@ -7,5 +7,11 @@
       "attribute": "minecraft:max_health",
       "amount": 1
     }
+  ],
+  "gear": [
+    {
+      "items": "minecraft:shield",
+      "min": 2
+    }
   ]
 }

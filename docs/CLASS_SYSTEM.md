@@ -98,6 +98,18 @@ at 100, 250, 450, 700... XP. One pool of stat points pays for both raising stats
 regeneration) and `luck` (+0.2% critical hit chance). The last four use `effects`, since there is no vanilla
 attribute for them. Override any of them with a datapack file at the same path to change the numbers.
 
+**Shipped gear requirements** (`gear` in the stat files; wood, stone, gold, leather, bows and the turtle helmet need
+nothing):
+
+| Items | Stat | Copper | Iron | Diamond | Netherite |
+|---|---|---|---|---|---|
+| Swords | Strength | 2 | 3 | 6 | 9 |
+| Axes | Strength | 2 | 4 | 7 | 10 |
+| Spears | Dexterity | 2 | 3 | 6 | 9 |
+| Armor | Strength | 2 | 3 | 6 | 9 |
+
+Also: mace 8 Strength, trident 5 Strength, crossbow 4 Dexterity, chainmail armor 3 Endurance, shield 2 Vitality.
+
 ### 2.2 Trinket slot types — `trinket_slot/<name>.json`
 
 Slot **types** are global. **How many** of each slot a player has comes from their class.

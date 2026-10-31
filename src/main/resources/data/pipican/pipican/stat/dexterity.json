@@ -8,5 +8,27 @@
       "amount": 0.002,
       "operation": "add_multiplied_base"
     }
+  ],
+  "gear": [
+    {
+      "items": "minecraft:copper_spear",
+      "min": 2
+    },
+    {
+      "items": "minecraft:iron_spear",
+      "min": 3
+    },
+    {
+      "items": "minecraft:diamond_spear",
+      "min": 6
+    },
+    {
+      "items": "minecraft:netherite_spear",
+      "min": 9
+    },
+    {
+      "items": "minecraft:crossbow",
+      "min": 4
+    }
   ]
 }

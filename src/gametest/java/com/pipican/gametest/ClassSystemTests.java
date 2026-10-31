@@ -274,10 +274,11 @@ public final class ClassSystemTests {
 
         player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
         ClassEffectApplier.refresh(player);
-        double clumsyArmor = PipicanConfig.tier(Affinity.CLUMSY).armor();
-        assertNear(helper, 3 + 6 * (clumsyArmor - 1), modifier(player, Attributes.ARMOR, "class/add_value"), "clumsy heavy armor");
-        double clumsyMove = PipicanConfig.tier(Affinity.CLUMSY).movePenaltyPerArmorPiece();
-        assertNear(helper, clumsyMove - 1, modifier(player, Attributes.MOVEMENT_SPEED, "class/add_multiplied_total"), "clumsy armor slows");
+        // Heavy armor is clumsy for this class, and an iron chestplate needs 3 Strength it doesn't have: one tier worse.
+        double forbiddenArmor = PipicanConfig.tier(Affinity.FORBIDDEN).armor();
+        assertNear(helper, 3 + 6 * (forbiddenArmor - 1), modifier(player, Attributes.ARMOR, "class/add_value"), "clumsy heavy armor without the strength");
+        double forbiddenMove = PipicanConfig.tier(Affinity.FORBIDDEN).movePenaltyPerArmorPiece();
+        assertNear(helper, forbiddenMove - 1, modifier(player, Attributes.MOVEMENT_SPEED, "class/add_multiplied_total"), "it slows like forbidden armor");
         helper.succeed();
     }
 
@@ -330,7 +331,9 @@ public final class ClassSystemTests {
         // Grip 0 of the 5 a stone sword needs: one requirement missed; an iron sword has none.
         var access = helper.getLevel().registryAccess();
         helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(Items.STONE_SWORD), state::stat) == 1, "stone sword needs grip");
-        helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(Items.IRON_SWORD), state::stat) == 0, "iron sword doesn't");
+        helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(Items.WOODEN_SWORD), state::stat) == 0, "a wooden sword needs nothing");
+        // The shipped requirements: an iron sword needs 3 Strength (this class has none).
+        helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(Items.IRON_SWORD), state::stat) == 1, "iron sword needs strength");
         helper.assertTrue(ClassEffectApplier.capped(player, new ItemStack(Items.STONE_SWORD), com.pipican.rpgclass.Affinity.NEUTRAL, k -> 0.0)
                 == com.pipican.rpgclass.Affinity.CLUMSY, "a missed requirement is one tier worse");
         helper.succeed();
