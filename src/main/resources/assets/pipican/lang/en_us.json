@@ -382,5 +382,8 @@
   "entity.pipican.aurelios_sunken_emperor": "Aurelios, Sunken Emperor",
   "item.pipican.lianhua_lotus_serpent_sigil": "Lianhua's Lotus Sigil",
   "item.pipican.lianhua_lotus_serpent_trophy": "Lotus Serpent Trophy",
-  "entity.pipican.lianhua_lotus_serpent": "Lianhua, Lotus Serpent"
+  "entity.pipican.lianhua_lotus_serpent": "Lianhua, Lotus Serpent",
+  "item.pipican.akhmar_sand_emperor_sigil": "Akhmar's Sun Sigil",
+  "item.pipican.akhmar_sand_emperor_trophy": "Akhmar's Sun Crown",
+  "entity.pipican.akhmar_sand_emperor": "Akhmar, Sand Emperor"
 }

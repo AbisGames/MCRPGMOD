@@ -19,7 +19,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | aurelios_sunken_emperor | implemented | preserved source geometry + native trident/mirror poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | morvath_ashen_king | complete | prototype | complete | complete | complete | complete | complete | complete | passed | sampled |
 | lianhua_lotus_serpent | implemented | preserved source geometry + flowing segment poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
-| akhmar_sand_emperor | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| akhmar_sand_emperor | implemented | preserved source geometry + native crown/mantle poses | implemented | implemented | implemented | implemented | implemented | implemented | implemented | pending |
 | netharis_river_guardian | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | zahira_crimson_corsair | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | xaltek_emerald_devourer | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -63,3 +63,5 @@ Aurelios now has directional mirror sectors that reduce damage only from guarded
 
 
 Lianhua now has rotating petal danger arcs around a safe central lily, a fixed coiling river route with a marked opening, and four bloom pulses followed by a separately warned reflected echo. In phase two the petal gap rotates between pulses and the serpent exposes its tail for bonus damage from behind. The Lotus Delta altar, exact Lotus Opal/core/lily-pad sigil recipe, unique trophy and eight guaranteed Lotus Opals are implemented with save/reload and combat counterplay coverage. Client visual QA remains pending for the target Minecraft version.
+
+Akhmar now has a registered Sand Emperor encounter and renderer using the retained source geometry, with separate sandstone and sunfire atlases. The dune procession previews winding lanes and a safe crossing, sun obelisks show stable shadow refuges and can be broken by projectiles, and the buried court locks three sequential eruption silhouettes. Phase two shifts the procession lane, combat clocks and delayed eruptions persist on reload, and the Sunscorch Desert altar uses the exact five Sunglass, two desert core, ritual core, rabbit foot recipe. GameTests cover the attack windows and counterplay, biome-gated summon rollback, trophy and eight Sunglass rewards; target-client visual QA remains pending.

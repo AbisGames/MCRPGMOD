@@ -76,5 +76,11 @@
     "boss": "lianhua_lotus_serpent",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:akhmar_sand_emperor_sigil",
+    "boss": "akhmar_sand_emperor",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

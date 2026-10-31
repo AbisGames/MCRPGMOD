@@ -1287,12 +1287,12 @@
   {
     "id": "akhmar_sand_emperor",
     "region": "sunscorch_desert",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 900,
     "damage": 16,
     "sigil": {
-      "planned_item_id": "pipican:akhmar_sand_emperor_sigil",
+      "item": "pipican:akhmar_sand_emperor_sigil",
       "regional_material": "pipican:sunglass",
       "regional_count": 5,
       "dungeon_material": "pipican:sunscorch_desert_boss_core",
@@ -1305,33 +1305,33 @@
     "abilities": [
       {
         "id": "dune_procession",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Sand spirits advance through previewed winding lanes.",
         "counterplay": "Cross into a lane without a procession marker.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:akhmar_sand_emperor/dune_procession"
+        "animation": "akhmar_sand_emperor/dune_procession"
       },
       {
         "id": "sun_obelisks",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Temporary spectral obelisks cast safe shadows before a sun pulse.",
         "counterplay": "Use the displayed shadow or interrupt an obelisk.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:akhmar_sand_emperor/sun_obelisks"
+        "animation": "akhmar_sand_emperor/sun_obelisks"
       },
       {
         "id": "buried_court",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Burrowing silhouettes announce three successive eruptions.",
         "counterplay": "Keep moving out of each locked silhouette, not the whole arena.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:akhmar_sand_emperor/buried_court"
+        "animation": "akhmar_sand_emperor/buried_court"
       }
     ],
     "phase_two": {
@@ -1342,7 +1342,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:sunglass",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:akhmar_sand_emperor_trophy",
       "planned_trophy_name": "Akhmar Sand Emperor Trophy",
       "xp": 225
     },
@@ -1350,16 +1350,16 @@
       "geometry": "geometry.pipican.akhmar_sand_emperor",
       "file": "geo/bosses/akhmar_sand_emperor.geo.json",
       "animation_mapping": {
-        "idle": "planned:akhmar_sand_emperor/idle",
-        "walk": "planned:akhmar_sand_emperor/walk",
-        "basic_attack": "planned:akhmar_sand_emperor/basic_attack",
-        "hurt": "planned:akhmar_sand_emperor/hurt",
-        "phase_transition": "planned:akhmar_sand_emperor/phase_transition",
-        "summoning": "planned:akhmar_sand_emperor/summoning",
-        "death": "planned:akhmar_sand_emperor/death",
-        "dune_procession": "planned:akhmar_sand_emperor/dune_procession",
-        "sun_obelisks": "planned:akhmar_sand_emperor/sun_obelisks",
-        "buried_court": "planned:akhmar_sand_emperor/buried_court"
+        "idle": "akhmar_sand_emperor/idle",
+        "walk": "akhmar_sand_emperor/walk",
+        "basic_attack": "akhmar_sand_emperor/basic_attack",
+        "hurt": "akhmar_sand_emperor/hurt",
+        "phase_transition": "akhmar_sand_emperor/phase_transition",
+        "summoning": "akhmar_sand_emperor/summoning",
+        "death": "akhmar_sand_emperor/death",
+        "dune_procession": "akhmar_sand_emperor/dune_procession",
+        "sun_obelisks": "akhmar_sand_emperor/sun_obelisks",
+        "buried_court": "akhmar_sand_emperor/buried_court"
       }
     },
     "arena": {

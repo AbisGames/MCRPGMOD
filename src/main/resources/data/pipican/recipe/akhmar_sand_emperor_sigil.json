@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SSS", "SCR", "SCB"],
+  "key": {
+    "S": "pipican:sunglass",
+    "C": "pipican:sunscorch_desert_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:rabbit_foot"
+  },
+  "result": {
+    "id": "pipican:akhmar_sand_emperor_sigil",
+    "count": 1
+  }
+}

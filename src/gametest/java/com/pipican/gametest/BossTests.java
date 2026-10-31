@@ -36,7 +36,9 @@ public final class BossTests {
         Map.entry("longwei_jade_encounter",BossTests::longweiJadeEncounter),
         Map.entry("morgatha_marshfen_encounter",BossTests::morgathaMarshfenEncounter),
         Map.entry("aurelios_inner_sea_encounter",BossTests::aureliosInnerSeaEncounter),
-        Map.entry("lianhua_lotus_encounter",BossTests::lianhuaLotusEncounter));
+        Map.entry("lianhua_lotus_encounter",BossTests::lianhuaLotusEncounter),
+        Map.entry("akhmar_sun_encounter",BossTests::akhmarSunEncounter),
+        Map.entry("akhmar_combat",BossTests::akhmarCombat));
     @SubscribeEvent public static void functions(RegisterEvent event){
         event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
     }
@@ -47,7 +49,7 @@ public final class BossTests {
             new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
-        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==13,"functional boss design count differs from implemented bindings");
+        helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==14,"functional boss design count differs from implemented bindings");
         var mechanics=new HashSet<String>(); var regional=new HashSet<String>();
         for(var design:BossDesigns.all()){
             helper.assertTrue(regional.add(design.region()) && design.abilities().size()==3 && design.animations().size()==10,"design mapping incomplete: "+design.id());
@@ -94,6 +96,8 @@ public final class BossTests {
         helper.assertTrue(aurelios.functional()&&aurelios.sigil().registered()&&aurelios.loot().trophyItem().equals("pipican:aurelios_sunken_emperor_trophy"),"Aurelios sunken emperor metadata is incomplete");
         var lianhua=BossDesigns.require("lianhua_lotus_serpent");
         helper.assertTrue(lianhua.functional()&&lianhua.sigil().registered()&&lianhua.loot().trophyItem().equals("pipican:lianhua_lotus_serpent_trophy"),"Lianhua lotus serpent metadata is incomplete");
+        var akhmar=BossDesigns.require("akhmar_sand_emperor");
+        helper.assertTrue(akhmar.functional()&&akhmar.sigil().registered()&&akhmar.loot().trophyItem().equals("pipican:akhmar_sand_emperor_trophy"),"Akhmar sand emperor metadata is incomplete");
         helper.succeed();
     }
     private static net.minecraft.core.BlockPos rejectSpawnAt;
@@ -106,7 +110,7 @@ public final class BossTests {
             List.of(net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.CRYING_OBSIDIAN,net.minecraft.world.item.Items.OBSIDIAN,net.minecraft.world.item.Items.DIAMOND,net.minecraft.world.item.Items.OBSIDIAN),
             List.of(net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.ENDER_PEARL,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD,net.minecraft.world.item.Items.GOLD_INGOT,net.minecraft.world.item.Items.AMETHYST_SHARD),
             List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("cinderite").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("ashlands").get(),BossContent.CORE.get(),net.minecraft.world.item.Items.MAGMA_CREAM));
-        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil"};
+        String[] ids={"ritual_altar","ritual_core","morvath_sigil","frostbound_colossus_sigil","eldaroth_treant_sigil","fallen_king_sigil","kragmor_canyon_warlord_sigil","nocthar_void_sovereign_sigil","aetherion_sky_guardian_sigil","vermillion_blood_monarch_sigil","longwei_jade_dragon_sigil","morgatha_swamp_queen_sigil","aurelios_sunken_emperor_sigil","lianhua_lotus_serpent_sigil","akhmar_sand_emperor_sigil"};
         rows=new ArrayList<>(rows);
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("whitecrown_icecap").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("frostcrystal").get(),
@@ -141,6 +145,9 @@ public final class BossTests {
         rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lotus_opal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lotus_opal").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lotus_opal").get(),
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lotus_opal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("lotus_delta").get(),net.minecraft.world.item.Items.LILY_PAD,
             com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lotus_opal").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("lotus_delta").get(),BossContent.CORE.get()));
+        rows.add(List.of(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("sunscorch_desert").get(),BossContent.CORE.get(),
+            com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get(),com.pipican.worldgen.RegionalOreRegistries.BOSS_CORES.get("sunscorch_desert").get(),net.minecraft.world.item.Items.RABBIT_FOOT));
         for(int index=0;index<ids.length;index++){
             var holder=level.getServer().getRecipeManager().byKey(ResourceKey.create(Registries.RECIPE,Pipican.id(ids[index]))).orElseThrow();
             var recipe=(net.minecraft.world.item.crafting.ShapedRecipe)holder.value();
@@ -449,6 +456,57 @@ public final class BossTests {
             helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.LIANHUA_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lotus_opal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Lianhua trophy/lotus opal rewards missing");helper.succeed();
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
+    private static void akhmarSunEncounter(GameTestHelper helper){
+        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(4096,32,4096));var arena=altar.north(6);
+        for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
+            level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);
+        var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.AKHMAR_SIGIL.get());
+        owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        try{
+            var state=level.getBlockState(altar);helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1,"Akhmar altar accepted a non-Sunscorch biome");
+            var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/sunscorch_desert")));
+            helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Sunscorch Desert biome fixture failed");
+            rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Akhmar spawn consumed its sigil or leaked reservation");rejectSpawnAt=null;
+            helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Sunscorch altar summon failed");
+            var boss=level.getEntitiesOfClass(AkhmarEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Akhmar spawn missing"));
+            helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("akhmar_sand_emperor"),"Akhmar encounter type was not saved");
+            boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));
+            helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.AKHMAR_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("sunglass").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Akhmar trophy/Sunglass rewards missing");helper.succeed();
+        }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
+    }
+    private static void akhmarCombat(GameTestHelper helper){
+        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(50000,30,50000));
+        for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))
+            level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        level.addFreshEntity(front);level.addFreshEntity(refuge);
+        var boss=BossRegistries.AKHMAR.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
+        try{
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+12,origin.getY(),origin.getZ());refuge.setHealth(20);refuge.invulnerableTime=0;refuge.snapTo(origin.getX()+6,origin.getY(),origin.getZ());
+            var procession=new AkhmarCombat(boss);helper.assertTrue(procession.begin(AkhmarCombat.PROCESSION,front),"Akhmar dune procession failed to start");front.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+4.2);
+            for(int i=0;i<40;i++)procession.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()==20,"Akhmar procession struck before its marked-lane warning");for(int i=0;i<16;i++)procession.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20,"Akhmar winding procession or safe-lane counterplay failed: front="+front.getHealth()+", refuge="+refuge.getHealth());
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+10,origin.getY(),origin.getZ());refuge.setHealth(20);refuge.invulnerableTime=0;
+            var obelisks=new AkhmarCombat(boss);helper.assertTrue(obelisks.begin(AkhmarCombat.OBELISKS,front),"Akhmar sun obelisks failed to start");var shadow=obelisks.shadowPosition(0);refuge.snapTo(shadow.x,shadow.y,shadow.z);
+            for(int i=0;i<49;i++)obelisks.tick(level);helper.assertTrue(front.getHealth()==20&&refuge.getHealth()==20,"Akhmar solar pulse resolved before the safe shadows");obelisks.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20,"Akhmar stable obelisk shadow counterplay failed");
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+10,origin.getY(),origin.getZ());refuge.setHealth(20);refuge.invulnerableTime=0;
+            var brokenObelisk=new AkhmarCombat(boss);helper.assertTrue(brokenObelisk.begin(AkhmarCombat.OBELISKS,front),"Akhmar interruptible obelisk attack failed to start");var shot=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);
+            helper.assertTrue(shot!=null,"Akhmar obelisk interrupt projectile could not be created");shot.setPos(origin.getX()+6,origin.getY(),origin.getZ());shot.setNoGravity(true);shot.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);level.addFreshEntity(shot);
+            var exposedShadow=brokenObelisk.shadowPosition(0);refuge.snapTo(exposedShadow.x,exposedShadow.y,exposedShadow.z);for(int i=0;i<50;i++)brokenObelisk.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()<20&&!shot.isAlive(),"breaking a sun obelisk did not remove its safe shadow");
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+10,origin.getY(),origin.getZ());refuge.setHealth(20);refuge.invulnerableTime=0;refuge.snapTo(origin.getX()-8,origin.getY(),origin.getZ());
+            var court=new AkhmarCombat(boss);helper.assertTrue(court.begin(AkhmarCombat.COURT,front),"Akhmar buried court failed to start");var marked=court.eruptionPosition(0);front.snapTo(marked.x,marked.y,marked.z);
+            for(int i=0;i<59;i++)court.tick(level);helper.assertTrue(front.getHealth()==20,"Akhmar eruption struck before its silhouette warning");court.tick(level);court.tick(level);court.tick(level);
+            helper.assertTrue(front.getHealth()<20&&refuge.getHealth()==20,"Akhmar sequential eruption silhouette/dodge failed: front="+front.getHealth()+", refuge="+refuge.getHealth()+", marked="+marked+", player="+front.position()+", inside="+boss.insideArena(front.position())+", remaining="+court.clock().remaining()+", active="+court.clock().active()+", resolved="+court.clock().resolved()+", progress="+court.eruptionProgress());
+            front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+10,origin.getY(),origin.getZ());var phaseTwo=new AkhmarCombat(boss);
+            helper.assertTrue(phaseTwo.updatePhase(450,900)&&phaseTwo.begin(AkhmarCombat.PROCESSION,front),"Akhmar phase-two lane shift failed to start");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());phaseTwo.save(saved);
+            var reloaded=new AkhmarCombat(boss);reloaded.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));
+            helper.assertTrue(reloaded.clock().phase()==2&&reloaded.clock().active().equals(AkhmarCombat.PROCESSION),"Akhmar phase/lane attack state was lost on reload");helper.succeed();
+        }finally{front.discard();refuge.discard();}
+    }
     private static void realAttacks(GameTestHelper helper){
         var level=helper.getLevel(); var origin=helper.absolutePos(new net.minecraft.core.BlockPos(768,30,768));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))
@@ -688,7 +746,7 @@ public final class BossTests {
         for(int i=0;i<39;i++)seams.tick(level);helper.assertTrue(front.getHealth()==20,"Nocthar seam ruptured before the crossing warning");seams.tick(level);
         helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20,"Nocthar paired seam crossing or unlinked safe route failed");
         front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+6,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+9);front.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
-        var wells=new NoctharCombat(nocthar);helper.assertTrue(wells.begin(NoctharCombat.WELLS,front),"Nocthar gravity wells failed to start");front.snapTo(origin.getX()+6,origin.getY(),origin.getZ()+3.5);
+        var wells=new NoctharCombat(nocthar);helper.assertTrue(wells.begin(NoctharCombat.WELLS,front),"Nocthar gravity wells failed to start");front.snapTo(origin.getX()+6.8,origin.getY(),origin.getZ()+3.5);
         for(int i=0;i<49;i++)wells.tick(level);helper.assertTrue(front.getHealth()==20,"Nocthar gravity well damaged before charge");wells.tick(level);
         helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&front.getDeltaMovement().horizontalDistanceSqr()>0,"Nocthar bounded gravity pull/damage or exit-boundary counterplay failed");
         front.setHealth(20);front.invulnerableTime=0;dodge.setHealth(20);dodge.invulnerableTime=0;
@@ -782,8 +840,9 @@ public final class BossTests {
         front.setHealth(20);front.removeEffect(net.minecraft.world.effect.MobEffects.POISON);front.invulnerableTime=0;front.snapTo(origin.getX()+20,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX(),origin.getY(),origin.getZ());
         var blightedHex=new MorgathaCombat(queen);helper.assertTrue(blightedHex.updatePhase(400,800)&&blightedHex.begin(MorgathaCombat.DECOYS,front),"Morgatha phase-two charged decoy failed to start");
         for(int i=0;i<60;i++)blightedHex.tick(level);for(int i=0;i<8;i++)blightedHex.tick(level);output=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());blightedHex.save(output);var blightedReload=new MorgathaCombat(queen);blightedReload.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(output.buildResult())));
-        for(int i=0;i<5;i++)blightedReload.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20,"Morgatha phase-two wave warning resolved early");blightedReload.tick(level);
-        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&blightedReload.clock().phase()==2,"Morgatha extended phase-two warning or save state failed");
+        var markedWave=blightedReload.phaseWaveTarget();front.snapTo(markedWave.x,markedWave.y,markedWave.z);
+        for(int i=0;i<5;i++)blightedReload.tick(level);helper.assertTrue(front.getHealth()==20&&dodge.getHealth()==20&&blightedReload.phaseWaveDelay()==1,"Morgatha phase-two warning/save state resolved early or lost: delay="+blightedReload.phaseWaveDelay());blightedReload.tick(level);
+        helper.assertTrue(front.getHealth()<20&&dodge.getHealth()==20&&blightedReload.clock().phase()==2,"Morgatha extended phase-two warning or save state failed: front="+front.getHealth()+", dodge="+dodge.getHealth()+", phase="+blightedReload.clock().phase()+", delay="+blightedReload.phaseWaveDelay());
 
         var emperor=BossRegistries.AURELIOS.get().create(level,EntitySpawnReason.COMMAND);emperor.snapTo(origin.getX(),origin.getY(),origin.getZ());emperor.setNoAi(true);level.addFreshEntity(emperor);
         front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());dodge.setHealth(20);dodge.invulnerableTime=0;dodge.snapTo(origin.getX()-8,origin.getY(),origin.getZ());
@@ -824,6 +883,8 @@ public final class BossTests {
         front.setHealth(20);front.invulnerableTime=0;front.snapTo(origin.getX()+8,origin.getY(),origin.getZ());var phaseTwoPetals=new LianhuaCombat(serpent);
         helper.assertTrue(phaseTwoPetals.updatePhase(425,850)&&phaseTwoPetals.begin(LianhuaCombat.PETALS,front),"Lianhua phase-two petal attack failed to begin");for(int i=0;i<42;i++)phaseTwoPetals.tick(level);
         front.snapTo(origin.getX()-8,origin.getY(),origin.getZ());helper.assertTrue(phaseTwoPetals.tailExposure()>0&&phaseTwoPetals.damageMultiplier(serpent.damageSources().mobAttack(front))>1.4f,"Lianhua phase-two rotating gaps or exposed tail vulnerability failed");
+
+
     }
     private static BossCombatState ready(){ var state=new BossCombatState(); for(int i=0;i<40;i++) state.tick(); return state; }
     private static BossCombatState reload(BossCombatState original){
