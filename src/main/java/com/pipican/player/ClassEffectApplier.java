@@ -140,7 +140,9 @@ public final class ClassEffectApplier {
         data.setResourceMax(next.resourceMax());
         data.setResource(Math.min(data.resource(), next.resourceMax()));
         player.syncData(PipicanAttachments.CLASS_DATA);
-        if (!old.stats().equals(next.stats()) || old == ClassState.EMPTY) {
+        // hasChannel: test (mock) players and clients without the mod can't receive it.
+        if ((!old.stats().equals(next.stats()) || old == ClassState.EMPTY)
+                && player.connection != null && player.connection.hasChannel(com.pipican.network.StatTotalsPayload.TYPE)) {
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player,
                     new com.pipican.network.StatTotalsPayload(new java.util.HashMap<>(next.stats())));
         }
