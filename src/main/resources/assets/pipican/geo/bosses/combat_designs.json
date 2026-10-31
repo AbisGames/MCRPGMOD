@@ -427,12 +427,12 @@
   {
     "id": "tengri_champion",
     "region": "khagan_steppe",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 750,
     "damage": 15,
     "sigil": {
-      "planned_item_id": "pipican:tengri_champion_sigil",
+      "item": "pipican:tengri_champion_sigil",
       "regional_material": "pipican:skyiron",
       "regional_count": 5,
       "dungeon_material": "pipican:khagan_steppe_boss_core",
@@ -445,33 +445,33 @@
     "abilities": [
       {
         "id": "steppe_triangle",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Three mounted dashes follow a previewed triangular route.",
         "counterplay": "Leave the triangle edges and attack during the turn.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:tengri_champion/steppe_triangle"
+        "animation": "native:tengri_champion/steppe_triangle"
       },
       {
         "id": "falcon_volley",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Arrow fans arrive from visible circling falcon markers.",
         "counterplay": "Face the announced fan gap and reposition between volleys.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:tengri_champion/falcon_volley"
+        "animation": "native:tengri_champion/falcon_volley"
       },
       {
         "id": "khan_banner",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A banner charges a limited offensive rally until interrupted.",
         "counterplay": "Break the banner during its long warning or dodge the rally lanes.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:tengri_champion/khan_banner"
+        "animation": "native:tengri_champion/khan_banner"
       }
     ],
     "phase_two": {
@@ -482,7 +482,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:skyiron",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:tengri_champion_trophy",
       "planned_trophy_name": "Tengri Champion Trophy",
       "xp": 188
     },
@@ -490,16 +490,16 @@
       "geometry": "geometry.pipican.tengri_champion",
       "file": "geo/bosses/tengri_champion.geo.json",
       "animation_mapping": {
-        "idle": "planned:tengri_champion/idle",
-        "walk": "planned:tengri_champion/walk",
-        "basic_attack": "planned:tengri_champion/basic_attack",
-        "hurt": "planned:tengri_champion/hurt",
-        "phase_transition": "planned:tengri_champion/phase_transition",
-        "summoning": "planned:tengri_champion/summoning",
-        "death": "planned:tengri_champion/death",
-        "steppe_triangle": "planned:tengri_champion/steppe_triangle",
-        "falcon_volley": "planned:tengri_champion/falcon_volley",
-        "khan_banner": "planned:tengri_champion/khan_banner"
+        "idle": "native:tengri_champion/idle",
+        "walk": "native:tengri_champion/walk",
+        "basic_attack": "native:tengri_champion/basic_attack",
+        "hurt": "native:tengri_champion/hurt",
+        "phase_transition": "native:tengri_champion/phase_transition",
+        "summoning": "native:tengri_champion/summoning",
+        "death": "native:tengri_champion/death",
+        "steppe_triangle": "native:tengri_champion/steppe_triangle",
+        "falcon_volley": "native:tengri_champion/falcon_volley",
+        "khan_banner": "native:tengri_champion/khan_banner"
       }
     },
     "arena": {

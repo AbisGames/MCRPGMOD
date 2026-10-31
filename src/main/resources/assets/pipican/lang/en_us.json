@@ -409,5 +409,8 @@
   "entity.pipican.hrothgar_drowned_jarl": "Hrothgar, Drowned Jarl",
   "item.pipican.valthor_stormbringer_sigil": "Valthor's Storm Sigil",
   "item.pipican.valthor_stormbringer_trophy": "Stormbringer's Crown",
-  "entity.pipican.valthor_stormbringer": "Valthor, Stormbringer"
+  "entity.pipican.valthor_stormbringer": "Valthor, Stormbringer",
+  "item.pipican.tengri_champion_sigil": "Tengri's Khanate Sigil",
+  "item.pipican.tengri_champion_trophy": "Khagan's Golden Standard",
+  "entity.pipican.tengri_champion": "Tengri, Champion of the Steppe"
 }

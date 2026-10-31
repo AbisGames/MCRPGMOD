@@ -9,7 +9,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | skollvar_winterfang | partial | prototype | partial | partial | partial | partial | complete | complete | partial | pending |
 | hrothgar_drowned_jarl | implemented | prototype + native axe/crest poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | valthor_stormbringer | implemented | prototype + native wing poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
-| tengri_champion | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| tengri_champion | implemented | prototype + native crest/limb poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | thalassor_deep_tyrant | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
 | eldaroth_treant | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | fallen_king | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
@@ -77,3 +77,5 @@ Nhalkorr is a registered ice-sea leviathan with preserved geometry, articulated 
 Hrothgar is a registered Fjordmark jarl with native axe, shield and crest poses and jarl/drowned atlases. His marked curved oath returns after a separate delay, four visible chain links can be shot to interrupt their spans, and four rower lanes resolve sequentially around a rotating missing-row refuge; rower sources can also be interrupted. The Stormsilver/fjord-core/rotten-flesh sigil, transactional Fjordmark altar, trophy and material rewards are covered by GameTests. Client visual QA remains pending for the target version.
 
 Valthor Stormbringer now uses three independently timed, interruptible conductor links, a center-safe expanding thunder annulus and three rotating wind lanes with a marked refuge. Its phase shift, summoning pose, encounter reservation, exact nine-ingredient sigil recipe, Stormcoast biome altar route, trophy and Thunderbasalt rewards are wired and covered by server GameTests. The renderer animates native wing, body and limb poses against the preserved geometry; in-client visual QA remains pending.
+
+Tengri Champion now combines a previewed triangular charge, a five-ray falcon volley with a rotating safe gap, and a three-lane rally whose banners can be shot down. Phase two rotates the safe opening. Entity, renderer, save state, Khagan Steppe summon route, crafted sigil and trophy rewards are covered by server GameTests; in-client visual QA remains pending.

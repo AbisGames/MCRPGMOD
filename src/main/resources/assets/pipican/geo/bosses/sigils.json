@@ -130,5 +130,11 @@
     "boss": "valthor_stormbringer",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:tengri_champion_sigil",
+    "boss": "tengri_champion",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

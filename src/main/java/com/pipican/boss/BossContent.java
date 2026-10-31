@@ -54,6 +54,8 @@ public final class BossContent {
     public static final DeferredItem<Item> HROTHGAR_TROPHY=ITEMS.registerSimpleItem("hrothgar_drowned_jarl_trophy");
     public static final DeferredItem<Item> VALTHOR_SIGIL=ITEMS.registerSimpleItem("valthor_stormbringer_sigil");
     public static final DeferredItem<Item> VALTHOR_TROPHY=ITEMS.registerSimpleItem("valthor_stormbringer_trophy");
+    public static final DeferredItem<Item> TENGRI_SIGIL=ITEMS.registerSimpleItem("tengri_champion_sigil");
+    public static final DeferredItem<Item> TENGRI_TROPHY=ITEMS.registerSimpleItem("tengri_champion_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

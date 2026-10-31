@@ -101,6 +101,10 @@ public final class BossRegistries {
         "valthor_stormbringer",()->EntityType.Builder.<ValthorEntity>of(ValthorEntity::new,MobCategory.MONSTER)
             .sized(2.1f,3.8f).clientTrackingRange(15).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("valthor_stormbringer"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<TengriEntity>> TENGRI=ENTITIES.register(
+        "tengri_champion",()->EntityType.Builder.<TengriEntity>of(TengriEntity::new,MobCategory.MONSTER)
+            .sized(1.8f,3.4f).clientTrackingRange(14).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("tengri_champion"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -126,5 +130,6 @@ public final class BossRegistries {
         event.put(NHALKORR.get(),NhalkorrEntity.attributes().build());
         event.put(HROTHGAR.get(),HrothgarEntity.attributes().build());
         event.put(VALTHOR.get(),ValthorEntity.attributes().build());
+        event.put(TENGRI.get(),TengriEntity.attributes().build());
     }
 }

@@ -40,7 +40,7 @@ public final class XaltekCombat {
         if(active.isEmpty()){clock.tick();return;}String impact=clock.tick();if(impact.isEmpty())return;
         switch(impact){case SNARES->{List<Vec3> live=new ArrayList<>();for(int i=0;i<3;i++)if(!broken.get(i))live.addAll(line(pods.get(i),pods.get((i+1)%3)));strike(level,live,0.48f);if(phase==2&&brokenPods()==3)exposureTicks=70;boss.playSound(SoundEvents.BEEHIVE_WORK,1.1f,0.6f);}
             case TONGUE->{if(!tongueCut){strike(level,line(origin.add(0,1.4,0),mark.add(0,0.5,0)),0.62f);var t=players(level).stream().filter(p->p.position().distanceToSqr(mark)<3.2*3.2).findFirst().orElse(null);if(t!=null){Vec3 pull=origin.subtract(t.position()).normalize().scale(0.42);t.push(pull.x,0.08,pull.z);}}boss.playSound(SoundEvents.SLIME_BLOCK_PLACE,1.2f,0.7f);}
-            case POUNCE->{boss.teleportTo(landing.x,landing.y,landing.z);strike(level,List.of(landing),0.72f);boss.playSound(SoundEvents.RAVAGER_ATTACK,1.1f,0.7f);}
+            case POUNCE->{strike(level,List.of(landing),0.72f);boss.teleportTo(landing.x,landing.y,landing.z);boss.playSound(SoundEvents.RAVAGER_ATTACK,1.1f,0.7f);}
             case "basic"->strike(level,List.of(mark),0.68f);default->{}}
     }
     private Vec3 forward(){return new Vec3(Math.cos(heading),0,Math.sin(heading));}

@@ -70,6 +70,7 @@ public final class PipicanClient {
           event.registerEntityRenderer(com.pipican.boss.BossRegistries.NHALKORR.get(),com.pipican.client.boss.NhalkorrRenderer::new);
           event.registerEntityRenderer(com.pipican.boss.BossRegistries.HROTHGAR.get(),com.pipican.client.boss.HrothgarRenderer::new);
           event.registerEntityRenderer(com.pipican.boss.BossRegistries.VALTHOR.get(),com.pipican.client.boss.ValthorRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.TENGRI.get(),com.pipican.client.boss.TengriRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {
