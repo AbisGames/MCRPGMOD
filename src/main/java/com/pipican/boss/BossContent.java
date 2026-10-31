@@ -62,6 +62,8 @@ public final class BossContent {
     public static final DeferredItem<Item> DURMAGON_TROPHY=ITEMS.registerSimpleItem("durmagon_runic_titan_trophy");
     public static final DeferredItem<Item> SYLTHERA_SIGIL=ITEMS.registerSimpleItem("sylthera_primordial_bloom_sigil");
     public static final DeferredItem<Item> SYLTHERA_TROPHY=ITEMS.registerSimpleItem("sylthera_primordial_bloom_trophy");
+    public static final DeferredItem<Item> LUMYNARA_SIGIL=ITEMS.registerSimpleItem("lumynara_abyssal_oracle_sigil");
+    public static final DeferredItem<Item> LUMYNARA_TROPHY=ITEMS.registerSimpleItem("lumynara_abyssal_oracle_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }

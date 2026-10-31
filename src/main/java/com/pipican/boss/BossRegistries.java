@@ -117,6 +117,10 @@ public final class BossRegistries {
         "sylthera_primordial_bloom",()->EntityType.Builder.<SyltheraEntity>of(SyltheraEntity::new,MobCategory.MONSTER)
             .sized(2.4f,3.8f).clientTrackingRange(16).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("sylthera_primordial_bloom"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<LumynaraEntity>> LUMYNARA=ENTITIES.register(
+        "lumynara_abyssal_oracle",()->EntityType.Builder.<LumynaraEntity>of(LumynaraEntity::new,MobCategory.MONSTER)
+            .sized(2.4f,3.4f).clientTrackingRange(16).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("lumynara_abyssal_oracle"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -146,5 +150,6 @@ public final class BossRegistries {
         event.put(THALASSOR.get(),ThalassorEntity.attributes().build());
         event.put(DURMAGON.get(),DurmagonEntity.attributes().build());
         event.put(SYLTHERA.get(),SyltheraEntity.attributes().build());
+        event.put(LUMYNARA.get(),LumynaraEntity.attributes().build());
     }
 }

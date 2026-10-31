@@ -2240,7 +2240,7 @@
   {
     "id": "lumynara_abyssal_oracle",
     "region": "shimmering_reefs",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1200,
     "damage": 18,
@@ -2253,38 +2253,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:glowstone_dust",
       "min_y": -64,
-      "max_y": 89
+      "max_y": 89,
+      "item": "pipican:lumynara_abyssal_oracle_sigil"
     },
     "abilities": [
       {
         "id": "luminous_gaze",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Eye lights announce a locked gaze beam, with an obvious shutter cue.",
         "counterplay": "Leave the beam line before the eye opens.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:lumynara_abyssal_oracle/luminous_gaze"
+        "animation": "lumynara_abyssal_oracle/luminous_gaze"
       },
       {
         "id": "choral_waves",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Sound rings display a harmonic safe band between pulses.",
         "counterplay": "Move into the lit safe band instead of crossing every wave.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:lumynara_abyssal_oracle/choral_waves"
+        "animation": "lumynara_abyssal_oracle/choral_waves"
       },
       {
         "id": "abyssal_lanterns",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Lantern nodes reveal delayed converging rays.",
         "counterplay": "Interrupt a lantern or stay outside its drawn ray intersection.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:lumynara_abyssal_oracle/abyssal_lanterns"
+        "animation": "lumynara_abyssal_oracle/abyssal_lanterns"
       }
     ],
     "phase_two": {
@@ -2295,7 +2296,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:abyssal_shard",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:lumynara_abyssal_oracle_trophy",
       "planned_trophy_name": "Lumynara Abyssal Oracle Trophy",
       "xp": 300
     },
@@ -2303,16 +2304,16 @@
       "geometry": "geometry.pipican.lumynara_abyssal_oracle",
       "file": "geo/bosses/lumynara_abyssal_oracle.geo.json",
       "animation_mapping": {
-        "idle": "planned:lumynara_abyssal_oracle/idle",
-        "walk": "planned:lumynara_abyssal_oracle/walk",
-        "basic_attack": "planned:lumynara_abyssal_oracle/basic_attack",
-        "hurt": "planned:lumynara_abyssal_oracle/hurt",
-        "phase_transition": "planned:lumynara_abyssal_oracle/phase_transition",
-        "summoning": "planned:lumynara_abyssal_oracle/summoning",
-        "death": "planned:lumynara_abyssal_oracle/death",
-        "luminous_gaze": "planned:lumynara_abyssal_oracle/luminous_gaze",
-        "choral_waves": "planned:lumynara_abyssal_oracle/choral_waves",
-        "abyssal_lanterns": "planned:lumynara_abyssal_oracle/abyssal_lanterns"
+        "idle": "lumynara_abyssal_oracle/idle",
+        "walk": "lumynara_abyssal_oracle/walk",
+        "basic_attack": "lumynara_abyssal_oracle/basic_attack",
+        "hurt": "lumynara_abyssal_oracle/hurt",
+        "phase_transition": "lumynara_abyssal_oracle/phase_transition",
+        "summoning": "lumynara_abyssal_oracle/summoning",
+        "death": "lumynara_abyssal_oracle/death",
+        "luminous_gaze": "lumynara_abyssal_oracle/luminous_gaze",
+        "choral_waves": "lumynara_abyssal_oracle/choral_waves",
+        "abyssal_lanterns": "lumynara_abyssal_oracle/abyssal_lanterns"
       }
     },
     "arena": {

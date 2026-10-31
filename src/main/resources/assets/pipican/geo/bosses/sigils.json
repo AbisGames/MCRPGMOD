@@ -154,5 +154,11 @@
     "boss": "sylthera_primordial_bloom",
     "min_y": -64,
     "max_y": 43
+  },
+  {
+    "item": "pipican:lumynara_abyssal_oracle_sigil",
+    "boss": "lumynara_abyssal_oracle",
+    "min_y": -64,
+    "max_y": 89
   }
 ]

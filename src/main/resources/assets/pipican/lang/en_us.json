@@ -421,5 +421,8 @@
   "entity.pipican.durmagon_runic_titan": "Durmagon, Runic Titan",
   "item.pipican.sylthera_primordial_bloom_sigil": "Sylthera's Blooming Seal",
   "item.pipican.sylthera_primordial_bloom_trophy": "Primordial Bloom",
-  "entity.pipican.sylthera_primordial_bloom": "Sylthera, Primordial Bloom"
+  "entity.pipican.sylthera_primordial_bloom": "Sylthera, Primordial Bloom",
+  "item.pipican.lumynara_abyssal_oracle_sigil": "Lumynara's Luminous Seal",
+  "item.pipican.lumynara_abyssal_oracle_trophy": "Abyssal Oracle's Bell",
+  "entity.pipican.lumynara_abyssal_oracle": "Lumynara, Abyssal Oracle"
 }
