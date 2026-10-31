@@ -1,5 +1,7 @@
 package com.pipican.effect.type;
 
+import com.pipican.condition.type.TempleCondition;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -36,14 +38,19 @@ public record ConditionalEffect(ClassCondition when, List<ClassEffect> effects) 
     @Override
     public void collectStats(EffectContext ctx) {
         if (ctx.test(when)) {
-            effects.forEach(e -> e.collectStats(ctx));
+            ctx.scaled(strength(ctx), null, () -> effects.forEach(e -> e.collectStats(ctx)));
         }
     }
 
     @Override
     public void apply(EffectContext ctx) {
         if (ctx.test(when)) {
-            effects.forEach(e -> e.apply(ctx));
+            ctx.scaled(strength(ctx), null, () -> effects.forEach(e -> e.apply(ctx)));
         }
+    }
+
+    /** "Inside your temple" bonuses follow {@code temple_strength}. */
+    private double strength(EffectContext ctx) {
+        return when instanceof TempleCondition t && t.radius().isEmpty() ? ctx.templeStrength() : 1;
     }
 }

@@ -119,6 +119,54 @@
   ],
   "special_passives": [
     {
+      "type": "pipican:stat",
+      "stat": "pipican:vitality",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:strength",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:dexterity",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:agility",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:intelligence",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:wisdom",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:endurance",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
+      "type": "pipican:stat",
+      "stat": "pipican:luck",
+      "per_special": 0.2,
+      "step": 10.0
+    },
+    {
       "type": "pipican:optimization",
       "amount": 0.0,
       "scaling": [

@@ -201,8 +201,13 @@ public final class ClassEffectApplier {
 
         // Every effect source with the rank it applies at.
         List<Map.Entry<ClassEffect, Integer>> effects = new ArrayList<>();
-        rpgClass.passives().forEach(e -> effects.add(Map.entry(e, 1)));
-        rpgClass.specialPassives().forEach(e -> effects.add(Map.entry(e, 1)));
+        // temple_only_passives (Fortress Temple): outside the temple the class passives are off.
+        boolean passives = state(player).chance(com.pipican.effect.type.BonusEffect.Kind.TEMPLE_ONLY_PASSIVES) <= 0
+                || c.test(new com.pipican.condition.type.TempleCondition(Optional.empty()));
+        if (passives) {
+            rpgClass.passives().forEach(e -> effects.add(Map.entry(e, 1)));
+            rpgClass.specialPassives().forEach(e -> effects.add(Map.entry(e, 1)));
+        }
         rpgClass.weakness().ifPresent(w -> w.effects().forEach(e -> effects.add(Map.entry(e, 1))));
         for (TreeKind kind : TreeKind.values()) {
             Optional<SkillTree> tree = ClassLookup.tree(access, rpgClass, kind);
@@ -247,6 +252,13 @@ public final class ClassEffectApplier {
         for (Map.Entry<ClassEffect, Integer> e : effects) {
             c.rank = e.getValue();
             e.getKey().collectStats(c);
+        }
+        // Stats that grow with the special stat (Transmuter: "+0.2 to every stat per 10 points").
+        double specialPoints = c.sourceValue("special_stat");
+        for (Map.Entry<ClassEffect, Integer> e : effects) {
+            if (e.getKey() instanceof com.pipican.effect.type.StatEffect s && s.perSpecial() != 0) {
+                s.collectSpecial(c, specialPoints);
+            }
         }
 
         // Optimization (Transmuter): one stat up, one down, sized by stats counted so far.
@@ -673,6 +685,11 @@ public final class ClassEffectApplier {
             this.rpgClass = rpgClass;
             this.level = level;
             this.player = player;
+        }
+
+        @Override
+        public double templeStrength() {
+            return com.pipican.ability.Temples.strength(player);
         }
 
         @Override

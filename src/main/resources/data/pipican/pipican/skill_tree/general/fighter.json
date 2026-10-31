@@ -94,16 +94,7 @@
     {
       "id": "fighter_champion",
       "name": "Living Weapon",
-      "description": {
-        "text": "+15% weapon damage and attack speed, but -30% magic damage and potion strength",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "+15% weapon damage and attack speed, but -30% magic damage and potion strength",
       "type": "keystone",
       "x": -945,
       "y": -167,
@@ -112,7 +103,29 @@
         "fighter_iron_will"
       ],
       "cost": 3,
-      "required_level": 25
+      "required_level": 25,
+      "effects": [
+        {
+          "type": "pipican:damage_dealt",
+          "multiplier": 1.15
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_speed",
+          "amount": 0.15,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:damage_dealt",
+          "damage_types": "#pipican:is_magic",
+          "multiplier": 0.7
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "drunk_potion_strength",
+          "amount": -0.3
+        }
+      ]
     }
   ]
 }

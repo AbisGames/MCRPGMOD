@@ -90,16 +90,7 @@
     {
       "id": "living_temple",
       "name": "Living Temple",
-      "description": {
-        "text": "your temple follows you (radius 6); -15% temple bonuses",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "your temple follows you (radius 6); -15% temple bonuses",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -108,7 +99,19 @@
         "portable_shrine"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "temple_mobile",
+          "amount": 6.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "temple_strength",
+          "amount": -0.15
+        }
+      ]
     }
   ]
 }

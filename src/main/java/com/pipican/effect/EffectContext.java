@@ -135,6 +135,11 @@ public interface EffectContext {
         apply.run();
     }
 
+    /** How strong bonuses that need the player in their temple are (1 = as written). */
+    default double templeStrength() {
+        return 1;
+    }
+
     /** The player picks a favored weapon type when they wake up. */
     void enableFavoredWeapon();
 

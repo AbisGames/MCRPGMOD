@@ -4,7 +4,7 @@ Generated from `class_specs/*.md` by the class builder. Everything listed here i
 tree nodes and skill tiers still show their text in-game, marked "(not in game yet)" or "(partly not in game yet)".
 
 - Classes built: **84**, skills: **109**, active abilities: **114** (of 114 named in the specs)
-- Bonus phrases: **2250**. Fully working: **2210**, partly working: **2**, not yet: **38**
+- Bonus phrases: **2250**. Fully working: **2217**, partly working: **2**, not yet: **31**
 
 Passives and weaknesses have no tooltip of their own, so their missing parts are only listed here.
 
@@ -13,12 +13,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | Feature | Lines |
 |---|---|
 | [Skill trigger approximated](#skill-trigger-approximated) | 28 |
-| [Other mechanics](#other-mechanics) | 15 |
-| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 8 |
-| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 7 |
+| [Other mechanics](#other-mechanics) | 13 |
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 5 |
-| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 5 |
+| [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 5 |
+| [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 5 |
 | [Immunities](#immunities) | 4 |
+| [Potions, XP, loot, trading, crafting, food](#potions-xp-loot-trading-crafting-food) | 3 |
 | [Resource bar that fills from use (only the drain works)](#resource-bar-that-fills-from-use-only-the-drain-works) | 2 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 1 |
 
@@ -99,50 +99,12 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - general tree: Saint Among Us: max health penalty is 3 per use
 - **technomancer**
   - passive: Redstone you place powers 2 blocks farther
-- **templar**
-  - general tree: Fortress Temple: outside it you lose all class passives
 - **tenebrist**
   - special tree: Snuff: torches within 4 blocks flicker - mobs near you can't see you
-- **transmuter**
-  - special stat per point: +0.2 to every stat per 10 points (rounded down)
 - **warlock**
   - special tree: Expert Spell Thief: stolen effects can be re-applied (see section 12)
 - **zealot**
   - special tree: Violent Madness: Violent Madness no longer targets players
-
-## Active abilities (named abilities, cooldowns, auras, summons)
-
-- **bard**
-  - special tree: Swift Song: Inspiring Song refreshes twice as fast
-- **diviner**
-  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
-- **engineer**
-  - special tree: Mecha: while in the cockpit, eidolon damage +25%
-- **runesmith**
-  - general tree: Runelord: sigil bonuses doubled
-- **shapeshifter**
-  - special passive: Form bonuses +1% per Mutability
-- **templar**
-  - general tree: Fortress Temple: temple bonuses doubled
-  - special tree: Living Temple: your temple follows you
-  - special tree: Living Temple: -15% temple bonuses
-
-## Resource bar: filling, refills, spending
-
-- **assassin**
-  - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
-- **diviner**
-  - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
-- **savant**
-  - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
-- **scout**
-  - special tree: Low Blow: when a revealed mob takes damage from an ally, you get a free 50% damage hit on it; -10% max Stride
-- **shapeshifter**
-  - special tree: Thousand Faces: you can disguise as a villager to be ignored by illagers; -10% max health
-- **technomancer**
-  - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
-- **templar**
-  - general tree: Sacred Ground: players in your temple regenerate 20% faster
 
 ## Conditional bonus (while / when / where)
 
@@ -157,17 +119,31 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **zealot**
   - weakness: when Madness is full: Violent Madness - for 10s you attack anything near you (including allies), +30% damage, then Madness resets
 
-## Potions, XP, loot, trading, crafting, food
+## Resource bar: filling, refills, spending
 
-- **artificer**
-  - special tree: Store Spell: potions you brew can be loaded into crafted gear (see section 12)
-- **diplomat**
-  - special passive: Per 10 Rapport, wandering traders offer 1 extra trade
-  - skill Bartering: +5% piglin barter quality
+- **assassin**
+  - special tree: The Black Hand: Assassinate can trigger again 10s after a kill; -10% max health
 - **diviner**
-  - general tree: Read the Signs: loot chests show their contents' rarity colour
-- **fighter**
-  - general tree: Living Weapon: +15% weapon damage and attack speed, but -30% magic damage and potion strength
+  - special tree: Oracle of Ages: premonitions refill every 10 minutes; Omens regen -30%
+- **savant**
+  - weakness: -10% max Insight regen and your focus schools are the only ones above neutral
+- **shapeshifter**
+  - special tree: Thousand Faces: you can disguise as a villager to be ignored by illagers; -10% max health
+- **technomancer**
+  - special tree: Clockwork Legion: Animate Object can keep 3 at once; -15% max health
+
+## Active abilities (named abilities, cooldowns, auras, summons)
+
+- **bard**
+  - special tree: Swift Song: Inspiring Song refreshes twice as fast
+- **diviner**
+  - passive: while you have a premonition left, mobs can't surprise-hit you and you see their outlines within 8 blocks
+- **engineer**
+  - special tree: Mecha: while in the cockpit, eidolon damage +25%
+- **runesmith**
+  - general tree: Runelord: sigil bonuses doubled
+- **shapeshifter**
+  - special passive: Form bonuses +1% per Mutability
 
 ## Immunities
 
@@ -179,6 +155,15 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
   - passive: Trackless: your footsteps never trigger sculk sensors, shriekers or tripwires
 - **thief**
   - passive: you never trigger tripwires or pressure plates
+
+## Potions, XP, loot, trading, crafting, food
+
+- **artificer**
+  - special tree: Store Spell: potions you brew can be loaded into crafted gear (see section 12)
+- **diplomat**
+  - skill Bartering: +5% piglin barter quality
+- **diviner**
+  - general tree: Read the Signs: loot chests show their contents' rarity colour
 
 ## Resource bar that fills from use (only the drain works)
 

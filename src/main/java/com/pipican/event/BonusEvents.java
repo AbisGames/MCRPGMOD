@@ -75,6 +75,14 @@ public final class BonusEvents {
     @SubscribeEvent
     static void onEffectAdded(MobEffectEvent.Added event) {
         MobEffectInstance effect = event.getEffectInstance();
+        // drunk_potion_strength: a potion you drink gives a lower level (level II at -30% is 1.4 levels: level I).
+        if (event.getEntity() instanceof ServerPlayer drinker && drinker.isUsingItem()
+                && drinker.getUseItem().has(net.minecraft.core.component.DataComponents.POTION_CONTENTS)) {
+            double k = ClassEffectApplier.state(drinker).bonus(Kind.DRUNK_POTION_STRENGTH);
+            if (k != 1) {
+                effect.amplifier = Math.max(0, (int) Math.round((effect.amplifier + 1) * k) - 1);
+            }
+        }
         if (effect.isInfiniteDuration() || effect.getEffect().value().isInstantenous() || effect.duration <= 0) {
             return;
         }
@@ -97,6 +105,18 @@ public final class BonusEvents {
         }
         if (mult != 1) {
             effect.duration = Math.max(1, (int) Math.round(effect.duration * mult));
+        }
+    }
+
+    /** {@code drunk_potion_strength} also weakens Instant Health from a potion you drink. */
+    @SubscribeEvent
+    static void onDrunkHeal(net.neoforged.neoforge.event.entity.living.LivingHealEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && player.isUsingItem()
+                && player.getUseItem().has(net.minecraft.core.component.DataComponents.POTION_CONTENTS)) {
+            double k = ClassEffectApplier.state(player).bonus(Kind.DRUNK_POTION_STRENGTH);
+            if (k != 1) {
+                event.setAmount((float) Math.max(0, event.getAmount() * k));
+            }
         }
     }
 

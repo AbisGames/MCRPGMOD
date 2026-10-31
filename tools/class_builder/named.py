@@ -2342,6 +2342,44 @@ def world(low, ctx):
             return bonus_kind('scrutiny_targets', float(m.group(1)) - 1) + rest
     if re.fullmatch(r'first escalating hit also knocks back', low) and cid == 'mage_knight':
         return bonus_kind('empower_knockback', 0.8)
+    m = re.fullmatch(rf'per {N} ([a-z]+),? wandering traders offer {N} extra trades?', low)
+    if m and m.group(2) == sp:
+        return bonus_kind('wandering_trades', 0.0, round(float(m.group(3)) / float(m.group(1)), 6))
+    # Low Blow (scout): "revealed" mobs are the ones you marked with Reveal Weakness.
+    m = re.fullmatch(rf'when a revealed mob takes damage from an ally, you get a free {N}% damage hit on it(?:; (.+))?', low)
+    if m:
+        rest = _rest(m.group(2), ctx) if m.group(2) else []
+        if rest is not None:
+            # A short cooldown so two players with it can't trade free hits forever.
+            return [{'type': 'pipican:on', 'event': 'ally_hits_mob', 'victim': {'marked': True}, 'cooldown_ticks': 10, 'name': 'low blow',
+                     'actions': [{'type': 'pipican:counter', 'target': 'victim', 'multiplier': pct(m.group(1))}]}] + rest
+    # Transmuter's points: whole steps only, counted after the other stats.
+    m = re.fullmatch(rf'\+{N} to every stat per {N} points(?: \(rounded down\))?', low)
+    if m and ctx.get('implicit_per_point'):
+        import effects as fx
+        return [{'type': 'pipican:stat', 'stat': 'pipican:' + st, 'per_special': float(m.group(1)), 'step': float(m.group(2))} for st in fx.CORE_STATS]
+    # Living Weapon (fighter): the downside is to magic you deal and potions you drink.
+    m = re.fullmatch(rf'\+{N}% weapon damage and attack speed, but -{N}% magic damage and potion strength', low)
+    if m:
+        up = _rest(f'+{m.group(1)}% weapon damage and attack speed', ctx)
+        if up:
+            return up + [{'type': 'pipican:damage_dealt', 'damage_types': '#pipican:is_magic', 'multiplier': round(1 - pct(m.group(2)), 6)}] + \
+                bonus_kind('drunk_potion_strength', -pct(m.group(2)))
+    # Templar: the temple itself changes (Fortress Temple, Living Temple, Sacred Ground).
+    if cid == 'templar':
+        if re.fullmatch(r'temple bonuses doubled', low):
+            return bonus_kind('temple_strength', 1.0)
+        m = re.fullmatch(rf'-{N}% temple bonuses', low)
+        if m:
+            return bonus_kind('temple_strength', -pct(m.group(1)))
+        if re.fullmatch(r'outside it you lose all class passives', low):
+            return bonus_kind('temple_only_passives', 1.0)
+        m = re.fullmatch(rf'your temple follows you(?: \(radius {N}\))?', low)
+        if m:
+            return bonus_kind('temple_mobile', float(m.group(1) or 6))
+        m = re.fullmatch(rf'players in your temple regenerate {N}% faster', low)
+        if m:
+            return bonus_kind('temple_healing', pct(m.group(1)))
     # Lone Wolf (duelist): the challenge is the class's quarry.
     if re.fullmatch(r'duel bonuses doubled', low) and cid == 'duelist':
         return bonus_kind('quarry_double', 1.0)

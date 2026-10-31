@@ -676,6 +676,63 @@ public final class WorldBonusEvents {
         }
     }
 
+    /** Wandering traders -> extra offers already added to them (for {@code wandering_trades}). */
+    private static final Map<UUID, Integer> TRADER_EXTRAS = new ConcurrentHashMap<>();
+
+    /** {@code wandering_trades}: a wandering trader you talk to rolls that many more offers from its common trades (once each). */
+    @SubscribeEvent
+    static void onTraderInteract(PlayerInteractEvent.EntityInteract event) {
+        if (!(event.getEntity() instanceof ServerPlayer player) || !(event.getTarget() instanceof net.minecraft.world.entity.npc.wanderingtrader.WanderingTrader trader)
+                || !(player.level() instanceof ServerLevel level)) {
+            return;
+        }
+        int want = (int) Math.floor(ClassEffectApplier.state(player).chance(Kind.WANDERING_TRADES) + 1e-9);
+        int had = TRADER_EXTRAS.getOrDefault(trader.getUUID(), 0);
+        if (want <= had) {
+            return;
+        }
+        var offers = trader.getOffers();
+        var set = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.TRADE_SET)
+                .getOptional(net.minecraft.world.item.trading.TradeSets.WANDERING_TRADER_COMMON);
+        if (set.isEmpty()) {
+            return;
+        }
+        var ctx = new net.minecraft.world.level.storage.loot.LootContext.Builder(new net.minecraft.world.level.storage.loot.LootParams.Builder(level)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, trader.position())
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.THIS_ENTITY, trader)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ADDITIONAL_COST_COMPONENT_ALLOWED, net.minecraft.util.Unit.INSTANCE)
+                .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.VILLAGER_TRADE)).create(java.util.Optional.empty());
+        java.util.List<net.minecraft.core.Holder<net.minecraft.world.item.trading.VillagerTrade>> pool = new java.util.ArrayList<>();
+        set.get().getTrades().forEach(pool::add);
+        int added = 0;
+        while (had + added < want && !pool.isEmpty()) {
+            var offer = pool.remove(trader.getRandom().nextInt(pool.size())).value().getOffer(ctx);
+            if (offer != null && offers.stream().noneMatch(o -> ItemStack.isSameItemSameComponents(o.getResult(), offer.getResult()))) {
+                offers.add(offer);
+                added++;
+            }
+        }
+        TRADER_EXTRAS.put(trader.getUUID(), had + added);
+    }
+
+    /** {@code temple_healing} (Sacred Ground): players inside a Templar's temple heal more - the Templar too. */
+    @SubscribeEvent
+    static void onTempleHeal(net.neoforged.neoforge.event.entity.living.LivingHealEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer healed) || !(healed.level() instanceof ServerLevel level)) {
+            return;
+        }
+        double more = 0;
+        for (ServerPlayer templar : level.players()) {
+            double k = ClassEffectApplier.state(templar).chance(Kind.TEMPLE_HEALING);
+            if (k > 0 && com.pipican.ability.Temples.contains(templar, healed.position())) {
+                more = Math.max(more, k);
+            }
+        }
+        if (more > 0) {
+            event.setAmount((float) (event.getAmount() * (1 + more)));
+        }
+    }
+
     private static final Map<UUID, java.util.Set<UUID>> IN_TEMPLE = new ConcurrentHashMap<>();
 
     /** {@code temple_alarm}: a hostile mob stepping into your temple gives you Speed II for 2s. */
@@ -683,12 +740,12 @@ public final class WorldBonusEvents {
         if (ClassEffectApplier.state(player).chance(Kind.TEMPLE_ALARM) <= 0) {
             return;
         }
-        var config = player.getRespawnConfig();
-        if (config == null || config.respawnData().dimension() != level.dimension()) {
+        var center = com.pipican.ability.Temples.center(player);
+        if (center.isEmpty()) {
             return;
         }
-        BlockPos temple = config.respawnData().pos();
-        double r = 10 + ClassEffectApplier.state(player).chance(Kind.TEMPLE_RADIUS);
+        BlockPos temple = BlockPos.containing(center.get());
+        double r = com.pipican.ability.Temples.radius(player);
         java.util.Set<UUID> before = IN_TEMPLE.getOrDefault(player.getUUID(), java.util.Set.of());
         java.util.Set<UUID> now = new java.util.HashSet<>();
         for (LivingEntity mob : level.getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(temple).inflate(r),

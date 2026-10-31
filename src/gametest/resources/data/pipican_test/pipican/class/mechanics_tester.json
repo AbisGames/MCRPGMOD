@@ -359,6 +359,11 @@
       "type": "pipican:bonus",
       "kind": "poison_undead",
       "amount": 1
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "temple_mobile",
+      "amount": 6
     }
   ]
 }

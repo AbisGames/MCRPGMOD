@@ -132,6 +132,17 @@
           "per": 0.003
         }
       ]
+    },
+    {
+      "type": "pipican:bonus",
+      "kind": "wandering_trades",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.1
+        }
+      ]
     }
   ],
   "weakness": {

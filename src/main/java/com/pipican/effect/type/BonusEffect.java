@@ -191,6 +191,13 @@ import net.minecraft.util.StringRepresentable;
  *       {@code scrutiny_targets}: how many more mobs can be scrutinised at once (one without it - a new one replaces the oldest)</li>
  *   <li>{@code empower_knockback}: the first hit of each "your next hits" buff also knocks the mob back this hard (vanilla
  *       Knockback I is about 0.5)</li>
+ *   <li>Temple: {@code temple_mobile} - your temple follows you, this many blocks wide; {@code temple_strength} - bonuses that
+ *       need you in your temple are this much stronger (1 = doubled, -0.15 = 15% weaker); {@code temple_only_passives} (any amount
+ *       above 0) - outside your temple your class passives don't work; {@code temple_healing} - players in your temple heal this
+ *       much more (0.2 = +20%)</li>
+ *   <li>{@code wandering_trades}: whole extra offers a wandering trader rolls when you talk to it (once per trader; everyone sees them)</li>
+ *   <li>{@code drunk_potion_strength}: potions you drink are this much stronger (-0.3 = 30% weaker: levels round to the nearest,
+ *       never below I; Instant Health heals 30% less)</li>
  *   <li>{@code magic_armor_pierce}: the share of armor your magic damage ignores</li>
  *   <li>{@code bare_handed}: any amount above 0 = your hits only count without an item in hand, and items can't be used</li>
  *   <li>{@code focus_slots}: <i>focus schools</i> you can pick ({@code /pipican focus}); {@code focus_bonus} / {@code non_focus_bonus}:
@@ -232,7 +239,8 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         THRESHOLD_DROP, TEMPLE_ALARM, STANCE_WALK, CHAOS_DOUBLE,
         NO_COBWEB, NO_POWDER_SNOW, DOUBLE_JUMP, WALL_RUN, WALL_CLIMB, GLIDE,
         HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
-        POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK;
+        POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK,
+        TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

@@ -62,16 +62,7 @@
     {
       "id": "templar_sacred_ground",
       "name": "Sacred Ground",
-      "description": {
-        "text": "players in your temple regenerate 20% faster",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "players in your temple regenerate 20% faster",
       "type": "notable",
       "x": 1668,
       "y": 497,
@@ -79,7 +70,14 @@
         "templar_hallowed"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "temple_healing",
+          "amount": 0.2
+        }
+      ]
     },
     {
       "id": "templar_holy_bulwark",
@@ -112,16 +110,7 @@
     {
       "id": "templar_fortress_temple",
       "name": "Fortress Temple",
-      "description": {
-        "text": "temple bonuses doubled, but outside it you lose all class passives",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "temple bonuses doubled, but outside it you lose all class passives",
       "type": "keystone",
       "x": 1726,
       "y": 544,
@@ -130,7 +119,19 @@
         "templar_holy_bulwark"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "temple_strength",
+          "amount": 1.0
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "temple_only_passives",
+          "amount": 1.0
+        }
+      ]
     }
   ]
 }

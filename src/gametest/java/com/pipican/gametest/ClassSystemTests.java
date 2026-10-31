@@ -719,6 +719,11 @@ public final class ClassSystemTests {
         var cursedTwo = new AbilityContext(player, Optional.empty(), prey.position(), Optional.of(prey), 0);
         curse.run(cursedTwo);
         helper.assertTrue(!cursedOne.fizzled() && cursedTwo.fizzled(), "one curse at a time");
+
+        // A temple that follows you: you're always in it, and so is anything within its 6 blocks.
+        helper.assertTrue(new com.pipican.condition.type.TempleCondition(Optional.empty()).test(player), "inside a moving temple");
+        helper.assertTrue(com.pipican.ability.Temples.contains(player, player.position().add(5, 0, 0))
+                && !com.pipican.ability.Temples.contains(player, player.position().add(7, 0, 0)), "6 blocks wide");
         helper.succeed();
     }
 
