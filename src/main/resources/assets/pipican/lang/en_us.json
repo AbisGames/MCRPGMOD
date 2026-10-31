@@ -167,5 +167,6 @@
   "pipican.favored.swapped": "Favored weapon changed",
   "pipican.favored.no_swap": "You can't change your favored weapon again today",
   "pipican.structure_hint": "Your compass hints at a %s about %s blocks away",
-  "pipican.mount_returned": "Your bonded steed has found its way home"
+  "pipican.mount_returned": "Your bonded steed has found its way home",
+  "pipican.stat.requires": "Needs %s %s (one affinity tier worse below it)"
 }

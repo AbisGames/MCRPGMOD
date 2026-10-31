@@ -1,0 +1,8 @@
+{
+  "name": "Grip",
+  "description": "Test-only stat: stone swords need 5 of it.",
+  "max": 100,
+  "gear": [
+    { "items": "minecraft:stone_sword", "min": 5 }
+  ]
+}

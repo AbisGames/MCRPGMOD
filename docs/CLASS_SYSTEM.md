@@ -82,6 +82,8 @@ The number of stats is not fixed: each file is one stat.
 | `max` | 100 | Highest value players can **raise** it to with stat points (bonuses from skills/passives can exceed it). |
 | `per_point` | none | Attribute modifiers applied once per point. `operation`: `add_value` (default), `add_multiplied_base`, `add_multiplied_total`. Any vanilla or modded attribute works. |
 | `exclusive` | false | If true, only classes whose **special stat** is this stat can buy points in it. Use it for signature stats like "Faith". |
+| `effects` | none | Any class effects (the same ones passives use) that grow with this stat. In their `scaling`, the source `"points"` is the player's points in this stat, times their class's `stat_growth` for it. Example: `{ "type": "pipican:damage_dealt", "damage_types": "#pipican:is_magic", "multiplier": 1.0, "scaling": [{ "source": "points", "per": 0.005 }] }` is +0.5% magic damage per point. |
+| `gear` | none | Stat requirements on items: `[{ "items": "#minecraft:swords", "min": 15 }]`. Below `min` the item counts **one affinity tier worse** for each requirement it misses (proficient → neutral → clumsy...). Nothing is ever blocked. Tooltips show "Needs 15 Strength". |
 | `color` | white | ARGB int for UIs (`-1` = white). |
 
 A player's total in a stat = class `base_stats` + stat points put into it + `pipican:stat` effects (passives, tree nodes).
@@ -92,9 +94,9 @@ at 100, 250, 450, 700... XP. One pool of stat points pays for both raising stats
 
 **Built-in stats.** The mod ships eight stats in the `pipican` namespace: `vitality` (+1 max health per point),
 `strength` (+0.1 attack damage), `dexterity` (+0.2% attack speed), `agility` (+0.5% movement speed),
-`intelligence`, `wisdom`, `endurance` and `luck`. The last four have no `per_point` bonuses yet: magic damage,
-healing power, health regen and crit chance have no vanilla attribute to hook into. Override any of them with a
-datapack file at the same path to change the numbers.
+`intelligence` (+0.5% magic damage), `wisdom` (+0.5% healing you do), `endurance` (+1% natural health
+regeneration) and `luck` (+0.2% critical hit chance). The last four use `effects`, since there is no vanilla
+attribute for them. Override any of them with a datapack file at the same path to change the numbers.
 
 ### 2.2 Trinket slot types — `trinket_slot/<name>.json`
 
@@ -191,6 +193,7 @@ Copy `docs/templates/pipican_template_pack/data/mypack/pipican/class/example_cla
 | `selectable` | true | false = hidden from the selection screen (admins can still `/pipican class set` it). |
 | `base_health` | 20 | Starting max health (20 = 10 hearts). Does **not** grow with level; stats/skills can still add health. |
 | `base_stats` | none | `{ "<stat id>": points }` starting points, including the special stat. |
+| `stat_growth` | none | `{ "<stat id>": multiplier }`: how much this class gets out of each point of a stat, e.g. `{ "pipican:intelligence": 1.5 }` for a mage. Multiplies the stat's `per_point` and `effects` (not its points). |
 | `special_stat` | none | See below. |
 | `starting_kit` | none | Items given once when the class is chosen: `"minecraft:bread"` or `{ "id": "minecraft:bread", "count": 8, "components": { ... } }`. |
 | `skill_tree`, `special_skill_tree`, `stat_tree` | none | `{ "tree": "<tree id>", "start": "<start node id>" }`. Several classes can share a tree with different starts. |

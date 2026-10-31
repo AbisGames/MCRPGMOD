@@ -34,6 +34,8 @@ import net.minecraft.world.item.Items;
  * @param selectable       false hides the class from the selection screen (admins can still set it)
  * @param baseHealth       starting max health (vanilla player is 20 = 10 hearts). Does not scale with level.
  * @param baseStats        starting points per stat, e.g. {@code {"pipican:strength": 5}}
+ * @param statGrowth       how much the class gets out of each point of a stat, e.g. {@code {"pipican:intelligence": 1.5}}
+ *                         (a mage's Intelligence counts half again); 1 when missing
  * @param specialStat      the class's signature stat (+ optional resource bar)
  * @param startingKit      items given once when the class is chosen ({@code "minecraft:bread"} or
  *                         {@code {"id": "minecraft:bread", "count": 8, "components": {...}}})
@@ -55,6 +57,7 @@ public record RpgClass(
         boolean selectable,
         double baseHealth,
         Map<ResourceKey<StatDefinition>, Integer> baseStats,
+        Map<ResourceKey<StatDefinition>, Double> statGrowth,
         Optional<SpecialStat> specialStat,
         List<ItemStackTemplate> startingKit,
         Optional<TreeRef> skillTree,
@@ -74,7 +77,7 @@ public record RpgClass(
             BuiltInRegistries.ITEM.byNameCodec().optionalFieldOf("icon", Items.PLAYER_HEAD).forGetter(RpgClass::icon),
             Codec.BOOL.optionalFieldOf("selectable", true).forGetter(RpgClass::selectable),
             Codec.doubleRange(1, 2048).optionalFieldOf("base_health", 20.0).forGetter(RpgClass::baseHealth),
-            Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.STAT), Codec.INT).optionalFieldOf("base_stats", Map.of()).forGetter(RpgClass::baseStats),
+            StatSetup.MAP_CODEC.forGetter(c -> new StatSetup(c.baseStats, c.statGrowth)),
             SpecialStat.CODEC.optionalFieldOf("special_stat").forGetter(RpgClass::specialStat),
             ItemStackTemplate.CODEC.listOf().optionalFieldOf("starting_kit", List.of()).forGetter(RpgClass::startingKit),
             Trees.MAP_CODEC.forGetter(c -> new Trees(c.skillTree, c.specialSkillTree, c.statTree)),
@@ -85,11 +88,24 @@ public record RpgClass(
             AffinityRules.CODEC.optionalFieldOf("affinities", AffinityRules.NEUTRAL).forGetter(RpgClass::affinities),
             Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.TRINKET_SLOT), Codec.intRange(0, 64)).optionalFieldOf("trinket_slots", Map.of()).forGetter(RpgClass::trinketSlots),
             ResourceKey.codec(PipicanRegistries.ABILITY).listOf().optionalFieldOf("abilities", List.of()).forGetter(RpgClass::abilities)
-    ).apply(i, (name, description, icon, selectable, baseHealth, baseStats, specialStat, startingKit, trees,
+    ).apply(i, (name, description, icon, selectable, baseHealth, statSetup, specialStat, startingKit, trees,
                 progression, passives, specialPassives, weakness, affinities, trinketSlots, abilities) -> new RpgClass(
-                name, description, icon, selectable, baseHealth, baseStats, specialStat, startingKit,
+                name, description, icon, selectable, baseHealth, statSetup.base(), statSetup.growth(), specialStat, startingKit,
                 trees.skill(), trees.special(), trees.stat(),
                 progression, passives, specialPassives, weakness, affinities, trinketSlots, abilities)));
+
+    /** {@code base_stats} and {@code stat_growth}, grouped only because a codec takes at most 16 fields. Still flat in JSON. */
+    private record StatSetup(Map<ResourceKey<StatDefinition>, Integer> base, Map<ResourceKey<StatDefinition>, Double> growth) {
+        static final MapCodec<StatSetup> MAP_CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+                Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.STAT), Codec.INT).optionalFieldOf("base_stats", Map.of()).forGetter(StatSetup::base),
+                Codec.unboundedMap(ResourceKey.codec(PipicanRegistries.STAT), Codec.doubleRange(0, 100)).optionalFieldOf("stat_growth", Map.of()).forGetter(StatSetup::growth)
+        ).apply(i, StatSetup::new));
+    }
+
+    /** How much this class gets out of each point of {@code stat} (1 = as the stat says; {@code stat_growth} in JSON). */
+    public double growth(ResourceKey<StatDefinition> stat) {
+        return statGrowth.getOrDefault(stat, 1.0);
+    }
 
     /** The three tree fields, grouped only because a codec takes at most 16 fields. Still flat in JSON. */
     private record Trees(Optional<TreeRef> skill, Optional<TreeRef> special, Optional<TreeRef> stat) {

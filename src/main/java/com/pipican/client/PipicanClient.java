@@ -112,10 +112,18 @@ public final class PipicanClient {
         }
     }
 
-    /** Adds "Affinity: Proficient" (etc.) to item tooltips for the local player's class. */
+    /** Adds "Affinity: Proficient" (etc.) and stat requirements ("Needs 15 Strength") to item tooltips. */
     private static void onTooltip(ItemTooltipEvent event) {
         if (event.getEntity() == null || event.getItemStack().isEmpty()) {
             return;
+        }
+        for (var stat : ClassLookup.stats(event.getEntity().level().registryAccess())) {
+            for (var req : stat.gear()) {
+                if (event.getItemStack().is(req.items())) {
+                    event.getToolTip().add(Component.translatable("pipican.stat.requires", req.min(), stat.name())
+                            .withStyle(net.minecraft.ChatFormatting.GRAY));
+                }
+            }
         }
         PlayerClassData data = event.getEntity().getData(PipicanAttachments.CLASS_DATA);
         data.activeClass()

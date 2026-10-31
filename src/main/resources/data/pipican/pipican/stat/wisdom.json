@@ -1,5 +1,18 @@
 {
   "name": "Wisdom",
-  "description": "Insight. Will add healing power.",
-  "max": 100
+  "description": "Insight. Each point makes your healing 0.5% stronger.",
+  "max": 100,
+  "effects": [
+    {
+      "type": "pipican:bonus",
+      "kind": "healing_given",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "points",
+          "per": 0.005
+        }
+      ]
+    }
+  ]
 }

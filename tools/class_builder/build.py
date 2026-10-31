@@ -632,6 +632,7 @@ def main(spec_dir, res_dir, report_path):
         rpg = {
             'name': c['name'], 'description': c['description'], 'icon': 'minecraft:' + c['icon'],
             'selectable': c['selectable'], 'base_health': c['health'], 'base_stats': base_stats,
+            **({'stat_growth': {(sid if k == 'SPECIAL' else f'{NS}:{k}'): v for k, v in c['growth'].items()}} if c.get('growth') else {}),
             'special_stat': special_stat, 'starting_kit': kit,
             'skill_tree': {'tree': f'{NS}:general', 'start': start_of(gnodes)},
             'special_skill_tree': {'tree': f'{NS}:special/{cid}', 'start': start_of(snodes)},

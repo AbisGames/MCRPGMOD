@@ -104,12 +104,15 @@ give temporary items, steal, transmute, cast spells written in a book, build and
 bond with a player, and react to hits and kills ("for 30s, every mob you kill rises as a zombie"). Abilities can need a situation
 ("only in darkness", "while holding your staff"), and can start by themselves ("when Rage is above 75%").
 
+## Stats
+
+Every stat gives something per point (see section 2 of `_TEMPLATE.md`). A class can get more or less out of a stat
+with the optional **Growth** column in section 2 ("x1.5"). Stat requirements on gear ("swords need 15 Strength";
+below that they count one affinity tier worse) are set once for everyone in the stat files
+(`data/pipican/pipican/stat/<stat>.json`, field `gear`), not per class - see `docs/CLASS_SYSTEM.md`.
+
 ## Not possible yet
 
 Fine to write these in section 12 ("Anything else"). Claude will leave them out and list them, until the system
-supports them.
+supports them. Nothing is listed right now: write what you need and the build report will say what's missing.
 
-- Magic damage, healing power, health regen, crit chance as stats (Intelligence, Wisdom, Endurance and Luck
-  give nothing yet)
-- Different stat growth per class (e.g. a mage getting more out of Intelligence)
-- Stat requirements on gear

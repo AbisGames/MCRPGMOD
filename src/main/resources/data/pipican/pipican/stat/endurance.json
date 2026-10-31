@@ -1,5 +1,18 @@
 {
   "name": "Endurance",
-  "description": "Staying power. Will add health regeneration.",
-  "max": 100
+  "description": "Staying power. Each point makes natural health regeneration 1% faster.",
+  "max": 100,
+  "effects": [
+    {
+      "type": "pipican:bonus",
+      "kind": "natural_regen",
+      "amount": 0.0,
+      "scaling": [
+        {
+          "source": "points",
+          "per": 0.01
+        }
+      ]
+    }
+  ]
 }

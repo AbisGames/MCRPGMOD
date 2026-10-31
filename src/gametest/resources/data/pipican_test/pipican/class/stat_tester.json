@@ -1,0 +1,13 @@
+{
+  "name": "Stat Tester",
+  "description": "Test-only class for stat effects, class stat growth and gear stat requirements.",
+  "selectable": false,
+  "base_stats": {
+    "pipican:intelligence": 10,
+    "pipican:luck": 20,
+    "pipican_test:grip": 0
+  },
+  "stat_growth": {
+    "pipican:intelligence": 2
+  }
+}

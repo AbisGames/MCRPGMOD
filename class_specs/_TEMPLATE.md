@@ -22,6 +22,13 @@ See class_specs/README.md for what each thing does and the list of what is possi
 
 Points the class starts with in each stat. Leave 0 for none.
 
+Optionally add a third column, **Growth**, for how much this class gets out of each point of a stat: "x1.5" means
+every point counts half again (a mage's Intelligence), "x0.5" half. Leave it out (or "x1") for normal.
+
+What a point gives: Vitality +1 max health, Strength +0.1 attack damage, Dexterity +0.2% attack speed, Agility +0.5%
+movement speed, Intelligence +0.5% magic damage, Wisdom +0.5% healing you do, Endurance +1% natural health regen,
+Luck +0.2% critical hit chance.
+
 | Stat         | Points |
 |--------------|--------|
 | Vitality     | 0 |

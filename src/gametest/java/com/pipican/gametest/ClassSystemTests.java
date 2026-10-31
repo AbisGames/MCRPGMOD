@@ -85,6 +85,7 @@ public final class ClassSystemTests {
     private static final ResourceKey<RpgClass> CONDITION_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "condition_tester"));
     private static final ResourceKey<RpgClass> ABILITY_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "ability_tester"));
     private static final ResourceKey<RpgClass> MECHANICS_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "mechanics_tester"));
+    private static final ResourceKey<RpgClass> STAT_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "stat_tester"));
     private static final ResourceKey<RpgClass> BONUS_TESTER = ResourceKey.create(PipicanRegistries.CLASS, Identifier.fromNamespaceAndPath("pipican_test", "bonus_tester"));
     private static final ResourceKey<StatDefinition> MIGHT = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "might"));
     private static final ResourceKey<StatDefinition> FOCUS = ResourceKey.create(PipicanRegistries.STAT, Identifier.fromNamespaceAndPath("pipican_test", "focus"));
@@ -110,6 +111,7 @@ public final class ClassSystemTests {
         TESTS.put("ability_mechanics", ClassSystemTests::abilityMechanics);
         TESTS.put("bonuses", ClassSystemTests::bonuses);
         TESTS.put("class_mechanics", ClassSystemTests::classMechanics);
+        TESTS.put("stat_effects", ClassSystemTests::statEffects);
     }
 
     private ClassSystemTests() {}
@@ -314,6 +316,26 @@ public final class ClassSystemTests {
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
     /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    /** Stats' own effects ("points" scaling), a class's stat_growth, and stat requirements on gear. */
+    private static void statEffects(GameTestHelper helper) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        helper.assertTrue(ClassService.chooseClass(player, STAT_TESTER, false, true).success(), "choose stat tester");
+        ClassState state = ClassEffectApplier.state(player);
+        // Intelligence: +0.5% magic damage per point; 10 points count double for this class.
+        assertNear(helper, 1.1, ClassState.multiplier(state.damageDealt(), helper.getLevel().damageSources().magic()), "magic damage from intelligence");
+        assertNear(helper, 1, ClassState.multiplier(state.damageDealt(), helper.getLevel().damageSources().generic()), "not other damage");
+        // Luck: +0.2% crit chance per point.
+        assertNear(helper, 0.04, state.criticals().stream().mapToDouble(ClassState.Critical::chance).sum(), "crit chance from luck");
+        // Grip 0 of the 5 a stone sword needs: one requirement missed; an iron sword has none.
+        var access = helper.getLevel().registryAccess();
+        helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(Items.STONE_SWORD), state::stat) == 1, "stone sword needs grip");
+        helper.assertTrue(ClassEffectApplier.missedRequirements(access, new ItemStack(Items.IRON_SWORD), state::stat) == 0, "iron sword doesn't");
+        helper.assertTrue(ClassEffectApplier.capped(player, new ItemStack(Items.STONE_SWORD), com.pipican.rpgclass.Affinity.NEUTRAL, k -> 0.0)
+                == com.pipican.rpgclass.Affinity.CLUMSY, "a missed requirement is one tier worse");
+        helper.succeed();
+    }
+
     private static void classMechanics(GameTestHelper helper) {
         @SuppressWarnings("removal")
         ServerPlayer player = helper.makeMockServerPlayerInLevel();

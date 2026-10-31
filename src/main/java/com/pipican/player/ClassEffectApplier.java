@@ -284,7 +284,18 @@ public final class ClassEffectApplier {
         c.stats.forEach((statKey, points) -> {
             StatDefinition stat = ClassLookup.stats(access).getValue(statKey);
             if (stat != null) {
-                stat.perPoint().forEach(b -> c.addAttribute(b.attribute(), b.amount() * points, b.operation()));
+                // stat_growth: a class can get more (or less) out of each point.
+                double grown = points * rpgClass.growth(statKey);
+                stat.perPoint().forEach(b -> c.addAttribute(b.attribute(), b.amount() * grown, b.operation()));
+                if (!stat.effects().isEmpty()) {
+                    c.rank = 1;
+                    c.statPoints = grown;
+                    try {
+                        stat.effects().forEach(e -> e.apply(c));
+                    } finally {
+                        c.statPoints = null;
+                    }
+                }
             }
         });
         for (Map.Entry<ClassEffect, Integer> e : effects) {
@@ -385,8 +396,19 @@ public final class ClassEffectApplier {
      * clumsy (Staff of the Archmagus), weapons other than the favored kind forbidden (One True Weapon).
      */
     public static Affinity capped(ServerPlayer player, ItemStack stack, Affinity affinity, java.util.function.Function<BonusEffect.Kind, Double> bonus) {
+        return capped(player, stack, affinity, bonus, state(player)::stat);
+    }
+
+    /** As above, with the player's stat totals from {@code stats} (while they are being computed). */
+    public static Affinity capped(ServerPlayer player, ItemStack stack, Affinity affinity, java.util.function.Function<BonusEffect.Kind, Double> bonus,
+                                  java.util.function.ToDoubleFunction<ResourceKey<StatDefinition>> stats) {
         if (stack.isEmpty()) {
             return affinity;
+        }
+        // Stat requirements on gear: one tier worse for each one missed.
+        int missed = missedRequirements(player.level().registryAccess(), stack, stats);
+        if (missed > 0) {
+            affinity = Affinity.values()[Math.min(Affinity.FORBIDDEN.ordinal(), affinity.ordinal() + missed)];
         }
         boolean weapon = com.pipican.ability.SpecialItems.isWeapon(stack);
         boolean gear = weapon || stack.has(net.minecraft.core.component.DataComponents.EQUIPPABLE) && !com.pipican.ability.SpecialItems.isStaff(stack);
@@ -409,6 +431,20 @@ public final class ClassEffectApplier {
         return out;
     }
 
+    /** How many stat requirements ({@code gear} in stat JSON) {@code stack} has that the player's {@code stats} don't meet. */
+    public static int missedRequirements(net.minecraft.core.RegistryAccess access, ItemStack stack,
+                                         java.util.function.ToDoubleFunction<ResourceKey<StatDefinition>> stats) {
+        int missed = 0;
+        for (var entry : ClassLookup.stats(access).entrySet()) {
+            for (StatDefinition.GearRequirement req : entry.getValue().gear()) {
+                if (stack.is(req.items()) && stats.applyAsDouble(entry.getKey()) < req.min()) {
+                    missed++;
+                }
+            }
+        }
+        return missed;
+    }
+
     /**
      * Equipment rules. Damage dealt by weapons is handled in the damage event (it needs the actual
      * weapon used); here we handle what can be expressed as attributes.
@@ -417,7 +453,8 @@ public final class ClassEffectApplier {
         // Held item: attack speed.
         ItemStack mainHand = player.getMainHandItem();
         boolean floor = c.bonuses.getOrDefault(BonusEffect.Kind.AFFINITY_FLOOR, 0.0) > 0;
-        Affinity held = capped(player, mainHand, rpgClass.affinities().resolve(mainHand).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0));
+        Affinity held = capped(player, mainHand, rpgClass.affinities().resolve(mainHand).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0),
+                k -> c.stats.getOrDefault(k, 0.0));
         c.addAttribute(Attributes.ATTACK_SPEED, held.tuning().attackSpeed() - 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
         // Armor: scale the armor/toughness each piece gives, and slow the player per bad piece.
@@ -427,7 +464,8 @@ public final class ClassEffectApplier {
             if (stack.isEmpty()) {
                 continue;
             }
-            var tier = capped(player, stack, rpgClass.affinities().resolve(stack).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0)).tuning();
+            var tier = capped(player, stack, rpgClass.affinities().resolve(stack).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0),
+                    k -> c.stats.getOrDefault(k, 0.0)).tuning();
             double[] armor = new double[2];
             stack.forEachModifier(slot, (attribute, modifier) -> {
                 if (modifier.operation() != AttributeModifier.Operation.ADD_VALUE) {
@@ -556,6 +594,9 @@ public final class ClassEffectApplier {
             }
             return self;
         }
+
+        /** While applying a stat's own effects: its points, for the "points" scaling source. */
+        @org.jspecify.annotations.Nullable Double statPoints;
 
         /** While applying another player's aura: their stats drive its scaling. */
         java.util.function.@org.jspecify.annotations.Nullable ToDoubleFunction<String> sourceOverride;
@@ -694,6 +735,10 @@ public final class ClassEffectApplier {
 
         @Override
         public double sourceValue(String source) {
+            // A stat's own effects scale with "points": that stat's points (after class growth).
+            if (statPoints != null && "points".equals(source)) {
+                return statPoints;
+            }
             if (sourceOverride != null) {
                 return sourceOverride.applyAsDouble(source);
             }

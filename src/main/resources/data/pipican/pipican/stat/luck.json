@@ -1,5 +1,17 @@
 {
   "name": "Luck",
-  "description": "Fortune. Will add critical hit chance.",
-  "max": 100
+  "description": "Fortune. Each point adds 0.2% critical hit chance.",
+  "max": 100,
+  "effects": [
+    {
+      "type": "pipican:critical",
+      "chance": 0.0,
+      "chance_scaling": [
+        {
+          "source": "points",
+          "per": 0.002
+        }
+      ]
+    }
+  ]
 }

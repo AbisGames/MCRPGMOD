@@ -45,10 +45,15 @@ def parse(path):
     c['health'] = float(re.match(r'[\d.]+', _field(b, 'Base health')).group())
 
     c['stats'] = {}
+    c['growth'] = {}
     for row in _table(s['2']):
         if len(row) >= 2 and re.match(r'^-?\d+$', row[1]):
             key = 'SPECIAL' if row[0].lower().startswith('special') else row[0].lower()
             c['stats'][key] = int(row[1])
+            # Optional "Growth" column: "x1.5" = the class gets half again out of each point.
+            g = re.fullmatch(r'[x×]?\s*(\d+(?:\.\d+)?)', row[2].strip()) if len(row) >= 3 else None
+            if g and float(g.group(1)) != 1:
+                c['growth'][key] = float(g.group(1))
 
     sp = s['3']
     res_split = re.split(r'^### Resource bar[^\n]*\n', sp, flags=re.M)
