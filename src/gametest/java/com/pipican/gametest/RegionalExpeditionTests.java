@@ -99,17 +99,14 @@ final class RegionalExpeditionTests {
                     }
                 BlockPos node=null;
                 int spawners=0,chests=0,furniture=0;
-                var regionalBlocks=new HashMap<net.minecraft.world.level.block.Block,String>();
-                RegionalOreRegistries.NODES.forEach((name,block)->regionalBlocks.put(block.get(),name));
+                // The region's mine ore is a T1 ore of the tiered catalog; other ores - including ones several regions'
+                // mines share - also spawn naturally in the terrain a structure sits in, so only this region's node counts.
+                var mineBlock=RegionalOreRegistries.NODES.get(ore.id()).get();
                 for(int x=box.minX();x<=box.maxX();x++)for(int z=box.minZ();z<=box.maxZ();z++)
                     for(int y=box.minY();y<=box.maxY();y++){
                         var pos=new BlockPos(x,y,z);
                         var state=level.getBlockState(pos);
-                        String found=regionalBlocks.get(state.getBlock());
-                        if(found!=null){
-                            helper.assertTrue(found.equals(ore.id()),"foreign regional ore in "+id+" at "+pos+": "+found);
-                            if(node==null)node=pos;
-                        }
+                        if(state.is(mineBlock)&&node==null)node=pos;
                         if(state.is(net.minecraft.world.level.block.Blocks.TRIAL_SPAWNER))spawners++;
                         if(state.is(net.minecraft.tags.BlockTags.BEDS)||state.is(net.minecraft.world.level.block.Blocks.CHEST))furniture++;
                         if(state.is(net.minecraft.world.level.block.Blocks.CHEST)

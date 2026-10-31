@@ -177,7 +177,7 @@
     "health": 650,
     "damage": 13,
     "sigil": {
-      "regional_material": "pipican:wintersteel",
+      "regional_material": "pipican:wintersteel_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:pinewall_taiga_boss_core",
       "dungeon_count": 2,
@@ -225,7 +225,7 @@
       "behavior": "A third charge can be feinted, with a distinct howl and longer final recovery."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:wintersteel",
+      "guaranteed_regional_material": "pipican:wintersteel_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:skollvar_winterfang_trophy",
       "planned_trophy_name": "Skollvar Winterfang Trophy",
@@ -263,7 +263,7 @@
     "damage": 14,
     "sigil": {
       "item": "pipican:hrothgar_drowned_jarl_sigil",
-      "regional_material": "pipican:stormsilver",
+      "regional_material": "pipican:stormsilver_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:fjordmark_boss_core",
       "dungeon_count": 2,
@@ -310,7 +310,7 @@
       "behavior": "Phase two shifts the returning oath curve and rotating missing-row gap while chain anchors remain shootable."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:stormsilver",
+      "guaranteed_regional_material": "pipican:stormsilver_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:hrothgar_drowned_jarl_trophy",
       "planned_trophy_name": "Hrothgar Drowned Jarl Trophy",
@@ -433,7 +433,7 @@
     "damage": 15,
     "sigil": {
       "item": "pipican:tengri_champion_sigil",
-      "regional_material": "pipican:skyiron",
+      "regional_material": "pipican:skyiron_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:khagan_steppe_boss_core",
       "dungeon_count": 2,
@@ -480,7 +480,7 @@
       "behavior": "Ride routes change after a banner signal; each banner exposes a flank."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:skyiron",
+      "guaranteed_regional_material": "pipican:skyiron_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:tengri_champion_trophy",
       "planned_trophy_name": "Tengri Champion Trophy",
@@ -689,7 +689,7 @@
     "damage": 13,
     "sigil": {
       "planned_item_id": "pipican:fallen_king_sigil",
-      "regional_material": "pipican:royal_silver",
+      "regional_material": "pipican:royal_silver_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:heartlands_boss_core",
       "dungeon_count": 2,
@@ -737,7 +737,7 @@
       "behavior": "The duel adds a second announced feint; breaking regalia extends the opening."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:royal_silver",
+      "guaranteed_regional_material": "pipican:royal_silver_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:fallen_king_trophy",
       "planned_trophy_name": "Fallen King Trophy",
@@ -775,7 +775,7 @@
     "damage": 17,
     "sigil": {
       "planned_item_id": "pipican:durmagon_runic_titan_sigil",
-      "regional_material": "pipican:runic_iron",
+      "regional_material": "pipican:runic_iron_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:greyspine_mountains_boss_core",
       "dungeon_count": 2,
@@ -823,7 +823,7 @@
       "behavior": "Rune circuits change sequence but reveal every connection before discharge."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:runic_iron",
+      "guaranteed_regional_material": "pipican:runic_iron_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:durmagon_runic_titan_trophy",
       "planned_trophy_name": "Durmagon Runic Titan Trophy",
@@ -1033,7 +1033,7 @@
     "damage": 16,
     "sigil": {
       "planned_item_id": "pipican:aurelios_sunken_emperor_sigil",
-      "regional_material": "pipican:pearlsilver",
+      "regional_material": "pipican:pearlsilver_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:inner_sea_boss_core",
       "dungeon_count": 2,
@@ -1081,7 +1081,7 @@
       "behavior": "Mirror openings alternate with pressure rows; tribute orbs shorten the shield."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:pearlsilver",
+      "guaranteed_regional_material": "pipican:pearlsilver_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:aurelios_sunken_emperor_trophy",
       "planned_trophy_name": "Aurelios Sunken Emperor Trophy",
@@ -1119,7 +1119,7 @@
     "damage": 12,
     "sigil": {
       "item": "pipican:morvath_sigil",
-      "regional_material": "pipican:cinderite",
+      "regional_material": "pipican:cinderite_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:ashlands_boss_core",
       "dungeon_count": 2,
@@ -1166,7 +1166,7 @@
       "behavior": "Cooldown 55 to 35 ticks; movement x1.25; extra meteor marks; eruption 4/80 to 7/120 damage/ticks."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:cinderite",
+      "guaranteed_regional_material": "pipican:cinderite_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:ashen_kings_heart",
       "planned_trophy_name": "Morvath Ashen King Trophy",
@@ -1464,7 +1464,7 @@
     "damage": 14,
     "sigil": {
       "item": "pipican:zahira_crimson_corsair_sigil",
-      "regional_material": "pipican:saffron_gold",
+      "regional_material": "pipican:saffron_gold_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:spice_coast_boss_core",
       "dungeon_count": 2,
@@ -1511,7 +1511,7 @@
       "behavior": "Cannons alternate flanks and bombs retain visible fuses."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:saffron_gold",
+      "guaranteed_regional_material": "pipican:saffron_gold_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:zahira_crimson_corsair_trophy",
       "planned_trophy_name": "Zahira Crimson Corsair Trophy",
@@ -1718,7 +1718,7 @@
     "health": 1100,
     "damage": 18,
     "sigil": {
-      "regional_material": "pipican:dawnbronze",
+      "regional_material": "pipican:dawnbronze_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:goldgrass_savanna_boss_core",
       "dungeon_count": 2,
@@ -1766,7 +1766,7 @@
       "behavior": "Reflected rays alternate with marked stampedes; kneeling creates recovery."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:dawnbronze",
+      "guaranteed_regional_material": "pipican:dawnbronze_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:azhar_golden_behemoth_trophy",
       "planned_trophy_name": "Azhar Golden Behemoth Trophy",
@@ -1804,7 +1804,7 @@
     "damage": 17,
     "sigil": {
       "planned_item_id": "pipican:kragmor_canyon_warlord_sigil",
-      "regional_material": "pipican:redrock_iron",
+      "regional_material": "pipican:redrock_iron_ingot",
       "regional_count": 5,
       "dungeon_material": "pipican:redrock_badlands_boss_core",
       "dungeon_count": 2,
@@ -1852,7 +1852,7 @@
       "behavior": "Rockfalls alternate ledges; broken cairns create longer punish windows."
     },
     "loot": {
-      "guaranteed_regional_material": "pipican:redrock_iron",
+      "guaranteed_regional_material": "pipican:redrock_iron_ingot",
       "regional_count": 8,
       "trophy_item": "pipican:kragmor_canyon_warlord_trophy",
       "planned_trophy_name": "Kragmor Canyon Warlord Trophy",
