@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    " C ",
+    " C "
+  ],
+  "key": {
+    "S": "pipican:sunglass",
+    "C": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "minecraft:spyglass",
+    "count": 1
+  }
+}

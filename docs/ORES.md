@@ -64,11 +64,39 @@ only, and no recipe - it is found, not forged).
 - Textures: shared grayscale icons (wooden handle + tinted head) and three worn-armor weights (light, medium, heavy),
   tinted with the ore's colour.
 
+## Special uses (phase 3)
+
+`tools/ore_builder/specials.py` - what the special-use ores do (Java hooks in `com.pipican.ore.SpecialOreEvents`):
+
+- **Fuel**: Vespene, Energon, Warpstone, Ion Cube, Naquadah, Elerium, Promethium (and their blocks, nine times over).
+- **Brewing**: awkward potion + Frostcrystal (slowness), Tideglass / Abyssal Shard (water breathing), Mooncrystal
+  (night vision), Jade Essence (healing), Lifebloom (regeneration), Skycrystal (slow falling), Mirestone (poison).
+  **Amber** makes any potion long, like redstone; **Mercury** (smelted from Cinnabar) makes it strong, like glowstone.
+- **Use up** (right-click): Eco, Jade Essence, Lifebloom, Mirestone (also cures poison), Skycrystal, Abyssal Shard,
+  Mooncrystal; Lacrima refills 30% of your class resource; Evolution Stone +5 and Mega Stone +10 class levels.
+- **Anvil coatings** (one per item): on weapons - Bloodstone (life steal 15%), Thunderstone (10% lightning),
+  Silversheen (+30% vs undead and spirits), Dragonglass (+50% vs undead and ice creatures, wears the weapon), Kairoseki
+  (+40% vs spellcasters, strips a buff), Dust (burn or slow), Prismatic Shard (burn, slow, 5% lightning), Materia
+  (+15% magic); Kyanite on a helmet (water breathing); Starmetal on armor (+2 special stat per piece); Cortosis on a
+  shield (blocking halves magic damage).
+- **Off-hand focus**: Aquamarine, Khaydarin, Hextech (magic damage and more), Sunglass (day), Night Jade (night).
+- **Blocks**: Sunstone (undead don't target players within 8 blocks), Sekkiseki (no teleporting within 8), Kairoseki
+  (no class abilities within 6), Katchin (unbreakable).
+- **Other**: Kryptonite in your inventory weakens bosses and large creatures within 8 blocks - and you; Octiron points
+  to the nearest T4+ ore within 48 blocks; Energon / Sakuradite heal and empower an iron golem; Verdantite is strong
+  bone meal; recipes: Nitre → gunpowder, Frostcrystal / Dragonglass arrows, Tideglass → glass, Sunglass → spyglass and
+  lanterns, Thunderbasalt → lightning rods, Verdantite → bone meal.
+- **Trade goods**: wandering traders (and one profession each) buy Morkite, Night Jade, Enor Pearl, Saffron Gold,
+  Lotus Opal and Certus Quartz for emeralds.
+
+Left for phase 4 and later: upgrade materials (Titanite, Raritanium, Eridium, Zonaite), world mechanics (Tiberium,
+Warpstone mutation, Quantanium, Element Zero, Dilithium, SAM), Allomancy metals, the limited T8/T9 materials.
+
 ## Phases
 
 1. **Ores, worldgen, materials** — done.
 2. **Armor, tools and weapons, set bonuses** — done.
-3. Special uses (fuel, currency, potion boosts, lightning cores, element ammo, class tokens ...).
+3. **Special uses** — done.
 4. Alloys (Manyullyn, Arcanite, Terrasteel, Daedric, Malatium), Titanite upgrades, world events (meteor craters,
    growing Chlorophyte, spreading Tiberium, unstable Quantanium) and the limited T8/T9 sources.
 5. Mistborn Allomancy.

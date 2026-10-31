@@ -56,6 +56,8 @@ public final class PipicanOres {
     /** Blocks and items by registry path (for code that refers to a specific ore, like the regional mines). */
     private static final Map<String, DeferredBlock<Block>> BLOCKS_BY_PATH = new HashMap<>();
     private static final Map<String, DeferredItem<? extends Item>> ITEMS_BY_PATH = new HashMap<>();
+    /** Each ore's special uses (phase 3; tools/ore_builder/specials.py): brew, consume, coating, block. Empty when none. */
+    private static final Map<String, JsonObject> SPECIAL = new HashMap<>();
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = TABS.register("ores", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.pipican.ores"))
@@ -118,9 +120,15 @@ public final class PipicanOres {
                     : BLOCKS.registerBlock(id, Block::new, props);
             blockItem(ore, id, block, rarity);
         }
+        JsonObject special = json.has("special") ? json.getAsJsonObject("special") : new JsonObject();
+        SPECIAL.put(ore.id(), special);
         for (JsonElement e : json.getAsJsonArray("items")) {
             String id = e.getAsJsonObject().get("id").getAsString();
-            DeferredItem<Item> item = ITEMS.registerSimpleItem(id, () -> itemProps(tier, rarity));
+            // A gem with a "consume" use is used up on right-click (its effects are applied; Java actions in SpecialOreEvents).
+            boolean consumable = special.has("consume") && id.equals(ore.id());
+            DeferredItem<Item> item = ITEMS.registerSimpleItem(id, () -> consumable
+                    ? itemProps(tier, rarity).component(net.minecraft.core.component.DataComponents.CONSUMABLE, consumable(special.getAsJsonObject("consume")))
+                    : itemProps(tier, rarity));
             TAB_ITEMS.add(item);
             ITEMS_BY_PATH.put(id, item);
             BY_PATH.put(id, ore);
@@ -132,9 +140,11 @@ public final class PipicanOres {
             JsonObject storage = e.getAsJsonObject();
             String id = storage.get("id").getAsString();
             boolean raw = storage.get("kind").getAsString().equals("raw");
+            // Katchin: an unbreakable block (fortress walls, boss arenas).
+            boolean unbreakable = !raw && special.has("block") && special.get("block").getAsString().equals("unbreakable");
             DeferredBlock<Block> block = BLOCKS.registerSimpleBlock(id, () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.METAL)
-                    .strength(5.0f, 6.0f + tier)
+                    .strength(unbreakable ? -1.0f : 5.0f, unbreakable ? 3_600_000.0f : 6.0f + tier)
                     .requiresCorrectToolForDrops()
                     .sound(raw ? SoundType.STONE : gem ? SoundType.AMETHYST : SoundType.METAL)
                     .lightLevel(state -> light));
@@ -211,6 +221,28 @@ public final class PipicanOres {
     private static Item.Properties itemProps(int tier, Rarity rarity) {
         Item.Properties props = new Item.Properties().rarity(rarity);
         return tier >= 6 ? props.fireResistant() : props;
+    }
+
+
+    public static JsonObject special(String oreId) {
+        return SPECIAL.getOrDefault(oreId, new JsonObject());
+    }
+
+    private static net.minecraft.world.item.component.Consumable consumable(JsonObject consume) {
+        List<net.minecraft.world.effect.MobEffectInstance> effects = new ArrayList<>();
+        for (JsonElement e : consume.getAsJsonArray("effects")) {
+            JsonObject effect = e.getAsJsonObject();
+            var holder = net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.get(net.minecraft.resources.Identifier.parse(effect.get("effect").getAsString()))
+                    .orElseThrow(() -> new IllegalStateException("unknown effect " + effect));
+            effects.add(new net.minecraft.world.effect.MobEffectInstance(holder, Math.max(1, effect.get("seconds").getAsInt() * 20), effect.get("amplifier").getAsInt()));
+        }
+        var builder = net.minecraft.world.item.component.Consumable.builder().consumeSeconds(0.8f)
+                .animation(net.minecraft.world.item.ItemUseAnimation.BRUSH)
+                .sound(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME)).hasConsumeParticles(false);
+        if (!effects.isEmpty()) {
+            builder.onConsume(new net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect(effects));
+        }
+        return builder.build();
     }
 
     /** One of the ore blocks (an ore, storage or raw block) by registry path: "frostcrystal_ore". */

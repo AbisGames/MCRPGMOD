@@ -311,6 +311,10 @@
       {
         "id": "cinnabar",
         "kind": "gem"
+      },
+      {
+        "id": "mercury",
+        "kind": "extra"
       }
     ],
     "storage": [
@@ -319,7 +323,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "amplifier_item": "mercury"
+    }
   },
   {
     "id": "nitre",
@@ -385,7 +392,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew_extend": true
+    }
   },
   {
     "id": "morkite",
@@ -784,7 +794,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "slowness"
+    }
   },
   {
     "id": "tideglass",
@@ -817,7 +830,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "water_breathing"
+    }
   },
   {
     "id": "sunglass",
@@ -1195,7 +1211,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "sunstone",
@@ -1228,7 +1247,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "block": "sunstone"
+    }
   },
   {
     "id": "aquamarine",
@@ -1632,7 +1654,20 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "night_vision",
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:night_vision",
+            "seconds": 300,
+            "amplifier": 0
+          }
+        ],
+        "action": ""
+      }
+    }
   },
   {
     "id": "jade_essence",
@@ -1665,7 +1700,25 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "healing",
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:instant_health",
+            "seconds": 0,
+            "amplifier": 0
+          },
+          {
+            "effect": "minecraft:regeneration",
+            "seconds": 10,
+            "amplifier": 0
+          }
+        ],
+        "action": ""
+      }
+    }
   },
   {
     "id": "cobalt",
@@ -2403,7 +2456,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "thunderstone",
@@ -2436,7 +2492,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "lacrima",
@@ -2469,7 +2528,13 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "consume": {
+        "effects": [],
+        "action": "refill_resource"
+      }
+    }
   },
   {
     "id": "enor_pearl",
@@ -2823,7 +2888,20 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "poison",
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:regeneration",
+            "seconds": 5,
+            "amplifier": 0
+          }
+        ],
+        "action": "cure_poison"
+      }
+    }
   },
   {
     "id": "skyiron",
@@ -3879,7 +3957,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "helmet"
+    }
   },
   {
     "id": "starmetal",
@@ -3920,7 +4001,10 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "armor"
+    }
   },
   {
     "id": "kairoseki",
@@ -3953,7 +4037,11 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon",
+      "block": "kairoseki"
+    }
   },
   {
     "id": "sekkiseki",
@@ -3986,7 +4074,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "block": "sekkiseki"
+    }
   },
   {
     "id": "dust",
@@ -4019,7 +4110,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "eco",
@@ -4052,7 +4146,34 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:instant_health",
+            "seconds": 0,
+            "amplifier": 0
+          },
+          {
+            "effect": "minecraft:speed",
+            "seconds": 30,
+            "amplifier": 0
+          },
+          {
+            "effect": "minecraft:strength",
+            "seconds": 30,
+            "amplifier": 0
+          },
+          {
+            "effect": "minecraft:haste",
+            "seconds": 30,
+            "amplifier": 0
+          }
+        ],
+        "action": ""
+      }
+    }
   },
   {
     "id": "raritanium",
@@ -4118,7 +4239,13 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "consume": {
+        "effects": [],
+        "action": "class_levels_5"
+      }
+    }
   },
   {
     "id": "chromium",
@@ -5669,7 +5796,10 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "sakuradite",
@@ -5869,7 +5999,25 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "slow_falling",
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:levitation",
+            "seconds": 3,
+            "amplifier": 0
+          },
+          {
+            "effect": "minecraft:slow_falling",
+            "seconds": 20,
+            "amplifier": 0
+          }
+        ],
+        "action": ""
+      }
+    }
   },
   {
     "id": "lifebloom_crystal",
@@ -5902,7 +6050,25 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "regeneration",
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:instant_health",
+            "seconds": 0,
+            "amplifier": 1
+          },
+          {
+            "effect": "minecraft:regeneration",
+            "seconds": 20,
+            "amplifier": 1
+          }
+        ],
+        "action": ""
+      }
+    }
   },
   {
     "id": "abyssal_shard",
@@ -5935,7 +6101,25 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "brew": "water_breathing",
+      "consume": {
+        "effects": [
+          {
+            "effect": "minecraft:water_breathing",
+            "seconds": 300,
+            "amplifier": 0
+          },
+          {
+            "effect": "minecraft:conduit_power",
+            "seconds": 120,
+            "amplifier": 0
+          }
+        ],
+        "action": ""
+      }
+    }
   },
   {
     "id": "soulstone",
@@ -6907,7 +7091,10 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "shield"
+    }
   },
   {
     "id": "element_zero",
@@ -7202,7 +7389,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "adamantine",
@@ -7688,7 +7878,10 @@
         "kind": "raw"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "block": "unbreakable"
+    }
   },
   {
     "id": "sam",
@@ -7782,7 +7975,10 @@
         "kind": "gem"
       }
     ],
-    "spawns": true
+    "spawns": true,
+    "special": {
+      "coating": "weapon"
+    }
   },
   {
     "id": "promethium",
@@ -8882,6 +9078,12 @@
         "id": "mega_stone_block",
         "kind": "gem"
       }
-    ]
+    ],
+    "special": {
+      "consume": {
+        "effects": [],
+        "action": "class_levels_10"
+      }
+    }
   }
 ]

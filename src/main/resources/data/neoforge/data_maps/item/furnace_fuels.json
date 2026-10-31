@@ -1,0 +1,46 @@
+{
+  "values": {
+    "pipican:vespene": {
+      "burn_time": 6400
+    },
+    "pipican:vespene_block": {
+      "burn_time": 57600
+    },
+    "pipican:energon": {
+      "burn_time": 8000
+    },
+    "pipican:energon_block": {
+      "burn_time": 72000
+    },
+    "pipican:warpstone": {
+      "burn_time": 4000
+    },
+    "pipican:warpstone_block": {
+      "burn_time": 36000
+    },
+    "pipican:ion_cube": {
+      "burn_time": 12000
+    },
+    "pipican:ion_cube_block": {
+      "burn_time": 108000
+    },
+    "pipican:naquadah": {
+      "burn_time": 16000
+    },
+    "pipican:naquadah_block": {
+      "burn_time": 144000
+    },
+    "pipican:elerium": {
+      "burn_time": 20000
+    },
+    "pipican:elerium_block": {
+      "burn_time": 180000
+    },
+    "pipican:promethium": {
+      "burn_time": 200000
+    },
+    "pipican:promethium_block": {
+      "burn_time": 1800000
+    }
+  }
+}

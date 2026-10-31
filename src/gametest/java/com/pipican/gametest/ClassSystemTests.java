@@ -114,6 +114,7 @@ public final class ClassSystemTests {
         TESTS.put("stat_effects", ClassSystemTests::statEffects);
         TESTS.put("ores", ClassSystemTests::ores);
         TESTS.put("gear_sets", ClassSystemTests::gearSets);
+        TESTS.put("special_ores", ClassSystemTests::specialOres);
     }
 
     private ClassSystemTests() {}
@@ -319,6 +320,47 @@ public final class ClassSystemTests {
 
     /** pipican:resource changes the bar; pipican:conditional effects switch on and off as conditions flip. */
     /** pipican:execute, pipican:aura, low_health + shrug, start reactions, favored weapon. */
+    /** Phase 3: brewing, fuel, consumables, anvil coatings, special blocks, trades and off-hand focuses. */
+    private static void specialOres(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var access = level.registryAccess();
+        java.util.function.Function<String, net.minecraft.world.item.Item> item = path ->
+                net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Pipican.id(path));
+        java.util.function.Function<net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion>, ItemStack> potion = p ->
+                net.minecraft.world.item.alchemy.PotionContents.createItemStack(Items.POTION, p);
+        var brewing = level.potionBrewing();
+        // Awkward + Frostcrystal = Slowness; Amber lengthens any potion, Mercury strengthens it.
+        ItemStack slow = brewing.mix(new ItemStack(item.apply("frostcrystal")), potion.apply(net.minecraft.world.item.alchemy.Potions.AWKWARD));
+        helper.assertTrue(slow.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS).is(net.minecraft.world.item.alchemy.Potions.SLOWNESS), "frostcrystal brews slowness");
+        ItemStack longSwift = brewing.mix(new ItemStack(item.apply("amber")), potion.apply(net.minecraft.world.item.alchemy.Potions.SWIFTNESS));
+        helper.assertTrue(longSwift.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS).is(net.minecraft.world.item.alchemy.Potions.LONG_SWIFTNESS), "amber lengthens");
+        ItemStack strongHeal = brewing.mix(new ItemStack(item.apply("mercury")), potion.apply(net.minecraft.world.item.alchemy.Potions.HEALING));
+        helper.assertTrue(strongHeal.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS).is(net.minecraft.world.item.alchemy.Potions.STRONG_HEALING), "mercury strengthens");
+        // Fuel, consumables, the unbreakable block.
+        helper.assertTrue(level.fuelValues().burnDuration(new ItemStack(item.apply("vespene"))) == 6400, "vespene burns 6400 ticks");
+        helper.assertTrue(new ItemStack(item.apply("eco")).has(net.minecraft.core.component.DataComponents.CONSUMABLE), "eco can be used up");
+        helper.assertTrue(!new ItemStack(item.apply("morkite")).has(net.minecraft.core.component.DataComponents.CONSUMABLE), "morkite can't");
+        helper.assertTrue(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Pipican.id("katchin_block")).defaultBlockState()
+                .getDestroySpeed(level, BlockPos.ZERO) < 0, "katchin blocks can't be broken");
+        // Anvil coating: an iron sword and a Silversheen ingot make a silver-coated sword; it can't be coated twice.
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        var anvil = new net.neoforged.neoforge.event.AnvilUpdateEvent(new ItemStack(Items.IRON_SWORD), new ItemStack(item.apply("silversheen_ingot")),
+                null, ItemStack.EMPTY, 0, 0, player);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(anvil);
+        helper.assertTrue(com.pipican.ore.SpecialOreEvents.coating(anvil.getOutput()).filter("silversheen"::equals).isPresent(), "silversheen coats a sword");
+        var again = new net.neoforged.neoforge.event.AnvilUpdateEvent(anvil.getOutput(), new ItemStack(item.apply("bloodstone")), null, ItemStack.EMPTY, 0, 0, player);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(again);
+        helper.assertTrue(again.getOutput().isEmpty(), "one coating per item");
+        var helmetOnSword = new net.neoforged.neoforge.event.AnvilUpdateEvent(new ItemStack(Items.IRON_SWORD), new ItemStack(item.apply("kyanite")), null, ItemStack.EMPTY, 0, 0, player);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(helmetOnSword);
+        helper.assertTrue(helmetOnSword.getOutput().isEmpty(), "kyanite only coats helmets");
+        // Trades and off-hand focuses are registered.
+        helper.assertTrue(access.lookupOrThrow(Registries.VILLAGER_TRADE).get(ResourceKey.create(Registries.VILLAGER_TRADE, Pipican.id("trade/morkite_emerald"))).isPresent(), "morkite trade");
+        helper.assertTrue(com.pipican.core.ClassLookup.gearSets(access).containsKey(Pipican.id("focus_aquamarine")), "aquamarine focus");
+        helper.succeed();
+    }
+
     /** Gear sets: tier/style stats, mining levels, traits, recipes, stat requirements and set bonuses. */
     private static void gearSets(GameTestHelper helper) {
         var server = helper.getLevel().getServer();

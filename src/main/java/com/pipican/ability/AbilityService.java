@@ -62,6 +62,9 @@ public final class AbilityService {
         if (!AbilitySlots.granted(access, data).contains(key)) {
             return ClassService.Result.fail(Component.translatable("pipican.ability.not_granted"));
         }
+        if (com.pipican.ore.SpecialOreEvents.suppressesAbilities(player)) {
+            return ClassService.Result.fail(Component.translatable("pipican.ability.suppressed"));
+        }
         Ability ability = ClassLookup.abilities(access).getValue(key);
         if (data.abilityActive().containsKey(key)) {
             if (ability.toggle()) {

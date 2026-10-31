@@ -169,9 +169,25 @@ public final class PipicanClient {
         if (itemId.getNamespace().equals(com.pipican.Pipican.MOD_ID)) {
             com.pipican.ore.PipicanOres.of(itemId.getPath()).ifPresent(ore -> {
                 event.getToolTip().add(Component.translatable("pipican.ore.tier." + ore.tier()).withStyle(net.minecraft.ChatFormatting.GOLD));
-                event.getToolTip().add(Component.translatable("pipican.ore." + ore.id() + ".note").withStyle(net.minecraft.ChatFormatting.GRAY));
+                // An item with its own description (Mercury) uses it; otherwise the ore's.
+                String own = "pipican.ore." + itemId.getPath() + ".note";
+                event.getToolTip().add(Component.translatable(net.minecraft.client.resources.language.I18n.exists(own) ? own : "pipican.ore." + ore.id() + ".note")
+                        .withStyle(net.minecraft.ChatFormatting.GRAY));
+                if (com.pipican.ore.SpecialOreEvents.materialOf(itemId.getPath()).isPresent()) {
+                    for (String use : new String[] {"pipican.coating." + ore.id() + ".slot", "pipican.coating." + ore.id(), "pipican.focus." + ore.id()}) {
+                        if (net.minecraft.client.resources.language.I18n.exists(use)) {
+                            event.getToolTip().add(Component.translatable(use).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+                        }
+                    }
+                }
             });
         }
+        // Coated gear: which ore, and what it does.
+        com.pipican.ore.SpecialOreEvents.coating(event.getItemStack()).ifPresent(ore -> {
+            event.getToolTip().add(Component.translatable("pipican.coating.tooltip",
+                    new net.minecraft.world.item.ItemStack(com.pipican.ore.PipicanOres.material(ore).get()).getHoverName()).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE));
+            event.getToolTip().add(Component.translatable("pipican.coating." + ore).withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+        });
         for (var stat : ClassLookup.stats(event.getEntity().level().registryAccess())) {
             for (var req : stat.gear()) {
                 if (event.getItemStack().is(req.items())) {

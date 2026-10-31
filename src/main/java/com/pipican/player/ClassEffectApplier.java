@@ -255,6 +255,11 @@ public final class ClassEffectApplier {
             c.rank = e.getValue();
             e.getKey().collectStats(c);
         }
+        // Starmetal-coated armor: +2 points of the class's special stat per piece.
+        int starmetal = com.pipican.ore.SpecialOreEvents.coatedPieces(player, "starmetal");
+        if (starmetal > 0) {
+            rpgClass.specialStat().ifPresent(sp -> c.addStat(sp.stat(), 2.0 * starmetal));
+        }
         // Stats that grow with the special stat (Transmuter: "+0.2 to every stat per 10 points").
         double specialPoints = c.sourceValue("special_stat");
         for (Map.Entry<ClassEffect, Integer> e : effects) {

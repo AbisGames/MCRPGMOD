@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/mercury",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3617326
+      }
+    ]
+  }
+}

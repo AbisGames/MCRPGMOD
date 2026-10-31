@@ -1751,5 +1751,9 @@
   "item.pipican.skyiron_spear": "Gök Demiri Mızrağı",
   "item.pipican.skyiron_pickaxe": "Gök Demiri Kazması",
   "item.pipican.skyiron_shovel": "Gök Demiri Küreği",
-  "item.pipican.skyiron_hoe": "Gök Demiri Çapası"
+  "item.pipican.skyiron_hoe": "Gök Demiri Çapası",
+  "item.pipican.mercury": "Cıva",
+  "pipican.coating.tooltip": "Kaplama: %s",
+  "pipican.ore.class_levels": "+%s sınıf seviyesi!",
+  "pipican.ability.suppressed": "Yakındaki Kairoseki yeteneklerini bastırıyor."
 }

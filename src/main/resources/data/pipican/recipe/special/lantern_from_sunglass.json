@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "ITI",
+    "IGI"
+  ],
+  "key": {
+    "I": "minecraft:iron_nugget",
+    "T": "minecraft:torch",
+    "G": "pipican:sunglass"
+  },
+  "result": {
+    "id": "minecraft:lantern",
+    "count": 2
+  }
+}

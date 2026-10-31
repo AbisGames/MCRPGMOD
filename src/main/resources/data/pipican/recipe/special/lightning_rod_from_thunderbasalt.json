@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "C",
+    "T",
+    "C"
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "T": "pipican:thunderbasalt"
+  },
+  "result": {
+    "id": "minecraft:lightning_rod",
+    "count": 3
+  }
+}

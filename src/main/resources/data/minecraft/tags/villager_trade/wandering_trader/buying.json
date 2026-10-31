@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:trade/certus_quartz_emerald",
+    "pipican:trade/enor_pearl_emerald",
+    "pipican:trade/lotus_opal_emerald",
+    "pipican:trade/morkite_emerald",
+    "pipican:trade/night_jade_emerald",
+    "pipican:trade/saffron_gold_ingot_emerald"
+  ]
+}
