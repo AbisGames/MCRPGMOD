@@ -769,7 +769,7 @@
   {
     "id": "durmagon_runic_titan",
     "region": "greyspine_mountains",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1000,
     "damage": 17,
@@ -782,38 +782,39 @@
       "ritual_core": "pipican:ritual_core",
       "catalyst": "minecraft:amethyst_shard",
       "min_y": -64,
-      "max_y": 448
+      "max_y": 448,
+      "item": "pipican:durmagon_runic_titan_sigil"
     },
     "abilities": [
       {
         "id": "rune_circuit",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Rune anchors draw a delayed circuit across the arena.",
         "counterplay": "Occupy an unconnected rune or interrupt the lit junction.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:durmagon_runic_titan/rune_circuit"
+        "animation": "durmagon_runic_titan/rune_circuit"
       },
       {
         "id": "forge_rebounds",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Runic projectiles preview one wall rebound before launch.",
         "counterplay": "Use the rebound preview instead of tracking the first line alone.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:durmagon_runic_titan/forge_rebounds"
+        "animation": "durmagon_runic_titan/forge_rebounds"
       },
       {
         "id": "gravity_stamp",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A polygonal hammer shock leaves safe lit rune pads.",
         "counterplay": "Reach a safe rune pad before the stamp lands.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:durmagon_runic_titan/gravity_stamp"
+        "animation": "durmagon_runic_titan/gravity_stamp"
       }
     ],
     "phase_two": {
@@ -824,7 +825,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:runic_iron",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:durmagon_runic_titan_trophy",
       "planned_trophy_name": "Durmagon Runic Titan Trophy",
       "xp": 250
     },
@@ -832,16 +833,16 @@
       "geometry": "geometry.pipican.durmagon_runic_titan",
       "file": "geo/bosses/durmagon_runic_titan.geo.json",
       "animation_mapping": {
-        "idle": "planned:durmagon_runic_titan/idle",
-        "walk": "planned:durmagon_runic_titan/walk",
-        "basic_attack": "planned:durmagon_runic_titan/basic_attack",
-        "hurt": "planned:durmagon_runic_titan/hurt",
-        "phase_transition": "planned:durmagon_runic_titan/phase_transition",
-        "summoning": "planned:durmagon_runic_titan/summoning",
-        "death": "planned:durmagon_runic_titan/death",
-        "rune_circuit": "planned:durmagon_runic_titan/rune_circuit",
-        "forge_rebounds": "planned:durmagon_runic_titan/forge_rebounds",
-        "gravity_stamp": "planned:durmagon_runic_titan/gravity_stamp"
+        "idle": "durmagon_runic_titan/idle",
+        "walk": "durmagon_runic_titan/walk",
+        "basic_attack": "durmagon_runic_titan/basic_attack",
+        "hurt": "durmagon_runic_titan/hurt",
+        "phase_transition": "durmagon_runic_titan/phase_transition",
+        "summoning": "durmagon_runic_titan/summoning",
+        "death": "durmagon_runic_titan/death",
+        "rune_circuit": "durmagon_runic_titan/rune_circuit",
+        "forge_rebounds": "durmagon_runic_titan/forge_rebounds",
+        "gravity_stamp": "durmagon_runic_titan/gravity_stamp"
       }
     },
     "arena": {

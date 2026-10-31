@@ -142,5 +142,11 @@
     "boss": "thalassor_deep_tyrant",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:durmagon_runic_titan_sigil",
+    "boss": "durmagon_runic_titan",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

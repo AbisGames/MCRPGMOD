@@ -109,6 +109,10 @@ public final class BossRegistries {
         "thalassor_deep_tyrant",()->EntityType.Builder.<ThalassorEntity>of(ThalassorEntity::new,MobCategory.MONSTER)
             .sized(2.9f,3.8f).clientTrackingRange(16).updateInterval(1)
             .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("thalassor_deep_tyrant"))));
+    public static final DeferredHolder<EntityType<?>,EntityType<DurmagonEntity>> DURMAGON=ENTITIES.register(
+        "durmagon_runic_titan",()->EntityType.Builder.<DurmagonEntity>of(DurmagonEntity::new,MobCategory.MONSTER)
+            .sized(2.7f,3.6f).clientTrackingRange(16).updateInterval(1)
+            .build(ResourceKey.create(Registries.ENTITY_TYPE,Pipican.id("durmagon_runic_titan"))));
     private BossRegistries(){}
     public static void register(IEventBus bus){ ENTITIES.register(bus); bus.addListener(BossRegistries::attributes); }
     private static void attributes(EntityAttributeCreationEvent event){
@@ -136,5 +140,6 @@ public final class BossRegistries {
         event.put(VALTHOR.get(),ValthorEntity.attributes().build());
         event.put(TENGRI.get(),TengriEntity.attributes().build());
         event.put(THALASSOR.get(),ThalassorEntity.attributes().build());
+        event.put(DURMAGON.get(),DurmagonEntity.attributes().build());
     }
 }

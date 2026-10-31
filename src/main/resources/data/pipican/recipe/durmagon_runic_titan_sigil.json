@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "RRR",
+    "RCR",
+    "KCP"
+  ],
+  "key": {
+    "R": "pipican:runic_iron",
+    "C": "pipican:greyspine_mountains_boss_core",
+    "K": "pipican:ritual_core",
+    "P": "minecraft:amethyst_shard"
+  },
+  "result": {
+    "id": "pipican:durmagon_runic_titan_sigil",
+    "count": 1
+  }
+}

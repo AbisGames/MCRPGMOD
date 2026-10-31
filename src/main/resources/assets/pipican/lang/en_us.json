@@ -310,7 +310,7 @@
   "ritual.pipican.wrong_biome": "This sigil requires an Ashlands altar at a valid height.",
   "ritual.pipican.failed": "Ritual rejected: %s",
   "ritual.pipican.summoned": "The Ashen King awakens.",
-  "ritual.pipican.instructions": "Prepare a solid 13×13 floor and 11×11×5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
+  "ritual.pipican.instructions": "Prepare a solid 13Ã—13 floor and 11Ã—11Ã—5 clearance, centered six blocks north. Sneak-use with an empty hand to cancel your encounter.",
   "ritual.pipican.cancelled": "Encounter cancelled. No rewards are granted.",
   "ritual.pipican.result.invalid_player": "Stand near the altar while alive to summon.",
   "ritual.pipican.result.invalid_height": "Leave at least five blocks below the world ceiling.",
@@ -353,7 +353,7 @@
   "item.pipican.frostbound_colossus_sigil": "Frostbound Sigil",
   "item.pipican.frostbound_colossus_trophy": "Frostbound Colossus Trophy",
   "item.pipican.skollvar_winterfang_sigil": "Winterfang Sigil",
-  "item.pipican.skollvar_winterfang_trophy": "Sköllvar Trophy",
+  "item.pipican.skollvar_winterfang_trophy": "SkÃ¶llvar Trophy",
   "item.pipican.eldaroth_treant_sigil": "Eldaroth Sigil",
   "item.pipican.eldaroth_treant_trophy": "Ancient Treant Trophy",
   "item.pipican.fallen_king_sigil": "Fallen King Sigil",
@@ -415,5 +415,8 @@
   "entity.pipican.tengri_champion": "Tengri, Champion of the Steppe",
   "item.pipican.thalassor_deep_tyrant_sigil": "Thalassor's Abyssal Seal",
   "item.pipican.thalassor_deep_tyrant_trophy": "Abyssal Tyrant's Trident",
-  "entity.pipican.thalassor_deep_tyrant": "Thalassor, Deep Tyrant"
+  "entity.pipican.thalassor_deep_tyrant": "Thalassor, Deep Tyrant",
+  "item.pipican.durmagon_runic_titan_sigil": "Durmagon's Runic Seal",
+  "item.pipican.durmagon_runic_titan_trophy": "Runic Titan's Core",
+  "entity.pipican.durmagon_runic_titan": "Durmagon, Runic Titan"
 }

@@ -58,6 +58,8 @@ public final class BossContent {
     public static final DeferredItem<Item> TENGRI_TROPHY=ITEMS.registerSimpleItem("tengri_champion_trophy");
     public static final DeferredItem<Item> THALASSOR_SIGIL=ITEMS.registerSimpleItem("thalassor_deep_tyrant_sigil");
     public static final DeferredItem<Item> THALASSOR_TROPHY=ITEMS.registerSimpleItem("thalassor_deep_tyrant_trophy");
+    public static final DeferredItem<Item> DURMAGON_SIGIL=ITEMS.registerSimpleItem("durmagon_runic_titan_sigil");
+    public static final DeferredItem<Item> DURMAGON_TROPHY=ITEMS.registerSimpleItem("durmagon_runic_titan_trophy");
     public static final DeferredItem<Item> HEART=ITEMS.registerSimpleItem("ashen_kings_heart",p->p.fireResistant());
     public static final DeferredItem<Item> INFERNIUM=ITEMS.registerSimpleItem("infernium",p->p.fireResistant());
     static { ITEMS.registerSimpleBlockItem(ALTAR); }
