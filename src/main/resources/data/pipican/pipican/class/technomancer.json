@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:technomancer_circuitry": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.85,
+    "pipican:dexterity": 1.15,
+    "pipican:intelligence": 1.25,
+    "pipican:wisdom": 1.15,
+    "pipican:endurance": 0.75,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:technomancer_circuitry",
     "resource": {

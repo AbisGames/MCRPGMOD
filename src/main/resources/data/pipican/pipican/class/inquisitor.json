@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:inquisitor_scrutiny": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:agility": 0.95,
+    "pipican:intelligence": 1.05,
+    "pipican:wisdom": 1.05,
+    "pipican:endurance": 0.95,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:inquisitor_scrutiny",
     "resource": {

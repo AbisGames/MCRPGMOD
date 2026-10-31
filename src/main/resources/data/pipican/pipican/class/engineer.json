@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:engineer_engineering": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.1,
+    "pipican:strength": 0.9,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 0.9,
+    "pipican:intelligence": 1.25,
+    "pipican:luck": 0.75
+  },
   "special_stat": {
     "stat": "pipican:engineer_engineering",
     "resource": {

@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:theurge_piety": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:agility": 0.85,
+    "pipican:intelligence": 1.15,
+    "pipican:wisdom": 1.35,
+    "pipican:endurance": 0.65,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:theurge_piety",
     "resource": {

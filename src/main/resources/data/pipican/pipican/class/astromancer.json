@@ -15,6 +15,14 @@
     "pipican:luck": 2,
     "pipican:astromancer_radiance": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:strength": 0.75,
+    "pipican:agility": 0.85,
+    "pipican:intelligence": 1.25,
+    "pipican:wisdom": 1.15,
+    "pipican:endurance": 0.85
+  },
   "special_stat": {
     "stat": "pipican:astromancer_radiance",
     "resource": {

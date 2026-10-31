@@ -15,6 +15,14 @@
     "pipican:luck": 2,
     "pipican:pyromancer_inferno": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 0.75,
+    "pipican:strength": 0.85,
+    "pipican:intelligence": 1.25,
+    "pipican:wisdom": 1.15,
+    "pipican:endurance": 0.85,
+    "pipican:luck": 1.15
+  },
   "special_stat": {
     "stat": "pipican:pyromancer_inferno",
     "resource": {

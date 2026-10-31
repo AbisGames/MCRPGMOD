@@ -13,6 +13,14 @@
     "pipican:luck": 1,
     "pipican:berserker_fury": 8
   },
+  "stat_growth": {
+    "pipican:vitality": 1.2,
+    "pipican:strength": 1.35,
+    "pipican:intelligence": 0.8,
+    "pipican:wisdom": 0.65,
+    "pipican:endurance": 1.2,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:berserker_fury",
     "resource": {

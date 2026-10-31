@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:traveler_displacement": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.8,
+    "pipican:dexterity": 0.9,
+    "pipican:agility": 1.1,
+    "pipican:intelligence": 1.2,
+    "pipican:wisdom": 1.1,
+    "pipican:endurance": 0.9
+  },
   "special_stat": {
     "stat": "pipican:traveler_displacement",
     "resource": {

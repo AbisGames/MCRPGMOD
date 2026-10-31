@@ -14,6 +14,14 @@
     "pipican:luck": 1,
     "pipican:defender_bulwark": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.45,
+    "pipican:strength": 1.2,
+    "pipican:agility": 0.55,
+    "pipican:intelligence": 0.8,
+    "pipican:endurance": 1.2,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:defender_bulwark",
     "resource": {

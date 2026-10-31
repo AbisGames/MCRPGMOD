@@ -14,6 +14,14 @@
     "pipican:endurance": 2,
     "pipican:ranger_instinct": 8
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:dexterity": 1.3,
+    "pipican:agility": 1.15,
+    "pipican:intelligence": 0.85,
+    "pipican:endurance": 0.85,
+    "pipican:luck": 0.7
+  },
   "special_stat": {
     "stat": "pipican:ranger_instinct",
     "resource": {

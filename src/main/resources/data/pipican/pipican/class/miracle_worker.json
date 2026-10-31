@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:miracle_worker_devotion": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.35,
+    "pipican:dexterity": 0.85,
+    "pipican:agility": 0.85,
+    "pipican:wisdom": 1.15,
+    "pipican:endurance": 1.15,
+    "pipican:luck": 0.65
+  },
   "special_stat": {
     "stat": "pipican:miracle_worker_devotion",
     "resource": {

@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:explorer_wayfinding": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.1,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 1.25,
+    "pipican:intelligence": 0.75,
+    "pipican:endurance": 0.9,
+    "pipican:luck": 0.9
+  },
   "special_stat": {
     "stat": "pipican:explorer_wayfinding",
     "resource": {

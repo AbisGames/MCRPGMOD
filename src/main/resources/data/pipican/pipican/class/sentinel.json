@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:sentinel_vigilance": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.25,
+    "pipican:strength": 1.15,
+    "pipican:dexterity": 1.15,
+    "pipican:agility": 0.75,
+    "pipican:intelligence": 0.85,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:sentinel_vigilance",
     "resource": {

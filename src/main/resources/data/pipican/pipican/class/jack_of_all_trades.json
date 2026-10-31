@@ -15,6 +15,14 @@
     "pipican:luck": 2,
     "pipican:jack_of_all_trades_aptitude": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.05,
+    "pipican:agility": 1.1,
+    "pipican:intelligence": 0.95,
+    "pipican:wisdom": 0.95,
+    "pipican:endurance": 0.9,
+    "pipican:luck": 1.05
+  },
   "special_stat": {
     "stat": "pipican:jack_of_all_trades_aptitude",
     "resource": {

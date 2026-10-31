@@ -14,6 +14,14 @@
     "pipican:endurance": 2,
     "pipican:spellbinder_binding": 8
   },
+  "stat_growth": {
+    "pipican:vitality": 1.05,
+    "pipican:strength": 1.05,
+    "pipican:intelligence": 1.15,
+    "pipican:wisdom": 0.95,
+    "pipican:endurance": 0.95,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:spellbinder_binding",
     "resource": {

@@ -15,6 +15,14 @@
     "pipican:luck": 3,
     "pipican:infiltrator_subtlety": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 0.9,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 1.25,
+    "pipican:intelligence": 1.1,
+    "pipican:wisdom": 0.9,
+    "pipican:endurance": 0.75
+  },
   "special_stat": {
     "stat": "pipican:infiltrator_subtlety",
     "resource": {

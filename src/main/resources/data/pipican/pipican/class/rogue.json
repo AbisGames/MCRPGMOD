@@ -13,6 +13,14 @@
     "pipican:luck": 1,
     "pipican:rogue_cunning": 5
   },
+  "stat_growth": {
+    "pipican:vitality": 0.65,
+    "pipican:dexterity": 1.15,
+    "pipican:agility": 1.35,
+    "pipican:wisdom": 0.85,
+    "pipican:endurance": 0.85,
+    "pipican:luck": 1.15
+  },
   "special_stat": {
     "stat": "pipican:rogue_cunning",
     "resource": {

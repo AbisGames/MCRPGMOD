@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:aeromancer_gale": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.9,
+    "pipican:agility": 1.1,
+    "pipican:intelligence": 1.2,
+    "pipican:wisdom": 1.1,
+    "pipican:endurance": 0.8,
+    "pipican:luck": 0.9
+  },
   "special_stat": {
     "stat": "pipican:aeromancer_gale",
     "resource": {

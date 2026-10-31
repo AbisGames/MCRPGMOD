@@ -13,6 +13,14 @@
     "pipican:luck": 1,
     "pipican:dervish_rhythm": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:dexterity": 1.3,
+    "pipican:agility": 1.15,
+    "pipican:intelligence": 0.85,
+    "pipican:wisdom": 0.7,
+    "pipican:endurance": 0.85
+  },
   "special_stat": {
     "stat": "pipican:dervish_rhythm",
     "resource": {

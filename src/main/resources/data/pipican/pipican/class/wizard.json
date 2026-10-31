@@ -14,6 +14,14 @@
     "pipican:luck": 1,
     "pipican:wizard_lore": 8
   },
+  "stat_growth": {
+    "pipican:strength": 0.6,
+    "pipican:dexterity": 1.2,
+    "pipican:agility": 0.8,
+    "pipican:intelligence": 1.4,
+    "pipican:wisdom": 1.2,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:wizard_lore",
     "resource": {

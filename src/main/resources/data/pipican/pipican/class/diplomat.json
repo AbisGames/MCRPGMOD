@@ -15,6 +15,14 @@
     "pipican:luck": 2,
     "pipican:diplomat_rapport": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.1,
+    "pipican:strength": 0.75,
+    "pipican:dexterity": 0.9,
+    "pipican:intelligence": 1.25,
+    "pipican:wisdom": 1.1,
+    "pipican:endurance": 0.9
+  },
   "special_stat": {
     "stat": "pipican:diplomat_rapport",
     "resource": {

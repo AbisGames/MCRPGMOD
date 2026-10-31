@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:woodwose_verdure": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:strength": 0.7,
+    "pipican:agility": 1.15,
+    "pipican:intelligence": 0.85,
+    "pipican:wisdom": 1.3,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:woodwose_verdure",
     "resource": {

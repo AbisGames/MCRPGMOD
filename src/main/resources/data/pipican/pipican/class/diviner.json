@@ -14,6 +14,14 @@
     "pipican:luck": 4,
     "pipican:diviner_foresight": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.75,
+    "pipican:agility": 0.85,
+    "pipican:intelligence": 1.15,
+    "pipican:wisdom": 1.25,
+    "pipican:endurance": 0.85,
+    "pipican:luck": 1.15
+  },
   "special_stat": {
     "stat": "pipican:diviner_foresight",
     "resource": {

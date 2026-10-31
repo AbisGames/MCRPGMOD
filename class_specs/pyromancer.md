@@ -13,17 +13,17 @@
 
 ## 2. Starting stats
 
-| Stat         | Points |
-|--------------|--------|
-| Vitality     | 3 |
-| Strength     | 1 |
-| Dexterity    | 2 |
-| Agility      | 2 |
-| Intelligence | 8 |
-| Wisdom       | 6 |
-| Endurance    | 2 |
-| Luck         | 2 |
-| Special stat (section 3) | 10 |
+| Stat         | Points | Growth |
+|--------------|--------|--------|
+| Vitality     | 3 | x0.75 |
+| Strength     | 1 | x0.85 |
+| Dexterity    | 2 | x1 |
+| Agility      | 2 | x1 |
+| Intelligence | 8 | x1.25 |
+| Wisdom       | 6 | x1.15 |
+| Endurance    | 2 | x0.85 |
+| Luck         | 2 | x1.15 |
+| Special stat (section 3) | 10 | |
 
 ## 3. Special stat
 

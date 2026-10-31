@@ -14,6 +14,14 @@
     "pipican:luck": 1,
     "pipican:gunslinger_trigger_finger": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.15,
+    "pipican:strength": 0.65,
+    "pipican:dexterity": 1.35,
+    "pipican:agility": 1.15,
+    "pipican:wisdom": 0.85,
+    "pipican:endurance": 0.85
+  },
   "special_stat": {
     "stat": "pipican:gunslinger_trigger_finger",
     "resource": {

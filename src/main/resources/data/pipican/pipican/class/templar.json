@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:templar_sanctum": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.3,
+    "pipican:strength": 1.15,
+    "pipican:dexterity": 0.85,
+    "pipican:intelligence": 0.85,
+    "pipican:wisdom": 1.15,
+    "pipican:luck": 0.7
+  },
   "special_stat": {
     "stat": "pipican:templar_sanctum",
     "resource": {

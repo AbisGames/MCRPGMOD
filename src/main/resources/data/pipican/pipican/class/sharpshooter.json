@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:sharpshooter_precision": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.2,
+    "pipican:strength": 0.65,
+    "pipican:dexterity": 1.35,
+    "pipican:agility": 1.2,
+    "pipican:wisdom": 0.8,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:sharpshooter_precision",
     "resource": {

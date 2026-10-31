@@ -13,6 +13,14 @@
     "pipican:luck": 1,
     "pipican:magician_power": 5
   },
+  "stat_growth": {
+    "pipican:vitality": 0.75,
+    "pipican:strength": 0.55,
+    "pipican:agility": 1.25,
+    "pipican:intelligence": 1.45,
+    "pipican:wisdom": 1.25,
+    "pipican:endurance": 0.75
+  },
   "special_stat": {
     "stat": "pipican:magician_power",
     "resource": {

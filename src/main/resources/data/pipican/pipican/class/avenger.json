@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:avenger_vengeance": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.2,
+    "pipican:strength": 1.1,
+    "pipican:intelligence": 0.9,
+    "pipican:wisdom": 0.9,
+    "pipican:endurance": 1.1,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:avenger_vengeance",
     "resource": {

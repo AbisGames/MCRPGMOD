@@ -14,6 +14,14 @@
     "pipican:luck": 1,
     "pipican:myrmidon_shieldcraft": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.35,
+    "pipican:strength": 1.2,
+    "pipican:intelligence": 0.65,
+    "pipican:wisdom": 0.8,
+    "pipican:endurance": 1.2,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:myrmidon_shieldcraft",
     "resource": {

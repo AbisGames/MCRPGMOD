@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:executioner_severance": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.1,
+    "pipican:strength": 1.2,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 0.9,
+    "pipican:intelligence": 0.9,
+    "pipican:wisdom": 0.8
+  },
   "special_stat": {
     "stat": "pipican:executioner_severance",
     "resource": {

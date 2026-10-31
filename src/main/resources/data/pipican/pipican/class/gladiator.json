@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:gladiator_showmanship": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.25,
+    "pipican:strength": 1.1,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 0.9,
+    "pipican:intelligence": 0.9,
+    "pipican:wisdom": 0.75
+  },
   "special_stat": {
     "stat": "pipican:gladiator_showmanship",
     "resource": {

@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:poisoner_toxicity": 10
   },
+  "stat_growth": {
+    "pipican:dexterity": 1.2,
+    "pipican:agility": 1.1,
+    "pipican:intelligence": 1.1,
+    "pipican:wisdom": 0.9,
+    "pipican:endurance": 0.8,
+    "pipican:luck": 0.9
+  },
   "special_stat": {
     "stat": "pipican:poisoner_toxicity",
     "resource": {

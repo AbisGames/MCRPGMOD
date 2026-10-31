@@ -15,6 +15,14 @@
     "pipican:luck": 2,
     "pipican:cavalier_horsemanship": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.25,
+    "pipican:strength": 1.15,
+    "pipican:agility": 0.85,
+    "pipican:intelligence": 0.75,
+    "pipican:endurance": 1.15,
+    "pipican:luck": 0.85
+  },
   "special_stat": {
     "stat": "pipican:cavalier_horsemanship",
     "resource": {

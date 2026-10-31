@@ -14,6 +14,14 @@
     "pipican:luck": 1,
     "pipican:witch_craft": 8
   },
+  "stat_growth": {
+    "pipican:vitality": 0.85,
+    "pipican:strength": 0.7,
+    "pipican:intelligence": 1.15,
+    "pipican:wisdom": 1.3,
+    "pipican:endurance": 0.85,
+    "pipican:luck": 1.15
+  },
   "special_stat": {
     "stat": "pipican:witch_craft",
     "resource": {

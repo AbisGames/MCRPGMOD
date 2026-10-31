@@ -12,6 +12,14 @@
     "pipican:endurance": 3,
     "pipican:warrior_grit": 5
   },
+  "stat_growth": {
+    "pipican:vitality": 1.2,
+    "pipican:strength": 1.45,
+    "pipican:intelligence": 0.8,
+    "pipican:wisdom": 0.55,
+    "pipican:endurance": 1.2,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:warrior_grit",
     "resource": {

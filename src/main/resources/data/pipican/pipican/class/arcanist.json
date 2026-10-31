@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:arcanist_arcana": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.6,
+    "pipican:agility": 0.8,
+    "pipican:intelligence": 1.4,
+    "pipican:wisdom": 1.2,
+    "pipican:endurance": 0.8,
+    "pipican:luck": 1.2
+  },
   "special_stat": {
     "stat": "pipican:arcanist_arcana",
     "resource": {

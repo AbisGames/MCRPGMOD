@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:oracle_communion": 8
   },
+  "stat_growth": {
+    "pipican:vitality": 1.1,
+    "pipican:strength": 0.9,
+    "pipican:dexterity": 0.9,
+    "pipican:intelligence": 1.1,
+    "pipican:wisdom": 1.2,
+    "pipican:luck": 0.8
+  },
   "special_stat": {
     "stat": "pipican:oracle_communion",
     "resource": {

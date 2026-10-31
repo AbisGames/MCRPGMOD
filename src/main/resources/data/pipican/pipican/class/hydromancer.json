@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:hydromancer_tide": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.9,
+    "pipican:agility": 1.25,
+    "pipican:intelligence": 1.1,
+    "pipican:wisdom": 1.1,
+    "pipican:endurance": 0.75,
+    "pipican:luck": 0.9
+  },
   "special_stat": {
     "stat": "pipican:hydromancer_tide",
     "resource": {

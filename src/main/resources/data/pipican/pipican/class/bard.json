@@ -15,6 +15,14 @@
     "pipican:luck": 3,
     "pipican:bard_resonance": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 0.85,
+    "pipican:strength": 0.85,
+    "pipican:agility": 1.15,
+    "pipican:intelligence": 1.15,
+    "pipican:wisdom": 1.25,
+    "pipican:endurance": 0.75
+  },
   "special_stat": {
     "stat": "pipican:bard_resonance",
     "resource": {

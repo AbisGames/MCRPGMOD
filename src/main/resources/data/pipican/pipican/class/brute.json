@@ -13,6 +13,14 @@
     "pipican:luck": 1,
     "pipican:brute_brawn": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.5,
+    "pipican:strength": 1.25,
+    "pipican:dexterity": 0.75,
+    "pipican:agility": 0.5,
+    "pipican:wisdom": 0.75,
+    "pipican:endurance": 1.25
+  },
   "special_stat": {
     "stat": "pipican:brute_brawn",
     "resource": {

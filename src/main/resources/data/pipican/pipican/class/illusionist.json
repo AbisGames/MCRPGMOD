@@ -14,6 +14,14 @@
     "pipican:luck": 2,
     "pipican:illusionist_phantasm": 10
   },
+  "stat_growth": {
+    "pipican:strength": 0.75,
+    "pipican:agility": 0.9,
+    "pipican:intelligence": 1.25,
+    "pipican:wisdom": 1.1,
+    "pipican:endurance": 0.9,
+    "pipican:luck": 1.1
+  },
   "special_stat": {
     "stat": "pipican:illusionist_phantasm",
     "resource": {

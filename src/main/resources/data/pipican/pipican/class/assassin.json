@@ -14,6 +14,14 @@
     "pipican:luck": 3,
     "pipican:assassin_lethality": 8
   },
+  "stat_growth": {
+    "pipican:vitality": 0.9,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 1.25,
+    "pipican:intelligence": 0.9,
+    "pipican:wisdom": 0.75,
+    "pipican:luck": 1.1
+  },
   "special_stat": {
     "stat": "pipican:assassin_lethality",
     "resource": {

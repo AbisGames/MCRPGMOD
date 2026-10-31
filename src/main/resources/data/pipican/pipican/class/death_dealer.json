@@ -13,6 +13,14 @@
     "pipican:luck": 2,
     "pipican:death_dealer_carnage": 10
   },
+  "stat_growth": {
+    "pipican:vitality": 1.2,
+    "pipican:strength": 1.45,
+    "pipican:dexterity": 0.8,
+    "pipican:agility": 0.55,
+    "pipican:wisdom": 0.8,
+    "pipican:endurance": 1.2
+  },
   "special_stat": {
     "stat": "pipican:death_dealer_carnage",
     "resource": {

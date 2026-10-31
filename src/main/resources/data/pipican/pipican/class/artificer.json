@@ -15,6 +15,14 @@
     "pipican:luck": 1,
     "pipican:artificer_ingenuity": 8
   },
+  "stat_growth": {
+    "pipican:strength": 0.9,
+    "pipican:dexterity": 1.1,
+    "pipican:agility": 0.9,
+    "pipican:intelligence": 1.2,
+    "pipican:wisdom": 0.8,
+    "pipican:endurance": 1.1
+  },
   "special_stat": {
     "stat": "pipican:artificer_ingenuity",
     "resource": {
