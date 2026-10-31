@@ -136,5 +136,11 @@
     "boss": "tengri_champion",
     "min_y": -64,
     "max_y": 448
+  },
+  {
+    "item": "pipican:thalassor_deep_tyrant_sigil",
+    "boss": "thalassor_deep_tyrant",
+    "min_y": -64,
+    "max_y": 448
   }
 ]

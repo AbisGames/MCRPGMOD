@@ -11,7 +11,7 @@ def validate(path):
         assert not any(n.startswith(('com/pipican/gametest/','data/pipican_test/')) for n in names),'Test content shipped'
         for name,digest in expected.items():
             assert hashlib.sha256(jar.read('assets/pipican/geo/bosses/'+name).replace(b'\r\n',b'\n')).hexdigest()==digest,name
-        for name in ['RegionalBossEntity','MorvathCombat','FrostboundEntity','FrostboundCombat','SkollvarEntity','SkollvarCombat','EldarothEntity','EldarothCombat','FallenKingEntity','FallenKingCombat','KragmorEntity','KragmorCombat','NoctharEntity','NoctharCombat','AetherionEntity','AetherionCombat','VermillionEntity','VermillionCombat','LongweiEntity','LongweiCombat','MorgathaEntity','MorgathaCombat','AureliosEntity','AureliosCombat','LianhuaEntity','LianhuaCombat','AkhmarEntity','AkhmarCombat','RitualAltarBlock','RitualSigils','BossContent','XaltekEntity','XaltekCombat','CorallithEntity','CorallithCombat','AzharEntity','AzharCombat','NhalkorrEntity','NhalkorrCombat','HrothgarEntity','HrothgarCombat','ValthorEntity','ValthorCombat','TengriEntity','TengriCombat']:
+        for name in ['RegionalBossEntity','MorvathCombat','FrostboundEntity','FrostboundCombat','SkollvarEntity','SkollvarCombat','EldarothEntity','EldarothCombat','FallenKingEntity','FallenKingCombat','KragmorEntity','KragmorCombat','NoctharEntity','NoctharCombat','AetherionEntity','AetherionCombat','VermillionEntity','VermillionCombat','LongweiEntity','LongweiCombat','MorgathaEntity','MorgathaCombat','AureliosEntity','AureliosCombat','LianhuaEntity','LianhuaCombat','AkhmarEntity','AkhmarCombat','RitualAltarBlock','RitualSigils','BossContent','XaltekEntity','XaltekCombat','CorallithEntity','CorallithCombat','AzharEntity','AzharCombat','NhalkorrEntity','NhalkorrCombat','HrothgarEntity','HrothgarCombat','ValthorEntity','ValthorCombat','TengriEntity','TengriCombat','ThalassorEntity','ThalassorCombat']:
             assert 'com/pipican/boss/'+name+'.class' in names,name
         for phase in ['armored','enraged']:
             for suffix in ['', '_glow']:
@@ -36,7 +36,7 @@ def validate(path):
         assert 'assets/pipican/textures/block/ritual_altar.png' in names
         if 'com/pipican/boss/BossDesigns.class' in names:
             designs=json.loads(jar.read('assets/pipican/geo/bosses/combat_designs.json'))
-            assert len(designs)==27 and sum(design['functional'] for design in designs)==23
+            assert len(designs)==27 and sum(design['functional'] for design in designs)==24
             assert 'com/pipican/boss/FrostboundEntity.class' in names
             assert 'com/pipican/boss/SkollvarEntity.class' in names
             assert 'com/pipican/boss/EldarothEntity.class' in names
@@ -63,6 +63,20 @@ def validate(path):
             assert 'com/pipican/boss/AkhmarCombat.class' in names
             assert 'com/pipican/client/boss/AkhmarRenderer.class' in names
             assert 'com/pipican/boss/NetharisEntity.class' in names
+            thalassor=next(design for design in designs if design['id']=='thalassor_deep_tyrant')
+            assert thalassor['functional'] and thalassor['sigil']['item']=='pipican:thalassor_deep_tyrant_sigil'
+            assert thalassor['loot']['trophy_item']=='pipican:thalassor_deep_tyrant_trophy'
+            assert all(ability['implementation']=='functional' for ability in thalassor['abilities'])
+            for item in ['sigil','trophy']:
+                assert f'assets/pipican/models/item/thalassor_deep_tyrant_{item}.json' in names
+                data=jar.read(f'assets/pipican/textures/item/thalassor_deep_tyrant_{item}.png')
+                assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
+            recipe=json.loads(jar.read('data/pipican/recipe/thalassor_deep_tyrant_sigil.json'))
+            counts=Counter(recipe['key'][symbol] for row in recipe['pattern'] for symbol in row)
+            assert counts=={'pipican:tideglass':5,'pipican:western_ocean_boss_core':2,'pipican:ritual_core':1,'minecraft:prismarine_shard':1},counts
+            for phase in ['deep_tyrant','abyssal']:
+                data=jar.read(f'assets/pipican/textures/entity/boss/thalassor_{phase}.png')
+                assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256
             tengri=next(design for design in designs if design['id']=='tengri_champion')
             assert tengri['functional'] and tengri['sigil']['item']=='pipican:tengri_champion_sigil'
             assert tengri['loot']['trophy_item']=='pipican:tengri_champion_trophy'
@@ -104,6 +118,7 @@ def validate(path):
             assert 'com/pipican/client/boss/HrothgarRenderer.class' in names
             assert 'com/pipican/client/boss/ValthorRenderer.class' in names
             assert 'com/pipican/client/boss/TengriRenderer.class' in names
+            assert 'com/pipican/client/boss/ThalassorRenderer.class' in names
             for phase in ['dormant','awakened']:
                 data=jar.read(f'assets/pipican/textures/entity/boss/frostbound_{phase}.png')
                 assert data[:8]==bytes([137,80,78,71,13,10,26,10]) and int.from_bytes(data[16:20],'big')==256

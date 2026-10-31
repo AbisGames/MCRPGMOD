@@ -10,7 +10,7 @@ Only implemented and verified behavior is marked complete. Geometry for each bos
 | hrothgar_drowned_jarl | implemented | prototype + native axe/crest poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | valthor_stormbringer | implemented | prototype + native wing poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | tengri_champion | implemented | prototype + native crest/limb poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
-| thalassor_deep_tyrant | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
+| thalassor_deep_tyrant | implemented | prototype + native core/crest poses | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | eldaroth_treant | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | fallen_king | implemented | prototype | implemented | implemented | implemented | implemented | implemented | implemented | passed | pending |
 | durmagon_runic_titan | planned | prototype | planned | planned | planned | planned | planned | planned | planned | pending |
@@ -79,3 +79,5 @@ Hrothgar is a registered Fjordmark jarl with native axe, shield and crest poses 
 Valthor Stormbringer now uses three independently timed, interruptible conductor links, a center-safe expanding thunder annulus and three rotating wind lanes with a marked refuge. Its phase shift, summoning pose, encounter reservation, exact nine-ingredient sigil recipe, Stormcoast biome altar route, trophy and Thunderbasalt rewards are wired and covered by server GameTests. The renderer animates native wing, body and limb poses against the preserved geometry; in-client visual QA remains pending.
 
 Tengri Champion now combines a previewed triangular charge, a five-ray falcon volley with a rotating safe gap, and a three-lane rally whose banners can be shot down. Phase two rotates the safe opening. Entity, renderer, save state, Khagan Steppe summon route, crafted sigil and trophy rewards are covered by server GameTests; in-client visual QA remains pending.
+
+Thalassor Deep Tyrant now telegraphs a seven-ray trident fan with a rotating gap, an expanding pressure field that can be escaped beyond its boundary, and a linked four-mine chain whose source mine interrupts the detonation. Its entity, phase and warning save state, ocean altar route, crafted sigil, texture atlases, trophy and Tideglass reward are registered and covered by server GameTests. In-client visual QA remains pending.

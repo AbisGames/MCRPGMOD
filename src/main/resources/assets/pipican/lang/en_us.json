@@ -412,5 +412,8 @@
   "entity.pipican.valthor_stormbringer": "Valthor, Stormbringer",
   "item.pipican.tengri_champion_sigil": "Tengri's Khanate Sigil",
   "item.pipican.tengri_champion_trophy": "Khagan's Golden Standard",
-  "entity.pipican.tengri_champion": "Tengri, Champion of the Steppe"
+  "entity.pipican.tengri_champion": "Tengri, Champion of the Steppe",
+  "item.pipican.thalassor_deep_tyrant_sigil": "Thalassor's Abyssal Seal",
+  "item.pipican.thalassor_deep_tyrant_trophy": "Abyssal Tyrant's Trident",
+  "entity.pipican.thalassor_deep_tyrant": "Thalassor, Deep Tyrant"
 }

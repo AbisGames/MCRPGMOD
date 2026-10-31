@@ -512,12 +512,12 @@
   {
     "id": "thalassor_deep_tyrant",
     "region": "western_ocean",
-    "functional": false,
+    "functional": true,
     "client_qa_complete": false,
     "health": 1000,
     "damage": 18,
     "sigil": {
-      "planned_item_id": "pipican:thalassor_deep_tyrant_sigil",
+      "item": "pipican:thalassor_deep_tyrant_sigil",
       "regional_material": "pipican:tideglass",
       "regional_count": 5,
       "dungeon_material": "pipican:western_ocean_boss_core",
@@ -530,33 +530,33 @@
     "abilities": [
       {
         "id": "trident_fan",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "A broad fan of individually visible tridents travels outward.",
         "counterplay": "Move through the announced fan gap rather than backing straight away.",
         "windup_ticks": 40,
         "recovery_ticks": 30,
         "cooldown_ticks": 80,
-        "animation": "planned:thalassor_deep_tyrant/trident_fan"
+        "animation": "native:thalassor_deep_tyrant/trident_fan"
       },
       {
         "id": "pressure_bubbles",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Expanding bubbles burst only after their boundary fills.",
         "counterplay": "Exit the bubble boundary before it completes.",
         "windup_ticks": 50,
         "recovery_ticks": 40,
         "cooldown_ticks": 100,
-        "animation": "planned:thalassor_deep_tyrant/pressure_bubbles"
+        "animation": "native:thalassor_deep_tyrant/pressure_bubbles"
       },
       {
         "id": "abyssal_mines",
-        "implementation": "planned",
+        "implementation": "functional",
         "behavior": "Floating mines illuminate a chain before detonation.",
         "counterplay": "Leave the indicated chain or interrupt its lit source mine.",
         "windup_ticks": 60,
         "recovery_ticks": 50,
         "cooldown_ticks": 120,
-        "animation": "planned:thalassor_deep_tyrant/abyssal_mines"
+        "animation": "native:thalassor_deep_tyrant/abyssal_mines"
       }
     ],
     "phase_two": {
@@ -567,7 +567,7 @@
     "loot": {
       "guaranteed_regional_material": "pipican:tideglass",
       "regional_count": 8,
-      "trophy_item": null,
+      "trophy_item": "pipican:thalassor_deep_tyrant_trophy",
       "planned_trophy_name": "Thalassor Deep Tyrant Trophy",
       "xp": 250
     },
@@ -575,16 +575,16 @@
       "geometry": "geometry.pipican.thalassor_deep_tyrant",
       "file": "geo/bosses/thalassor_deep_tyrant.geo.json",
       "animation_mapping": {
-        "idle": "planned:thalassor_deep_tyrant/idle",
-        "walk": "planned:thalassor_deep_tyrant/walk",
-        "basic_attack": "planned:thalassor_deep_tyrant/basic_attack",
-        "hurt": "planned:thalassor_deep_tyrant/hurt",
-        "phase_transition": "planned:thalassor_deep_tyrant/phase_transition",
-        "summoning": "planned:thalassor_deep_tyrant/summoning",
-        "death": "planned:thalassor_deep_tyrant/death",
-        "trident_fan": "planned:thalassor_deep_tyrant/trident_fan",
-        "pressure_bubbles": "planned:thalassor_deep_tyrant/pressure_bubbles",
-        "abyssal_mines": "planned:thalassor_deep_tyrant/abyssal_mines"
+        "idle": "native:thalassor_deep_tyrant/idle",
+        "walk": "native:thalassor_deep_tyrant/walk",
+        "basic_attack": "native:thalassor_deep_tyrant/basic_attack",
+        "hurt": "native:thalassor_deep_tyrant/hurt",
+        "phase_transition": "native:thalassor_deep_tyrant/phase_transition",
+        "summoning": "native:thalassor_deep_tyrant/summoning",
+        "death": "native:thalassor_deep_tyrant/death",
+        "trident_fan": "native:thalassor_deep_tyrant/trident_fan",
+        "pressure_bubbles": "native:thalassor_deep_tyrant/pressure_bubbles",
+        "abyssal_mines": "native:thalassor_deep_tyrant/abyssal_mines"
       }
     },
     "arena": {
