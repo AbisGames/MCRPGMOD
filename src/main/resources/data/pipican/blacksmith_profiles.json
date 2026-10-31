@@ -1,0 +1,164 @@
+[
+  {
+    "id": "whitecrown_icecap",
+    "regional_material": "pipican:frostcrystal",
+    "boss_material": "pipican:whitecrown_icecap_boss_core",
+    "rare_material": "pipican:frostbound_colossus_trophy"
+  },
+  {
+    "id": "northern_ice_sea",
+    "regional_material": "pipican:glacierite",
+    "boss_material": "pipican:northern_ice_sea_boss_core",
+    "rare_material": "pipican:nhalkorr_leviathan_trophy"
+  },
+  {
+    "id": "pinewall_taiga",
+    "regional_material": "pipican:wintersteel_ingot",
+    "boss_material": "pipican:pinewall_taiga_boss_core",
+    "rare_material": "pipican:skollvar_winterfang_trophy"
+  },
+  {
+    "id": "fjordmark",
+    "regional_material": "pipican:stormsilver_ingot",
+    "boss_material": "pipican:fjordmark_boss_core",
+    "rare_material": "pipican:hrothgar_drowned_jarl_trophy"
+  },
+  {
+    "id": "stormcoast",
+    "regional_material": "pipican:thunderbasalt",
+    "boss_material": "pipican:stormcoast_boss_core",
+    "rare_material": "pipican:valthor_stormbringer_trophy"
+  },
+  {
+    "id": "khagan_steppe",
+    "regional_material": "pipican:skyiron_ingot",
+    "boss_material": "pipican:khagan_steppe_boss_core",
+    "rare_material": "pipican:tengri_champion_trophy"
+  },
+  {
+    "id": "western_ocean",
+    "regional_material": "pipican:tideglass",
+    "boss_material": "pipican:western_ocean_boss_core",
+    "rare_material": "pipican:thalassor_deep_tyrant_trophy"
+  },
+  {
+    "id": "elderwood",
+    "regional_material": "pipican:mooncrystal",
+    "boss_material": "pipican:elderwood_boss_core",
+    "rare_material": "pipican:eldaroth_treant_trophy"
+  },
+  {
+    "id": "heartlands",
+    "regional_material": "pipican:royal_silver_ingot",
+    "boss_material": "pipican:heartlands_boss_core",
+    "rare_material": "pipican:fallen_king_trophy"
+  },
+  {
+    "id": "greyspine_mountains",
+    "regional_material": "pipican:runic_iron_ingot",
+    "boss_material": "pipican:greyspine_mountains_boss_core",
+    "rare_material": "pipican:durmagon_runic_titan_trophy"
+  },
+  {
+    "id": "jade_empire",
+    "regional_material": "pipican:jade_essence",
+    "boss_material": "pipican:jade_empire_boss_core",
+    "rare_material": "pipican:longwei_jade_dragon_trophy"
+  },
+  {
+    "id": "marshfen",
+    "regional_material": "pipican:mirestone",
+    "boss_material": "pipican:marshfen_boss_core",
+    "rare_material": "pipican:morgatha_swamp_queen_trophy"
+  },
+  {
+    "id": "inner_sea",
+    "regional_material": "pipican:pearlsilver_ingot",
+    "boss_material": "pipican:inner_sea_boss_core",
+    "rare_material": "pipican:aurelios_sunken_emperor_trophy"
+  },
+  {
+    "id": "ashlands",
+    "regional_material": "pipican:cinderite_ingot",
+    "boss_material": "pipican:ashen_kings_heart",
+    "rare_material": "pipican:infernium"
+  },
+  {
+    "id": "lotus_delta",
+    "regional_material": "pipican:lotus_opal",
+    "boss_material": "pipican:lotus_delta_boss_core",
+    "rare_material": "pipican:lianhua_lotus_serpent_trophy"
+  },
+  {
+    "id": "sunscorch_desert",
+    "regional_material": "pipican:sunglass",
+    "boss_material": "pipican:sunscorch_desert_boss_core",
+    "rare_material": "pipican:akhmar_sand_emperor_trophy"
+  },
+  {
+    "id": "riverlands",
+    "regional_material": "pipican:sunstone",
+    "boss_material": "pipican:riverlands_boss_core",
+    "rare_material": "pipican:netharis_river_guardian_trophy"
+  },
+  {
+    "id": "spice_coast",
+    "regional_material": "pipican:saffron_gold_ingot",
+    "boss_material": "pipican:spice_coast_boss_core",
+    "rare_material": "pipican:zahira_crimson_corsair_trophy"
+  },
+  {
+    "id": "emerald_jungle",
+    "regional_material": "pipican:verdantite",
+    "boss_material": "pipican:emerald_jungle_boss_core",
+    "rare_material": "pipican:xaltek_emerald_devourer_trophy"
+  },
+  {
+    "id": "coral_isles",
+    "regional_material": "pipican:tidalite",
+    "boss_material": "pipican:coral_isles_boss_core",
+    "rare_material": "pipican:corallith_reef_colossus_trophy"
+  },
+  {
+    "id": "goldgrass_savanna",
+    "regional_material": "pipican:dawnbronze_ingot",
+    "boss_material": "pipican:goldgrass_savanna_boss_core",
+    "rare_material": "pipican:azhar_golden_behemoth_trophy"
+  },
+  {
+    "id": "redrock_badlands",
+    "regional_material": "pipican:redrock_iron_ingot",
+    "boss_material": "pipican:redrock_badlands_boss_core",
+    "rare_material": "pipican:kragmor_canyon_warlord_trophy"
+  },
+  {
+    "id": "aetheris_expanse",
+    "regional_material": "pipican:skycrystal",
+    "boss_material": "pipican:aetheris_expanse_boss_core",
+    "rare_material": "pipican:celestium"
+  },
+  {
+    "id": "verdant_depths",
+    "regional_material": "pipican:lifebloom_crystal",
+    "boss_material": "pipican:verdant_depths_boss_core",
+    "rare_material": "pipican:sylthera_primordial_bloom_trophy"
+  },
+  {
+    "id": "umbral_chasm",
+    "regional_material": "pipican:umbrite",
+    "boss_material": "pipican:umbral_chasm_boss_core",
+    "rare_material": "pipican:voidsteel"
+  },
+  {
+    "id": "crimson_wilds",
+    "regional_material": "pipican:bloodstone",
+    "boss_material": "pipican:crimson_wilds_boss_core",
+    "rare_material": "pipican:bloodcrystal"
+  },
+  {
+    "id": "shimmering_reefs",
+    "regional_material": "pipican:abyssal_shard",
+    "boss_material": "pipican:shimmering_reefs_boss_core",
+    "rare_material": "pipican:lumynara_abyssal_oracle_trophy"
+  }
+]

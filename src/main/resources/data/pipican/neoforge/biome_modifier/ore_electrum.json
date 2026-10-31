@@ -4,7 +4,11 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_river",
-      "#c:is_plains"
+      "#c:is_plains",
+      "#pipican:region/heartlands",
+      "#pipican:region/riverlands",
+      "#pipican:region/khagan_steppe",
+      "#pipican:region/lotus_delta"
     ]
   },
   "features": "pipican:ore_electrum",

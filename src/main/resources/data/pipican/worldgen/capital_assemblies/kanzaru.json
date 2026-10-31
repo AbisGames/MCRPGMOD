@@ -1,0 +1,708 @@
+{
+  "id": "kanzaru",
+  "region": "goldgrass_savanna",
+  "anchor": [
+    -9500000,
+    12500000
+  ],
+  "author_coord_scale": 600,
+  "tile_pitch": 112,
+  "relative_positions": [
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_0_residences",
+      "x": -224,
+      "z": -224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_0_garden",
+      "x": -112,
+      "z": -224,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_0_military",
+      "x": 0,
+      "z": -224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_0_residences",
+      "x": 112,
+      "z": -224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_0_harbor",
+      "x": 224,
+      "z": -224,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_1_market",
+      "x": -224,
+      "z": -112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_1_academy",
+      "x": -112,
+      "z": -112,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_1_harbor",
+      "x": 0,
+      "z": -112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_1_military",
+      "x": 112,
+      "z": -112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_1_garden",
+      "x": 224,
+      "z": -112,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_2_military",
+      "x": -224,
+      "z": 0,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_2_academy",
+      "x": -112,
+      "z": 0,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:authored/landmarks/goldgrass_savanna/kanzaru",
+      "x": 0,
+      "z": 0,
+      "kind": "central_keep",
+      "size": [
+        112,
+        72,
+        112
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_2_harbor",
+      "x": 112,
+      "z": 0,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_2_academy",
+      "x": 224,
+      "z": 0,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_3_military",
+      "x": -224,
+      "z": 112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_3_temple",
+      "x": -112,
+      "z": 112,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_3_market",
+      "x": 0,
+      "z": 112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_3_market",
+      "x": 112,
+      "z": 112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_3_artisan",
+      "x": 224,
+      "z": 112,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/0_4_residences",
+      "x": -224,
+      "z": 224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/1_4_temple",
+      "x": -112,
+      "z": 224,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/2_4_military",
+      "x": 0,
+      "z": 224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/3_4_residences",
+      "x": 112,
+      "z": 224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/goldgrass_savanna/kanzaru/4_4_temple",
+      "x": 224,
+      "z": 224,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    }
+  ],
+  "connectors": [
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -132,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -20,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 92,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 204,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -132,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -20,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 92,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 204,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -132,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -20,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 204,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -132,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -20,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 92,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 204,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -132,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": -20,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 92,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/eastwest",
+      "x": 204,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -182,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -182,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -182,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -182,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -70,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -70,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -70,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": -70,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 42,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 42,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 42,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 154,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 154,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 154,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 154,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 266,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 266,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 266,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/goldgrass_savanna/northsouth",
+      "x": 266,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    }
+  ],
+  "implementation": "25 roomed city tiles, plus accessible capital road connectors."
+}

@@ -39,6 +39,11 @@ run/
 repo/
 !**/src/**/repo/
 
-# Python bytecode from tools/
+### Python bytecode and asset validators ###
 __pycache__/
-*.pyc
+*.py[cod]
+tools/worldgen/output/
+
+# Isolated Morvath client QA
+run-client-boss/
+run-client-regional-qa/

@@ -1,6 +1,13 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_taiga",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_taiga",
+      "#pipican:region/pinewall_taiga",
+      "#pipican:region/fjordmark"
+    ]
+  },
   "features": "pipican:ore_wintersteel",
   "step": "underground_ores"
 }

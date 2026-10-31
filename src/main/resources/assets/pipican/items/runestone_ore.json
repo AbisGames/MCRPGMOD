@@ -1,0 +1,7 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/runestone_ore",
+    "tints": []
+  }
+}

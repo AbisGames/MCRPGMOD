@@ -5,9 +5,13 @@
     "values": [
       "#c:is_flower_forest",
       "#c:is_magical",
+      "#pipican:region/jade_empire",
+      "#pipican:region/lotus_delta",
+      "#pipican:region/elderwood",
       [
         "minecraft:cherry_grove",
-        "minecraft:mushroom_fields"
+        "minecraft:mushroom_fields",
+        "pipican:aetheris_expanse"
       ]
     ]
   },

@@ -4,7 +4,9 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_old_growth",
-      "#c:is_dark_forest"
+      "#c:is_dark_forest",
+      "#pipican:region/elderwood",
+      "#pipican:region/pinewall_taiga"
     ]
   },
   "features": "pipican:ore_amber",

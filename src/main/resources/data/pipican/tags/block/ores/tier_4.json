@@ -19,12 +19,15 @@
     "pipican:deepslate_kyanite_ore",
     "pipican:deepslate_magisteel_ore",
     "pipican:deepslate_meteoric_iron_ore",
+    "pipican:deepslate_moonshard_ore",
     "pipican:deepslate_nickel_ore",
     "pipican:deepslate_palladium_ore",
     "pipican:deepslate_raritanium_ore",
+    "pipican:deepslate_runestone_ore",
     "pipican:deepslate_sekkiseki_ore",
     "pipican:deepslate_starmetal_ore",
     "pipican:deepslate_starsilver_ore",
+    "pipican:deepslate_sunforged_ore",
     "pipican:dimeritium_ore",
     "pipican:dust_ore",
     "pipican:eco_ore",
@@ -37,12 +40,15 @@
     "pipican:kyanite_ore",
     "pipican:magisteel_ore",
     "pipican:meteoric_iron_ore",
+    "pipican:moonshard_ore",
     "pipican:nether_carbalite_ore",
     "pipican:nickel_ore",
     "pipican:palladium_ore",
     "pipican:raritanium_ore",
+    "pipican:runestone_ore",
     "pipican:sekkiseki_ore",
     "pipican:starmetal_ore",
-    "pipican:starsilver_ore"
+    "pipican:starsilver_ore",
+    "pipican:sunforged_ore"
   ]
 }

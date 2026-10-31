@@ -1,0 +1,22 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 207736728,
+    "separation": 12,
+    "spacing": 35
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/verdant_depths/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/verdant_depths/mine",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/verdant_depths/village",
+      "weight": 4
+    }
+  ]
+}

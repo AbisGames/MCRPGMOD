@@ -1,0 +1,708 @@
+{
+  "id": "vanhara",
+  "region": "lotus_delta",
+  "anchor": [
+    12800000,
+    3000000
+  ],
+  "author_coord_scale": 600,
+  "tile_pitch": 112,
+  "relative_positions": [
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_0_residences",
+      "x": -224,
+      "z": -224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_0_temple",
+      "x": -112,
+      "z": -224,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_0_garden",
+      "x": 0,
+      "z": -224,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_0_military",
+      "x": 112,
+      "z": -224,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_0_academy",
+      "x": 224,
+      "z": -224,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_1_military",
+      "x": -224,
+      "z": -112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_1_harbor",
+      "x": -112,
+      "z": -112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_1_market",
+      "x": 0,
+      "z": -112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_1_temple",
+      "x": 112,
+      "z": -112,
+      "kind": "temple",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_1_military",
+      "x": 224,
+      "z": -112,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_2_military",
+      "x": -224,
+      "z": 0,
+      "kind": "military",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_2_residences",
+      "x": -112,
+      "z": 0,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:authored/landmarks/lotus_delta/vanhara",
+      "x": 0,
+      "z": 0,
+      "kind": "central_keep",
+      "size": [
+        112,
+        72,
+        112
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_2_academy",
+      "x": 112,
+      "z": 0,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_2_artisan",
+      "x": 224,
+      "z": 0,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_3_artisan",
+      "x": -224,
+      "z": 112,
+      "kind": "artisan",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_3_residences",
+      "x": -112,
+      "z": 112,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_3_harbor",
+      "x": 0,
+      "z": 112,
+      "kind": "harbor",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_3_academy",
+      "x": 112,
+      "z": 112,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_3_market",
+      "x": 224,
+      "z": 112,
+      "kind": "market",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/0_4_academy",
+      "x": -224,
+      "z": 224,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/1_4_garden",
+      "x": -112,
+      "z": 224,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/2_4_academy",
+      "x": 0,
+      "z": 224,
+      "kind": "academy",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/3_4_garden",
+      "x": 112,
+      "z": 224,
+      "kind": "garden",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    },
+    {
+      "template": "pipican:capital_districts/lotus_delta/vanhara/4_4_residences",
+      "x": 224,
+      "z": 224,
+      "kind": "residences",
+      "size": [
+        92,
+        34,
+        92
+      ]
+    }
+  ],
+  "connectors": [
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -132,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -20,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 92,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 204,
+      "z": -182,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -132,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -20,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 92,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 204,
+      "z": -70,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -132,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -20,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 204,
+      "z": 42,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -132,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -20,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 92,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 204,
+      "z": 154,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -132,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": -20,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 92,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/eastwest",
+      "x": 204,
+      "z": 266,
+      "kind": "walkway_eastwest",
+      "size": [
+        20,
+        4,
+        7
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -182,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -182,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -182,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -182,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -70,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -70,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -70,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": -70,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 42,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 42,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 42,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 154,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 154,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 154,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 154,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 266,
+      "z": -132,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 266,
+      "z": -20,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 266,
+      "z": 92,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    },
+    {
+      "template": "pipican:capital_connections/lotus_delta/northsouth",
+      "x": 266,
+      "z": 204,
+      "kind": "walkway_northsouth",
+      "size": [
+        7,
+        4,
+        20
+      ]
+    }
+  ],
+  "implementation": "25 roomed city tiles, plus accessible capital road connectors."
+}

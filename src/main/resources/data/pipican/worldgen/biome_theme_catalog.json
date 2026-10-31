@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "design": "Capital-themed geography and decorative palette for 22 macro regions and 5 exceptional biomes. Castle templates are not randomized.",
+  "biomes": [
+    {
+      "id": "whitecrown_icecap",
+      "stone": "#9ccdeb",
+      "wood": "#8c8d9e",
+      "canopy": "#d1f4ff",
+      "bloom": "#70d9f7",
+      "trees_per_chunk": 2,
+      "tree_base_height": 9,
+      "landscape": "glacier spires; snow encrusted alpine terraces"
+    },
+    {
+      "id": "northern_ice_sea",
+      "stone": "#4a91bf",
+      "wood": "#858ca2",
+      "canopy": "#a2efff",
+      "bloom": "#b7eafa",
+      "trees_per_chunk": 0,
+      "tree_base_height": 7,
+      "landscape": "basalt ice shelves and wind-scoured islands"
+    },
+    {
+      "id": "pinewall_taiga",
+      "stone": "#657787",
+      "wood": "#77543c",
+      "canopy": "#4f855e",
+      "bloom": "#90bdc6",
+      "trees_per_chunk": 5,
+      "tree_base_height": 12,
+      "landscape": "black fir ridges and misty conifer valleys"
+    },
+    {
+      "id": "fjordmark",
+      "stone": "#718991",
+      "wood": "#78604a",
+      "canopy": "#609079",
+      "bloom": "#c3b48c",
+      "trees_per_chunk": 3,
+      "tree_base_height": 9,
+      "landscape": "salt cliffs, monumental fjord terraces"
+    },
+    {
+      "id": "stormcoast",
+      "stone": "#676d83",
+      "wood": "#524948",
+      "canopy": "#585177",
+      "bloom": "#bda4e5",
+      "trees_per_chunk": 1,
+      "tree_base_height": 7,
+      "landscape": "storm cliffs and sulfurous basalt beaches"
+    },
+    {
+      "id": "khagan_steppe",
+      "stone": "#a29476",
+      "wood": "#92704d",
+      "canopy": "#96a063",
+      "bloom": "#e6c26c",
+      "trees_per_chunk": 2,
+      "tree_base_height": 5,
+      "landscape": "loess bluffs and sweeping feathergrass plain"
+    },
+    {
+      "id": "western_ocean",
+      "stone": "#508a9b",
+      "wood": "#668b9a",
+      "canopy": "#53adba",
+      "bloom": "#90d8dd",
+      "trees_per_chunk": 0,
+      "tree_base_height": 2,
+      "landscape": "sea stacks, kelp beds, distant archipelago"
+    },
+    {
+      "id": "elderwood",
+      "stone": "#c9b8dd",
+      "wood": "#d9ccae",
+      "canopy": "#80bc9c",
+      "bloom": "#e7afe9",
+      "trees_per_chunk": 7,
+      "tree_base_height": 20,
+      "landscape": "Sylvaran crystal valley, ancient canopies and waterfalls"
+    },
+    {
+      "id": "heartlands",
+      "stone": "#a0aa9c",
+      "wood": "#866845",
+      "canopy": "#71af5c",
+      "bloom": "#eed66c",
+      "trees_per_chunk": 4,
+      "tree_base_height": 10,
+      "landscape": "terraced farmland and oak castle hills"
+    },
+    {
+      "id": "greyspine_mountains",
+      "stone": "#5f657a",
+      "wood": "#645f61",
+      "canopy": "#8492a8",
+      "bloom": "#9cdaed",
+      "trees_per_chunk": 2,
+      "tree_base_height": 6,
+      "landscape": "Durnhold monumental granite ridges and gorges"
+    },
+    {
+      "id": "jade_empire",
+      "stone": "#86b8a5",
+      "wood": "#b08b65",
+      "canopy": "#5dbb8a",
+      "bloom": "#eea6c0",
+      "trees_per_chunk": 5,
+      "tree_base_height": 12,
+      "landscape": "Tianmen misty peaks and stepped rice-valley slopes"
+    },
+    {
+      "id": "marshfen",
+      "stone": "#526c62",
+      "wood": "#5f4c45",
+      "canopy": "#648c72",
+      "bloom": "#ad8bb7",
+      "trees_per_chunk": 4,
+      "tree_base_height": 12,
+      "landscape": "witchwood islands and peat-water channels"
+    },
+    {
+      "id": "inner_sea",
+      "stone": "#8fabb5",
+      "wood": "#bba38d",
+      "canopy": "#6aaba3",
+      "bloom": "#d7d3ab",
+      "trees_per_chunk": 2,
+      "tree_base_height": 5,
+      "landscape": "white limestone islands and ancient port terraces"
+    },
+    {
+      "id": "ashlands",
+      "stone": "#484149",
+      "wood": "#534545",
+      "canopy": "#97594d",
+      "bloom": "#ee724f",
+      "trees_per_chunk": 1,
+      "tree_base_height": 4,
+      "landscape": "Morvath volcanic plateaus, obsidian ribs, fumaroles"
+    },
+    {
+      "id": "lotus_delta",
+      "stone": "#93baaa",
+      "wood": "#977252",
+      "canopy": "#6eab73",
+      "bloom": "#f6a6c8",
+      "trees_per_chunk": 5,
+      "tree_base_height": 14,
+      "landscape": "lotus wetland and water stepped towns"
+    },
+    {
+      "id": "sunscorch_desert",
+      "stone": "#d9b482",
+      "wood": "#b27e4d",
+      "canopy": "#cfa76a",
+      "bloom": "#fac269",
+      "trees_per_chunk": 1,
+      "tree_base_height": 4,
+      "landscape": "Qasr Zahir monumental sandstone mesas and oasis"
+    },
+    {
+      "id": "riverlands",
+      "stone": "#bdab89",
+      "wood": "#987955",
+      "canopy": "#79aa63",
+      "bloom": "#f5d49e",
+      "trees_per_chunk": 4,
+      "tree_base_height": 11,
+      "landscape": "fertile alluvial terraces and floodplain hills"
+    },
+    {
+      "id": "spice_coast",
+      "stone": "#c19870",
+      "wood": "#97704c",
+      "canopy": "#73a779",
+      "bloom": "#f3a26b",
+      "trees_per_chunk": 4,
+      "tree_base_height": 8,
+      "landscape": "aromatic terraced coastal hills"
+    },
+    {
+      "id": "emerald_jungle",
+      "stone": "#566d5b",
+      "wood": "#6b4c3b",
+      "canopy": "#30a66a",
+      "bloom": "#e6a46b",
+      "trees_per_chunk": 8,
+      "tree_base_height": 24,
+      "landscape": "Yaxcala dense giant-root canopy and cenotes"
+    },
+    {
+      "id": "coral_isles",
+      "stone": "#7abbc5",
+      "wood": "#93a6a2",
+      "canopy": "#6dd6c1",
+      "bloom": "#f3a8b3",
+      "trees_per_chunk": 2,
+      "tree_base_height": 6,
+      "landscape": "Tahuna turquoise atolls and coral stair reefs"
+    },
+    {
+      "id": "goldgrass_savanna",
+      "stone": "#bead78",
+      "wood": "#907356",
+      "canopy": "#8c9750",
+      "bloom": "#edbf6d",
+      "trees_per_chunk": 4,
+      "tree_base_height": 6,
+      "landscape": "baobab crowns and sun-gold uplands"
+    },
+    {
+      "id": "redrock_badlands",
+      "stone": "#b76b5b",
+      "wood": "#835044",
+      "canopy": "#947e5f",
+      "bloom": "#dfad8c",
+      "trees_per_chunk": 1,
+      "tree_base_height": 4,
+      "landscape": "Dustgate layered red canyons and hoodoo towers"
+    },
+    {
+      "id": "aetheris_expanse",
+      "stone": "#9ec8dc",
+      "wood": "#b4b6d3",
+      "canopy": "#a4e5fa",
+      "bloom": "#e2ceff",
+      "trees_per_chunk": 2,
+      "tree_base_height": 8,
+      "landscape": "crystalline sky island vegetation"
+    },
+    {
+      "id": "verdant_depths",
+      "stone": "#4f9972",
+      "wood": "#69523f",
+      "canopy": "#4ab58b",
+      "bloom": "#86f2b8",
+      "trees_per_chunk": 8,
+      "tree_base_height": 24,
+      "landscape": "gigantic luminous roots and fern cathedrals"
+    },
+    {
+      "id": "umbral_chasm",
+      "stone": "#595171",
+      "wood": "#554962",
+      "canopy": "#8173b1",
+      "bloom": "#c090f0",
+      "trees_per_chunk": 3,
+      "tree_base_height": 8,
+      "landscape": "shadow grotto, glowing subterranean forest"
+    },
+    {
+      "id": "crimson_wilds",
+      "stone": "#a24d59",
+      "wood": "#71464a",
+      "canopy": "#b46068",
+      "bloom": "#ff9696",
+      "trees_per_chunk": 2,
+      "tree_base_height": 6,
+      "landscape": "thorn forests and blood red cliffs"
+    },
+    {
+      "id": "shimmering_reefs",
+      "stone": "#65b5c7",
+      "wood": "#668b9c",
+      "canopy": "#61dccc",
+      "bloom": "#afecf7",
+      "trees_per_chunk": 1,
+      "tree_base_height": 5,
+      "landscape": "shimmering shelf reefs and iridescent flora"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 586574860,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/jade_empire/bamboo_forest/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/bamboo_forest/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/bamboo_forest/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/cherry_blossom_hills/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/cherry_blossom_hills/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/cherry_blossom_hills/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/imperial_plains/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/imperial_plains/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/imperial_plains/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/karst_pillar_valleys/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/karst_pillar_valleys/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/karst_pillar_valleys/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/misty_river_gorges/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/misty_river_gorges/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/misty_river_gorges/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/terraced_tea_slopes/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/terraced_tea_slopes/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/jade_empire/terraced_tea_slopes/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/jade_empire/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/jade_empire/mine",
+      "weight": 4
+    }
+  ]
+}

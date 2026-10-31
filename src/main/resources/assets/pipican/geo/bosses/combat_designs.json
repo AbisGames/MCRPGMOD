@@ -1,0 +1,2326 @@
+[
+  {
+    "id": "frostbound_colossus",
+    "region": "whitecrown_icecap",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 800,
+    "damage": 14,
+    "sigil": {
+      "regional_material": "pipican:frostcrystal",
+      "regional_count": 5,
+      "dungeon_material": "pipican:whitecrown_icecap_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:blue_ice",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:frostbound_colossus_sigil"
+    },
+    "abilities": [
+      {
+        "id": "frost_fissure",
+        "implementation": "functional",
+        "behavior": "Delayed branching ice fissures trace outward from both fists.",
+        "counterplay": "Step across an unlit branch before the cracks activate.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "native:frostbound/frost_fissure"
+      },
+      {
+        "id": "winter_wheel",
+        "implementation": "functional",
+        "behavior": "Concentric freezing rings have a visibly unmarked wedge.",
+        "counterplay": "Move through the rotating wedge instead of outrunning the ring.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "native:frostbound/winter_wheel"
+      },
+      {
+        "id": "crystal_lances",
+        "implementation": "functional",
+        "behavior": "Suspended ice lances fall in alternating rows.",
+        "counterplay": "Stand between the highlighted rows; the next row warns separately.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "native:frostbound/crystal_lances"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Ring gaps reverse; exposed crystal joints retain a long punish window."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:frostcrystal",
+      "regional_count": 8,
+      "trophy_item": "pipican:frostbound_colossus_trophy",
+      "planned_trophy_name": "Frostbound Colossus Trophy",
+      "xp": 200
+    },
+    "model": {
+      "geometry": "geometry.pipican.frostbound_colossus",
+      "file": "geo/bosses/frostbound_colossus.geo.json",
+      "animation_mapping": {
+        "idle": "native:frostbound/idle",
+        "walk": "native:frostbound/walk",
+        "basic_attack": "native:frostbound/basic",
+        "hurt": "native:frostbound/hurt",
+        "phase_transition": "native:frostbound/phase",
+        "summoning": "native:frostbound/summoning",
+        "death": "native:frostbound/death",
+        "frost_fissure": "native:frostbound/fissure",
+        "winter_wheel": "native:frostbound/wheel",
+        "crystal_lances": "native:frostbound/lances"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "nhalkorr_leviathan",
+    "region": "northern_ice_sea",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1100,
+    "damage": 18,
+    "sigil": {
+      "item": "pipican:nhalkorr_leviathan_sigil",
+      "regional_material": "pipican:glacierite",
+      "regional_count": 5,
+      "dungeon_material": "pipican:northern_ice_sea_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:nautilus_shell",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "anchor_current",
+        "implementation": "functional",
+        "behavior": "A water-current anchor pulls along a single marked lane.",
+        "counterplay": "Move perpendicular to the lane or destroy the exposed anchor.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "nhalkorr_leviathan/anchor_current"
+      },
+      {
+        "id": "undertow_loop",
+        "implementation": "functional",
+        "behavior": "Three vortices orbit and converge on fixed endpoints.",
+        "counterplay": "Use the displayed safe current between vortices.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "nhalkorr_leviathan/undertow_loop"
+      },
+      {
+        "id": "ink_breaches",
+        "implementation": "functional",
+        "behavior": "Submerged silhouettes predict staggered surface breaches.",
+        "counterplay": "Leave the silhouettes; each breach locks its destination early.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "nhalkorr_leviathan/ink_breaches"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Current safe lanes rotate; the marked anchor and each delayed breach remain locked through phase changes."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:glacierite",
+      "regional_count": 8,
+      "trophy_item": "pipican:nhalkorr_leviathan_trophy",
+      "planned_trophy_name": "Nhalkorr Leviathan Trophy",
+      "xp": 275
+    },
+    "model": {
+      "geometry": "geometry.pipican.nhalkorr_leviathan",
+      "file": "geo/bosses/nhalkorr_leviathan.geo.json",
+      "animation_mapping": {
+        "idle": "nhalkorr_leviathan/idle",
+        "walk": "nhalkorr_leviathan/walk",
+        "basic_attack": "nhalkorr_leviathan/basic_attack",
+        "hurt": "nhalkorr_leviathan/hurt",
+        "phase_transition": "nhalkorr_leviathan/phase_transition",
+        "summoning": "nhalkorr_leviathan/summoning",
+        "death": "nhalkorr_leviathan/death",
+        "anchor_current": "nhalkorr_leviathan/anchor_current",
+        "undertow_loop": "nhalkorr_leviathan/undertow_loop",
+        "ink_breaches": "nhalkorr_leviathan/ink_breaches"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 6,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "skollvar_winterfang",
+    "region": "pinewall_taiga",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 650,
+    "damage": 13,
+    "sigil": {
+      "regional_material": "pipican:wintersteel",
+      "regional_count": 5,
+      "dungeon_material": "pipican:pinewall_taiga_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:bone",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:skollvar_winterfang_sigil"
+    },
+    "abilities": [
+      {
+        "id": "scent_charge",
+        "implementation": "functional",
+        "behavior": "A paw-marked straight charge locks direction before launching.",
+        "counterplay": "Cross the paw trail or punish the stopped wolf from the flank.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "native:skollvar/scent_charge"
+      },
+      {
+        "id": "pack_mirages",
+        "implementation": "functional",
+        "behavior": "Decoy wolves telegraph alternating pounces.",
+        "counterplay": "Identify the solid shadow and leave its landing marker.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "native:skollvar/pack_mirages"
+      },
+      {
+        "id": "silent_prowl",
+        "implementation": "functional",
+        "behavior": "The wolf circles toward the last observed player footprint.",
+        "counterplay": "Move away from the marked footprint before the final bite.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "native:skollvar/silent_prowl"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "A third charge can be feinted, with a distinct howl and longer final recovery."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:wintersteel",
+      "regional_count": 8,
+      "trophy_item": "pipican:skollvar_winterfang_trophy",
+      "planned_trophy_name": "Skollvar Winterfang Trophy",
+      "xp": 162
+    },
+    "model": {
+      "geometry": "geometry.pipican.skollvar_winterfang",
+      "file": "geo/bosses/skollvar_winterfang.geo.json",
+      "animation_mapping": {
+        "idle": "native:skollvar/idle",
+        "walk": "native:skollvar/walk",
+        "basic_attack": "native:skollvar/basic_attack",
+        "hurt": "native:skollvar/hurt",
+        "phase_transition": "native:skollvar/phase_transition",
+        "summoning": "native:skollvar/summoning",
+        "death": "native:skollvar/death",
+        "scent_charge": "native:skollvar/scent_charge",
+        "pack_mirages": "native:skollvar/pack_mirages",
+        "silent_prowl": "native:skollvar/silent_prowl"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "hrothgar_drowned_jarl",
+    "region": "fjordmark",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 700,
+    "damage": 14,
+    "sigil": {
+      "item": "pipican:hrothgar_drowned_jarl_sigil",
+      "regional_material": "pipican:stormsilver",
+      "regional_count": 5,
+      "dungeon_material": "pipican:fjordmark_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:rotten_flesh",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "returning_oath",
+        "implementation": "functional",
+        "behavior": "A thrown axe follows a curved outbound and returning path.",
+        "counterplay": "Dodge across the marked curve after its outbound pass.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "hrothgar_drowned_jarl/returning_oath"
+      },
+      {
+        "id": "drowned_chains",
+        "implementation": "functional",
+        "behavior": "Visible chains connect summoned anchors before tightening.",
+        "counterplay": "Break a highlighted weak link or move outside its span.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "hrothgar_drowned_jarl/drowned_chains"
+      },
+      {
+        "id": "rowing_dead",
+        "implementation": "functional",
+        "behavior": "Spectral rowers launch staggered rectangular surges.",
+        "counterplay": "Use the missing-row gap; the rowers can be interrupted.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "hrothgar_drowned_jarl/rowing_dead"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Phase two shifts the returning oath curve and rotating missing-row gap while chain anchors remain shootable."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:stormsilver",
+      "regional_count": 8,
+      "trophy_item": "pipican:hrothgar_drowned_jarl_trophy",
+      "planned_trophy_name": "Hrothgar Drowned Jarl Trophy",
+      "xp": 175
+    },
+    "model": {
+      "geometry": "geometry.pipican.hrothgar_drowned_jarl",
+      "file": "geo/bosses/hrothgar_drowned_jarl.geo.json",
+      "animation_mapping": {
+        "idle": "hrothgar_drowned_jarl/idle",
+        "walk": "hrothgar_drowned_jarl/walk",
+        "basic_attack": "hrothgar_drowned_jarl/basic_attack",
+        "hurt": "hrothgar_drowned_jarl/hurt",
+        "phase_transition": "hrothgar_drowned_jarl/phase_transition",
+        "summoning": "hrothgar_drowned_jarl/summoning",
+        "death": "hrothgar_drowned_jarl/death",
+        "returning_oath": "hrothgar_drowned_jarl/returning_oath",
+        "drowned_chains": "hrothgar_drowned_jarl/drowned_chains",
+        "rowing_dead": "hrothgar_drowned_jarl/rowing_dead"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "valthor_stormbringer",
+    "region": "stormcoast",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 850,
+    "damage": 16,
+    "sigil": {
+      "item": "pipican:valthor_stormbringer_sigil",
+      "regional_material": "pipican:thunderbasalt",
+      "regional_count": 5,
+      "dungeon_material": "pipican:stormcoast_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:lightning_rod",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "conductor_link",
+        "implementation": "functional",
+        "behavior": "Placed spectral conductors connect with delayed lightning lines.",
+        "counterplay": "Stand outside the drawn connections or break a conductor.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "native:valthor_stormbringer/conductor_link"
+      },
+      {
+        "id": "thunder_donut",
+        "implementation": "functional",
+        "behavior": "A thunderclap expands through an annulus, leaving the center safe.",
+        "counterplay": "Choose the inner refuge or leave the outer edge during windup.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "native:valthor_stormbringer/thunder_donut"
+      },
+      {
+        "id": "gale_channels",
+        "implementation": "functional",
+        "behavior": "Parallel wind channels push toward lit strike zones.",
+        "counterplay": "Move into an unlit channel before the push starts.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "native:valthor_stormbringer/gale_channels"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Conductors gain one visible fork; grounded intervals open the boss."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:thunderbasalt",
+      "regional_count": 8,
+      "trophy_item": "pipican:valthor_stormbringer_trophy",
+      "planned_trophy_name": "Valthor Stormbringer Trophy",
+      "xp": 212
+    },
+    "model": {
+      "geometry": "geometry.pipican.valthor_stormbringer",
+      "file": "geo/bosses/valthor_stormbringer.geo.json",
+      "animation_mapping": {
+        "idle": "native:valthor_stormbringer/idle",
+        "walk": "native:valthor_stormbringer/walk",
+        "basic_attack": "native:valthor_stormbringer/basic_attack",
+        "hurt": "native:valthor_stormbringer/hurt",
+        "phase_transition": "native:valthor_stormbringer/phase_transition",
+        "summoning": "native:valthor_stormbringer/summoning",
+        "death": "native:valthor_stormbringer/death",
+        "conductor_link": "native:valthor_stormbringer/conductor_link",
+        "thunder_donut": "native:valthor_stormbringer/thunder_donut",
+        "gale_channels": "native:valthor_stormbringer/gale_channels"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "tengri_champion",
+    "region": "khagan_steppe",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 750,
+    "damage": 15,
+    "sigil": {
+      "item": "pipican:tengri_champion_sigil",
+      "regional_material": "pipican:skyiron",
+      "regional_count": 5,
+      "dungeon_material": "pipican:khagan_steppe_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:wind_charge",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "steppe_triangle",
+        "implementation": "functional",
+        "behavior": "Three mounted dashes follow a previewed triangular route.",
+        "counterplay": "Leave the triangle edges and attack during the turn.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "native:tengri_champion/steppe_triangle"
+      },
+      {
+        "id": "falcon_volley",
+        "implementation": "functional",
+        "behavior": "Arrow fans arrive from visible circling falcon markers.",
+        "counterplay": "Face the announced fan gap and reposition between volleys.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "native:tengri_champion/falcon_volley"
+      },
+      {
+        "id": "khan_banner",
+        "implementation": "functional",
+        "behavior": "A banner charges a limited offensive rally until interrupted.",
+        "counterplay": "Break the banner during its long warning or dodge the rally lanes.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "native:tengri_champion/khan_banner"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Ride routes change after a banner signal; each banner exposes a flank."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:skyiron",
+      "regional_count": 8,
+      "trophy_item": "pipican:tengri_champion_trophy",
+      "planned_trophy_name": "Tengri Champion Trophy",
+      "xp": 188
+    },
+    "model": {
+      "geometry": "geometry.pipican.tengri_champion",
+      "file": "geo/bosses/tengri_champion.geo.json",
+      "animation_mapping": {
+        "idle": "native:tengri_champion/idle",
+        "walk": "native:tengri_champion/walk",
+        "basic_attack": "native:tengri_champion/basic_attack",
+        "hurt": "native:tengri_champion/hurt",
+        "phase_transition": "native:tengri_champion/phase_transition",
+        "summoning": "native:tengri_champion/summoning",
+        "death": "native:tengri_champion/death",
+        "steppe_triangle": "native:tengri_champion/steppe_triangle",
+        "falcon_volley": "native:tengri_champion/falcon_volley",
+        "khan_banner": "native:tengri_champion/khan_banner"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "thalassor_deep_tyrant",
+    "region": "western_ocean",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1000,
+    "damage": 18,
+    "sigil": {
+      "item": "pipican:thalassor_deep_tyrant_sigil",
+      "regional_material": "pipican:tideglass",
+      "regional_count": 5,
+      "dungeon_material": "pipican:western_ocean_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:prismarine_shard",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "trident_fan",
+        "implementation": "functional",
+        "behavior": "A broad fan of individually visible tridents travels outward.",
+        "counterplay": "Move through the announced fan gap rather than backing straight away.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "native:thalassor_deep_tyrant/trident_fan"
+      },
+      {
+        "id": "pressure_bubbles",
+        "implementation": "functional",
+        "behavior": "Expanding bubbles burst only after their boundary fills.",
+        "counterplay": "Exit the bubble boundary before it completes.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "native:thalassor_deep_tyrant/pressure_bubbles"
+      },
+      {
+        "id": "abyssal_mines",
+        "implementation": "functional",
+        "behavior": "Floating mines illuminate a chain before detonation.",
+        "counterplay": "Leave the indicated chain or interrupt its lit source mine.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "native:thalassor_deep_tyrant/abyssal_mines"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Pressure bubbles alternate with mines; escape corridors remain unmarked."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:tideglass",
+      "regional_count": 8,
+      "trophy_item": "pipican:thalassor_deep_tyrant_trophy",
+      "planned_trophy_name": "Thalassor Deep Tyrant Trophy",
+      "xp": 250
+    },
+    "model": {
+      "geometry": "geometry.pipican.thalassor_deep_tyrant",
+      "file": "geo/bosses/thalassor_deep_tyrant.geo.json",
+      "animation_mapping": {
+        "idle": "native:thalassor_deep_tyrant/idle",
+        "walk": "native:thalassor_deep_tyrant/walk",
+        "basic_attack": "native:thalassor_deep_tyrant/basic_attack",
+        "hurt": "native:thalassor_deep_tyrant/hurt",
+        "phase_transition": "native:thalassor_deep_tyrant/phase_transition",
+        "summoning": "native:thalassor_deep_tyrant/summoning",
+        "death": "native:thalassor_deep_tyrant/death",
+        "trident_fan": "native:thalassor_deep_tyrant/trident_fan",
+        "pressure_bubbles": "native:thalassor_deep_tyrant/pressure_bubbles",
+        "abyssal_mines": "native:thalassor_deep_tyrant/abyssal_mines"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "eldaroth_treant",
+    "region": "elderwood",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 900,
+    "damage": 14,
+    "sigil": {
+      "planned_item_id": "pipican:eldaroth_treant_sigil",
+      "regional_material": "pipican:mooncrystal",
+      "regional_count": 5,
+      "dungeon_material": "pipican:elderwood_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:oak_sapling",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:eldaroth_treant_sigil"
+    },
+    "abilities": [
+      {
+        "id": "root_lattice",
+        "implementation": "functional",
+        "behavior": "Root lines form a delayed lattice with open cells.",
+        "counterplay": "Move into an unrooted cell before the roots close.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "eldaroth_treant/root_lattice"
+      },
+      {
+        "id": "seed_pods",
+        "implementation": "functional",
+        "behavior": "Lobbed pods sprout short-lived hazards at fixed landings.",
+        "counterplay": "Leave the landing rings or destroy the dormant pod.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "eldaroth_treant/seed_pods"
+      },
+      {
+        "id": "branch_clock",
+        "implementation": "functional",
+        "behavior": "A high branch rotates around a visible near-trunk refuge.",
+        "counterplay": "Use the inner refuge or pass behind the branch after its sweep.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "eldaroth_treant/branch_clock"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Seed pods bloom twice while the treant exposes its root heart."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:mooncrystal",
+      "regional_count": 8,
+      "trophy_item": "pipican:eldaroth_treant_trophy",
+      "planned_trophy_name": "Eldaroth Treant Trophy",
+      "xp": 225
+    },
+    "model": {
+      "geometry": "geometry.pipican.eldaroth_treant",
+      "file": "geo/bosses/eldaroth_treant.geo.json",
+      "animation_mapping": {
+        "idle": "eldaroth_treant/idle",
+        "walk": "eldaroth_treant/walk",
+        "basic_attack": "eldaroth_treant/basic_attack",
+        "hurt": "eldaroth_treant/hurt",
+        "phase_transition": "eldaroth_treant/phase_transition",
+        "summoning": "eldaroth_treant/summoning",
+        "death": "eldaroth_treant/death",
+        "root_lattice": "eldaroth_treant/root_lattice",
+        "seed_pods": "eldaroth_treant/seed_pods",
+        "branch_clock": "eldaroth_treant/branch_clock"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 7,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "fallen_king",
+    "region": "heartlands",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 700,
+    "damage": 13,
+    "sigil": {
+      "planned_item_id": "pipican:fallen_king_sigil",
+      "regional_material": "pipican:royal_silver",
+      "regional_count": 5,
+      "dungeon_material": "pipican:heartlands_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:golden_apple",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:fallen_king_sigil"
+    },
+    "abilities": [
+      {
+        "id": "royal_duel",
+        "implementation": "functional",
+        "behavior": "The king announces a thrust, feint or guarded riposte with distinct stances.",
+        "counterplay": "Sidestep the thrust; wait out the riposte stance before attacking.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "fallen_king/royal_duel"
+      },
+      {
+        "id": "phantom_cavalry",
+        "implementation": "functional",
+        "behavior": "Spectral knights charge only along heralded lanes.",
+        "counterplay": "Move into the missing rank or interrupt its standard bearer.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "fallen_king/phantom_cavalry"
+      },
+      {
+        "id": "broken_regalia",
+        "implementation": "functional",
+        "behavior": "Orbiting regalia shield marked directions while exposing another.",
+        "counterplay": "Attack from the exposed direction or break a lit regalia piece.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "fallen_king/broken_regalia"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "The duel adds a second announced feint; breaking regalia extends the opening."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:royal_silver",
+      "regional_count": 8,
+      "trophy_item": "pipican:fallen_king_trophy",
+      "planned_trophy_name": "Fallen King Trophy",
+      "xp": 175
+    },
+    "model": {
+      "geometry": "geometry.pipican.fallen_king",
+      "file": "geo/bosses/fallen_king.geo.json",
+      "animation_mapping": {
+        "idle": "fallen_king/idle",
+        "walk": "fallen_king/walk",
+        "basic_attack": "fallen_king/basic_attack",
+        "hurt": "fallen_king/hurt",
+        "phase_transition": "fallen_king/phase_transition",
+        "summoning": "fallen_king/summoning",
+        "death": "fallen_king/death",
+        "royal_duel": "fallen_king/royal_duel",
+        "phantom_cavalry": "fallen_king/phantom_cavalry",
+        "broken_regalia": "fallen_king/broken_regalia"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "durmagon_runic_titan",
+    "region": "greyspine_mountains",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1000,
+    "damage": 17,
+    "sigil": {
+      "planned_item_id": "pipican:durmagon_runic_titan_sigil",
+      "regional_material": "pipican:runic_iron",
+      "regional_count": 5,
+      "dungeon_material": "pipican:greyspine_mountains_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:amethyst_shard",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:durmagon_runic_titan_sigil"
+    },
+    "abilities": [
+      {
+        "id": "rune_circuit",
+        "implementation": "functional",
+        "behavior": "Rune anchors draw a delayed circuit across the arena.",
+        "counterplay": "Occupy an unconnected rune or interrupt the lit junction.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "durmagon_runic_titan/rune_circuit"
+      },
+      {
+        "id": "forge_rebounds",
+        "implementation": "functional",
+        "behavior": "Runic projectiles preview one wall rebound before launch.",
+        "counterplay": "Use the rebound preview instead of tracking the first line alone.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "durmagon_runic_titan/forge_rebounds"
+      },
+      {
+        "id": "gravity_stamp",
+        "implementation": "functional",
+        "behavior": "A polygonal hammer shock leaves safe lit rune pads.",
+        "counterplay": "Reach a safe rune pad before the stamp lands.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "durmagon_runic_titan/gravity_stamp"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Rune circuits change sequence but reveal every connection before discharge."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:runic_iron",
+      "regional_count": 8,
+      "trophy_item": "pipican:durmagon_runic_titan_trophy",
+      "planned_trophy_name": "Durmagon Runic Titan Trophy",
+      "xp": 250
+    },
+    "model": {
+      "geometry": "geometry.pipican.durmagon_runic_titan",
+      "file": "geo/bosses/durmagon_runic_titan.geo.json",
+      "animation_mapping": {
+        "idle": "durmagon_runic_titan/idle",
+        "walk": "durmagon_runic_titan/walk",
+        "basic_attack": "durmagon_runic_titan/basic_attack",
+        "hurt": "durmagon_runic_titan/hurt",
+        "phase_transition": "durmagon_runic_titan/phase_transition",
+        "summoning": "durmagon_runic_titan/summoning",
+        "death": "durmagon_runic_titan/death",
+        "rune_circuit": "durmagon_runic_titan/rune_circuit",
+        "forge_rebounds": "durmagon_runic_titan/forge_rebounds",
+        "gravity_stamp": "durmagon_runic_titan/gravity_stamp"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "longwei_jade_dragon",
+    "region": "jade_empire",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1100,
+    "damage": 18,
+    "sigil": {
+      "planned_item_id": "pipican:longwei_jade_dragon_sigil",
+      "regional_material": "pipican:jade_essence",
+      "regional_count": 5,
+      "dungeon_material": "pipican:jade_empire_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:green_dye",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:longwei_jade_dragon_sigil"
+    },
+    "abilities": [
+      {
+        "id": "jade_ribbon",
+        "implementation": "functional",
+        "behavior": "A serpentine breath path tracks briefly then freezes its route.",
+        "counterplay": "Cross behind the frozen ribbon before it ignites.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "longwei_jade_dragon/jade_ribbon"
+      },
+      {
+        "id": "spiral_descent",
+        "implementation": "functional",
+        "behavior": "A dive follows a descending spiral with a central refuge.",
+        "counterplay": "Use the center or an announced opening in the spiral.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "longwei_jade_dragon/spiral_descent"
+      },
+      {
+        "id": "five_orbits",
+        "implementation": "functional",
+        "behavior": "Five jade orbs pulse in a visible color sequence.",
+        "counterplay": "Move between the next-pulsing orbs; no class-specific action is required.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "longwei_jade_dragon/five_orbits"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Breath ends early to combine with a separate, clearly marked spiral dive."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:jade_essence",
+      "regional_count": 8,
+      "trophy_item": "pipican:longwei_jade_dragon_trophy",
+      "planned_trophy_name": "Longwei Jade Dragon Trophy",
+      "xp": 275
+    },
+    "model": {
+      "geometry": "geometry.pipican.longwei_jade_dragon",
+      "file": "geo/bosses/longwei_jade_dragon.geo.json",
+      "animation_mapping": {
+        "idle": "longwei_jade_dragon/idle",
+        "walk": "longwei_jade_dragon/walk",
+        "basic_attack": "longwei_jade_dragon/basic_attack",
+        "hurt": "longwei_jade_dragon/hurt",
+        "phase_transition": "longwei_jade_dragon/phase_transition",
+        "summoning": "longwei_jade_dragon/summoning",
+        "death": "longwei_jade_dragon/death",
+        "jade_ribbon": "longwei_jade_dragon/jade_ribbon",
+        "spiral_descent": "longwei_jade_dragon/spiral_descent",
+        "five_orbits": "longwei_jade_dragon/five_orbits"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 7,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "morgatha_swamp_queen",
+    "region": "marshfen",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 800,
+    "damage": 14,
+    "sigil": {
+      "planned_item_id": "pipican:morgatha_swamp_queen_sigil",
+      "regional_material": "pipican:mirestone",
+      "regional_count": 5,
+      "dungeon_material": "pipican:marshfen_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:slime_ball",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:morgatha_swamp_queen_sigil"
+    },
+    "abilities": [
+      {
+        "id": "muck_bubbles",
+        "implementation": "functional",
+        "behavior": "Swelling bubbles burst into temporary poison pools.",
+        "counterplay": "Leave the swelling circle or burst it early from range.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "muck_bubbles"
+      },
+      {
+        "id": "mosquito_veil",
+        "implementation": "functional",
+        "behavior": "A slow cloud pursues one clearly marked target.",
+        "counterplay": "Kite the cloud out of the group or interrupt its caster.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "mosquito_veil"
+      },
+      {
+        "id": "bog_decoys",
+        "implementation": "functional",
+        "behavior": "The queen swaps with a visibly charged decoy before a hex wave.",
+        "counterplay": "Watch the charged decoy and leave its announced wave direction.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "bog_decoys"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Decoy swaps affect the queen, not players; hazards pair with longer warnings."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:mirestone",
+      "regional_count": 8,
+      "trophy_item": "pipican:morgatha_swamp_queen_trophy",
+      "planned_trophy_name": "Morgatha Swamp Queen Trophy",
+      "xp": 200
+    },
+    "model": {
+      "geometry": "geometry.pipican.morgatha_swamp_queen",
+      "file": "geo/bosses/morgatha_swamp_queen.geo.json",
+      "animation_mapping": {
+        "idle": "morgatha_swamp_queen/idle",
+        "walk": "morgatha_swamp_queen/walk",
+        "basic_attack": "morgatha_swamp_queen/basic_attack",
+        "hurt": "morgatha_swamp_queen/hurt",
+        "phase_transition": "morgatha_swamp_queen/phase_transition",
+        "summoning": "morgatha_swamp_queen/summoning",
+        "death": "morgatha_swamp_queen/death",
+        "muck_bubbles": "morgatha_swamp_queen/muck_bubbles",
+        "mosquito_veil": "morgatha_swamp_queen/mosquito_veil",
+        "bog_decoys": "morgatha_swamp_queen/bog_decoys"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "aurelios_sunken_emperor",
+    "region": "inner_sea",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 950,
+    "damage": 16,
+    "sigil": {
+      "planned_item_id": "pipican:aurelios_sunken_emperor_sigil",
+      "regional_material": "pipican:pearlsilver",
+      "regional_count": 5,
+      "dungeon_material": "pipican:inner_sea_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:gold_ingot",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:aurelios_sunken_emperor_sigil"
+    },
+    "abilities": [
+      {
+        "id": "mirror_guards",
+        "implementation": "functional",
+        "behavior": "Water mirrors shield announced projectile directions only.",
+        "counterplay": "Attack from the open flank or strike the exposed mirror core.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "mirror_guards"
+      },
+      {
+        "id": "pressure_grid",
+        "implementation": "functional",
+        "behavior": "Jets activate alternating rows of a visible grid.",
+        "counterplay": "Move into the next inactive row during the warning.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "pressure_grid"
+      },
+      {
+        "id": "treasury_tithe",
+        "implementation": "functional",
+        "behavior": "Tribute orbs travel toward a shield while broadcasting their paths.",
+        "counterplay": "Intercept an orb safely or dodge the resulting announced pulse.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "treasury_tithe"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Mirror openings alternate with pressure rows; tribute orbs shorten the shield."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:pearlsilver",
+      "regional_count": 8,
+      "trophy_item": "pipican:aurelios_sunken_emperor_trophy",
+      "planned_trophy_name": "Aurelios Sunken Emperor Trophy",
+      "xp": 238
+    },
+    "model": {
+      "geometry": "geometry.pipican.aurelios_sunken_emperor",
+      "file": "geo/bosses/aurelios_sunken_emperor.geo.json",
+      "animation_mapping": {
+        "idle": "aurelios_sunken_emperor/idle",
+        "walk": "aurelios_sunken_emperor/walk",
+        "basic_attack": "aurelios_sunken_emperor/basic_attack",
+        "hurt": "aurelios_sunken_emperor/hurt",
+        "phase_transition": "aurelios_sunken_emperor/phase_transition",
+        "summoning": "aurelios_sunken_emperor/summoning",
+        "death": "aurelios_sunken_emperor/death",
+        "mirror_guards": "aurelios_sunken_emperor/mirror_guards",
+        "pressure_grid": "aurelios_sunken_emperor/pressure_grid",
+        "treasury_tithe": "aurelios_sunken_emperor/treasury_tithe"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "morvath_ashen_king",
+    "region": "ashlands",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 600,
+    "damage": 12,
+    "sigil": {
+      "item": "pipican:morvath_sigil",
+      "regional_material": "pipican:cinderite",
+      "regional_count": 5,
+      "dungeon_material": "pipican:ashlands_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:magma_cream",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "CLEAVE",
+        "implementation": "functional",
+        "behavior": "Fixed-heading frontal sword cone, physical damage with ignition and knockback.",
+        "counterplay": "Dodge behind the king or outside the warned cone.",
+        "windup_ticks": 30,
+        "recovery_ticks": 18,
+        "cooldown_ticks": 55,
+        "animation": "CLEAVE"
+      },
+      {
+        "id": "METEOR_RAIN",
+        "implementation": "functional",
+        "behavior": "Ground marks stay fixed; falling flame trails precede one area impact.",
+        "counterplay": "Leave the marked circles before the impact.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 55,
+        "animation": "METEOR_RAIN"
+      },
+      {
+        "id": "ERUPTION",
+        "implementation": "functional",
+        "behavior": "Temporary non-terrain zones pulse damage after their warning.",
+        "counterplay": "Step out of the zones; overlapping zones do not multiply one pulse.",
+        "windup_ticks": 45,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 55,
+        "animation": "ERUPTION"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Cooldown 55 to 35 ticks; movement x1.25; extra meteor marks; eruption 4/80 to 7/120 damage/ticks."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:cinderite",
+      "regional_count": 8,
+      "trophy_item": "pipican:ashen_kings_heart",
+      "planned_trophy_name": "Morvath Ashen King Trophy",
+      "xp": 150,
+      "rare_drop": {
+        "item": "pipican:infernium",
+        "chance": 0.25
+      }
+    },
+    "model": {
+      "geometry": "geometry.pipican.morvath_ashen_king",
+      "file": "geo/bosses/morvath_ashen_king.geo.json",
+      "animation_mapping": {
+        "idle": "native:morvath/idle",
+        "walk": "native:morvath/walk",
+        "basic_attack": "native:morvath/basic_attack",
+        "cleave": "native:morvath/cleave",
+        "meteor": "native:morvath/meteor",
+        "eruption": "native:morvath/eruption",
+        "hurt": "native:morvath/hurt",
+        "phase_transition": "native:morvath/phase_transition",
+        "summoning": "native:morvath/summoning",
+        "death": "native:morvath/death"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": false
+    }
+  },
+  {
+    "id": "lianhua_lotus_serpent",
+    "region": "lotus_delta",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 850,
+    "damage": 15,
+    "sigil": {
+      "planned_item_id": "pipican:lianhua_lotus_serpent_sigil",
+      "regional_material": "pipican:lotus_opal",
+      "regional_count": 5,
+      "dungeon_material": "pipican:lotus_delta_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:lily_pad",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:lianhua_lotus_serpent_sigil"
+    },
+    "abilities": [
+      {
+        "id": "lotus_petals",
+        "implementation": "functional",
+        "behavior": "Petal-shaped danger arcs open around a central safe lily.",
+        "counterplay": "Move through the unlit petal before the arcs close.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "lotus_petals"
+      },
+      {
+        "id": "river_coils",
+        "implementation": "functional",
+        "behavior": "The serpent previews a coiled route then traverses it.",
+        "counterplay": "Cross the announced coil opening rather than following the head.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "river_coils"
+      },
+      {
+        "id": "bloom_reflections",
+        "implementation": "functional",
+        "behavior": "Reflected blooms copy a pulse after a separate warning.",
+        "counterplay": "Leave the echo bloom before its delayed second pulse.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "bloom_reflections"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Petal gaps rotate after each pulse; the serpent exposes its tail between patterns."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:lotus_opal",
+      "regional_count": 8,
+      "trophy_item": "pipican:lianhua_lotus_serpent_trophy",
+      "planned_trophy_name": "Lianhua Lotus Serpent Trophy",
+      "xp": 212
+    },
+    "model": {
+      "geometry": "geometry.pipican.lianhua_lotus_serpent",
+      "file": "geo/bosses/lianhua_lotus_serpent.geo.json",
+      "animation_mapping": {
+        "idle": "lianhua_lotus_serpent/idle",
+        "walk": "lianhua_lotus_serpent/walk",
+        "basic_attack": "lianhua_lotus_serpent/basic_attack",
+        "hurt": "lianhua_lotus_serpent/hurt",
+        "phase_transition": "lianhua_lotus_serpent/phase_transition",
+        "summoning": "lianhua_lotus_serpent/summoning",
+        "death": "lianhua_lotus_serpent/death",
+        "lotus_petals": "lianhua_lotus_serpent/lotus_petals",
+        "river_coils": "lianhua_lotus_serpent/river_coils",
+        "bloom_reflections": "lianhua_lotus_serpent/bloom_reflections"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 6,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "akhmar_sand_emperor",
+    "region": "sunscorch_desert",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 900,
+    "damage": 16,
+    "sigil": {
+      "item": "pipican:akhmar_sand_emperor_sigil",
+      "regional_material": "pipican:sunglass",
+      "regional_count": 5,
+      "dungeon_material": "pipican:sunscorch_desert_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:rabbit_foot",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "dune_procession",
+        "implementation": "functional",
+        "behavior": "Sand spirits advance through previewed winding lanes.",
+        "counterplay": "Cross into a lane without a procession marker.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "akhmar_sand_emperor/dune_procession"
+      },
+      {
+        "id": "sun_obelisks",
+        "implementation": "functional",
+        "behavior": "Temporary spectral obelisks cast safe shadows before a sun pulse.",
+        "counterplay": "Use the displayed shadow or interrupt an obelisk.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "akhmar_sand_emperor/sun_obelisks"
+      },
+      {
+        "id": "buried_court",
+        "implementation": "functional",
+        "behavior": "Burrowing silhouettes announce three successive eruptions.",
+        "counterplay": "Keep moving out of each locked silhouette, not the whole arena.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "akhmar_sand_emperor/buried_court"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Sand lanes shift after an audible command; shadow refuges remain stable."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:sunglass",
+      "regional_count": 8,
+      "trophy_item": "pipican:akhmar_sand_emperor_trophy",
+      "planned_trophy_name": "Akhmar Sand Emperor Trophy",
+      "xp": 225
+    },
+    "model": {
+      "geometry": "geometry.pipican.akhmar_sand_emperor",
+      "file": "geo/bosses/akhmar_sand_emperor.geo.json",
+      "animation_mapping": {
+        "idle": "akhmar_sand_emperor/idle",
+        "walk": "akhmar_sand_emperor/walk",
+        "basic_attack": "akhmar_sand_emperor/basic_attack",
+        "hurt": "akhmar_sand_emperor/hurt",
+        "phase_transition": "akhmar_sand_emperor/phase_transition",
+        "summoning": "akhmar_sand_emperor/summoning",
+        "death": "akhmar_sand_emperor/death",
+        "dune_procession": "akhmar_sand_emperor/dune_procession",
+        "sun_obelisks": "akhmar_sand_emperor/sun_obelisks",
+        "buried_court": "akhmar_sand_emperor/buried_court"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "netharis_river_guardian",
+    "region": "riverlands",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 850,
+    "damage": 14,
+    "sigil": {
+      "item": "pipican:netharis_river_guardian_sigil",
+      "regional_material": "pipican:sunstone",
+      "regional_count": 5,
+      "dungeon_material": "pipican:riverlands_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:glow_ink_sac",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "river_gates",
+        "implementation": "functional",
+        "behavior": "Temporary water-gate waves sweep through visible openings.",
+        "counterplay": "Pass through an announced opening before the gate reaches you.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "netharis_river_guardian/river_gates"
+      },
+      {
+        "id": "silt_javelins",
+        "implementation": "functional",
+        "behavior": "Javelins rise from marked riverbed spots in sequence.",
+        "counterplay": "Leave the next numbered spot during its separate warning.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "netharis_river_guardian/silt_javelins"
+      },
+      {
+        "id": "tributary_call",
+        "implementation": "functional",
+        "behavior": "Small current anchors feed a central charge.",
+        "counterplay": "Interrupt an anchor or use its unlit crossing before the surge.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "netharis_river_guardian/tributary_call"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Currents rotate between calls; water gates retain broad announced openings."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:sunstone",
+      "regional_count": 8,
+      "trophy_item": "pipican:netharis_river_guardian_trophy",
+      "planned_trophy_name": "Netharis River Guardian Trophy",
+      "xp": 212
+    },
+    "model": {
+      "geometry": "geometry.pipican.netharis_river_guardian",
+      "file": "geo/bosses/netharis_river_guardian.geo.json",
+      "animation_mapping": {
+        "idle": "netharis_river_guardian/idle",
+        "walk": "netharis_river_guardian/walk",
+        "basic_attack": "netharis_river_guardian/basic_attack",
+        "hurt": "netharis_river_guardian/hurt",
+        "phase_transition": "netharis_river_guardian/phase_transition",
+        "summoning": "netharis_river_guardian/summoning",
+        "death": "netharis_river_guardian/death",
+        "river_gates": "netharis_river_guardian/river_gates",
+        "silt_javelins": "netharis_river_guardian/silt_javelins",
+        "tributary_call": "netharis_river_guardian/tributary_call"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "zahira_crimson_corsair",
+    "region": "spice_coast",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 700,
+    "damage": 14,
+    "sigil": {
+      "item": "pipican:zahira_crimson_corsair_sigil",
+      "regional_material": "pipican:saffron_gold",
+      "regional_count": 5,
+      "dungeon_material": "pipican:spice_coast_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:fire_charge",
+      "min_y": -64,
+      "max_y": 448
+    },
+    "abilities": [
+      {
+        "id": "boarding_lines",
+        "implementation": "functional",
+        "behavior": "Spectral grappling lines preview the corsair boarding route.",
+        "counterplay": "Move away from the rope landing or punish the boarding recovery.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "zahira_crimson_corsair/boarding_lines"
+      },
+      {
+        "id": "broadside",
+        "implementation": "functional",
+        "behavior": "Side cannons light their barrels before firing straight lanes.",
+        "counterplay": "Use gaps between barrels or interrupt the lit cannon.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "zahira_crimson_corsair/broadside"
+      },
+      {
+        "id": "fuse_dance",
+        "implementation": "functional",
+        "behavior": "Rolling bombs display individual fuses and fixed detonation circles.",
+        "counterplay": "Kick or leave a bomb before its own fuse expires.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "zahira_crimson_corsair/fuse_dance"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Cannons alternate flanks and bombs retain visible fuses."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:saffron_gold",
+      "regional_count": 8,
+      "trophy_item": "pipican:zahira_crimson_corsair_trophy",
+      "planned_trophy_name": "Zahira Crimson Corsair Trophy",
+      "xp": 175
+    },
+    "model": {
+      "geometry": "geometry.pipican.zahira_crimson_corsair",
+      "file": "geo/bosses/zahira_crimson_corsair.geo.json",
+      "animation_mapping": {
+        "idle": "zahira_crimson_corsair/idle",
+        "walk": "zahira_crimson_corsair/walk",
+        "basic_attack": "zahira_crimson_corsair/basic_attack",
+        "hurt": "zahira_crimson_corsair/hurt",
+        "phase_transition": "zahira_crimson_corsair/phase_transition",
+        "summoning": "zahira_crimson_corsair/summoning",
+        "death": "zahira_crimson_corsair/death",
+        "boarding_lines": "zahira_crimson_corsair/boarding_lines",
+        "broadside": "zahira_crimson_corsair/broadside",
+        "fuse_dance": "zahira_crimson_corsair/fuse_dance"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "xaltek_emerald_devourer",
+    "region": "emerald_jungle",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 950,
+    "damage": 17,
+    "sigil": {
+      "regional_material": "pipican:verdantite",
+      "regional_count": 5,
+      "dungeon_material": "pipican:emerald_jungle_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:fermented_spider_eye",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:xaltek_emerald_devourer_sigil"
+    },
+    "abilities": [
+      {
+        "id": "thorn_snares",
+        "implementation": "functional",
+        "behavior": "Seed pods draw triangular vine snares before tightening.",
+        "counterplay": "Escape an open triangle edge or destroy a pod.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "xaltek_emerald_devourer/thorn_snares"
+      },
+      {
+        "id": "tongue_line",
+        "implementation": "functional",
+        "behavior": "A straight tongue lash marks its line before a pull attempt.",
+        "counterplay": "Sidestep the line or interrupt the exposed tongue tip.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "xaltek_emerald_devourer/tongue_line"
+      },
+      {
+        "id": "canopy_pounce",
+        "implementation": "functional",
+        "behavior": "Foliage shadows reveal a chosen landing before the leap.",
+        "counterplay": "Leave the locked shadow, then attack during landing recovery.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "xaltek_emerald_devourer/canopy_pounce"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Pods grow paired vines; destroying a pod exposes a weak spot."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:verdantite",
+      "regional_count": 8,
+      "trophy_item": "pipican:xaltek_emerald_devourer_trophy",
+      "xp": 238,
+      "planned_trophy_name": "Xaltek Emerald Devourer Trophy"
+    },
+    "model": {
+      "geometry": "geometry.pipican.xaltek_emerald_devourer",
+      "file": "geo/bosses/xaltek_emerald_devourer.geo.json",
+      "animation_mapping": {
+        "idle": "xaltek_emerald_devourer/idle",
+        "walk": "xaltek_emerald_devourer/walk",
+        "basic_attack": "xaltek_emerald_devourer/basic_attack",
+        "hurt": "xaltek_emerald_devourer/hurt",
+        "phase_transition": "xaltek_emerald_devourer/phase_transition",
+        "summoning": "xaltek_emerald_devourer/summoning",
+        "death": "xaltek_emerald_devourer/death",
+        "thorn_snares": "xaltek_emerald_devourer/thorn_snares",
+        "tongue_line": "xaltek_emerald_devourer/tongue_line",
+        "canopy_pounce": "xaltek_emerald_devourer/canopy_pounce"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "corallith_reef_colossus",
+    "region": "coral_isles",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1000,
+    "damage": 16,
+    "sigil": {
+      "regional_material": "pipican:tidalite",
+      "regional_count": 5,
+      "dungeon_material": "pipican:coral_isles_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:tube_coral",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:corallith_reef_colossus_sigil"
+    },
+    "abilities": [
+      {
+        "id": "coral_gates",
+        "implementation": "functional",
+        "behavior": "Temporary coral silhouettes form an advancing broken ring.",
+        "counterplay": "Use its clearly unoccupied gate; no permanent coral blocks are placed.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "corallith_reef_colossus/coral_gates"
+      },
+      {
+        "id": "reef_echo",
+        "implementation": "functional",
+        "behavior": "A sonar sector repeats once with a separate warning.",
+        "counterplay": "Dodge the first sector and its announced echo direction.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "corallith_reef_colossus/reef_echo"
+      },
+      {
+        "id": "urchin_fan",
+        "implementation": "functional",
+        "behavior": "Slow urchins spread from previewed sockets.",
+        "counterplay": "Move between sockets or destroy the slow urchin before contact.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "corallith_reef_colossus/urchin_fan"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Reef echoes add one delayed rotation; coral gates always have a safe gap."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:tidalite",
+      "regional_count": 8,
+      "trophy_item": "pipican:corallith_reef_colossus_trophy",
+      "planned_trophy_name": "Corallith Reef Colossus Trophy",
+      "xp": 250
+    },
+    "model": {
+      "geometry": "geometry.pipican.corallith_reef_colossus",
+      "file": "geo/bosses/corallith_reef_colossus.geo.json",
+      "animation_mapping": {
+        "idle": "corallith_reef_colossus/idle",
+        "walk": "corallith_reef_colossus/walk",
+        "basic_attack": "corallith_reef_colossus/basic_attack",
+        "hurt": "corallith_reef_colossus/hurt",
+        "phase_transition": "corallith_reef_colossus/phase_transition",
+        "summoning": "corallith_reef_colossus/summoning",
+        "death": "corallith_reef_colossus/death",
+        "coral_gates": "corallith_reef_colossus/coral_gates",
+        "reef_echo": "corallith_reef_colossus/reef_echo",
+        "urchin_fan": "corallith_reef_colossus/urchin_fan"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 6,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "azhar_golden_behemoth",
+    "region": "goldgrass_savanna",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1100,
+    "damage": 18,
+    "sigil": {
+      "regional_material": "pipican:dawnbronze",
+      "regional_count": 5,
+      "dungeon_material": "pipican:goldgrass_savanna_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:blaze_powder",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:azhar_golden_behemoth_sigil"
+    },
+    "abilities": [
+      {
+        "id": "sun_refraction",
+        "implementation": "functional",
+        "behavior": "Golden plates preview a reflected sunlight path.",
+        "counterplay": "Cross behind the announced reflection or interrupt the plate.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "azhar_golden_behemoth/sun_refraction"
+      },
+      {
+        "id": "savanna_stampede",
+        "implementation": "functional",
+        "behavior": "Dust lanes reveal a limited spectral stampede.",
+        "counterplay": "Move into a clear lane instead of racing along the charge.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "azhar_golden_behemoth/savanna_stampede"
+      },
+      {
+        "id": "gilded_kneel",
+        "implementation": "functional",
+        "behavior": "A charged kneel sends staggered ground lobes with inner refuges.",
+        "counterplay": "Use an inner refuge or leave the next marked lobe.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "azhar_golden_behemoth/gilded_kneel"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Reflected rays alternate with marked stampedes; kneeling creates recovery."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:dawnbronze",
+      "regional_count": 8,
+      "trophy_item": "pipican:azhar_golden_behemoth_trophy",
+      "planned_trophy_name": "Azhar Golden Behemoth Trophy",
+      "xp": 275
+    },
+    "model": {
+      "geometry": "geometry.pipican.azhar_golden_behemoth",
+      "file": "geo/bosses/azhar_golden_behemoth.geo.json",
+      "animation_mapping": {
+        "idle": "azhar_golden_behemoth/idle",
+        "walk": "azhar_golden_behemoth/walk",
+        "basic_attack": "azhar_golden_behemoth/basic_attack",
+        "hurt": "azhar_golden_behemoth/hurt",
+        "phase_transition": "azhar_golden_behemoth/phase_transition",
+        "summoning": "azhar_golden_behemoth/summoning",
+        "death": "azhar_golden_behemoth/death",
+        "sun_refraction": "azhar_golden_behemoth/sun_refraction",
+        "savanna_stampede": "azhar_golden_behemoth/savanna_stampede",
+        "gilded_kneel": "azhar_golden_behemoth/gilded_kneel"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 6,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "kragmor_canyon_warlord",
+    "region": "redrock_badlands",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1000,
+    "damage": 17,
+    "sigil": {
+      "planned_item_id": "pipican:kragmor_canyon_warlord_sigil",
+      "regional_material": "pipican:redrock_iron",
+      "regional_count": 5,
+      "dungeon_material": "pipican:redrock_badlands_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:pointed_dripstone",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:kragmor_canyon_warlord_sigil"
+    },
+    "abilities": [
+      {
+        "id": "canyon_rockfall",
+        "implementation": "functional",
+        "behavior": "Shadows mark sequential falling rocks along canyon lanes.",
+        "counterplay": "Leave the next shadow; each rock locks its landing.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "kragmor_canyon_warlord/canyon_rockfall"
+      },
+      {
+        "id": "cairn_tethers",
+        "implementation": "functional",
+        "behavior": "Temporary cairns trace a delayed tether web.",
+        "counterplay": "Break a lit cairn or stand outside connected segments.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "kragmor_canyon_warlord/cairn_tethers"
+      },
+      {
+        "id": "ravine_leap",
+        "implementation": "functional",
+        "behavior": "The warlord previews a leap and a subsequent narrow shock line.",
+        "counterplay": "Leave the landing circle, then sidestep the announced line.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "kragmor_canyon_warlord/ravine_leap"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Rockfalls alternate ledges; broken cairns create longer punish windows."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:redrock_iron",
+      "regional_count": 8,
+      "trophy_item": "pipican:kragmor_canyon_warlord_trophy",
+      "planned_trophy_name": "Kragmor Canyon Warlord Trophy",
+      "xp": 250
+    },
+    "model": {
+      "geometry": "geometry.pipican.kragmor_canyon_warlord",
+      "file": "geo/bosses/kragmor_canyon_warlord.geo.json",
+      "animation_mapping": {
+        "idle": "kragmor_canyon_warlord/idle",
+        "walk": "kragmor_canyon_warlord/walk",
+        "basic_attack": "kragmor_canyon_warlord/basic_attack",
+        "hurt": "kragmor_canyon_warlord/hurt",
+        "phase_transition": "kragmor_canyon_warlord/phase_transition",
+        "summoning": "kragmor_canyon_warlord/summoning",
+        "death": "kragmor_canyon_warlord/death",
+        "canyon_rockfall": "kragmor_canyon_warlord/canyon_rockfall",
+        "cairn_tethers": "kragmor_canyon_warlord/cairn_tethers",
+        "ravine_leap": "kragmor_canyon_warlord/ravine_leap"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "aetherion_sky_guardian",
+    "region": "aetheris_expanse",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1200,
+    "damage": 18,
+    "sigil": {
+      "planned_item_id": "pipican:aetherion_sky_guardian_sigil",
+      "regional_material": "pipican:skycrystal",
+      "regional_count": 5,
+      "dungeon_material": "pipican:aetheris_expanse_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:feather",
+      "min_y": 251,
+      "max_y": 448,
+      "item": "pipican:aetherion_sky_guardian_sigil"
+    },
+    "abilities": [
+      {
+        "id": "updraft_paths",
+        "implementation": "functional",
+        "behavior": "Visible air paths offer lift before a low sweeping beam.",
+        "counterplay": "Enter a safe updraft or move behind the announced sweep.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "aetherion_sky_guardian/updraft_paths"
+      },
+      {
+        "id": "feather_constellation",
+        "implementation": "functional",
+        "behavior": "Feathers form a constellation then launch along drawn connections.",
+        "counterplay": "Stand outside connections or interrupt a lit feather node.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "aetherion_sky_guardian/feather_constellation"
+      },
+      {
+        "id": "sky_dive",
+        "implementation": "functional",
+        "behavior": "A descending guardian shadow fixes its landing and wake.",
+        "counterplay": "Leave the shadow and cross behind the trailing wake.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "aetherion_sky_guardian/sky_dive"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Updraft paths alternate and feather volleys retain their telegraphed gaps."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:skycrystal",
+      "regional_count": 8,
+      "trophy_item": "pipican:aetherion_sky_guardian_trophy",
+      "planned_trophy_name": "Aetherion Sky Guardian Trophy",
+      "xp": 300,
+      "rare_drop": {
+        "item": "pipican:celestium",
+        "chance": 0.25
+      }
+    },
+    "model": {
+      "geometry": "geometry.pipican.aetherion_sky_guardian",
+      "file": "geo/bosses/aetherion_sky_guardian.geo.json",
+      "animation_mapping": {
+        "idle": "aetherion_sky_guardian/idle",
+        "walk": "aetherion_sky_guardian/walk",
+        "basic_attack": "aetherion_sky_guardian/basic_attack",
+        "hurt": "aetherion_sky_guardian/hurt",
+        "phase_transition": "aetherion_sky_guardian/phase_transition",
+        "summoning": "aetherion_sky_guardian/summoning",
+        "death": "aetherion_sky_guardian/death",
+        "updraft_paths": "aetherion_sky_guardian/updraft_paths",
+        "feather_constellation": "aetherion_sky_guardian/feather_constellation",
+        "sky_dive": "aetherion_sky_guardian/sky_dive"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "sylthera_primordial_bloom",
+    "region": "verdant_depths",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1100,
+    "damage": 17,
+    "sigil": {
+      "planned_item_id": "pipican:sylthera_primordial_bloom_sigil",
+      "regional_material": "pipican:lifebloom_crystal",
+      "regional_count": 5,
+      "dungeon_material": "pipican:verdant_depths_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:moss_block",
+      "min_y": -64,
+      "max_y": 43,
+      "item": "pipican:sylthera_primordial_bloom_sigil"
+    },
+    "abilities": [
+      {
+        "id": "spore_sequence",
+        "implementation": "functional",
+        "behavior": "Colored spore rings activate in a displayed sequence.",
+        "counterplay": "Move into a ring that has just finished pulsing.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "sylthera_primordial_bloom/spore_sequence"
+      },
+      {
+        "id": "root_nursery",
+        "implementation": "functional",
+        "behavior": "Seedlings feed a healing root pool while warning their growth area.",
+        "counterplay": "Destroy a seedling to open a safe path and interrupt healing.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "sylthera_primordial_bloom/root_nursery"
+      },
+      {
+        "id": "bloom_inhalation",
+        "implementation": "functional",
+        "behavior": "A slow inhalation draws spores inward before a directional release.",
+        "counterplay": "Move out of the drawn release sector or interrupt the throat bloom.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "sylthera_primordial_bloom/bloom_inhalation"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Spore colors change order; cleared root pools remain safe refuges."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:lifebloom_crystal",
+      "regional_count": 8,
+      "trophy_item": "pipican:sylthera_primordial_bloom_trophy",
+      "planned_trophy_name": "Sylthera Primordial Bloom Trophy",
+      "xp": 275
+    },
+    "model": {
+      "geometry": "geometry.pipican.sylthera_primordial_bloom",
+      "file": "geo/bosses/sylthera_primordial_bloom.geo.json",
+      "animation_mapping": {
+        "idle": "sylthera_primordial_bloom/idle",
+        "walk": "sylthera_primordial_bloom/walk",
+        "basic_attack": "sylthera_primordial_bloom/basic_attack",
+        "hurt": "sylthera_primordial_bloom/hurt",
+        "phase_transition": "sylthera_primordial_bloom/phase_transition",
+        "summoning": "sylthera_primordial_bloom/summoning",
+        "death": "sylthera_primordial_bloom/death",
+        "spore_sequence": "sylthera_primordial_bloom/spore_sequence",
+        "root_nursery": "sylthera_primordial_bloom/root_nursery",
+        "bloom_inhalation": "sylthera_primordial_bloom/bloom_inhalation"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 6,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "nocthar_void_sovereign",
+    "region": "umbral_chasm",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1600,
+    "damage": 20,
+    "sigil": {
+      "planned_item_id": "pipican:nocthar_void_sovereign_sigil",
+      "regional_material": "pipican:umbrite",
+      "regional_count": 5,
+      "dungeon_material": "pipican:umbral_chasm_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:ender_pearl",
+      "min_y": -64,
+      "max_y": -1,
+      "item": "pipican:nocthar_void_sovereign_sigil"
+    },
+    "abilities": [
+      {
+        "id": "void_seams",
+        "implementation": "functional",
+        "behavior": "Paired seams preview a spatial crossing and delayed rupture.",
+        "counterplay": "Leave the connected seam or use the announced unlinked crossing.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "nocthar_void_sovereign/void_seams"
+      },
+      {
+        "id": "gravity_wells",
+        "implementation": "functional",
+        "behavior": "Clearly bounded gravity wells charge before pulling.",
+        "counterplay": "Exit the boundary or destroy its exposed focus.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "nocthar_void_sovereign/gravity_wells"
+      },
+      {
+        "id": "eclipse_lanes",
+        "implementation": "functional",
+        "behavior": "An eclipse reveals a rotating unshaded corridor between beams.",
+        "counterplay": "Follow the unshaded corridor during each announced rotation.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "nocthar_void_sovereign/eclipse_lanes"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Void seams change topology, with pair destinations always shown before activation."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:umbrite",
+      "regional_count": 8,
+      "trophy_item": "pipican:nocthar_void_sovereign_trophy",
+      "planned_trophy_name": "Nocthar Void Sovereign Trophy",
+      "xp": 400,
+      "rare_drop": {
+        "item": "pipican:voidsteel",
+        "chance": 0.2
+      }
+    },
+    "model": {
+      "geometry": "geometry.pipican.nocthar_void_sovereign",
+      "file": "geo/bosses/nocthar_void_sovereign.geo.json",
+      "animation_mapping": {
+        "idle": "nocthar_void_sovereign/idle",
+        "walk": "nocthar_void_sovereign/walk",
+        "basic_attack": "nocthar_void_sovereign/basic_attack",
+        "hurt": "nocthar_void_sovereign/hurt",
+        "phase_transition": "nocthar_void_sovereign/phase_transition",
+        "summoning": "nocthar_void_sovereign/summoning",
+        "death": "nocthar_void_sovereign/death",
+        "void_seams": "nocthar_void_sovereign/void_seams",
+        "gravity_wells": "nocthar_void_sovereign/gravity_wells",
+        "eclipse_lanes": "nocthar_void_sovereign/eclipse_lanes"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 7,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "vermillion_blood_monarch",
+    "region": "crimson_wilds",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1400,
+    "damage": 19,
+    "sigil": {
+      "planned_item_id": "pipican:vermillion_blood_monarch_sigil",
+      "regional_material": "pipican:bloodstone",
+      "regional_count": 5,
+      "dungeon_material": "pipican:crimson_wilds_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:nether_wart",
+      "min_y": -64,
+      "max_y": 448,
+      "item": "pipican:vermillion_blood_monarch_sigil"
+    },
+    "abilities": [
+      {
+        "id": "blood_tethers",
+        "implementation": "functional",
+        "behavior": "Visible draining tethers connect charged vessels to the monarch.",
+        "counterplay": "Break a vessel or move out of its announced line.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "vermillion_blood_monarch/blood_tethers"
+      },
+      {
+        "id": "crimson_orbits",
+        "implementation": "functional",
+        "behavior": "Blades orbit in staggered heights with a visible safe crossing.",
+        "counterplay": "Use the crossing when its blade has just passed.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "vermillion_blood_monarch/crimson_orbits"
+      },
+      {
+        "id": "sanguine_court",
+        "implementation": "functional",
+        "behavior": "Spectral courtiers announce a shared life-drain channel.",
+        "counterplay": "Interrupt a marked courtier or leave its limited channel sector.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "vermillion_blood_monarch/sanguine_court"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Blood tethers alternate with orbiting blades; broken tethers expose the monarch."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:bloodstone",
+      "regional_count": 8,
+      "trophy_item": "pipican:vermillion_blood_monarch_trophy",
+      "planned_trophy_name": "Vermillion Blood Monarch Trophy",
+      "xp": 350,
+      "rare_drop": {
+        "item": "pipican:bloodcrystal",
+        "chance": 0.25
+      }
+    },
+    "model": {
+      "geometry": "geometry.pipican.vermillion_blood_monarch",
+      "file": "geo/bosses/vermillion_blood_monarch.geo.json",
+      "animation_mapping": {
+        "idle": "vermillion_blood_monarch/idle",
+        "walk": "vermillion_blood_monarch/walk",
+        "basic_attack": "vermillion_blood_monarch/basic_attack",
+        "hurt": "vermillion_blood_monarch/hurt",
+        "phase_transition": "vermillion_blood_monarch/phase_transition",
+        "summoning": "vermillion_blood_monarch/summoning",
+        "death": "vermillion_blood_monarch/death",
+        "blood_tethers": "vermillion_blood_monarch/blood_tethers",
+        "crimson_orbits": "vermillion_blood_monarch/crimson_orbits",
+        "sanguine_court": "vermillion_blood_monarch/sanguine_court"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  },
+  {
+    "id": "lumynara_abyssal_oracle",
+    "region": "shimmering_reefs",
+    "functional": true,
+    "client_qa_complete": false,
+    "health": 1200,
+    "damage": 18,
+    "sigil": {
+      "planned_item_id": "pipican:lumynara_abyssal_oracle_sigil",
+      "regional_material": "pipican:abyssal_shard",
+      "regional_count": 5,
+      "dungeon_material": "pipican:shimmering_reefs_boss_core",
+      "dungeon_count": 2,
+      "ritual_core": "pipican:ritual_core",
+      "catalyst": "minecraft:glowstone_dust",
+      "min_y": -64,
+      "max_y": 89,
+      "item": "pipican:lumynara_abyssal_oracle_sigil"
+    },
+    "abilities": [
+      {
+        "id": "luminous_gaze",
+        "implementation": "functional",
+        "behavior": "Eye lights announce a locked gaze beam, with an obvious shutter cue.",
+        "counterplay": "Leave the beam line before the eye opens.",
+        "windup_ticks": 40,
+        "recovery_ticks": 30,
+        "cooldown_ticks": 80,
+        "animation": "lumynara_abyssal_oracle/luminous_gaze"
+      },
+      {
+        "id": "choral_waves",
+        "implementation": "functional",
+        "behavior": "Sound rings display a harmonic safe band between pulses.",
+        "counterplay": "Move into the lit safe band instead of crossing every wave.",
+        "windup_ticks": 50,
+        "recovery_ticks": 40,
+        "cooldown_ticks": 100,
+        "animation": "lumynara_abyssal_oracle/choral_waves"
+      },
+      {
+        "id": "abyssal_lanterns",
+        "implementation": "functional",
+        "behavior": "Lantern nodes reveal delayed converging rays.",
+        "counterplay": "Interrupt a lantern or stay outside its drawn ray intersection.",
+        "windup_ticks": 60,
+        "recovery_ticks": 50,
+        "cooldown_ticks": 120,
+        "animation": "lumynara_abyssal_oracle/abyssal_lanterns"
+      }
+    ],
+    "phase_two": {
+      "health_fraction": 0.5,
+      "once_only": true,
+      "behavior": "Gaze patterns add an echo while harmonic safe zones alternate visibly."
+    },
+    "loot": {
+      "guaranteed_regional_material": "pipican:abyssal_shard",
+      "regional_count": 8,
+      "trophy_item": "pipican:lumynara_abyssal_oracle_trophy",
+      "planned_trophy_name": "Lumynara Abyssal Oracle Trophy",
+      "xp": 300
+    },
+    "model": {
+      "geometry": "geometry.pipican.lumynara_abyssal_oracle",
+      "file": "geo/bosses/lumynara_abyssal_oracle.geo.json",
+      "animation_mapping": {
+        "idle": "lumynara_abyssal_oracle/idle",
+        "walk": "lumynara_abyssal_oracle/walk",
+        "basic_attack": "lumynara_abyssal_oracle/basic_attack",
+        "hurt": "lumynara_abyssal_oracle/hurt",
+        "phase_transition": "lumynara_abyssal_oracle/phase_transition",
+        "summoning": "lumynara_abyssal_oracle/summoning",
+        "death": "lumynara_abyssal_oracle/death",
+        "luminous_gaze": "lumynara_abyssal_oracle/luminous_gaze",
+        "choral_waves": "lumynara_abyssal_oracle/choral_waves",
+        "abyssal_lanterns": "lumynara_abyssal_oracle/abyssal_lanterns"
+      }
+    },
+    "arena": {
+      "floor_width": 13,
+      "clear_width": 11,
+      "clear_height": 5,
+      "requires_individual_validation": true
+    }
+  }
+]

@@ -93,6 +93,7 @@ SETS = {
     'manasteel': _s('magic', ['+10% magic damage', _bonus('ability_cooldown', -0.1)], ['+10% mining speed'], traits=['self_repair']),
     'wintersteel': _s('balanced', ['immune to freezing damage', '+1 armor toughness'], ['mobs you hit get Slowness I for 3s', '+15% freezing damage']),
     'royal_silver': _s('balanced', [_bonus('trade_price', -0.1), '-10% damage taken from undead'], ['+30% damage against undead']),
+    'skyiron': _s('light', ['+10% movement speed', '+10% mount speed'], ['+15% damage while mounted']),
     'dawnbronze': _s('balanced', ['+15% damage during the day'], ['+15% damage against undead']),
 
     # ---------------------------------------------------------------- T4

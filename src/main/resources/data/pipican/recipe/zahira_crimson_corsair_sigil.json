@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SSS", "SCR", "SCB"],
+  "key": {
+    "S": "pipican:saffron_gold_ingot",
+    "C": "pipican:spice_coast_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:fire_charge"
+  },
+  "result": {
+    "id": "pipican:zahira_crimson_corsair_sigil",
+    "count": 1
+  }
+}

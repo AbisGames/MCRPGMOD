@@ -1,6 +1,12 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_desert",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_desert",
+      "#pipican:region/sunscorch_desert"
+    ]
+  },
   "features": "pipican:ore_dimeritium",
   "step": "underground_ores"
 }

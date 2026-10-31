@@ -1,5 +1,7 @@
 assets/pipican/blockstates/abyssal_shard_block.json
 assets/pipican/blockstates/abyssal_shard_ore.json
+assets/pipican/blockstates/abyssium_block.json
+assets/pipican/blockstates/abyssium_ore.json
 assets/pipican/blockstates/adamantine_block.json
 assets/pipican/blockstates/adamantine_ore.json
 assets/pipican/blockstates/adamantium_block.json
@@ -15,6 +17,8 @@ assets/pipican/blockstates/aquamarine_block.json
 assets/pipican/blockstates/aquamarine_ore.json
 assets/pipican/blockstates/arcanite_block.json
 assets/pipican/blockstates/ardite_block.json
+assets/pipican/blockstates/astralite_block.json
+assets/pipican/blockstates/astralite_ore.json
 assets/pipican/blockstates/atium_block.json
 assets/pipican/blockstates/atium_ore.json
 assets/pipican/blockstates/beskar_block.json
@@ -56,12 +60,14 @@ assets/pipican/blockstates/darksteel_ore.json
 assets/pipican/blockstates/dawnbronze_block.json
 assets/pipican/blockstates/dawnbronze_ore.json
 assets/pipican/blockstates/deepslate_abyssal_shard_ore.json
+assets/pipican/blockstates/deepslate_abyssium_ore.json
 assets/pipican/blockstates/deepslate_adamantine_ore.json
 assets/pipican/blockstates/deepslate_adamantium_ore.json
 assets/pipican/blockstates/deepslate_allthemodium_ore.json
 assets/pipican/blockstates/deepslate_aluminum_ore.json
 assets/pipican/blockstates/deepslate_amber_ore.json
 assets/pipican/blockstates/deepslate_aquamarine_ore.json
+assets/pipican/blockstates/deepslate_astralite_ore.json
 assets/pipican/blockstates/deepslate_atium_ore.json
 assets/pipican/blockstates/deepslate_beskar_ore.json
 assets/pipican/blockstates/deepslate_black_metal_ore.json
@@ -116,6 +122,7 @@ assets/pipican/blockstates/deepslate_kyanite_ore.json
 assets/pipican/blockstates/deepslate_lacrima_ore.json
 assets/pipican/blockstates/deepslate_lerasium_ore.json
 assets/pipican/blockstates/deepslate_lifebloom_crystal_ore.json
+assets/pipican/blockstates/deepslate_lotus_opal_ore.json
 assets/pipican/blockstates/deepslate_luminite_ore.json
 assets/pipican/blockstates/deepslate_luna_titanium_ore.json
 assets/pipican/blockstates/deepslate_machalite_ore.json
@@ -126,6 +133,7 @@ assets/pipican/blockstates/deepslate_meteoric_iron_ore.json
 assets/pipican/blockstates/deepslate_mirestone_ore.json
 assets/pipican/blockstates/deepslate_mithril_ore.json
 assets/pipican/blockstates/deepslate_mooncrystal_ore.json
+assets/pipican/blockstates/deepslate_moonshard_ore.json
 assets/pipican/blockstates/deepslate_moonstone_ore.json
 assets/pipican/blockstates/deepslate_morkite_ore.json
 assets/pipican/blockstates/deepslate_nickel_ore.json
@@ -145,6 +153,7 @@ assets/pipican/blockstates/deepslate_quicksilver_ore.json
 assets/pipican/blockstates/deepslate_raritanium_ore.json
 assets/pipican/blockstates/deepslate_redrock_iron_ore.json
 assets/pipican/blockstates/deepslate_royal_silver_ore.json
+assets/pipican/blockstates/deepslate_runestone_ore.json
 assets/pipican/blockstates/deepslate_runic_iron_ore.json
 assets/pipican/blockstates/deepslate_saffron_gold_ore.json
 assets/pipican/blockstates/deepslate_sakuradite_ore.json
@@ -153,10 +162,13 @@ assets/pipican/blockstates/deepslate_scarlet_ore.json
 assets/pipican/blockstates/deepslate_sekkiseki_ore.json
 assets/pipican/blockstates/deepslate_sigmarite_ore.json
 assets/pipican/blockstates/deepslate_silversheen_ore.json
+assets/pipican/blockstates/deepslate_skyiron_ore.json
+assets/pipican/blockstates/deepslate_soulstone_ore.json
 assets/pipican/blockstates/deepslate_stalhrim_ore.json
 assets/pipican/blockstates/deepslate_starmetal_ore.json
 assets/pipican/blockstates/deepslate_starsilver_ore.json
 assets/pipican/blockstates/deepslate_stormsilver_ore.json
+assets/pipican/blockstates/deepslate_sunforged_ore.json
 assets/pipican/blockstates/deepslate_sunglass_ore.json
 assets/pipican/blockstates/deepslate_sunstone_ore.json
 assets/pipican/blockstates/deepslate_tamashigane_ore.json
@@ -214,6 +226,7 @@ assets/pipican/blockstates/end_gundanium_ore.json
 assets/pipican/blockstates/end_khaydarin_ore.json
 assets/pipican/blockstates/end_naquadah_ore.json
 assets/pipican/blockstates/end_phrik_ore.json
+assets/pipican/blockstates/end_primordial_ore.json
 assets/pipican/blockstates/end_sam_ore.json
 assets/pipican/blockstates/end_skycrystal_ore.json
 assets/pipican/blockstates/end_trinium_ore.json
@@ -276,6 +289,8 @@ assets/pipican/blockstates/lerasium_block.json
 assets/pipican/blockstates/lerasium_ore.json
 assets/pipican/blockstates/lifebloom_crystal_block.json
 assets/pipican/blockstates/lifebloom_crystal_ore.json
+assets/pipican/blockstates/lotus_opal_block.json
+assets/pipican/blockstates/lotus_opal_ore.json
 assets/pipican/blockstates/luminite_block.json
 assets/pipican/blockstates/luminite_ore.json
 assets/pipican/blockstates/luna_titanium_block.json
@@ -300,6 +315,8 @@ assets/pipican/blockstates/mithril_block.json
 assets/pipican/blockstates/mithril_ore.json
 assets/pipican/blockstates/mooncrystal_block.json
 assets/pipican/blockstates/mooncrystal_ore.json
+assets/pipican/blockstates/moonshard_block.json
+assets/pipican/blockstates/moonshard_ore.json
 assets/pipican/blockstates/moonstone_block.json
 assets/pipican/blockstates/moonstone_ore.json
 assets/pipican/blockstates/morkite_block.json
@@ -343,6 +360,7 @@ assets/pipican/blockstates/phazon_ore.json
 assets/pipican/blockstates/philosophers_stone_block.json
 assets/pipican/blockstates/philosophers_stone_ore.json
 assets/pipican/blockstates/phrik_block.json
+assets/pipican/blockstates/primordial_block.json
 assets/pipican/blockstates/prismatic_shard_block.json
 assets/pipican/blockstates/prismatic_shard_ore.json
 assets/pipican/blockstates/promethium_block.json
@@ -425,6 +443,7 @@ assets/pipican/blockstates/raw_saronite_block.json
 assets/pipican/blockstates/raw_scarlet_block.json
 assets/pipican/blockstates/raw_sigmarite_block.json
 assets/pipican/blockstates/raw_silversheen_block.json
+assets/pipican/blockstates/raw_skyiron_block.json
 assets/pipican/blockstates/raw_starmetal_block.json
 assets/pipican/blockstates/raw_starsilver_block.json
 assets/pipican/blockstates/raw_stormsilver_block.json
@@ -447,6 +466,8 @@ assets/pipican/blockstates/redrock_iron_block.json
 assets/pipican/blockstates/redrock_iron_ore.json
 assets/pipican/blockstates/royal_silver_block.json
 assets/pipican/blockstates/royal_silver_ore.json
+assets/pipican/blockstates/runestone_block.json
+assets/pipican/blockstates/runestone_ore.json
 assets/pipican/blockstates/runic_iron_block.json
 assets/pipican/blockstates/runic_iron_ore.json
 assets/pipican/blockstates/runite_block.json
@@ -466,6 +487,10 @@ assets/pipican/blockstates/sigmarite_ore.json
 assets/pipican/blockstates/silversheen_block.json
 assets/pipican/blockstates/silversheen_ore.json
 assets/pipican/blockstates/skycrystal_block.json
+assets/pipican/blockstates/skyiron_block.json
+assets/pipican/blockstates/skyiron_ore.json
+assets/pipican/blockstates/soulstone_block.json
+assets/pipican/blockstates/soulstone_ore.json
 assets/pipican/blockstates/stalhrim_block.json
 assets/pipican/blockstates/stalhrim_ore.json
 assets/pipican/blockstates/starmetal_block.json
@@ -475,6 +500,8 @@ assets/pipican/blockstates/starsilver_ore.json
 assets/pipican/blockstates/stormsilver_block.json
 assets/pipican/blockstates/stormsilver_ore.json
 assets/pipican/blockstates/stygian_iron_block.json
+assets/pipican/blockstates/sunforged_block.json
+assets/pipican/blockstates/sunforged_ore.json
 assets/pipican/blockstates/sunglass_block.json
 assets/pipican/blockstates/sunglass_ore.json
 assets/pipican/blockstates/sunstone_block.json
@@ -595,6 +622,7 @@ assets/pipican/equipment/runite.json
 assets/pipican/equipment/saronite.json
 assets/pipican/equipment/scarlet.json
 assets/pipican/equipment/sigmarite.json
+assets/pipican/equipment/skyiron.json
 assets/pipican/equipment/stalhrim.json
 assets/pipican/equipment/starsilver.json
 assets/pipican/equipment/stormsilver.json
@@ -615,6 +643,9 @@ assets/pipican/equipment/wintersteel.json
 assets/pipican/items/abyssal_shard.json
 assets/pipican/items/abyssal_shard_block.json
 assets/pipican/items/abyssal_shard_ore.json
+assets/pipican/items/abyssium.json
+assets/pipican/items/abyssium_block.json
+assets/pipican/items/abyssium_ore.json
 assets/pipican/items/adamantine_axe.json
 assets/pipican/items/adamantine_block.json
 assets/pipican/items/adamantine_boots.json
@@ -699,6 +730,9 @@ assets/pipican/items/ardite_pickaxe.json
 assets/pipican/items/ardite_shovel.json
 assets/pipican/items/ardite_spear.json
 assets/pipican/items/ardite_sword.json
+assets/pipican/items/astralite.json
+assets/pipican/items/astralite_block.json
+assets/pipican/items/astralite_ore.json
 assets/pipican/items/atium_block.json
 assets/pipican/items/atium_ingot.json
 assets/pipican/items/atium_ore.json
@@ -913,12 +947,14 @@ assets/pipican/items/dawnbronze_shovel.json
 assets/pipican/items/dawnbronze_spear.json
 assets/pipican/items/dawnbronze_sword.json
 assets/pipican/items/deepslate_abyssal_shard_ore.json
+assets/pipican/items/deepslate_abyssium_ore.json
 assets/pipican/items/deepslate_adamantine_ore.json
 assets/pipican/items/deepslate_adamantium_ore.json
 assets/pipican/items/deepslate_allthemodium_ore.json
 assets/pipican/items/deepslate_aluminum_ore.json
 assets/pipican/items/deepslate_amber_ore.json
 assets/pipican/items/deepslate_aquamarine_ore.json
+assets/pipican/items/deepslate_astralite_ore.json
 assets/pipican/items/deepslate_atium_ore.json
 assets/pipican/items/deepslate_beskar_ore.json
 assets/pipican/items/deepslate_black_metal_ore.json
@@ -973,6 +1009,7 @@ assets/pipican/items/deepslate_kyanite_ore.json
 assets/pipican/items/deepslate_lacrima_ore.json
 assets/pipican/items/deepslate_lerasium_ore.json
 assets/pipican/items/deepslate_lifebloom_crystal_ore.json
+assets/pipican/items/deepslate_lotus_opal_ore.json
 assets/pipican/items/deepslate_luminite_ore.json
 assets/pipican/items/deepslate_luna_titanium_ore.json
 assets/pipican/items/deepslate_machalite_ore.json
@@ -983,6 +1020,7 @@ assets/pipican/items/deepslate_meteoric_iron_ore.json
 assets/pipican/items/deepslate_mirestone_ore.json
 assets/pipican/items/deepslate_mithril_ore.json
 assets/pipican/items/deepslate_mooncrystal_ore.json
+assets/pipican/items/deepslate_moonshard_ore.json
 assets/pipican/items/deepslate_moonstone_ore.json
 assets/pipican/items/deepslate_morkite_ore.json
 assets/pipican/items/deepslate_nickel_ore.json
@@ -1002,6 +1040,7 @@ assets/pipican/items/deepslate_quicksilver_ore.json
 assets/pipican/items/deepslate_raritanium_ore.json
 assets/pipican/items/deepslate_redrock_iron_ore.json
 assets/pipican/items/deepslate_royal_silver_ore.json
+assets/pipican/items/deepslate_runestone_ore.json
 assets/pipican/items/deepslate_runic_iron_ore.json
 assets/pipican/items/deepslate_saffron_gold_ore.json
 assets/pipican/items/deepslate_sakuradite_ore.json
@@ -1010,10 +1049,13 @@ assets/pipican/items/deepslate_scarlet_ore.json
 assets/pipican/items/deepslate_sekkiseki_ore.json
 assets/pipican/items/deepslate_sigmarite_ore.json
 assets/pipican/items/deepslate_silversheen_ore.json
+assets/pipican/items/deepslate_skyiron_ore.json
+assets/pipican/items/deepslate_soulstone_ore.json
 assets/pipican/items/deepslate_stalhrim_ore.json
 assets/pipican/items/deepslate_starmetal_ore.json
 assets/pipican/items/deepslate_starsilver_ore.json
 assets/pipican/items/deepslate_stormsilver_ore.json
+assets/pipican/items/deepslate_sunforged_ore.json
 assets/pipican/items/deepslate_sunglass_ore.json
 assets/pipican/items/deepslate_sunstone_ore.json
 assets/pipican/items/deepslate_tamashigane_ore.json
@@ -1176,6 +1218,7 @@ assets/pipican/items/end_gundanium_ore.json
 assets/pipican/items/end_khaydarin_ore.json
 assets/pipican/items/end_naquadah_ore.json
 assets/pipican/items/end_phrik_ore.json
+assets/pipican/items/end_primordial_ore.json
 assets/pipican/items/end_sam_ore.json
 assets/pipican/items/end_skycrystal_ore.json
 assets/pipican/items/end_trinium_ore.json
@@ -1409,6 +1452,9 @@ assets/pipican/items/lerasium_ore.json
 assets/pipican/items/lifebloom_crystal.json
 assets/pipican/items/lifebloom_crystal_block.json
 assets/pipican/items/lifebloom_crystal_ore.json
+assets/pipican/items/lotus_opal.json
+assets/pipican/items/lotus_opal_block.json
+assets/pipican/items/lotus_opal_ore.json
 assets/pipican/items/luminite_axe.json
 assets/pipican/items/luminite_block.json
 assets/pipican/items/luminite_boots.json
@@ -1537,6 +1583,9 @@ assets/pipican/items/mithril_sword.json
 assets/pipican/items/mooncrystal.json
 assets/pipican/items/mooncrystal_block.json
 assets/pipican/items/mooncrystal_ore.json
+assets/pipican/items/moonshard.json
+assets/pipican/items/moonshard_block.json
+assets/pipican/items/moonshard_ore.json
 assets/pipican/items/moonstone.json
 assets/pipican/items/moonstone_axe.json
 assets/pipican/items/moonstone_block.json
@@ -1665,6 +1714,8 @@ assets/pipican/items/phrik_pickaxe.json
 assets/pipican/items/phrik_shovel.json
 assets/pipican/items/phrik_spear.json
 assets/pipican/items/phrik_sword.json
+assets/pipican/items/primordial.json
+assets/pipican/items/primordial_block.json
 assets/pipican/items/prismatic_shard.json
 assets/pipican/items/prismatic_shard_block.json
 assets/pipican/items/prismatic_shard_ore.json
@@ -1835,6 +1886,8 @@ assets/pipican/items/raw_sigmarite.json
 assets/pipican/items/raw_sigmarite_block.json
 assets/pipican/items/raw_silversheen.json
 assets/pipican/items/raw_silversheen_block.json
+assets/pipican/items/raw_skyiron.json
+assets/pipican/items/raw_skyiron_block.json
 assets/pipican/items/raw_starmetal.json
 assets/pipican/items/raw_starmetal_block.json
 assets/pipican/items/raw_starsilver.json
@@ -1897,6 +1950,9 @@ assets/pipican/items/royal_silver_pickaxe.json
 assets/pipican/items/royal_silver_shovel.json
 assets/pipican/items/royal_silver_spear.json
 assets/pipican/items/royal_silver_sword.json
+assets/pipican/items/runestone.json
+assets/pipican/items/runestone_block.json
+assets/pipican/items/runestone_ore.json
 assets/pipican/items/runic_iron_axe.json
 assets/pipican/items/runic_iron_block.json
 assets/pipican/items/runic_iron_boots.json
@@ -1977,6 +2033,22 @@ assets/pipican/items/silversheen_ingot.json
 assets/pipican/items/silversheen_ore.json
 assets/pipican/items/skycrystal.json
 assets/pipican/items/skycrystal_block.json
+assets/pipican/items/skyiron_axe.json
+assets/pipican/items/skyiron_block.json
+assets/pipican/items/skyiron_boots.json
+assets/pipican/items/skyiron_chestplate.json
+assets/pipican/items/skyiron_helmet.json
+assets/pipican/items/skyiron_hoe.json
+assets/pipican/items/skyiron_ingot.json
+assets/pipican/items/skyiron_leggings.json
+assets/pipican/items/skyiron_ore.json
+assets/pipican/items/skyiron_pickaxe.json
+assets/pipican/items/skyiron_shovel.json
+assets/pipican/items/skyiron_spear.json
+assets/pipican/items/skyiron_sword.json
+assets/pipican/items/soulstone.json
+assets/pipican/items/soulstone_block.json
+assets/pipican/items/soulstone_ore.json
 assets/pipican/items/stalhrim.json
 assets/pipican/items/stalhrim_axe.json
 assets/pipican/items/stalhrim_block.json
@@ -2031,6 +2103,9 @@ assets/pipican/items/stygian_iron_pickaxe.json
 assets/pipican/items/stygian_iron_shovel.json
 assets/pipican/items/stygian_iron_spear.json
 assets/pipican/items/stygian_iron_sword.json
+assets/pipican/items/sunforged.json
+assets/pipican/items/sunforged_block.json
+assets/pipican/items/sunforged_ore.json
 assets/pipican/items/sunglass.json
 assets/pipican/items/sunglass_block.json
 assets/pipican/items/sunglass_ore.json
@@ -2247,6 +2322,8 @@ assets/pipican/items/zonaite.json
 assets/pipican/items/zonaite_block.json
 assets/pipican/models/block/abyssal_shard_block.json
 assets/pipican/models/block/abyssal_shard_ore.json
+assets/pipican/models/block/abyssium_block.json
+assets/pipican/models/block/abyssium_ore.json
 assets/pipican/models/block/adamantine_block.json
 assets/pipican/models/block/adamantine_ore.json
 assets/pipican/models/block/adamantium_block.json
@@ -2262,6 +2339,8 @@ assets/pipican/models/block/aquamarine_block.json
 assets/pipican/models/block/aquamarine_ore.json
 assets/pipican/models/block/arcanite_block.json
 assets/pipican/models/block/ardite_block.json
+assets/pipican/models/block/astralite_block.json
+assets/pipican/models/block/astralite_ore.json
 assets/pipican/models/block/atium_block.json
 assets/pipican/models/block/atium_ore.json
 assets/pipican/models/block/beskar_block.json
@@ -2303,12 +2382,14 @@ assets/pipican/models/block/darksteel_ore.json
 assets/pipican/models/block/dawnbronze_block.json
 assets/pipican/models/block/dawnbronze_ore.json
 assets/pipican/models/block/deepslate_abyssal_shard_ore.json
+assets/pipican/models/block/deepslate_abyssium_ore.json
 assets/pipican/models/block/deepslate_adamantine_ore.json
 assets/pipican/models/block/deepslate_adamantium_ore.json
 assets/pipican/models/block/deepslate_allthemodium_ore.json
 assets/pipican/models/block/deepslate_aluminum_ore.json
 assets/pipican/models/block/deepslate_amber_ore.json
 assets/pipican/models/block/deepslate_aquamarine_ore.json
+assets/pipican/models/block/deepslate_astralite_ore.json
 assets/pipican/models/block/deepslate_atium_ore.json
 assets/pipican/models/block/deepslate_beskar_ore.json
 assets/pipican/models/block/deepslate_black_metal_ore.json
@@ -2363,6 +2444,7 @@ assets/pipican/models/block/deepslate_kyanite_ore.json
 assets/pipican/models/block/deepslate_lacrima_ore.json
 assets/pipican/models/block/deepslate_lerasium_ore.json
 assets/pipican/models/block/deepslate_lifebloom_crystal_ore.json
+assets/pipican/models/block/deepslate_lotus_opal_ore.json
 assets/pipican/models/block/deepslate_luminite_ore.json
 assets/pipican/models/block/deepslate_luna_titanium_ore.json
 assets/pipican/models/block/deepslate_machalite_ore.json
@@ -2373,6 +2455,7 @@ assets/pipican/models/block/deepslate_meteoric_iron_ore.json
 assets/pipican/models/block/deepslate_mirestone_ore.json
 assets/pipican/models/block/deepslate_mithril_ore.json
 assets/pipican/models/block/deepslate_mooncrystal_ore.json
+assets/pipican/models/block/deepslate_moonshard_ore.json
 assets/pipican/models/block/deepslate_moonstone_ore.json
 assets/pipican/models/block/deepslate_morkite_ore.json
 assets/pipican/models/block/deepslate_nickel_ore.json
@@ -2392,6 +2475,7 @@ assets/pipican/models/block/deepslate_quicksilver_ore.json
 assets/pipican/models/block/deepslate_raritanium_ore.json
 assets/pipican/models/block/deepslate_redrock_iron_ore.json
 assets/pipican/models/block/deepslate_royal_silver_ore.json
+assets/pipican/models/block/deepslate_runestone_ore.json
 assets/pipican/models/block/deepslate_runic_iron_ore.json
 assets/pipican/models/block/deepslate_saffron_gold_ore.json
 assets/pipican/models/block/deepslate_sakuradite_ore.json
@@ -2400,10 +2484,13 @@ assets/pipican/models/block/deepslate_scarlet_ore.json
 assets/pipican/models/block/deepslate_sekkiseki_ore.json
 assets/pipican/models/block/deepslate_sigmarite_ore.json
 assets/pipican/models/block/deepslate_silversheen_ore.json
+assets/pipican/models/block/deepslate_skyiron_ore.json
+assets/pipican/models/block/deepslate_soulstone_ore.json
 assets/pipican/models/block/deepslate_stalhrim_ore.json
 assets/pipican/models/block/deepslate_starmetal_ore.json
 assets/pipican/models/block/deepslate_starsilver_ore.json
 assets/pipican/models/block/deepslate_stormsilver_ore.json
+assets/pipican/models/block/deepslate_sunforged_ore.json
 assets/pipican/models/block/deepslate_sunglass_ore.json
 assets/pipican/models/block/deepslate_sunstone_ore.json
 assets/pipican/models/block/deepslate_tamashigane_ore.json
@@ -2461,6 +2548,7 @@ assets/pipican/models/block/end_gundanium_ore.json
 assets/pipican/models/block/end_khaydarin_ore.json
 assets/pipican/models/block/end_naquadah_ore.json
 assets/pipican/models/block/end_phrik_ore.json
+assets/pipican/models/block/end_primordial_ore.json
 assets/pipican/models/block/end_sam_ore.json
 assets/pipican/models/block/end_skycrystal_ore.json
 assets/pipican/models/block/end_trinium_ore.json
@@ -2523,6 +2611,8 @@ assets/pipican/models/block/lerasium_block.json
 assets/pipican/models/block/lerasium_ore.json
 assets/pipican/models/block/lifebloom_crystal_block.json
 assets/pipican/models/block/lifebloom_crystal_ore.json
+assets/pipican/models/block/lotus_opal_block.json
+assets/pipican/models/block/lotus_opal_ore.json
 assets/pipican/models/block/luminite_block.json
 assets/pipican/models/block/luminite_ore.json
 assets/pipican/models/block/luna_titanium_block.json
@@ -2547,6 +2637,8 @@ assets/pipican/models/block/mithril_block.json
 assets/pipican/models/block/mithril_ore.json
 assets/pipican/models/block/mooncrystal_block.json
 assets/pipican/models/block/mooncrystal_ore.json
+assets/pipican/models/block/moonshard_block.json
+assets/pipican/models/block/moonshard_ore.json
 assets/pipican/models/block/moonstone_block.json
 assets/pipican/models/block/moonstone_ore.json
 assets/pipican/models/block/morkite_block.json
@@ -2590,6 +2682,7 @@ assets/pipican/models/block/phazon_ore.json
 assets/pipican/models/block/philosophers_stone_block.json
 assets/pipican/models/block/philosophers_stone_ore.json
 assets/pipican/models/block/phrik_block.json
+assets/pipican/models/block/primordial_block.json
 assets/pipican/models/block/prismatic_shard_block.json
 assets/pipican/models/block/prismatic_shard_ore.json
 assets/pipican/models/block/promethium_block.json
@@ -2672,6 +2765,7 @@ assets/pipican/models/block/raw_saronite_block.json
 assets/pipican/models/block/raw_scarlet_block.json
 assets/pipican/models/block/raw_sigmarite_block.json
 assets/pipican/models/block/raw_silversheen_block.json
+assets/pipican/models/block/raw_skyiron_block.json
 assets/pipican/models/block/raw_starmetal_block.json
 assets/pipican/models/block/raw_starsilver_block.json
 assets/pipican/models/block/raw_stormsilver_block.json
@@ -2694,6 +2788,8 @@ assets/pipican/models/block/redrock_iron_block.json
 assets/pipican/models/block/redrock_iron_ore.json
 assets/pipican/models/block/royal_silver_block.json
 assets/pipican/models/block/royal_silver_ore.json
+assets/pipican/models/block/runestone_block.json
+assets/pipican/models/block/runestone_ore.json
 assets/pipican/models/block/runic_iron_block.json
 assets/pipican/models/block/runic_iron_ore.json
 assets/pipican/models/block/runite_block.json
@@ -2713,6 +2809,10 @@ assets/pipican/models/block/sigmarite_ore.json
 assets/pipican/models/block/silversheen_block.json
 assets/pipican/models/block/silversheen_ore.json
 assets/pipican/models/block/skycrystal_block.json
+assets/pipican/models/block/skyiron_block.json
+assets/pipican/models/block/skyiron_ore.json
+assets/pipican/models/block/soulstone_block.json
+assets/pipican/models/block/soulstone_ore.json
 assets/pipican/models/block/stalhrim_block.json
 assets/pipican/models/block/stalhrim_ore.json
 assets/pipican/models/block/starmetal_block.json
@@ -2722,6 +2822,8 @@ assets/pipican/models/block/starsilver_ore.json
 assets/pipican/models/block/stormsilver_block.json
 assets/pipican/models/block/stormsilver_ore.json
 assets/pipican/models/block/stygian_iron_block.json
+assets/pipican/models/block/sunforged_block.json
+assets/pipican/models/block/sunforged_ore.json
 assets/pipican/models/block/sunglass_block.json
 assets/pipican/models/block/sunglass_ore.json
 assets/pipican/models/block/sunstone_block.json
@@ -2777,6 +2879,7 @@ assets/pipican/models/block/zinc_block.json
 assets/pipican/models/block/zinc_ore.json
 assets/pipican/models/block/zonaite_block.json
 assets/pipican/models/item/abyssal_shard.json
+assets/pipican/models/item/abyssium.json
 assets/pipican/models/item/adamantine_axe.json
 assets/pipican/models/item/adamantine_boots.json
 assets/pipican/models/item/adamantine_chestplate.json
@@ -2846,6 +2949,7 @@ assets/pipican/models/item/ardite_pickaxe.json
 assets/pipican/models/item/ardite_shovel.json
 assets/pipican/models/item/ardite_spear.json
 assets/pipican/models/item/ardite_sword.json
+assets/pipican/models/item/astralite.json
 assets/pipican/models/item/atium_ingot.json
 assets/pipican/models/item/beskar_axe.json
 assets/pipican/models/item/beskar_boots.json
@@ -3295,6 +3399,7 @@ assets/pipican/models/item/kyanite.json
 assets/pipican/models/item/lacrima.json
 assets/pipican/models/item/lerasium_ingot.json
 assets/pipican/models/item/lifebloom_crystal.json
+assets/pipican/models/item/lotus_opal.json
 assets/pipican/models/item/luminite_axe.json
 assets/pipican/models/item/luminite_boots.json
 assets/pipican/models/item/luminite_chestplate.json
@@ -3399,6 +3504,7 @@ assets/pipican/models/item/mithril_shovel.json
 assets/pipican/models/item/mithril_spear.json
 assets/pipican/models/item/mithril_sword.json
 assets/pipican/models/item/mooncrystal.json
+assets/pipican/models/item/moonshard.json
 assets/pipican/models/item/moonstone.json
 assets/pipican/models/item/moonstone_axe.json
 assets/pipican/models/item/moonstone_boots.json
@@ -3484,6 +3590,7 @@ assets/pipican/models/item/phrik_pickaxe.json
 assets/pipican/models/item/phrik_shovel.json
 assets/pipican/models/item/phrik_spear.json
 assets/pipican/models/item/phrik_sword.json
+assets/pipican/models/item/primordial.json
 assets/pipican/models/item/prismatic_shard.json
 assets/pipican/models/item/promethium_ingot.json
 assets/pipican/models/item/quantanium.json
@@ -3572,6 +3679,7 @@ assets/pipican/models/item/raw_saronite.json
 assets/pipican/models/item/raw_scarlet.json
 assets/pipican/models/item/raw_sigmarite.json
 assets/pipican/models/item/raw_silversheen.json
+assets/pipican/models/item/raw_skyiron.json
 assets/pipican/models/item/raw_starmetal.json
 assets/pipican/models/item/raw_starsilver.json
 assets/pipican/models/item/raw_stormsilver.json
@@ -3612,6 +3720,7 @@ assets/pipican/models/item/royal_silver_pickaxe.json
 assets/pipican/models/item/royal_silver_shovel.json
 assets/pipican/models/item/royal_silver_spear.json
 assets/pipican/models/item/royal_silver_sword.json
+assets/pipican/models/item/runestone.json
 assets/pipican/models/item/runic_iron_axe.json
 assets/pipican/models/item/runic_iron_boots.json
 assets/pipican/models/item/runic_iron_chestplate.json
@@ -3673,6 +3782,18 @@ assets/pipican/models/item/sigmarite_spear.json
 assets/pipican/models/item/sigmarite_sword.json
 assets/pipican/models/item/silversheen_ingot.json
 assets/pipican/models/item/skycrystal.json
+assets/pipican/models/item/skyiron_axe.json
+assets/pipican/models/item/skyiron_boots.json
+assets/pipican/models/item/skyiron_chestplate.json
+assets/pipican/models/item/skyiron_helmet.json
+assets/pipican/models/item/skyiron_hoe.json
+assets/pipican/models/item/skyiron_ingot.json
+assets/pipican/models/item/skyiron_leggings.json
+assets/pipican/models/item/skyiron_pickaxe.json
+assets/pipican/models/item/skyiron_shovel.json
+assets/pipican/models/item/skyiron_spear.json
+assets/pipican/models/item/skyiron_sword.json
+assets/pipican/models/item/soulstone.json
 assets/pipican/models/item/stalhrim.json
 assets/pipican/models/item/stalhrim_axe.json
 assets/pipican/models/item/stalhrim_boots.json
@@ -3718,6 +3839,7 @@ assets/pipican/models/item/stygian_iron_pickaxe.json
 assets/pipican/models/item/stygian_iron_shovel.json
 assets/pipican/models/item/stygian_iron_spear.json
 assets/pipican/models/item/stygian_iron_sword.json
+assets/pipican/models/item/sunforged.json
 assets/pipican/models/item/sunglass.json
 assets/pipican/models/item/sunstone.json
 assets/pipican/models/item/tamashigane_ingot.json
@@ -3882,6 +4004,7 @@ assets/pipican/models/item/zinc_ingot.json
 assets/pipican/models/item/zonaite.json
 data/c/tags/block/ores.json
 data/c/tags/block/ores/abyssal_shard.json
+data/c/tags/block/ores/abyssium.json
 data/c/tags/block/ores/adamantine.json
 data/c/tags/block/ores/adamantium.json
 data/c/tags/block/ores/aetherium.json
@@ -3890,6 +4013,7 @@ data/c/tags/block/ores/aluminum.json
 data/c/tags/block/ores/amber.json
 data/c/tags/block/ores/aquamarine.json
 data/c/tags/block/ores/ardite.json
+data/c/tags/block/ores/astralite.json
 data/c/tags/block/ores/atium.json
 data/c/tags/block/ores/beskar.json
 data/c/tags/block/ores/black_metal.json
@@ -3958,6 +4082,7 @@ data/c/tags/block/ores/kyanite.json
 data/c/tags/block/ores/lacrima.json
 data/c/tags/block/ores/lerasium.json
 data/c/tags/block/ores/lifebloom_crystal.json
+data/c/tags/block/ores/lotus_opal.json
 data/c/tags/block/ores/luminite.json
 data/c/tags/block/ores/luna_titanium.json
 data/c/tags/block/ores/machalite.json
@@ -3969,6 +4094,7 @@ data/c/tags/block/ores/meteoric_iron.json
 data/c/tags/block/ores/mirestone.json
 data/c/tags/block/ores/mithril.json
 data/c/tags/block/ores/mooncrystal.json
+data/c/tags/block/ores/moonshard.json
 data/c/tags/block/ores/moonstone.json
 data/c/tags/block/ores/morkite.json
 data/c/tags/block/ores/naquadah.json
@@ -3984,6 +4110,7 @@ data/c/tags/block/ores/pearlsilver.json
 data/c/tags/block/ores/phazon.json
 data/c/tags/block/ores/philosophers_stone.json
 data/c/tags/block/ores/phrik.json
+data/c/tags/block/ores/primordial.json
 data/c/tags/block/ores/prismatic_shard.json
 data/c/tags/block/ores/promethium.json
 data/c/tags/block/ores/quantanium.json
@@ -3991,6 +4118,7 @@ data/c/tags/block/ores/quicksilver.json
 data/c/tags/block/ores/raritanium.json
 data/c/tags/block/ores/redrock_iron.json
 data/c/tags/block/ores/royal_silver.json
+data/c/tags/block/ores/runestone.json
 data/c/tags/block/ores/runic_iron.json
 data/c/tags/block/ores/runite.json
 data/c/tags/block/ores/saffron_gold.json
@@ -4002,11 +4130,14 @@ data/c/tags/block/ores/sekkiseki.json
 data/c/tags/block/ores/sigmarite.json
 data/c/tags/block/ores/silversheen.json
 data/c/tags/block/ores/skycrystal.json
+data/c/tags/block/ores/skyiron.json
+data/c/tags/block/ores/soulstone.json
 data/c/tags/block/ores/stalhrim.json
 data/c/tags/block/ores/starmetal.json
 data/c/tags/block/ores/starsilver.json
 data/c/tags/block/ores/stormsilver.json
 data/c/tags/block/ores/stygian_iron.json
+data/c/tags/block/ores/sunforged.json
 data/c/tags/block/ores/sunglass.json
 data/c/tags/block/ores/sunstone.json
 data/c/tags/block/ores/tamashigane.json
@@ -4040,9 +4171,11 @@ data/c/tags/block/ores_in_ground/stone.json
 data/c/tags/block/storage_blocks.json
 data/c/tags/item/gems.json
 data/c/tags/item/gems/abyssal_shard.json
+data/c/tags/item/gems/abyssium.json
 data/c/tags/item/gems/aetherium.json
 data/c/tags/item/gems/amber.json
 data/c/tags/item/gems/aquamarine.json
+data/c/tags/item/gems/astralite.json
 data/c/tags/item/gems/bloodstone.json
 data/c/tags/item/gems/certus_quartz.json
 data/c/tags/item/gems/chaos_emerald.json
@@ -4070,25 +4203,31 @@ data/c/tags/item/gems/kryptonite.json
 data/c/tags/item/gems/kyanite.json
 data/c/tags/item/gems/lacrima.json
 data/c/tags/item/gems/lifebloom_crystal.json
+data/c/tags/item/gems/lotus_opal.json
 data/c/tags/item/gems/malachite.json
 data/c/tags/item/gems/materia.json
 data/c/tags/item/gems/mega_stone.json
 data/c/tags/item/gems/mirestone.json
 data/c/tags/item/gems/mooncrystal.json
+data/c/tags/item/gems/moonshard.json
 data/c/tags/item/gems/moonstone.json
 data/c/tags/item/gems/morkite.json
 data/c/tags/item/gems/night_jade.json
 data/c/tags/item/gems/nitre.json
 data/c/tags/item/gems/phazon.json
 data/c/tags/item/gems/philosophers_stone.json
+data/c/tags/item/gems/primordial.json
 data/c/tags/item/gems/prismatic_shard.json
 data/c/tags/item/gems/quantanium.json
 data/c/tags/item/gems/raritanium.json
+data/c/tags/item/gems/runestone.json
 data/c/tags/item/gems/sakuradite.json
 data/c/tags/item/gems/sam.json
 data/c/tags/item/gems/sekkiseki.json
 data/c/tags/item/gems/skycrystal.json
+data/c/tags/item/gems/soulstone.json
 data/c/tags/item/gems/stalhrim.json
+data/c/tags/item/gems/sunforged.json
 data/c/tags/item/gems/sunglass.json
 data/c/tags/item/gems/sunstone.json
 data/c/tags/item/gems/thunderbasalt.json
@@ -4180,6 +4319,7 @@ data/c/tags/item/ingots/saronite.json
 data/c/tags/item/ingots/scarlet.json
 data/c/tags/item/ingots/sigmarite.json
 data/c/tags/item/ingots/silversheen.json
+data/c/tags/item/ingots/skyiron.json
 data/c/tags/item/ingots/starmetal.json
 data/c/tags/item/ingots/starsilver.json
 data/c/tags/item/ingots/stormsilver.json
@@ -4202,6 +4342,7 @@ data/c/tags/item/ingots/wintersteel.json
 data/c/tags/item/ingots/zinc.json
 data/c/tags/item/ores.json
 data/c/tags/item/ores/abyssal_shard.json
+data/c/tags/item/ores/abyssium.json
 data/c/tags/item/ores/adamantine.json
 data/c/tags/item/ores/adamantium.json
 data/c/tags/item/ores/aetherium.json
@@ -4210,6 +4351,7 @@ data/c/tags/item/ores/aluminum.json
 data/c/tags/item/ores/amber.json
 data/c/tags/item/ores/aquamarine.json
 data/c/tags/item/ores/ardite.json
+data/c/tags/item/ores/astralite.json
 data/c/tags/item/ores/atium.json
 data/c/tags/item/ores/beskar.json
 data/c/tags/item/ores/black_metal.json
@@ -4278,6 +4420,7 @@ data/c/tags/item/ores/kyanite.json
 data/c/tags/item/ores/lacrima.json
 data/c/tags/item/ores/lerasium.json
 data/c/tags/item/ores/lifebloom_crystal.json
+data/c/tags/item/ores/lotus_opal.json
 data/c/tags/item/ores/luminite.json
 data/c/tags/item/ores/luna_titanium.json
 data/c/tags/item/ores/machalite.json
@@ -4289,6 +4432,7 @@ data/c/tags/item/ores/meteoric_iron.json
 data/c/tags/item/ores/mirestone.json
 data/c/tags/item/ores/mithril.json
 data/c/tags/item/ores/mooncrystal.json
+data/c/tags/item/ores/moonshard.json
 data/c/tags/item/ores/moonstone.json
 data/c/tags/item/ores/morkite.json
 data/c/tags/item/ores/naquadah.json
@@ -4304,6 +4448,7 @@ data/c/tags/item/ores/pearlsilver.json
 data/c/tags/item/ores/phazon.json
 data/c/tags/item/ores/philosophers_stone.json
 data/c/tags/item/ores/phrik.json
+data/c/tags/item/ores/primordial.json
 data/c/tags/item/ores/prismatic_shard.json
 data/c/tags/item/ores/promethium.json
 data/c/tags/item/ores/quantanium.json
@@ -4311,6 +4456,7 @@ data/c/tags/item/ores/quicksilver.json
 data/c/tags/item/ores/raritanium.json
 data/c/tags/item/ores/redrock_iron.json
 data/c/tags/item/ores/royal_silver.json
+data/c/tags/item/ores/runestone.json
 data/c/tags/item/ores/runic_iron.json
 data/c/tags/item/ores/runite.json
 data/c/tags/item/ores/saffron_gold.json
@@ -4322,11 +4468,14 @@ data/c/tags/item/ores/sekkiseki.json
 data/c/tags/item/ores/sigmarite.json
 data/c/tags/item/ores/silversheen.json
 data/c/tags/item/ores/skycrystal.json
+data/c/tags/item/ores/skyiron.json
+data/c/tags/item/ores/soulstone.json
 data/c/tags/item/ores/stalhrim.json
 data/c/tags/item/ores/starmetal.json
 data/c/tags/item/ores/starsilver.json
 data/c/tags/item/ores/stormsilver.json
 data/c/tags/item/ores/stygian_iron.json
+data/c/tags/item/ores/sunforged.json
 data/c/tags/item/ores/sunglass.json
 data/c/tags/item/ores/sunstone.json
 data/c/tags/item/ores/tamashigane.json
@@ -4428,6 +4577,7 @@ data/c/tags/item/raw_materials/saronite.json
 data/c/tags/item/raw_materials/scarlet.json
 data/c/tags/item/raw_materials/sigmarite.json
 data/c/tags/item/raw_materials/silversheen.json
+data/c/tags/item/raw_materials/skyiron.json
 data/c/tags/item/raw_materials/starmetal.json
 data/c/tags/item/raw_materials/starsilver.json
 data/c/tags/item/raw_materials/stormsilver.json
@@ -4466,6 +4616,8 @@ data/minecraft/tags/item/swords.json
 data/minecraft/tags/item/trimmable_armor.json
 data/pipican/loot_table/blocks/abyssal_shard_block.json
 data/pipican/loot_table/blocks/abyssal_shard_ore.json
+data/pipican/loot_table/blocks/abyssium_block.json
+data/pipican/loot_table/blocks/abyssium_ore.json
 data/pipican/loot_table/blocks/adamantine_block.json
 data/pipican/loot_table/blocks/adamantine_ore.json
 data/pipican/loot_table/blocks/adamantium_block.json
@@ -4481,6 +4633,8 @@ data/pipican/loot_table/blocks/aquamarine_block.json
 data/pipican/loot_table/blocks/aquamarine_ore.json
 data/pipican/loot_table/blocks/arcanite_block.json
 data/pipican/loot_table/blocks/ardite_block.json
+data/pipican/loot_table/blocks/astralite_block.json
+data/pipican/loot_table/blocks/astralite_ore.json
 data/pipican/loot_table/blocks/atium_block.json
 data/pipican/loot_table/blocks/atium_ore.json
 data/pipican/loot_table/blocks/beskar_block.json
@@ -4522,12 +4676,14 @@ data/pipican/loot_table/blocks/darksteel_ore.json
 data/pipican/loot_table/blocks/dawnbronze_block.json
 data/pipican/loot_table/blocks/dawnbronze_ore.json
 data/pipican/loot_table/blocks/deepslate_abyssal_shard_ore.json
+data/pipican/loot_table/blocks/deepslate_abyssium_ore.json
 data/pipican/loot_table/blocks/deepslate_adamantine_ore.json
 data/pipican/loot_table/blocks/deepslate_adamantium_ore.json
 data/pipican/loot_table/blocks/deepslate_allthemodium_ore.json
 data/pipican/loot_table/blocks/deepslate_aluminum_ore.json
 data/pipican/loot_table/blocks/deepslate_amber_ore.json
 data/pipican/loot_table/blocks/deepslate_aquamarine_ore.json
+data/pipican/loot_table/blocks/deepslate_astralite_ore.json
 data/pipican/loot_table/blocks/deepslate_atium_ore.json
 data/pipican/loot_table/blocks/deepslate_beskar_ore.json
 data/pipican/loot_table/blocks/deepslate_black_metal_ore.json
@@ -4582,6 +4738,7 @@ data/pipican/loot_table/blocks/deepslate_kyanite_ore.json
 data/pipican/loot_table/blocks/deepslate_lacrima_ore.json
 data/pipican/loot_table/blocks/deepslate_lerasium_ore.json
 data/pipican/loot_table/blocks/deepslate_lifebloom_crystal_ore.json
+data/pipican/loot_table/blocks/deepslate_lotus_opal_ore.json
 data/pipican/loot_table/blocks/deepslate_luminite_ore.json
 data/pipican/loot_table/blocks/deepslate_luna_titanium_ore.json
 data/pipican/loot_table/blocks/deepslate_machalite_ore.json
@@ -4592,6 +4749,7 @@ data/pipican/loot_table/blocks/deepslate_meteoric_iron_ore.json
 data/pipican/loot_table/blocks/deepslate_mirestone_ore.json
 data/pipican/loot_table/blocks/deepslate_mithril_ore.json
 data/pipican/loot_table/blocks/deepslate_mooncrystal_ore.json
+data/pipican/loot_table/blocks/deepslate_moonshard_ore.json
 data/pipican/loot_table/blocks/deepslate_moonstone_ore.json
 data/pipican/loot_table/blocks/deepslate_morkite_ore.json
 data/pipican/loot_table/blocks/deepslate_nickel_ore.json
@@ -4611,6 +4769,7 @@ data/pipican/loot_table/blocks/deepslate_quicksilver_ore.json
 data/pipican/loot_table/blocks/deepslate_raritanium_ore.json
 data/pipican/loot_table/blocks/deepslate_redrock_iron_ore.json
 data/pipican/loot_table/blocks/deepslate_royal_silver_ore.json
+data/pipican/loot_table/blocks/deepslate_runestone_ore.json
 data/pipican/loot_table/blocks/deepslate_runic_iron_ore.json
 data/pipican/loot_table/blocks/deepslate_saffron_gold_ore.json
 data/pipican/loot_table/blocks/deepslate_sakuradite_ore.json
@@ -4619,10 +4778,13 @@ data/pipican/loot_table/blocks/deepslate_scarlet_ore.json
 data/pipican/loot_table/blocks/deepslate_sekkiseki_ore.json
 data/pipican/loot_table/blocks/deepslate_sigmarite_ore.json
 data/pipican/loot_table/blocks/deepslate_silversheen_ore.json
+data/pipican/loot_table/blocks/deepslate_skyiron_ore.json
+data/pipican/loot_table/blocks/deepslate_soulstone_ore.json
 data/pipican/loot_table/blocks/deepslate_stalhrim_ore.json
 data/pipican/loot_table/blocks/deepslate_starmetal_ore.json
 data/pipican/loot_table/blocks/deepslate_starsilver_ore.json
 data/pipican/loot_table/blocks/deepslate_stormsilver_ore.json
+data/pipican/loot_table/blocks/deepslate_sunforged_ore.json
 data/pipican/loot_table/blocks/deepslate_sunglass_ore.json
 data/pipican/loot_table/blocks/deepslate_sunstone_ore.json
 data/pipican/loot_table/blocks/deepslate_tamashigane_ore.json
@@ -4680,6 +4842,7 @@ data/pipican/loot_table/blocks/end_gundanium_ore.json
 data/pipican/loot_table/blocks/end_khaydarin_ore.json
 data/pipican/loot_table/blocks/end_naquadah_ore.json
 data/pipican/loot_table/blocks/end_phrik_ore.json
+data/pipican/loot_table/blocks/end_primordial_ore.json
 data/pipican/loot_table/blocks/end_sam_ore.json
 data/pipican/loot_table/blocks/end_skycrystal_ore.json
 data/pipican/loot_table/blocks/end_trinium_ore.json
@@ -4742,6 +4905,8 @@ data/pipican/loot_table/blocks/lerasium_block.json
 data/pipican/loot_table/blocks/lerasium_ore.json
 data/pipican/loot_table/blocks/lifebloom_crystal_block.json
 data/pipican/loot_table/blocks/lifebloom_crystal_ore.json
+data/pipican/loot_table/blocks/lotus_opal_block.json
+data/pipican/loot_table/blocks/lotus_opal_ore.json
 data/pipican/loot_table/blocks/luminite_block.json
 data/pipican/loot_table/blocks/luminite_ore.json
 data/pipican/loot_table/blocks/luna_titanium_block.json
@@ -4766,6 +4931,8 @@ data/pipican/loot_table/blocks/mithril_block.json
 data/pipican/loot_table/blocks/mithril_ore.json
 data/pipican/loot_table/blocks/mooncrystal_block.json
 data/pipican/loot_table/blocks/mooncrystal_ore.json
+data/pipican/loot_table/blocks/moonshard_block.json
+data/pipican/loot_table/blocks/moonshard_ore.json
 data/pipican/loot_table/blocks/moonstone_block.json
 data/pipican/loot_table/blocks/moonstone_ore.json
 data/pipican/loot_table/blocks/morkite_block.json
@@ -4809,6 +4976,7 @@ data/pipican/loot_table/blocks/phazon_ore.json
 data/pipican/loot_table/blocks/philosophers_stone_block.json
 data/pipican/loot_table/blocks/philosophers_stone_ore.json
 data/pipican/loot_table/blocks/phrik_block.json
+data/pipican/loot_table/blocks/primordial_block.json
 data/pipican/loot_table/blocks/prismatic_shard_block.json
 data/pipican/loot_table/blocks/prismatic_shard_ore.json
 data/pipican/loot_table/blocks/promethium_block.json
@@ -4891,6 +5059,7 @@ data/pipican/loot_table/blocks/raw_saronite_block.json
 data/pipican/loot_table/blocks/raw_scarlet_block.json
 data/pipican/loot_table/blocks/raw_sigmarite_block.json
 data/pipican/loot_table/blocks/raw_silversheen_block.json
+data/pipican/loot_table/blocks/raw_skyiron_block.json
 data/pipican/loot_table/blocks/raw_starmetal_block.json
 data/pipican/loot_table/blocks/raw_starsilver_block.json
 data/pipican/loot_table/blocks/raw_stormsilver_block.json
@@ -4913,6 +5082,8 @@ data/pipican/loot_table/blocks/redrock_iron_block.json
 data/pipican/loot_table/blocks/redrock_iron_ore.json
 data/pipican/loot_table/blocks/royal_silver_block.json
 data/pipican/loot_table/blocks/royal_silver_ore.json
+data/pipican/loot_table/blocks/runestone_block.json
+data/pipican/loot_table/blocks/runestone_ore.json
 data/pipican/loot_table/blocks/runic_iron_block.json
 data/pipican/loot_table/blocks/runic_iron_ore.json
 data/pipican/loot_table/blocks/runite_block.json
@@ -4932,6 +5103,10 @@ data/pipican/loot_table/blocks/sigmarite_ore.json
 data/pipican/loot_table/blocks/silversheen_block.json
 data/pipican/loot_table/blocks/silversheen_ore.json
 data/pipican/loot_table/blocks/skycrystal_block.json
+data/pipican/loot_table/blocks/skyiron_block.json
+data/pipican/loot_table/blocks/skyiron_ore.json
+data/pipican/loot_table/blocks/soulstone_block.json
+data/pipican/loot_table/blocks/soulstone_ore.json
 data/pipican/loot_table/blocks/stalhrim_block.json
 data/pipican/loot_table/blocks/stalhrim_ore.json
 data/pipican/loot_table/blocks/starmetal_block.json
@@ -4941,6 +5116,8 @@ data/pipican/loot_table/blocks/starsilver_ore.json
 data/pipican/loot_table/blocks/stormsilver_block.json
 data/pipican/loot_table/blocks/stormsilver_ore.json
 data/pipican/loot_table/blocks/stygian_iron_block.json
+data/pipican/loot_table/blocks/sunforged_block.json
+data/pipican/loot_table/blocks/sunforged_ore.json
 data/pipican/loot_table/blocks/sunglass_block.json
 data/pipican/loot_table/blocks/sunglass_ore.json
 data/pipican/loot_table/blocks/sunstone_block.json
@@ -4994,6 +5171,7 @@ data/pipican/loot_table/blocks/zinc_block.json
 data/pipican/loot_table/blocks/zinc_ore.json
 data/pipican/loot_table/blocks/zonaite_block.json
 data/pipican/neoforge/biome_modifier/ore_abyssal_shard.json
+data/pipican/neoforge/biome_modifier/ore_abyssium.json
 data/pipican/neoforge/biome_modifier/ore_adamantine.json
 data/pipican/neoforge/biome_modifier/ore_aetherium.json
 data/pipican/neoforge/biome_modifier/ore_allthemodium.json
@@ -5001,6 +5179,7 @@ data/pipican/neoforge/biome_modifier/ore_aluminum.json
 data/pipican/neoforge/biome_modifier/ore_amber.json
 data/pipican/neoforge/biome_modifier/ore_aquamarine.json
 data/pipican/neoforge/biome_modifier/ore_ardite.json
+data/pipican/neoforge/biome_modifier/ore_astralite.json
 data/pipican/neoforge/biome_modifier/ore_atium.json
 data/pipican/neoforge/biome_modifier/ore_beskar.json
 data/pipican/neoforge/biome_modifier/ore_black_metal.json
@@ -5066,6 +5245,7 @@ data/pipican/neoforge/biome_modifier/ore_kryptonite.json
 data/pipican/neoforge/biome_modifier/ore_kyanite.json
 data/pipican/neoforge/biome_modifier/ore_lacrima.json
 data/pipican/neoforge/biome_modifier/ore_lifebloom_crystal.json
+data/pipican/neoforge/biome_modifier/ore_lotus_opal.json
 data/pipican/neoforge/biome_modifier/ore_luna_titanium.json
 data/pipican/neoforge/biome_modifier/ore_machalite.json
 data/pipican/neoforge/biome_modifier/ore_magisteel.json
@@ -5076,6 +5256,7 @@ data/pipican/neoforge/biome_modifier/ore_meteoric_iron.json
 data/pipican/neoforge/biome_modifier/ore_mirestone.json
 data/pipican/neoforge/biome_modifier/ore_mithril.json
 data/pipican/neoforge/biome_modifier/ore_mooncrystal.json
+data/pipican/neoforge/biome_modifier/ore_moonshard.json
 data/pipican/neoforge/biome_modifier/ore_moonstone.json
 data/pipican/neoforge/biome_modifier/ore_morkite.json
 data/pipican/neoforge/biome_modifier/ore_naquadah.json
@@ -5088,6 +5269,7 @@ data/pipican/neoforge/biome_modifier/ore_orichalcum.json
 data/pipican/neoforge/biome_modifier/ore_palladium.json
 data/pipican/neoforge/biome_modifier/ore_pearlsilver.json
 data/pipican/neoforge/biome_modifier/ore_phrik.json
+data/pipican/neoforge/biome_modifier/ore_primordial.json
 data/pipican/neoforge/biome_modifier/ore_prismatic_shard.json
 data/pipican/neoforge/biome_modifier/ore_promethium.json
 data/pipican/neoforge/biome_modifier/ore_quantanium.json
@@ -5095,6 +5277,7 @@ data/pipican/neoforge/biome_modifier/ore_quicksilver.json
 data/pipican/neoforge/biome_modifier/ore_raritanium.json
 data/pipican/neoforge/biome_modifier/ore_redrock_iron.json
 data/pipican/neoforge/biome_modifier/ore_royal_silver.json
+data/pipican/neoforge/biome_modifier/ore_runestone.json
 data/pipican/neoforge/biome_modifier/ore_runic_iron.json
 data/pipican/neoforge/biome_modifier/ore_runite.json
 data/pipican/neoforge/biome_modifier/ore_saffron_gold.json
@@ -5106,11 +5289,14 @@ data/pipican/neoforge/biome_modifier/ore_sekkiseki.json
 data/pipican/neoforge/biome_modifier/ore_sigmarite.json
 data/pipican/neoforge/biome_modifier/ore_silversheen.json
 data/pipican/neoforge/biome_modifier/ore_skycrystal.json
+data/pipican/neoforge/biome_modifier/ore_skyiron.json
+data/pipican/neoforge/biome_modifier/ore_soulstone.json
 data/pipican/neoforge/biome_modifier/ore_stalhrim.json
 data/pipican/neoforge/biome_modifier/ore_starmetal.json
 data/pipican/neoforge/biome_modifier/ore_starsilver.json
 data/pipican/neoforge/biome_modifier/ore_stormsilver.json
 data/pipican/neoforge/biome_modifier/ore_stygian_iron.json
+data/pipican/neoforge/biome_modifier/ore_sunforged.json
 data/pipican/neoforge/biome_modifier/ore_sunglass.json
 data/pipican/neoforge/biome_modifier/ore_sunstone.json
 data/pipican/neoforge/biome_modifier/ore_thaumium.json
@@ -5202,6 +5388,7 @@ data/pipican/pipican/gear_set/runite.json
 data/pipican/pipican/gear_set/saronite.json
 data/pipican/pipican/gear_set/scarlet.json
 data/pipican/pipican/gear_set/sigmarite.json
+data/pipican/pipican/gear_set/skyiron.json
 data/pipican/pipican/gear_set/stalhrim.json
 data/pipican/pipican/gear_set/starsilver.json
 data/pipican/pipican/gear_set/stormsilver.json
@@ -5222,6 +5409,8 @@ data/pipican/pipican/gear_set/void_metal.json
 data/pipican/pipican/gear_set/wintersteel.json
 data/pipican/recipe/abyssal_shard_block.json
 data/pipican/recipe/abyssal_shard_from_abyssal_shard_block.json
+data/pipican/recipe/abyssium_block.json
+data/pipican/recipe/abyssium_from_abyssium_block.json
 data/pipican/recipe/adamantine_axe.json
 data/pipican/recipe/adamantine_block.json
 data/pipican/recipe/adamantine_boots.json
@@ -5320,6 +5509,8 @@ data/pipican/recipe/ardite_pickaxe.json
 data/pipican/recipe/ardite_shovel.json
 data/pipican/recipe/ardite_spear.json
 data/pipican/recipe/ardite_sword.json
+data/pipican/recipe/astralite_block.json
+data/pipican/recipe/astralite_from_astralite_block.json
 data/pipican/recipe/atium_block.json
 data/pipican/recipe/atium_ingot_from_atium_block.json
 data/pipican/recipe/atium_ingot_from_blasting_atium_ore.json
@@ -6002,6 +6193,8 @@ data/pipican/recipe/lerasium_ingot_from_smelting_lerasium_ore.json
 data/pipican/recipe/lerasium_ingot_from_smelting_raw_lerasium.json
 data/pipican/recipe/lifebloom_crystal_block.json
 data/pipican/recipe/lifebloom_crystal_from_lifebloom_crystal_block.json
+data/pipican/recipe/lotus_opal_block.json
+data/pipican/recipe/lotus_opal_from_lotus_opal_block.json
 data/pipican/recipe/luminite_axe.json
 data/pipican/recipe/luminite_block.json
 data/pipican/recipe/luminite_boots.json
@@ -6148,6 +6341,8 @@ data/pipican/recipe/mithril_spear.json
 data/pipican/recipe/mithril_sword.json
 data/pipican/recipe/mooncrystal_block.json
 data/pipican/recipe/mooncrystal_from_mooncrystal_block.json
+data/pipican/recipe/moonshard_block.json
+data/pipican/recipe/moonshard_from_moonshard_block.json
 data/pipican/recipe/moonstone_axe.json
 data/pipican/recipe/moonstone_block.json
 data/pipican/recipe/moonstone_boots.json
@@ -6284,6 +6479,8 @@ data/pipican/recipe/phrik_pickaxe.json
 data/pipican/recipe/phrik_shovel.json
 data/pipican/recipe/phrik_spear.json
 data/pipican/recipe/phrik_sword.json
+data/pipican/recipe/primordial_block.json
+data/pipican/recipe/primordial_from_primordial_block.json
 data/pipican/recipe/prismatic_shard_block.json
 data/pipican/recipe/prismatic_shard_from_prismatic_shard_block.json
 data/pipican/recipe/promethium_block.json
@@ -6458,6 +6655,8 @@ data/pipican/recipe/raw_sigmarite_block.json
 data/pipican/recipe/raw_sigmarite_from_raw_sigmarite_block.json
 data/pipican/recipe/raw_silversheen_block.json
 data/pipican/recipe/raw_silversheen_from_raw_silversheen_block.json
+data/pipican/recipe/raw_skyiron_block.json
+data/pipican/recipe/raw_skyiron_from_raw_skyiron_block.json
 data/pipican/recipe/raw_starmetal_block.json
 data/pipican/recipe/raw_starmetal_from_raw_starmetal_block.json
 data/pipican/recipe/raw_starsilver_block.json
@@ -6526,6 +6725,8 @@ data/pipican/recipe/royal_silver_pickaxe.json
 data/pipican/recipe/royal_silver_shovel.json
 data/pipican/recipe/royal_silver_spear.json
 data/pipican/recipe/royal_silver_sword.json
+data/pipican/recipe/runestone_block.json
+data/pipican/recipe/runestone_from_runestone_block.json
 data/pipican/recipe/runic_iron_axe.json
 data/pipican/recipe/runic_iron_block.json
 data/pipican/recipe/runic_iron_boots.json
@@ -6626,6 +6827,24 @@ data/pipican/recipe/silversheen_ingot_from_smelting_raw_silversheen.json
 data/pipican/recipe/silversheen_ingot_from_smelting_silversheen_ore.json
 data/pipican/recipe/skycrystal_block.json
 data/pipican/recipe/skycrystal_from_skycrystal_block.json
+data/pipican/recipe/skyiron_axe.json
+data/pipican/recipe/skyiron_block.json
+data/pipican/recipe/skyiron_boots.json
+data/pipican/recipe/skyiron_chestplate.json
+data/pipican/recipe/skyiron_helmet.json
+data/pipican/recipe/skyiron_hoe.json
+data/pipican/recipe/skyiron_ingot_from_blasting_raw_skyiron.json
+data/pipican/recipe/skyiron_ingot_from_blasting_skyiron_ore.json
+data/pipican/recipe/skyiron_ingot_from_skyiron_block.json
+data/pipican/recipe/skyiron_ingot_from_smelting_raw_skyiron.json
+data/pipican/recipe/skyiron_ingot_from_smelting_skyiron_ore.json
+data/pipican/recipe/skyiron_leggings.json
+data/pipican/recipe/skyiron_pickaxe.json
+data/pipican/recipe/skyiron_shovel.json
+data/pipican/recipe/skyiron_spear.json
+data/pipican/recipe/skyiron_sword.json
+data/pipican/recipe/soulstone_block.json
+data/pipican/recipe/soulstone_from_soulstone_block.json
 data/pipican/recipe/stalhrim_axe.json
 data/pipican/recipe/stalhrim_block.json
 data/pipican/recipe/stalhrim_boots.json
@@ -6692,6 +6911,8 @@ data/pipican/recipe/stygian_iron_pickaxe.json
 data/pipican/recipe/stygian_iron_shovel.json
 data/pipican/recipe/stygian_iron_spear.json
 data/pipican/recipe/stygian_iron_sword.json
+data/pipican/recipe/sunforged_block.json
+data/pipican/recipe/sunforged_from_sunforged_block.json
 data/pipican/recipe/sunglass_block.json
 data/pipican/recipe/sunglass_from_sunglass_block.json
 data/pipican/recipe/sunstone_block.json
@@ -7076,6 +7297,7 @@ data/pipican/tags/item/repairs/runite.json
 data/pipican/tags/item/repairs/saronite.json
 data/pipican/tags/item/repairs/scarlet.json
 data/pipican/tags/item/repairs/sigmarite.json
+data/pipican/tags/item/repairs/skyiron.json
 data/pipican/tags/item/repairs/stalhrim.json
 data/pipican/tags/item/repairs/starsilver.json
 data/pipican/tags/item/repairs/stormsilver.json
@@ -7230,6 +7452,8 @@ data/pipican/tags/item/sets/scarlet/armor.json
 data/pipican/tags/item/sets/scarlet/weapons.json
 data/pipican/tags/item/sets/sigmarite/armor.json
 data/pipican/tags/item/sets/sigmarite/weapons.json
+data/pipican/tags/item/sets/skyiron/armor.json
+data/pipican/tags/item/sets/skyiron/weapons.json
 data/pipican/tags/item/sets/stalhrim/armor.json
 data/pipican/tags/item/sets/stalhrim/weapons.json
 data/pipican/tags/item/sets/starsilver/armor.json
@@ -7274,6 +7498,7 @@ data/pipican/tags/item/traits/self_repair.json
 data/pipican/tags/item/traits/soulbound.json
 data/pipican/tags/item/traits/unbreakable.json
 data/pipican/worldgen/configured_feature/ore_abyssal_shard.json
+data/pipican/worldgen/configured_feature/ore_abyssium.json
 data/pipican/worldgen/configured_feature/ore_adamantine.json
 data/pipican/worldgen/configured_feature/ore_aetherium.json
 data/pipican/worldgen/configured_feature/ore_allthemodium.json
@@ -7281,6 +7506,7 @@ data/pipican/worldgen/configured_feature/ore_aluminum.json
 data/pipican/worldgen/configured_feature/ore_amber.json
 data/pipican/worldgen/configured_feature/ore_aquamarine.json
 data/pipican/worldgen/configured_feature/ore_ardite.json
+data/pipican/worldgen/configured_feature/ore_astralite.json
 data/pipican/worldgen/configured_feature/ore_atium.json
 data/pipican/worldgen/configured_feature/ore_beskar.json
 data/pipican/worldgen/configured_feature/ore_black_metal.json
@@ -7346,6 +7572,7 @@ data/pipican/worldgen/configured_feature/ore_kryptonite.json
 data/pipican/worldgen/configured_feature/ore_kyanite.json
 data/pipican/worldgen/configured_feature/ore_lacrima.json
 data/pipican/worldgen/configured_feature/ore_lifebloom_crystal.json
+data/pipican/worldgen/configured_feature/ore_lotus_opal.json
 data/pipican/worldgen/configured_feature/ore_luna_titanium.json
 data/pipican/worldgen/configured_feature/ore_machalite.json
 data/pipican/worldgen/configured_feature/ore_magisteel.json
@@ -7356,6 +7583,7 @@ data/pipican/worldgen/configured_feature/ore_meteoric_iron.json
 data/pipican/worldgen/configured_feature/ore_mirestone.json
 data/pipican/worldgen/configured_feature/ore_mithril.json
 data/pipican/worldgen/configured_feature/ore_mooncrystal.json
+data/pipican/worldgen/configured_feature/ore_moonshard.json
 data/pipican/worldgen/configured_feature/ore_moonstone.json
 data/pipican/worldgen/configured_feature/ore_morkite.json
 data/pipican/worldgen/configured_feature/ore_naquadah.json
@@ -7368,6 +7596,7 @@ data/pipican/worldgen/configured_feature/ore_orichalcum.json
 data/pipican/worldgen/configured_feature/ore_palladium.json
 data/pipican/worldgen/configured_feature/ore_pearlsilver.json
 data/pipican/worldgen/configured_feature/ore_phrik.json
+data/pipican/worldgen/configured_feature/ore_primordial.json
 data/pipican/worldgen/configured_feature/ore_prismatic_shard.json
 data/pipican/worldgen/configured_feature/ore_promethium.json
 data/pipican/worldgen/configured_feature/ore_quantanium.json
@@ -7375,6 +7604,7 @@ data/pipican/worldgen/configured_feature/ore_quicksilver.json
 data/pipican/worldgen/configured_feature/ore_raritanium.json
 data/pipican/worldgen/configured_feature/ore_redrock_iron.json
 data/pipican/worldgen/configured_feature/ore_royal_silver.json
+data/pipican/worldgen/configured_feature/ore_runestone.json
 data/pipican/worldgen/configured_feature/ore_runic_iron.json
 data/pipican/worldgen/configured_feature/ore_runite.json
 data/pipican/worldgen/configured_feature/ore_saffron_gold.json
@@ -7386,11 +7616,14 @@ data/pipican/worldgen/configured_feature/ore_sekkiseki.json
 data/pipican/worldgen/configured_feature/ore_sigmarite.json
 data/pipican/worldgen/configured_feature/ore_silversheen.json
 data/pipican/worldgen/configured_feature/ore_skycrystal.json
+data/pipican/worldgen/configured_feature/ore_skyiron.json
+data/pipican/worldgen/configured_feature/ore_soulstone.json
 data/pipican/worldgen/configured_feature/ore_stalhrim.json
 data/pipican/worldgen/configured_feature/ore_starmetal.json
 data/pipican/worldgen/configured_feature/ore_starsilver.json
 data/pipican/worldgen/configured_feature/ore_stormsilver.json
 data/pipican/worldgen/configured_feature/ore_stygian_iron.json
+data/pipican/worldgen/configured_feature/ore_sunforged.json
 data/pipican/worldgen/configured_feature/ore_sunglass.json
 data/pipican/worldgen/configured_feature/ore_sunstone.json
 data/pipican/worldgen/configured_feature/ore_thaumium.json
@@ -7415,6 +7648,7 @@ data/pipican/worldgen/configured_feature/ore_wintersteel.json
 data/pipican/worldgen/configured_feature/ore_zinc.json
 data/pipican/worldgen/configured_feature/ore_zonaite.json
 data/pipican/worldgen/placed_feature/ore_abyssal_shard.json
+data/pipican/worldgen/placed_feature/ore_abyssium.json
 data/pipican/worldgen/placed_feature/ore_adamantine.json
 data/pipican/worldgen/placed_feature/ore_aetherium.json
 data/pipican/worldgen/placed_feature/ore_allthemodium.json
@@ -7422,6 +7656,7 @@ data/pipican/worldgen/placed_feature/ore_aluminum.json
 data/pipican/worldgen/placed_feature/ore_amber.json
 data/pipican/worldgen/placed_feature/ore_aquamarine.json
 data/pipican/worldgen/placed_feature/ore_ardite.json
+data/pipican/worldgen/placed_feature/ore_astralite.json
 data/pipican/worldgen/placed_feature/ore_atium.json
 data/pipican/worldgen/placed_feature/ore_beskar.json
 data/pipican/worldgen/placed_feature/ore_black_metal.json
@@ -7487,6 +7722,7 @@ data/pipican/worldgen/placed_feature/ore_kryptonite.json
 data/pipican/worldgen/placed_feature/ore_kyanite.json
 data/pipican/worldgen/placed_feature/ore_lacrima.json
 data/pipican/worldgen/placed_feature/ore_lifebloom_crystal.json
+data/pipican/worldgen/placed_feature/ore_lotus_opal.json
 data/pipican/worldgen/placed_feature/ore_luna_titanium.json
 data/pipican/worldgen/placed_feature/ore_machalite.json
 data/pipican/worldgen/placed_feature/ore_magisteel.json
@@ -7497,6 +7733,7 @@ data/pipican/worldgen/placed_feature/ore_meteoric_iron.json
 data/pipican/worldgen/placed_feature/ore_mirestone.json
 data/pipican/worldgen/placed_feature/ore_mithril.json
 data/pipican/worldgen/placed_feature/ore_mooncrystal.json
+data/pipican/worldgen/placed_feature/ore_moonshard.json
 data/pipican/worldgen/placed_feature/ore_moonstone.json
 data/pipican/worldgen/placed_feature/ore_morkite.json
 data/pipican/worldgen/placed_feature/ore_naquadah.json
@@ -7509,6 +7746,7 @@ data/pipican/worldgen/placed_feature/ore_orichalcum.json
 data/pipican/worldgen/placed_feature/ore_palladium.json
 data/pipican/worldgen/placed_feature/ore_pearlsilver.json
 data/pipican/worldgen/placed_feature/ore_phrik.json
+data/pipican/worldgen/placed_feature/ore_primordial.json
 data/pipican/worldgen/placed_feature/ore_prismatic_shard.json
 data/pipican/worldgen/placed_feature/ore_promethium.json
 data/pipican/worldgen/placed_feature/ore_quantanium.json
@@ -7516,6 +7754,7 @@ data/pipican/worldgen/placed_feature/ore_quicksilver.json
 data/pipican/worldgen/placed_feature/ore_raritanium.json
 data/pipican/worldgen/placed_feature/ore_redrock_iron.json
 data/pipican/worldgen/placed_feature/ore_royal_silver.json
+data/pipican/worldgen/placed_feature/ore_runestone.json
 data/pipican/worldgen/placed_feature/ore_runic_iron.json
 data/pipican/worldgen/placed_feature/ore_runite.json
 data/pipican/worldgen/placed_feature/ore_saffron_gold.json
@@ -7527,11 +7766,14 @@ data/pipican/worldgen/placed_feature/ore_sekkiseki.json
 data/pipican/worldgen/placed_feature/ore_sigmarite.json
 data/pipican/worldgen/placed_feature/ore_silversheen.json
 data/pipican/worldgen/placed_feature/ore_skycrystal.json
+data/pipican/worldgen/placed_feature/ore_skyiron.json
+data/pipican/worldgen/placed_feature/ore_soulstone.json
 data/pipican/worldgen/placed_feature/ore_stalhrim.json
 data/pipican/worldgen/placed_feature/ore_starmetal.json
 data/pipican/worldgen/placed_feature/ore_starsilver.json
 data/pipican/worldgen/placed_feature/ore_stormsilver.json
 data/pipican/worldgen/placed_feature/ore_stygian_iron.json
+data/pipican/worldgen/placed_feature/ore_sunforged.json
 data/pipican/worldgen/placed_feature/ore_sunglass.json
 data/pipican/worldgen/placed_feature/ore_sunstone.json
 data/pipican/worldgen/placed_feature/ore_thaumium.json

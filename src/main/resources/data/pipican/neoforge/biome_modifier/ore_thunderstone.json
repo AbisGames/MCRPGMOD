@@ -1,10 +1,18 @@
 {
   "type": "neoforge:add_features",
-  "biomes": [
-    "minecraft:jagged_peaks",
-    "minecraft:frozen_peaks",
-    "minecraft:stony_peaks"
-  ],
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#pipican:region/greyspine_mountains",
+      "#pipican:region/whitecrown_icecap",
+      "#pipican:region/jade_empire",
+      [
+        "minecraft:jagged_peaks",
+        "minecraft:frozen_peaks",
+        "minecraft:stony_peaks"
+      ]
+    ]
+  },
   "features": "pipican:ore_thunderstone",
   "step": "underground_ores"
 }

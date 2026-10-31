@@ -1,0 +1,22 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 446321392,
+    "separation": 12,
+    "spacing": 35
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/shimmering_reefs/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/shimmering_reefs/mine",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/shimmering_reefs/village",
+      "weight": 4
+    }
+  ]
+}

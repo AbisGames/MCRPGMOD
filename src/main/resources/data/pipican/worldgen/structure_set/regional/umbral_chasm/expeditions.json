@@ -1,0 +1,22 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 625103321,
+    "separation": 12,
+    "spacing": 35
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/umbral_chasm/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/umbral_chasm/mine",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/umbral_chasm/village",
+      "weight": 4
+    }
+  ]
+}

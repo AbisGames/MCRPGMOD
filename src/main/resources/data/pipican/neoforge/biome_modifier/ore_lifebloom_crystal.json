@@ -4,7 +4,12 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_forest",
-      "#c:is_jungle"
+      "#c:is_jungle",
+      "#pipican:region/elderwood",
+      "#pipican:region/emerald_jungle",
+      [
+        "pipican:verdant_depths"
+      ]
     ]
   },
   "features": "pipican:ore_lifebloom_crystal",

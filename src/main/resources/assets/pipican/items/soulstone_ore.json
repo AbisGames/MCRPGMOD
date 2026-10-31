@@ -1,0 +1,7 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:block/soulstone_ore",
+    "tints": []
+  }
+}

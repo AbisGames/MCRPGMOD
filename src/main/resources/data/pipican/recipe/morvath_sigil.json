@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CCC",
+    "CDC",
+    "DRM"
+  ],
+  "key": {
+    "C": "pipican:cinderite_ingot",
+    "D": "pipican:ashlands_boss_core",
+    "R": "pipican:ritual_core",
+    "M": "minecraft:magma_cream"
+  },
+  "result": {
+    "id": "pipican:morvath_sigil",
+    "count": 1
+  }
+}

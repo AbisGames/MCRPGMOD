@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:whitecrown_icecap/glacier_sheet",
+    "pipican:whitecrown_icecap/ice_spire_fields",
+    "pipican:whitecrown_icecap/frozen_crevasse_maze",
+    "pipican:whitecrown_icecap/giant_ruins_tundra",
+    "pipican:whitecrown_icecap/aurora_plateau",
+    "pipican:whitecrown_icecap/frozen_lake_basin"
+  ]
+}

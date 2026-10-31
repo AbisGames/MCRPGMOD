@@ -4,7 +4,10 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_desert",
-      "#c:is_badlands"
+      "#c:is_badlands",
+      "#pipican:region/sunscorch_desert",
+      "#pipican:region/redrock_badlands",
+      "#pipican:region/spice_coast"
     ]
   },
   "features": "pipican:ore_sunstone",

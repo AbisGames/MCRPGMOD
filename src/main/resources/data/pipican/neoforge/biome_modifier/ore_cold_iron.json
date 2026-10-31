@@ -5,8 +5,10 @@
     "values": [
       "#c:is_flower_forest",
       "#c:is_floral",
+      "#pipican:region/elderwood",
       [
-        "minecraft:cherry_grove"
+        "minecraft:cherry_grove",
+        "pipican:verdant_depths"
       ]
     ]
   },

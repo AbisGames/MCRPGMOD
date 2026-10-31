@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:inner_sea/turquoise_shallows",
+    "pipican:inner_sea/city_state_islands",
+    "pipican:inner_sea/open_sea",
+    "pipican:inner_sea/olive_coast_cliffs",
+    "pipican:inner_sea/shipwreck_straits"
+  ]
+}

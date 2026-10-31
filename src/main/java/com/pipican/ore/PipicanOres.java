@@ -18,6 +18,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +36,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /**
  * The mod's ores: blocks, items and the creative tab, registered from {@code pipican/ores.json} (generated from
  * {@code tools/ore_builder/catalog.py}, so adding an ore needs no Java). Every ore has a tier (T1 common to T9 unique);
- * the textures are grayscale and tinted with the ore's colour ({@link #color}).
+ * the textures are grayscale and tinted with the ore's colour, unless the ore has hand-made ones.
  */
 public final class PipicanOres {
 
@@ -52,6 +53,9 @@ public final class PipicanOres {
     /** Blocks drawn with a tint (all of them), with their colour. */
     public static final List<Map.Entry<DeferredBlock<Block>, Integer>> TINTED = new ArrayList<>();
     private static final List<DeferredItem<? extends Item>> TAB_ITEMS = new ArrayList<>();
+    /** Blocks and items by registry path (for code that refers to a specific ore, like the regional mines). */
+    private static final Map<String, DeferredBlock<Block>> BLOCKS_BY_PATH = new HashMap<>();
+    private static final Map<String, DeferredItem<? extends Item>> ITEMS_BY_PATH = new HashMap<>();
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = TABS.register("ores", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.pipican.ores"))
@@ -118,6 +122,7 @@ public final class PipicanOres {
             String id = e.getAsJsonObject().get("id").getAsString();
             DeferredItem<Item> item = ITEMS.registerSimpleItem(id, () -> itemProps(tier, rarity));
             TAB_ITEMS.add(item);
+            ITEMS_BY_PATH.put(id, item);
             BY_PATH.put(id, ore);
         }
         if (json.has("set")) {
@@ -188,13 +193,17 @@ public final class PipicanOres {
                 default -> throw new IllegalStateException("unknown gear kind " + kind);
             };
             TAB_ITEMS.add(item);
+            ITEMS_BY_PATH.put(name, item);
             BY_PATH.put(name, ore);
         }
     }
 
     private static void blockItem(Ore ore, String id, DeferredBlock<Block> block, Rarity rarity) {
         TINTED.add(Map.entry(block, ore.color()));
-        TAB_ITEMS.add(ITEMS.registerSimpleBlockItem(id, block, () -> itemProps(ore.tier(), rarity)));
+        BLOCKS_BY_PATH.put(id, block);
+        DeferredItem<BlockItem> item = ITEMS.registerSimpleBlockItem(id, block, () -> itemProps(ore.tier(), rarity));
+        TAB_ITEMS.add(item);
+        ITEMS_BY_PATH.put(id, item);
         BY_PATH.put(id, ore);
     }
 
@@ -202,6 +211,30 @@ public final class PipicanOres {
     private static Item.Properties itemProps(int tier, Rarity rarity) {
         Item.Properties props = new Item.Properties().rarity(rarity);
         return tier >= 6 ? props.fireResistant() : props;
+    }
+
+    /** One of the ore blocks (an ore, storage or raw block) by registry path: "frostcrystal_ore". */
+    public static DeferredBlock<Block> block(String path) {
+        DeferredBlock<Block> block = BLOCKS_BY_PATH.get(path);
+        if (block == null) {
+            throw new IllegalArgumentException("no ore block " + path);
+        }
+        return block;
+    }
+
+    /** One of the ore items (raw, ingot, gem, block item, gear) by registry path: "wintersteel_ingot". */
+    @SuppressWarnings("unchecked")
+    public static DeferredItem<Item> item(String path) {
+        DeferredItem<? extends Item> item = ITEMS_BY_PATH.get(path);
+        if (item == null) {
+            throw new IllegalArgumentException("no ore item " + path);
+        }
+        return (DeferredItem<Item>) item;
+    }
+
+    /** An ore's material: its ingot (metals) or the gem itself. */
+    public static DeferredItem<Item> material(String oreId) {
+        return ITEMS_BY_PATH.containsKey(oreId + "_ingot") ? item(oreId + "_ingot") : item(oreId);
     }
 
     /** The ore a block or item of this mod belongs to (by registry path), if any. */

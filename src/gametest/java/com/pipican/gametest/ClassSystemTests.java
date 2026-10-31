@@ -364,7 +364,7 @@ public final class ClassSystemTests {
     private static void ores(GameTestHelper helper) {
         var server = helper.getLevel().getServer();
         var access = helper.getLevel().registryAccess();
-        helper.assertTrue(com.pipican.ore.PipicanOres.ORES.size() == 160, "160 ores: " + com.pipican.ore.PipicanOres.ORES.size());
+        helper.assertTrue(com.pipican.ore.PipicanOres.ORES.size() == 169, "169 ores: " + com.pipican.ore.PipicanOres.ORES.size());
         java.util.function.Function<String, net.minecraft.world.level.block.Block> block = path ->
                 net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Pipican.id(path));
         for (String path : List.of("electrum_ore", "deepslate_electrum_ore", "nether_hellstone_ore", "end_dragonite_ore", "mithril_block", "raw_mithril_block")) {

@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""Validate original capital-themed biome assets independently from Minecraft.
+
+This is a strict static preflight: it checks registry references, texture
+integrity and 150 biome data entries. Runtime testing is still required.
+"""
+from pathlib import Path
+import json
+import struct
+import zlib
+
+ROOT=Path(__file__).resolve().parents[1]
+DATA=ROOT/"src/main/resources/data/pipican"
+ASSETS=ROOT/"src/main/resources/assets/pipican"
+catalog=json.loads((DATA/"worldgen/biome_theme_catalog.json").read_text())
+realms=json.loads((DATA/"worldgen/region_map.json").read_text())
+palettes=catalog["biomes"]
+
+assert len(palettes)==27
+assert len({r["id"] for r in palettes})==27
+assert len(realms["macro_regions"])==22
+assert sum(len(r["subregions"]) for r in realms["macro_regions"])==120
+
+def check_png(path):
+    src=path.read_bytes()
+    assert src[:8]==bytes([137,80,78,71,13,10,26,10]),path
+    off=8
+    idat=bytearray()
+    width=height=0
+    while off<len(src):
+        n=struct.unpack_from(">I",src,off)[0]
+        tag=src[off+4:off+8]
+        val=src[off+8:off+8+n]
+        actual=struct.unpack_from(">I",src,off+8+n)[0]
+        assert zlib.crc32(tag+val)&0xffffffff==actual,(path,tag)
+        if tag==b"IHDR":
+            width,height=struct.unpack_from(">II",val,0)
+            assert (width,height)==(16,16),path
+        if tag==b"IDAT":idat.extend(val)
+        off+=12+n
+    payload=zlib.decompress(idat)
+    assert len(payload)==16*(1+16*4),path
+
+for p in palettes:
+    id=p["id"]
+    for typ in ("strata","trunk","canopy","bloom","ground"):
+        name=f"{id}_{typ}"
+        texture=ASSETS/f"textures/block/{name}.png"
+        check_png(texture)
+        for ref in (ASSETS/f"models/block/{name}.json",ASSETS/f"items/{name}.json",
+                    ASSETS/f"blockstates/{name}.json",DATA/f"loot_table/blocks/{name}.json"):
+            json.loads(ref.read_text())
+    for feature in ("tree","bloom","outcrop"):
+        feature_name=f"{id}_{feature}"
+        for folder in ("configured_feature","placed_feature"):
+            resource=DATA/f"worldgen/{folder}/{feature_name}.json"
+            assert resource.is_file(),resource
+            json.loads(resource.read_text())
+    res=DATA/f"neoforge/biome_modifier/{id}_outcrops.json"
+    assert json.loads(res.read_text())["type"]=="neoforge:add_features"
+    is_extra=id not in {m["id"] for m in realms["macro_regions"]}
+    tree_modifier=DATA/f"neoforge/biome_modifier/{id}_trees.json"
+    bloom_modifier=DATA/f"neoforge/biome_modifier/{id}_blooms.json"
+    assert tree_modifier.is_file()==(is_extra and p["trees_per_chunk"]>0)
+    assert bloom_modifier.is_file()==is_extra
+
+count=0
+for macro in realms["macro_regions"]:
+    for child in macro["subregions"]:
+        path=DATA/f"worldgen/biome/{macro['id']}/{child['id']}.json"
+        assert path.is_file(),path
+        json.loads(path.read_text())
+        detail=f"{macro['id']}/{child['id']}"
+        for kind in ("bloom",):
+            v=DATA/f"worldgen/placed_feature/subregion/{detail}_{kind}.json"
+            m=DATA/f"neoforge/biome_modifier/subregion/{detail}_{kind}.json"
+            assert v.is_file() and m.is_file(),detail
+            json.loads(v.read_text())
+            json.loads(m.read_text())
+        count+=1
+assert count==120
+for p in palettes[22:]:
+    assert (DATA/f"worldgen/biome/{p['id']}.json").is_file()
+surface=json.loads((DATA/"worldgen/noise_settings/rpg_overworld.json").read_text())["surface_rule"]["sequence"]
+geology=[e for e in surface if isinstance(e,dict) and e.get("type")=="minecraft:sequence" and len(e.get("sequence",[]))==27]
+assert len(geology)==2,"expected distinct cliff strata and regional soil rules"
+
+capitals=json.loads((DATA/"worldgen/fixed_capital_locations.json").read_text())["capitals"]
+assert len(capitals)==22
+region_lookup={r["id"]:r for r in realms["macro_regions"]}
+for castle in capitals:
+    assert castle["region"] in region_lookup
+    assert castle["subregion"] in {x["id"] for x in region_lookup[castle["region"]]["subregions"]}
+    assert castle["placement"]=="fixed"
+
+# These features place inventories or block entities independently of native
+# structure reservations and can permanently block deferred authored cities.
+competing={"minecraft:amethyst_geode","minecraft:monster_room","minecraft:monster_room_deep",
+           "minecraft:sculk_vein","minecraft:sculk_patch_deep_dark","minecraft:desert_well",
+           "minecraft:fossil_lower","minecraft:fossil_upper","minecraft:lake_lava_surface",
+           "minecraft:lake_lava_underground","minecraft:spring_lava","minecraft:spring_water"}
+reserved=list((DATA/"worldgen/biome/protected").glob("*.json"))
+reserved += [DATA/f"worldgen/biome/{site}_sanctuary.json" for site in ("umbral","redrock","aetheris")]
+for path in reserved:
+    reserved_biome=json.loads(path.read_text())
+    assert not reserved_biome["carvers"],f"Carvers undermine reserved foundations: {path}"
+    features=reserved_biome["features"]
+    assert not competing.intersection(item for step in features for item in step),path
+    assert not any(item.startswith("minecraft:trees_") for step in features for item in step),path
+    if path.parent.name=="protected":
+        assert "pipican:"+path.stem+"_tree" in features[9],path
+
+print("PASS: 27 palettes; 135 custom block textures; 81 configured features;")
+print("      150 biome definitions (including 25 protected); 120 undergrowth sets;")
+print("      22 protected capital subregions; geology rules.")

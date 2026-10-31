@@ -1,0 +1,82 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 803974272,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/birch_lake_country/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/birch_lake_country/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/birch_lake_country/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/dense_spruce_forest/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/dense_spruce_forest/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/dense_spruce_forest/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/permafrost_bog/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/permafrost_bog/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/snowy_pine_hills/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/snowy_pine_hills/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/snowy_pine_hills/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/trapper_river_valley/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/trapper_river_valley/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/trapper_river_valley/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/wolf_hollows/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/pinewall_taiga/wolf_hollows/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/pinewall_taiga/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/pinewall_taiga/mine",
+      "weight": 4
+    }
+  ]
+}

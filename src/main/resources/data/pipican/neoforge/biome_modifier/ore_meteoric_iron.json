@@ -6,7 +6,11 @@
       "#c:is_plains",
       "#c:is_desert",
       "#c:is_savanna",
-      "#c:is_badlands"
+      "#c:is_badlands",
+      "#pipican:region/khagan_steppe",
+      "#pipican:region/sunscorch_desert",
+      "#pipican:region/redrock_badlands",
+      "#pipican:region/ashlands"
     ]
   },
   "features": "pipican:ore_meteoric_iron",

@@ -1,0 +1,23 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "pipican:expedition",
+        "location": "pipican:regional/lotus_delta/dungeon",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "pipican:expedition_foundation"
+            },
+            {
+              "processor_type": "pipican:expedition_access"
+            }
+          ]
+        },
+        "projection": "rigid"
+      }
+    }
+  ]
+}

@@ -96,7 +96,12 @@ def build(out, ores, tag, lang_en, lang_tr, runtime):
         for kind in kinds:
             item = f'{sid}_{kind}'
             tint_head = {'type': 'minecraft:constant', 'value': color - (1 << 32)}
-            if kind in ARMOR:
+            if os.path.exists(os.path.join(out.root, 'assets', NS, 'textures', 'item', item + '.png')):
+                # Hand-made art wins.
+                out.json(f'assets/{NS}/models/item/{item}.json', {'parent': 'minecraft:item/generated' if kind in ARMOR else 'minecraft:item/handheld',
+                                                                  'textures': {'layer0': f'{NS}:item/{item}'}})
+                tints = []
+            elif kind in ARMOR:
                 out.json(f'assets/{NS}/models/item/{item}.json', {'parent': 'minecraft:item/generated', 'textures': {'layer0': f'{NS}:item/gear/{kind}'}})
                 tints = [tint_head]
             else:

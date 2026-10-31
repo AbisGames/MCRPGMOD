@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CCC",
+    "CDC",
+    "CRB"
+  ],
+  "key": {
+    "C": "pipican:frostcrystal",
+    "D": "pipican:whitecrown_icecap_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:blue_ice"
+  },
+  "result": {
+    "id": "pipican:frostbound_colossus_sigil",
+    "count": 1
+  }
+}

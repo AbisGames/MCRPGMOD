@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SCR",
+    "SCB"
+  ],
+  "key": {
+    "S": "pipican:verdantite",
+    "C": "pipican:emerald_jungle_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:fermented_spider_eye"
+  },
+  "result": {
+    "id": "pipican:xaltek_emerald_devourer_sigil",
+    "count": 1
+  }
+}

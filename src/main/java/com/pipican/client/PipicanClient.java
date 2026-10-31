@@ -7,6 +7,8 @@ import com.pipican.network.OpenClassSelectionPayload;
 import com.pipican.network.OpenSkillTreePayload;
 import com.pipican.network.OpenTrinketsPayload;
 import com.pipican.network.UseAbilityPayload;
+import com.pipican.network.OpenBlacksmithPayload;
+import com.pipican.network.RequestOpenBlacksmithPayload;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.player.PlayerClassData;
 import com.pipican.rpgclass.Affinity;
@@ -38,6 +40,7 @@ public final class PipicanClient {
     public PipicanClient(IEventBus modBus) {
         modBus.addListener(PipicanClient::registerPayloadHandlers);
         modBus.addListener(PipicanClient::registerScreens);
+        modBus.addListener(PipicanClient::registerBossRenderers);
         modBus.addListener(PipicanClient::registerKeys);
         modBus.addListener(PipicanClient::registerHud);
         modBus.addListener(PipicanClient::registerRenderers);
@@ -60,6 +63,37 @@ public final class PipicanClient {
     private static void registerPayloadHandlers(RegisterClientPayloadHandlersEvent event) {
         event.register(OpenClassSelectionPayload.TYPE, (payload, ctx) -> openClassSelection());
         event.register(OpenSkillTreePayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new SkillTreeScreen()));
+        event.register(OpenBlacksmithPayload.TYPE, (payload, ctx) -> Minecraft.getInstance().setScreen(new BlacksmithScreen()));
+    }
+
+    private static void registerBossRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.MORVATH.get(),com.pipican.client.boss.RegionalBossRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.FROSTBOUND.get(),com.pipican.client.boss.FrostboundRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.SKOLLVAR.get(),com.pipican.client.boss.SkollvarRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.ELDAROTH.get(),com.pipican.client.boss.EldarothRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.FALLEN_KING.get(),com.pipican.client.boss.FallenKingRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.KRAGMOR.get(),com.pipican.client.boss.KragmorRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.NOCTHAR.get(),com.pipican.client.boss.NoctharRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.AETHERION.get(),com.pipican.client.boss.AetherionRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.VERMILLION.get(),com.pipican.client.boss.VermillionRenderer::new);
+        event.registerEntityRenderer(com.pipican.boss.BossRegistries.LONGWEI.get(),com.pipican.client.boss.LongweiRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.MORGATHA.get(),com.pipican.client.boss.MorgathaRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.AURELIOS.get(),com.pipican.client.boss.AureliosRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.LIANHUA.get(),com.pipican.client.boss.LianhuaRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.AKHMAR.get(),com.pipican.client.boss.AkhmarRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.NETHARIS.get(),com.pipican.client.boss.NetharisRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.ZAHIRA.get(),com.pipican.client.boss.ZahiraRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.XALTEK.get(),com.pipican.client.boss.XaltekRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.CORALLITH.get(),com.pipican.client.boss.CorallithRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.AZHAR.get(),com.pipican.client.boss.AzharRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.NHALKORR.get(),com.pipican.client.boss.NhalkorrRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.HROTHGAR.get(),com.pipican.client.boss.HrothgarRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.VALTHOR.get(),com.pipican.client.boss.ValthorRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.TENGRI.get(),com.pipican.client.boss.TengriRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.THALASSOR.get(),com.pipican.client.boss.ThalassorRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.DURMAGON.get(),com.pipican.client.boss.DurmagonRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.SYLTHERA.get(),com.pipican.client.boss.SyltheraRenderer::new);
+          event.registerEntityRenderer(com.pipican.boss.BossRegistries.LUMYNARA.get(),com.pipican.client.boss.LumynaraRenderer::new);
     }
 
     private static void registerScreens(RegisterMenuScreensEvent event) {
@@ -115,8 +149,12 @@ public final class PipicanClient {
     /** A "Passive Tree" button above the survival inventory, the way into the tree screen (no keybind yet). */
     private static void addInventoryButton(ScreenEvent.Init.Post event) {
         if (event.getScreen() instanceof InventoryScreen screen) {
+            event.addListener(Button.builder(Component.translatable("blacksmith.pipican.button"), b ->
+                            ClientPacketDistributor.sendToServer(RequestOpenBlacksmithPayload.INSTANCE))
+                    .bounds(screen.getLeftPos() + 4, screen.getTopPos() - 18, 72, 16)
+                    .build());
             event.addListener(Button.builder(Component.translatable("pipican.tree.button"), b -> Minecraft.getInstance().setScreen(new SkillTreeScreen()))
-                    .bounds(screen.getGuiLeft() + screen.getImageWidth() - 60, screen.getGuiTop() - 18, 60, 16)
+                    .bounds(screen.getLeftPos() + screen.getImageWidth() - 60, screen.getTopPos() - 18, 60, 16)
                     .build());
         }
     }

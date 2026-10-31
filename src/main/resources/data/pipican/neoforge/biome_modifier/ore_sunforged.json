@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_desert",
+      "#pipican:region/sunscorch_desert"
+    ]
+  },
+  "features": "pipican:ore_sunforged",
+  "step": "underground_ores"
+}

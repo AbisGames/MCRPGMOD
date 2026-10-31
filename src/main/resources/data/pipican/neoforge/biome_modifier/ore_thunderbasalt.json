@@ -4,7 +4,10 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_hill",
-      "#c:is_windswept"
+      "#c:is_windswept",
+      "#pipican:region/fjordmark",
+      "#pipican:region/stormcoast",
+      "#pipican:region/heartlands"
     ]
   },
   "features": "pipican:ore_thunderbasalt",

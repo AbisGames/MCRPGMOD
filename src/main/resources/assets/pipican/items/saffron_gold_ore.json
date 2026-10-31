@@ -2,11 +2,6 @@
   "model": {
     "type": "minecraft:model",
     "model": "pipican:block/saffron_gold_ore",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -1007586
-      }
-    ]
+    "tints": []
   }
 }

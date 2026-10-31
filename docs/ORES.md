@@ -1,9 +1,11 @@
 # Ores
 
-160 ores in nine tiers, from the design document "Fantastik Cevherler — Kademe, Nadirlik ve Setler" plus the
-worldgen branch's 27 regional ores (sorted into the same tiers: common → T1, uncommon → T2, rare → T3, epic → T5;
-Bloodstone and Sunstone were in both and are one ore each). The Mistborn base metals that have no vanilla ore
-(tin, zinc, cadmium, chromium, nickel, aluminum) are ores too.
+169 ores in nine tiers, from the design document "Fantastik Cevherler — Kademe, Nadirlik ve Setler", the RPG world's
+27 regional ores (sorted into the same tiers: common → T1, uncommon → T2, rare → T3, epic → T5; Bloodstone and
+Sunstone were in both and are one ore each) and its 8 rare deposits (soulstone, dragonite, abyssium, runestone,
+astralite, sunforged, moonshard, primordial). The Mistborn base metals that have no vanilla ore (tin, zinc, cadmium,
+chromium, nickel, aluminum) are ores too. There is one ore system: the RPG world's code
+(`RegionalOreRegistries`, `RareResources`) looks its ores up in this catalog.
 
 ## Where things live
 
@@ -30,7 +32,8 @@ Bloodstone and Sunstone were in both and are one ore each). The Mistborn base me
 | T8 | Mythic | limited per world (phase 4) | a T7 tool |
 | T9 | Unique | one source per world (phase 4) | a T8 tool |
 
-Counts are per chunk *in the ore's biomes* (see `PLACES` in the catalog). Rarer ores also hide from the air more
+Counts are per chunk *in the ore's biomes* (see `PLACES` in the catalog; in the RPG world preset, the regions listed
+in `REGIONS` too). Rarer ores also hide from the air more
 often, like diamonds. Overworld ores come in stone and deepslate; Nether ores in netherrack; End ores in end stone.
 
 Each ore has: ore blocks, a raw item (metals, smelts and blasts into an ingot) or the gem itself, a storage block
@@ -71,6 +74,11 @@ only, and no recipe - it is found, not forged).
 5. Mistborn Allomancy.
 6. Tamashigane.
 
-**Fixed mines** (worldgen branch): they keep only T1 ores. That branch isn't on main yet; its mine catalog gets
-updated to the T1 regional ores (stormsilver, runic iron, redrock iron, pearlsilver, frostcrystal, tideglass,
-sunglass, verdantite) when it is merged.
+## Regional mines
+
+Each of the RPG world's 27 regions has a renewable fixed mine; mines hold **only T1 ores** (`mineOre` in
+`RegionalOreCatalog`, `ORE` in `tools/worldgen/build_full_structures.py`): Frostcrystal, Stormsilver, Tideglass,
+Pearlsilver, Electrum, Corundum, Verdantite, Redrock Iron, Runic Iron, Sunglass, Cold Iron, Amber, Tin, Nitre,
+Truesilver or Morkite, by region. The region's own signature ore (`id`) is still what its boss drops and its
+blacksmith uses - as an ingot (metals) or the gem - and it spawns by tier in the open world like every other ore.
+Hand-made textures in `assets/pipican/textures/{block,item}/<name>.png` replace the tinted ones automatically.

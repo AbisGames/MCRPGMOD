@@ -2,11 +2,6 @@
   "model": {
     "type": "minecraft:model",
     "model": "pipican:block/dawnbronze_ore",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -2517942
-      }
-    ]
+    "tints": []
   }
 }

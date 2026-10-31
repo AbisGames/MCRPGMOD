@@ -2,11 +2,6 @@
   "model": {
     "type": "minecraft:model",
     "model": "pipican:block/bloodstone_ore",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -8776666
-      }
-    ]
+    "tints": []
   }
 }

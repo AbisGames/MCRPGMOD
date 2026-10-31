@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:jade_empire/bamboo_forest",
+    "pipican:jade_empire/karst_pillar_valleys",
+    "pipican:jade_empire/cherry_blossom_hills",
+    "pipican:jade_empire/terraced_tea_slopes",
+    "pipican:jade_empire/misty_river_gorges",
+    "pipican:jade_empire/imperial_plains"
+  ]
+}

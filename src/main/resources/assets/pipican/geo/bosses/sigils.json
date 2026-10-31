@@ -1,0 +1,164 @@
+[
+  {
+    "item": "pipican:morvath_sigil",
+    "boss": "morvath_ashen_king",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:frostbound_colossus_sigil",
+    "boss": "frostbound_colossus",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:skollvar_winterfang_sigil",
+    "boss": "skollvar_winterfang",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:eldaroth_treant_sigil",
+    "boss": "eldaroth_treant",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:fallen_king_sigil",
+    "boss": "fallen_king",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:kragmor_canyon_warlord_sigil",
+    "boss": "kragmor_canyon_warlord",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:nocthar_void_sovereign_sigil",
+    "boss": "nocthar_void_sovereign",
+    "min_y": -64,
+    "max_y": -1
+  },
+  {
+    "item": "pipican:aetherion_sky_guardian_sigil",
+    "boss": "aetherion_sky_guardian",
+    "min_y": 251,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:vermillion_blood_monarch_sigil",
+    "boss": "vermillion_blood_monarch",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:longwei_jade_dragon_sigil",
+    "boss": "longwei_jade_dragon",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:morgatha_swamp_queen_sigil",
+    "boss": "morgatha_swamp_queen",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:aurelios_sunken_emperor_sigil",
+    "boss": "aurelios_sunken_emperor",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:lianhua_lotus_serpent_sigil",
+    "boss": "lianhua_lotus_serpent",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:akhmar_sand_emperor_sigil",
+    "boss": "akhmar_sand_emperor",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:netharis_river_guardian_sigil",
+    "boss": "netharis_river_guardian",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:zahira_crimson_corsair_sigil",
+    "boss": "zahira_crimson_corsair",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:xaltek_emerald_devourer_sigil",
+    "boss": "xaltek_emerald_devourer",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:corallith_reef_colossus_sigil",
+    "boss": "corallith_reef_colossus",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:azhar_golden_behemoth_sigil",
+    "boss": "azhar_golden_behemoth",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:nhalkorr_leviathan_sigil",
+    "boss": "nhalkorr_leviathan",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:hrothgar_drowned_jarl_sigil",
+    "boss": "hrothgar_drowned_jarl",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:valthor_stormbringer_sigil",
+    "boss": "valthor_stormbringer",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:tengri_champion_sigil",
+    "boss": "tengri_champion",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:thalassor_deep_tyrant_sigil",
+    "boss": "thalassor_deep_tyrant",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:durmagon_runic_titan_sigil",
+    "boss": "durmagon_runic_titan",
+    "min_y": -64,
+    "max_y": 448
+  },
+  {
+    "item": "pipican:sylthera_primordial_bloom_sigil",
+    "boss": "sylthera_primordial_bloom",
+    "min_y": -64,
+    "max_y": 43
+  },
+  {
+    "item": "pipican:lumynara_abyssal_oracle_sigil",
+    "boss": "lumynara_abyssal_oracle",
+    "min_y": -64,
+    "max_y": 89
+  }
+]

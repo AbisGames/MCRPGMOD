@@ -4,7 +4,11 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_beach",
-      "#c:is_river"
+      "#c:is_river",
+      "#pipican:region/inner_sea",
+      "#pipican:region/coral_isles",
+      "#pipican:region/stormcoast",
+      "#pipican:region/spice_coast"
     ]
   },
   "features": "pipican:ore_pearlsilver",

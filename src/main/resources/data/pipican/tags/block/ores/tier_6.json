@@ -2,8 +2,10 @@
   "replace": false,
   "values": [
     "pipican:allthemodium_ore",
+    "pipican:astralite_ore",
     "pipican:chlorophyte_ore",
     "pipican:deepslate_allthemodium_ore",
+    "pipican:deepslate_astralite_ore",
     "pipican:deepslate_chlorophyte_ore",
     "pipican:deepslate_dilithium_ore",
     "pipican:deepslate_element_zero_ore",

@@ -1,0 +1,70 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 703417915,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/dry_salt_lake/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/dry_salt_lake/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/hoodoo_spires/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/hoodoo_spires/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/mesa_and_butte_plains/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/mesa_and_butte_plains/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/mesa_and_butte_plains/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/outback_scrubland/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/outback_scrubland/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/outlaw_frontier/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/outlaw_frontier/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/red_canyon_maze/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/redrock_badlands/red_canyon_maze/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/redrock_badlands/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/redrock_badlands/mine",
+      "weight": 4
+    }
+  ]
+}

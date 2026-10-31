@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WWW",
+    "WDW",
+    "WRB"
+  ],
+  "key": {
+    "W": "pipican:wintersteel_ingot",
+    "D": "pipican:pinewall_taiga_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:bone"
+  },
+  "result": {
+    "id": "pipican:skollvar_winterfang_sigil",
+    "count": 1
+  }
+}

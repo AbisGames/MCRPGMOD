@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.25,
+  "group": "skyiron_ingot",
+  "ingredient": "pipican:raw_skyiron",
+  "result": {
+    "id": "pipican:skyiron_ingot"
+  }
+}

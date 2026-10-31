@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:jigsaw",
+  "biomes": "pipican:umbral_chasm",
+  "step": "underground_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "beard_thin",
+  "size": 1,
+  "start_height": {
+    "absolute": -20
+  },
+  "max_distance_from_center": 96,
+  "start_pool": "pipican:regional/umbral_chasm/castle",
+  "use_expansion_hack": false
+}

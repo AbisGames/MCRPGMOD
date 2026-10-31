@@ -1,0 +1,47 @@
+package com.pipican.boss;
+
+import java.util.*;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
+
+/** Reef gate rings, a separately warned sonar echo, and shootable spreading urchins. */
+public final class CorallithCombat {
+    public static final String GATES="coral_gates",ECHO="reef_echo",URCHINS="urchin_fan";
+    private final RegionalBossEntity boss;private final RegionalCombatClock clock;
+    private Vec3 origin=Vec3.ZERO,mark=Vec3.ZERO,echoMark=Vec3.ZERO;
+    private double heading,echoHeading;
+    private List<Vec3> sockets=List.of(Vec3.ZERO,Vec3.ZERO,Vec3.ZERO,Vec3.ZERO);
+    private List<Boolean> destroyed=List.of(false,false,false,false);
+    private int phase=1,gateGap,echoDelay,echoPass,urchinTicks,exposureTicks;
+    public CorallithCombat(RegionalBossEntity boss){this.boss=boss;var d=BossDesigns.require("corallith_reef_colossus");clock=new RegionalCombatClock(Map.of(GATES,time(d,0),ECHO,time(d,1),URCHINS,time(d,2),"basic",new RegionalCombatClock.Timing(18,20,52)));}
+    private static RegionalCombatClock.Timing time(BossDesigns.Design d,int n){var a=d.abilities().get(n);return new RegionalCombatClock.Timing(a.windup(),a.recovery(),a.cooldown());}
+    public RegionalCombatClock clock(){return clock;}public int destroyedUrchins(){return (int)destroyed.stream().filter(Boolean::booleanValue).count();}public int exposureTicks(){return exposureTicks;}public Vec3 socket(int i){if(i<0||i>=4)throw new IndexOutOfBoundsException();return sockets.get(i);}public Vec3 gateOpening(){double a=gateGap*Math.PI/2;return origin.add(forward().scale(Math.cos(a)*6)).add(side().scale(Math.sin(a)*6));}public Vec3 echoTarget(){return echoMark.add(Math.cos(echoHeading)*6,0,Math.sin(echoHeading)*6);}
+    public boolean begin(String id,LivingEntity target){if(target==null||!target.isAlive()||!boss.insideArena(target.position())||!clock.begin(id))return false;origin=boss.position();mark=target.position();heading=Math.atan2(mark.z-origin.z,mark.x-origin.x);phase=clock.phase();if(phase==2){gateGap=(gateGap+1)%4;heading+=0.12;boss.playSound(SoundEvents.CONDUIT_AMBIENT,1.1f,0.6f);}Vec3 f=forward(),s=side();sockets=List.of(origin.add(f.scale(3)).add(s.scale(4)),origin.add(f.scale(5)).add(s.scale(1.3)),origin.add(f.scale(5)).subtract(s.scale(1.3)),origin.add(f.scale(3)).subtract(s.scale(4)));destroyed=List.of(false,false,false,false);echoHeading=heading;echoMark=origin.add(f.scale(2));echoDelay=0;echoPass=0;urchinTicks=0;return true;}
+    public void tick(ServerLevel level){if(exposureTicks>0)exposureTicks--;checkUrchins(level);if(echoDelay>0){telegraphEcho(level,echoHeading,echoMark);if(--echoDelay==0){resolveEcho(level,echoHeading,echoMark);if(phase==2&&echoPass==0){echoPass=1;echoHeading+=0.72;echoMark=origin.add(forward().scale(2));echoDelay=10;}}}
+        String active=clock.active();if(!active.isEmpty()&&!clock.resolved()&&clock.remaining()%5==0)telegraph(level,active);if(active.isEmpty()){clock.tick();if(urchinTicks>0)tickUrchins(level);return;}String impact=clock.tick();if(urchinTicks>0)tickUrchins(level);if(impact.isEmpty())return;
+        switch(impact){case GATES->{resolveGates(level);boss.playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT,1.3f,0.65f);}case ECHO->{echoDelay=phase==2?14:8;echoPass=0;echoMark=origin.add(forward().scale(2));boss.playSound(SoundEvents.GUARDIAN_ATTACK,1.2f,0.7f);}case URCHINS->{urchinTicks=36;boss.playSound(SoundEvents.TURTLE_EGG_BREAK,1.1f,0.75f);}case "basic"->strike(level,List.of(mark),0.68f);default->{}}}
+    private Vec3 forward(){return new Vec3(Math.cos(heading),0,Math.sin(heading));}private Vec3 side(){Vec3 f=forward();return new Vec3(-f.z,0,f.x);}
+    private List<Vec3> radialGate(){var points=new ArrayList<Vec3>();Vec3 f=forward(),s=side();for(int deg=0;deg<360;deg+=3){double a=Math.toRadians(deg);Vec3 p=origin.add(f.scale(Math.cos(a)*6)).add(s.scale(Math.sin(a)*6));double gapAngle=Math.toRadians(gateGap*90);double diff=Math.abs(Math.atan2(Math.sin(a-gapAngle),Math.cos(a-gapAngle)));if(diff>0.24&&boss.insideArena(p))points.add(p);}return points;}
+    private List<Vec3> ray(double angle,Vec3 start){Vec3 f=new Vec3(Math.cos(angle),0,Math.sin(angle));var out=new ArrayList<Vec3>();for(int i=0;i<=36;i++){Vec3 p=start.add(f.scale(i*0.4));if(boss.insideArena(p))out.add(p);}return out;}
+    private void checkUrchins(ServerLevel level){if(urchinTicks<=0)return;var next=new ArrayList<>(destroyed);for(int i=0;i<4;i++)if(!next.get(i)){Vec3 p=urchinPosition(i);var shots=level.getEntitiesOfClass(Projectile.class,new net.minecraft.world.phys.AABB(p.add(-0.9,-1,-0.9),p.add(0.9,1.5,0.9)),Projectile::isAlive);if(!shots.isEmpty()){next.set(i,true);shots.forEach(Projectile::discard);level.sendParticles(ParticleTypes.POOF,p.x,p.y,p.z,14,0.3,0.2,0.3,0.02);}}destroyed=List.copyOf(next);}
+    public Vec3 urchinPosition(int i){if(i<0||i>=4)throw new IndexOutOfBoundsException();Vec3 start=sockets.get(i);double progress=(36-urchinTicks)/36.0;Vec3 toward=origin.add(0,0,0).subtract(start).normalize();return start.add(toward.scale(progress*5));}
+    private void tickUrchins(ServerLevel level){urchinTicks--;for(int i=0;i<4;i++)if(!destroyed.get(i)){Vec3 p=urchinPosition(i);level.sendParticles(ParticleTypes.BUBBLE,p.x,p.y+0.1,p.z,3,0.15,0.05,0.15,0.005);for(Player player:players(level))if(Math.abs(player.getY()-p.y)<2.3&&player.position().distanceToSqr(p)<1.4*1.4){player.hurtServer(level,boss.damageSources().mobAttack(boss),(float)(boss.getAttributeValue(Attributes.ATTACK_DAMAGE)*0.16));player.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.SLOWNESS,35,0));}}if(urchinTicks<=0)destroyed=List.of(false,false,false,false);}
+    private void telegraph(ServerLevel l,String id){if(id.equals(GATES)){for(Vec3 p:radialGate())if(Math.abs(p.x-origin.x)%1.5<0.12)l.sendParticles(ParticleTypes.BUBBLE,p.x,p.y+0.08,p.z,1,0.04,0.03,0.04,0);}else if(id.equals(ECHO))telegraphEcho(l,heading,origin.add(forward().scale(2)));else for(int i=0;i<4;i++){Vec3 p=sockets.get(i);l.sendParticles(destroyed.get(i)?ParticleTypes.POOF:ParticleTypes.NAUTILUS,p.x,p.y+0.2,p.z,8,0.25,0.2,0.25,0);}}
+    private void telegraphEcho(ServerLevel l,double angle,Vec3 start){for(Vec3 p:ray(angle,start))if(p.distanceToSqr(start)%2<0.2)l.sendParticles(ParticleTypes.BUBBLE,p.x,p.y+0.1,p.z,2,0.08,0.05,0.08,0);}
+    private void resolveGates(ServerLevel l){var pts=radialGate();for(Vec3 p:pts)l.sendParticles(ParticleTypes.SPLASH,p.x,p.y,p.z,2,0.12,0.08,0.12,0.01);strike(l,pts,0.54f);}
+    private void resolveEcho(ServerLevel l,double a,Vec3 start){var pts=ray(a,start);for(Vec3 p:pts)l.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP,p.x,p.y,p.z,1,0.1,0.08,0.1,0);strike(l,pts,0.46f);}
+    private void strike(ServerLevel l,List<Vec3> pts,float scale){for(Player p:players(l))if(pts.stream().anyMatch(q->Math.abs(p.getY()-q.y)<2.8&&p.position().distanceToSqr(q)<1.55*1.55))p.hurtServer(l,boss.damageSources().mobAttack(boss),(float)(boss.getAttributeValue(Attributes.ATTACK_DAMAGE)*scale));}
+    private List<Player> players(ServerLevel l){return l.getEntitiesOfClass(Player.class,boss.getBoundingBox().inflate(28),p->p.isAlive()&&!p.isCreative()&&!p.isSpectator()&&boss.insideArena(p.position()));}
+    public boolean updatePhase(float hp,float max){boolean changed=clock.updatePhase(hp,max);if(changed)phase=2;return changed;}
+    public void save(ValueOutput o){clock.save(o);o.store("CorallithOrigin",Vec3.CODEC,origin);o.store("CorallithMark",Vec3.CODEC,mark);o.store("CorallithEchoMark",Vec3.CODEC,echoMark);o.store("CorallithSockets",Vec3.CODEC.listOf(),sockets);o.store("CorallithDestroyed",com.mojang.serialization.Codec.BOOL.listOf(),destroyed);o.putDouble("CorallithHeading",heading);o.putDouble("CorallithEchoHeading",echoHeading);o.putInt("CorallithPhase",phase);o.putInt("CorallithGap",gateGap);o.putInt("CorallithEchoDelay",echoDelay);o.putInt("CorallithEchoPass",echoPass);o.putInt("CorallithUrchinTicks",urchinTicks);o.putInt("CorallithExposure",exposureTicks);}
+    public void load(ValueInput i){clock.load(i);origin=i.read("CorallithOrigin",Vec3.CODEC).orElse(Vec3.ZERO);mark=i.read("CorallithMark",Vec3.CODEC).orElse(Vec3.ZERO);echoMark=i.read("CorallithEchoMark",Vec3.CODEC).orElse(Vec3.ZERO);sockets=normalize(i.read("CorallithSockets",Vec3.CODEC.listOf()).orElse(List.of()),Vec3.ZERO);destroyed=normalize(i.read("CorallithDestroyed",com.mojang.serialization.Codec.BOOL.listOf()).orElse(List.of()),false);heading=i.getDoubleOr("CorallithHeading",0);echoHeading=i.getDoubleOr("CorallithEchoHeading",0);phase=clock.phase();gateGap=Math.floorMod(i.getIntOr("CorallithGap",0),4);echoDelay=Math.clamp(i.getIntOr("CorallithEchoDelay",0),0,14);echoPass=Math.clamp(i.getIntOr("CorallithEchoPass",0),0,1);urchinTicks=Math.clamp(i.getIntOr("CorallithUrchinTicks",0),0,36);exposureTicks=Math.clamp(i.getIntOr("CorallithExposure",0),0,60);}
+    private static <T> List<T> normalize(List<T> v,T d){var r=new ArrayList<T>(4);for(int n=0;n<4;n++)r.add(n<v.size()?v.get(n):d);return List.copyOf(r);}
+}

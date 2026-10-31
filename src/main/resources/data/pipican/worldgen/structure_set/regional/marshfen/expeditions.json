@@ -1,0 +1,62 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 462318091,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/marshfen/drowned_ruins/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/drowned_ruins/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/fog_swamp/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/fog_swamp/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/mangrove_bayou/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/mangrove_bayou/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/peat_bog/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/peat_bog/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/witch_hollow_woods/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/witch_hollow_woods/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/marshfen/witch_hollow_woods/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/marshfen/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/marshfen/mine",
+      "weight": 4
+    }
+  ]
+}

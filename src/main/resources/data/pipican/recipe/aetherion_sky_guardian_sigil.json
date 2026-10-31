@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SDS",
+    "SRC"
+  ],
+  "key": {
+    "S": "pipican:skycrystal",
+    "D": "pipican:aetheris_expanse_boss_core",
+    "R": "pipican:ritual_core",
+    "C": "minecraft:feather"
+  },
+  "result": {
+    "id": "pipican:aetherion_sky_guardian_sigil",
+    "count": 1
+  }
+}

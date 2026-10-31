@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:ashlands/active_volcano_field",
+    "pipican:ashlands/ash_waste_plains",
+    "pipican:ashlands/obsidian_spires",
+    "pipican:ashlands/magma_rivers",
+    "pipican:ashlands/dark_fortress_plateau",
+    "pipican:ashlands/dead_forest"
+  ]
+}

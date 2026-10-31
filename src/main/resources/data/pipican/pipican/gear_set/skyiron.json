@@ -1,0 +1,49 @@
+{
+  "effects": [
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:wearing",
+        "items": "#pipican:sets/skyiron/armor",
+        "min": 4
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        },
+        {
+          "type": "pipican:mount",
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": "#pipican:sets/skyiron/weapons",
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:state",
+            "state": "mounted"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

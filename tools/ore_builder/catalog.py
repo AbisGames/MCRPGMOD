@@ -61,7 +61,61 @@ PLACES = {
     'end':         ('end', ['#minecraft:is_end'], 'end'),
     'end_islands': ('end', ['minecraft:end_highlands', 'minecraft:end_midlands', 'minecraft:small_end_islands'], 'end'),
     'end_void':    ('end', ['minecraft:end_barrens', 'minecraft:small_end_islands'], 'end'),
+    # Single regions of the RPG world (worldgen branch)
+    'umbral':      ('overworld', ['minecraft:deep_dark'], 'deep'),
+    'greyspine':   ('overworld', ['#c:is_mountain'], 'middle'),
+    'aetheris':    ('overworld', ['minecraft:jagged_peaks', 'minecraft:frozen_peaks'], 'sky'),
+    'elderwood':   ('overworld', ['#c:is_old_growth', '#c:is_dark_forest'], 'middle'),
+    'sunscorch':   ('overworld', ['#c:is_desert'], 'middle'),
 }
+
+# The RPG world's regions (worldgen branch) that count as each place, on top of the vanilla biomes above. The 22
+# macro-regions are biome tags (#pipican:region/<name>); the five special regions are single biomes.
+TAGGED_REGIONS = {'ashlands', 'coral_isles', 'elderwood', 'emerald_jungle', 'fjordmark', 'goldgrass_savanna', 'greyspine_mountains',
+                  'heartlands', 'inner_sea', 'jade_empire', 'khagan_steppe', 'lotus_delta', 'marshfen', 'northern_ice_sea', 'pinewall_taiga',
+                  'redrock_badlands', 'riverlands', 'spice_coast', 'stormcoast', 'sunscorch_desert', 'western_ocean', 'whitecrown_icecap'}
+ALL_REGIONS = sorted(TAGGED_REGIONS) + ['aetheris_expanse', 'crimson_wilds', 'shimmering_reefs', 'umbral_chasm', 'verdant_depths']
+REGIONS = {
+    'everywhere': ALL_REGIONS, 'deep': ALL_REGIONS, 'very_deep': ALL_REGIONS, 'ruins': ALL_REGIONS, 'caves': ALL_REGIONS,
+    'crystal_caves': ['umbral_chasm', 'verdant_depths', 'greyspine_mountains', 'jade_empire', 'aetheris_expanse'],
+    'river_plains': ['heartlands', 'riverlands', 'khagan_steppe', 'lotus_delta'],
+    'fey_forest': ['elderwood', 'verdant_depths'],
+    'old_forest': ['elderwood', 'pinewall_taiga'],
+    'forest_deep': ['elderwood', 'emerald_jungle', 'verdant_depths'],
+    'jungle': ['emerald_jungle', 'verdant_depths', 'jade_empire'],
+    'mountain': ['greyspine_mountains', 'fjordmark', 'jade_empire'],
+    'mountain_heart': ['greyspine_mountains', 'fjordmark'],
+    'peaks': ['greyspine_mountains', 'whitecrown_icecap', 'jade_empire'],
+    'hills': ['fjordmark', 'stormcoast', 'heartlands'],
+    'desert': ['sunscorch_desert', 'redrock_badlands', 'spice_coast'],
+    'desert_deep': ['sunscorch_desert'],
+    'badlands': ['redrock_badlands', 'ashlands'],
+    'savanna': ['goldgrass_savanna', 'spice_coast'],
+    'swamp': ['marshfen', 'lotus_delta'],
+    'swamp_ruins': ['marshfen'],
+    'beach': ['inner_sea', 'coral_isles', 'stormcoast', 'spice_coast'],
+    'ocean_floor': ['western_ocean', 'northern_ice_sea', 'shimmering_reefs'],
+    'ocean': ['western_ocean', 'inner_sea', 'coral_isles', 'shimmering_reefs'],
+    'snowy': ['whitecrown_icecap', 'northern_ice_sea', 'pinewall_taiga'],
+    'glacier': ['whitecrown_icecap', 'northern_ice_sea'],
+    'taiga': ['pinewall_taiga', 'fjordmark'],
+    'night': ['elderwood', 'umbral_chasm'],
+    'corrupted': ['umbral_chasm', 'crimson_wilds'],
+    'magical': ['jade_empire', 'lotus_delta', 'elderwood', 'aetheris_expanse'],
+    'holy': ['heartlands', 'riverlands', 'aetheris_expanse'],
+    'battlefield': ['heartlands', 'khagan_steppe', 'crimson_wilds'],
+    'crater': ['khagan_steppe', 'sunscorch_desert', 'redrock_badlands', 'ashlands'],
+    'umbral': ['umbral_chasm'],
+    'greyspine': ['greyspine_mountains'],
+    'aetheris': ['aetheris_expanse'],
+    'elderwood': ['elderwood'],
+    'sunscorch': ['sunscorch_desert'],
+}
+
+
+def region_biomes(place):
+    """Biome references for the RPG world's regions of a place."""
+    return [f'#pipican:region/{r}' if r in TAGGED_REGIONS else f'pipican:{r}' for r in REGIONS.get(place, [])]
 
 
 def _o(id, en, tr, tier, form, use, place, color, note):
@@ -183,6 +237,10 @@ ORES = [
        'Set: holy bronze; strong by day.'),
     _o('mirestone', 'Mirestone', 'Bataklık Taşı', 3, 'gem', 'special', 'swamp', 0x5E6B3C,
        'Bog stone: poison cures and swamp waders.'),
+    _o('skyiron', 'Skyiron', 'Gök Demiri', 3, 'metal', 'set', 'battlefield', 0x8FA3C4,
+       'Set: steppe-forged sky iron; light armor, swift mounted strikes.'),
+    _o('lotus_opal', 'Lotus Opal', 'Nilüfer Opali', 3, 'gem', 'special', 'swamp', 0xF4C6E7,
+       'Delta gem: jewelry, trade and calming charms.'),
     _o('saffron_gold', 'Saffron Gold', 'Safran Altını', 3, 'metal', 'special', 'savanna', 0xF0A01E,
        'Spice-coast gold: trade currency and luxury goods.'),
 
@@ -231,6 +289,14 @@ ORES = [
        'Allomancy: ground into flakes for Chromium.'),
     _o('nickel', 'Nickel', 'Nikel', 4, 'metal', 'mistborn', 'deep', 0xB5B09A,
        'Allomancy: alloyed with chromium into Nicrosil.'),
+
+    # rare deposits (worldgen branch): each in one region, once gated behind a regional pickaxe
+    _o('runestone', 'Runestone', 'Rün Taşı', 4, 'gem', 'special', 'greyspine', 0x6E7FA6,
+       'Rare deposit: rune inscriptions for blacksmith upgrades.'),
+    _o('sunforged', 'Sunforged Crystal', 'Güneşte Dövülmüş Kristal', 4, 'gem', 'special', 'sunscorch', 0xFFC247,
+       'Rare deposit: sun-forged crystal for blacksmith upgrades.'),
+    _o('moonshard', 'Moonshard', 'Ay Parçası', 4, 'gem', 'special', 'elderwood', 0xB9C8FF,
+       'Rare deposit: moonlit shard for blacksmith upgrades.'),
 
     # ---------------------------------------------------------------- T5 - very rare
     _o('mithril', 'Mithril', 'Mithril', 5, 'metal', 'set', 'mountain_heart', 0xCFE9F5,
@@ -295,6 +361,11 @@ ORES = [
     _o('abyssal_shard', 'Abyssal Shard', 'Derinlik Parçası', 5, 'gem', 'special', 'ocean_floor', 0x22305E,
        'Abyssal shard: deep-sea breathing and pressure resistance.'),
 
+    _o('soulstone', 'Soulstone', 'Ruh Taşı', 5, 'gem', 'special', 'umbral', 0x5B3F7A,
+       'Rare deposit: holds souls; blacksmith upgrades and soul magic.'),
+    _o('abyssium', 'Abyssium', 'Abisyum', 5, 'gem', 'special', 'ocean_floor', 0x1F3D6B,
+       'Rare deposit: abyssal crystal for blacksmith upgrades.'),
+
     # ---------------------------------------------------------------- T6 - epic
     _o('orichalcum', 'Orichalcum', 'Orikalkum', 6, 'metal', 'set', 'ocean_floor', 0xE89B4F,
        'Set: balanced magic and might; water breathing.'),
@@ -338,6 +409,8 @@ ORES = [
        'Rare weapon upgrade currency.'),
     _o('khaydarin', 'Khaydarin Crystal', 'Khaydarin', 6, 'gem', 'special', 'end', 0x5FE8C8,
        'Staff core for mind spells.'),
+    _o('astralite', 'Astralite', 'Astralit', 6, 'gem', 'special', 'aetheris', 0xA7E8FF,
+       'Rare deposit: star crystal from the sky islands, for blacksmith upgrades.'),
     _o('materia', 'Materia', 'Materia', 6, 'gem', 'special', 'caves', 0x47FF9C,
        'Spell sockets for equipment.'),
 
@@ -368,6 +441,9 @@ ORES = [
        'Allomancy god metal: see seconds of your foes\' future.'),
     _o('harmonium', 'Harmonium', 'Harmonium (Ettmetal)', 7, 'metal', 'mistborn', 'crystal_caves', 0xF0E2B6,
        'Allomancy god metal: explodes on contact with water.'),
+
+    _o('primordial', 'Primordial Crystal', 'İlksel Kristal', 7, 'gem', 'special', 'end_void', 0xFFFFFF,
+       'Rare deposit: crystal from before the world; the strongest blacksmith upgrades.'),
 
     # ---------------------------------------------------------------- T8 - mythic (limited per world; phase 4)
     _o('uru', 'Uru', 'Uru', 8, 'metal', 'limited', None, 0x6E7682,
@@ -433,6 +509,7 @@ BANDS = {
     'high': (64, 320, 'uniform'),
     'deep': (-64, 16, 'trapezoid'),
     'bottom': (-64, -32, 'uniform'),
+    'sky': (200, 368, 'uniform'),
     'nether': (8, 120, 'uniform'),
     'end': (0, 100, 'uniform'),
 }

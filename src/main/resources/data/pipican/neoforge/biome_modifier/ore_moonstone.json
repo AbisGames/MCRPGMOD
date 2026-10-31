@@ -5,8 +5,10 @@
     "values": [
       "#c:is_spooky",
       "#c:is_dark_forest",
+      "#pipican:region/elderwood",
       [
-        "minecraft:pale_garden"
+        "minecraft:pale_garden",
+        "pipican:umbral_chasm"
       ]
     ]
   },

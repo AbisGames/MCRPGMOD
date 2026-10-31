@@ -1,0 +1,58 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 270375455,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/buried_city_ruins/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/buried_city_ruins/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/great_dune_sea/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/great_dune_sea/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/oasis_basins/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/oasis_basins/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/rocky_hamada/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/rocky_hamada/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/sandstone_mesas/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/sunscorch_desert/sandstone_mesas/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/sunscorch_desert/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/sunscorch_desert/mine",
+      "weight": 4
+    }
+  ]
+}

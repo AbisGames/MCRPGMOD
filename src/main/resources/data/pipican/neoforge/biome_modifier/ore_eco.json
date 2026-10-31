@@ -1,6 +1,16 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_jungle",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_jungle",
+      "#pipican:region/emerald_jungle",
+      "#pipican:region/jade_empire",
+      [
+        "pipican:verdant_depths"
+      ]
+    ]
+  },
   "features": "pipican:ore_eco",
   "step": "underground_ores"
 }

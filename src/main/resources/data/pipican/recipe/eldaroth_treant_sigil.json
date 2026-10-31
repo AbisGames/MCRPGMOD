@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MMM",
+    "MDM",
+    "MRB"
+  ],
+  "key": {
+    "M": "pipican:mooncrystal",
+    "D": "pipican:elderwood_boss_core",
+    "R": "pipican:ritual_core",
+    "B": "minecraft:oak_sapling"
+  },
+  "result": {
+    "id": "pipican:eldaroth_treant_sigil",
+    "count": 1
+  }
+}

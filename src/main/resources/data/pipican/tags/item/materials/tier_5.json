@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "pipican:abyssal_shard",
+    "pipican:abyssium",
     "pipican:aluminum_ingot",
     "pipican:carbonadium_ingot",
     "pipican:crystallite",
@@ -40,6 +41,7 @@
     "pipican:scarlet_ingot",
     "pipican:silversheen_ingot",
     "pipican:skycrystal",
+    "pipican:soulstone",
     "pipican:stalhrim",
     "pipican:stygian_iron_ingot",
     "pipican:tiberium",

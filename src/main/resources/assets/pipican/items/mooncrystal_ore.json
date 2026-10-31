@@ -2,11 +2,6 @@
   "model": {
     "type": "minecraft:model",
     "model": "pipican:block/mooncrystal_ore",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -2824961
-      }
-    ]
+    "tints": []
   }
 }

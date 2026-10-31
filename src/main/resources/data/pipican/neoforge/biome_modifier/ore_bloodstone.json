@@ -5,7 +5,12 @@
     "values": [
       "#c:is_plains",
       "#c:is_savanna",
-      "#c:is_windswept"
+      "#c:is_windswept",
+      "#pipican:region/heartlands",
+      "#pipican:region/khagan_steppe",
+      [
+        "pipican:crimson_wilds"
+      ]
     ]
   },
   "features": "pipican:ore_bloodstone",

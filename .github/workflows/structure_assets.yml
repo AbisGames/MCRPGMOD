@@ -1,0 +1,165 @@
+name: Generate and validate complete structure assets
+concurrency:
+  group: pipican-worldgen-structures
+  cancel-in-progress: false
+on:
+  push:
+    branches: [worldgen-and-ores]
+    paths:
+      - 'tools/worldgen/**'
+      - '.github/workflows/structure_assets.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [0, 123, 987654321]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Generate actual authored NBT assets
+        run: python3 tools/worldgen/build_full_structures.py
+      - name: Validate full authored structure graph and NBT data
+        run: python3 tools/worldgen/validate_full_structures.py
+      - name: Integrate validated special landmarks and Morvath portal room
+        run: python3 tools/worldgen/build_special_landmarks.py
+      - name: Install the generated structures into mod resources
+        run: cp -a tools/worldgen/output/data/. src/main/resources/data/
+      - name: Compile NeoForge with generated structures
+        run: chmod +x ./gradlew && ./gradlew build --no-daemon
+      - name: Verify final packaged structure templates
+        id: packaged
+        run: for jar in build/libs/*.jar; do python3 tools/worldgen/validate_packaged_mod.py "$jar"; done
+      - name: Generated sky islands and End portal
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: sky
+          seed: ${{ matrix.seed }}
+      - name: Player protection and ore disk reload
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 10
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: protection
+          seed: ${{ matrix.seed }}
+      - name: Unique landmark placement
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: unique
+          seed: ${{ matrix.seed }}
+      - name: All regional capital terrain
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 15
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: terrain
+          seed: ${{ matrix.seed }}
+      - name: All authored settlements and disk reload
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 25
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: settlements
+          seed: ${{ matrix.seed }}
+      - name: Regional native villages and outposts
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 30
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: villages
+          seed: ${{ matrix.seed }}
+      - name: All regional mine and dungeon fixtures
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 45
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: expeditions
+          seed: ${{ matrix.seed }}
+      - name: All capital assemblies and road connectivity
+        if: ${{ !cancelled() && steps.packaged.outcome == 'success' }}
+        timeout-minutes: 60
+        uses: ./.github/actions/worldgen-suite
+        with:
+          suite: capital
+          seed: ${{ matrix.seed }}
+      - name: Preserve generated-asset test diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: structure-asset-diagnostics-${{ github.sha }}-seed-${{ matrix.seed }}
+          path: |
+            run/logs/
+            build/reports/
+            build/worldgen-logs/
+          if-no-files-found: warn
+      - name: Publish generated structure pack
+        if: matrix.seed == 0
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipican-full-regional-structure-models
+          path: |
+            tools/worldgen/output/data/
+            tools/worldgen/output/STRUCTURE_CATALOG.json
+            tools/worldgen/output/BUILD_REPORT.json
+          retention-days: 30
+          compression-level: 6
+      - name: Publish mod with regenerated structure templates
+        if: matrix.seed == 0
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipican-generated-singleplayer-${{ github.sha }}
+          path: build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 30
+  publish:
+    needs: generate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/worldgen-and-ores'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: pipican-full-regional-structure-models
+          path: tools/worldgen/output
+      - name: Commit validated NBT and pool files to structure branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Never rebase generated binary NBT files: two concurrent runs
+          # cannot resolve content conflicts. Re-apply the just-validated
+          # generator output onto a fresh copy of the newest branch head.
+          for attempt in 1 2 3 4; do
+            git fetch origin worldgen-and-ores
+            # Older generator jobs must not overwrite newer source changes.
+            if ! git diff --quiet HEAD origin/worldgen-and-ores --               tools/worldgen/build_full_structures.py tools/worldgen/build_special_landmarks.py tools/worldgen/legacy.py               src/main/resources/data/pipican/worldgen/region_map.json               src/main/resources/data/pipican/worldgen/settlements.json               src/main/resources/data/pipican/worldgen/structure_pools_manifest.json; then
+              echo "Generator source changed since this run; newer run owns publishing."
+              exit 0
+            fi
+            git reset --hard origin/worldgen-and-ores
+            cp -a tools/worldgen/output/data/. src/main/resources/data/
+            git add src/main/resources/data/pipican/
+            if git diff --cached --quiet; then
+              echo "All generated assets are already current."
+              exit 0
+            fi
+            git commit -m "assets(worldgen): regenerate authored structures and pools [skip ci]"
+            if git push origin HEAD:worldgen-and-ores; then
+              exit 0
+            fi
+            echo "Branch moved during upload, retrying from current head ($attempt/4)"
+            sleep 3
+          done
+          echo "Unable to publish validated NBT assets after four retries" >&2
+          exit 1

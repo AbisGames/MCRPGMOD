@@ -1,6 +1,40 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_overworld",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_overworld",
+      "#pipican:region/ashlands",
+      "#pipican:region/coral_isles",
+      "#pipican:region/elderwood",
+      "#pipican:region/emerald_jungle",
+      "#pipican:region/fjordmark",
+      "#pipican:region/goldgrass_savanna",
+      "#pipican:region/greyspine_mountains",
+      "#pipican:region/heartlands",
+      "#pipican:region/inner_sea",
+      "#pipican:region/jade_empire",
+      "#pipican:region/khagan_steppe",
+      "#pipican:region/lotus_delta",
+      "#pipican:region/marshfen",
+      "#pipican:region/northern_ice_sea",
+      "#pipican:region/pinewall_taiga",
+      "#pipican:region/redrock_badlands",
+      "#pipican:region/riverlands",
+      "#pipican:region/spice_coast",
+      "#pipican:region/stormcoast",
+      "#pipican:region/sunscorch_desert",
+      "#pipican:region/western_ocean",
+      "#pipican:region/whitecrown_icecap",
+      [
+        "pipican:aetheris_expanse",
+        "pipican:crimson_wilds",
+        "pipican:shimmering_reefs",
+        "pipican:umbral_chasm",
+        "pipican:verdant_depths"
+      ]
+    ]
+  },
   "features": "pipican:ore_adamantine",
   "step": "underground_ores"
 }

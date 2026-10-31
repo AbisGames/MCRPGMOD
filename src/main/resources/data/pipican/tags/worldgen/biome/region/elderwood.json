@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:elderwood/giant_tree_forest",
+    "pipican:elderwood/glowing_glades",
+    "pipican:elderwood/dark_tangled_woods",
+    "pipican:elderwood/elven_canopy_realm",
+    "pipican:elderwood/mushroom_hollows"
+  ]
+}

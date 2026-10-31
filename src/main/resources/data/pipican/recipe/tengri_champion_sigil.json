@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "SCR",
+    "SCW"
+  ],
+  "key": {
+    "S": "pipican:skyiron_ingot",
+    "C": "pipican:khagan_steppe_boss_core",
+    "R": "pipican:ritual_core",
+    "W": "minecraft:wind_charge"
+  },
+  "result": {
+    "id": "pipican:tengri_champion_sigil",
+    "count": 1
+  }
+}

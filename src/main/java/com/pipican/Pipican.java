@@ -7,6 +7,13 @@ import com.pipican.core.PipicanRegistries;
 import com.pipican.network.PipicanNetwork;
 import com.pipican.player.PipicanAttachments;
 import com.pipican.trinket.PipicanMenus;
+import com.pipican.worldgen.RegionalOreRegistries;
+import com.pipican.worldgen.RegionalNatureBlocks;
+import com.pipican.worldgen.RegionalNatureTab;
+import com.pipican.worldgen.WorldgenCodecs;
+import com.pipican.worldgen.RegionalDensityCodecs;
+import com.pipican.worldgen.CapitalChunkLoader;
+import com.pipican.worldgen.ExpeditionFoundationProcessor;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -40,9 +47,23 @@ public final class Pipican {
         com.pipican.ore.PipicanOres.ITEMS.register(modBus);
         com.pipican.ore.PipicanOres.TABS.register(modBus);
         modBus.addListener(PipicanEntities::registerAttributes);
+        RegionalOreRegistries.register(modBus);
+        com.pipican.boss.BossRegistries.register(modBus);
+        com.pipican.boss.BossContent.register(modBus);
+        com.pipican.resource.RareResources.register(modBus);
+        com.pipican.resource.ProgressionCreativeTab.register(modBus);
+        RegionalNatureBlocks.register(modBus);
+        RegionalNatureTab.register(modBus);
+        WorldgenCodecs.register(modBus);
+        RegionalDensityCodecs.register(modBus);
+        CapitalChunkLoader.register(modBus);
+        ExpeditionFoundationProcessor.register(modBus);
+        com.pipican.worldgen.ExpeditionAccessProcessor.register(modBus);
+        com.pipican.worldgen.ExpeditionPoolElement.register(modBus);
         modBus.addListener(PipicanRegistries::onNewDataPackRegistries);
         modBus.addListener(PipicanNetwork::register);
         container.registerConfig(ModConfig.Type.SERVER, PipicanConfig.SPEC);
+        container.registerConfig(ModConfig.Type.SERVER, com.pipican.boss.BossBalance.SPEC,"pipican-bosses-server.toml");
     }
 
     public static Identifier id(String path) {

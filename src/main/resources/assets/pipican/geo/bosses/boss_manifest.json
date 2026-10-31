@@ -1,0 +1,245 @@
+[
+  {
+    "region": "whitecrown_icecap",
+    "id": "frostbound_colossus",
+    "entity_identifier": "pipican:frostbound_colossus",
+    "geometry": "geometry.pipican.frostbound_colossus",
+    "style": "golem",
+    "scale": 1.6,
+    "signature": "ice_spikes"
+  },
+  {
+    "region": "northern_ice_sea",
+    "id": "nhalkorr_leviathan",
+    "entity_identifier": "pipican:nhalkorr_leviathan",
+    "geometry": "geometry.pipican.nhalkorr_leviathan",
+    "style": "serpent",
+    "scale": 2.3,
+    "signature": "fins"
+  },
+  {
+    "region": "pinewall_taiga",
+    "id": "skollvar_winterfang",
+    "entity_identifier": "pipican:skollvar_winterfang",
+    "geometry": "geometry.pipican.skollvar_winterfang",
+    "style": "beast",
+    "scale": 1.4,
+    "signature": "wolf"
+  },
+  {
+    "region": "fjordmark",
+    "id": "hrothgar_drowned_jarl",
+    "entity_identifier": "pipican:hrothgar_drowned_jarl",
+    "geometry": "geometry.pipican.hrothgar_drowned_jarl",
+    "style": "knight",
+    "scale": 1.35,
+    "signature": "horns"
+  },
+  {
+    "region": "stormcoast",
+    "id": "valthor_stormbringer",
+    "entity_identifier": "pipican:valthor_stormbringer",
+    "geometry": "geometry.pipican.valthor_stormbringer",
+    "style": "winged",
+    "scale": 1.55,
+    "signature": "storm"
+  },
+  {
+    "region": "khagan_steppe",
+    "id": "tengri_champion",
+    "entity_identifier": "pipican:tengri_champion",
+    "geometry": "geometry.pipican.tengri_champion",
+    "style": "knight",
+    "scale": 1.3,
+    "signature": "crown"
+  },
+  {
+    "region": "western_ocean",
+    "id": "thalassor_deep_tyrant",
+    "entity_identifier": "pipican:thalassor_deep_tyrant",
+    "geometry": "geometry.pipican.thalassor_deep_tyrant",
+    "style": "golem",
+    "scale": 1.6,
+    "signature": "coral"
+  },
+  {
+    "region": "elderwood",
+    "id": "eldaroth_treant",
+    "entity_identifier": "pipican:eldaroth_treant",
+    "geometry": "geometry.pipican.eldaroth_treant",
+    "style": "treant",
+    "scale": 2,
+    "signature": "branches"
+  },
+  {
+    "region": "heartlands",
+    "id": "fallen_king",
+    "entity_identifier": "pipican:fallen_king",
+    "geometry": "geometry.pipican.fallen_king",
+    "style": "knight",
+    "scale": 1.45,
+    "signature": "crown"
+  },
+  {
+    "region": "greyspine_mountains",
+    "id": "durmagon_runic_titan",
+    "entity_identifier": "pipican:durmagon_runic_titan",
+    "geometry": "geometry.pipican.durmagon_runic_titan",
+    "style": "golem",
+    "scale": 1.8,
+    "signature": "runic"
+  },
+  {
+    "region": "jade_empire",
+    "id": "longwei_jade_dragon",
+    "entity_identifier": "pipican:longwei_jade_dragon",
+    "geometry": "geometry.pipican.longwei_jade_dragon",
+    "style": "serpent",
+    "scale": 2.4,
+    "signature": "dragon"
+  },
+  {
+    "region": "marshfen",
+    "id": "morgatha_swamp_queen",
+    "entity_identifier": "pipican:morgatha_swamp_queen",
+    "geometry": "geometry.pipican.morgatha_swamp_queen",
+    "style": "mage",
+    "scale": 1.45,
+    "signature": "roots"
+  },
+  {
+    "region": "inner_sea",
+    "id": "aurelios_sunken_emperor",
+    "entity_identifier": "pipican:aurelios_sunken_emperor",
+    "geometry": "geometry.pipican.aurelios_sunken_emperor",
+    "style": "knight",
+    "scale": 1.55,
+    "signature": "crown"
+  },
+  {
+    "region": "ashlands",
+    "id": "morvath_ashen_king",
+    "entity_identifier": "pipican:morvath_ashen_king",
+    "geometry": "geometry.pipican.morvath_ashen_king",
+    "style": "knight",
+    "scale": 1.65,
+    "signature": "horns"
+  },
+  {
+    "region": "lotus_delta",
+    "id": "lianhua_lotus_serpent",
+    "entity_identifier": "pipican:lianhua_lotus_serpent",
+    "geometry": "geometry.pipican.lianhua_lotus_serpent",
+    "style": "serpent",
+    "scale": 1.8,
+    "signature": "lotus"
+  },
+  {
+    "region": "sunscorch_desert",
+    "id": "akhmar_sand_emperor",
+    "entity_identifier": "pipican:akhmar_sand_emperor",
+    "geometry": "geometry.pipican.akhmar_sand_emperor",
+    "style": "knight",
+    "scale": 1.6,
+    "signature": "crown"
+  },
+  {
+    "region": "riverlands",
+    "id": "netharis_river_guardian",
+    "entity_identifier": "pipican:netharis_river_guardian",
+    "geometry": "geometry.pipican.netharis_river_guardian",
+    "style": "beast",
+    "scale": 1.6,
+    "signature": "crocodile"
+  },
+  {
+    "region": "spice_coast",
+    "id": "zahira_crimson_corsair",
+    "entity_identifier": "pipican:zahira_crimson_corsair",
+    "geometry": "geometry.pipican.zahira_crimson_corsair",
+    "style": "knight",
+    "scale": 1.2,
+    "signature": "pirate"
+  },
+  {
+    "region": "emerald_jungle",
+    "id": "xaltek_emerald_devourer",
+    "entity_identifier": "pipican:xaltek_emerald_devourer",
+    "geometry": "geometry.pipican.xaltek_emerald_devourer",
+    "style": "beast",
+    "scale": 1.55,
+    "signature": "jaguar"
+  },
+  {
+    "region": "coral_isles",
+    "id": "corallith_reef_colossus",
+    "entity_identifier": "pipican:corallith_reef_colossus",
+    "geometry": "geometry.pipican.corallith_reef_colossus",
+    "style": "golem",
+    "scale": 1.7,
+    "signature": "coral"
+  },
+  {
+    "region": "goldgrass_savanna",
+    "id": "azhar_golden_behemoth",
+    "entity_identifier": "pipican:azhar_golden_behemoth",
+    "geometry": "geometry.pipican.azhar_golden_behemoth",
+    "style": "beast",
+    "scale": 1.8,
+    "signature": "lion"
+  },
+  {
+    "region": "redrock_badlands",
+    "id": "kragmor_canyon_warlord",
+    "entity_identifier": "pipican:kragmor_canyon_warlord",
+    "geometry": "geometry.pipican.kragmor_canyon_warlord",
+    "style": "golem",
+    "scale": 1.6,
+    "signature": "horns"
+  },
+  {
+    "region": "aetheris_expanse",
+    "id": "aetherion_sky_guardian",
+    "entity_identifier": "pipican:aetherion_sky_guardian",
+    "geometry": "geometry.pipican.aetherion_sky_guardian",
+    "style": "winged",
+    "scale": 1.65,
+    "signature": "halo"
+  },
+  {
+    "region": "verdant_depths",
+    "id": "sylthera_primordial_bloom",
+    "entity_identifier": "pipican:sylthera_primordial_bloom",
+    "geometry": "geometry.pipican.sylthera_primordial_bloom",
+    "style": "mage",
+    "scale": 1.65,
+    "signature": "flower"
+  },
+  {
+    "region": "umbral_chasm",
+    "id": "nocthar_void_sovereign",
+    "entity_identifier": "pipican:nocthar_void_sovereign",
+    "geometry": "geometry.pipican.nocthar_void_sovereign",
+    "style": "mage",
+    "scale": 1.9,
+    "signature": "void"
+  },
+  {
+    "region": "crimson_wilds",
+    "id": "vermillion_blood_monarch",
+    "entity_identifier": "pipican:vermillion_blood_monarch",
+    "geometry": "geometry.pipican.vermillion_blood_monarch",
+    "style": "winged",
+    "scale": 1.6,
+    "signature": "bat"
+  },
+  {
+    "region": "shimmering_reefs",
+    "id": "lumynara_abyssal_oracle",
+    "entity_identifier": "pipican:lumynara_abyssal_oracle",
+    "geometry": "geometry.pipican.lumynara_abyssal_oracle",
+    "style": "jelly",
+    "scale": 1.6,
+    "signature": "tentacles"
+  }
+]

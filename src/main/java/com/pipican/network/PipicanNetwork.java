@@ -2,7 +2,9 @@ package com.pipican.network;
 
 import com.pipican.ability.AbilityService;
 import com.pipican.player.ClassService;
+import com.pipican.blacksmith.BlacksmithUpgrades;
 import com.pipican.trinket.TrinketMenu;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -24,6 +26,7 @@ public final class PipicanNetwork {
 
         r.playToClient(OpenClassSelectionPayload.TYPE, OpenClassSelectionPayload.STREAM_CODEC);
         r.playToClient(OpenSkillTreePayload.TYPE, OpenSkillTreePayload.STREAM_CODEC);
+        r.playToClient(OpenBlacksmithPayload.TYPE, OpenBlacksmithPayload.STREAM_CODEC);
 
         r.playToServer(ChooseClassPayload.TYPE, ChooseClassPayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
@@ -32,6 +35,19 @@ public final class PipicanNetwork {
         });
         r.playToServer(OpenTrinketsPayload.TYPE, OpenTrinketsPayload.STREAM_CODEC,
                 (payload, ctx) -> TrinketMenu.open((ServerPlayer) ctx.player()));
+        r.playToServer(RequestOpenBlacksmithPayload.TYPE, RequestOpenBlacksmithPayload.STREAM_CODEC, (payload, ctx) -> {
+            ServerPlayer player = (ServerPlayer) ctx.player();
+            if (!BlacksmithUpgrades.profiles().isEmpty()) {
+                PacketDistributor.sendToPlayer(player, OpenBlacksmithPayload.INSTANCE);
+            }
+        });
+        r.playToServer(BlacksmithUpgradePayload.TYPE, BlacksmithUpgradePayload.STREAM_CODEC, (payload, ctx) -> {
+            ServerPlayer player = (ServerPlayer) ctx.player();
+            var result = BlacksmithUpgrades.execute(player, new BlacksmithUpgrades.Request(payload.nonce(), payload.slot(),
+                    payload.expectedRevision(), payload.expected(), payload.action(), payload.profile()));
+            player.sendSystemMessage(net.minecraft.network.chat.Component.translatable(
+                    "blacksmith.pipican.result." + result.name().toLowerCase(java.util.Locale.ROOT)));
+        });
         r.playToServer(RaiseStatPayload.TYPE, RaiseStatPayload.STREAM_CODEC, (payload, ctx) -> {
             ServerPlayer player = (ServerPlayer) ctx.player();
             player.sendSystemMessage(ClassService.raiseStat(player, payload.stat()).message());

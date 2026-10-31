@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SSS", "SCR", "SCF"],
+  "key": {
+    "S": "pipican:stormsilver_ingot",
+    "C": "pipican:fjordmark_boss_core",
+    "R": "pipican:ritual_core",
+    "F": "minecraft:rotten_flesh"
+  },
+  "result": {"id": "pipican:hrothgar_drowned_jarl_sigil", "count": 1}
+}

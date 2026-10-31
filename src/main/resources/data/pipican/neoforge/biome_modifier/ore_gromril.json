@@ -1,6 +1,13 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_mountain",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_mountain",
+      "#pipican:region/greyspine_mountains",
+      "#pipican:region/fjordmark"
+    ]
+  },
   "features": "pipican:ore_gromril",
   "step": "underground_ores"
 }

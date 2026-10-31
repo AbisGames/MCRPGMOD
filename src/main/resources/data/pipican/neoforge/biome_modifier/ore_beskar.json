@@ -1,6 +1,13 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_badlands",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_badlands",
+      "#pipican:region/redrock_badlands",
+      "#pipican:region/ashlands"
+    ]
+  },
   "features": "pipican:ore_beskar",
   "step": "underground_ores"
 }

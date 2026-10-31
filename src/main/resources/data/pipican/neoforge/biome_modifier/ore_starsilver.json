@@ -4,7 +4,10 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_snowy",
-      "#c:is_icy"
+      "#c:is_icy",
+      "#pipican:region/whitecrown_icecap",
+      "#pipican:region/northern_ice_sea",
+      "#pipican:region/pinewall_taiga"
     ]
   },
   "features": "pipican:ore_starsilver",

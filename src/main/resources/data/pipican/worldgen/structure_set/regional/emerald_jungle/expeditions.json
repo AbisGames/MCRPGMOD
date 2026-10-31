@@ -1,0 +1,70 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 517457799,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/cloud_forest_highlands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/cloud_forest_highlands/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/deep_canopy_jungle/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/deep_canopy_jungle/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/giant_flora_grove/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/giant_flora_grove/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/jungle_river_basin/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/jungle_river_basin/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/jungle_river_basin/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/lost_city_ruins/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/lost_city_ruins/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/waterfall_cliffs/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/emerald_jungle/waterfall_cliffs/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/emerald_jungle/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/emerald_jungle/mine",
+      "weight": 4
+    }
+  ]
+}

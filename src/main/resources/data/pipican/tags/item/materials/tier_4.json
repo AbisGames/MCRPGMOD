@@ -18,6 +18,7 @@
     "pipican:kyanite",
     "pipican:magisteel_ingot",
     "pipican:meteoric_iron_ingot",
+    "pipican:moonshard",
     "pipican:nickel_ingot",
     "pipican:palladium_ingot",
     "pipican:raritanium",
@@ -36,8 +37,10 @@
     "pipican:raw_palladium",
     "pipican:raw_starmetal",
     "pipican:raw_starsilver",
+    "pipican:runestone",
     "pipican:sekkiseki",
     "pipican:starmetal_ingot",
-    "pipican:starsilver_ingot"
+    "pipican:starsilver_ingot",
+    "pipican:sunforged"
   ]
 }

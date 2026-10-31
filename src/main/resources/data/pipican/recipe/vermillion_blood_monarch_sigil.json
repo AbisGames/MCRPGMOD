@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BBB",
+    "BCB",
+    "BRN"
+  ],
+  "key": {
+    "B": "pipican:bloodstone",
+    "C": "pipican:crimson_wilds_boss_core",
+    "R": "pipican:ritual_core",
+    "N": "minecraft:nether_wart"
+  },
+  "result": {
+    "id": "pipican:vermillion_blood_monarch_sigil",
+    "count": 1
+  }
+}

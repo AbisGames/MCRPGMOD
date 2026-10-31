@@ -9,11 +9,13 @@
     "ores": [
       {
         "id": "electrum_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_electrum_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -82,11 +84,13 @@
     "ores": [
       {
         "id": "cold_iron_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_cold_iron_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -153,11 +157,13 @@
     "ores": [
       {
         "id": "truesilver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_truesilver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -224,11 +230,13 @@
     "ores": [
       {
         "id": "corundum_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_corundum_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -295,7 +303,8 @@
     "ores": [
       {
         "id": "nether_cinnabar_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -322,11 +331,13 @@
     "ores": [
       {
         "id": "nitre_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_nitre_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -353,11 +364,13 @@
     "ores": [
       {
         "id": "amber_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_amber_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -384,11 +397,13 @@
     "ores": [
       {
         "id": "morkite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_morkite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -415,11 +430,13 @@
     "ores": [
       {
         "id": "tin_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_tin_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -454,11 +471,13 @@
     "ores": [
       {
         "id": "stormsilver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_stormsilver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -525,11 +544,13 @@
     "ores": [
       {
         "id": "runic_iron_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_runic_iron_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -596,11 +617,13 @@
     "ores": [
       {
         "id": "redrock_iron_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_redrock_iron_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -667,11 +690,13 @@
     "ores": [
       {
         "id": "pearlsilver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_pearlsilver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -738,11 +763,13 @@
     "ores": [
       {
         "id": "frostcrystal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_frostcrystal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -769,11 +796,13 @@
     "ores": [
       {
         "id": "tideglass_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_tideglass_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -800,11 +829,13 @@
     "ores": [
       {
         "id": "sunglass_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_sunglass_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -831,11 +862,13 @@
     "ores": [
       {
         "id": "verdantite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_verdantite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -862,11 +895,13 @@
     "ores": [
       {
         "id": "moonstone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_moonstone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -925,11 +960,13 @@
     "ores": [
       {
         "id": "demonite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_demonite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -996,7 +1033,8 @@
     "ores": [
       {
         "id": "nether_crimtane_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -1063,11 +1101,13 @@
     "ores": [
       {
         "id": "machalite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_machalite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1134,11 +1174,13 @@
     "ores": [
       {
         "id": "bloodstone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_bloodstone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1165,11 +1207,13 @@
     "ores": [
       {
         "id": "sunstone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_sunstone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1196,11 +1240,13 @@
     "ores": [
       {
         "id": "aquamarine_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_aquamarine_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1227,11 +1273,13 @@
     "ores": [
       {
         "id": "certus_quartz_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_certus_quartz_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1258,11 +1306,13 @@
     "ores": [
       {
         "id": "night_jade_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_night_jade_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1289,11 +1339,13 @@
     "ores": [
       {
         "id": "zinc_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_zinc_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1328,11 +1380,13 @@
     "ores": [
       {
         "id": "glacierite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_glacierite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1391,7 +1445,8 @@
     "ores": [
       {
         "id": "nether_cinderite_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -1458,11 +1513,13 @@
     "ores": [
       {
         "id": "tidalite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_tidalite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1521,11 +1578,13 @@
     "ores": [
       {
         "id": "thunderbasalt_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_thunderbasalt_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1552,11 +1611,13 @@
     "ores": [
       {
         "id": "mooncrystal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_mooncrystal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1583,11 +1644,13 @@
     "ores": [
       {
         "id": "jade_essence_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_jade_essence_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1614,11 +1677,13 @@
     "ores": [
       {
         "id": "cobalt_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_cobalt_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1685,7 +1750,8 @@
     "ores": [
       {
         "id": "nether_ardite_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -1754,11 +1820,13 @@
     "ores": [
       {
         "id": "thorium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_thorium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1825,7 +1893,8 @@
     "ores": [
       {
         "id": "nether_malachite_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -1886,11 +1955,13 @@
     "ores": [
       {
         "id": "quicksilver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_quicksilver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -1957,7 +2028,8 @@
     "ores": [
       {
         "id": "nether_hellstone_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -2024,7 +2096,8 @@
     "ores": [
       {
         "id": "nether_fel_iron_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -2091,11 +2164,13 @@
     "ores": [
       {
         "id": "dwemer_metal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_dwemer_metal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2164,11 +2239,13 @@
     "ores": [
       {
         "id": "thaumium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_thaumium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2235,11 +2312,13 @@
     "ores": [
       {
         "id": "manasteel_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_manasteel_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2308,7 +2387,8 @@
     "ores": [
       {
         "id": "nether_dragonglass_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -2335,11 +2415,13 @@
     "ores": [
       {
         "id": "thunderstone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_thunderstone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2366,11 +2448,13 @@
     "ores": [
       {
         "id": "lacrima_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_lacrima_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2397,11 +2481,13 @@
     "ores": [
       {
         "id": "enor_pearl_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_enor_pearl_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2428,7 +2514,8 @@
     "ores": [
       {
         "id": "nether_vespene_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -2455,11 +2542,13 @@
     "ores": [
       {
         "id": "cadmium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_cadmium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2494,11 +2583,13 @@
     "ores": [
       {
         "id": "wintersteel_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_wintersteel_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2565,11 +2656,13 @@
     "ores": [
       {
         "id": "royal_silver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_royal_silver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2636,11 +2729,13 @@
     "ores": [
       {
         "id": "dawnbronze_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_dawnbronze_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2707,11 +2802,13 @@
     "ores": [
       {
         "id": "mirestone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_mirestone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2729,6 +2826,112 @@
     "spawns": true
   },
   {
+    "id": "skyiron",
+    "tier": 3,
+    "form": "metal",
+    "use": "set",
+    "color": 4287603652,
+    "light": 0,
+    "ores": [
+      {
+        "id": "skyiron_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_skyiron_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "raw_skyiron",
+        "kind": "raw"
+      },
+      {
+        "id": "skyiron_ingot",
+        "kind": "ingot"
+      }
+    ],
+    "storage": [
+      {
+        "id": "skyiron_block",
+        "kind": "metal"
+      },
+      {
+        "id": "raw_skyiron_block",
+        "kind": "raw"
+      }
+    ],
+    "spawns": true,
+    "set": {
+      "kinds": [
+        "helmet",
+        "chestplate",
+        "leggings",
+        "boots",
+        "sword",
+        "axe",
+        "spear",
+        "pickaxe",
+        "shovel",
+        "hoe"
+      ],
+      "traits": [],
+      "weight": "light",
+      "defense": [
+        2,
+        6,
+        4,
+        2
+      ],
+      "armor_durability": 22,
+      "toughness": 1.0,
+      "knockback_resistance": 0.0,
+      "tool_durability": 700,
+      "speed": 7.7,
+      "damage": 2.5,
+      "swing": 0.2,
+      "enchantability": 16,
+      "incorrect": "pipican:incorrect_for_tier_3_tool",
+      "repair": "pipican:repairs/skyiron"
+    }
+  },
+  {
+    "id": "lotus_opal",
+    "tier": 3,
+    "form": "gem",
+    "use": "special",
+    "color": 4294231783,
+    "light": 0,
+    "ores": [
+      {
+        "id": "lotus_opal_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_lotus_opal_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "lotus_opal",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "lotus_opal_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
     "id": "saffron_gold",
     "tier": 3,
     "form": "metal",
@@ -2738,11 +2941,13 @@
     "ores": [
       {
         "id": "saffron_gold_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_saffron_gold_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2777,11 +2982,13 @@
     "ores": [
       {
         "id": "meteoric_iron_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_meteoric_iron_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2848,11 +3055,13 @@
     "ores": [
       {
         "id": "palladium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_palladium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2919,11 +3128,13 @@
     "ores": [
       {
         "id": "elementium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_elementium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -2990,11 +3201,13 @@
     "ores": [
       {
         "id": "iridium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_iridium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3064,7 +3277,8 @@
     "ores": [
       {
         "id": "nether_carbalite_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -3131,11 +3345,13 @@
     "ores": [
       {
         "id": "black_metal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_black_metal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3202,11 +3418,13 @@
     "ores": [
       {
         "id": "starsilver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_starsilver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3273,11 +3491,13 @@
     "ores": [
       {
         "id": "celestial_bronze_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_celestial_bronze_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3344,11 +3564,13 @@
     "ores": [
       {
         "id": "imperial_gold_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_imperial_gold_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3415,11 +3637,13 @@
     "ores": [
       {
         "id": "goblin_silver_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_goblin_silver_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3488,11 +3712,13 @@
     "ores": [
       {
         "id": "dimeritium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_dimeritium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3559,11 +3785,13 @@
     "ores": [
       {
         "id": "magisteel_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_magisteel_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3630,11 +3858,13 @@
     "ores": [
       {
         "id": "kyanite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_kyanite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3661,11 +3891,13 @@
     "ores": [
       {
         "id": "starmetal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_starmetal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3700,11 +3932,13 @@
     "ores": [
       {
         "id": "kairoseki_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_kairoseki_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3731,11 +3965,13 @@
     "ores": [
       {
         "id": "sekkiseki_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_sekkiseki_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3762,11 +3998,13 @@
     "ores": [
       {
         "id": "dust_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_dust_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3793,11 +4031,13 @@
     "ores": [
       {
         "id": "eco_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_eco_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3824,11 +4064,13 @@
     "ores": [
       {
         "id": "raritanium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_raritanium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3855,11 +4097,13 @@
     "ores": [
       {
         "id": "evolution_stone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_evolution_stone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3886,11 +4130,13 @@
     "ores": [
       {
         "id": "chromium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_chromium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3925,11 +4171,13 @@
     "ores": [
       {
         "id": "nickel_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_nickel_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -3955,6 +4203,105 @@
     "spawns": true
   },
   {
+    "id": "runestone",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4285431718,
+    "light": 0,
+    "ores": [
+      {
+        "id": "runestone_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_runestone_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "runestone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "runestone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "sunforged",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4294951495,
+    "light": 0,
+    "ores": [
+      {
+        "id": "sunforged_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_sunforged_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "sunforged",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "sunforged_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "moonshard",
+    "tier": 4,
+    "form": "gem",
+    "use": "special",
+    "color": 4290365695,
+    "light": 0,
+    "ores": [
+      {
+        "id": "moonshard_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_moonshard_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "moonshard",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "moonshard_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
     "id": "mithril",
     "tier": 5,
     "form": "metal",
@@ -3964,11 +4311,13 @@
     "ores": [
       {
         "id": "mithril_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_mithril_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4035,7 +4384,8 @@
     "ores": [
       {
         "id": "nether_ebony_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -4102,11 +4452,13 @@
     "ores": [
       {
         "id": "stalhrim_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_stalhrim_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4165,11 +4517,13 @@
     "ores": [
       {
         "id": "eternium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_eternium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4238,11 +4592,13 @@
     "ores": [
       {
         "id": "saronite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_saronite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4309,7 +4665,8 @@
     "ores": [
       {
         "id": "nether_runite_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -4376,11 +4733,13 @@
     "ores": [
       {
         "id": "titanium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_titanium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4447,11 +4806,13 @@
     "ores": [
       {
         "id": "hallowed_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_hallowed_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4518,7 +4879,8 @@
     "ores": [
       {
         "id": "nether_stygian_iron_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -4585,11 +4947,13 @@
     "ores": [
       {
         "id": "luna_titanium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_luna_titanium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4656,7 +5020,8 @@
     "ores": [
       {
         "id": "end_dragonite_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -4715,11 +5080,13 @@
     "ores": [
       {
         "id": "scarlet_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_scarlet_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4786,11 +5153,13 @@
     "ores": [
       {
         "id": "crystallite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_crystallite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4849,11 +5218,13 @@
     "ores": [
       {
         "id": "gromril_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_gromril_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4920,11 +5291,13 @@
     "ores": [
       {
         "id": "ithilmar_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_ithilmar_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -4991,11 +5364,13 @@
     "ores": [
       {
         "id": "carbonadium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_carbonadium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5064,11 +5439,13 @@
     "ores": [
       {
         "id": "octiron_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_octiron_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5103,11 +5480,13 @@
     "ores": [
       {
         "id": "titanite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_titanite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5134,7 +5513,8 @@
     "ores": [
       {
         "id": "end_zonaite_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -5161,11 +5541,13 @@
     "ores": [
       {
         "id": "hextech_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_hextech_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5192,11 +5574,13 @@
     "ores": [
       {
         "id": "warpstone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_warpstone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5223,11 +5607,13 @@
     "ores": [
       {
         "id": "tiberium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_tiberium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5254,11 +5640,13 @@
     "ores": [
       {
         "id": "silversheen_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_silversheen_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5293,11 +5681,13 @@
     "ores": [
       {
         "id": "sakuradite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_sakuradite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5324,11 +5714,13 @@
     "ores": [
       {
         "id": "energon_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_energon_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5355,11 +5747,13 @@
     "ores": [
       {
         "id": "aluminum_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_aluminum_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5394,11 +5788,13 @@
     "ores": [
       {
         "id": "umbrite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_umbrite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5457,7 +5853,8 @@
     "ores": [
       {
         "id": "end_skycrystal_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -5484,11 +5881,13 @@
     "ores": [
       {
         "id": "lifebloom_crystal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_lifebloom_crystal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5515,11 +5914,13 @@
     "ores": [
       {
         "id": "abyssal_shard_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": false
       },
       {
         "id": "deepslate_abyssal_shard_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5537,6 +5938,72 @@
     "spawns": true
   },
   {
+    "id": "soulstone",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4284170106,
+    "light": 0,
+    "ores": [
+      {
+        "id": "soulstone_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_soulstone_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "soulstone",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "soulstone_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
+    "id": "abyssium",
+    "tier": 5,
+    "form": "gem",
+    "use": "special",
+    "color": 4280237419,
+    "light": 0,
+    "ores": [
+      {
+        "id": "abyssium_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_abyssium_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "abyssium",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "abyssium_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
     "id": "orichalcum",
     "tier": 6,
     "form": "metal",
@@ -5546,11 +6013,13 @@
     "ores": [
       {
         "id": "orichalcum_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_orichalcum_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5617,11 +6086,13 @@
     "ores": [
       {
         "id": "chlorophyte_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_chlorophyte_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5688,7 +6159,8 @@
     "ores": [
       {
         "id": "end_aetherium_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -5747,7 +6219,8 @@
     "ores": [
       {
         "id": "end_void_metal_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -5816,7 +6289,8 @@
     "ores": [
       {
         "id": "end_gundanium_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -5885,11 +6359,13 @@
     "ores": [
       {
         "id": "inertron_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_inertron_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -5956,11 +6432,13 @@
     "ores": [
       {
         "id": "sigmarite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_sigmarite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6027,7 +6505,8 @@
     "ores": [
       {
         "id": "end_phrik_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -6094,7 +6573,8 @@
     "ores": [
       {
         "id": "end_trinium_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -6161,7 +6641,8 @@
     "ores": [
       {
         "id": "end_dragon_metal_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -6228,7 +6709,8 @@
     "ores": [
       {
         "id": "nether_flametal_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -6295,11 +6777,13 @@
     "ores": [
       {
         "id": "allthemodium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_allthemodium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6366,11 +6850,13 @@
     "ores": [
       {
         "id": "kryptonite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_kryptonite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6397,7 +6883,8 @@
     "ores": [
       {
         "id": "end_cortosis_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -6432,11 +6919,13 @@
     "ores": [
       {
         "id": "element_zero_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_element_zero_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6463,11 +6952,13 @@
     "ores": [
       {
         "id": "ion_cube_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_ion_cube_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6494,7 +6985,8 @@
     "ores": [
       {
         "id": "end_naquadah_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -6529,11 +7021,13 @@
     "ores": [
       {
         "id": "dilithium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_dilithium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6560,11 +7054,13 @@
     "ores": [
       {
         "id": "quantanium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_quantanium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6591,11 +7087,13 @@
     "ores": [
       {
         "id": "eridium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_eridium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6622,7 +7120,8 @@
     "ores": [
       {
         "id": "end_khaydarin_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -6640,6 +7139,39 @@
     "spawns": true
   },
   {
+    "id": "astralite",
+    "tier": 6,
+    "form": "gem",
+    "use": "special",
+    "color": 4289194239,
+    "light": 0,
+    "ores": [
+      {
+        "id": "astralite_ore",
+        "base": "stone",
+        "tinted": false
+      },
+      {
+        "id": "deepslate_astralite_ore",
+        "base": "deepslate",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "astralite",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "astralite_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
     "id": "materia",
     "tier": 6,
     "form": "gem",
@@ -6649,11 +7181,13 @@
     "ores": [
       {
         "id": "materia_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_materia_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6680,11 +7214,13 @@
     "ores": [
       {
         "id": "adamantine_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_adamantine_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6754,11 +7290,13 @@
     "ores": [
       {
         "id": "hihiirokane_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_hihiirokane_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6825,11 +7363,13 @@
     "ores": [
       {
         "id": "darksteel_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_darksteel_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6898,11 +7438,13 @@
     "ores": [
       {
         "id": "beskar_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_beskar_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -6971,11 +7513,13 @@
     "ores": [
       {
         "id": "nth_metal_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_nth_metal_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7042,11 +7586,13 @@
     "ores": [
       {
         "id": "vibranium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_vibranium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7113,11 +7659,13 @@
     "ores": [
       {
         "id": "katchin_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_katchin_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7152,7 +7700,8 @@
     "ores": [
       {
         "id": "end_sam_ore",
-        "base": "end"
+        "base": "end",
+        "tinted": true
       }
     ],
     "items": [
@@ -7179,11 +7728,13 @@
     "ores": [
       {
         "id": "elerium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_elerium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7210,11 +7761,13 @@
     "ores": [
       {
         "id": "prismatic_shard_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_prismatic_shard_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7241,7 +7794,8 @@
     "ores": [
       {
         "id": "nether_promethium_ore",
-        "base": "nether"
+        "base": "nether",
+        "tinted": true
       }
     ],
     "items": [
@@ -7276,11 +7830,13 @@
     "ores": [
       {
         "id": "atium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_atium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7315,11 +7871,13 @@
     "ores": [
       {
         "id": "harmonium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_harmonium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7345,6 +7903,34 @@
     "spawns": true
   },
   {
+    "id": "primordial",
+    "tier": 7,
+    "form": "gem",
+    "use": "special",
+    "color": 4294967295,
+    "light": 0,
+    "ores": [
+      {
+        "id": "end_primordial_ore",
+        "base": "end",
+        "tinted": true
+      }
+    ],
+    "items": [
+      {
+        "id": "primordial",
+        "kind": "gem"
+      }
+    ],
+    "storage": [
+      {
+        "id": "primordial_block",
+        "kind": "gem"
+      }
+    ],
+    "spawns": true
+  },
+  {
     "id": "uru",
     "tier": 8,
     "form": "metal",
@@ -7354,11 +7940,13 @@
     "ores": [
       {
         "id": "uru_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_uru_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7424,11 +8012,13 @@
     "ores": [
       {
         "id": "adamantium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_adamantium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7496,11 +8086,13 @@
     "ores": [
       {
         "id": "draconium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_draconium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7566,11 +8158,13 @@
     "ores": [
       {
         "id": "luminite_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_luminite_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7636,11 +8230,13 @@
     "ores": [
       {
         "id": "phazon_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_phazon_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7698,11 +8294,13 @@
     "ores": [
       {
         "id": "pale_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_pale_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7736,11 +8334,13 @@
     "ores": [
       {
         "id": "chaos_emerald_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_chaos_emerald_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7766,11 +8366,13 @@
     "ores": [
       {
         "id": "trellium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_trellium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7804,11 +8406,13 @@
     "ores": [
       {
         "id": "unobtanium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_unobtanium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7878,11 +8482,13 @@
     "ores": [
       {
         "id": "philosophers_stone_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_philosophers_stone_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7908,11 +8514,13 @@
     "ores": [
       {
         "id": "lerasium_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_lerasium_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [
@@ -7946,11 +8554,13 @@
     "ores": [
       {
         "id": "tamashigane_ore",
-        "base": "stone"
+        "base": "stone",
+        "tinted": true
       },
       {
         "id": "deepslate_tamashigane_ore",
-        "base": "deepslate"
+        "base": "deepslate",
+        "tinted": true
       }
     ],
     "items": [

@@ -5,7 +5,9 @@
     "values": [
       "#c:is_spooky",
       [
-        "minecraft:deep_dark"
+        "minecraft:deep_dark",
+        "pipican:umbral_chasm",
+        "pipican:crimson_wilds"
       ]
     ]
   },

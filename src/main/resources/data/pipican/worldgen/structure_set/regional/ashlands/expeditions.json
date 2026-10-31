@@ -1,0 +1,50 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 993057985,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/ashlands/ash_waste_plains/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/ash_waste_plains/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/dark_fortress_plateau/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/dark_fortress_plateau/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/dead_forest/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/dead_forest/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/obsidian_spires/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/ashlands/obsidian_spires/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/ashlands/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/ashlands/mine",
+      "weight": 4
+    }
+  ]
+}

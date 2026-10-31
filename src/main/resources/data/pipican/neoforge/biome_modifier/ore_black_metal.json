@@ -1,6 +1,12 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_swamp",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_swamp",
+      "#pipican:region/marshfen"
+    ]
+  },
   "features": "pipican:ore_black_metal",
   "step": "underground_ores"
 }

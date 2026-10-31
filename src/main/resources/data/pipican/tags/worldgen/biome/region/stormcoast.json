@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:stormcoast/lava_field_islands",
+    "pipican:stormcoast/geyser_basin",
+    "pipican:stormcoast/black_sand_shores",
+    "pipican:stormcoast/storm_cliffs",
+    "pipican:stormcoast/moss_covered_lava"
+  ]
+}

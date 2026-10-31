@@ -1,0 +1,70 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 986496379,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/fjordmark/cliff_coast/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/cliff_coast/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/cliff_coast/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/deep_fjords/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/deep_fjords/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/deep_fjords/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/highland_moor/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/highland_moor/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/highland_moor/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/longhouse_valleys/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/longhouse_valleys/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/rune_stone_barrens/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/fjordmark/rune_stone_barrens/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/fjordmark/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/fjordmark/mine",
+      "weight": 4
+    }
+  ]
+}

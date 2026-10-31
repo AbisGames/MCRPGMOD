@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "RRR",
+    "RDR",
+    "RGB"
+  ],
+  "key": {
+    "R": "pipican:redrock_iron_ingot",
+    "D": "pipican:redrock_badlands_boss_core",
+    "G": "pipican:ritual_core",
+    "B": "minecraft:pointed_dripstone"
+  },
+  "result": {
+    "id": "pipican:kragmor_canyon_warlord_sigil",
+    "count": 1
+  }
+}

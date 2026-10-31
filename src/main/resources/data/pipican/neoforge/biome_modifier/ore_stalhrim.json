@@ -4,6 +4,8 @@
     "type": "neoforge:or",
     "values": [
       "#c:is_icy",
+      "#pipican:region/whitecrown_icecap",
+      "#pipican:region/northern_ice_sea",
       [
         "minecraft:frozen_peaks",
         "minecraft:ice_spikes"

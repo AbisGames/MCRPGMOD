@@ -1,10 +1,20 @@
 {
   "type": "neoforge:add_features",
-  "biomes": [
-    "minecraft:dripstone_caves",
-    "minecraft:lush_caves",
-    "minecraft:deep_dark"
-  ],
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#pipican:region/greyspine_mountains",
+      "#pipican:region/jade_empire",
+      [
+        "minecraft:dripstone_caves",
+        "minecraft:lush_caves",
+        "minecraft:deep_dark",
+        "pipican:umbral_chasm",
+        "pipican:verdant_depths",
+        "pipican:aetheris_expanse"
+      ]
+    ]
+  },
   "features": "pipican:ore_dilithium",
   "step": "underground_ores"
 }

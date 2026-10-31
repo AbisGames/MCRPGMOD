@@ -2,11 +2,6 @@
   "model": {
     "type": "minecraft:model",
     "model": "pipican:block/tidalite_ore",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -13662539
-      }
-    ]
+    "tints": []
   }
 }

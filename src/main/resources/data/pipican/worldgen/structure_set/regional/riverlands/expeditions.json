@@ -1,0 +1,74 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 579909931,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/riverlands/great_river_floodplain/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/great_river_floodplain/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/great_river_floodplain/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/palm_farmland/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/palm_farmland/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/palm_farmland/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/pyramid_fields/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/pyramid_fields/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/reed_marsh_delta/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/reed_marsh_delta/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/reed_marsh_delta/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/ziggurat_cities/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/ziggurat_cities/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/riverlands/ziggurat_cities/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/riverlands/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/riverlands/mine",
+      "weight": 4
+    }
+  ]
+}

@@ -1,6 +1,17 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#c:is_ocean",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_ocean",
+      "#pipican:region/western_ocean",
+      "#pipican:region/inner_sea",
+      "#pipican:region/coral_isles",
+      [
+        "pipican:shimmering_reefs"
+      ]
+    ]
+  },
   "features": "pipican:ore_tideglass",
   "step": "underground_ores"
 }

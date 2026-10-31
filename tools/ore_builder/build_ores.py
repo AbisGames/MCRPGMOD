@@ -79,6 +79,11 @@ class Out:
         self.written.append(rel)
 
 
+def custom(root, kind, name):
+    """A hand-made texture (assets/pipican/textures/<kind>/<name>.png), used as-is instead of the tinted one."""
+    return os.path.exists(os.path.join(root, 'assets', NS, 'textures', kind, name + '.png'))
+
+
 def color(o):
     return 0xFF000000 | o['color']
 
@@ -125,10 +130,16 @@ def build(root):
         for block, base in variants(o):
             entry['ores'].append({'id': block, 'base': base})
             overlay = f'{NS}:block/ore_overlay_{"gem" if o["form"] == "gem" else "metal"}'
-            out.json(f'assets/{NS}/models/block/{block}.json', {'parent': f'{NS}:block/tinted_ore',
-                                                                'textures': {'base': BASES[base], 'overlay': overlay}})
+            if custom(root, 'block', block):
+                out.json(f'assets/{NS}/models/block/{block}.json', {'parent': 'minecraft:block/cube_all', 'textures': {'all': f'{NS}:block/{block}'}})
+                block_tint = []
+            else:
+                out.json(f'assets/{NS}/models/block/{block}.json', {'parent': f'{NS}:block/tinted_ore',
+                                                                    'textures': {'base': BASES[base], 'overlay': overlay}})
+                block_tint = tint
+            entry['ores'][-1]['tinted'] = bool(block_tint)
             out.json(f'assets/{NS}/blockstates/{block}.json', {'variants': {'': {'model': f'{NS}:block/{block}'}}})
-            out.json(f'assets/{NS}/items/{block}.json', {'model': {'type': 'minecraft:model', 'model': f'{NS}:block/{block}', 'tints': tint}})
+            out.json(f'assets/{NS}/items/{block}.json', {'model': {'type': 'minecraft:model', 'model': f'{NS}:block/{block}', 'tints': block_tint}})
             out.json(f'data/{NS}/loot_table/blocks/{block}.json', ore_loot(block, drop_item, o['form']))
             prefix = {'stone': '', 'deepslate': 'Deepslate ', 'nether': 'Nether ', 'end': 'End '}[base]
             prefix_tr = {'stone': '', 'deepslate': 'Derin Kayrak ', 'nether': 'Nether ', 'end': 'End '}[base]
@@ -147,9 +158,15 @@ def build(root):
         # --- items
         for item, kind in items_of(o):
             entry['items'].append({'id': item, 'kind': kind})
-            tex = {'raw': 'raw_ore', 'ingot': 'ingot', 'gem': 'gem'}[kind]
-            out.json(f'assets/{NS}/models/item/{item}.json', {'parent': 'minecraft:item/generated', 'textures': {'layer0': f'{NS}:item/{tex}'}})
-            out.json(f'assets/{NS}/items/{item}.json', {'model': {'type': 'minecraft:model', 'model': f'{NS}:item/{item}', 'tints': tint}})
+            tex = f'{NS}:item/' + {'raw': 'raw_ore', 'ingot': 'ingot', 'gem': 'gem'}[kind]
+            item_tint = tint
+            # Hand-made art wins: the item's own texture, or a metal's material icon for its ingot.
+            for own in ([item] + ([i] if kind == 'ingot' else [])):
+                if custom(root, 'item', own):
+                    tex, item_tint = f'{NS}:item/{own}', []
+                    break
+            out.json(f'assets/{NS}/models/item/{item}.json', {'parent': 'minecraft:item/generated', 'textures': {'layer0': tex}})
+            out.json(f'assets/{NS}/items/{item}.json', {'model': {'type': 'minecraft:model', 'model': f'{NS}:item/{item}', 'tints': item_tint}})
             lang_en[f'item.{NS}.{item}'] = {'raw': f'Raw {o["en"]}', 'ingot': f'{o["en"]} Ingot', 'gem': o['en']}[kind]
             lang_tr[f'item.{NS}.{item}'] = {'raw': f'Ham {o["tr"]}', 'ingot': f'{o["tr"]} Külçesi', 'gem': o['tr']}[kind]
             if kind == 'raw':
@@ -261,6 +278,8 @@ def self_drop(block):
 def worldgen(out, o):
     i, tier = o['id'], o['tier']
     dim, biomes, band = catalog.PLACES[o['place']]
+    if dim == 'overworld':
+        biomes = biomes + catalog.region_biomes(o['place'])
     gen = catalog.TIER_GEN[tier]
     targets = []
     for block, base in variants(o):

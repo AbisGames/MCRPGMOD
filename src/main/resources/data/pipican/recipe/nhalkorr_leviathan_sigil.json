@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SSS", "SCR", "SCN"],
+  "key": {
+    "S": "pipican:glacierite",
+    "C": "pipican:northern_ice_sea_boss_core",
+    "R": "pipican:ritual_core",
+    "N": "minecraft:nautilus_shell"
+  },
+  "result": {"id": "pipican:nhalkorr_leviathan_sigil", "count": 1}
+}

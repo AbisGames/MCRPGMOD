@@ -1,0 +1,82 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 624063281,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/heartlands/castle_highlands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/castle_highlands/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/castle_highlands/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/farmland_plains/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/farmland_plains/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/flower_meadows/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/flower_meadows/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/flower_meadows/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/oak_and_birch_woods/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/oak_and_birch_woods/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/oak_and_birch_woods/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/river_valley_towns/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/river_valley_towns/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/rolling_green_hills/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/rolling_green_hills/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/heartlands/rolling_green_hills/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/heartlands/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/heartlands/mine",
+      "weight": 4
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/skyiron_ingot",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -7363644
+      }
+    ]
+  }
+}

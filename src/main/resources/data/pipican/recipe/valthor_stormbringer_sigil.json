@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TTT",
+    "TCR",
+    "TCL"
+  ],
+  "key": {
+    "T": "pipican:thunderbasalt",
+    "C": "pipican:stormcoast_boss_core",
+    "R": "pipican:ritual_core",
+    "L": "minecraft:lightning_rod"
+  },
+  "result": {
+    "id": "pipican:valthor_stormbringer_sigil",
+    "count": 1
+  }
+}

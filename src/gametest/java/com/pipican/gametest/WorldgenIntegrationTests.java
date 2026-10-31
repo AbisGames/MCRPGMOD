@@ -1,0 +1,514 @@
+package com.pipican.gametest;
+
+import com.pipican.Pipican;
+import com.pipican.worldgen.*;
+import java.util.List;
+import java.util.function.Consumer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterGameTestsEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
+
+/** Integration checks use the actual RPG noise generator in a test-only dimension. */
+@EventBusSubscriber(modid = Pipican.MOD_ID)
+public final class WorldgenIntegrationTests {
+    private static long generationSeed;
+    private static String suite;
+    private static final List<String> SUITES=List.of("sky","terrain","terrain_probe","capital","settlements","villages","protection","unique","expeditions");
+    private static final java.util.Map<ResourceKey<Level>,net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess>
+        STORAGE=new java.util.HashMap<>();
+    private static final java.util.Map<ResourceKey<Level>,java.nio.file.Path> WORLD_ROOTS=new java.util.HashMap<>();
+
+    @SubscribeEvent
+    public static void functions(RegisterEvent event) {
+        event.register(Registries.TEST_FUNCTION, registrar -> SUITES.forEach(name ->
+            registrar.register(Pipican.id("rpg_generated_"+name), helper -> generatedChunks(helper,name))));
+    }
+
+    @SubscribeEvent
+    public static void tests(RegisterGameTestsEvent event) {
+        String selected=System.getProperty("pipican.worldgenSuite","all");
+        if(!selected.equals("all")&&!SUITES.contains(selected))throw new IllegalArgumentException("Unknown worldgen suite: "+selected);
+        var env = event.registerEnvironment(Pipican.id("rpg_integration_env"),
+            new TestEnvironmentDefinition.AllOf(List.of()));
+        for(String name:SUITES){
+            if(name.equals("terrain_probe")&&selected.equals("all"))continue;
+            if(!selected.equals("all")&&!selected.equals(name))continue;
+            ResourceKey<Consumer<GameTestHelper>> fn = ResourceKey.create(
+                Registries.TEST_FUNCTION, Pipican.id("rpg_generated_"+name));
+            event.registerTest(Pipican.id("rpg_generated_"+name), new FunctionGameTestInstance(fn,
+                new TestData<>(env, net.minecraft.resources.Identifier.withDefaultNamespace("empty"), 2400, 0, true)));
+        }
+    }
+
+    private static net.minecraft.world.level.chunk.LevelChunk chunk(ServerLevel level,int x,int z){
+        WorldgenTestProgress.touch(suite+" chunk "+x+","+z);
+        return level.getChunk(x,z);
+    }
+
+    private static void check(GameTestHelper helper, ServerLevel level, BlockPos pos, boolean ok, String expected) {
+        helper.assertTrue(ok, "seed=" + generationSeed + " dimension=" + level.dimension().identifier()
+            + " pos=" + pos + " expected=" + expected + " actual=" + level.getBlockState(pos));
+    }
+
+    private static void generatedChunks(GameTestHelper helper,String name) {
+        suite=name;
+        WorldgenTestProgress.touch("starting suite "+name);
+        var server=helper.getLevel().getServer();
+        var original=server.getWorldGenSettings();
+        // GameTestServer hardcodes WORLD_OPTIONS=(0,false,false). Configure
+        // its private final instance field only in this test harness, restoring
+        // it before any other test batch runs. Passing ServerLevel's zoom seed
+        // alone does not change noise or enable native structure generation.
+        java.lang.reflect.Field options;
+        try{
+            options=net.minecraft.server.MinecraftServer.class.getDeclaredField("worldGenSettings");
+            options.setAccessible(true);
+        }catch(ReflectiveOperationException e){throw new IllegalStateException("GameTest world options unavailable",e);}
+        for(long seed:new long[]{Long.getLong("pipican.worldgenTestSeed",0L)}){
+            generationSeed=seed;
+            ServerLevel level=null;
+            try{
+                options.set(server,new net.minecraft.world.level.levelgen.WorldGenSettings(
+                    new net.minecraft.world.level.levelgen.WorldOptions(seed,true,false),original.dimensions()));
+                level=createLevel(helper,seed);
+                verifyGenerated(helper,level);
+            }catch(IllegalAccessException e){throw new IllegalStateException("Cannot set independent test seed",e);}
+            finally{
+                try{if(level!=null)saveAndClose(helper,level.dimension());}
+                finally{
+                    try{options.set(server,original);}
+                    catch(IllegalAccessException e){throw new IllegalStateException("Cannot restore GameTest world options",e);}
+                }
+            }
+        }
+        helper.succeed();
+        WorldgenTestProgress.touch("finished suite "+name+"; waiting for remaining GameTests");
+    }
+
+    // Reuse isolated generation/storage lifecycle for the new resource-only coverage.
+    static ServerLevel openResourceFixture(GameTestHelper helper){
+        suite="rare_resources"; generationSeed=0; return createLevel(helper,0);
+    }
+    static void closeResourceFixture(GameTestHelper helper,ServerLevel level){ saveAndClose(helper,level.dimension()); }
+
+    private static ServerLevel createLevel(GameTestHelper helper,long seed) {
+        var RPG=ResourceKey.create(Registries.DIMENSION,Pipican.id("rpg_integration_"+suite+"_"+seed));
+        ServerLevel level = helper.getLevel().getServer().getLevel(RPG);
+        // GameTestServer intentionally creates only vanilla dimensions. Build
+        // a real ServerLevel from the RPG preset instead of falling back to its
+        // flat overworld (which would make terrain assertions meaningless).
+        if(level==null){
+            var server=helper.getLevel().getServer();
+            var json=WorldgenJson.read("world_preset/rpg_world.json")
+                .getAsJsonObject("dimensions").get("minecraft:overworld");
+            var ops=net.minecraft.resources.RegistryOps.create(
+                com.mojang.serialization.JsonOps.INSTANCE,server.registryAccess());
+            var stem=net.minecraft.world.level.dimension.LevelStem.CODEC.parse(ops,json).getOrThrow();
+            try{
+                var root=WORLD_ROOTS.get(RPG);
+                if(root==null){
+                    var parent=server.getWorldPath(net.minecraft.world.level.storage.LevelResource.ROOT).resolve("rpg-integration");
+                    java.nio.file.Files.createDirectories(parent);
+                    root=java.nio.file.Files.createTempDirectory(parent,suite+"_seed_"+seed+"_");
+                    WORLD_ROOTS.put(RPG,root);
+                }
+                var source=net.minecraft.world.level.storage.LevelStorageSource.createDefault(root);
+                var storage=source.validateAndCreateAccess("world");
+                STORAGE.put(RPG,storage);
+                level=new ServerLevel(server,java.util.concurrent.ForkJoinPool.commonPool(),storage,
+                    new net.minecraft.world.level.storage.DerivedLevelData(server.getWorldData(),
+                        server.getWorldData().overworldData()),RPG,stem,false,
+                    net.minecraft.world.level.biome.BiomeManager.obfuscateSeed(seed),List.of(),false);
+                PlayerWorldgenProtection.get(level); // Match server LevelEvent.Load before worker generation.
+                server.forgeGetWorldMap().put(RPG,level);
+                server.markWorldsDirty();
+            }catch(Exception e){throw new IllegalStateException("Unable to open temporary RPG test world for seed "+seed,e);}
+        }
+        return level;
+    }
+
+    private static void saveAndClose(GameTestHelper helper,ResourceKey<Level> key){
+        WorldgenTestProgress.touch("closing "+key.identifier());
+        var server=helper.getLevel().getServer();
+        var level=server.getLevel(key);
+        if(level==null)return;
+        var closingThread=Thread.currentThread();
+        var phase=new java.util.concurrent.atomic.AtomicReference<String>("draining chunks");
+        var watchdog=Thread.ofPlatform().daemon().name("worldgen-close-watchdog").start(()->{
+            try{
+                for(int elapsed=30;elapsed<=180;elapsed+=30){
+                    Thread.sleep(30000);
+                    Pipican.LOGGER.error("Test world close stalled {}s dimension {} phase {} server stack {}",
+                        elapsed,key,phase.get(),java.util.Arrays.toString(closingThread.getStackTrace()));
+                }
+                // This is an isolated disposable GameTest JVM. Enforce the
+                // close deadline even if a native join ignores interruption.
+                // A nonzero exit preserves failure, with diagnostics in CI.
+                Runtime.getRuntime().halt(3);
+            }catch(InterruptedException completed){}
+        });
+        try{
+            // Mirror MinecraftServer.stopServer: closing region storage while
+            // generation/unload tasks still own chunks leaks worlds and can
+            // fail their futures with "Parent chunk missing".
+            var source=level.getChunkSource();
+            long deadline=System.nanoTime()+java.util.concurrent.TimeUnit.SECONDS.toNanos(120);
+            long quietSince=-1;
+            while(true){
+                source.deactivateTicketsOnClosing();
+                source.tick(()->true,false);
+                for(int i=0;i<128&&source.pollTask();i++){}
+                // Native server shutdown also pumps its main event loop;
+                // chunk-only polling can leave server callbacks pending.
+                long pumpUntil=System.nanoTime()+1000000L;
+                server.managedBlock(()->System.nanoTime()>=pumpUntil);
+                // POI callbacks are server tasks, independent of chunkMap work.
+                // Drain them while this level's POI storage is still open.
+                long now=System.nanoTime();
+                if(source.chunkMap.hasWork()||server.getPendingTasksCount()>0)quietSince=-1;
+                else if(quietSince<0)quietSince=now;
+                else if(now-quietSince>=java.util.concurrent.TimeUnit.MILLISECONDS.toNanos(100))break;
+                if(now>deadline)throw new IllegalStateException(
+                    "Timed out draining test-world chunks: "+key+" "+source.gatherStats());
+                Thread.sleep(1);
+            }
+            phase.set("saving level");
+            level.save(null,true,false);
+            server.forgeGetWorldMap().remove(key);
+            server.markWorldsDirty();
+            phase.set("closing level");
+            level.close();
+            phase.set("releasing storage");
+            var storage=STORAGE.remove(key);
+            if(storage!=null)storage.close();
+        }catch(Exception e){throw new IllegalStateException("Saving temporary RPG integration world "+key,e);}
+        finally{watchdog.interrupt();}
+    }
+
+    private static void verifyGenerated(GameTestHelper helper,ServerLevel level) {
+        helper.assertTrue(level.getSeed()==generationSeed,"test world did not receive its independent seed");
+        helper.assertTrue(level.structureManager().shouldGenerateStructures(),"native structures disabled in test world");
+        if(suite.equals("terrain_probe")){
+            String target=System.getProperty("pipican.worldgenTarget","");
+            var points=switch(target){
+                case "hallvard" -> new int[][]{{-3929,-12705},{-3937,-12713},{-3667,-12667}};
+                case "skelvik" -> new int[][]{{8921,-21095},{8897,-21095},{9167,-20833}};
+                case "bogmere" -> new int[][]{{-12543,2630}};
+                default -> throw new IllegalArgumentException("Unknown terrain probe: "+target);
+            };
+            var city=new LandmarkCatalog().all().stream().filter(c->c.id().equals(target)).findFirst().orElseThrow();
+            var generator=level.getChunkSource().getGenerator();
+            var randomState=level.getChunkSource().randomState();
+            int centre=generator.getBaseHeight(city.x(),city.z(),net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,randomState);
+            var failures=new java.util.ArrayList<String>();
+            for(var point:points){
+                int x=point[0],z=point[1];chunk(level,x>>4,z>>4);
+                int raw=generator.getBaseHeight(x,z,net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,randomState);
+                int actual=level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.WORLD_SURFACE,x,z);
+                var context=new net.minecraft.world.level.levelgen.DensityFunction.SinglePointContext(x,raw-1,z);
+                String region=WorldLayout.regionAt(0L,x,z).orElseThrow().id();
+                double interpolated=generator instanceof net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator noise?
+                    noise.getInterpolatedNoiseValue(randomState,context):Double.NaN;
+                Pipican.LOGGER.info("Terrain probe seed {} city {} point {},{} centre {} raw {} actual {} region {} correction {} regional {} final {} interpolated {} block {} biome {}",
+                    generationSeed,target,x,z,centre,raw,actual,region,
+                    RegionalElevation.terraceCorrection(region,x,raw-1,z),new RegionalElevation(1).compute(context),
+                    randomState.router().finalDensity().compute(context),interpolated,
+                    level.getBlockState(new BlockPos(x,raw-1,z)),level.getBiome(new BlockPos(x,raw-1,z)).unwrapKey());
+                if(raw>centre+24||raw<centre-12)failures.add(x+","+z+" raw="+raw+" centre="+centre);
+            }
+            helper.assertTrue(failures.isEmpty(),"terrain probe failed seed="+generationSeed+" city="+target+" "+failures);
+        }
+        if(suite.equals("settlements"))AuthoredSettlementTests.verify(helper,level,generationSeed,
+            ()->createLevel(helper,generationSeed),key->saveAndClose(helper,key));
+        if(suite.equals("expeditions")||suite.equals("villages"))RegionalExpeditionTests.verify(helper,level,generationSeed,suite.equals("villages"),
+            ()->createLevel(helper,generationSeed),key->saveAndClose(helper,key));
+        if(suite.equals("unique")){
+            for(var site:SpecialLandmarkPlacementEvents.sites()){
+                if(site.id().startsWith("aetheris_"))continue;
+                var template=level.getServer().getStructureManager().get(Pipican.id(site.template())).orElseThrow();
+                var size=template.getSize();
+                int minX=site.x()-size.getX()/2,minZ=site.z()-size.getZ()/2;
+                for(int cx=Math.floorDiv(minX,16);cx<=Math.floorDiv(minX+size.getX()-1,16);cx++)
+                    for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)chunk(level,cx,cz);
+                helper.assertTrue(SpecialLandmarkPlacementEvents.tryPlace(level,site),
+                    "seed="+generationSeed+" unique landmark placement failed: "+site.id());
+                if(site.id().equals("umbral_city")){
+                    helper.assertTrue(site.elevation()<0&&site.elevation()+size.getY()<64,
+                        "Umbral city escaped its underground elevation");
+                }
+            }
+        }
+        if(suite.equals("protection")){
+            var built=new BlockPos(-2500,400,-3333);
+            var node=built.east(2);
+            chunk(level,built.getX()>>4,built.getZ()>>4);
+            var snapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,built);
+            level.setBlock(built,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
+                new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(snapshot,
+                    net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),helper.makeMockServerPlayerInLevel()));
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"real place event did not protect natural stone");
+            var piston=built.west(4);
+            var pushed=piston.east();
+            level.setBlock(piston,net.minecraft.world.level.block.Blocks.PISTON.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.piston.PistonBaseBlock.FACING,net.minecraft.core.Direction.EAST),3);
+            level.setBlock(pushed,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.level.PistonEvent.Pre(
+                level,piston,net.minecraft.core.Direction.EAST,
+                net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType.EXTEND));
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(pushed.east()),"piston destination lost player provenance");
+            var fluid=built.south(3);
+            level.setBlock(fluid,net.minecraft.world.level.block.Blocks.WATER.defaultBlockState(),3);
+            level.gameEvent(net.minecraft.world.level.gameevent.GameEvent.FLUID_PLACE,fluid,
+                net.minecraft.world.level.gameevent.GameEvent.Context.of(helper.makeMockServerPlayerInLevel()));
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(fluid),"successful fluid placement was not protected");
+            long ready=level.getGameTime()+20;
+            RenewableOreSavedData.get(level).record(node,"frostcrystal",ready);
+            var unloaded=new BlockPos(23000,400,23000);
+            chunk(level,unloaded.getX()>>4,unloaded.getZ()>>4);
+            RenewableOreSavedData.get(level).record(unloaded,"glacierite",ready);
+            var key=level.dimension();
+            saveAndClose(helper,key);
+            level=createLevel(helper,generationSeed);
+            chunk(level,built.getX()>>4,built.getZ()>>4);
+            helper.assertTrue(!level.hasChunkAt(unloaded),"distant queued node remained loaded after reopening the world");
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(built),"player provenance lost after disk reload");
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(pushed.east()),"piston provenance lost after disk reload");
+            helper.assertTrue(PlayerWorldgenProtection.get(level).contains(fluid),"fluid-source provenance lost after disk reload");
+            helper.assertTrue(level.getBlockState(built).is(net.minecraft.world.level.block.Blocks.STONE),"player stone lost after disk reload");
+            helper.assertTrue(RegionalMineEvents.restoreDue(level,ready-1,8)==0,"ore restored before cooldown");
+            helper.assertTrue(RegionalMineEvents.restoreDue(level,ready,8)==1,"queued ore did not survive disk reload");
+            helper.assertTrue(level.getBlockState(node).is(RegionalOreRegistries.NODES.get("frostcrystal").get()),"wrong renewed ore");
+            helper.assertTrue(!level.hasChunkAt(unloaded),"renewal force-loaded an unloaded chunk");
+            helper.assertTrue(RenewableOreSavedData.get(level).contains(unloaded),"unloaded node discarded");
+            var pending=new net.minecraft.world.level.ChunkPos(unloaded.getX()>>4,unloaded.getZ()>>4);
+            level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,pending,0);
+            helper.assertTrue(level.getChunkSource().getChunkNow(pending.x(),pending.z())==null,
+                "pending-load regression requires an unfinished full chunk");
+            helper.assertTrue(RegionalMineEvents.restoreDue(level,ready,8)==0,
+                "renewal waited for and restored a pending-load chunk");
+            helper.assertTrue(level.getChunkSource().getChunkNow(pending.x(),pending.z())==null,
+                "renewal synchronously completed pending chunk generation");
+            level.getChunkSource().removeTicketWithRadius(net.minecraft.server.level.TicketType.PORTAL,pending,0);
+            var city=new LandmarkCatalog().all().stream().filter(s->s.tier().equals("capital")).findFirst().orElseThrow();
+            int ground=level.getChunkSource().getGenerator().getBaseHeight(city.x(),city.z(),
+                net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR_WG,level,level.getChunkSource().randomState());
+            var cityBuild=new BlockPos(city.x()+1,ground+4,city.z()+1);
+            chunk(level,cityBuild.getX()>>4,cityBuild.getZ()>>4);
+            var citySnapshot=net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(),level,cityBuild);
+            level.setBlock(cityBuild,net.minecraft.world.level.block.Blocks.STONE.defaultBlockState(),3);
+            net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(
+                new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(citySnapshot,
+                    net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),helper.makeMockServerPlayerInLevel()));
+            var cityProgress=CapitalPlacementSavedData.get(level);
+            helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,cityProgress),
+                "deferred capital overwrote a player-placed natural stone block");
+            helper.assertTrue(cityProgress.progress(city.id())==null,"obstructed capital advanced its progress");
+            helper.assertTrue(level.getBlockState(cityBuild).is(net.minecraft.world.level.block.Blocks.STONE),
+                "player build was changed by rejected capital placement");
+        }
+        helper.assertTrue(level.getChunkSource().getGenerator().getBiomeSource() instanceof RegionalBiomeSource,
+            "integration test must use the real RPG generator");
+        if(suite.equals("sky")){
+        for (var island : SkyIslandLayout.ISLANDS) {
+            // Centre plus four corners within the authored structure support area.
+            for (int[] offset : new int[][] {{0,0},{-30,-30},{-30,30},{30,-30},{30,30}}) {
+                var floor = new BlockPos(island.x()+offset[0], 318, island.z()+offset[1]);
+                chunk(level,floor.getX() >> 4, floor.getZ() >> 4);
+                check(helper,level,floor,level.getBlockState(floor).isSolid(), "solid island support " + island.id());
+                var clearance = floor.above(4);
+                check(helper,level,clearance,level.getBlockState(clearance).isAir(), "clear building space " + island.id());
+            }
+        }
+        for(var site:SpecialLandmarkPlacementEvents.sites()){
+            if(!site.id().startsWith("aetheris_"))continue;
+            var template=level.getServer().getStructureManager().get(
+                Pipican.id(site.template())).orElseThrow();
+            var size=template.getSize();
+            int minX=site.x()-size.getX()/2,minZ=site.z()-size.getZ()/2;
+            for(int cx=Math.floorDiv(minX,16);cx<=Math.floorDiv(minX+size.getX()-1,16);cx++)
+                for(int cz=Math.floorDiv(minZ,16);cz<=Math.floorDiv(minZ+size.getZ()-1,16);cz++)
+                    chunk(level,cx,cz);
+            helper.assertTrue(SpecialLandmarkPlacementEvents.tryPlace(level,site),
+                "seed="+generationSeed+" failed sky structure placement: "+site.id());
+            if(site.id().equals("aetheris_citadel")){
+                int frames=0;
+                for(int x=54;x<=58;x++)for(int z=54;z<=58;z++){
+                    var pos=new BlockPos(minX+x,site.elevation()+45,minZ+z);
+                    var block=level.getBlockState(pos);
+                    if(block.is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME)){
+                        frames++;
+                        var expected=x==54?net.minecraft.core.Direction.EAST:
+                            x==58?net.minecraft.core.Direction.WEST:
+                            z==54?net.minecraft.core.Direction.SOUTH:net.minecraft.core.Direction.NORTH;
+                        check(helper,level,pos,block.getValue(net.minecraft.world.level.block.EndPortalFrameBlock.FACING)==expected,
+                            "inward-facing End portal frame");
+                    }
+                }
+                helper.assertTrue(frames==12,"Sky Citadel must contain twelve End portal frames");
+                // Use vanilla eye insertion, rather than setting portal blocks
+                // directly: wrong frame orientation must fail this test.
+                for(int x=54;x<=58;x++)for(int z=54;z<=58;z++){
+                    var pos=new BlockPos(minX+x,site.elevation()+45,minZ+z);
+                    if(!level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.END_PORTAL_FRAME))continue;
+                    var eye=new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENDER_EYE);
+                    var hit=new net.minecraft.world.phys.BlockHitResult(
+                        net.minecraft.world.phys.Vec3.atCenterOf(pos),net.minecraft.core.Direction.UP,pos,false);
+                    var context=new net.minecraft.world.item.context.UseOnContext(level,null,
+                        net.minecraft.world.InteractionHand.MAIN_HAND,eye,hit){};
+                    net.minecraft.world.item.Items.ENDER_EYE.useOn(context);
+                }
+                for(int x=55;x<=57;x++)for(int z=55;z<=57;z++){
+                    var pos=new BlockPos(minX+x,site.elevation()+45,minZ+z);
+                    check(helper,level,pos,level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.END_PORTAL),
+                        "vanilla-activated End portal");
+                }
+            }
+        }
+        }
+        if(suite.equals("terrain")){
+        // A physically generated capital core in every region, not a density calculation.
+        for (var city : new LandmarkCatalog().all()) {
+            if (!city.tier().equals("capital")) continue;
+            chunk(level,city.x() >> 4,city.z() >> 4);
+            int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.OCEAN_FLOOR,
+                city.x(),city.z()) - 1;
+            var floor = new BlockPos(city.x(),y,city.z());
+            check(helper,level,floor,y > level.getMinY() && level.getBlockState(floor).isSolid(),
+                "solid capital terrain " + city.id());
+        }
+        Pipican.LOGGER.info("RPG generated chunk checks passed for seed {}: 22 capital cores",
+            generationSeed);
+        }
+        if(suite.equals("capital")){
+            var cities=new LandmarkCatalog().all().stream().filter(c->c.tier().equals("capital")).toList();
+            int shard=generationSeed==123L?1:generationSeed==987654321L?2:0;
+            String target=System.getProperty("pipican.worldgenTarget","");
+            if(!target.isEmpty()){
+                cities=cities.stream().filter(c->c.id().equals(target)).toList();
+                helper.assertTrue(!cities.isEmpty(),"unknown target capital: "+target);
+            }
+            var failures=new java.util.ArrayList<String>();
+            for(int i=target.isEmpty()?shard:0;i<cities.size();i+=target.isEmpty()?3:1){
+                var city=cities.get(i);
+                try{
+                    verifyCapital(helper,level,city);
+                    Pipican.LOGGER.info("Verified 63 placed capital pieces, foundations and disk reload: {} seed {}",city.id(),generationSeed);
+                }catch(RuntimeException error){
+                    failures.add(city.id()+": "+error.getMessage());
+                    Pipican.LOGGER.error("Capital integration failure {} seed {}",city.id(),generationSeed,error);
+                }finally{
+                    var layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
+                    for(String collection:List.of("relative_positions","connectors"))
+                        for(var row:layout.getAsJsonArray(collection))
+                            level.getServer().getStructureManager().remove(net.minecraft.resources.Identifier.parse(
+                                row.getAsJsonObject().get("template").getAsString()));
+                    saveAndClose(helper,level.dimension());
+                    level=createLevel(helper,generationSeed);
+                }
+            }
+            helper.assertTrue(failures.isEmpty(),"seed="+generationSeed+" capital failures: "+failures);
+        }
+    }
+
+    private static void verifyCapital(GameTestHelper helper,ServerLevel level,LandmarkCatalog.Landmark city){
+        var progress=CapitalPlacementSavedData.get(level);
+        for(int i=0;i<63;i++){
+            WorldgenTestProgress.touch("capital "+city.id()+" tile "+i);
+            var preparation=CapitalChunkLoader.prepare(level,city,progress);
+            int before=progress.progress(city.id())==null?0:progress.progress(city.id()).nextTile();
+            helper.assertTrue(before==i,"chunk preparation advanced placement progress");
+            // Synchronously finish the fixture's chunks; production ticks wait
+            // for preparation.ready() and never block on generation.
+            try{
+                helper.assertTrue(CapitalPlacementEvents.buildOneTile(level,city,progress),
+                    "seed="+generationSeed+" capital="+city.id()+" tile="+i+" placement deferred");
+            }finally{preparation.release(level);}
+            if(i==10){
+                var key=level.dimension();
+                saveAndClose(helper,key);
+                level=createLevel(helper,generationSeed);
+                progress=CapitalPlacementSavedData.get(level);
+                helper.assertTrue(progress.progress(city.id())!=null&&progress.progress(city.id()).nextTile()==11,
+                    "partially built capital progress lost after actual disk save/reload");
+            }
+        }
+        helper.assertTrue(progress.progress(city.id()).nextTile()==63,"capital not completed");
+        helper.assertTrue(!CapitalPlacementEvents.buildOneTile(level,city,progress),"completed capital rebuilt");
+        if(city.id().equals("morvath")){
+            int ox=city.x()-46,oz=city.z()-46,base=progress.progress(city.id()).foundationY();
+            for(int x=28;x<=38;x++)for(int y=2;y<=13;y++){
+                var pos=new BlockPos(ox+x,base+y,oz+51);
+                boolean frame=x==28||x==38||y==2||y==13;
+                check(helper,level,pos,frame?level.getBlockState(pos).is(net.minecraft.world.level.block.Blocks.OBSIDIAN):
+                    level.getBlockState(pos).isAir(),"complete unlit Morvath Nether portal");
+            }
+        }
+        var layout=WorldgenJson.read("capital_assemblies/"+city.id()+".json");
+        for(String collection:List.of("relative_positions","connectors"))
+            for(var element:layout.getAsJsonArray(collection)){
+                var row=element.getAsJsonObject();
+                var template=level.getServer().getStructureManager().get(
+                    net.minecraft.resources.Identifier.parse(row.get("template").getAsString())).orElseThrow();
+                var size=template.getSize();
+                int x=CapitalPlacementEvents.tileOrigin(city.x(),true,size.getX(),row.get("x").getAsInt());
+                int z=CapitalPlacementEvents.tileOrigin(city.z(),true,size.getZ(),row.get("z").getAsInt());
+                int y=progress.progress(city.id()).foundationY()-1;
+                for(int dx:new int[]{0,size.getX()/2,size.getX()-1})
+                    for(int dz:new int[]{0,size.getZ()/2,size.getZ()-1}){
+                        var pos=new BlockPos(x+dx,y,z+dz);
+                        check(helper,level,pos,level.getBlockState(pos).isSolid(),"supported capital foundation "+city.id());
+                    }
+            }
+        verifyRoadConnectivity(helper,level,city,progress.progress(city.id()).foundationY(),layout);
+    }
+
+    private static boolean walkable(ServerLevel level,BlockPos feet){
+        var floor=feet.below();
+        return level.getBlockState(floor).isCollisionShapeFullBlock(level,floor)
+            &&level.getBlockState(feet).getCollisionShape(level,feet).isEmpty()
+            &&level.getBlockState(feet.above()).getCollisionShape(level,feet.above()).isEmpty();
+    }
+
+    private static void verifyRoadConnectivity(GameTestHelper helper,ServerLevel level,
+            LandmarkCatalog.Landmark city,int base,com.google.gson.JsonObject layout){
+        var targets=new java.util.HashSet<BlockPos>();
+        for(var element:layout.getAsJsonArray("relative_positions")){
+            var row=element.getAsJsonObject();
+            var size=row.getAsJsonArray("size");
+            int x=city.x()-46+row.get("x").getAsInt()+size.get(0).getAsInt()/2;
+            int z=city.z()-46+row.get("z").getAsInt()+2;
+            BlockPos target=new BlockPos(x,base+1,z);
+            helper.assertTrue(walkable(level,target),"blocked district entrance "+city.id()+" "+target);
+            targets.add(target);
+        }
+        var start=new BlockPos(city.x()+10,base+1,city.z()-44);
+        helper.assertTrue(walkable(level,start),"blocked central keep approach "+city.id());
+        var queue=new java.util.ArrayDeque<BlockPos>();
+        var visited=new it.unimi.dsi.fastutil.longs.LongOpenHashSet();
+        queue.add(start);visited.add(start.asLong());
+        while(!queue.isEmpty()&&!targets.isEmpty()){
+            var pos=queue.removeFirst();
+            targets.remove(pos);
+            for(var direction:List.of(net.minecraft.core.Direction.NORTH,net.minecraft.core.Direction.SOUTH,
+                    net.minecraft.core.Direction.EAST,net.minecraft.core.Direction.WEST)){
+                var adjacent=pos.relative(direction);
+                if(Math.abs(adjacent.getX()-city.x())>274||Math.abs(adjacent.getZ()-city.z())>274)continue;
+                for(int dy=1;dy>=-2;dy--){
+                    var next=adjacent.above(dy);
+                    if(next.getY()<base-2||next.getY()>base+3||!walkable(level,next))continue;
+                    if(visited.add(next.asLong()))queue.add(next);
+                    break;
+                }
+            }
+        }
+        helper.assertTrue(targets.isEmpty(),"disconnected capital district entrances "+city.id()+": "+targets);
+    }
+}

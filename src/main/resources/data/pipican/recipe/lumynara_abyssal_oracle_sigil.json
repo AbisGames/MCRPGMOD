@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AAA",
+    "ACA",
+    "KCG"
+  ],
+  "key": {
+    "A": "pipican:abyssal_shard",
+    "C": "pipican:shimmering_reefs_boss_core",
+    "K": "pipican:ritual_core",
+    "G": "minecraft:glowstone_dust"
+  },
+  "result": {
+    "id": "pipican:lumynara_abyssal_oracle_sigil",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pipican:heartlands/farmland_plains",
+    "pipican:heartlands/rolling_green_hills",
+    "pipican:heartlands/oak_and_birch_woods",
+    "pipican:heartlands/river_valley_towns",
+    "pipican:heartlands/castle_highlands",
+    "pipican:heartlands/flower_meadows"
+  ]
+}

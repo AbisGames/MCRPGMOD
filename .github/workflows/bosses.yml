@@ -1,0 +1,51 @@
+name: Boss framework validation
+on:
+  workflow_dispatch:
+    inputs:
+      rare_generation:
+        description: Validate actual native rare deposit generation after focused tests
+        type: boolean
+        default: false
+  push:
+    branches: [biome-bosses]
+permissions:
+  contents: read
+concurrency:
+  group: pipican-bosses-${{ github.ref }}-${{ inputs.rare_generation && 'rare' || 'focused' }}
+  cancel-in-progress: true
+jobs:
+  boss-server:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: gradle
+      - name: Generate required worldgen resources
+        run: |
+          python3 tools/worldgen/build_special_landmarks.py
+          mkdir -p src/main/resources/data/pipican/structure/special
+          cp tools/worldgen/output/data/pipican/structure/special/*.nbt src/main/resources/data/pipican/structure/special/
+          cp tools/worldgen/output/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt src/main/resources/data/pipican/structure/authored/landmarks/ashlands/morvath.nbt
+      - name: Build and run boss plus protection regressions
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build --no-daemon
+          python3 tools/bosses/validate_boss_jar.py build/libs/*.jar
+          ./gradlew runGameTestServer --no-daemon -PworldgenSuite=protection -PworldgenTestSeed=0
+      - name: Native rare generation after focused regressions
+        if: ${{ inputs.rare_generation }}
+        timeout-minutes: 35
+        run: ./gradlew runGameTestServer --no-daemon -PworldgenSuite=protection -PrareGenerationTests=true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: boss-framework-${{ github.sha }}
+          path: |
+            run/logs/
+            build/reports/
+            build/libs/*.jar
+          retention-days: 30

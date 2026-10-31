@@ -1,0 +1,58 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 959454505,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/aurora_plateau/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/aurora_plateau/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/frozen_crevasse_maze/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/frozen_crevasse_maze/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/frozen_lake_basin/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/frozen_lake_basin/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/giant_ruins_tundra/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/giant_ruins_tundra/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/ice_spire_fields/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/whitecrown_icecap/ice_spire_fields/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:regional/whitecrown_icecap/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/whitecrown_icecap/mine",
+      "weight": 4
+    }
+  ]
+}

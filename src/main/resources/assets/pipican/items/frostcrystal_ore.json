@@ -2,11 +2,6 @@
   "model": {
     "type": "minecraft:model",
     "model": "pipican:block/frostcrystal_ore",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -5708811
-      }
-    ]
+    "tints": []
   }
 }

@@ -1,7 +1,6 @@
 {
-  "parent": "pipican:block/tinted_ore",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "base": "minecraft:block/stone",
-    "overlay": "pipican:block/ore_overlay_gem"
+    "all": "pipican:block/mirestone_ore"
   }
 }

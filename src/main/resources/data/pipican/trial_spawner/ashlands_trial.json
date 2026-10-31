@@ -1,0 +1,1 @@
+{"spawn_range":5,"simultaneous_mobs":2,"total_mobs":6,"ticks_between_spawn":35,"spawn_potentials":[{"weight":1,"data":{"entity":{"id":"minecraft:blaze"}}}],"loot_tables_to_eject":[{"weight":1,"data":"pipican:rewards/ashlands_trial"}],"items_to_drop_when_ominous":"minecraft:spawners/trial_chamber/items_to_drop_when_ominous"}

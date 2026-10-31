@@ -1,0 +1,82 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 726246704,
+    "separation": 22,
+    "spacing": 60
+  },
+  "structures": [
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/acacia_woodland/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/acacia_woodland/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/acacia_woodland/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/baobab_highlands/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/baobab_highlands/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/baobab_highlands/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/open_grassland/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/open_grassland/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/rift_valley/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/rift_valley/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/rift_valley/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/termite_mound_scrub/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/termite_mound_scrub/outpost",
+      "weight": 1
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/watering_hole_plains/hamlet",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/watering_hole_plains/town",
+      "weight": 2
+    },
+    {
+      "structure": "pipican:authored/settlements/goldgrass_savanna/watering_hole_plains/village",
+      "weight": 4
+    },
+    {
+      "structure": "pipican:regional/goldgrass_savanna/dungeon",
+      "weight": 3
+    },
+    {
+      "structure": "pipican:regional/goldgrass_savanna/mine",
+      "weight": 4
+    }
+  ]
+}

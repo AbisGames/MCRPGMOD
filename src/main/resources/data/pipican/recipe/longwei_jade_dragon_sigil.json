@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "JJJ",
+    "JCJ",
+    "JRG"
+  ],
+  "key": {
+    "J": "pipican:jade_essence",
+    "C": "pipican:jade_empire_boss_core",
+    "R": "pipican:ritual_core",
+    "G": "minecraft:green_dye"
+  },
+  "result": {
+    "id": "pipican:longwei_jade_dragon_sigil",
+    "count": 1
+  }
+}

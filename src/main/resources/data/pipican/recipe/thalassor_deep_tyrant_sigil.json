@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TTT",
+    "TCR",
+    "TCP"
+  ],
+  "key": {
+    "T": "pipican:tideglass",
+    "C": "pipican:western_ocean_boss_core",
+    "R": "pipican:ritual_core",
+    "P": "minecraft:prismarine_shard"
+  },
+  "result": {
+    "id": "pipican:thalassor_deep_tyrant_sigil",
+    "count": 1
+  }
+}
