@@ -55,7 +55,7 @@ final class LevelUpPanel {
             "pipican:vitality", "pipican:endurance", "pipican:strength", "pipican:dexterity",
             "pipican:agility", "pipican:intelligence", "pipican:wisdom", "pipican:luck");
 
-    private static final int ROW = 13;
+    private static final int ROW = 12;
     private static final int COLOR_PANEL = 0xE0141210;
     private static final int COLOR_BORDER = 0xFF7A6640;
     private static final int COLOR_TITLE = 0xFFE8D8A8;
@@ -74,13 +74,9 @@ final class LevelUpPanel {
 
     private final Minecraft minecraft;
     private final Map<ResourceKey<StatDefinition>, Integer> pending = new HashMap<>();
-    /** Clickable +/- boxes from the last frame: {x, y, size, statIndex, delta}. */
+    /** Clickable boxes from the last frame, in sheet coordinates: {x, y, width, statIndex, delta or action, height}. */
     private final List<int[]> hitBoxes = new ArrayList<>();
     private List<ResourceKey<StatDefinition>> shownStats = List.of();
-    int left;
-    int top;
-    int leftWidth;
-    int bottomOfLeft;
 
     LevelUpPanel(Minecraft minecraft) {
         this.minecraft = minecraft;
@@ -186,63 +182,87 @@ final class LevelUpPanel {
 
     // ------------------------------------------------------------------ input
 
-    /** Returns true if the click hit a +/- box. */
-    boolean mouseClicked(double mx, double my, boolean shift) {
+    private static final int HIT_ACCEPT = 2;
+    private static final int HIT_RESET = 3;
+
+    /** Returns true if the click hit a +/-, Accept or Reset box. Coordinates are screen coordinates. */
+    boolean mouseClicked(double screenX, double screenY, boolean shift) {
         Optional<RpgClass> cls = rpgClass();
-        if (cls.isEmpty()) {
+        if (cls.isEmpty() || scale <= 0) {
             return false;
         }
-        for (int[] box : hitBoxes) {
-            if (mx >= box[0] && mx < box[0] + box[2] && my >= box[1] && my < box[1] + box[2]) {
-                ResourceKey<StatDefinition> key = shownStats.get(box[3]);
-                int steps = shift ? 5 : 1;
-                for (int i = 0; i < steps; i++) {
-                    if (box[4] > 0) {
-                        StatDefinition stat = stat(key);
-                        int planned = pending.getOrDefault(key, 0);
-                        if (stat == null || pendingTotal() >= available() || trained(cls.get(), key) + planned >= stat.max()) {
-                            break;
-                        }
-                        pending.merge(key, 1, Integer::sum);
-                    } else {
-                        if (pending.getOrDefault(key, 0) <= 0) {
-                            break;
-                        }
-                        pending.merge(key, -1, Integer::sum);
-                    }
-                }
-                pending.values().removeIf(v -> v <= 0);
-                minecraft.getSoundManager().play(net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
-                        net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK, 1.0f));
-                return true;
-            }
+        double mx = (screenX - originX) / scale;
+        double my = (screenY - originY) / scale;
+        int[] box = boxAt(mx, my);
+        if (box == null) {
+            return false;
         }
-        return false;
+        if (box[4] == HIT_ACCEPT) {
+            accept();
+        } else if (box[4] == HIT_RESET) {
+            reset();
+        } else {
+            ResourceKey<StatDefinition> key = shownStats.get(box[3]);
+            int steps = shift ? 5 : 1;
+            for (int i = 0; i < steps; i++) {
+                if (box[4] > 0) {
+                    StatDefinition stat = stat(key);
+                    int planned = pending.getOrDefault(key, 0);
+                    if (stat == null || pendingTotal() >= available() || trained(cls.get(), key) + planned >= stat.max()) {
+                        break;
+                    }
+                    pending.merge(key, 1, Integer::sum);
+                } else {
+                    if (pending.getOrDefault(key, 0) <= 0) {
+                        break;
+                    }
+                    pending.merge(key, -1, Integer::sum);
+                }
+            }
+            pending.values().removeIf(v -> v <= 0);
+        }
+        minecraft.getSoundManager().play(net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
+                net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK, 1.0f));
+        return true;
     }
 
-    // ------------------------------------------------------------------ layout
-
-    /** Lays the panel out for a screen of this size; call before adding the Accept/Reset buttons. */
-    void layout(int screenWidth, int screenHeight, int topBar) {
-        int total = Math.min(screenWidth - 16, 560);
-        left = (screenWidth - total) / 2;
-        top = topBar + 8;
-        leftWidth = Math.max(170, total * 36 / 100);
-        Optional<RpgClass> cls = minecraft.player == null ? Optional.empty() : rpgClass();
-        shownStats = cls.map(this::statsToShow).orElse(List.of());
-        bottomOfLeft = top + 22 + 3 * ROW + 6 + shownStats.size() * ROW + 6;
+    private int[] boxAt(double mx, double my) {
+        for (int[] box : hitBoxes) {
+            if (mx >= box[0] && mx < box[0] + box[2] && my >= box[1] && my < box[1] + box[5]) {
+                return box;
+            }
+        }
+        return null;
     }
 
     // ------------------------------------------------------------------ rendering
 
-    void render(GuiGraphicsExtractor g, Font font, int screenWidth, int screenHeight, int mouseX, int mouseY) {
+    private static final int GAP = 5;        // between panels
+    private static final int PAD = 6;        // inside a panel
+    private static final int HEADER = 20;    // panel title strip
+    private static final int BTN = 11;       // +/- box size
+    private static final int ACTION_H = 14;  // Accept / Reset height
+    private static final int MAX_LABEL = 100;
+
+    /** Where the sheet is drawn and how much it is shrunk to fit; mouse input is mapped back through these. */
+    private float originX;
+    private float originY;
+    private float scale = 1;
+
+    /** One "label  old > new" line in the middle or right panel. */
+    private record Line(Component label, String now, Change change) {}
+
+    /**
+     * Draws the sheet. Everything is measured first, laid out at its natural size, then scaled down (never up) so the
+     * whole sheet fits between the tab bar and the bottom of the screen at any GUI scale.
+     */
+    void render(GuiGraphicsExtractor g, Font font, int screenWidth, int screenHeight, int topBar, int mouseX, int mouseY) {
         Optional<RpgClass> clsOpt = rpgClass();
         if (clsOpt.isEmpty()) {
             return;
         }
         RpgClass cls = clsOpt.get();
         shownStats = statsToShow(cls);
-        hitBoxes.clear();
         // Drop plans the player can no longer afford (points spent elsewhere, data changed...).
         while (pendingTotal() > available() && !pending.isEmpty()) {
             ResourceKey<StatDefinition> any = pending.keySet().iterator().next();
@@ -250,92 +270,23 @@ final class LevelUpPanel {
             pending.values().removeIf(v -> v <= 0);
         }
 
-        int total = Math.min(screenWidth - 16, 560);
-        int midLeft = left + leftWidth + 6;
-        int restWidth = total - leftWidth - 6;
-        int midWidth = (restWidth - 6) / 2;
-        int rightLeft = midLeft + midWidth + 6;
-        int rightWidth = restWidth - midWidth - 6;
-
-        // ---- left: class, points, stats
-        int bottom = Math.max(bottomOfLeft + 26, top + 22 + 3 * ROW + 6 + shownStats.size() * ROW + 32);
-        panel(g, left, top, leftWidth, bottom - top);
-        g.item(new ItemStack(cls.icon()), left + 6, top + 4);
-        g.text(font, Component.translatable("pipican.levelup.title").withStyle(ChatFormatting.BOLD), left + 26, top + 4, COLOR_TITLE);
-        g.text(font, cls.name(), left + 26, top + 13, COLOR_LABEL);
-
-        int y = top + 26;
+        // ---- gather the content
         int level = data().activeProgress().map(ClassProgress::level).orElse(1);
-        row(g, font, left, leftWidth, y, Component.translatable("pipican.levelup.level"), String.valueOf(level), null);
-        y += ROW;
         int avail = available();
-        int left2 = avail - pendingTotal();
-        row(g, font, left, leftWidth, y, Component.translatable("pipican.levelup.points"), String.valueOf(avail),
-                hasPending() ? new Change(String.valueOf(left2), COLOR_DOWN) : null);
-        y += ROW;
+        int remaining = avail - pendingTotal();
         long toNext = StatPoints.xpToNextPoint(data());
-        row(g, font, left, leftWidth, y, Component.translatable("pipican.levelup.next_point"),
-                toNext == Long.MAX_VALUE ? "-" : toNext + " XP", null);
-        y += ROW;
-        g.fill(left + 6, y + 2, left + leftWidth - 6, y + 3, COLOR_BORDER);
-        y += 6;
+        List<Line> info = List.of(
+                new Line(Component.translatable("pipican.levelup.level"), String.valueOf(level), null),
+                new Line(Component.translatable("pipican.levelup.points"), String.valueOf(avail),
+                        hasPending() ? new Change(String.valueOf(remaining), COLOR_DOWN) : null),
+                new Line(Component.translatable("pipican.levelup.next_point"), toNext == Long.MAX_VALUE ? "-" : toNext + " XP", null));
 
-        int valueX = left + leftWidth - 74;
-        int gradeX = valueX - 16;
-        for (int i = 0; i < shownStats.size(); i++) {
-            ResourceKey<StatDefinition> key = shownStats.get(i);
-            StatDefinition stat = stat(key);
-            if (stat == null) {
-                continue;
-            }
-            boolean raisable = canRaise(cls, key, stat);
-            int planned = pending.getOrDefault(key, 0);
-            boolean hover = mouseX >= left + 2 && mouseX < left + leftWidth - 2 && mouseY >= y - 1 && mouseY < y + ROW - 1;
-            if (hover) {
-                g.fill(left + 3, y - 1, left + leftWidth - 3, y + ROW - 2, 0x30FFFFFF);
-            }
-            g.fill(left + 6, y + 1, left + 8, y + 9, stat.color() == 0xFFFFFFFF ? COLOR_BORDER : stat.color());
-            Component name = stat.name().copy();
-            if (cls.isSpecialStat(key)) {
-                name = name.copy().withStyle(ChatFormatting.LIGHT_PURPLE);
-            }
-            g.text(font, clip(font, name, gradeX - left - 16), left + 12, y + 1, raisable ? COLOR_LABEL : COLOR_DIM);
-            String grade = grade(cls.growth(key));
-            g.text(font, grade, gradeX, y + 1, gradeColor(grade));
-
-            double now = total(cls, key);
-            g.text(font, fmtInt(now), valueX, y + 1, COLOR_VALUE);
-            if (planned > 0) {
-                g.text(font, ">", valueX + 20, y + 1, COLOR_DIM);
-                g.text(font, fmtInt(now + planned), valueX + 28, y + 1, COLOR_UP);
-            }
-            if (raisable) {
-                boolean canAdd = left2 > 0 && trained(cls, key) + planned < stat.max();
-                smallButton(g, font, left + leftWidth - 30, y, "-", planned > 0, i, -1, mouseX, mouseY);
-                smallButton(g, font, left + leftWidth - 17, y, "+", canAdd, i, 1, mouseX, mouseY);
-            }
-            if (hover && !overBox(mouseX, mouseY)) {
-                g.setComponentTooltipForNextFrame(font, statTooltip(cls, key, stat, now), mouseX, mouseY);
-            }
-            y += ROW;
-        }
-        bottomOfLeft = y + 4;
-
-        // ---- middle: attributes
-        Map<Holder<Attribute>, double[]> attrs = attributePreview(cls);
-        int midBottom = Math.max(bottom, top + 26 + (attrs.size() + 2) * ROW);
-        panel(g, midLeft, top, midWidth, midBottom - top);
-        g.text(font, Component.translatable("pipican.levelup.attributes"), midLeft + 6, top + 6, COLOR_TITLE);
-        y = top + 22;
+        List<Line> attrLines = new ArrayList<>();
         Player player = minecraft.player;
-        for (var e : attrs.entrySet()) {
+        for (var e : attributePreview(cls).entrySet()) {
             double now = player.getAttributeValue(e.getKey());
-            double after = now + e.getValue()[0];
-            Component label = Component.translatable(e.getKey().value().getDescriptionId());
-            row(g, font, midLeft, midWidth, y, clip(font, label, midWidth - 80), fmt(now), changeOf(now, after));
-            y += ROW;
+            attrLines.add(new Line(Component.translatable(e.getKey().value().getDescriptionId()), fmt(now), changeOf(now, now + e.getValue()[0])));
         }
-        // The class resource (stamina, mana...) grows with the special stat.
         Optional<SpecialStat> special = cls.specialStat();
         if (special.isPresent() && special.get().resource().isPresent()) {
             SpecialStat.Resource res = special.get().resource().get();
@@ -343,30 +294,162 @@ final class LevelUpPanel {
             int planned = pending.getOrDefault(special.get().stat(), 0);
             double nowMax = data().resourceMax();
             double afterMax = nowMax + (res.max(points + planned) - res.max(points));
-            row(g, font, midLeft, midWidth, y, clip(font, Component.translatable("pipican.levelup.resource_max", res.name()), midWidth - 80),
-                    fmt(nowMax), changeOf(nowMax, afterMax));
-            y += ROW;
+            attrLines.add(new Line(Component.translatable("pipican.levelup.resource_max", res.name()), fmt(nowMax), changeOf(nowMax, afterMax)));
             double nowRegen = res.regenPerSecond(points);
-            row(g, font, midLeft, midWidth, y, clip(font, Component.translatable("pipican.levelup.resource_regen", res.name()), midWidth - 80),
-                    fmt(nowRegen), changeOf(nowRegen, res.regenPerSecond(points + planned)));
+            attrLines.add(new Line(Component.translatable("pipican.levelup.resource_regen", res.name()), fmt(nowRegen),
+                    changeOf(nowRegen, res.regenPerSecond(points + planned))));
+        }
+        List<Line> bonusLines = new ArrayList<>();
+        for (BonusLine b : bonusPreview(cls)) {
+            bonusLines.add(new Line(b.label(), pct(b.now()), changeOf(b.now(), b.after(), LevelUpPanel::pct)));
         }
 
-        // ---- right: bonuses that grow with stats
-        List<BonusLine> bonuses = bonusPreview(cls);
-        int rightBottom = Math.max(midBottom, top + 26 + bonuses.size() * ROW);
-        panel(g, rightLeft, top, rightWidth, rightBottom - top);
-        g.text(font, Component.translatable("pipican.levelup.bonuses"), rightLeft + 6, top + 6, COLOR_TITLE);
-        y = top + 22;
-        for (BonusLine b : bonuses) {
-            row(g, font, rightLeft, rightWidth, y, clip(font, b.label, rightWidth - 80), pct(b.now), changeOf(b.now, b.after, LevelUpPanel::pct));
+        // ---- measure
+        int statNameW = 0;
+        int statValueW = font.width("00");
+        for (ResourceKey<StatDefinition> key : shownStats) {
+            StatDefinition stat = stat(key);
+            if (stat != null) {
+                statNameW = Math.max(statNameW, font.width(stat.name()));
+                double now = total(cls, key);
+                statValueW = Math.max(statValueW, font.width(fmtInt(now + pending.getOrDefault(key, 0))));
+                statValueW = Math.max(statValueW, font.width(fmtInt(now)));
+            }
+        }
+        int infoLabelW = info.stream().mapToInt(l -> font.width(l.label())).max().orElse(0);
+        int infoValueW = valueWidth(font, info);
+        int gradeW = font.width("S");
+        int arrowW = font.width(" > ");
+        int statLabelW = Math.min(MAX_LABEL, statNameW);
+        // stat row: [bar 2][4][name][6][grade][6][value][ > ][value][6][-][2][+]
+        int statRowW = 6 + statLabelW + 6 + gradeW + 6 + statValueW + arrowW + statValueW + 6 + BTN + 2 + BTN;
+        int infoRowW = Math.min(MAX_LABEL, infoLabelW) + 8 + infoValueW + arrowW + infoValueW;
+        Component title = Component.translatable("pipican.levelup.title").withStyle(ChatFormatting.BOLD);
+        int titleW = 22 + Math.max(font.width(title), font.width(cls.name())) + 12;
+        int actionMinW = 2 * (Math.max(font.width(Component.translatable("pipican.levelup.accept")),
+                font.width(Component.translatable("pipican.levelup.reset"))) + 12) + 6;
+        int leftW = 2 * PAD + Math.max(Math.max(statRowW, infoRowW), Math.max(titleW, actionMinW));
+
+        Component attrTitle = Component.translatable("pipican.levelup.attributes");
+        Component bonusTitle = Component.translatable("pipican.levelup.bonuses");
+        int midW = 2 * PAD + Math.max(font.width(attrTitle), lineWidth(font, attrLines, arrowW));
+        List<Line> bonusShown = bonusLines.isEmpty()
+                ? List.of(new Line(Component.translatable("pipican.levelup.no_bonuses"), "", null)) : bonusLines;
+        int rightW = 2 * PAD + Math.max(font.width(bonusTitle), lineWidth(font, bonusShown, arrowW));
+
+        int leftH = HEADER + 4 + info.size() * ROW + 6 + shownStats.size() * ROW + 4 + ACTION_H + PAD;
+        int midH = HEADER + 4 + attrLines.size() * ROW + PAD;
+        int rightH = HEADER + 4 + bonusShown.size() * ROW + PAD;
+        int sheetH = Math.max(leftH, Math.max(midH, rightH));
+        int sheetW = leftW + GAP + midW + GAP + rightW;
+
+        // ---- fit to the screen
+        int availW = screenWidth - 8;
+        int availH = screenHeight - topBar - 8;
+        scale = Math.min(1f, Math.min(availW / (float) sheetW, availH / (float) sheetH));
+        originX = (screenWidth - sheetW * scale) / 2f;
+        originY = topBar + 4 + Math.max(0, (availH - sheetH * scale) / 2f);
+        int mx = (int) Math.floor((mouseX - originX) / scale);
+        int my = (int) Math.floor((mouseY - originY) / scale);
+
+        hitBoxes.clear();
+        List<Component> tooltip = null;
+        g.pose().pushMatrix();
+        g.pose().translate(originX, originY);
+        g.pose().scale(scale, scale);
+
+        // ---- left: class, points, stats, Accept / Reset
+        panel(g, 0, 0, leftW, sheetH);
+        g.item(new ItemStack(cls.icon()), PAD - 2, 2);
+        g.text(font, clip(font, title, leftW - 22 - 18), 20, 3, COLOR_TITLE);
+        g.text(font, clip(font, cls.name(), leftW - 22 - 18), 20, 11, COLOR_LABEL);
+        // "?" with the help text as its tooltip, instead of a line under the sheet.
+        int qx = leftW - PAD - font.width("?");
+        g.text(font, "?", qx, 6, COLOR_TITLE);
+        if (mx >= qx - 2 && mx < leftW - 2 && my >= 2 && my < 16) {
+            tooltip = List.of(Component.translatable("pipican.levelup.help").withStyle(ChatFormatting.GRAY));
+        }
+        int y = HEADER + 4;
+        for (Line l : info) {
+            line(g, font, PAD, leftW - 2 * PAD, y, l, infoValueW, arrowW);
             y += ROW;
         }
-        if (bonuses.isEmpty()) {
-            g.text(font, Component.translatable("pipican.levelup.no_bonuses"), rightLeft + 6, y, COLOR_DIM);
+        g.fill(PAD, y + 1, leftW - PAD, y + 2, 0x807A6640);
+        y += 6;
+
+        int plusX = leftW - PAD - BTN;
+        int minusX = plusX - 2 - BTN;
+        int newX = minusX - 6 - statValueW;
+        int oldX = newX - arrowW - statValueW;
+        int gradeX = oldX - 6 - gradeW;
+        int nameX = PAD + 6;
+        int nameMax = gradeX - 6 - nameX;
+        for (int i = 0; i < shownStats.size(); i++) {
+            ResourceKey<StatDefinition> key = shownStats.get(i);
+            StatDefinition stat = stat(key);
+            if (stat == null) {
+                y += ROW;
+                continue;
+            }
+            boolean raisable = canRaise(cls, key, stat);
+            int planned = pending.getOrDefault(key, 0);
+            boolean hover = mx >= 2 && mx < leftW - 2 && my >= y - 2 && my < y + ROW - 2;
+            if (hover) {
+                g.fill(2, y - 2, leftW - 2, y + ROW - 2, 0x30FFFFFF);
+            }
+            g.fill(PAD, y, PAD + 2, y + 8, stat.color() == 0xFFFFFFFF ? COLOR_BORDER : stat.color());
+            Component name = cls.isSpecialStat(key) ? stat.name().copy().withStyle(ChatFormatting.LIGHT_PURPLE) : stat.name();
+            g.text(font, clip(font, name, nameMax), nameX, y, raisable ? COLOR_LABEL : COLOR_DIM);
+            String grade = grade(cls.growth(key));
+            g.text(font, grade, gradeX, y, gradeColor(grade));
+            double now = total(cls, key);
+            rightText(g, font, fmtInt(now), oldX + statValueW, y, COLOR_VALUE);
+            g.text(font, " > ", oldX + statValueW, y, COLOR_DIM);
+            rightText(g, font, fmtInt(now + planned), newX + statValueW, y, planned > 0 ? COLOR_UP : COLOR_DIM);
+            if (raisable) {
+                boolean canAdd = remaining > 0 && trained(cls, key) + planned < stat.max();
+                smallButton(g, font, minusX, y - 2, "-", planned > 0, i, -1, mx, my);
+                smallButton(g, font, plusX, y - 2, "+", canAdd, i, 1, mx, my);
+            }
+            if (hover && boxAt(mx, my) == null) {
+                tooltip = statTooltip(cls, key, stat, now);
+            }
+            y += ROW;
+        }
+        int actionY = sheetH - PAD - ACTION_H;
+        int actionW = (leftW - 2 * PAD - 6) / 2;
+        actionButton(g, font, PAD, actionY, actionW, Component.translatable("pipican.levelup.accept"), hasPending(), HIT_ACCEPT, mx, my);
+        actionButton(g, font, PAD + actionW + 6, actionY, actionW, Component.translatable("pipican.levelup.reset"), hasPending(), HIT_RESET, mx, my);
+
+        // ---- middle: attributes
+        int midX = leftW + GAP;
+        panel(g, midX, 0, midW, sheetH);
+        g.text(font, attrTitle, midX + PAD, 6, COLOR_TITLE);
+        int attrValueW = valueWidth(font, attrLines);
+        y = HEADER + 4;
+        for (Line l : attrLines) {
+            line(g, font, midX + PAD, midW - 2 * PAD, y, l, attrValueW, arrowW);
+            y += ROW;
         }
 
-        Component help = Component.translatable("pipican.levelup.help");
-        g.text(font, help, left, Math.max(rightBottom, bottom) + 6, COLOR_DIM);
+        // ---- right: stat bonuses
+        int rightX = midX + midW + GAP;
+        panel(g, rightX, 0, rightW, sheetH);
+        g.text(font, bonusTitle, rightX + PAD, 6, COLOR_TITLE);
+        int bonusValueW = valueWidth(font, bonusLines);
+        y = HEADER + 4;
+        if (bonusLines.isEmpty()) {
+            g.text(font, bonusShown.getFirst().label(), rightX + PAD, y, COLOR_DIM);
+        }
+        for (Line l : bonusLines) {
+            line(g, font, rightX + PAD, rightW - 2 * PAD, y, l, bonusValueW, arrowW);
+            y += ROW;
+        }
+        g.pose().popMatrix();
+
+        if (tooltip != null) {
+            g.setComponentTooltipForNextFrame(font, tooltip, mouseX, mouseY);
+        }
     }
 
     private record Change(String text, int color) {}
@@ -384,44 +467,72 @@ final class LevelUpPanel {
         return new Change(format.apply(after), after > now ? COLOR_UP : COLOR_DOWN);
     }
 
-    /** Label on the left, value then "> new value" right-aligned, like Dark Souls' level-up columns. */
-    private static void row(GuiGraphicsExtractor g, Font font, int x, int width, int y, Component label, String value, Change change) {
-        g.text(font, label, x + 6, y + 1, COLOR_LABEL);
-        int newX = x + width - 6 - 34;
-        int oldX = newX - 44;
-        g.text(font, value, oldX + 34 - font.width(value), y + 1, COLOR_VALUE);
-        g.text(font, ">", oldX + 37, y + 1, COLOR_DIM);
-        if (change != null) {
-            g.text(font, change.text(), newX + 34 - font.width(change.text()), y + 1, change.color());
-        } else {
-            g.text(font, value, newX + 34 - font.width(value), y + 1, COLOR_DIM);
-        }
-    }
-
-    private void smallButton(GuiGraphicsExtractor g, Font font, int x, int y, String label, boolean active, int index, int delta, int mouseX, int mouseY) {
-        int size = 11;
-        boolean hover = active && mouseX >= x && mouseX < x + size && mouseY >= y && mouseY < y + size;
-        g.fill(x, y, x + size, y + size, active ? (hover ? 0xFFB09050 : COLOR_BORDER) : 0xFF3A3A3A);
-        g.fill(x + 1, y + 1, x + size - 1, y + size - 1, hover ? 0xFF3A3020 : 0xFF1C1A16);
-        g.text(font, label, x + (size - font.width(label)) / 2 + 1, y + 2, active ? COLOR_TITLE : COLOR_DIM);
-        if (active) {
-            hitBoxes.add(new int[] {x, y, size, index, delta});
-        }
-    }
-
-    private boolean overBox(int mx, int my) {
-        for (int[] box : hitBoxes) {
-            if (mx >= box[0] && mx < box[0] + box[2] && my >= box[1] && my < box[1] + box[2]) {
-                return true;
+    /** Widest value (old or new) in these lines. */
+    private static int valueWidth(Font font, List<Line> lines) {
+        int w = font.width("0");
+        for (Line l : lines) {
+            w = Math.max(w, font.width(l.now()));
+            if (l.change() != null) {
+                w = Math.max(w, font.width(l.change().text()));
             }
         }
-        return false;
+        return w;
+    }
+
+    /** Natural width of a column of lines: label, gap, old value, " > ", new value. */
+    private static int lineWidth(Font font, List<Line> lines, int arrowW) {
+        int label = 0;
+        for (Line l : lines) {
+            label = Math.min(MAX_LABEL, Math.max(label, font.width(l.label())));
+        }
+        int value = valueWidth(font, lines);
+        boolean values = lines.stream().anyMatch(l -> !l.now().isEmpty());
+        return values ? label + 8 + value + arrowW + value : label;
+    }
+
+    /** Label on the left, "old > new" right-aligned, like Dark Souls' level-up columns. */
+    private static void line(GuiGraphicsExtractor g, Font font, int x, int width, int y, Line l, int valueW, int arrowW) {
+        int newRight = x + width;
+        int oldRight = newRight - valueW - arrowW;
+        g.text(font, clip(font, l.label(), oldRight - valueW - 8 - x), x, y, COLOR_LABEL);
+        rightText(g, font, l.now(), oldRight, y, COLOR_VALUE);
+        g.text(font, " > ", oldRight, y, COLOR_DIM);
+        if (l.change() != null) {
+            rightText(g, font, l.change().text(), newRight, y, l.change().color());
+        } else {
+            rightText(g, font, l.now(), newRight, y, COLOR_DIM);
+        }
+    }
+
+    private static void rightText(GuiGraphicsExtractor g, Font font, String text, int right, int y, int color) {
+        g.text(font, text, right - font.width(text), y, color);
+    }
+
+    private void smallButton(GuiGraphicsExtractor g, Font font, int x, int y, String label, boolean active, int index, int delta, int mx, int my) {
+        boolean hover = active && mx >= x && mx < x + BTN && my >= y && my < y + BTN;
+        g.fill(x, y, x + BTN, y + BTN, active ? (hover ? 0xFFB09050 : COLOR_BORDER) : 0xFF3A3A3A);
+        g.fill(x + 1, y + 1, x + BTN - 1, y + BTN - 1, hover ? 0xFF3A3020 : 0xFF1C1A16);
+        g.text(font, label, x + (BTN - font.width(label) + 1) / 2, y + 2, active ? COLOR_TITLE : COLOR_DIM);
+        if (active) {
+            hitBoxes.add(new int[] {x, y, BTN, index, delta, BTN});
+        }
+    }
+
+    private void actionButton(GuiGraphicsExtractor g, Font font, int x, int y, int w, Component label, boolean active, int code, int mx, int my) {
+        boolean hover = active && mx >= x && mx < x + w && my >= y && my < y + ACTION_H;
+        g.fill(x, y, x + w, y + ACTION_H, active ? (hover ? 0xFFD0B070 : COLOR_BORDER) : 0xFF3A3A3A);
+        g.fill(x + 1, y + 1, x + w - 1, y + ACTION_H - 1, hover ? 0xFF3A3020 : 0xFF1C1A16);
+        Component text = clip(font, label, w - 4);
+        g.text(font, text, x + (w - font.width(text)) / 2, y + 3, active ? COLOR_TITLE : COLOR_DIM);
+        if (active) {
+            hitBoxes.add(new int[] {x, y, w, -1, code, ACTION_H});
+        }
     }
 
     private static void panel(GuiGraphicsExtractor g, int x, int y, int w, int h) {
         g.fill(x, y, x + w, y + h, COLOR_BORDER);
         g.fill(x + 1, y + 1, x + w - 1, y + h - 1, COLOR_PANEL);
-        g.fill(x + 3, y + 17, x + w - 3, y + 18, 0x807A6640);
+        g.fill(x + 3, y + HEADER - 1, x + w - 3, y + HEADER, 0x807A6640);
     }
 
     private static Component clip(Font font, Component text, int width) {
@@ -429,7 +540,7 @@ final class LevelUpPanel {
             return text;
         }
         String s = text.getString();
-        while (!s.isEmpty() && font.width(s + "..") > width) {
+        while (!s.isEmpty() && font.width(Component.literal(s + "..").withStyle(text.getStyle())) > width) {
             s = s.substring(0, s.length() - 1);
         }
         return Component.literal(s + "..").withStyle(text.getStyle());
