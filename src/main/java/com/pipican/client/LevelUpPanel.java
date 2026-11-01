@@ -239,7 +239,7 @@ final class LevelUpPanel {
 
     private static final int GAP = 5;        // between panels
     private static final int PAD = 6;        // inside a panel
-    private static final int HEADER = 20;    // panel title strip
+    private static final int HEADER = 21;    // panel title strip
     private static final int BTN = 11;       // +/- box size
     private static final int ACTION_H = 14;  // Accept / Reset height
     private static final int MAX_LABEL = 100;
@@ -250,7 +250,11 @@ final class LevelUpPanel {
     private float scale = 1;
 
     /** One "label  old > new" line in the middle or right panel. */
-    private record Line(Component label, String now, Change change) {}
+    private record Line(Component label, String now, Change change, boolean fixed) {
+        Line(Component label, String now, Change change) {
+            this(label, now, change, false);
+        }
+    }
 
     /**
      * Draws the sheet. Everything is measured first, laid out at its natural size, then scaled down (never up) so the
@@ -276,10 +280,10 @@ final class LevelUpPanel {
         int remaining = avail - pendingTotal();
         long toNext = StatPoints.xpToNextPoint(data());
         List<Line> info = List.of(
-                new Line(Component.translatable("pipican.levelup.level"), String.valueOf(level), null),
+                new Line(Component.translatable("pipican.levelup.level"), String.valueOf(level), null, true),
                 new Line(Component.translatable("pipican.levelup.points"), String.valueOf(avail),
                         hasPending() ? new Change(String.valueOf(remaining), COLOR_DOWN) : null),
-                new Line(Component.translatable("pipican.levelup.next_point"), toNext == Long.MAX_VALUE ? "-" : toNext + " XP", null));
+                new Line(Component.translatable("pipican.levelup.next_point"), toNext == Long.MAX_VALUE ? "-" : toNext + " XP", null, true));
 
         List<Line> attrLines = new ArrayList<>();
         Player player = minecraft.player;
@@ -340,13 +344,33 @@ final class LevelUpPanel {
         int leftH = HEADER + 4 + info.size() * ROW + 6 + shownStats.size() * ROW + 4 + ACTION_H + PAD;
         int midH = HEADER + 4 + attrLines.size() * ROW + PAD;
         int rightH = HEADER + 4 + bonusShown.size() * ROW + PAD;
-        int sheetH = Math.max(leftH, Math.max(midH, rightH));
-        int sheetW = leftW + GAP + midW + GAP + rightW;
 
-        // ---- fit to the screen
+        // ---- fit to the screen: three columns side by side, or (on narrow screens, when that is bigger)
+        // attributes stacked above bonuses in a second column.
         int availW = screenWidth - 8;
         int availH = screenHeight - topBar - 8;
-        scale = Math.min(1f, Math.min(availW / (float) sheetW, availH / (float) sheetH));
+        int wideW = leftW + GAP + midW + GAP + rightW;
+        int wideH = Math.max(leftH, Math.max(midH, rightH));
+        float wideScale = Math.min(1f, Math.min(availW / (float) wideW, availH / (float) wideH));
+        int colW = Math.max(midW, rightW);
+        int tallW = leftW + GAP + colW;
+        int tallH = Math.max(leftH, midH + GAP + rightH);
+        float tallScale = Math.min(1f, Math.min(availW / (float) tallW, availH / (float) tallH));
+        boolean stacked = tallScale > wideScale + 0.01f;
+        int sheetW = stacked ? tallW : wideW;
+        int sheetH = stacked ? tallH : wideH;
+        scale = stacked ? tallScale : wideScale;
+        if (stacked) {
+            midW = colW;
+            rightW = colW;
+            // Stretch the two right panels so together they are as tall as the left one.
+            int extra = sheetH - (midH + GAP + rightH);
+            midH += extra / 2;
+            rightH += extra - extra / 2;
+        } else {
+            midH = sheetH;
+            rightH = sheetH;
+        }
         originX = (screenWidth - sheetW * scale) / 2f;
         originY = topBar + 4 + Math.max(0, (availH - sheetH * scale) / 2f);
         int mx = (int) Math.floor((mouseX - originX) / scale);
@@ -361,8 +385,8 @@ final class LevelUpPanel {
         // ---- left: class, points, stats, Accept / Reset
         panel(g, 0, 0, leftW, sheetH);
         g.item(new ItemStack(cls.icon()), PAD - 2, 2);
-        g.text(font, clip(font, title, leftW - 22 - 18), 20, 3, COLOR_TITLE);
-        g.text(font, clip(font, cls.name(), leftW - 22 - 18), 20, 11, COLOR_LABEL);
+        g.text(font, clip(font, title, leftW - 22 - 18), 22, 2, COLOR_TITLE);
+        g.text(font, clip(font, cls.name(), leftW - 22 - 18), 22, 10, COLOR_LABEL);
         // "?" with the help text as its tooltip, instead of a line under the sheet.
         int qx = leftW - PAD - font.width("?");
         g.text(font, "?", qx, 6, COLOR_TITLE);
@@ -423,7 +447,7 @@ final class LevelUpPanel {
 
         // ---- middle: attributes
         int midX = leftW + GAP;
-        panel(g, midX, 0, midW, sheetH);
+        panel(g, midX, 0, midW, midH);
         g.text(font, attrTitle, midX + PAD, 6, COLOR_TITLE);
         int attrValueW = valueWidth(font, attrLines);
         y = HEADER + 4;
@@ -433,11 +457,12 @@ final class LevelUpPanel {
         }
 
         // ---- right: stat bonuses
-        int rightX = midX + midW + GAP;
-        panel(g, rightX, 0, rightW, sheetH);
-        g.text(font, bonusTitle, rightX + PAD, 6, COLOR_TITLE);
+        int rightX = stacked ? midX : midX + midW + GAP;
+        int rightY = stacked ? midH + GAP : 0;
+        panel(g, rightX, rightY, rightW, rightH);
+        g.text(font, bonusTitle, rightX + PAD, rightY + 6, COLOR_TITLE);
         int bonusValueW = valueWidth(font, bonusLines);
-        y = HEADER + 4;
+        y = rightY + HEADER + 4;
         if (bonusLines.isEmpty()) {
             g.text(font, bonusShown.getFirst().label(), rightX + PAD, y, COLOR_DIM);
         }
@@ -493,6 +518,11 @@ final class LevelUpPanel {
     /** Label on the left, "old > new" right-aligned, like Dark Souls' level-up columns. */
     private static void line(GuiGraphicsExtractor g, Font font, int x, int width, int y, Line l, int valueW, int arrowW) {
         int newRight = x + width;
+        if (l.fixed()) {
+            g.text(font, clip(font, l.label(), width - font.width(l.now()) - 8), x, y, COLOR_LABEL);
+            rightText(g, font, l.now(), newRight, y, COLOR_VALUE);
+            return;
+        }
         int oldRight = newRight - valueW - arrowW;
         g.text(font, clip(font, l.label(), oldRight - valueW - 8 - x), x, y, COLOR_LABEL);
         rightText(g, font, l.now(), oldRight, y, COLOR_VALUE);
