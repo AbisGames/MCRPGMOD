@@ -19,6 +19,48 @@ import net.neoforged.neoforge.registries.RegisterEvent;
 /** Real registry/entity serialization tests plus deterministic combat timing regressions. */
 @EventBusSubscriber(modid=Pipican.MOD_ID)
 public final class BossTests {
+    /**
+     * A boss arena far from the test's own plot (so neighbouring tests can't reach into it). Chunks loaded there just by
+     * placing blocks only become entity-visible after asynchronous tasks run, so a mock player standing in one of them
+     * was sometimes invisible to the boss's attacks - the tests' flakiness. arena() force-loads the arena's chunks and,
+     * until every one is fully loaded and entity-ticking, throws {@link ArenaNotReady}; {@link #whenArenaReady} then
+     * re-runs the test a tick later. Each test run gets its own slot (509 blocks further along z) and keeps it on re-runs.
+     */
+    private static final java.util.concurrent.atomic.AtomicInteger ARENAS=new java.util.concurrent.atomic.AtomicInteger();
+    private static final Map<String,net.minecraft.core.BlockPos> ARENA_SLOTS=new java.util.concurrent.ConcurrentHashMap<>();
+    /** Forced chunk (packed) -> game time it may be released. */
+    private static final Map<Long,Long> FORCED=new java.util.concurrent.ConcurrentHashMap<>();
+    private static final int ARENA_RADIUS=40, ARENA_HOLD_TICKS=2400;
+    private static final class ArenaNotReady extends RuntimeException{ArenaNotReady(){super("boss arena chunks still loading",null,false,false);}}
+
+    private static net.minecraft.core.BlockPos arena(GameTestHelper helper,int x,int y,int z){
+        var pos=ARENA_SLOTS.computeIfAbsent(System.identityHashCode(helper)+":"+x+":"+y+":"+z,
+            k->helper.absolutePos(new net.minecraft.core.BlockPos(x,y,z-509*ARENAS.getAndIncrement())));
+        var level=helper.getLevel();
+        boolean ready=true;
+        long hold=level.getGameTime()+ARENA_HOLD_TICKS;
+        for(int cx=(pos.getX()-ARENA_RADIUS)>>4;cx<=(pos.getX()+ARENA_RADIUS)>>4;cx++)for(int cz=(pos.getZ()-ARENA_RADIUS)>>4;cz<=(pos.getZ()+ARENA_RADIUS)>>4;cz++){
+            var chunk=new net.minecraft.world.level.ChunkPos(cx,cz);
+            if(FORCED.put(chunk.pack(),hold)==null)level.setChunkForced(cx,cz,true);
+            if(!level.areEntitiesActuallyLoadedAndTicking(chunk))ready=false;
+        }
+        if(!ready)throw new ArenaNotReady();
+        return pos;
+    }
+
+    /** Runs a test once its arena (if it uses one) is fully loaded. */
+    private static Consumer<GameTestHelper> whenArenaReady(Consumer<GameTestHelper> test){
+        return new Consumer<>(){public void accept(GameTestHelper helper){
+            try{test.accept(helper);}
+            catch(ArenaNotReady waiting){helper.runAtTickTime(helper.getTick()+1,()->accept(helper));}
+        }};
+    }
+
+    @SubscribeEvent static void releaseArenas(net.neoforged.neoforge.event.tick.ServerTickEvent.Post event){
+        if(FORCED.isEmpty())return;
+        var level=event.getServer().overworld();long now=level.getGameTime();
+        FORCED.entrySet().removeIf(e->{if(e.getValue()>now)return false;var c=net.minecraft.world.level.ChunkPos.unpack(e.getKey());level.setChunkForced(c.x(),c.z(),false);return true;});
+    }
     private static void refreshMockPositions(net.minecraft.server.level.ServerLevel level,net.minecraft.world.entity.player.Player... players){
         for(var player:players)player.teleportTo(level,player.getX(),player.getY(),player.getZ(),java.util.Set.of(),player.getYRot(),player.getXRot(),false);
     }
@@ -69,13 +111,13 @@ public final class BossTests {
         Map.entry("lumynara_combat",BossTests::lumynaraCombat),
         Map.entry("lumynara_encounter",BossTests::lumynaraEncounter));
     @SubscribeEvent public static void functions(RegisterEvent event){
-        event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),fn)));
+        event.register(Registries.TEST_FUNCTION,registry->TESTS.forEach((name,fn)->registry.register(Pipican.id(name),whenArenaReady(fn))));
     }
     @SubscribeEvent public static void tests(RegisterGameTestsEvent event){
         Holder<TestEnvironmentDefinition<?>> env=event.registerEnvironment(Pipican.id("boss_test"),new TestEnvironmentDefinition.AllOf(List.of()));
         TESTS.keySet().forEach(name->event.registerTest(Pipican.id(name),new FunctionGameTestInstance(
             ResourceKey.create(Registries.TEST_FUNCTION,Pipican.id(name)),
-            new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),100,0,true))));
+            new TestData<>(env,net.minecraft.resources.Identifier.withDefaultNamespace("empty"),1200,0,true))));
     }
     private static void designCatalog(GameTestHelper helper){
         helper.assertTrue(BossDesigns.all().size()==27 && BossDesigns.all().stream().filter(BossDesigns.Design::functional).count()==27,"functional boss design count differs from implemented bindings");
@@ -256,7 +298,7 @@ public final class BossTests {
             .filter(item->item.getItem().is(BossContent.HEART.get())).mapToLong(item->item.getItem().getCount()).sum();
     }
     private static void ritualInteraction(GameTestHelper helper){
-        var level=helper.getLevel(); var altar=helper.absolutePos(new net.minecraft.core.BlockPos(1024,30,1024)); var arena=altar.north(6);
+        var level=helper.getLevel(); var altar=arena(helper,1024,30,1024); var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8) for(int z=-32;z<=32;z+=8) level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1 ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState() : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -364,7 +406,7 @@ public final class BossTests {
         }finally { rejectSpawnAt=null; level.getServer().getPlayerList().remove(owner); }
     }
     private static void noctharDeepEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(1536,34,1536));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,1536,34,1536);var arena=altar.north(6);
         helper.assertTrue(altar.getY()>=level.getMinY()&&altar.getY()<=-6,"Nocthar test fixture is outside the permitted deep Y band");
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
@@ -405,7 +447,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void aetherionHighEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(1536,330,1536));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,1536,330,1536);var arena=altar.north(6);
         helper.assertTrue(altar.getY()>=251&&altar.getY()<=443,"Aetherion test altar is outside the valid high-altitude band");
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
@@ -442,7 +484,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void vermillionCrimsonEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(2048,32,2048));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,2048,32,2048);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.BLACKSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -468,7 +510,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void longweiJadeEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(2560,32,2560));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,2560,32,2560);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.POLISHED_ANDESITE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -491,7 +533,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void morgathaMarshfenEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(3072,32,3072));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,3072,32,3072);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MUD_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -511,7 +553,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void aureliosInnerSeaEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(3328,32,3328));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,3328,32,3328);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -531,7 +573,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void lianhuaLotusEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(3584,32,3584));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,3584,32,3584);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MOSSY_STONE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -551,7 +593,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void akhmarSunEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(4096,32,4096));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,4096,32,4096);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -571,7 +613,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void akhmarCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(50000,30,50000));
+        var level=helper.getLevel();var origin=arena(helper,50000,30,50000);
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))
             level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
@@ -602,7 +644,7 @@ public final class BossTests {
         }finally{front.discard();refuge.discard();}
     }
     private static void netharisRiverEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(4608,32,4608));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,4608,32,4608);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.COBBLESTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -621,7 +663,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void netharisCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(53000,30,53000));
+        var level=helper.getLevel();var origin=arena(helper,53000,30,53000);
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(front);level.addFreshEntity(refuge);
         var boss=BossRegistries.NETHARIS.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
@@ -644,7 +686,7 @@ public final class BossTests {
         }finally{front.discard();refuge.discard();boss.discard();}
     }
     private static void zahiraSpiceEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(5120,32,5120));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,5120,32,5120);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))
             level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
@@ -663,7 +705,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void zahiraCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(57000,30,57000));
+        var level=helper.getLevel();var origin=arena(helper,57000,30,57000);
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.CUT_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(front);level.addFreshEntity(refuge);
         var boss=BossRegistries.ZAHIRA.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
@@ -684,7 +726,7 @@ public final class BossTests {
         }finally{front.discard();refuge.discard();boss.discard();}
     }
     private static void xaltekEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(6400,32,6400));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,6400,32,6400);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.XALTEK_SIGIL.get());
@@ -700,7 +742,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void xaltekCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(59000,30,59000));
+        var level=helper.getLevel();var origin=arena(helper,59000,30,59000);
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(pos,pos.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(front);level.addFreshEntity(refuge);
         var boss=BossRegistries.XALTEK.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
@@ -717,7 +759,7 @@ public final class BossTests {
         }finally{front.discard();refuge.discard();boss.discard();}
     }
     private static void corallithEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(6800,32,6800));var arena=altar.north(6);
+        var level=helper.getLevel();var altar=arena(helper,6800,32,6800);var arena=altar.north(6);
         for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(pos,pos.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.CORALLITH_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
@@ -728,7 +770,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void corallithCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(61000,30,61000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,61000,30,61000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var player=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(player);level.addFreshEntity(refuge);var boss=BossRegistries.CORALLITH.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{player.setHealth(20);player.invulnerableTime=0;player.snapTo(origin.getX()+8,origin.getY(),origin.getZ());var gates=new CorallithCombat(boss);helper.assertTrue(gates.begin(CorallithCombat.GATES,player),"Corallith coral gates failed to start");var safe=gates.gateOpening();refuge.snapTo(origin.getX()-6,origin.getY(),origin.getZ());player.snapTo(safe.x,safe.y,safe.z);for(int i=0;i<39;i++)gates.tick(level);helper.assertTrue(player.getHealth()==20&&refuge.getHealth()==20,"Corallith gate ring struck before warning");gates.tick(level);helper.assertTrue(player.getHealth()==20&&refuge.getHealth()<20,"Corallith gate had no stable refuge opening");
             player.setHealth(20);player.invulnerableTime=0;var echo=new CorallithCombat(boss);helper.assertTrue(echo.updatePhase(500,1000)&&echo.begin(CorallithCombat.ECHO,player),"Corallith phase-two reef echo failed to start");for(int i=0;i<50;i++)echo.tick(level);var target=echo.echoTarget();player.snapTo(target.x,target.y,target.z);for(int i=0;i<13;i++)echo.tick(level);helper.assertTrue(player.getHealth()==20,"Corallith sonar echo struck before its separate warning finished");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());echo.save(saved);var restored=new CorallithCombat(boss);restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));helper.assertTrue(restored.clock().phase()==2,"Corallith phase lost on echo reload");restored.tick(level);helper.assertTrue(player.getHealth()<20,"saved announced reef echo did not resolve at its target");
@@ -736,7 +778,7 @@ public final class BossTests {
         }finally{player.discard();refuge.discard();boss.discard();}
     }
     private static void azharEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(7200,32,7200));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,7200,32,7200);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.AZHAR_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/goldgrass_savanna")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"goldgrass savanna biome fixture failed");
@@ -746,7 +788,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void azharCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(62000,30,62000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,62000,30,62000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.SMOOTH_SANDSTONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var safePlayer=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(safePlayer);level.addFreshEntity(danger);var boss=BossRegistries.AZHAR.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{safePlayer.setHealth(20);safePlayer.invulnerableTime=0;safePlayer.snapTo(origin.getX()+8,origin.getY(),origin.getZ());var stampede=new AzharCombat(boss);helper.assertTrue(stampede.begin(AzharCombat.STAMPEDE,safePlayer),"Azhar stampede failed to start");var safe=stampede.safeStampedePosition();safePlayer.snapTo(safe.x,safe.y,safe.z);danger.snapTo(origin.getX()+5,origin.getY(),origin.getZ()-4.5);for(int i=0;i<49;i++)stampede.tick(level);helper.assertTrue(safePlayer.getHealth()==20&&danger.getHealth()==20,"Azhar stampede crossed lanes before warning ended");stampede.tick(level);helper.assertTrue(safePlayer.getHealth()==20&&danger.getHealth()<20,"Azhar stampede lacked a stable clear lane");
             var rays=new AzharCombat(boss);helper.assertTrue(rays.updatePhase(550,1100)&&rays.begin(AzharCombat.REFRACTION,safePlayer),"Azhar phase-two refraction failed to begin");var plate=rays.platePosition(0);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Azhar plate interrupt projectile missing");arrow.setPos(plate.x,plate.y,plate.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);rays.tick(level);helper.assertTrue(rays.brokenPlates()==1&&!arrow.isAlive(),"Azhar illuminated sun plate was not breakable");var saved=TagValueOutput.createWithContext(ProblemReporter.DISCARDING,level.registryAccess());rays.save(saved);var restored=new AzharCombat(boss);restored.load(TagValueInput.create(ProblemReporter.DISCARDING,level.registryAccess(),diskRoundtrip(saved.buildResult())));helper.assertTrue(restored.clock().phase()==2&&restored.brokenPlates()==1,"Azhar plate break or phase was lost on reload");
@@ -754,7 +796,7 @@ public final class BossTests {
         }finally{safePlayer.discard();danger.discard();boss.discard();}
     }
     private static void nhalkorrEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(7600,32,7600));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,7600,32,7600);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PACKED_ICE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.NHALKORR_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/northern_ice_sea")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"northern ice sea biome fixture failed");
@@ -764,7 +806,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void nhalkorrCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(64000,30,64000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PACKED_ICE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,64000,30,64000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PACKED_ICE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.NHALKORR.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.setHealth(20);refuge.snapTo(origin.getX()+8,origin.getY(),origin.getZ());var current=new NhalkorrCombat(boss);helper.assertTrue(current.begin(NhalkorrCombat.CURRENT,refuge),"Nhalkorr current failed to start");danger.snapTo(origin.getX()+5,origin.getY(),origin.getZ());for(int i=0;i<39;i++)current.tick(level);helper.assertTrue(danger.getHealth()==20,"Nhalkorr current struck before its warning ended");current.tick(level);helper.assertTrue(danger.getHealth()<20,"Nhalkorr marked current lane failed to resolve");
             var interrupted=new NhalkorrCombat(boss);helper.assertTrue(interrupted.begin(NhalkorrCombat.CURRENT,refuge),"Nhalkorr anchor current failed to restart");var anchor=interrupted.anchorPosition(1);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Nhalkorr anchor interrupt projectile missing");arrow.setPos(anchor.x,anchor.y,anchor.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);interrupted.tick(level);helper.assertTrue(interrupted.brokenAnchors()==1&&!arrow.isAlive(),"Nhalkorr current anchor was not interruptible");
@@ -773,7 +815,7 @@ public final class BossTests {
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void thalassorEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(86000,32,86000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,86000,32,86000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.THALASSOR_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/western_ocean")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"western ocean biome fixture failed");rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Thalassor summon consumed sigil or leaked reservation");rejectSpawnAt=null;
@@ -781,7 +823,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void thalassorCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(72000,30,72000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,72000,30,72000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.THALASSOR.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var fan=new ThalassorCombat(boss);helper.assertTrue(fan.begin(ThalassorCombat.FAN,refuge),"Thalassor trident fan failed to start");var safe=fan.fanPoint(fan.safeGap(),8);refuge.snapTo(safe.x,safe.y,safe.z);var mark=fan.fanPoint(0,8);danger.snapTo(mark.x,mark.y,mark.z);refreshMockPositions(level,refuge,danger);for(int i=0;i<39;i++)fan.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Thalassor tridents struck before fan warning");fan.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Thalassor rotating trident fan gap failed");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+13);danger.snapTo(origin.getX()+5,origin.getY(),origin.getZ());var pressure=new ThalassorCombat(boss);helper.assertTrue(pressure.begin(ThalassorCombat.PRESSURE,danger),"Thalassor pressure bubbles failed to start");for(int i=0;i<49;i++)pressure.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Thalassor pressure field burst before its boundary filled");pressure.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Thalassor expanding pressure field escape boundary failed");
@@ -789,7 +831,7 @@ public final class BossTests {
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void tengriEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(84000,32,84000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,84000,32,84000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.TENGRI_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/khagan_steppe")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Khagan steppe biome fixture failed");rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Tengri summon consumed sigil or leaked reservation");rejectSpawnAt=null;
@@ -797,7 +839,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void tengriCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(70000,30,70000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.STONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,70000,30,70000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.STONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.TENGRI.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var charge=new TengriCombat(boss);helper.assertTrue(charge.begin(TengriCombat.TRIANGLE,refuge),"Tengri triangle charge failed to start");var edge=charge.triangleEdgePoint(0);danger.snapTo(edge.x,edge.y,edge.z);refreshMockPositions(level,refuge,danger);for(int i=0;i<39;i++)charge.tick(level);helper.assertTrue(danger.getHealth()==20,"Tengri triangle struck before warning");charge.tick(level);helper.assertTrue(danger.getHealth()<20&&charge.chargeIndex()==1,"Tengri first announced triangle dash did not strike");for(int i=0;i<5;i++)charge.tick(level);helper.assertTrue(charge.chargeIndex()==1,"Tengri triangle dashes were not staggered");charge.tick(level);helper.assertTrue(charge.chargeIndex()==2,"Tengri second triangle dash did not resolve");for(int i=0;i<6;i++)charge.tick(level);helper.assertTrue(charge.chargeIndex()==3,"Tengri final triangle dash did not resolve");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var volley=new TengriCombat(boss);helper.assertTrue(volley.begin(TengriCombat.VOLLEY,refuge),"Tengri falcon volley failed");var safe=volley.fanPoint(volley.safeGap(),20);refuge.snapTo(safe.x,safe.y,safe.z);var marked=volley.fanPoint(0,20);danger.snapTo(marked.x,marked.y,marked.z);for(int i=0;i<49;i++)volley.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Tengri fan struck before warning");volley.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Tengri volley gap counterplay failed: gap="+volley.safeGap()+", refuge="+refuge.getHealth()+"/invul="+refuge.invulnerableTime+" at "+refuge.position()+", danger="+danger.getHealth()+"/invul="+danger.invulnerableTime+" at "+danger.position()+", marked="+marked+", safe="+safe+", inside="+boss.insideArena(danger.position())+"/"+boss.insideArena(refuge.position())+", nearby="+level.getEntitiesOfClass(net.minecraft.world.entity.player.Player.class,boss.getBoundingBox().inflate(28)).size()+", active="+volley.clock().active()+", remaining="+volley.clock().remaining()+", resolved="+volley.clock().resolved()+", end="+volley.fanPoint(0,99));
@@ -805,7 +847,7 @@ public final class BossTests {
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void valthorEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(82000,32,82000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,82000,32,82000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.VALTHOR_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/stormcoast")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Stormcoast biome fixture failed");rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Valthor summon consumed sigil or leaked reservation");rejectSpawnAt=null;
@@ -813,7 +855,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void valthorCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(68000,30,68000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.STONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,68000,30,68000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.STONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.VALTHOR.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var chains=new ValthorCombat(boss);helper.assertTrue(chains.begin(ValthorCombat.CONDUCTORS,refuge),"Valthor conductor attack failed");var anchor=chains.conductor(0);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Valthor conductor interrupt projectile missing");arrow.setPos(anchor.x,anchor.y,anchor.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);chains.tick(level);helper.assertTrue(chains.brokenConductors()==1&&!arrow.isAlive(),"Valthor conductor was not interruptible");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;refuge.snapTo(origin.getX(),origin.getY(),origin.getZ());danger.snapTo(origin.getX()+6,origin.getY(),origin.getZ());var ring=new ValthorCombat(boss);helper.assertTrue(ring.begin(ValthorCombat.DONUT,danger),"Valthor thunder annulus failed to start");for(int i=0;i<49;i++)ring.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Valthor annulus struck before warning ended");ring.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Valthor center-safe thunder annulus did not resolve");
@@ -821,7 +863,7 @@ public final class BossTests {
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void hrothgarEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(8000,32,8000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,8000,32,8000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.STONE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.HROTHGAR_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/fjordmark")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"fjordmark biome fixture failed");rejectSpawnAt=arena;helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.FAIL&&sigil.getCount()==1&&!BossEncounters.get(level).conflicts(arena),"rejected Hrothgar summon consumed sigil or leaked reservation");rejectSpawnAt=null;
@@ -829,7 +871,7 @@ public final class BossTests {
         }finally{rejectSpawnAt=null;level.getServer().getPlayerList().remove(owner);}
     }
     private static void hrothgarCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(66000,30,66000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.STONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,66000,30,66000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.STONE.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.HROTHGAR.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()-8);danger.snapTo(origin.getX()+3,origin.getY(),origin.getZ());var oath=new HrothgarCombat(boss);helper.assertTrue(oath.begin(HrothgarCombat.OATH,refuge),"Hrothgar oath failed to start");for(int i=0;i<39;i++)oath.tick(level);helper.assertTrue(danger.getHealth()==20,"Hrothgar oath struck before its telegraph");oath.tick(level);for(int i=0;i<11;i++)oath.tick(level);helper.assertTrue(danger.getHealth()==20&&oath.pendingOathTicks()==1,"Hrothgar return path resolved too early");oath.tick(level);helper.assertTrue(danger.getHealth()==20&&oath.pendingOathTicks()==0,"Hrothgar return tell did not leave its last reaction tick");oath.tick(level);helper.assertTrue(danger.getHealth()<20,"Hrothgar returning oath path failed to hit locked curve");
             var chains=new HrothgarCombat(boss);helper.assertTrue(chains.begin(HrothgarCombat.CHAINS,refuge),"Hrothgar chain attack failed to start");var anchor=chains.chainAnchor(0);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Hrothgar weak-link projectile missing");arrow.setPos(anchor.x,anchor.y,anchor.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);chains.tick(level);helper.assertTrue(chains.brokenLinks()==1&&!arrow.isAlive(),"Hrothgar highlighted chain link was not breakable");
@@ -837,7 +879,7 @@ public final class BossTests {
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void realAttacks(GameTestHelper helper){
-        var level=helper.getLevel(); var origin=helper.absolutePos(new net.minecraft.core.BlockPos(768,30,768));
+        var level=helper.getLevel(); var origin=arena(helper,768,30,768);
         for(var pos:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-15,-1,-15),origin.offset(15,6,15)))
             level.setBlock(pos,pos.getY()==origin.getY()-1 ? net.minecraft.world.level.block.Blocks.STONE.defaultBlockState() : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var front=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
@@ -1260,7 +1302,7 @@ public final class BossTests {
     }
     private static void unloadAndCleanup(GameTestHelper helper){
         var level=helper.getLevel(); var data=BossEncounters.get(level);
-        var arena=helper.absolutePos(new net.minecraft.core.BlockPos(512,30,512));
+        var arena=arena(helper,512,30,512);
         var entity=BossRegistries.MORVATH.get().create(level,EntitySpawnReason.COMMAND);
         entity.snapTo(arena.getX(),arena.getY(),arena.getZ());
         helper.assertTrue(data.reserve(entity.getUUID(),UUID.randomUUID(),BossCatalog.MORVATH.id(),arena),"cleanup fixture reservation failed");
@@ -1282,7 +1324,7 @@ public final class BossTests {
         helper.succeed();
     }
     private static void summoningLifecycle(GameTestHelper helper){
-        var level=helper.getLevel(); var arena=helper.absolutePos(new net.minecraft.core.BlockPos(256,25,256));
+        var level=helper.getLevel(); var arena=arena(helper,256,25,256);
         for(int x=-32;x<=32;x+=8) for(int z=-32;z<=32;z+=8) level.getChunkAt(arena.offset(x,0,z));
         var chunk=net.minecraft.world.level.ChunkPos.containing(arena);
         level.getChunkSource().addTicketAndLoadWithRadius(net.minecraft.server.level.TicketType.PORTAL,chunk,2);
@@ -1365,7 +1407,7 @@ public final class BossTests {
         helper.succeed();
     }
     private static void durmagonCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(91000,30,91000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.DEEPSLATE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
+        var level=helper.getLevel();var origin=arena(helper,91000,30,91000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.DEEPSLATE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.DURMAGON.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var circuit=new DurmagonCombat(boss);helper.assertTrue(circuit.begin(DurmagonCombat.CIRCUIT,refuge),"Durmagon rune circuit failed to start");var rune=circuit.rune(0);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Durmagon rune interrupt projectile missing");arrow.setPos(rune.x,rune.y,rune.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);circuit.tick(level);helper.assertTrue(circuit.brokenRunes()==1&&!arrow.isAlive(),"Durmagon runic junction was not interruptible");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;var rebound=new DurmagonCombat(boss);helper.assertTrue(rebound.begin(DurmagonCombat.REBOUNDS,refuge),"Durmagon forge rebound failed");var mark=rebound.reboundPoint(0,7);danger.snapTo(mark.x,mark.y,mark.z);refreshMockPositions(level,refuge,danger);for(int i=0;i<49;i++)rebound.tick(level);helper.assertTrue(danger.getHealth()==20,"Durmagon rebound hit before telegraph");rebound.tick(level);helper.assertTrue(danger.getHealth()<20,"Durmagon announced rebound path failed to hit");
@@ -1373,33 +1415,33 @@ public final class BossTests {
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void durmagonEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(94000,32,94000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
+        var level=helper.getLevel();var altar=arena(helper,94000,32,94000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));
         for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.DEEPSLATE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);
         level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.DURMAGON_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("protected/greyspine_mountains")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Greyspine biome fixture failed");helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Greyspine altar summon failed");var boss=level.getEntitiesOfClass(DurmagonEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Durmagon spawn missing"));helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("durmagon_runic_titan"),"Durmagon encounter type not persisted");boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.DURMAGON_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("runic_iron").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Durmagon trophy/Runic Iron rewards missing");helper.succeed();
         }finally{level.getServer().getPlayerList().remove(owner);}
     }
     private static void syltheraCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(97000,30,97000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.SYLTHERA.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
+        var level=helper.getLevel();var origin=arena(helper,97000,30,97000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.SYLTHERA.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var spores=new SyltheraCombat(boss);helper.assertTrue(spores.updatePhase(550,1100)&&spores.begin(SyltheraCombat.SPORES,refuge),"Sylthera spore sequence failed to start");var safe=spores.safeSporePosition();refuge.snapTo(safe.x,safe.y,safe.z);var unsafe=origin.offset(0,0,3);danger.snapTo(unsafe.getX()+.5,unsafe.getY(),unsafe.getZ()+.5);for(int i=0;i<39;i++)spores.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Sylthera spores hit before sequence warning");spores.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Sylthera shown spore refuge failed");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;var nursery=new SyltheraCombat(boss);helper.assertTrue(nursery.begin(SyltheraCombat.NURSERY,refuge),"Sylthera root nursery failed to start");var seed=nursery.seedling(1);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Sylthera seedling interrupt projectile missing");arrow.setPos(seed.x,seed.y,seed.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);nursery.tick(level);helper.assertTrue(nursery.clearedSeedlings()==1&&!arrow.isAlive(),"Sylthera seedling was not destructible");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;var bloom=new SyltheraCombat(boss);helper.assertTrue(bloom.begin(SyltheraCombat.BLOOM,refuge),"Sylthera inhalation bloom failed");var line=bloom.bloomPoint(10);danger.snapTo(line.x,line.y,line.z);var flank=origin.offset(11,0,0);refuge.snapTo(flank.getX()+.5,flank.getY(),flank.getZ()+.5);for(int i=0;i<59;i++)bloom.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Sylthera bloom resolved before tell");bloom.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Sylthera directional bloom counterplay failed");helper.succeed();
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void syltheraEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(99000,32,99000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.SYLTHERA_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        var level=helper.getLevel();var altar=arena(helper,99000,32,99000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.MOSS_BLOCK.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.SYLTHERA_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("verdant_depths")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Verdant Depths biome fixture failed");helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Verdant Depths altar summon failed");var boss=level.getEntitiesOfClass(SyltheraEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Sylthera spawn missing"));helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("sylthera_primordial_bloom"),"Sylthera encounter type not persisted");boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.SYLTHERA_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("lifebloom_crystal").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Sylthera trophy/Lifebloom rewards missing");helper.succeed();
         }finally{level.getServer().getPlayerList().remove(owner);}
     }
     private static void lumynaraCombat(GameTestHelper helper){
-        var level=helper.getLevel();var origin=helper.absolutePos(new net.minecraft.core.BlockPos(102000,30,102000));for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.LUMYNARA.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
+        var level=helper.getLevel();var origin=arena(helper,102000,30,102000);for(var p:net.minecraft.core.BlockPos.betweenClosed(origin.offset(-16,-1,-16),origin.offset(16,6,16)))level.setBlock(p,p.getY()==origin.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);var refuge=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);var danger=helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);level.addFreshEntity(refuge);level.addFreshEntity(danger);var boss=BossRegistries.LUMYNARA.get().create(level,EntitySpawnReason.COMMAND);boss.snapTo(origin.getX(),origin.getY(),origin.getZ());boss.setNoAi(true);level.addFreshEntity(boss);
         try{refuge.snapTo(origin.getX(),origin.getY(),origin.getZ()+8);var gaze=new LumynaraCombat(boss);helper.assertTrue(gaze.updatePhase(600,1200)&&gaze.begin(LumynaraCombat.GAZE,refuge),"Lumynara luminous gaze failed to start");var beam=gaze.gazePoint(10);danger.snapTo(beam.x,beam.y,beam.z);refuge.snapTo(origin.getX(),origin.getY(),origin.getZ());for(int i=0;i<39;i++)gaze.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Lumynara gaze struck before shutter cue");gaze.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Lumynara locked gaze / phase echo failed");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;var waves=new LumynaraCombat(boss);helper.assertTrue(waves.begin(LumynaraCombat.WAVES,refuge),"Lumynara choral waves failed to start");var safe=waves.wavePoint(waves.safeRadius(),0);refuge.snapTo(safe.x,safe.y,safe.z);var impact=waves.wavePoint(3.7,0);danger.snapTo(impact.x,impact.y,impact.z);for(int i=0;i<49;i++)waves.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Lumynara harmonic waves resolved before warning");waves.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Lumynara harmonic safe-band counterplay failed");
             refuge.setHealth(20);refuge.invulnerableTime=0;danger.setHealth(20);danger.invulnerableTime=0;var lanterns=new LumynaraCombat(boss);helper.assertTrue(lanterns.begin(LumynaraCombat.LANTERNS,refuge),"Lumynara lantern convergence failed to start");var source=lanterns.lantern(0);var arrow=net.minecraft.world.entity.EntityType.ARROW.create(level,EntitySpawnReason.COMMAND);helper.assertTrue(arrow!=null,"Lumynara lantern interrupt projectile missing");arrow.setPos(source.x,source.y,source.z);arrow.setNoGravity(true);level.addFreshEntity(arrow);lanterns.tick(level);helper.assertTrue(lanterns.brokenLanterns()==1&&!arrow.isAlive(),"Lumynara lantern node was not interruptible");var refugePoint=lanterns.lanternRayPoint(0,10);refuge.snapTo(refugePoint.x,refugePoint.y,refugePoint.z);var dangerPoint=lanterns.lanternRayPoint(1,10);danger.snapTo(dangerPoint.x,dangerPoint.y,dangerPoint.z);for(int i=0;i<58;i++)lanterns.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()==20,"Lumynara lantern rays resolved before warning");lanterns.tick(level);helper.assertTrue(refuge.getHealth()==20&&danger.getHealth()<20,"Lumynara interrupted lantern ray refuge failed");helper.succeed();
         }finally{refuge.discard();danger.discard();boss.discard();}
     }
     private static void lumynaraEncounter(GameTestHelper helper){
-        var level=helper.getLevel();var altar=helper.absolutePos(new net.minecraft.core.BlockPos(104000,32,104000));var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.LUMYNARA_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
+        var level=helper.getLevel();var altar=arena(helper,104000,32,104000);var arena=altar.north(6);for(int x=-32;x<=32;x+=8)for(int z=-32;z<=32;z+=8)level.getChunkAt(arena.offset(x,0,z));for(var p:net.minecraft.core.BlockPos.betweenClosed(altar.offset(-8,-1,-14),altar.offset(8,6,3)))level.setBlock(p,p.getY()==altar.getY()-1?net.minecraft.world.level.block.Blocks.PRISMARINE_BRICKS.defaultBlockState():net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(),2);level.setBlock(altar,BossContent.ALTAR.get().defaultBlockState(),2);var owner=helper.makeMockServerPlayerInLevel();owner.snapTo(altar.getX()+2,altar.getY(),altar.getZ());var sigil=new net.minecraft.world.item.ItemStack(BossContent.LUMYNARA_SIGIL.get());owner.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,sigil);var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(altar),net.minecraft.core.Direction.UP,altar,false);
         try{var state=level.getBlockState(altar);var biome=level.registryAccess().lookupOrThrow(Registries.BIOME).getOrThrow(ResourceKey.create(Registries.BIOME,Pipican.id("shimmering_reefs")));helper.assertTrue(net.minecraft.server.commands.FillBiomeCommand.fill(level,altar.offset(-8,-8,-14),altar.offset(8,8,3),biome).left().isPresent(),"Shimmering Reefs biome fixture failed");helper.assertTrue(state.useItemOn(sigil,level,owner,net.minecraft.world.InteractionHand.MAIN_HAND,hit)==net.minecraft.world.InteractionResult.SUCCESS&&sigil.isEmpty(),"Shimmering Reefs altar summon failed");var boss=level.getEntitiesOfClass(LumynaraEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(5)).stream().filter(RegionalBossEntity::isAlive).findFirst().orElseThrow(()->new IllegalStateException("Lumynara spawn missing"));helper.assertTrue(BossEncounters.get(level).find(boss.getUUID()).orElseThrow().type().equals("lumynara_abyssal_oracle"),"Lumynara encounter type not persisted");boss.hurtServer(level,boss.damageSources().genericKill(),10000);var drops=level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class,new net.minecraft.world.phys.AABB(arena).inflate(8));helper.assertTrue(drops.stream().anyMatch(item->item.getItem().is(BossContent.LUMYNARA_TROPHY.get()))&&drops.stream().filter(item->item.getItem().is(com.pipican.worldgen.RegionalOreRegistries.MATERIALS.get("abyssal_shard").get())).mapToInt(item->item.getItem().getCount()).sum()==8,"Lumynara trophy/Abyssal Shard rewards missing");helper.succeed();
         }finally{level.getServer().getPlayerList().remove(owner);}
     }
