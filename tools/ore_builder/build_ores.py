@@ -23,6 +23,7 @@ import textures  # noqa: E402
 import gear  # noqa: E402
 import special_uses  # noqa: E402
 import allomancy  # noqa: E402
+import tamashigane  # noqa: E402
 
 NS = 'pipican'
 RARITY_EN = {1: 'Common', 2: 'Frequent', 3: 'Medium', 4: 'Rare', 5: 'Very Rare', 6: 'Epic', 7: 'Legendary', 8: 'Mythic', 9: 'Unique'}
@@ -226,6 +227,7 @@ def build(root):
     gear.mob_tags(out)
     special_uses.build(out, catalog.ORES, tag, lang_en, lang_tr, runtime)
     allomancy.build(out, tag, lang_en, lang_tr, runtime)
+    tamashigane.build(out, tag, lang_en, lang_tr)
     for (reg, path), entries in sorted(tags.items()):
         ns, p = path.split(':')
         folder = reg

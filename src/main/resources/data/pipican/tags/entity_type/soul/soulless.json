@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:armor_stand",
+    "minecraft:copper_golem",
+    "minecraft:creaking",
+    "minecraft:iron_golem",
+    "minecraft:magma_cube",
+    "minecraft:shulker",
+    "minecraft:slime",
+    "minecraft:snow_golem"
+  ]
+}

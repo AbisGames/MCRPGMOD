@@ -295,6 +295,63 @@ for _w in ('light', 'medium', 'heavy'):
     GEAR[f'entity/equipment/humanoid_leggings/plate_{_w}'] = (lambda w: lambda: armor_layer(w, True))(_w)
 
 
+# ---------------------------------------------------------------- Tamashigane (phase 6)
+def katana_blade():
+    """The Soul Blade's steel: a long, slightly curved edge (grayscale; tinted with the path's colour)."""
+    im = _img()
+    for i in range(10):
+        x, y = 5 + i, 10 - i
+        bow = 1 if 3 <= i <= 7 else 0          # the curve
+        im.putpixel((x, y - bow), _g(250))
+        im.putpixel((x - 1, y - bow), _g(215))
+        if y - bow + 1 < S:
+            im.putpixel((x, y - bow + 1), _g(160))
+    return im
+
+
+def katana_hilt():
+    """The hilt: a dark wrapped grip and a gold guard (not tinted)."""
+    im = _img()
+    wrap = [(0x1E, 0x1E, 0x24, 255), (0xE8, 0xE4, 0xD8, 255)]
+    for n, (x, y) in enumerate(_diag(1, 14, 4)):
+        im.putpixel((x, y), wrap[n % 2])
+        im.putpixel((x + 1, y), wrap[(n + 1) % 2])
+    gold = (0xC9, 0xA2, 0x3A, 255)
+    for x, y in [(3, 9), (4, 10), (5, 11), (6, 12), (4, 11), (5, 10)]:
+        im.putpixel((x, y), gold)
+    return im
+
+
+def soul_robe(leggings_layer):
+    """Worn soul armor: a kimono - folds and a sash - in light grays the path's colour tints."""
+    w, h = 64, 32
+    im = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    px = im.load()
+    rnd = random.Random(23)
+    boxes = [(0, 16, 16, 32), (16, 16, 40, 32)] if leggings_layer else [(0, 0, 32, 16), (16, 16, 40, 32), (40, 16, 56, 32), (0, 16, 16, 32)]
+    for x0, y0, x1, y1 in boxes:
+        for y in range(y0, y1):
+            for x in range(x0, x1):
+                v = 205 + rnd.choice([-8, 0, 0, 6])
+                if (x - x0 + y - y0) % 7 == 0:
+                    v = 165                                   # cloth folds
+                px[x, y] = _g(v)
+    if not leggings_layer:
+        for x in range(20, 36):                               # the sash
+            for y in (26, 27):
+                px[x, y] = _g(245)
+        for y in range(8, 16):                                # open face
+            for x in range(8, 16):
+                px[x, y] = (0, 0, 0, 0)
+    return im
+
+
+GEAR['item/soul/blade'] = katana_blade
+GEAR['item/soul/hilt'] = katana_hilt
+GEAR['entity/equipment/humanoid/soul_robe'] = lambda: soul_robe(False)
+GEAR['entity/equipment/humanoid_leggings/soul_robe'] = lambda: soul_robe(True)
+
+
 def flakes():
     """Metal flakes: small scattered shards."""
     im = _img()

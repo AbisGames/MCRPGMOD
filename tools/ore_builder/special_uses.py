@@ -29,7 +29,10 @@ def build(out, ores, tag, lang_en, lang_tr, runtime):
     # Fuel: the ore, and its block nine times over.
     fuels = {}
     for ore, ticks in specials.FUEL.items():
-        fuels[f'{NS}:{ore}'] = {'burn_time': ticks}
+        # Metals burn as their ingot (and raw ore), gems as themselves.
+        o = next(x for x in ores if x['id'] == ore)
+        for item in ([f'{ore}_ingot', f'raw_{ore}'] if o['form'] == 'metal' else [ore]):
+            fuels[f'{NS}:{item}'] = {'burn_time': ticks}
         for block in storage.get(ore, []):
             fuels[f'{NS}:{block}'] = {'burn_time': min(ticks * 9, 2_000_000)}
     out.json('data/neoforge/data_maps/item/furnace_fuels.json', {'values': fuels})

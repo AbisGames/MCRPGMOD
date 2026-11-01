@@ -623,6 +623,7 @@ assets/pipican/equipment/saronite.json
 assets/pipican/equipment/scarlet.json
 assets/pipican/equipment/sigmarite.json
 assets/pipican/equipment/skyiron.json
+assets/pipican/equipment/soul_robe.json
 assets/pipican/equipment/stalhrim.json
 assets/pipican/equipment/starsilver.json
 assets/pipican/equipment/stormsilver.json
@@ -2064,6 +2065,11 @@ assets/pipican/items/skyiron_pickaxe.json
 assets/pipican/items/skyiron_shovel.json
 assets/pipican/items/skyiron_spear.json
 assets/pipican/items/skyiron_sword.json
+assets/pipican/items/soul_blade.json
+assets/pipican/items/soul_boots.json
+assets/pipican/items/soul_chestplate.json
+assets/pipican/items/soul_helmet.json
+assets/pipican/items/soul_leggings.json
 assets/pipican/items/soulstone.json
 assets/pipican/items/soulstone_block.json
 assets/pipican/items/soulstone_ore.json
@@ -3852,6 +3858,11 @@ assets/pipican/models/item/skyiron_pickaxe.json
 assets/pipican/models/item/skyiron_shovel.json
 assets/pipican/models/item/skyiron_spear.json
 assets/pipican/models/item/skyiron_sword.json
+assets/pipican/models/item/soul_blade.json
+assets/pipican/models/item/soul_boots.json
+assets/pipican/models/item/soul_chestplate.json
+assets/pipican/models/item/soul_helmet.json
+assets/pipican/models/item/soul_leggings.json
 assets/pipican/models/item/soulstone.json
 assets/pipican/models/item/stalhrim.json
 assets/pipican/models/item/stalhrim_axe.json
@@ -4687,11 +4698,13 @@ data/minecraft/tags/block/needs_iron_tool.json
 data/minecraft/tags/block/needs_stone_tool.json
 data/minecraft/tags/item/axes.json
 data/minecraft/tags/item/chest_armor.json
+data/minecraft/tags/item/dyeable.json
 data/minecraft/tags/item/foot_armor.json
 data/minecraft/tags/item/head_armor.json
 data/minecraft/tags/item/hoes.json
 data/minecraft/tags/item/leg_armor.json
 data/minecraft/tags/item/pickaxes.json
+data/minecraft/tags/item/sharp_weapon_enchantable.json
 data/minecraft/tags/item/shovels.json
 data/minecraft/tags/item/spears.json
 data/minecraft/tags/item/swords.json
@@ -4876,6 +4889,7 @@ data/pipican/loot_table/blocks/deepslate_stormsilver_ore.json
 data/pipican/loot_table/blocks/deepslate_sunforged_ore.json
 data/pipican/loot_table/blocks/deepslate_sunglass_ore.json
 data/pipican/loot_table/blocks/deepslate_sunstone_ore.json
+data/pipican/loot_table/blocks/deepslate_tamashigane_ore.json
 data/pipican/loot_table/blocks/deepslate_tamashigane_ore.json
 data/pipican/loot_table/blocks/deepslate_thaumium_ore.json
 data/pipican/loot_table/blocks/deepslate_thorium_ore.json
@@ -5212,6 +5226,7 @@ data/pipican/loot_table/blocks/sunglass_ore.json
 data/pipican/loot_table/blocks/sunstone_block.json
 data/pipican/loot_table/blocks/sunstone_ore.json
 data/pipican/loot_table/blocks/tamashigane_block.json
+data/pipican/loot_table/blocks/tamashigane_ore.json
 data/pipican/loot_table/blocks/tamashigane_ore.json
 data/pipican/loot_table/blocks/terrasteel_block.json
 data/pipican/loot_table/blocks/thaumium_block.json
@@ -7343,6 +7358,9 @@ data/pipican/tags/entity_type/mobs/nether.json
 data/pipican/tags/entity_type/mobs/neutral.json
 data/pipican/tags/entity_type/mobs/spirits.json
 data/pipican/tags/entity_type/mobs/unclean.json
+data/pipican/tags/entity_type/soul/mini_bosses.json
+data/pipican/tags/entity_type/soul/soulless.json
+data/pipican/tags/entity_type/soul/world_bosses.json
 data/pipican/tags/item/allomancy/flakes.json
 data/pipican/tags/item/allomancy/metal_items.json
 data/pipican/tags/item/allomancy/vial.json
@@ -7645,6 +7663,8 @@ data/pipican/tags/item/sets/void_metal/armor.json
 data/pipican/tags/item/sets/void_metal/weapons.json
 data/pipican/tags/item/sets/wintersteel/armor.json
 data/pipican/tags/item/sets/wintersteel/weapons.json
+data/pipican/tags/item/soul/armor.json
+data/pipican/tags/item/soul/gear.json
 data/pipican/tags/item/traits/area_mine.json
 data/pipican/tags/item/traits/autosmelt.json
 data/pipican/tags/item/traits/durable.json
@@ -7960,3 +7980,4 @@ data/pipican/worldgen/placed_feature/ore_wintersteel.json
 data/pipican/worldgen/placed_feature/ore_zinc.json
 data/pipican/worldgen/placed_feature/ore_zonaite.json
 pipican/ores.json
+pipican/soul_paths.json

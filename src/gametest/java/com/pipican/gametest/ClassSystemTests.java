@@ -117,6 +117,7 @@ public final class ClassSystemTests {
         TESTS.put("special_ores", ClassSystemTests::specialOres);
         TESTS.put("ore_mechanics", ClassSystemTests::oreMechanics);
         TESTS.put("allomancy", ClassSystemTests::allomancy);
+        TESTS.put("tamashigane", ClassSystemTests::tamashigane);
     }
 
     private ClassSystemTests() {}
@@ -356,6 +357,121 @@ public final class ClassSystemTests {
                 "a Mistborn burns several at once");
         com.pipican.ore.Allomancy.drink(player, "aluminum", 1);
         helper.assertTrue(!com.pipican.ore.Allomancy.burning(player, "tin") && !com.pipican.ore.Allomancy.burning(player, "pewter"), "aluminum wipes them");
+        helper.succeed();
+    }
+
+    /** Phase 6: Tamashigane - the vein, forging, souls, stages, trials, Bankai and the paths' abilities. */
+    private static void tamashigane(GameTestHelper helper) {
+        var level = helper.getLevel();
+        helper.assertTrue(com.pipican.soul.Soul.PATHS.size() == 15, "15 paths");
+        helper.assertTrue(com.pipican.soul.Soul.threshold(10) == 50000 && com.pipican.soul.Soul.threshold(5) == 1500, "stage thresholds");
+        // Every path has its names and descriptions.
+        try (var in = com.pipican.soul.Soul.class.getResourceAsStream("/assets/pipican/lang/en_us.json")) {
+            var lang = com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(in, java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            for (String path : com.pipican.soul.Soul.PATHS.keySet()) {
+                for (String key : List.of("", ".s3", ".s5", ".s7", ".s10", ".armor", ".aura")) {
+                    helper.assertTrue(lang.has("pipican.soul.path." + path + key), "lang for " + path + key);
+                }
+            }
+        } catch (java.io.IOException e) {
+            throw new IllegalStateException(e);
+        }
+        var blade = com.pipican.soul.SoulItems.BLADE.get();
+        helper.assertTrue(new ItemStack(blade).is(net.minecraft.tags.TagKey.create(Registries.ITEM, Pipican.id("traits/soulbound"))), "soul gear is soulbound");
+
+        // The spring: one ore on a shrine.
+        BlockPos spring = com.pipican.soul.SoulSpring.build(level, helper.absolutePos(new BlockPos(6, 3, 6)));
+        var ore = level.getBlockState(spring);
+        helper.assertTrue(ore.is(com.pipican.ore.PipicanOres.block("deepslate_tamashigane_ore").get()), "the spring holds the vein");
+
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        @SuppressWarnings("removal")
+        ServerPlayer other = helper.makeMockServerPlayerInLevel();
+        player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        // A soul that already took its piece is refused by the vein.
+        com.pipican.soul.Soul.set(player, com.pipican.soul.SoulData.NONE.withMined());
+        var refused = net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.level.block.BreakBlockEvent(level, spring, ore, player));
+        helper.assertTrue(refused.isCanceled(), "the vein refuses a second piece (creative " + player.isCreative() + ", vein " + com.pipican.soul.SoulEvents.class.getSimpleName() + ")");
+
+        // Forging: the ingot becomes a bound blade and armor, on a path, once.
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(com.pipican.ore.PipicanOres.item("tamashigane_ingot").get()));
+        helper.assertTrue(!com.pipican.soul.Soul.forge(player, "no_such_path"), "unknown path");
+        helper.assertTrue(com.pipican.soul.Soul.forge(player, "black_crescent"), "forged");
+        helper.assertTrue(!com.pipican.soul.Soul.forge(player, "ash_sovereign"), "only once");
+        helper.assertTrue(com.pipican.soul.Soul.get(player).stage() == 1 && com.pipican.soul.Soul.carriesBlade(player), "stage 1, blade in hand");
+        ItemStack ownBlade = ItemStack.EMPTY;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (player.getInventory().getItem(i).is(blade)) {
+                ownBlade = player.getInventory().getItem(i);
+            }
+        }
+        helper.assertTrue(com.pipican.soul.Soul.owns(player, ownBlade) && !com.pipican.soul.Soul.owns(other, ownBlade), "bound to its owner alone");
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, ownBlade.copy());
+        player.getInventory().removeItem(ownBlade);
+
+        // What a death is worth.
+        var zombie = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        var golem = helper.spawn(net.minecraft.world.entity.EntityType.IRON_GOLEM, new BlockPos(1, 2, 1));
+        helper.assertTrue(com.pipican.soul.Soul.soulValue(zombie) == 1 && com.pipican.soul.Soul.soulValue(golem) == 0
+                && com.pipican.soul.Soul.soulValue(other) == 25, "soul values");
+        golem.discard();
+        // Killing near the blade feeds it.
+        player.snapTo(helper.absoluteVec(new net.minecraft.world.phys.Vec3(2.5, 2, 4.5)));
+        zombie.hurtServer(level, level.damageSources().playerAttack(player), 1000);
+        helper.assertTrue(com.pipican.soul.Soul.get(player).souls() == 1, "a kill gives its soul, got " + com.pipican.soul.Soul.get(player).souls());
+
+        // Stages: 100 -> 2, 300 -> 3, then 1500 waits for the Shikai trial.
+        com.pipican.soul.Soul.addSouls(player, 299);
+        helper.assertTrue(com.pipican.soul.Soul.get(player).stage() == 3, "stage 3 at 300 souls");
+        com.pipican.soul.Soul.addSouls(player, 1200);
+        helper.assertTrue(com.pipican.soul.Soul.get(player).stage() == 4 && com.pipican.soul.Soul.pendingTrial(com.pipican.soul.Soul.get(player)) == 5,
+                "the Shikai trial waits");
+        helper.assertTrue(player.getMainHandItem().has(net.minecraft.core.component.DataComponents.CUSTOM_NAME), "the blade whispered its name");
+        var spirit = com.pipican.soul.SoulMinions.startTrial(player, 5);
+        helper.assertTrue(spirit != null, "the spirit appears");
+        spirit.hurtServer(level, level.damageSources().playerAttack(other), 1000);
+        helper.assertTrue(spirit.isAlive(), "only its owner can hurt the spirit");
+        spirit.hurtServer(level, level.damageSources().playerAttack(player), 1000);
+        helper.assertTrue(com.pipican.soul.Soul.get(player).stage() == 5, "trial won: Shikai");
+
+        // The stage-3/Shikai ability: a crescent cuts the zombie in front.
+        var target = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, new BlockPos(2, 2, 7));
+        target.setNoAi(true);
+        var eye = player.getEyePosition();
+        var to = target.getBoundingBox().getCenter().subtract(eye);
+        player.setYRot((float) (Math.toDegrees(Math.atan2(to.z, to.x)) - 90));
+        player.setXRot((float) -Math.toDegrees(Math.atan2(to.y, Math.sqrt(to.x * to.x + to.z * to.z))));
+        float before = target.getHealth();
+        com.pipican.soul.Soul.use(player);
+        helper.assertTrue(target.getHealth() < before, "the Shikai crescent hits");
+        helper.assertTrue(com.pipican.soul.Soul.get(player).abilityReady() > level.getGameTime(), "then it recovers");
+
+        // Bankai: stage 7, 60 s, 10 min to recover; the Absolute Form once a day.
+        com.pipican.soul.Soul.set(player, com.pipican.soul.Soul.get(player).withSouls(50000).withStage(10));
+        com.pipican.soul.Soul.releaseBankai(player);
+        var d = com.pipican.soul.Soul.get(player);
+        helper.assertTrue(com.pipican.soul.Soul.bankai(player) && d.bankaiEnd() - level.getGameTime() == 90 * 20, "Bankai Mastery: 90 s");
+        player.setShiftKeyDown(true);
+        com.pipican.soul.Soul.use(player);
+        long day = com.pipican.soul.Soul.get(player).ultimateDay();
+        helper.assertTrue(day == level.getDefaultClockTime() / 24000L && com.pipican.soul.SoulAbilities.on(player, "beast"), "the Absolute Form");
+        player.setShiftKeyDown(false);
+
+        // Every path's abilities run (none throws), at every form.
+        for (String path : com.pipican.soul.Soul.PATHS.keySet()) {
+            com.pipican.soul.Soul.set(player, com.pipican.soul.Soul.get(player).withPath(path).withStage(10).withBankai(0, 0).withAbilityReady(0).withUltimateDay(-1));
+            var ctx = com.pipican.soul.SoulAbilities.ctx(player);
+            com.pipican.soul.SoulAbilities.whisper(ctx);
+            com.pipican.soul.SoulAbilities.shikai(ctx);
+            com.pipican.soul.Soul.releaseBankai(player);
+            ctx = com.pipican.soul.SoulAbilities.ctx(player);
+            com.pipican.soul.SoulAbilities.bankaiAbility(ctx);
+            com.pipican.soul.SoulAbilities.ultimate(ctx);
+            com.pipican.soul.SoulAbilities.tick(player);
+        }
+        com.pipican.soul.Soul.reset(player);
+        helper.assertTrue(!com.pipican.soul.Soul.get(player).forged(), "reset");
         helper.succeed();
     }
 

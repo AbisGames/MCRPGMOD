@@ -7,39 +7,8 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:alternatives",
-          "children": [
-            {
-              "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              ],
-              "name": "pipican:deepslate_tamashigane_ore"
-            },
-            {
-              "type": "minecraft:item",
-              "name": "pipican:raw_tamashigane",
-              "functions": [
-                {
-                  "function": "minecraft:explosion_decay"
-                }
-              ]
-            }
-          ]
+          "type": "minecraft:item",
+          "name": "pipican:raw_tamashigane"
         }
       ]
     }

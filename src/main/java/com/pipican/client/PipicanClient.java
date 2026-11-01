@@ -165,6 +165,30 @@ public final class PipicanClient {
         if (event.getEntity() == null || event.getItemStack().isEmpty()) {
             return;
         }
+        // Soul gear: its owner, path and stage (stamped onto the stack by the server).
+        if (com.pipican.soul.Soul.isGear(event.getItemStack())) {
+            var data = event.getItemStack().get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            if (data != null && data.contains(com.pipican.soul.Soul.OWNER)) {
+                var tag = data.copyTag();
+                String path = tag.getStringOr("pipican_soul_path", "");
+                int stage = tag.getIntOr("pipican_soul_stage", 1);
+                var tip = event.getToolTip();
+                tip.add(Component.translatable("pipican.soul.tooltip_path", Component.translatable("pipican.soul.path." + path))
+                        .withStyle(net.minecraft.network.chat.Style.EMPTY.withColor(Math.max(com.pipican.soul.Soul.PATHS.getOrDefault(path, 0xAAAAAA), 0x777777))));
+                tip.add(Component.translatable("pipican.soul.tooltip_stage", stage, Component.translatable("pipican.soul.stage." + stage)).withStyle(net.minecraft.ChatFormatting.AQUA));
+                tip.add(Component.translatable("pipican.soul.tooltip_souls", tag.getLongOr("pipican_soul_souls", 0L)).withStyle(net.minecraft.ChatFormatting.DARK_AQUA));
+                if (event.getItemStack().is(com.pipican.soul.SoulItems.BLADE.get())) {
+                    for (int s : new int[] {3, 5, 7, 10}) {
+                        if (stage >= s) {
+                            tip.add(Component.literal(s + ": ").append(Component.translatable("pipican.soul.path." + path + ".s" + s)).withStyle(net.minecraft.ChatFormatting.GRAY));
+                        }
+                    }
+                } else if (stage >= 6) {
+                    tip.add(Component.translatable("pipican.soul.path." + path + ".armor").withStyle(net.minecraft.ChatFormatting.GRAY));
+                }
+                tip.add(Component.translatable("pipican.soul.tooltip_bound", tag.getStringOr(com.pipican.soul.Soul.OWNER_NAME, "?")).withStyle(net.minecraft.ChatFormatting.DARK_PURPLE));
+            }
+        }
         // Ores: their tier and what they're for.
         var itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(event.getItemStack().getItem());
         if (itemId.getNamespace().equals(com.pipican.Pipican.MOD_ID)) {

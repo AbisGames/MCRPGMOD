@@ -24,7 +24,10 @@
     "pipican:ion_cube_block": {
       "burn_time": 108000
     },
-    "pipican:naquadah": {
+    "pipican:naquadah_ingot": {
+      "burn_time": 16000
+    },
+    "pipican:raw_naquadah": {
       "burn_time": 16000
     },
     "pipican:naquadah_block": {
@@ -36,7 +39,10 @@
     "pipican:elerium_block": {
       "burn_time": 180000
     },
-    "pipican:promethium": {
+    "pipican:promethium_ingot": {
+      "burn_time": 200000
+    },
+    "pipican:raw_promethium": {
       "burn_time": 200000
     },
     "pipican:promethium_block": {

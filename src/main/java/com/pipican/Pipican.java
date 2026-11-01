@@ -46,6 +46,7 @@ public final class Pipican {
         com.pipican.ore.PipicanOres.BLOCKS.register(modBus);
         com.pipican.ore.PipicanOres.ITEMS.register(modBus);
         com.pipican.ore.PipicanOres.TABS.register(modBus);
+        com.pipican.soul.SoulItems.ITEMS.register(modBus);
         modBus.addListener(PipicanEntities::registerAttributes);
         RegionalOreRegistries.register(modBus);
         com.pipican.boss.BossRegistries.register(modBus);

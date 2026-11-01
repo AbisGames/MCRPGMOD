@@ -52,6 +52,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
  * <pre>
  * Admin (gamemaster permission):
  *   /pipican class set &lt;players&gt; &lt;class&gt; [giveKit]
+ *   /pipican soul add &lt;players&gt; &lt;souls&gt;  /  soul reset &lt;players&gt;   (Tamashigane)
  *   /pipican class reset &lt;players&gt;               full respec, re-opens class selection
  *   /pipican level set &lt;players&gt; &lt;level&gt;
  *   /pipican xp add &lt;players&gt; &lt;amount&gt;
@@ -212,7 +213,21 @@ public final class PipicanCommands {
                 .then(Commands.literal("trinkets").executes(c -> {
                     TrinketMenu.open(c.getSource().getPlayerOrException());
                     return 1;
-                })));
+                }))
+                // Tamashigane: /pipican soul, soul forge <path> (with the ingot in hand); admin: souls add, reset.
+                .then(Commands.literal("soul")
+                        .executes(c -> {
+                            com.pipican.soul.Soul.info(c.getSource().getPlayerOrException());
+                            return 1;
+                        })
+                        .then(Commands.literal("forge").then(Commands.argument("path", StringArgumentType.word())
+                                .suggests((c, b) -> SharedSuggestionProvider.suggest(com.pipican.soul.Soul.PATHS.keySet(), b))
+                                .executes(c -> com.pipican.soul.Soul.forge(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "path")) ? 1 : 0)))
+                        .then(admin("add").then(Commands.argument("targets", EntityArgument.players())
+                                .then(Commands.argument("amount", LongArgumentType.longArg(1))
+                                        .executes(c -> forEach(c, p -> com.pipican.soul.Soul.addSouls(p, LongArgumentType.getLong(c, "amount")))))))
+                        .then(admin("reset").then(Commands.argument("targets", EntityArgument.players())
+                                .executes(c -> forEach(c, com.pipican.soul.Soul::reset))))));
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> nodeCommand(TreeKind kind, boolean refund) {

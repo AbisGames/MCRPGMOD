@@ -18,6 +18,13 @@ public final class PipicanAttachments {
                     .sync((holder, to) -> holder == to, PlayerClassData.STREAM_CODEC)
                     .build());
 
+    /** The player's Tamashigane: path, souls, stage and Bankai timers (phase 6). Saved, kept through death. */
+    public static final Supplier<AttachmentType<com.pipican.soul.SoulData>> SOUL = REGISTER.register("soul", () ->
+            AttachmentType.builder(() -> com.pipican.soul.SoulData.NONE)
+                    .serialize(com.pipican.soul.SoulData.MAP_CODEC)
+                    .copyOnDeath()
+                    .build());
+
     /** Movement and look flags the client applies itself (double jump, glide, hidden name...), from the class state. Not saved; sent to everyone. */
     public static final Supplier<AttachmentType<MoveFlags>> MOVE_FLAGS = REGISTER.register("move_flags", () ->
             AttachmentType.builder(() -> MoveFlags.NONE)

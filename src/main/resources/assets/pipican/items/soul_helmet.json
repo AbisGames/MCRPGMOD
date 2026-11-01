@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "pipican:item/soul_helmet",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -14935006
+      }
+    ]
+  }
+}

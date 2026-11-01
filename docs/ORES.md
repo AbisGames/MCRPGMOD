@@ -89,8 +89,6 @@ only, and no recipe - it is found, not forged).
 - **Trade goods**: wandering traders (and one profession each) buy Morkite, Night Jade, Enor Pearl, Saffron Gold,
   Lotus Opal and Certus Quartz for emeralds.
 
-Allomancy metals come in phase 5, Tamashigane in phase 6.
-
 ## Alloys, upgrades, world mechanics, limited ores (phase 4)
 
 - **Alloys** (crafted, never mined): Cobalt + Ardite → Manyullyn; Thorium + Lacrima → Arcanite; Manasteel + Elementium
@@ -151,6 +149,64 @@ shows what burns and for how long.
 
 **Harmonium** explodes when it touches water.
 
+## Tamashigane (phase 6)
+
+Soul steel. `tools/ore_builder/soul_paths.py` (stages, paths, texts) and `com.pipican.soul` (mechanics).
+
+- **The vein** (`SoulSpring`): the world's one Tamashigane ore, at the source of the River of Souls - placed once, in
+  the first Soul Sand Valley chunk generated 128+ blocks from the Nether's centre, on a soul-soil shrine ringed by soul
+  campfires. Players who haven't taken their piece hear the river within 48 blocks. It needs a T8 pickaxe, never
+  drops itself (no Silk Touch), and re-forms right after it's mined - but **each player may take one piece, ever**.
+- **Forging**: smelt the raw piece, then use the ingot. The 15 paths are listed in chat; click one (or
+  `/pipican soul forge <path>`) - for good. You get the **Soul Blade** and four pieces of soul armor (a plain black
+  kimono). They're unbreakable, kept on death, and bound to you: in anyone else's hand the blade won't cut, and the
+  armor won't stay on them.
+- **Souls**: the blade (anywhere on you) absorbs the souls of creatures that die within 16 blocks - all of your own
+  kills (and your summons'), half of anyone else's. Common creature 1, strong (30+ health) 3, elite (60+) 10, mini boss
+  (elder guardian, ravager, evoker, piglin brute, breeze) 50, player 25, regional boss 250, world boss (Ender Dragon,
+  Wither, Warden) 1000. Golems, slimes, shulkers and the blade's own summons have no soul.
+- **Stages**:
+
+| Stage | Souls | |
+|---|---|---|
+| 1 Empty Blade | 0 | a plain blade, a plain black kimono |
+| 2 Awakening | 100 | +damage, +armor; sneak with the blade to see souls through walls |
+| 3 Whisper | 300 | the path's first ability; gear takes the path's colour |
+| 4 Name | 700 | the blade whispers its name (rename it on an anvil - not before stage 4) |
+| 5 Shikai | 1500 | **trial**: sneak + use to face the blade's spirit (80 health; only you can hurt it); the Shikai ability |
+| 6 Mastery | 3000 | abilities +25% damage and range; the armor's passive (full set) |
+| 7 Bankai | 6000 | **second trial** (200 health); sneak + use: Bankai, 60 s, 10 min to recover |
+| 8 Bankai Mastery | 12000 | Bankai 90 s, 5 min to recover; the gear glows for good |
+| 9 Soul Union | 25000 | abilities +25%; the path's aura is always on |
+| 10 Absolute Form | 50000 | sneak + use during Bankai: the path's ultimate, once a day |
+
+  The blade hits 6% harder per stage above 1 (+30% during Bankai); the armor gives up to +12 armor and +12 toughness
+  at stage 10 with all four pieces. Ability damage starts at 4 + 1.2 per stage.
+- **Controls** (blade in hand): use = the stage-3 ability, the Shikai from stage 5, the Bankai ability during Bankai;
+  sneak + use = a waiting trial, else Bankai, else (during Bankai, stage 10) the Absolute Form.
+
+| Path | Stage 3 | Shikai | Bankai | Absolute Form | Armor / aura |
+|---|---|---|---|---|---|
+| Black Crescent | energy crescent (line) | wider, stronger crescent | speed, quick black crescents | 30 s beast: Strength III, crimson crescents | speed / haste |
+| Ash Sovereign | burning hits (15 s) | flame wave (cone) | heat aura; kills rise as skeletons | sun blade: a 40-block line of fire | fire immunity / attackers burn |
+| Perfect Lie | vanish, foes lose you | illusion: foes turn on each other | black coffin on the looked-at foe | butterfly: regeneration, slow fall, survive one death (5 min) | 15% of hits miss / regeneration |
+| Cherry Storm | petal cone | petal blades where you look | thousand-blade pillars hit all around | white blade: Strength II, light wings, +damage | no knockback / absorption |
+| Snow Dragon | ice chain pulls a foe | ice dragon freezes a line | ice wings; ice dragon | 2 min with no time limit, every hit freezes | cold immunity, attackers slowed / frost aura |
+| Unchained Beast | 15 s: lower health, harder hits | giant cleave (x2 vs big) | damage grows as health falls | 30 s: no armor, triple damage | Strength under half health / weakens foes |
+| Playful Shadow | twin blades (hits x1.5) | step behind the foe, next hit x1.5 | bind foes: slowed, they share your wounds | final act: bound foes die (bosses -30%) | hidden in the dark / slows foes |
+| Crimson Healer | life steal, heal allies | healing beast heals allies | hits rot and heal you | first beast: every hit heals in full (1 min) | regeneration / allies regenerate |
+| Shadow Inventor | crimson shield | crimson blast, shield allies | heal allies, break a foe's gear | root every foe within 12 in traps | -1/3 projectile damage / absorption |
+| Scorpion Sting | speed and invisibility | 2 hits in 10 s kill (bosses -20%); dash | missile blast up to 48 blocks | 30 s invisible, every hit kills | speed, soft landings / invisible sneaking |
+| Decay Experiment | poison hits | paralyse a foe | giant grub; poison clouds | withering hits, survive one death (1 min) | poison immunity / attackers poisoned |
+| Moonlight Dance | freezing circle | 1st dance: frozen circle; 2nd: ice wave | absolute zero: hits freeze, you slow | dance of death: everything within 12 shattered | cold immunity / slows foes |
+| Bone Serpent | longer reach (10 s) | whip-blade (line) | serpent beam of fire | serpent arms: exploding blows (1 min) | no knockback / +1 reach |
+| Lethal Reach | 10-block thrust | 30-block thrust | thrust leaves poison shards | every shard bursts | speed / haste |
+| Wolf Guardian | ghost arm smash | giant warrior (30 s) | the giant in full form - you share a quarter of its wounds | 20 s immortal, then weak | resistance / resistance, no knockback |
+
+- `/pipican soul` shows your blade; admins: `/pipican soul add <players> <souls>`, `/pipican soul reset <players>`.
+- Looks: the gear is dyed in the path's colour from stage 3 and glows from Shikai (the blade), Bankai and stage 8 (all);
+  summons and abilities use particles. Per-stage model changes (coats, masks, wings) are not modelled.
+
 ## Phases
 
 1. **Ores, worldgen, materials** — done.
@@ -158,7 +214,7 @@ shows what burns and for how long.
 3. **Special uses** — done.
 4. **Alloys, upgrades, world mechanics, limited ores** — done.
 5. **Mistborn Allomancy** — done.
-6. Tamashigane.
+6. **Tamashigane** — done.
 
 ## Regional mines
 

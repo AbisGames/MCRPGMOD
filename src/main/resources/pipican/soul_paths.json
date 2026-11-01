@@ -1,0 +1,85 @@
+{
+  "stages": [
+    0,
+    100,
+    300,
+    700,
+    1500,
+    3000,
+    6000,
+    12000,
+    25000,
+    50000
+  ],
+  "souls": {
+    "common": 1,
+    "strong": 3,
+    "elite": 10,
+    "mini_boss": 50,
+    "player": 25,
+    "region_boss": 250,
+    "world_boss": 1000
+  },
+  "paths": [
+    {
+      "id": "black_crescent",
+      "color": 1710618
+    },
+    {
+      "id": "ash_sovereign",
+      "color": 14698012
+    },
+    {
+      "id": "perfect_lie",
+      "color": 15262448
+    },
+    {
+      "id": "cherry_storm",
+      "color": 16033728
+    },
+    {
+      "id": "snow_dragon",
+      "color": 10148084
+    },
+    {
+      "id": "unchained_beast",
+      "color": 9109504
+    },
+    {
+      "id": "playful_shadow",
+      "color": 5978764
+    },
+    {
+      "id": "crimson_healer",
+      "color": 11542076
+    },
+    {
+      "id": "shadow_inventor",
+      "color": 3046706
+    },
+    {
+      "id": "scorpion_sting",
+      "color": 13938487
+    },
+    {
+      "id": "decay_experiment",
+      "color": 8172354
+    },
+    {
+      "id": "moonlight_dance",
+      "color": 15792383
+    },
+    {
+      "id": "bone_serpent",
+      "color": 12986408
+    },
+    {
+      "id": "lethal_reach",
+      "color": 11583173
+    },
+    {
+      "id": "wolf_guardian",
+      "color": 7162945
+    }
+  ]
+}
