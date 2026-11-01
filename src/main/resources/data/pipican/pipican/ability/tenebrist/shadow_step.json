@@ -11,7 +11,8 @@
   "actions": [
     {
       "type": "pipican:blink",
-      "distance": 12
+      "distance": 16,
+      "max_light": 7
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "Bird Form",
-  "description": "Bird form (drains Change): slow fall, -50% max health.",
+  "description": "Bird form (drains Change): glide (hold jump while falling) and slow fall, -50% max health.",
   "icon": "minecraft:feather",
   "cooldown_ticks": 60,
   "toggle": true,
@@ -18,6 +18,11 @@
     }
   ],
   "effects": [
+    {
+      "type": "pipican:bonus",
+      "kind": "glide",
+      "amount": 1
+    },
     {
       "type": "pipican:mob_effect",
       "effect": "minecraft:slow_falling"

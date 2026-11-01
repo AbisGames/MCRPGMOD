@@ -8,7 +8,8 @@
     {
       "type": "pipican:cleanse",
       "target": "allies",
-      "radius": 8
+      "radius": 8,
+      "effects": "#pipican:mind"
     }
   ]
 }

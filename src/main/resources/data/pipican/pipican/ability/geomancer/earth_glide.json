@@ -4,11 +4,17 @@
   "icon": "minecraft:stone",
   "cost": 40,
   "cooldown_ticks": 300,
-  "actions": [
+  "duration_ticks": 60,
+  "end_actions": [
     {
-      "type": "pipican:blink",
-      "distance": 8,
-      "through_walls": true
+      "type": "pipican:surface"
+    }
+  ],
+  "effects": [
+    {
+      "type": "pipican:bonus",
+      "kind": "phase_stone",
+      "amount": 1
     }
   ]
 }

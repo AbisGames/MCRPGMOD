@@ -22,6 +22,35 @@ public final class SpecialItems {
         return !stack.isEmpty() && (stack.is(MELEE) || stack.is(RANGED));
     }
 
+    /** Each player's bound weapon: the last weapon seen in hotbar slot 1 (for Recall Weapon). Not saved. */
+    private static final java.util.Map<java.util.UUID, ItemStack> BOUND = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** Remembers the weapon in hotbar slot 1 as the player's bound weapon. */
+    public static void trackBound(ServerPlayer player) {
+        ItemStack first = player.getInventory().getItem(0);
+        if (isWeapon(first)) {
+            BOUND.put(player.getUUID(), first.copy());
+        }
+    }
+
+    /** The player's bound weapon as last seen (it may have been dropped or thrown since). */
+    public static ItemStack boundWeapon(ServerPlayer player) {
+        return BOUND.getOrDefault(player.getUUID(), ItemStack.EMPTY);
+    }
+
+    /** True if {@code stack} is the player's bound weapon (same item and components, damage aside). */
+    public static boolean isBound(ServerPlayer player, ItemStack stack) {
+        ItemStack bound = boundWeapon(player);
+        if (bound.isEmpty() || stack.isEmpty() || !stack.is(bound.getItem())) {
+            return false;
+        }
+        ItemStack a = bound.copy();
+        ItemStack b = stack.copy();
+        a.remove(DataComponents.DAMAGE);
+        b.remove(DataComponents.DAMAGE);
+        return ItemStack.isSameItemSameComponents(a, b);
+    }
+
     /** The weapon in hotbar slot 1 is in the main hand. */
     public static boolean holdingBound(ServerPlayer player) {
         return player.getInventory().getSelectedSlot() == 0 && isWeapon(player.getMainHandItem());

@@ -5,6 +5,14 @@
   "cooldown_ticks": 200,
   "toggle": true,
   "drain_per_second": 0,
+  "pulse_ticks": 20,
+  "pulse_actions": [
+    {
+      "type": "pipican:heal",
+      "target": "self",
+      "percent": 0.1
+    }
+  ],
   "effects": [
     {
       "type": "pipican:mob_effect",
@@ -16,9 +24,14 @@
       "amplifier": 9
     },
     {
-      "type": "pipican:mob_effect",
-      "effect": "minecraft:regeneration",
-      "amplifier": 1
+      "type": "pipican:attribute",
+      "attribute": "minecraft:jump_strength",
+      "amount": -1,
+      "operation": "add_multiplied_total"
+    },
+    {
+      "type": "pipican:ignored_by",
+      "mobs": "#pipican:mobs/monsters"
     }
   ]
 }

@@ -25,14 +25,19 @@ import net.minecraft.world.entity.animal.golem.IronGolem;
  * user instead: it attacks hostile mobs near them and never targets players.
  *
  * <pre>{@code { "type": "pipican:summon", "entity": "minecraft:wolf", "count": 2, "seconds": 30 } }</pre>
+ * In a reaction they appear where the mob was ({@code victims} / {@code unless_victims}: only when it was / wasn't one of
+ * these kinds - "a mob you kill rises as a zombie, or a skeleton if it was one").
  */
-public record SummonAction(EntityType<?> entity, int count, double seconds, boolean ally) implements AbilityAction {
+public record SummonAction(EntityType<?> entity, int count, double seconds, boolean ally,
+                           java.util.Optional<net.minecraft.core.HolderSet<EntityType<?>>> victims, java.util.Optional<net.minecraft.core.HolderSet<EntityType<?>>> unlessVictims) implements AbilityAction {
 
     public static final MapCodec<SummonAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter(SummonAction::entity),
             Codec.intRange(1, 16).optionalFieldOf("count", 1).forGetter(SummonAction::count),
             Codec.doubleRange(1, 3600).optionalFieldOf("seconds", 30.0).forGetter(SummonAction::seconds),
-            Codec.BOOL.optionalFieldOf("ally", false).forGetter(SummonAction::ally)
+            Codec.BOOL.optionalFieldOf("ally", false).forGetter(SummonAction::ally),
+            net.minecraft.core.RegistryCodecs.homogeneousList(net.minecraft.core.registries.Registries.ENTITY_TYPE).optionalFieldOf("victims").forGetter(SummonAction::victims),
+            net.minecraft.core.RegistryCodecs.homogeneousList(net.minecraft.core.registries.Registries.ENTITY_TYPE).optionalFieldOf("unless_victims").forGetter(SummonAction::unlessVictims)
     ).apply(i, SummonAction::new));
 
     @Override
@@ -50,6 +55,11 @@ public record SummonAction(EntityType<?> entity, int count, double seconds, bool
     @Override
     public void run(AbilityContext ctx) {
         var player = ctx.player();
+        var kind = ctx.subject().map(s -> s.getType().builtInRegistryHolder());
+        if (victims.isPresent() && kind.map(k -> !victims.get().contains(k)).orElse(true)
+                || unlessVictims.isPresent() && kind.map(k -> unlessVictims.get().contains(k)).orElse(false)) {
+            return;
+        }
         var mods = ClassEffectApplier.state(player).summonMods();
         int count = this.count + mods.count();
         double seconds = this.seconds + mods.seconds();

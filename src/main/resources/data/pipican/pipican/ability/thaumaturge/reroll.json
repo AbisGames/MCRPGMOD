@@ -7,7 +7,209 @@
   "actions": [
     {
       "type": "pipican:cleanse",
-      "target": "self"
+      "target": "self",
+      "last": true
+    },
+    {
+      "type": "pipican:random",
+      "choices": [
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:speed",
+                "seconds": 10,
+                "amplifier": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:strength",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:regeneration",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:resistance",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:haste",
+                "seconds": 10,
+                "amplifier": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:jump_boost",
+                "seconds": 10,
+                "amplifier": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:fire_resistance",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:invisibility",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:absorption",
+                "seconds": 10,
+                "amplifier": 1
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:luck",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:slowness",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:weakness",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:nausea",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:levitation",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:glowing",
+                "seconds": 10
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "pipican:effect",
+            "target": "self",
+            "effects": [
+              {
+                "effect": "minecraft:unluck",
+                "seconds": 10
+              }
+            ]
+          }
+        ]
+      ]
     }
   ]
 }

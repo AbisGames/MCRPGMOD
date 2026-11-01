@@ -4,16 +4,12 @@
   "icon": "minecraft:leather_helmet",
   "cost": 25,
   "cooldown_ticks": 600,
-  "actions": [
+  "duration_ticks": 200,
+  "effects": [
     {
-      "type": "pipican:effect",
-      "target": "self",
-      "effects": [
-        {
-          "effect": "minecraft:invisibility",
-          "seconds": 10
-        }
-      ]
+      "type": "pipican:ignored_by",
+      "mobs": "#pipican:mobs/monsters",
+      "unless_attacked": true
     }
   ]
 }

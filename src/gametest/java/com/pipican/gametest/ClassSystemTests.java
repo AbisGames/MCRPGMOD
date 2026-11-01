@@ -121,6 +121,7 @@ public final class ClassSystemTests {
         TESTS.put("tamashigane", ClassSystemTests::tamashigane);
         TESTS.put("soul_paths_play", ClassSystemTests::soulPathsPlay);
         TESTS.put("skill_triggers", ClassSystemTests::skillTriggers);
+        TESTS.put("ability_specs", ClassSystemTests::abilitySpecs);
     }
 
     private ClassSystemTests() {}
@@ -979,7 +980,7 @@ public final class ClassSystemTests {
         float hitBefore = hitOne.getHealth();
         float nearBefore = nearOne.getHealth();
         new com.pipican.ability.action.DamageAction(new com.pipican.ability.Targets(com.pipican.ability.Targets.Kind.NEAR_VICTIM, 4, 16, 360, Optional.empty(), false),
-                2, com.pipican.ability.action.DamageAction.Kind.MAGIC, 0, 0)
+                2, com.pipican.ability.action.DamageAction.Kind.MAGIC, 0, 0, List.of())
                 .run(new AbilityContext(player, Optional.empty(), hitOne.position(), Optional.of(hitOne), 0));
         helper.assertTrue(hitOne.getHealth() == hitBefore && nearOne.getHealth() < nearBefore, "chained to the neighbour only: " + hitOne.getHealth() + " / " + nearOne.getHealth());
         Reactions.fire(player, hitOne, ItemStack.EMPTY, ReactionEffect.Event.KILL);
@@ -1103,7 +1104,7 @@ public final class ClassSystemTests {
 
         // "Unarmed": an empty main hand counts as holding air.
         var unarmed = new com.pipican.condition.type.HoldingCondition(net.minecraft.core.HolderSet.direct(Items.AIR.builtInRegistryHolder()),
-                com.pipican.condition.type.HoldingCondition.Hand.MAIN);
+                com.pipican.condition.type.HoldingCondition.Hand.MAIN, Optional.empty());
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         helper.assertTrue(unarmed.test(player), "empty hand is unarmed");
         player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(Items.STICK));
@@ -1554,6 +1555,13 @@ public final class ClassSystemTests {
             var zombie = helper.spawnWithNoFreeWill(net.minecraft.world.entity.EntityType.ZOMBIE, 1, 1, 3);
             zombie.setBaby(false); // a baby zombie is below eye level, so "look" abilities would miss it
             player.snapTo(zombie.getX(), zombie.getY(), zombie.getZ() - 2, 0, 0);
+            // Finishers need an afflicted target (Coup de Grace); Rune Blast needs a sigil weapon in hand.
+            zombie.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WEAKNESS, 200));
+            if (owner.equals("runesmith")) {
+                ItemStack sigil = new ItemStack(Items.IRON_SWORD);
+                sigil.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Rune"));
+                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, sigil);
+            }
             var area = player.getBoundingBox().inflate(48);
             try {
                 AbilityService.force(player, entry.getKey());
@@ -1745,6 +1753,145 @@ public final class ClassSystemTests {
             helper.assertTrue(mastery(aero, "aeromancer_windcalling") > 0, "a safe long fall trains Windcalling");
             dismiss(helper, pyro);
             dismiss(helper, aero);
+            helper.succeed();
+        });
+    }
+
+    // ------------------------------------------------------------------ abilities built to their spec text
+
+    private static ResourceKey<com.pipican.ability.Ability> shipped(String id) {
+        return ResourceKey.create(PipicanRegistries.ABILITY, Pipican.id(id));
+    }
+
+    /** Each new mechanic does what its ability's text says. */
+    private static void abilitySpecs(GameTestHelper helper) {
+        var level = helper.getLevel();
+
+        // Time Stop: frozen in place, then thawed.
+        ServerPlayer chrono = classPlayer(helper, "chronomancer", new BlockPos(1, 2, 1));
+        Zombie frozen = helper.spawn(EntityType.ZOMBIE, new BlockPos(2, 2, 2));
+        com.pipican.ability.AbilityService.force(chrono, shipped("chronomancer/time_stop"));
+        helper.assertTrue(frozen.isNoAi() && com.pipican.ability.Freezes.isFrozen(frozen), "Time Stop freezes mobs within 6 blocks");
+        dismiss(helper, chrono);
+
+        // Hex: sneaking picks the next curse (free), using it casts the picked one.
+        ServerPlayer hexer = classPlayer(helper, "hexer", new BlockPos(1, 2, 4));
+        Zombie hexed = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, 1, 2, 7);
+        hexed.setBaby(false);
+        hexer.snapTo(hexed.getX(), hexed.getY(), hexed.getZ() - 2, 0, 0);
+        hexer.setShiftKeyDown(true);
+        var pick = com.pipican.ability.AbilityService.force(hexer, shipped("hexer/hex"));
+        helper.assertTrue(pick.isCancelled() && pick.cancelReason().getString().contains("Lethargy"), "sneak + use picks the next curse: " + pick.cancelReason().getString());
+        hexer.setShiftKeyDown(false);
+        com.pipican.ability.AbilityService.force(hexer, shipped("hexer/hex"));
+        helper.assertTrue(hexed.hasEffect(net.minecraft.world.effect.MobEffects.SLOWNESS), "the picked curse (Lethargy) is cast");
+        dismiss(helper, hexer);
+
+        // Shared Recovery: you and the nearest player.
+        ServerPlayer priest = classPlayer(helper, "priest", new BlockPos(4, 2, 1));
+        ServerPlayer friend = classPlayer(helper, "warrior", new BlockPos(5, 2, 1));
+        ServerPlayer far = classPlayer(helper, "warrior", new BlockPos(7, 2, 7));
+        priest.setHealth(4);
+        friend.setHealth(4);
+        far.setHealth(4);
+        com.pipican.ability.AbilityService.force(priest, shipped("priest/shared_recovery"));
+        helper.assertTrue(priest.getHealth() > 4 && friend.getHealth() > 4, "Shared Recovery heals you and the nearest player");
+        helper.assertTrue(far.getHealth() == 4, "...and only one other player");
+        dismiss(helper, priest);
+        dismiss(helper, friend);
+        dismiss(helper, far);
+
+        // Escape: cobwebs around you are torn.
+        ServerPlayer thief = classPlayer(helper, "thief", new BlockPos(6, 2, 4));
+        BlockPos web = helper.absolutePos(new BlockPos(6, 2, 4));
+        level.setBlockAndUpdate(web, net.minecraft.world.level.block.Blocks.COBWEB.defaultBlockState());
+        com.pipican.ability.AbilityService.force(thief, shipped("thief/escape"));
+        helper.assertTrue(!level.getBlockState(web).is(net.minecraft.world.level.block.Blocks.COBWEB), "Escape breaks the cobweb you're stuck in");
+        dismiss(helper, thief);
+
+        // Store Spell: the off-hand potion goes into the sword, and each hit casts it.
+        ServerPlayer artificer = classPlayer(helper, "artificer", new BlockPos(1, 2, 1));
+        ItemStack sword = new ItemStack(Items.IRON_SWORD);
+        artificer.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, sword);
+        artificer.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, net.minecraft.world.item.alchemy.PotionContents.createItemStack(
+                Items.POTION, net.minecraft.world.item.alchemy.Potions.WEAKNESS));
+        com.pipican.ability.AbilityService.force(artificer, shipped("artificer/store_spell"));
+        helper.assertTrue(com.pipican.ability.StoredSpells.has(artificer.getMainHandItem()), "Store Spell loads the potion into the weapon");
+        helper.assertTrue(artificer.getOffhandItem().is(Items.GLASS_BOTTLE), "the potion is used up");
+        Zombie stung = victim(helper, 2, 1);
+        stung.hurtServer(level, level.damageSources().playerAttack(artificer), 1);
+        helper.assertTrue(stung.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS), "a hit with the loaded weapon casts the stored potion");
+        dismiss(helper, artificer);
+
+        // Animate Object: the block becomes a construct, and comes back when it ends.
+        ServerPlayer techno = classPlayer(helper, "technomancer", new BlockPos(1, 2, 1));
+        BlockPos anvil = helper.absolutePos(new BlockPos(1, 2, 3));
+        level.setBlockAndUpdate(anvil, net.minecraft.world.level.block.Blocks.IRON_BLOCK.defaultBlockState());
+        techno.snapTo(anvil.getX() + 0.5, anvil.getY(), anvil.getZ() - 1.5, 0, 0);
+        techno.setXRot(20);
+        var animated = com.pipican.ability.AbilityService.force(techno, shipped("technomancer/animate_object"));
+        helper.assertTrue(!animated.isCancelled(), "Animate Object found the block: " + (animated.isCancelled() ? animated.cancelReason().getString() : ""));
+        helper.assertTrue(level.getBlockState(anvil).isAir(), "the block left its spot");
+        var construct = level.getEntitiesOfClass(net.minecraft.world.entity.animal.golem.IronGolem.class, new net.minecraft.world.phys.AABB(anvil).inflate(2),
+                g -> com.pipican.ability.Summons.isSummonOf(g, techno)).stream().findFirst();
+        helper.assertTrue(construct.isPresent() && construct.get().isInvisible() && !construct.get().getPassengers().isEmpty(), "a construct wearing the block took its place");
+        construct.get().discard();
+        helper.assertTrue(level.getBlockState(construct.get().blockPosition()).is(net.minecraft.world.level.block.Blocks.IRON_BLOCK), "the block comes back when the construct ends");
+        level.setBlockAndUpdate(construct.get().blockPosition(), net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        dismiss(helper, techno);
+
+        // Recall Weapon: the bound weapon comes back to slot 1, in hand.
+        ServerPlayer binder = classPlayer(helper, "spellbinder", new BlockPos(1, 2, 1));
+        ItemStack blade = new ItemStack(Items.DIAMOND_SWORD);
+        binder.getInventory().setItem(0, blade.copy());
+        com.pipican.ability.SpecialItems.trackBound(binder);
+        binder.getInventory().setItem(0, ItemStack.EMPTY);
+        binder.getInventory().setItem(20, blade.copy());
+        binder.getInventory().setSelectedSlot(3);
+        com.pipican.ability.AbilityService.force(binder, shipped("spellbinder/recall_weapon"));
+        helper.assertTrue(binder.getInventory().getSelectedSlot() == 0 && binder.getMainHandItem().is(Items.DIAMOND_SWORD), "Recall Weapon puts the bound weapon in your hand");
+        dismiss(helper, binder);
+
+        // Earth Glide: stone at your feet has no collision for you while it lasts.
+        ServerPlayer geo = classPlayer(helper, "geomancer", new BlockPos(1, 2, 1));
+        geo.setData(com.pipican.player.PipicanAttachments.MOVE_FLAGS, new com.pipican.player.PipicanAttachments.MoveFlags(List.of("phase_stone")));
+        BlockPos wall = helper.absolutePos(new BlockPos(2, 2, 1));
+        level.setBlockAndUpdate(wall, net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+        var shape = level.getBlockState(wall).getCollisionShape(level, wall, net.minecraft.world.phys.shapes.CollisionContext.of(geo));
+        helper.assertTrue(shape.isEmpty(), "phasing players pass through stone");
+        BlockPos floor = wall.below();
+        helper.assertTrue(!level.getBlockState(floor).getCollisionShape(level, floor, net.minecraft.world.phys.shapes.CollisionContext.of(geo)).isEmpty()
+                || !level.getBlockState(floor).is(com.pipican.ability.Phasing.PASSABLE), "the floor below holds unless you sneak");
+        level.setBlockAndUpdate(wall, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        dismiss(helper, geo);
+
+        // Raise Dead: the next kill rises as a servant, then the state ends.
+        ServerPlayer necro = classPlayer(helper, "necromancer", new BlockPos(1, 2, 1));
+        com.pipican.ability.AbilityService.force(necro, shipped("necromancer/raise_dead"));
+        killWith(helper, necro, victim(helper, 3, 3), new ItemStack(Items.IRON_SWORD));
+        var servants = level.getEntitiesOfClass(Zombie.class, helper.getBounds().inflate(4), z -> com.pipican.ability.Summons.isSummonOf(z, necro));
+        helper.assertTrue(servants.size() == 1, "the killed zombie rises as one servant zombie, got " + servants.size());
+        helper.assertTrue(!ClassService.data(necro).abilityActive().containsKey(shipped("necromancer/raise_dead")), "Raise Dead ends after raising one");
+        servants.forEach(net.minecraft.world.entity.Entity::discard);
+        dismiss(helper, necro);
+
+        // Witch Fire: a fireball appears while steering and goes out when it stops.
+        ServerPlayer witch = classPlayer(helper, "witch", new BlockPos(1, 2, 1));
+        var steer = new com.pipican.ability.action.SteerAction(0.6, 3, 1, false);
+        steer.run(com.pipican.ability.AbilityContext.of(witch, shipped("witch/witch_fire"), 0));
+        helper.assertTrue(!level.getEntitiesOfClass(com.pipican.entity.WitchFireball.class, witch.getBoundingBox().inflate(4)).isEmpty(), "Witch Fire conjures a fireball");
+        new com.pipican.ability.action.SteerAction(0.6, 3, 1, true).run(com.pipican.ability.AbilityContext.of(witch, shipped("witch/witch_fire"), 0));
+        helper.assertTrue(level.getEntitiesOfClass(com.pipican.entity.WitchFireball.class, witch.getBoundingBox().inflate(4), e -> e.isAlive()).isEmpty(), "...and puts it out");
+        dismiss(helper, witch);
+
+        // Consecrate Ground: the temple stands where you used it.
+        ServerPlayer templar = classPlayer(helper, "templar", new BlockPos(3, 2, 3));
+        com.pipican.ability.AbilityService.force(templar, shipped("templar/consecrate_ground"));
+        helper.assertTrue(com.pipican.ability.Temples.center(templar).map(c -> c.distanceTo(templar.position()) < 0.1).orElse(false), "Consecrate Ground raises a temple at your feet");
+        dismiss(helper, templar);
+
+        helper.runAfterDelay(70, () -> {
+            helper.assertTrue(!frozen.isNoAi() && !com.pipican.ability.Freezes.isFrozen(frozen), "frozen mobs thaw after 3s");
             helper.succeed();
         });
     }

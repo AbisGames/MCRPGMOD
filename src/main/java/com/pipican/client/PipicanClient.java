@@ -113,6 +113,7 @@ public final class PipicanClient {
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         // The eidolon reuses the iron golem model and texture; its SCALE attribute makes it bigger.
         event.registerEntityRenderer(PipicanEntities.EIDOLON.get(), IronGolemRenderer::new);
+        event.registerEntityRenderer(PipicanEntities.WITCH_FIREBALL.get(), net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
     }
 
     private static void registerHud(RegisterGuiLayersEvent event) {

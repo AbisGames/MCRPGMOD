@@ -7,9 +7,10 @@
   "actions": [
     {
       "type": "pipican:summon",
-      "entity": "minecraft:iron_golem",
-      "count": 1,
-      "seconds": 30
+      "entity": "minecraft:copper_golem",
+      "count": 2,
+      "seconds": 30,
+      "ally": true
     }
   ]
 }

@@ -4,17 +4,31 @@
   "icon": "minecraft:spyglass",
   "cost": 30,
   "cooldown_ticks": 400,
-  "duration_ticks": 60,
+  "duration_ticks": 40,
+  "actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
+        {
+          "effect": "minecraft:slowness",
+          "seconds": 2,
+          "amplifier": 3
+        },
+        {
+          "effect": "minecraft:mining_fatigue",
+          "seconds": 2,
+          "amplifier": 2
+        }
+      ],
+      "radius": 32
+    }
+  ],
   "effects": [
     {
-      "type": "pipican:damage_dealt",
-      "multiplier": 1.5,
-      "weapons": "#pipican:weapons/crossbows"
-    },
-    {
-      "type": "pipican:damage_dealt",
-      "multiplier": 1.5,
-      "weapons": "#pipican:weapons/bows"
+      "type": "pipican:bonus",
+      "kind": "ranged_crit",
+      "amount": 1
     }
   ]
 }

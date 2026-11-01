@@ -8,7 +8,14 @@
     {
       "type": "pipican:cleanse",
       "target": "look_ally",
-      "range": 8
+      "range": 8,
+      "effects": "#pipican:mind"
+    },
+    {
+      "type": "pipican:cleanse",
+      "target": "look_ally",
+      "range": 8,
+      "effects": "#pipican:curses"
     },
     {
       "type": "pipican:effect",
@@ -20,7 +27,9 @@
           "amplifier": 9
         }
       ],
-      "range": 8
+      "range": 8,
+      "entities": "#pipican:mobs/unclean",
+      "required": false
     }
   ]
 }

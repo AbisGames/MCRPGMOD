@@ -7,10 +7,11 @@
   "actions": [
     {
       "type": "pipican:dash",
-      "target": "allies",
+      "target": "players",
       "radius": 12,
       "strength": 1.2,
-      "up": 0.2
+      "up": 0.2,
+      "toward_look": true
     }
   ]
 }

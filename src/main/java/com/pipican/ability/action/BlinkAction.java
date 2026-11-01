@@ -27,13 +27,18 @@ import net.minecraft.world.phys.Vec3;
  * {@code through_walls}: go through solid blocks to the farthest free spot in range.
  * {@code require_blocks}: only works when looking at one of these blocks, and arrives beside it
  * (otherwise the use is cancelled and refunded).
+ * {@code max_light}: the arrival spot must be this dark or darker ("teleport between shadows").
+ * {@code start_near}: the user must be touching one of these blocks (within 1.5 blocks) to set off ("step into a log").
  */
-public record BlinkAction(double distance, boolean throughWalls, Optional<HolderSet<Block>> requireBlocks) implements AbilityAction {
+public record BlinkAction(double distance, boolean throughWalls, Optional<HolderSet<Block>> requireBlocks, int maxLight,
+                          Optional<HolderSet<Block>> startNear) implements AbilityAction {
 
     public static final MapCodec<BlinkAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Codec.doubleRange(1, 64).optionalFieldOf("distance", 8.0).forGetter(BlinkAction::distance),
             Codec.BOOL.optionalFieldOf("through_walls", false).forGetter(BlinkAction::throughWalls),
-            RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("require_blocks").forGetter(BlinkAction::requireBlocks)
+            RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("require_blocks").forGetter(BlinkAction::requireBlocks),
+            Codec.intRange(0, 15).optionalFieldOf("max_light", 15).forGetter(BlinkAction::maxLight),
+            RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("start_near").forGetter(BlinkAction::startNear)
     ).apply(i, BlinkAction::new));
 
     @Override
@@ -48,6 +53,21 @@ public record BlinkAction(double distance, boolean throughWalls, Optional<Holder
         double distance = this.distance + ctx.mod().radius()
                 + ctx.ability().map(k -> com.pipican.player.ClassEffectApplier.state(player).abilityMod(k).radius()).orElse(0.0);
         Vec3 look = player.getLookAngle();
+        if (startNear.isPresent() && BlockPos.betweenClosedStream(player.getBoundingBox().inflate(1.5)).noneMatch(p -> ctx.level().getBlockState(p).is(startNear.get()))) {
+            ctx.cancel(Component.translatable("pipican.ability.needs_start_block"));
+            return;
+        }
+        LIGHT.set(maxLight);
+        try {
+            go(ctx, player, distance, look);
+        } finally {
+            LIGHT.set(15);
+        }
+    }
+
+    private static final ThreadLocal<Integer> LIGHT = ThreadLocal.withInitial(() -> 15);
+
+    private void go(AbilityContext ctx, ServerPlayer player, double distance, Vec3 look) {
         HitResult hit = player.pick(distance, 1.0f, false);
         if (requireBlocks.isPresent()) {
             if (!(hit instanceof BlockHitResult blockHit) || hit.getType() == HitResult.Type.MISS
@@ -74,6 +94,18 @@ public record BlinkAction(double distance, boolean throughWalls, Optional<Holder
         Vec3 target = hit.getType() == HitResult.Type.MISS
                 ? player.getEyePosition().add(look.scale(distance))
                 : hit.getLocation().subtract(look.scale(0.8));
+        if (LIGHT.get() < 15) {
+            // Between shadows: the farthest dark enough spot along the way.
+            Vec3 eye = player.getEyePosition();
+            double reach = Math.min(distance, eye.distanceTo(target));
+            for (double d = reach; d >= 1; d -= 0.5) {
+                if (tryAt(ctx, eye.add(look.scale(d)).subtract(0, player.getEyeHeight(), 0))) {
+                    return;
+                }
+            }
+            ctx.cancel(Component.translatable("pipican.ability.no_shadow"));
+            return;
+        }
         if (!tryAt(ctx, target.subtract(0, player.getEyeHeight(), 0))) {
             ctx.cancel(Component.translatable("pipican.ability.no_room"));
         }
@@ -83,7 +115,8 @@ public record BlinkAction(double distance, boolean throughWalls, Optional<Holder
     static boolean tryAt(AbilityContext ctx, Vec3 feet) {
         ServerPlayer player = ctx.player();
         for (int i = 0; i < 4; i++) {
-            if (ctx.level().noCollision(player, player.getBoundingBox().move(feet.subtract(player.position())))) {
+            if (ctx.level().noCollision(player, player.getBoundingBox().move(feet.subtract(player.position())))
+                    && ctx.level().getMaxLocalRawBrightness(BlockPos.containing(feet)) <= LIGHT.get()) {
                 player.teleportTo(feet.x, feet.y, feet.z);
                 player.resetFallDistance();
                 MasteryEvents.did(player, SkillAction.Did.Kind.TELEPORT);

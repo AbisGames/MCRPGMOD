@@ -20,7 +20,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class MovementEvents {
 
-    private static final List<Kind> CLIENT_KINDS = List.of(Kind.NO_COBWEB, Kind.NO_POWDER_SNOW, Kind.DOUBLE_JUMP, Kind.WALL_RUN, Kind.WALL_CLIMB, Kind.GLIDE, Kind.HIDE_NAMEPLATE, Kind.SINK, Kind.UNPUSHABLE, Kind.DRY_RIPTIDE);
+    private static final List<Kind> CLIENT_KINDS = List.of(Kind.NO_COBWEB, Kind.NO_POWDER_SNOW, Kind.DOUBLE_JUMP, Kind.WALL_RUN, Kind.WALL_CLIMB, Kind.GLIDE, Kind.HIDE_NAMEPLATE, Kind.SINK, Kind.UNPUSHABLE, Kind.DRY_RIPTIDE, Kind.PHASE_STONE);
 
     private MovementEvents() {}
 
@@ -30,7 +30,7 @@ public final class MovementEvents {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
-        if (player.tickCount % 10 == 0) {
+        if (player.tickCount % 2 == 0) {
             List<String> flags = new ArrayList<>();
             for (Kind kind : CLIENT_KINDS) {
                 if (state.chance(kind) > 0) {

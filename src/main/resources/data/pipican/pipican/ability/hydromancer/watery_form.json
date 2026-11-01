@@ -8,7 +8,19 @@
   "effects": [
     {
       "type": "pipican:damage_dealt",
-      "multiplier": 0.5
+      "multiplier": 0.5,
+      "weapons": "#pipican:weapons/melee"
+    },
+    {
+      "type": "pipican:damage_dealt",
+      "multiplier": 0.5,
+      "weapons": "#pipican:weapons/ranged"
+    },
+    {
+      "type": "pipican:attribute",
+      "attribute": "minecraft:scale",
+      "amount": -0.5,
+      "operation": "add_multiplied_base"
     },
     {
       "type": "pipican:mob_effect",

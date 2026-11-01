@@ -10,7 +10,7 @@
       "target": "look",
       "range": 64,
       "seconds": 60,
-      "multiplier": 1.25
+      "multiplier": 1.0
     }
   ]
 }

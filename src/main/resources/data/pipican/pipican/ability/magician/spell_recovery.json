@@ -7,7 +7,7 @@
   "actions": [
     {
       "type": "pipican:resource",
-      "percent": 0.5
+      "percent": 1.0
     },
     {
       "type": "pipican:heal",

@@ -4,12 +4,32 @@
   "icon": "minecraft:chiseled_stone_bricks",
   "cost": 40,
   "cooldown_ticks": 300,
+  "requires": {
+    "type": "pipican:any_of",
+    "conditions": [
+      {
+        "type": "pipican:item_rule",
+        "rule": "sigil_weapon"
+      },
+      {
+        "type": "pipican:item_rule",
+        "rule": "sigil_armor",
+        "min": 1
+      }
+    ]
+  },
   "actions": [
     {
       "type": "pipican:damage",
       "target": "hostiles",
-      "amount": 7,
-      "radius": 4
+      "amount": 4,
+      "radius": 4,
+      "scaling": [
+        {
+          "source": "sigils",
+          "per": 1.5
+        }
+      ]
     }
   ]
 }

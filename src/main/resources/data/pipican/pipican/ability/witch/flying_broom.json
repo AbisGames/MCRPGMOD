@@ -8,18 +8,20 @@
   "requires": {
     "type": "pipican:holding",
     "items": [
-      "minecraft:blaze_rod",
-      "minecraft:stick"
-    ]
+      "minecraft:stick",
+      "minecraft:blaze_rod"
+    ],
+    "named": "broom"
   },
   "end_when": {
     "type": "pipican:not",
     "condition": {
       "type": "pipican:holding",
       "items": [
-        "minecraft:blaze_rod",
-        "minecraft:stick"
-      ]
+        "minecraft:stick",
+        "minecraft:blaze_rod"
+      ],
+      "named": "broom"
     }
   },
   "effects": [

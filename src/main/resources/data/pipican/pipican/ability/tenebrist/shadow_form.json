@@ -7,12 +7,26 @@
   "duration_ticks": 200,
   "effects": [
     {
-      "type": "pipican:mob_effect",
-      "effect": "minecraft:invisibility"
+      "type": "pipican:dodge",
+      "chance": 0.3
     },
     {
-      "type": "pipican:damage_taken",
-      "multiplier": 0.8
+      "type": "pipican:bonus",
+      "kind": "unpushable",
+      "amount": 1
+    },
+    {
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:light",
+        "max": 8
+      },
+      "effects": [
+        {
+          "type": "pipican:mob_effect",
+          "effect": "minecraft:invisibility"
+        }
+      ]
     }
   ]
 }

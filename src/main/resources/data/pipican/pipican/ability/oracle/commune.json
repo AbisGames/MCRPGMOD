@@ -7,7 +7,14 @@
   "actions": [
     {
       "type": "pipican:locate",
-      "structures": "#minecraft:village"
+      "any_of": [
+        "#minecraft:village",
+        "#minecraft:ruined_portal",
+        "#minecraft:shipwreck",
+        "#minecraft:on_woodland_explorer_maps",
+        "#minecraft:on_ocean_explorer_maps",
+        "#minecraft:on_trial_chambers_maps"
+      ]
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "values": [
+    "minecraft:unluck",
+    "minecraft:weakness",
+    "minecraft:mining_fatigue",
+    "minecraft:hunger",
+    "minecraft:wither",
+    "minecraft:bad_omen",
+    "minecraft:slowness"
+  ]
+}

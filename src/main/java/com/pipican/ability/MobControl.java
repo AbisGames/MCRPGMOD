@@ -160,6 +160,17 @@ public final class MobControl {
                     if (mob.getTarget() == null && mob.distanceToSqr(owner) > 64 && mob instanceof PathfinderMob pm) {
                         pm.getNavigation().moveTo(owner, 1.1);
                     }
+                    // Mobs with no attack of their own (copper golems) walk up and strike for 3.
+                    LivingEntity foe = mob.getTarget();
+                    if (foe != null && mob.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE) == null
+                            && mob.level() instanceof net.minecraft.server.level.ServerLevel level) {
+                        if (mob.distanceToSqr(foe) > 2.5 * 2.5) {
+                            mob.getNavigation().moveTo(foe, 1.2);
+                        } else if (mob.tickCount % 20 == 0) {
+                            mob.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+                            foe.hurtServer(level, mob.damageSources().mobAttack(mob), 3);
+                        }
+                    }
                 }
             }
         }

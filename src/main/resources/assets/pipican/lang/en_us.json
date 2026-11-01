@@ -2695,5 +2695,16 @@
   "pipican.soul.tooltip_stage": "Stage %s - %s",
   "pipican.soul.tooltip_souls": "%s souls",
   "pipican.soul.tooltip_path": "Path: %s",
-  "pipican.soul.tooltip_bound": "Bound to %s"
+  "pipican.soul.tooltip_bound": "Bound to %s",
+  "pipican.ability.needs_start_block": "You have to be touching the right kind of block to set off.",
+  "pipican.ability.no_shadow": "There's no shadow dark enough there.",
+  "pipican.ability.armor_full": "You're already wearing a full set of armor.",
+  "pipican.ability.chosen": "Chosen: %s",
+  "pipican.ability.cant_animate": "That block can't be animated.",
+  "pipican.ability.needs_gear": "Hold a weapon or a piece of armor in your main hand.",
+  "pipican.ability.nothing_stolen": "You haven't stolen anything to send back yet.",
+  "pipican.ability.grimoire_page": "Grimoire page %s: %s",
+  "pipican.ability.already_in_hand": "Your bound weapon is already in your hand.",
+  "pipican.stored_spell.line": "Stored spell: %s (%s charges)",
+  "entity.pipican.witch_fireball": "Witch Fire"
 }

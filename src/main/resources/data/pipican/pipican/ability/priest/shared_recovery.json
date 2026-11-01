@@ -8,7 +8,12 @@
   "actions": [
     {
       "type": "pipican:heal",
-      "target": "allies",
+      "target": "self",
+      "amount": 6
+    },
+    {
+      "type": "pipican:heal",
+      "target": "nearest_player",
       "amount": 6,
       "radius": 6
     }

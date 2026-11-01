@@ -19,12 +19,14 @@ import net.minecraft.world.level.levelgen.structure.Structure;
  * nearest structure from a structure tag.
  *
  * <pre>{@code { "type": "pipican:locate", "structures": "#minecraft:village" } }</pre>
- * Without {@code structures} it points to the user's respawn point (or the world spawn).
+ * {@code any_of}: several structure tags - it points to whichever is nearest ("the nearest structure").
+ * Without either it points to the user's respawn point (or the world spawn).
  */
-public record LocateAction(Optional<TagKey<Structure>> structures) implements AbilityAction {
+public record LocateAction(Optional<TagKey<Structure>> structures, java.util.List<TagKey<Structure>> anyOf) implements AbilityAction {
 
     public static final MapCodec<LocateAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            TagKey.hashedCodec(Registries.STRUCTURE).optionalFieldOf("structures").forGetter(LocateAction::structures)
+            TagKey.hashedCodec(Registries.STRUCTURE).optionalFieldOf("structures").forGetter(LocateAction::structures),
+            TagKey.hashedCodec(Registries.STRUCTURE).listOf().optionalFieldOf("any_of", java.util.List.of()).forGetter(LocateAction::anyOf)
     ).apply(i, LocateAction::new));
 
     @Override
@@ -37,7 +39,16 @@ public record LocateAction(Optional<TagKey<Structure>> structures) implements Ab
         var player = ctx.player();
         BlockPos target;
         Component what;
-        if (structures.isPresent()) {
+        if (!anyOf.isEmpty()) {
+            target = null;
+            for (TagKey<Structure> tag : anyOf) {
+                BlockPos found = ctx.level().findNearestMapStructure(tag, player.blockPosition(), 48, false);
+                if (found != null && (target == null || found.distSqr(player.blockPosition()) < target.distSqr(player.blockPosition()))) {
+                    target = found;
+                }
+            }
+            what = Component.translatable("pipican.locate.structure");
+        } else if (structures.isPresent()) {
             target = ctx.level().findNearestMapStructure(structures.get(), player.blockPosition(), 64, false);
             what = Component.translatable("pipican.locate.structure");
         } else {

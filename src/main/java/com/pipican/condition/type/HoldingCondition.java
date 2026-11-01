@@ -18,7 +18,7 @@ import net.minecraft.world.item.Item;
  * <pre>{@code { "type": "pipican:holding", "items": "#pipican:weapons/shields", "hand": "either" } }</pre>
  * {@code hand}: {@code main}, {@code off} or {@code either} (default).
  */
-public record HoldingCondition(HolderSet<Item> items, Hand hand) implements ClassCondition {
+public record HoldingCondition(HolderSet<Item> items, Hand hand, java.util.Optional<String> named) implements ClassCondition {
 
     public enum Hand implements StringRepresentable {
         MAIN("main"), OFF("off"), EITHER("either");
@@ -38,7 +38,8 @@ public record HoldingCondition(HolderSet<Item> items, Hand hand) implements Clas
 
     public static final MapCodec<HoldingCondition> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             RegistryCodecs.homogeneousList(Registries.ITEM).fieldOf("items").forGetter(HoldingCondition::items),
-            Hand.CODEC.optionalFieldOf("hand", Hand.EITHER).forGetter(HoldingCondition::hand)
+            Hand.CODEC.optionalFieldOf("hand", Hand.EITHER).forGetter(HoldingCondition::hand),
+            com.mojang.serialization.Codec.STRING.optionalFieldOf("named").forGetter(HoldingCondition::named)
     ).apply(i, HoldingCondition::new));
 
     @Override
@@ -48,8 +49,8 @@ public record HoldingCondition(HolderSet<Item> items, Hand hand) implements Clas
 
     @Override
     public boolean test(ServerPlayer player) {
-        boolean main = player.getMainHandItem().is(items);
-        boolean off = player.getOffhandItem().is(items);
+        boolean main = player.getMainHandItem().is(items) && named(player.getMainHandItem());
+        boolean off = player.getOffhandItem().is(items) && named(player.getOffhandItem());
         // Blessed Symbol: a shield with a banner pattern counts as an Icon of Faith (the icon list holds a totem).
         if (!off && hand == Hand.OFF && items.contains(net.minecraft.world.item.Items.TOTEM_OF_UNDYING.builtInRegistryHolder())
                 && player.getOffhandItem().is(net.minecraft.world.item.Items.SHIELD)
@@ -71,5 +72,14 @@ public record HoldingCondition(HolderSet<Item> items, Hand hand) implements Clas
             case OFF -> off;
             case EITHER -> main || off;
         };
+    }
+
+    /** {@code named}: the item must carry an anvil name containing this text, ignoring case ("a renamed stick" broom). */
+    private boolean named(net.minecraft.world.item.ItemStack stack) {
+        if (named.isEmpty()) {
+            return true;
+        }
+        var name = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_NAME);
+        return name != null && name.getString().toLowerCase(java.util.Locale.ROOT).contains(named.get().toLowerCase(java.util.Locale.ROOT));
     }
 }

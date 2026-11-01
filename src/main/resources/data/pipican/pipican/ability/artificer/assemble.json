@@ -8,8 +8,13 @@
     {
       "type": "pipican:give",
       "item": "minecraft:iron_sword",
-      "sneak_item": "minecraft:iron_chestplate",
-      "seconds": 600
+      "seconds": 0,
+      "sneak_items": [
+        "minecraft:iron_helmet",
+        "minecraft:iron_chestplate",
+        "minecraft:iron_leggings",
+        "minecraft:iron_boots"
+      ]
     }
   ]
 }

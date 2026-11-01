@@ -1986,5 +1986,17 @@
   "pipican.soul.tooltip_stage": "%s. aşama - %s",
   "pipican.soul.tooltip_souls": "%s ruh",
   "pipican.soul.tooltip_path": "Yol: %s",
-  "pipican.soul.tooltip_bound": "%s kişisine bağlı"
+  "pipican.soul.tooltip_bound": "%s kişisine bağlı",
+  "pipican.ability.needs_start_block": "Yola çıkmak için doğru türde bir bloğa dokunuyor olmalısın.",
+  "pipican.ability.no_shadow": "Orada yeterince karanlık bir gölge yok.",
+  "pipican.ability.armor_full": "Zaten tam bir zırh takımı giyiyorsun.",
+  "pipican.ability.chosen": "Seçilen: %s",
+  "pipican.ability.cant_animate": "Bu blok canlandırılamaz.",
+  "pipican.ability.needs_potion": "Sol elinde bir iksir tut.",
+  "pipican.ability.needs_gear": "Ana elinde bir silah ya da zırh parçası tut.",
+  "pipican.ability.nothing_stolen": "Geri gönderecek bir şey çalmadın henüz.",
+  "pipican.ability.grimoire_page": "Grimuar sayfası %s: %s",
+  "pipican.ability.already_in_hand": "Bağlı silahın zaten elinde.",
+  "pipican.stored_spell.line": "Saklı büyü: %s (%s yük)",
+  "entity.pipican.witch_fireball": "Cadı Ateşi"
 }

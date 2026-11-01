@@ -18,6 +18,11 @@ public final class PipicanEntities {
             id -> EntityType.Builder.of(Eidolon::new, MobCategory.MISC).sized(1.4f, 2.7f).clientTrackingRange(10)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, id)));
 
+    /** The Witch's steerable green fireball (Witch Fire). */
+    public static final DeferredHolder<EntityType<?>, EntityType<WitchFireball>> WITCH_FIREBALL = REGISTER.register("witch_fireball",
+            id -> EntityType.Builder.<WitchFireball>of(WitchFireball::new, MobCategory.MISC).sized(0.3125f, 0.3125f).clientTrackingRange(4).updateInterval(1)
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, id)));
+
     private PipicanEntities() {}
 
     /** Mod-bus listener. */

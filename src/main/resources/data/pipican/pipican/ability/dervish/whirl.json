@@ -6,11 +6,10 @@
   "cooldown_ticks": 120,
   "actions": [
     {
-      "type": "pipican:damage",
+      "type": "pipican:weapon_strike",
       "target": "hostiles",
-      "amount": 5,
       "radius": 3,
-      "kind": "melee"
+      "hands": "both"
     }
   ]
 }

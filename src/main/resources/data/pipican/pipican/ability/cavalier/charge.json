@@ -6,24 +6,12 @@
   "cooldown_ticks": 200,
   "actions": [
     {
-      "type": "pipican:dash",
+      "type": "pipican:charge",
       "strength": 1.8,
-      "up": 0.1
-    },
-    {
-      "type": "pipican:damage",
-      "target": "hostiles",
-      "amount": 8,
-      "radius": 3,
-      "cone": 60,
-      "kind": "melee"
-    },
-    {
-      "type": "pipican:push",
-      "target": "hostiles",
-      "radius": 3,
-      "strength": 1.5,
-      "cone": 60
+      "up": 0.1,
+      "damage": 8,
+      "push": 1.5,
+      "seconds": 1.2
     }
   ]
 }

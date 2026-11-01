@@ -36,6 +36,7 @@ import net.minecraft.world.phys.Vec3;
  *   <li>{@code companions} - your summons, tamed pets and eidolon within {@code radius}</li>
  *   <li>{@code mount} - what the user is riding</li>
  *   <li>{@code near_victim} - in a reaction, the hostile mob closest to the one hit, within {@code radius} of it</li>
+ *   <li>{@code nearest_player} - the other player closest to the user within {@code radius} ("you and one nearby player")</li>
  * </ul>
  * {@code cone} (degrees, default 360) keeps only targets in front of the user. {@code entities} (an entity
  * type, list or {@code #tag}, e.g. {@code "#minecraft:undead"}) keeps only those kinds of mob; {@code state} (a
@@ -52,7 +53,7 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
 
     public enum Kind implements StringRepresentable {
         SELF("self"), ALLIES("allies"), PLAYERS("players"), HOSTILES("hostiles"), MOBS("mobs"), LOOK("look"), LOOK_ALLY("look_ally"),
-        VICTIM("victim"), COMPANIONS("companions"), NEAR_VICTIM("near_victim"), MOUNT("mount");
+        VICTIM("victim"), COMPANIONS("companions"), NEAR_VICTIM("near_victim"), MOUNT("mount"), NEAREST_PLAYER("nearest_player");
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
         private final String name;
@@ -109,6 +110,9 @@ public record Targets(Kind target, double radius, double range, double cone, Opt
             case NEAR_VICTIM -> ctx.subject().ifPresent(subject -> player.level().getEntitiesOfClass(LivingEntity.class, subject.getBoundingBox().inflate(radius),
                             e -> e != subject && e != player && e.isAlive() && e instanceof Enemy && e.distanceTo(subject) <= radius).stream()
                     .min(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(subject))).ifPresent(out::add));
+            case NEAREST_PLAYER -> player.level().getEntitiesOfClass(Player.class, new AABB(origin, origin).inflate(radius),
+                            p -> p != player && p.isAlive() && !p.isSpectator() && p.position().distanceToSqr(origin) <= radius * radius).stream()
+                    .min(java.util.Comparator.comparingDouble(p -> p.position().distanceToSqr(origin))).ifPresent(out::add);
             case LOOK -> {
                 LivingEntity hit = lookTarget(player, range);
                 if (hit != null && !(hit instanceof Player)) {

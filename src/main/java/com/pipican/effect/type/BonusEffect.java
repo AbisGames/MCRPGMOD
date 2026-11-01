@@ -202,6 +202,11 @@ import net.minecraft.util.StringRepresentable;
  *   <li>Trackless (any amount above 0): {@code no_tripwires} / {@code no_plates} - you don't set off tripwires / press pressure
  *       plates; {@code no_sculk_steps} - your steps, landings and swimming make no vibrations</li>
  *   <li>{@code unpushable}: any amount above 0 = you and the creatures around you don't push each other</li>
+ *   <li>{@code ranged_crit}: any amount above 0 = every arrow, bolt or bullet you shoot is a critical shot (Deadeye)</li>
+ *   <li>{@code keep_stolen}: any amount above 0 = Return to Sender keeps the stolen effect after throwing it, so it can be
+ *       thrown again (Expert Spell Thief: "stolen effects can be re-applied")</li>
+ *   <li>{@code phase_stone}: any amount above 0 = you walk through stone, ores, dirt and gravel at and above your feet (sneak to
+ *       sink through the floor) and don't suffocate in them (Earth Glide)</li>
  *   <li>{@code dry_riptide}: any amount above 0 = Riptide tridents work out of water and rain</li>
  *   <li>{@code map_range}: maps you carry fill in a circle this much wider (0.25 = +25%)</li>
  *   <li>{@code lose_track}: every this many seconds, mobs targeting you lose track of you</li>
@@ -251,7 +256,7 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
         POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK,
         TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH, FRENZY_SPARES_PLAYERS,
-        NO_TRIPWIRES, NO_PLATES, NO_SCULK_STEPS, UNPUSHABLE, DRY_RIPTIDE, MAP_RANGE, LOSE_TRACK, WIND_PULL, BLAST_GRIEF;
+        NO_TRIPWIRES, NO_PLATES, NO_SCULK_STEPS, UNPUSHABLE, DRY_RIPTIDE, MAP_RANGE, LOSE_TRACK, WIND_PULL, BLAST_GRIEF, PHASE_STONE, KEEP_STOLEN, RANGED_CRIT;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

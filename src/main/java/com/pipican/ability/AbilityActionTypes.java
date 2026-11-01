@@ -111,6 +111,18 @@ public final class AbilityActionTypes {
     public static final Type BOND = register("bond", BondAction.CODEC);
     public static final Type OPTIMIZE = register("optimize", OptimizeAction.CODEC);
     public static final Type RECALL_ITEM = register("recall_item", RecallItemAction.CODEC);
+    public static final Type FREEZE = register("freeze", com.pipican.ability.action.FreezeAction.CODEC);
+    public static final Type CHOICE = register("choice", com.pipican.ability.action.ChoiceAction.CODEC);
+    public static final Type WEAPON_STRIKE = register("weapon_strike", com.pipican.ability.action.WeaponStrikeAction.CODEC);
+    public static final Type CHARGE = register("charge", com.pipican.ability.action.ChargeAction.CODEC);
+    public static final Type TEMPLE = register("temple", com.pipican.ability.action.TempleAction.CODEC);
+    public static final Type BREAK_FREE = register("break_free", com.pipican.ability.action.BreakFreeAction.CODEC);
+    public static final Type STEER = register("steer", com.pipican.ability.action.SteerAction.CODEC);
+    public static final Type SURFACE = register("surface", com.pipican.ability.action.SurfaceAction.CODEC);
+    public static final Type ANIMATE = register("animate", com.pipican.ability.action.AnimateAction.CODEC);
+    public static final Type STORE_SPELL = register("store_spell", com.pipican.ability.action.StoreSpellAction.CODEC);
+    public static final Type THROW_STOLEN = register("throw_stolen", com.pipican.ability.action.ThrowStolenAction.CODEC);
+    public static final Type ATTRIBUTE_BOOST = register("attribute_boost", com.pipican.ability.action.AttributeBoostAction.CODEC);
 
     private AbilityActionTypes() {}
 

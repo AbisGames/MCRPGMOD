@@ -283,6 +283,9 @@ public final class TriggerEvents {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
+        if (player.tickCount % 10 == 0) {
+            com.pipican.ability.SpecialItems.trackBound(player);
+        }
         if (player.tickCount % 20 != 0 || player.isSpectator() || ClassService.activeClass(player).isEmpty()) {
             return;
         }

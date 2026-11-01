@@ -8,10 +8,9 @@
     {
       "type": "pipican:empower",
       "target": "self",
-      "multiplier": 1.25,
-      "bonus": 3.5,
       "seconds": 10,
-      "against": "#minecraft:undead"
+      "against": "#minecraft:undead",
+      "bonus_roll": 6
     }
   ]
 }

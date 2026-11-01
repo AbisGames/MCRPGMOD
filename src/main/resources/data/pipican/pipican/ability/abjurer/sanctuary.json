@@ -4,24 +4,16 @@
   "icon": "minecraft:end_crystal",
   "cost": 40,
   "cooldown_ticks": 800,
-  "actions": [
+  "duration_ticks": 100,
+  "pulse_ticks": 2,
+  "anchored": true,
+  "pulse_actions": [
     {
       "type": "pipican:push",
       "target": "hostiles",
-      "radius": 4,
-      "strength": 1.8
-    },
-    {
-      "type": "pipican:effect",
-      "target": "hostiles",
-      "effects": [
-        {
-          "effect": "minecraft:slowness",
-          "seconds": 5,
-          "amplifier": 3
-        }
-      ],
-      "radius": 4
+      "radius": 3,
+      "strength": 0.6,
+      "from_origin": true
     }
   ]
 }

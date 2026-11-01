@@ -5,15 +5,18 @@
   "cooldown_ticks": 200,
   "toggle": true,
   "drain_per_second": 15,
-  "pulse_ticks": 20,
+  "pulse_ticks": 1,
+  "end_actions": [
+    {
+      "type": "pipican:steer",
+      "stop": true
+    }
+  ],
   "pulse_actions": [
     {
-      "type": "pipican:damage",
-      "target": "look",
-      "amount": 3,
-      "range": 16,
-      "required": false,
-      "fire_seconds": 3
+      "type": "pipican:steer",
+      "speed": 0.6,
+      "damage": 3
     }
   ],
   "effects": [

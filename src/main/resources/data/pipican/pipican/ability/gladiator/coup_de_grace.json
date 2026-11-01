@@ -10,7 +10,10 @@
       "target": "look",
       "amount": 10,
       "range": 4,
-      "kind": "melee"
+      "kind": "melee",
+      "state": {
+        "harmful_effect": true
+      }
     }
   ]
 }

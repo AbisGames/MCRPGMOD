@@ -14,8 +14,36 @@ public final class Temples {
 
     private Temples() {}
 
+    /** A temporary temple (Consecrate Ground): where, in which level, and until when. Not saved. */
+    private record Temporary(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> level, Vec3 center, long until) {}
+
+    private static final java.util.Map<java.util.UUID, Temporary> TEMPORARY = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** For {@code ticks}, the player's temple stands at {@code center} instead of their respawn point. */
+    public static void consecrate(ServerPlayer player, Vec3 center, long ticks) {
+        TEMPORARY.put(player.getUUID(), new Temporary(player.level().dimension(), center, player.level().getGameTime() + ticks));
+        com.pipican.player.ClassService.changed(player);
+    }
+
+    private static Optional<Vec3> temporary(ServerPlayer player) {
+        Temporary t = TEMPORARY.get(player.getUUID());
+        if (t == null) {
+            return Optional.empty();
+        }
+        if (player.level().getGameTime() >= t.until()) {
+            TEMPORARY.remove(player.getUUID());
+            com.pipican.player.ClassService.changed(player);
+            return Optional.empty();
+        }
+        return t.level().equals(player.level().dimension()) ? Optional.of(t.center()) : Optional.empty();
+    }
+
     /** The temple's centre, or empty when it is in another dimension (or there is none). */
     public static Optional<Vec3> center(ServerPlayer player) {
+        Optional<Vec3> consecrated = temporary(player);
+        if (consecrated.isPresent()) {
+            return consecrated;
+        }
         if (mobile(player)) {
             return Optional.of(player.position());
         }

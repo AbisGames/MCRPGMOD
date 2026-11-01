@@ -11,15 +11,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * {@code pipican:push} - knocks the targets away from the user ({@code strength} like vanilla knockback).
+ * {@code pipican:push} - knocks the targets away from the user ({@code strength} like vanilla knockback), or with
+ * {@code from_origin} away from the action's origin (an anchored state's spot: "mobs can't enter a bubble").
  *
  * <pre>{@code { "type": "pipican:push", "target": "hostiles", "radius": 6, "cone": 90, "strength": 1.5 } }</pre>
  */
-public record PushAction(Targets targets, double strength) implements AbilityAction {
+public record PushAction(Targets targets, double strength, boolean fromOrigin) implements AbilityAction {
 
     public static final MapCodec<PushAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Targets.mapCodec(Targets.Kind.HOSTILES).forGetter(PushAction::targets),
-            Codec.doubleRange(0, 10).optionalFieldOf("strength", 1.0).forGetter(PushAction::strength)
+            Codec.doubleRange(0, 10).optionalFieldOf("strength", 1.0).forGetter(PushAction::strength),
+            Codec.BOOL.optionalFieldOf("from_origin", false).forGetter(PushAction::fromOrigin)
     ).apply(i, PushAction::new));
 
     @Override
@@ -29,7 +31,7 @@ public record PushAction(Targets targets, double strength) implements AbilityAct
 
     @Override
     public void run(AbilityContext ctx) {
-        Vec3 from = ctx.player().position();
+        Vec3 from = fromOrigin ? ctx.origin() : ctx.player().position();
         for (LivingEntity target : targets.select(ctx)) {
             if (target == ctx.player()) {
                 continue;

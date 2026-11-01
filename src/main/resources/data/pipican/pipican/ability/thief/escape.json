@@ -6,16 +6,8 @@
   "cooldown_ticks": 200,
   "actions": [
     {
-      "type": "pipican:cleanse",
-      "target": "self",
-      "effects": [
-        "minecraft:slowness"
-      ]
-    },
-    {
-      "type": "pipican:dash",
-      "strength": 0.6,
-      "up": 0.4
+      "type": "pipican:break_free",
+      "seconds": 3
     }
   ]
 }

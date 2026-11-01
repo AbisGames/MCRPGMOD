@@ -6,9 +6,7 @@
   "cooldown_ticks": 200,
   "actions": [
     {
-      "type": "pipican:transfer_effects",
-      "target": "look",
-      "range": 16
+      "type": "pipican:throw_stolen"
     }
   ]
 }

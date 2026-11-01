@@ -7,9 +7,21 @@
   "duration_ticks": 400,
   "effects": [
     {
-      "type": "pipican:attribute",
-      "attribute": "minecraft:attack_damage",
-      "amount": 2
+      "type": "pipican:conditional",
+      "when": {
+        "type": "pipican:holding",
+        "items": [
+          "minecraft:air"
+        ],
+        "hand": "main"
+      },
+      "effects": [
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:attack_damage",
+          "amount": 2
+        }
+      ]
     },
     {
       "type": "pipican:attribute",

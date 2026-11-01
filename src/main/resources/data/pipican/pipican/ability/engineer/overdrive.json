@@ -6,21 +6,21 @@
   "cooldown_ticks": 600,
   "actions": [
     {
-      "type": "pipican:effect",
+      "type": "pipican:attribute_boost",
       "target": "companions",
-      "effects": [
+      "radius": 32,
+      "entities": "pipican:eidolon",
+      "seconds": 10,
+      "attributes": [
         {
-          "effect": "minecraft:speed",
-          "seconds": 10,
-          "amplifier": 1
+          "attribute": "minecraft:movement_speed",
+          "amount": 0.5
         },
         {
-          "effect": "minecraft:strength",
-          "seconds": 10,
-          "amplifier": 1
+          "attribute": "minecraft:attack_damage",
+          "amount": 0.5
         }
-      ],
-      "radius": 32
+      ]
     }
   ]
 }

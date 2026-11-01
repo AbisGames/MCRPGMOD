@@ -10,7 +10,10 @@
       "target": "look",
       "mode": "flee",
       "seconds": 8,
-      "range": 24
+      "range": 24,
+      "state": {
+        "marked": true
+      }
     }
   ]
 }

@@ -4,6 +4,9 @@
   "icon": "minecraft:wither_rose",
   "cost": 40,
   "cooldown_ticks": 500,
+  "duration_ticks": 160,
+  "pulse_ticks": 20,
+  "anchored": true,
   "actions": [
     {
       "type": "pipican:damage",
@@ -17,12 +20,22 @@
       "effects": [
         {
           "effect": "minecraft:slowness",
-          "seconds": 6,
-          "amplifier": 2
-        },
+          "seconds": 2,
+          "amplifier": 9
+        }
+      ],
+      "radius": 8
+    }
+  ],
+  "pulse_actions": [
+    {
+      "type": "pipican:effect",
+      "target": "hostiles",
+      "effects": [
         {
-          "effect": "minecraft:weakness",
-          "seconds": 6
+          "effect": "minecraft:slowness",
+          "seconds": 1.5,
+          "amplifier": 2
         }
       ],
       "radius": 8

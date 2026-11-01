@@ -25,9 +25,12 @@ import net.minecraft.world.entity.player.Player;
  *   "against": "#minecraft:undead" } }</pre>
  * Only players can be empowered. {@code against} limits it to some kinds of mob. With {@code charges} above 0 these
  * are stored charges: at most that many (plus {@code empower_charges} bonuses) wait at once, extra ones are lost.
+ * {@code bonus_roll}: a further 1..N damage rolled per hit ("+1d6"). {@code requires}: only hits made while this holds
+ * count ("a guaranteed critical with the favored weapon").
  */
 public record EmpowerAction(Targets targets, double multiplier, double bonus, double bonusPerSpent, int hits, double seconds,
-                            Optional<HolderSet<EntityType<?>>> against, List<EffectAction.Entry> effects, int charges) implements AbilityAction {
+                            Optional<HolderSet<EntityType<?>>> against, List<EffectAction.Entry> effects, int charges, int bonusRoll,
+                            Optional<com.pipican.condition.ClassCondition> requires) implements AbilityAction {
 
     public static final MapCodec<EmpowerAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
             Targets.mapCodec(Targets.Kind.SELF).forGetter(EmpowerAction::targets),
@@ -38,7 +41,9 @@ public record EmpowerAction(Targets targets, double multiplier, double bonus, do
             Codec.doubleRange(0.5, 3600).optionalFieldOf("seconds", 10.0).forGetter(EmpowerAction::seconds),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("against").forGetter(EmpowerAction::against),
             EffectAction.Entry.CODEC.listOf().optionalFieldOf("effects", List.of()).forGetter(EmpowerAction::effects),
-            Codec.intRange(0, 100).optionalFieldOf("charges", 0).forGetter(EmpowerAction::charges)
+            Codec.intRange(0, 100).optionalFieldOf("charges", 0).forGetter(EmpowerAction::charges),
+            Codec.intRange(0, 100).optionalFieldOf("bonus_roll", 0).forGetter(EmpowerAction::bonusRoll),
+            com.pipican.condition.ClassCondition.CODEC.optionalFieldOf("requires").forGetter(EmpowerAction::requires)
     ).apply(i, EmpowerAction::new));
 
     @Override
@@ -63,7 +68,7 @@ public record EmpowerAction(Targets targets, double multiplier, double bonus, do
                     }
                 }
                 Empowers.add(p, (long) ((seconds + ctx.mod().seconds()) * 20), mult,
-                        flat, Empowers.instances(effects), against, Math.max(1, hits + ctx.mod().hits()));
+                        flat, Empowers.instances(effects), against, Math.max(1, hits + ctx.mod().hits()), bonusRoll, requires);
             }
         }
     }

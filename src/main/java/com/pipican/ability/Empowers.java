@@ -22,7 +22,8 @@ import net.minecraft.world.entity.player.Player;
 public final class Empowers {
 
     public record Empower(long endsAt, double multiplier, double bonus, List<MobEffectInstance> effects,
-                          Optional<HolderSet<EntityType<?>>> against, int[] hitsLeft) {}
+                          Optional<HolderSet<EntityType<?>>> against, int[] hitsLeft, int bonusRoll,
+                          Optional<com.pipican.condition.ClassCondition> requires) {}
 
     private static final Map<UUID, List<Empower>> EMPOWERS = new ConcurrentHashMap<>();
 
@@ -30,8 +31,18 @@ public final class Empowers {
 
     public static void add(Player player, long ticks, double multiplier, double bonus, List<MobEffectInstance> effects,
                            Optional<HolderSet<EntityType<?>>> against, int hits) {
+        add(player, ticks, multiplier, bonus, effects, against, hits, 0, Optional.empty());
+    }
+
+    /**
+     * {@code bonusRoll}: a further 1..N damage rolled on each empowered hit ("+1d6 vs undead"). {@code requires}: only hits
+     * made while it holds use the empower up ("with the favored weapon").
+     */
+    public static void add(Player player, long ticks, double multiplier, double bonus, List<MobEffectInstance> effects,
+                           Optional<HolderSet<EntityType<?>>> against, int hits, int bonusRoll, Optional<com.pipican.condition.ClassCondition> requires) {
         EMPOWERS.computeIfAbsent(player.getUUID(), k -> new ArrayList<>())
-                .add(new Empower(player.level().getGameTime() + ticks, multiplier, bonus, List.copyOf(effects), against, new int[] {hits, hits}));
+                .add(new Empower(player.level().getGameTime() + ticks, multiplier, bonus, List.copyOf(effects), against, new int[] {hits, hits},
+                        bonusRoll, requires));
     }
 
     /** How many live empowers {@code player} has with this multiplier and bonus (stored charges of one kind). */
@@ -64,7 +75,11 @@ public final class Empowers {
                 if (e.against().isPresent() && !e.against().get().contains(target.getType().builtInRegistryHolder())) {
                     continue;
                 }
-                amount = (float) (amount * e.multiplier() + e.bonus());
+                if (e.requires().isPresent() && !(attacker instanceof net.minecraft.server.level.ServerPlayer req && e.requires().get().test(req))) {
+                    continue;
+                }
+                double roll = e.bonusRoll() > 0 ? 1 + attacker.getRandom().nextInt(e.bonusRoll()) : 0;
+                amount = (float) (amount * e.multiplier() + e.bonus() + roll);
                 used = true;
                 // empower_knockback (Charged Blade): the first empowered hit also knocks the mob back.
                 double push = attacker instanceof net.minecraft.server.level.ServerPlayer sp

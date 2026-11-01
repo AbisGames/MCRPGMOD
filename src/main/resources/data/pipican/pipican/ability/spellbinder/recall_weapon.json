@@ -8,7 +8,8 @@
     {
       "type": "pipican:recall_item",
       "items": "#pipican:weapons/melee",
-      "radius": 64
+      "radius": 64,
+      "bound": true
     }
   ]
 }

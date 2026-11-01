@@ -14,8 +14,23 @@
           "type": "pipican:summon",
           "entity": "minecraft:zombie",
           "count": 1,
-          "seconds": 30,
-          "ally": true
+          "seconds": 60,
+          "ally": true,
+          "unless_victims": "#minecraft:skeletons"
+        },
+        {
+          "type": "pipican:summon",
+          "entity": "minecraft:skeleton",
+          "count": 1,
+          "seconds": 60,
+          "ally": true,
+          "victims": "#minecraft:skeletons"
+        },
+        {
+          "type": "pipican:stop",
+          "abilities": [
+            "pipican:necromancer/raise_dead"
+          ]
         }
       ]
     }

@@ -6,9 +6,8 @@
   "cooldown_ticks": 200,
   "actions": [
     {
-      "type": "pipican:imbue",
-      "hits": 5,
-      "seconds": 60
+      "type": "pipican:store_spell",
+      "charges": 8
     }
   ]
 }

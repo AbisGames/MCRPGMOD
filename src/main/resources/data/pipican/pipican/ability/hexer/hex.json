@@ -6,23 +6,74 @@
   "cooldown_ticks": 160,
   "actions": [
     {
-      "type": "pipican:effect",
-      "target": "look",
-      "effects": [
+      "type": "pipican:choice",
+      "options": [
         {
-          "effect": "minecraft:weakness",
-          "seconds": 10
+          "name": "Desire",
+          "actions": [
+            {
+              "type": "pipican:mark",
+              "target": "look",
+              "range": 16,
+              "seconds": 10,
+              "multiplier": 1.0,
+              "glow": false
+            },
+            {
+              "type": "pipican:control",
+              "target": "look",
+              "mode": "pacify",
+              "seconds": 10,
+              "range": 16
+            }
+          ]
         },
         {
-          "effect": "minecraft:slowness",
-          "seconds": 10
+          "name": "Lethargy",
+          "actions": [
+            {
+              "type": "pipican:mark",
+              "target": "look",
+              "range": 16,
+              "seconds": 10,
+              "multiplier": 1.0,
+              "glow": false
+            },
+            {
+              "type": "pipican:effect",
+              "target": "look",
+              "effects": [
+                {
+                  "effect": "minecraft:slowness",
+                  "seconds": 10,
+                  "amplifier": 1
+                }
+              ],
+              "range": 16
+            }
+          ]
         },
         {
-          "effect": "minecraft:glowing",
-          "seconds": 10
+          "name": "Pain",
+          "actions": [
+            {
+              "type": "pipican:mark",
+              "target": "look",
+              "range": 16,
+              "seconds": 10,
+              "multiplier": 1.0,
+              "glow": false
+            },
+            {
+              "type": "pipican:dot",
+              "target": "look",
+              "range": 16,
+              "damage": 2,
+              "seconds": 10
+            }
+          ]
         }
-      ],
-      "range": 16
+      ]
     }
   ]
 }

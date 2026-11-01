@@ -98,6 +98,7 @@ public final class ProjectileAndEffectEvents {
         double ward = state.chance(Kind.SPELL_WARD);
         if (ward > 0 && event.getEffectSource() != null && event.getEffectSource() != player && player.getRandom().nextDouble() < ward) {
             event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            com.pipican.ability.action.ThrowStolenAction.stole(player, event.getEffectInstance());
             com.pipican.ability.Reactions.fire(player, event.getEffectSource() instanceof net.minecraft.world.entity.LivingEntity l ? l : null,
                     ItemStack.EMPTY, com.pipican.effect.type.ReactionEffect.Event.WARD);
             return;
@@ -171,6 +172,9 @@ public final class ProjectileAndEffectEvents {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
+        if (state.chance(Kind.RANGED_CRIT) > 0) {
+            arrow.setCritArrow(true);
+        }
         Long aimed = AIMED.remove(player.getUUID());
         if (aimed != null && aimed == player.level().getGameTime()) {
             var aim = state.deadlyAim();

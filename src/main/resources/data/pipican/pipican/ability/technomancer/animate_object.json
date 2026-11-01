@@ -6,11 +6,9 @@
   "cooldown_ticks": 1200,
   "actions": [
     {
-      "type": "pipican:summon",
-      "entity": "minecraft:iron_golem",
-      "count": 1,
+      "type": "pipican:animate",
       "seconds": 60,
-      "ally": true
+      "range": 6
     }
   ]
 }

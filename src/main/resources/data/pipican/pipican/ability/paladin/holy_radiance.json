@@ -29,7 +29,8 @@
           "seconds": 10
         }
       ],
-      "radius": 8
+      "radius": 8,
+      "entities": "#minecraft:undead"
     }
   ]
 }

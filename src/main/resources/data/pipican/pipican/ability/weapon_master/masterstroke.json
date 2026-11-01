@@ -8,8 +8,11 @@
     {
       "type": "pipican:empower",
       "target": "self",
-      "multiplier": 2.0,
-      "seconds": 10
+      "multiplier": 1.5,
+      "seconds": 10,
+      "requires": {
+        "type": "pipican:holding_favored"
+      }
     }
   ]
 }

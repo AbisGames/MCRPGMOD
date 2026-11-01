@@ -4,38 +4,10 @@
   "icon": "minecraft:beacon",
   "cost": 50,
   "cooldown_ticks": 1800,
-  "duration_ticks": 1200,
-  "pulse_ticks": 20,
-  "anchored": true,
-  "pulse_actions": [
+  "actions": [
     {
-      "type": "pipican:effect",
-      "target": "allies",
-      "effects": [
-        {
-          "effect": "minecraft:regeneration",
-          "seconds": 2.5
-        }
-      ],
-      "radius": 6
-    },
-    {
-      "type": "pipican:effect",
-      "target": "hostiles",
-      "effects": [
-        {
-          "effect": "minecraft:slowness",
-          "seconds": 2
-        }
-      ],
-      "radius": 6
-    },
-    {
-      "type": "pipican:damage",
-      "target": "hostiles",
-      "amount": 1,
-      "radius": 6,
-      "entities": "#minecraft:undead"
+      "type": "pipican:temple",
+      "seconds": 60
     }
   ]
 }

@@ -6,26 +6,10 @@
   "cooldown_ticks": 1200,
   "actions": [
     {
-      "type": "pipican:effect",
+      "type": "pipican:freeze",
       "target": "hostiles",
-      "effects": [
-        {
-          "effect": "minecraft:slowness",
-          "seconds": 3,
-          "amplifier": 9
-        },
-        {
-          "effect": "minecraft:weakness",
-          "seconds": 3,
-          "amplifier": 9
-        },
-        {
-          "effect": "minecraft:mining_fatigue",
-          "seconds": 3,
-          "amplifier": 9
-        }
-      ],
-      "radius": 6
+      "radius": 6,
+      "seconds": 3
     }
   ]
 }
