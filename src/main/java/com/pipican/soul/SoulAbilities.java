@@ -129,7 +129,7 @@ public final class SoulAbilities {
         return out;
     }
 
-    static void clear(ServerPlayer player) {
+    public static void clear(ServerPlayer player) {
         STATES.remove(player.getUUID());
         MARKS.remove(player.getUUID());
         SoulMinions.clear(player);

@@ -118,6 +118,7 @@ public final class ClassSystemTests {
         TESTS.put("ore_mechanics", ClassSystemTests::oreMechanics);
         TESTS.put("allomancy", ClassSystemTests::allomancy);
         TESTS.put("tamashigane", ClassSystemTests::tamashigane);
+        TESTS.put("soul_paths_play", ClassSystemTests::soulPathsPlay);
     }
 
     private ClassSystemTests() {}
@@ -473,6 +474,140 @@ public final class ClassSystemTests {
         com.pipican.soul.Soul.reset(player);
         helper.assertTrue(!com.pipican.soul.Soul.get(player).forged(), "reset");
         helper.succeed();
+    }
+
+    /**
+     * Phase 6, every path at every form against real targets: three zombies (500 health) in a line ahead of the
+     * player. Logs what each use did (SOULCHECK lines) and fails if a form does nothing observable.
+     */
+    private static void soulPathsPlay(GameTestHelper helper) {
+        var level = helper.getLevel();
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(com.pipican.ore.PipicanOres.item("tamashigane_ingot").get()));
+        com.pipican.soul.Soul.forge(player, "black_crescent");
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (player.getInventory().getItem(i).is(com.pipican.soul.SoulItems.BLADE.get())) {
+                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, player.getInventory().getItem(i).copy());
+                player.getInventory().setItem(i, ItemStack.EMPTY);
+            }
+        }
+        List<String> silent = new java.util.ArrayList<>();
+        for (String path : com.pipican.soul.Soul.PATHS.keySet()) {
+            for (String form : List.of("s3", "shikai", "bankai", "ultimate")) {
+                com.pipican.soul.SoulAbilities.clear(player);
+                player.removeAllEffects();
+                player.setHealth(player.getMaxHealth());
+                var start = helper.absoluteVec(new net.minecraft.world.phys.Vec3(2.5, 2, 1.5));
+                player.snapTo(start.x, start.y, start.z, 0, 0);   // looking south (+z)
+                player.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+                int stage = form.equals("s3") ? 4 : form.equals("shikai") ? 6 : 10;
+                com.pipican.soul.Soul.set(player, com.pipican.soul.Soul.get(player).withPath(path).withStage(stage).withBankai(0, 0)
+                        .withAbilityReady(0).withUltimateDay(-1));
+                List<net.minecraft.world.entity.monster.zombie.Zombie> targets = new java.util.ArrayList<>();
+                for (int z : new int[] {4, 6, 9}) {
+                    var t = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, new BlockPos(2, 2, z));
+                    t.setNoAi(true);
+                    t.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(500);
+                    t.setHealth(500);
+                    t.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE, 9999, 0, true, false));
+                    t.setTarget(player);
+                    targets.add(t);
+                }
+                var eye = player.getEyePosition();
+                var to = targets.getFirst().getBoundingBox().getCenter().subtract(eye);
+                player.setXRot((float) -Math.toDegrees(Math.atan2(to.y, Math.sqrt(to.x * to.x + to.z * to.z))));
+                var effectsBefore = player.getActiveEffects().size();
+                var box = player.getBoundingBox().inflate(20);
+                int mobsBefore = level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, box).size();
+                if (!form.equals("s3") && !form.equals("shikai")) {
+                    com.pipican.soul.Soul.releaseBankai(player);
+                }
+                int effectsAfterRelease = player.getActiveEffects().size();
+                var ctx = com.pipican.soul.SoulAbilities.ctx(player);
+                int cooldown = 0;
+                switch (form) {
+                    case "s3" -> cooldown = com.pipican.soul.SoulAbilities.whisper(ctx);
+                    case "shikai" -> cooldown = com.pipican.soul.SoulAbilities.shikai(ctx);
+                    case "bankai" -> cooldown = com.pipican.soul.SoulAbilities.bankaiAbility(ctx);
+                    default -> {
+                        // Bound foes / poison shards come from the Bankai ability first.
+                        com.pipican.soul.SoulAbilities.bankaiAbility(ctx);
+                        targets.forEach(t -> t.setHealth(500));
+                        com.pipican.soul.SoulAbilities.ultimate(ctx);
+                    }
+                }
+                StringBuilder what = new StringBuilder();
+                float dealt = 0;
+                int hit = 0;
+                int debuffed = 0;
+                for (var t : targets) {
+                    float d = 500 - (t.isAlive() ? t.getHealth() : 0);
+                    dealt += d;
+                    if (d > 0) {
+                        hit++;
+                    }
+                    if (t.getActiveEffects().size() > 1 || t.getRemainingFireTicks() > 0 || t.getTicksFrozen() > 0) {
+                        debuffed++;
+                        for (var eff : t.getActiveEffects()) {
+                            if (!eff.getEffect().is(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE)) {
+                                what.append(eff.getEffect().getRegisteredName().replace("minecraft:", "")).append(eff.getAmplifier() + 1).append(' ');
+                            }
+                        }
+                        if (t.getRemainingFireTicks() > 0) {
+                            what.append("burning ");
+                        }
+                        if (t.getTicksFrozen() > 0) {
+                            what.append("frozen ");
+                        }
+                        what.append("| ");
+                    }
+                    if (t.getTarget() != player) {
+                        what.append("lost-target ");
+                    }
+                }
+                int playerEffects = player.getActiveEffects().size() - effectsBefore;
+                int summons = level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, box).size() - mobsBefore - (int) targets.stream().filter(t -> !t.isAlive()).count() * 0;
+                boolean moved = player.position().distanceTo(start) > 0.5 || player.getDeltaMovement().lengthSqr() > 0.1;
+                long states = java.util.stream.Stream.of("fire_blade", "rage", "twin", "lifesteal", "poison_blade", "reach", "next_hit", "second_dance",
+                        "beast", "cheat", "white_blade", "unlimited", "limitless", "first_beast", "death_marks", "adaptive", "serpent_arms", "immortal")
+                        .filter(st -> com.pipican.soul.SoulAbilities.on(player, st)).count();
+                boolean clouds = !level.getEntitiesOfClass(net.minecraft.world.entity.AreaEffectCloud.class, box).isEmpty();
+                what.insert(0, String.format("dealt=%.1f hit=%d debuffed=%d playerEffects=%d summons=%d moved=%s states=%d cloud=%s cd=%.1fs dmgBase=%.1f",
+                        dealt, hit, debuffed, playerEffects, summons, moved, states, clouds, cooldown / 20.0, ctx.dmg()) + " targets: ");
+                System.out.println("SOULCHECK " + path + " " + form + " " + what);
+                boolean anything = dealt > 0 || debuffed > 0 || playerEffects > 0 || summons > 0 || moved || states > 0 || clouds
+                        || (form.equals("bankai") && effectsAfterRelease > effectsBefore);
+                if (!anything) {
+                    silent.add(path + "/" + form);
+                }
+                targets.forEach(net.minecraft.world.entity.Entity::discard);
+                for (var e : level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class, box, e -> e instanceof net.minecraft.world.entity.Mob
+                        || e instanceof net.minecraft.world.entity.AreaEffectCloud)) {
+                    e.discard();
+                }
+            }
+        }
+        helper.assertTrue(silent.isEmpty(), "forms that did nothing: " + silent);
+        // The Black Coffin closes 2 seconds later.
+        com.pipican.soul.SoulAbilities.clear(player);
+        com.pipican.soul.Soul.set(player, com.pipican.soul.Soul.get(player).withPath("perfect_lie").withStage(7).withBankai(0, 0).withAbilityReady(0));
+        var coffined = helper.spawn(net.minecraft.world.entity.EntityType.ZOMBIE, new BlockPos(2, 2, 4));
+        coffined.setNoAi(true);
+        coffined.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(500);
+        coffined.setHealth(500);
+        var start = helper.absoluteVec(new net.minecraft.world.phys.Vec3(2.5, 2, 1.5));
+        player.snapTo(start.x, start.y, start.z, 0, 0);
+        var to = coffined.getBoundingBox().getCenter().subtract(player.getEyePosition());
+        player.setXRot((float) -Math.toDegrees(Math.atan2(to.y, Math.sqrt(to.x * to.x + to.z * to.z))));
+        com.pipican.soul.Soul.releaseBankai(player);
+        com.pipican.soul.SoulAbilities.bankaiAbility(com.pipican.soul.SoulAbilities.ctx(player));
+        helper.assertTrue(coffined.getHealth() == 500, "the coffin hasn't closed yet");
+        helper.runAfterDelay(45, () -> {
+            System.out.println("SOULCHECK perfect_lie coffin-closed dealt=" + (500 - coffined.getHealth()));
+            helper.assertTrue(coffined.getHealth() < 500, "the black coffin closes and crushes");
+            helper.succeed();
+        });
     }
 
     /** Phase 4: alloys, blacksmith substitutes, meteors, spreading ores, Quantanium, transmutation, mutation. */
