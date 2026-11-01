@@ -1998,5 +1998,10 @@
   "pipican.ability.grimoire_page": "Grimuar sayfası %s: %s",
   "pipican.ability.already_in_hand": "Bağlı silahın zaten elinde.",
   "pipican.stored_spell.line": "Saklı büyü: %s (%s yük)",
-  "entity.pipican.witch_fireball": "Cadı Ateşi"
+  "entity.pipican.witch_fireball": "Cadı Ateşi",
+  "item.pipican.pistol": "Tabanca",
+  "item.pipican.six_shooter": "Altıpatlar",
+  "item.pipican.rifle": "Tüfek",
+  "item.pipican.bullet": "Mermi",
+  "entity.pipican.bullet": "Mermi"
 }

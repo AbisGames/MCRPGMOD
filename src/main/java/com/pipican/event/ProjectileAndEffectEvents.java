@@ -175,6 +175,19 @@ public final class ProjectileAndEffectEvents {
         if (state.chance(Kind.RANGED_CRIT) > 0) {
             arrow.setCritArrow(true);
         }
+        // Critical chance bonuses for the weapon that fired it ("firearm critical chance +0.3% per Trigger Finger").
+        ItemStack firedFrom = arrow.getWeaponItem();
+        if (!arrow.isCritArrow() && firedFrom != null) {
+            double chance = 0;
+            for (var c : state.criticals()) {
+                if (c.weapons().isPresent() && firedFrom.is(c.weapons().get())) {
+                    chance += c.chance();
+                }
+            }
+            if (chance > 0 && player.getRandom().nextDouble() < chance) {
+                arrow.setCritArrow(true);
+            }
+        }
         Long aimed = AIMED.remove(player.getUUID());
         if (aimed != null && aimed == player.level().getGameTime()) {
             var aim = state.deadlyAim();

@@ -41,14 +41,13 @@ EXCEPTIONS = {
                                      ('wooden_sword', 'stone_sword', 'wooden_axe', 'stone_axe', 'wooden_spear', 'stone_spear')
                                      if TIER_RANK.index(aff.get(_cat(i), 'neutral')) < TIER_RANK.index('proficient')],
                            'tier': 'proficient'}],
-    'gunslinger': lambda aff: [],  # crossbows already proficient in the table (firearms don't exist yet)
+    'gunslinger': lambda aff: [{'items': '#pipican:weapons/firearms', 'tier': 'mastery'}],  # pistols, six-shooters, rifles
     'magician': lambda aff: [{'items': ['minecraft:blaze_rod', 'minecraft:stick'], 'tier': 'proficient'}],
     'witch': lambda aff: [{'items': ['minecraft:stick', 'minecraft:blaze_rod'], 'tier': 'proficient'}],
     'priest': lambda aff: [{'items': ['minecraft:wooden_shovel', 'minecraft:stone_shovel'], 'tier': 'neutral'}],
     'wizard': lambda aff: [{'items': ['minecraft:book', 'minecraft:enchanted_book'], 'tier': 'proficient'}],
 }
 EXCEPTION_NOTES = {
-    'gunslinger': 'Firearms don\'t exist yet; crossbows stand in (already proficient in the table).',
     'wizard': 'Book/enchanted book counts as proficient in any hand (no off-hand-only rule exists).',
     'priest': 'Shovels are neutral (they don\'t become maces: there is no "counts as" rule).',
     'magician': 'Stick/blaze rod are proficient (they don\'t become spears: there is no "counts as" rule).',
@@ -96,11 +95,9 @@ def kit_entry(cid, n, item, extra, notes):
         notes.append('kit: "any trim" template -> coast armor trim')
         return {'id': 'minecraft:coast_armor_trim_smithing_template', 'count': n}
     if item == 'pistol':
-        notes.append('kit: pistol (planned) -> crossbow')
-        return {'id': 'minecraft:crossbow', 'count': n}
+        return {'id': 'pipican:pistol', 'count': n}
     if item == 'bullets':
-        notes.append('kit: bullets (planned) -> arrows')
-        return {'id': 'minecraft:arrow', 'count': n}
+        return {'id': 'pipican:bullet', 'count': n}
     e = {'id': 'minecraft:' + item}
     if n != 1:
         e['count'] = n
@@ -126,7 +123,7 @@ def map_trigger(text):
     if 'crossbow bolts' in t:
         return {'type': 'pipican:ranged_hit', 'items': '#pipican:weapons/crossbows'}, True
     if 'firearms' in t and t.startswith('hitting'):
-        return {'type': 'pipican:ranged_hit', 'items': '#pipican:weapons/crossbows'}, False
+        return {'type': 'pipican:ranged_hit', 'items': '#pipican:weapons/firearms'}, True
     if t.startswith('blocking attacks'):
         return {'type': 'pipican:block'}, True
     if t == 'sprinting':

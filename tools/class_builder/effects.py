@@ -29,7 +29,7 @@ WEAPON_TAGS = {
     'sword and axe': ['#pipican:weapons/swords', '#pipican:weapons/axes'],
     'staff': ['#pipican:weapons/staff'], 'staffs': ['#pipican:weapons/staff'], 'staff of magic': ['#pipican:weapons/staff'],
     'iron, diamond and netherite weapons': ['#pipican:weapons/metal'],
-    'firearm': ['#pipican:weapons/crossbows'], 'firearms': ['#pipican:weapons/crossbows'], 'gun': ['#pipican:weapons/crossbows'],
+    'firearm': ['#pipican:weapons/firearms'], 'firearms': ['#pipican:weapons/firearms'], 'gun': ['#pipican:weapons/firearms'],
     'pickaxe': ['#minecraft:pickaxes'], 'pickaxes': ['#minecraft:pickaxes'],
     'ranged': ['#pipican:weapons/ranged'], 'ranged weapons': ['#pipican:weapons/ranged'], 'melee weapons': ['#pipican:weapons/melee'],
 }

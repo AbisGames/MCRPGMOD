@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": "minecraft:clock",
+  "base": "pipican:pistol",
+  "addition": "minecraft:iron_ingot",
+  "result": {
+    "id": "pipican:six_shooter"
+  }
+}

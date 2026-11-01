@@ -96,9 +96,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 - **conjurer**: icon "zombie_spawner_egg" isn't an item id; used zombie_spawn_egg
 - **enchanter**: kit: "random level-1 enchanted book" isn't possible; gave a plain book
 - **fighter**: special passive: cap not enforced (scaling has no maximum): "Fighter's Resolve: -0.25% damage taken per Discipline point (max -15%)"
-- **gunslinger**: gear: Firearms don't exist yet; crossbows stand in (already proficient in the table).
-- **gunslinger**: kit: bullets (planned) -> arrows
-- **gunslinger**: kit: pistol (planned) -> crossbow
 - **jack_of_all_trades**: weakness: cap not enforced (scaling has no maximum): "you can never reach Tier V in any skill (max Tier IV)"
 - **magician**: gear: Stick/blaze rod are proficient (they don't become spears: there is no "counts as" rule).
 - **necromancer**: passive: cap not enforced (scaling has no maximum): "Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)"

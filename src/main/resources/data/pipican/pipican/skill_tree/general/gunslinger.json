@@ -11,7 +11,7 @@
       "effects": [
         {
           "type": "pipican:damage_dealt",
-          "weapons": "#pipican:weapons/crossbows",
+          "weapons": "#pipican:weapons/firearms",
           "multiplier": 1.05
         }
       ]
@@ -110,7 +110,7 @@
       "effects": [
         {
           "type": "pipican:damage_dealt",
-          "weapons": "#pipican:weapons/crossbows",
+          "weapons": "#pipican:weapons/firearms",
           "multiplier": 1.3
         },
         {

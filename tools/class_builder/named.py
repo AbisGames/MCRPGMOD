@@ -607,10 +607,10 @@ def segment(t, ctx):
             e['chance'] = 0.0
             e['chance_scaling'] = [{'source': src, 'per': round(float(m.group(1)) / 100 / float(m.group(2) or 1), 6)}]
         return [e]
-    # "Firearm critical chance +0.3% per Trigger Finger" (firearms are crossbows here)
+    # "Firearm critical chance +0.3% per Trigger Finger"
     m = re.fullmatch(rf'firearm critical chance \+{N}%(?: per (?:{N} )?([a-z]+(?: [a-z]+)?)(?: points?)?)?', t)
     if m:
-        e = {'type': 'pipican:critical', 'weapons': '#pipican:weapons/crossbows', 'chance': round(float(m.group(1)) / 100, 6)}
+        e = {'type': 'pipican:critical', 'weapons': '#pipican:weapons/firearms', 'chance': round(float(m.group(1)) / 100, 6)}
         if m.group(3):
             src = _stat_source(m.group(3), ctx)
             if not src:
@@ -1859,8 +1859,8 @@ def world(low, ctx):
     if m and 'invention' in REACTIONS.get(cid, {}):
         return [{'type': 'pipican:reaction_mod', 'name': 'invention', 'strength': 1.0},
                 {'type': 'pipican:on', 'event': 'spend', 'name': 'misfire', 'chance': pct(m.group(1)), 'actions': [{'type': 'pipican:hurt_self', 'amount': 2.0}]}]
-    # --- Bulk 42: Gunslinger (crossbows are the firearms until guns exist)
-    gun = '#pipican:weapons/crossbows'
+    # --- Bulk 42: Gunslinger (pistols, six-shooters, rifles)
+    gun = '#pipican:weapons/firearms'
     m = re.fullmatch(rf'a pistol you modify at a smithing table holds {N} shots before reloading and never misfires', low)
     if m:
         return bonus_kind('cylinder', float(m.group(1)))

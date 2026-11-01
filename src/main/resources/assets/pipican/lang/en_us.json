@@ -2706,5 +2706,10 @@
   "pipican.ability.grimoire_page": "Grimoire page %s: %s",
   "pipican.ability.already_in_hand": "Your bound weapon is already in your hand.",
   "pipican.stored_spell.line": "Stored spell: %s (%s charges)",
-  "entity.pipican.witch_fireball": "Witch Fire"
+  "entity.pipican.witch_fireball": "Witch Fire",
+  "item.pipican.pistol": "Pistol",
+  "item.pipican.six_shooter": "Six-Shooter",
+  "item.pipican.rifle": "Rifle",
+  "item.pipican.bullet": "Bullet",
+  "entity.pipican.bullet": "Bullet"
 }

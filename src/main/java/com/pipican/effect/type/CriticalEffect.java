@@ -15,7 +15,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 
 /**
- * {@code pipican:critical} - melee critical hits (the vanilla falling-hit crit).
+ * {@code pipican:critical} - critical hits: melee (the vanilla falling-hit crit), and for {@code chance} with {@code weapons}
+ * also the shots fired from those weapons (crit arrows, bolts and bullets).
  *
  * <pre>{@code { "type": "pipican:critical", "damage": 0.1, "chance": 0.05, "weapons": "#pipican:weapons/swords" } }</pre>
  * {@code damage}: crits deal that much more (0.1 = +10% critical damage). {@code chance}: the chance that

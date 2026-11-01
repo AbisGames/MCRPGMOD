@@ -122,6 +122,7 @@ public final class ClassSystemTests {
         TESTS.put("soul_paths_play", ClassSystemTests::soulPathsPlay);
         TESTS.put("skill_triggers", ClassSystemTests::skillTriggers);
         TESTS.put("ability_specs", ClassSystemTests::abilitySpecs);
+        TESTS.put("firearms", ClassSystemTests::firearms);
     }
 
     private ClassSystemTests() {}
@@ -1894,5 +1895,60 @@ public final class ClassSystemTests {
             helper.assertTrue(!frozen.isNoAi() && !com.pipican.ability.Freezes.isFrozen(frozen), "frozen mobs thaw after 3s");
             helper.succeed();
         });
+    }
+
+    // ------------------------------------------------------------------ firearms
+
+    private static int fire(GameTestHelper helper, ServerPlayer player, net.minecraft.world.item.Item gun, int shots) {
+        int before = helper.getLevel().getEntitiesOfClass(com.pipican.firearm.Bullet.class, player.getBoundingBox().inflate(64)).size();
+        for (int i = 0; i < shots; i++) {
+            ItemStack stack = new ItemStack(gun);
+            stack.set(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES,
+                    net.minecraft.world.item.component.ChargedProjectiles.ofNonEmpty(List.of(new ItemStack(com.pipican.firearm.Firearms.BULLET.get()))));
+            player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, stack);
+            stack.use(helper.getLevel(), player, net.minecraft.world.InteractionHand.MAIN_HAND);
+        }
+        var bullets = helper.getLevel().getEntitiesOfClass(com.pipican.firearm.Bullet.class, player.getBoundingBox().inflate(64));
+        int fired = bullets.size() - before;
+        bullets.forEach(net.minecraft.world.entity.Entity::discard);
+        return fired;
+    }
+
+    /** Guns load bullets (not arrows), fire bullets with their own damage, and plain guns sometimes misfire. */
+    private static void firearms(GameTestHelper helper) {
+        ServerPlayer gunslinger = classPlayer(helper, "gunslinger", new BlockPos(1, 2, 1));
+        helper.assertTrue(gunslinger.getInventory().contains(new ItemStack(com.pipican.firearm.Firearms.PISTOL.get())), "the Gunslinger starts with a pistol");
+        helper.assertTrue(gunslinger.getInventory().contains(com.pipican.firearm.Firearms.BULLETS), "...and bullets");
+        var pistol = com.pipican.firearm.Firearms.PISTOL.get();
+        helper.assertTrue(pistol.getAllSupportedProjectiles().test(new ItemStack(com.pipican.firearm.Firearms.BULLET.get())), "guns load bullets");
+        helper.assertTrue(!pistol.getAllSupportedProjectiles().test(new ItemStack(Items.ARROW)), "guns don't load arrows");
+        helper.assertTrue(!((net.minecraft.world.item.CrossbowItem) Items.CROSSBOW).getAllSupportedProjectiles().test(new ItemStack(com.pipican.firearm.Firearms.BULLET.get())),
+                "crossbows don't load bullets");
+        // One shot: a bullet with the pistol's damage.
+        ItemStack loaded = new ItemStack(pistol);
+        loaded.set(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES,
+                net.minecraft.world.item.component.ChargedProjectiles.ofNonEmpty(List.of(new ItemStack(com.pipican.firearm.Firearms.BULLET.get()))));
+        gunslinger.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, loaded);
+        // Six-shooters never misfire; 200 pistol shots at 5% misfire all landing would be a 1-in-30000 fluke.
+        int six = fire(helper, gunslinger, com.pipican.firearm.Firearms.SIX_SHOOTER.get(), 60);
+        helper.assertTrue(six == 60, "six-shooters never misfire: " + six + "/60 fired");
+        int plain = fire(helper, gunslinger, pistol, 200);
+        helper.assertTrue(plain < 200 && plain > 150, "plain pistols misfire now and then: " + plain + "/200 fired");
+        // Bullets carry the gun's damage.
+        ItemStack rifle = new ItemStack(com.pipican.firearm.Firearms.RIFLE.get());
+        rifle.set(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES,
+                net.minecraft.world.item.component.ChargedProjectiles.ofNonEmpty(List.of(new ItemStack(com.pipican.firearm.Firearms.BULLET.get()))));
+        gunslinger.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, rifle);
+        for (int tries = 0; tries < 20 && helper.getLevel().getEntitiesOfClass(com.pipican.firearm.Bullet.class, gunslinger.getBoundingBox().inflate(64)).isEmpty(); tries++) {
+            rifle.set(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES,
+                    net.minecraft.world.item.component.ChargedProjectiles.ofNonEmpty(List.of(new ItemStack(com.pipican.firearm.Firearms.BULLET.get()))));
+            rifle.use(helper.getLevel(), gunslinger, net.minecraft.world.InteractionHand.MAIN_HAND);
+        }
+        var shot = helper.getLevel().getEntitiesOfClass(com.pipican.firearm.Bullet.class, gunslinger.getBoundingBox().inflate(64));
+        helper.assertTrue(!shot.isEmpty() && Math.abs(shot.getFirst().baseDamage - 12) < 0.01, "a rifle bullet carries the rifle's damage");
+        shot.forEach(net.minecraft.world.entity.Entity::discard);
+        helper.assertTrue(com.pipican.ability.SpecialItems.isWeapon(new ItemStack(pistol)), "firearms are ranged weapons");
+        dismiss(helper, gunslinger);
+        helper.succeed();
     }
 }

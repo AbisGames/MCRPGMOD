@@ -26,7 +26,10 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 
-/** Gunslinger firearms. Until guns exist, crossbows are the firearm (as in the class's gear table). */
+/**
+ * Gunslinger firearm mechanics, for everything in {@code #pipican:weapons/firearms} (pistols, six-shooters, rifles): Quick
+ * Draw, accuracy, loud shots, ricochet, the six-shooter's cylinder, and each gun's own loading speed.
+ */
 @EventBusSubscriber(modid = Pipican.MOD_ID)
 public final class FirearmEvents {
 
@@ -40,7 +43,7 @@ public final class FirearmEvents {
     @SubscribeEvent
     static void onSwap(LivingEquipmentChangeEvent event) {
         if (event.getEntity() instanceof ServerPlayer player && event.getSlot() == EquipmentSlot.MAINHAND
-                && event.getTo().getItem() instanceof CrossbowItem && !(event.getFrom().getItem() instanceof CrossbowItem)) {
+                && event.getTo().is(com.pipican.firearm.Firearms.FIREARMS) && !event.getFrom().is(com.pipican.firearm.Firearms.FIREARMS)) {
             DRAWN.put(player.getUUID(), player.level().getGameTime());
         }
     }
@@ -48,7 +51,7 @@ public final class FirearmEvents {
     @SubscribeEvent
     static void onShot(EntityJoinLevelEvent event) {
         if (event.loadedFromDisk() || !(event.getEntity() instanceof AbstractArrow arrow) || !(arrow.getOwner() instanceof ServerPlayer player)
-                || arrow.tickCount > 0 || arrow.getWeaponItem() == null || !(arrow.getWeaponItem().getItem() instanceof CrossbowItem)) {
+                || arrow.tickCount > 0 || arrow.getWeaponItem() == null || !arrow.getWeaponItem().is(com.pipican.firearm.Firearms.FIREARMS)) {
             return;
         }
         ClassState state = ClassEffectApplier.state(player);
@@ -80,8 +83,8 @@ public final class FirearmEvents {
         if (state.chance(Kind.RICOCHET) > 0) {
             arrow.getPersistentData().putBoolean(RICOCHET_TAG, true);
         }
-        // Cylinder: the crossbow reloads itself until the cylinder is spent; the last shot can crit.
-        int cylinder = (int) Math.floor(state.chance(Kind.CYLINDER) + 1e-9);
+        // Cylinder: a six-shooter reloads itself until the cylinder is spent; the last shot can crit.
+        int cylinder = arrow.getWeaponItem().is(com.pipican.firearm.Firearms.SIX_SHOOTER.get()) ? (int) Math.floor(state.chance(Kind.CYLINDER) + 1e-9) : 0;
         if (cylinder > 1) {
             int shot = SHOTS.merge(player.getUUID(), 1, Integer::sum);
             if (shot >= cylinder) {
@@ -98,7 +101,7 @@ public final class FirearmEvents {
     }
 
     private static void reload(ServerPlayer player, ItemStack weapon) {
-        ItemStack crossbow = player.getMainHandItem().getItem() instanceof CrossbowItem ? player.getMainHandItem() : player.getOffhandItem();
+        ItemStack crossbow = player.getMainHandItem().is(com.pipican.firearm.Firearms.FIREARMS) ? player.getMainHandItem() : player.getOffhandItem();
         if (!(crossbow.getItem() instanceof CrossbowItem) || CrossbowItem.isCharged(crossbow)) {
             return;
         }
@@ -135,5 +138,23 @@ public final class FirearmEvents {
                         bouncing = false;
                     }
                 });
+    }
+
+    private static final Map<UUID, Double> RELOAD_REMAINDER = new ConcurrentHashMap<>();
+
+    /** Each gun loads at its own speed: a pistol faster than a crossbow, a rifle slower. */
+    @SubscribeEvent
+    static void onLoadTick(net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent.Tick event) {
+        if (!(event.getItem().getItem() instanceof com.pipican.firearm.FirearmItem gun) || gun.stats().reload() == 1) {
+            return;
+        }
+        // Per tick: skip ticks (faster) or hand some back (slower).
+        double step = 1 / gun.stats().reload() - 1;
+        double total = step + RELOAD_REMAINDER.getOrDefault(event.getEntity().getUUID(), 0.0);
+        int whole = (int) total;
+        RELOAD_REMAINDER.put(event.getEntity().getUUID(), total - whole);
+        if (whole != 0) {
+            event.setDuration(Math.max(1, event.getDuration() - whole));
+        }
     }
 }

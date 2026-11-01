@@ -1,3 +1,7 @@
 {
-  "values": []
+  "values": [
+    "pipican:pistol",
+    "pipican:six_shooter",
+    "pipican:rifle"
+  ]
 }
