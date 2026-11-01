@@ -52,6 +52,16 @@ public record ItemActionTrigger(Kind kind, Optional<HolderSet<Item>> items,
         return kindMatches && itemMatches(action.item()) ? 1 : 0;
     }
 
+    @Override
+    public double uses(net.minecraft.server.level.ServerPlayer player, SkillAction action) {
+        double uses = uses(action);
+        if (uses > 0 || items.isEmpty() || action.item().isEmpty() || !com.pipican.player.ClassState.countsAs(player, action.item(), items.get())) {
+            return uses;
+        }
+        // The item counts as one of these weapons for this class: the same check without the item list.
+        return new ItemActionTrigger(kind, Optional.empty(), enchantments).uses(action);
+    }
+
     private boolean itemMatches(ItemStack stack) {
         if (items.isPresent() && (stack.isEmpty() || !stack.is(items.get()))) {
             return false;

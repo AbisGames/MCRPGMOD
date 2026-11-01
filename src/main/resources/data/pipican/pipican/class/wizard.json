@@ -39,8 +39,13 @@
       "id": "minecraft:writable_book"
     },
     {
-      "id": "minecraft:book",
-      "count": 1
+      "id": "minecraft:enchanted_book",
+      "count": 1,
+      "components": {
+        "minecraft:custom_data": {
+          "pipican_random": "enchanted_book"
+        }
+      }
     },
     {
       "id": "minecraft:lapis_lazuli",
@@ -193,7 +198,8 @@
           "minecraft:book",
           "minecraft:enchanted_book"
         ],
-        "tier": "proficient"
+        "tier": "proficient",
+        "hand": "off"
       },
       {
         "items": "#pipican:weapons/swords",

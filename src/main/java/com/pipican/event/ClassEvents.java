@@ -219,7 +219,7 @@ public final class ClassEvents {
             amount *= (float) ClassState.multiplier(state.damageDealt(), event.getSource(), event.getEntity(), attacker);
             ItemStack weapon = event.getSource().getWeaponItem();
             if (weapon != null && !weapon.isEmpty() && state.rpgClass().isPresent()) {
-                amount *= (float) ClassEffectApplier.capped(attacker, weapon, state.rpgClass().get().affinities().resolve(weapon)
+                amount *= (float) ClassEffectApplier.capped(attacker, weapon, state.rpgClass().get().affinities().resolve(weapon, com.pipican.rpgclass.AffinityRules.Hand.MAIN)
                         .atLeastNeutral(state.chance(com.pipican.effect.type.BonusEffect.Kind.AFFINITY_FLOOR) > 0), state::chance).tuning().damage();
             }
             // Ability marks on the target and "your next hit" buffs.

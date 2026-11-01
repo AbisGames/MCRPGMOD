@@ -7,7 +7,7 @@
 - **Id:** runesmith
 - **Display name:** Runesmith
 - **Description:** A rune-carver taught by the dwarfs who inscribes glowing sigils on weapons and armor.
-- **Icon item:** smithing_template
+- **Icon item:** coast_armor_trim_smithing_template
 - **Selectable by players:** yes
 - **Base health:** 28
 

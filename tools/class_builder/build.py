@@ -42,17 +42,16 @@ EXCEPTIONS = {
                                      if TIER_RANK.index(aff.get(_cat(i), 'neutral')) < TIER_RANK.index('proficient')],
                            'tier': 'proficient'}],
     'gunslinger': lambda aff: [{'items': '#pipican:weapons/firearms', 'tier': 'mastery'}],  # pistols, six-shooters, rifles
-    'magician': lambda aff: [{'items': ['minecraft:blaze_rod', 'minecraft:stick'], 'tier': 'proficient'}],
-    'witch': lambda aff: [{'items': ['minecraft:stick', 'minecraft:blaze_rod'], 'tier': 'proficient'}],
-    'priest': lambda aff: [{'items': ['minecraft:wooden_shovel', 'minecraft:stone_shovel'], 'tier': 'neutral'}],
-    'wizard': lambda aff: [{'items': ['minecraft:book', 'minecraft:enchanted_book'], 'tier': 'proficient'}],
+    # "blaze_rod and stick held in main hand: count as a staff (spear) at proficient"
+    'magician': lambda aff: [{'items': ['minecraft:blaze_rod', 'minecraft:stick'], 'tier': 'proficient', 'hand': 'main',
+                              'counts_as': '#pipican:weapons/spears'}],
+    'witch': lambda aff: [{'items': '#pipican:weapons/staff', 'tier': 'proficient'}],
+    # "wooden_shovel and stone_shovel: count as maces at neutral"
+    'priest': lambda aff: [{'items': ['minecraft:wooden_shovel', 'minecraft:stone_shovel'], 'tier': 'neutral', 'counts_as': '#pipican:weapons/maces'}],
+    # "book/enchanted_book in off-hand: counts as proficient off-hand item"
+    'wizard': lambda aff: [{'items': ['minecraft:book', 'minecraft:enchanted_book'], 'tier': 'proficient', 'hand': 'off'}],
 }
-EXCEPTION_NOTES = {
-    'wizard': 'Book/enchanted book counts as proficient in any hand (no off-hand-only rule exists).',
-    'priest': 'Shovels are neutral (they don\'t become maces: there is no "counts as" rule).',
-    'magician': 'Stick/blaze rod are proficient (they don\'t become spears: there is no "counts as" rule).',
-    'witch': 'Stick/blaze rod are proficient (there is no "staff" category).',
-}
+EXCEPTION_NOTES = {}
 
 
 def _cat(item):
@@ -82,18 +81,19 @@ def kit_entry(cid, n, item, extra, notes):
         m = re.match(r'of (\w+)', extra)
         potion = POTIONS.get(m.group(1)) if m else None
         if m and m.group(1) == 'resistance':
-            notes.append('kit: "splash potion of resistance" doesn\'t exist in vanilla; gave Turtle Master instead')
+            # No vanilla potion of resistance: a 3-minute Resistance I potion of our own.
+            return {'id': 'minecraft:' + item, 'count': n, 'components': {
+                'minecraft:potion_contents': {'custom_color': 9520880, 'custom_effects': [{'id': 'minecraft:resistance', 'duration': 3600}]},
+                'minecraft:item_name': {'translate': 'item.pipican.' + item + '_of_resistance'}}}
         if potion:
             return {'id': 'minecraft:' + item, 'count': n, 'components': {'minecraft:potion_contents': {'potion': 'minecraft:' + potion}}}
+    # Rolled when the kit is handed out (KitItems): a random potion each, a random level-1 enchanted book, a random trim.
     if item == 'random' and 'potion' in extra:
-        notes.append('kit: "random potion" isn\'t possible; gave awkward potions')
-        return {'id': 'minecraft:potion', 'count': n, 'components': {'minecraft:potion_contents': {'potion': 'minecraft:awkward'}}}
+        return {'id': 'minecraft:potion', 'count': n, 'components': {'minecraft:custom_data': {'pipican_random': 'potion'}}}
     if item == 'enchanted_book':
-        notes.append('kit: "random level-1 enchanted book" isn\'t possible; gave a plain book')
-        return {'id': 'minecraft:book', 'count': n}
+        return {'id': 'minecraft:enchanted_book', 'count': n, 'components': {'minecraft:custom_data': {'pipican_random': 'enchanted_book'}}}
     if item == 'smithing_template':
-        notes.append('kit: "any trim" template -> coast armor trim')
-        return {'id': 'minecraft:coast_armor_trim_smithing_template', 'count': n}
+        return {'id': 'minecraft:coast_armor_trim_smithing_template', 'count': n, 'components': {'minecraft:custom_data': {'pipican_random': 'trim'}}}
     if item == 'pistol':
         return {'id': 'pipican:pistol', 'count': n}
     if item == 'bullets':
@@ -194,6 +194,27 @@ def spec_abilities(c):
             for m in UNLOCKS.finditer(n['gives']):
                 out.setdefault(m.group(1).strip(), '')
     return out
+
+
+def apply_cap(effects, text):
+    """"(max -20%)" / "(max +25%)": caps the scaling terms of the effects. True when the cap is in place (also when it
+    already was: "(max 2)" servants on a control action, "(max Tier IV)" as no_top_tier)."""
+    m = re.search(r'\(max ([+-]?\d+(?:\.\d+)?)%\)', text)
+    blob = json.dumps(effects)
+    if m:
+        cap = abs(float(m.group(1))) / 100
+        done = False
+        for e in effects:
+            for key in ('scaling', 'chance_scaling'):
+                for sc in e.get(key, []):
+                    sc['max'] = round(cap, 6)
+                    done = True
+        return done
+    if re.search(r'\(max (\d+)\)', text):
+        return '"max": ' + re.search(r'\(max (\d+)\)', text).group(1) in blob
+    if re.search(r'\(max tier [iv]+\)', text, re.I):
+        return 'no_top_tier' in blob
+    return False
 
 
 def ability_json(name, description, d):
@@ -373,7 +394,7 @@ def main(spec_dir, res_dir, report_path):
 
     def tr(cid, where, text, ctx, category=None):
         eff, uns = fx.translate(text, ctx)
-        if eff and re.search(r'\(max [^)]*\)', text or ''):
+        if eff and re.search(r'\(max [^)]*\)', text or '') and not apply_cap(eff, text):
             notes[cid].append(f'{where}: cap not enforced (scaling has no maximum): "{text}"')
         counts['phrases'] += 1
         if not uns:

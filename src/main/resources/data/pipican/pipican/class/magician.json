@@ -132,7 +132,9 @@
           "minecraft:blaze_rod",
           "minecraft:stick"
         ],
-        "tier": "proficient"
+        "tier": "proficient",
+        "hand": "main",
+        "counts_as": "#pipican:weapons/spears"
       },
       {
         "items": "#pipican:weapons/swords",

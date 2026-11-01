@@ -122,7 +122,8 @@
       "scaling": [
         {
           "source": "special_stat",
-          "per": -0.0025
+          "per": -0.0025,
+          "max": 0.15
         }
       ]
     }

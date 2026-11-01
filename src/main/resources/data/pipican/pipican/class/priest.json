@@ -165,7 +165,8 @@
           "minecraft:wooden_shovel",
           "minecraft:stone_shovel"
         ],
-        "tier": "neutral"
+        "tier": "neutral",
+        "counts_as": "#pipican:weapons/maces"
       },
       {
         "items": "#pipican:weapons/spears",

@@ -466,7 +466,7 @@ public final class ClassEffectApplier {
         // Held item: attack speed.
         ItemStack mainHand = player.getMainHandItem();
         boolean floor = c.bonuses.getOrDefault(BonusEffect.Kind.AFFINITY_FLOOR, 0.0) > 0;
-        Affinity held = capped(player, mainHand, rpgClass.affinities().resolve(mainHand).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0),
+        Affinity held = capped(player, mainHand, rpgClass.affinities().resolve(mainHand, com.pipican.rpgclass.AffinityRules.Hand.MAIN).atLeastNeutral(floor), k -> c.bonuses.getOrDefault(k, 0.0),
                 k -> c.stats.getOrDefault(k, 0.0));
         c.addAttribute(Attributes.ATTACK_SPEED, held.tuning().attackSpeed() - 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 

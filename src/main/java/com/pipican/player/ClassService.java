@@ -77,7 +77,9 @@ public final class ClassService {
         data.abilityActive().clear();
         if (giveKit) {
             for (var template : rpgClass.get().startingKit()) {
-                giveOrDrop(player, template.create());
+                for (var stack : KitItems.roll(player, template.create())) {
+                    giveOrDrop(player, stack);
+                }
             }
         }
         changed(player);

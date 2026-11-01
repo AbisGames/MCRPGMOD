@@ -41,24 +41,24 @@
     {
       "id": "minecraft:potion",
       "components": {
-        "minecraft:potion_contents": {
-          "potion": "minecraft:awkward"
+        "minecraft:custom_data": {
+          "pipican_random": "potion"
         }
       }
     },
     {
       "id": "minecraft:potion",
       "components": {
-        "minecraft:potion_contents": {
-          "potion": "minecraft:awkward"
+        "minecraft:custom_data": {
+          "pipican_random": "potion"
         }
       }
     },
     {
       "id": "minecraft:potion",
       "components": {
-        "minecraft:potion_contents": {
-          "potion": "minecraft:awkward"
+        "minecraft:custom_data": {
+          "pipican_random": "potion"
         }
       }
     },

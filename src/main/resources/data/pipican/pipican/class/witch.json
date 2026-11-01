@@ -164,10 +164,7 @@
     "default": "neutral",
     "rules": [
       {
-        "items": [
-          "minecraft:stick",
-          "minecraft:blaze_rod"
-        ],
+        "items": "#pipican:weapons/staff",
         "tier": "proficient"
       },
       {

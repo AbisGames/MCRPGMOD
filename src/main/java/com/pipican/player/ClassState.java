@@ -100,7 +100,7 @@ public record ClassState(
             }
             if (weapons.isPresent()) {
                 ItemStack weapon = source.getWeaponItem();
-                if (weapon == null || weapon.isEmpty() || !weapon.is(weapons.get())) {
+                if (weapon == null || weapon.isEmpty() || !weapon.is(weapons.get()) && !countsAs(source.getEntity(), weapon, weapons.get())) {
                     return false;
                 }
             }
@@ -286,5 +286,11 @@ public record ClassState(
             }
         }
         return mult;
+    }
+
+    /** True if {@code who}'s class rules make {@code stack} count as one of {@code weapons} ("sticks count as spears"). */
+    public static boolean countsAs(net.minecraft.world.entity.@Nullable Entity who, ItemStack stack, HolderSet<Item> weapons) {
+        return who instanceof net.minecraft.server.level.ServerPlayer player
+                && com.pipican.player.ClassEffectApplier.state(player).rpgClass().map(c -> c.affinities().countsAs(stack, weapons)).orElse(false);
     }
 }

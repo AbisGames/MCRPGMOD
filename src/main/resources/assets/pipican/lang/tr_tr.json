@@ -2003,5 +2003,7 @@
   "item.pipican.six_shooter": "Altıpatlar",
   "item.pipican.rifle": "Tüfek",
   "item.pipican.bullet": "Mermi",
-  "entity.pipican.bullet": "Mermi"
+  "entity.pipican.bullet": "Mermi",
+  "item.pipican.splash_potion_of_resistance": "Atılabilir Direnç İksiri",
+  "item.pipican.potion_of_resistance": "Direnç İksiri"
 }

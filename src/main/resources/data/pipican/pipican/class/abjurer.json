@@ -47,7 +47,16 @@
       "count": 1,
       "components": {
         "minecraft:potion_contents": {
-          "potion": "minecraft:turtle_master"
+          "custom_color": 9520880,
+          "custom_effects": [
+            {
+              "id": "minecraft:resistance",
+              "duration": 3600
+            }
+          ]
+        },
+        "minecraft:item_name": {
+          "translate": "item.pipican.splash_potion_of_resistance"
         }
       }
     },
@@ -110,7 +119,8 @@
       "scaling": [
         {
           "source": "special_stat",
-          "per": -0.002
+          "per": -0.002,
+          "max": 0.2
         }
       ]
     },

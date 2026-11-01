@@ -87,7 +87,7 @@ public record DamageAction(Targets targets, double amount, Kind kind, double exe
             }
             double total = amount;
             for (var s : scaling) {
-                total += s.per() * source(player, s.source());
+                total += s.term(source(player, s.source()));
             }
             if (total > 0) {
                 target.hurtServer(ctx.level(), source, (float) (total + ctx.mod().damage()));

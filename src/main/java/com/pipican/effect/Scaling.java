@@ -14,12 +14,25 @@ import java.util.List;
  *   <li>{@code special_stat} - total points in the class's special stat</li>
  *   <li>any stat id, e.g. {@code pipican:strength} - total points in that stat</li>
  * </ul>
+ * {@code max} caps how much this term can add (or take away): {@code { "source": "special_stat", "per": -0.002, "max": 0.2 }} is
+ * "-0.2% per point (max -20%)".
  */
-public record Scaling(String source, double per) {
+public record Scaling(String source, double per, java.util.Optional<Double> max) {
+
+    public Scaling(String source, double per) {
+        this(source, per, java.util.Optional.empty());
+    }
+
+    /** {@code per * value}, kept within the cap. */
+    public double term(double value) {
+        double t = per * value;
+        return max.map(m -> Math.clamp(t, -Math.abs(m), Math.abs(m))).orElse(t);
+    }
 
     public static final Codec<Scaling> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.STRING.fieldOf("source").forGetter(Scaling::source),
-            Codec.DOUBLE.fieldOf("per").forGetter(Scaling::per)
+            Codec.DOUBLE.fieldOf("per").forGetter(Scaling::per),
+            Codec.DOUBLE.optionalFieldOf("max").forGetter(Scaling::max)
     ).apply(i, Scaling::new));
 
     public static final Codec<List<Scaling>> LIST_CODEC = CODEC.listOf();
@@ -33,7 +46,7 @@ public record Scaling(String source, double per) {
     public static double evaluate(double base, List<Scaling> scaling, EffectContext ctx) {
         double value = base;
         for (Scaling s : scaling) {
-            value += s.per() * ctx.sourceValue(s.source());
+            value += s.term(ctx.sourceValue(s.source()));
         }
         return value;
     }

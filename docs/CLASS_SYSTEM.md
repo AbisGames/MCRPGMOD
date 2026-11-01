@@ -289,14 +289,14 @@ A tier can also unlock abilities while it is reached: `"grants": [ "pipican:knig
 |---|---|---|
 | `pipican:melee_hit` | `items` (optional) | a melee hit on a mob with one of the items |
 | `pipican:ranged_hit` | `items` (optional) | a projectile from one of the items (bow, crossbow...) hitting a mob |
-| `pipican:kill` | `items` (optional) | killing a mob with one of the items |
+| `pipican:kill` | `items`, `enchantments` (optional) | killing a mob with one of the items (`enchantments`: enchanted with one of them, e.g. Looting) |
 | `pipican:block` | `items` (optional) | blocking an attack with a shield |
 | `pipican:hurt_wearing` | `items`, `min_pieces` (=1) | taking damage while wearing at least `min_pieces` of the items |
 | `pipican:move` | `mode`, `per_blocks` (=10) | every `per_blocks` blocks moved in `mode`: `walk`, `sprint`, `sneak`, `swim`, `climb`, `glide`, `ride` (carried by a mount) |
 | `pipican:jump` | – | a jump |
 | `pipican:ability` | `ability` | using that active ability |
-| `pipican:did` | `action`, `items`, `blocks` | `crit`, `bleed`, `dodge`, `spend` (an ability spent resource), `heal` (you were healed), `hurt` (any damage taken), `take_fall`, `teleport` (pearls, chorus fruit, blinks), `enchant`, `brew`, `craft`, `smelt`, `trade`, `tame`, `breed`, `mine`, `harvest` (fully grown crops, berries, flowers, mushrooms), `plant`, `bone_meal`, `anvil`, `level_up`, `drink` (a potion), `fish`, `pet_kill` (your pet or summon killed a mob). `items` / `blocks` narrow it (`"action": "mine", "blocks": "#c:ores"`). |
-| `pipican:filtered` | `trigger`, `when`, `victims`, `victim`, `min_amount` | another trigger, only in a [condition](#conditions) (`when`), against some mobs (`victims`), mobs in a [state](#3-effects) (`victim`: marked, bleeding, low health...), or with at least `min_amount` damage / spending / healing. |
+| `pipican:did` | `action`, `items`, `blocks` | `crit`, `bleed`, `dodge`, `spend` (an ability spent resource), `heal` (you were healed), `hurt` (any damage taken), `take_fall`, `teleport` (pearls, chorus fruit, blinks), `enchant`, `brew`, `craft`, `smelt`, `trade`, `tame`, `breed`, `mine`, `harvest` (fully grown crops, berries, flowers, mushrooms), `plant`, `bone_meal`, `anvil`, `level_up`, `drink` (a potion), `fish`, `pet_kill` (your pet or summon killed a mob), `heal_other`, `execute`, `charm`, `explosion_hit`, `active_second`, `poison`, `use_item`, `absorb`, `safe_fall` (landed from 6+ blocks unhurt; amount = height), `second` (every second, for "time spent ..." with `when`), `aura_ally_kill` (another player killed a mob inside your aura; amount = distance), `assist` (another player killed a mob you hit; amount = seconds since your hit), `kill_streak` (amount = your kills in the last 10s), `offhand_combo`, `eidolon_hit`, `eidolon_repair`, `new_chunk` (first visit), `varied_kill` / `varied_use` (amount = different weapon / item types killed with / fought with today), `sneak_unseen` (each second sneaking near a hostile mob that isn't after you; amount = its distance), `ignite`, `trim`, `rename`, `focus_combo` (two focus schools in one fight), `magic_hit`, `loot_chest` (first opening of a generated loot container), `optimize`, `potion_hit` (your thrown potion splashed a mob), `perform` (goat horn, note block, jukebox), `empowered_hit`. `items` / `blocks` narrow it (`"action": "mine", "blocks": "#c:ores"`). |
+| `pipican:filtered` | `trigger`, `when`, `victims`, `victim`, `min_amount`, `max_amount` | another trigger, only in a [condition](#conditions) (`when`), against some mobs (`victims`), mobs in a [state](#3-effects) (`victim`: marked, bleeding, low health...), or with at least `min_amount` / at most `max_amount` (damage, spending, healing, distance, count - see the action). |
 | `pipican:any` | `triggers` | the first of several triggers that matches ("brewing potions and drinking them"). |
 
 **Total points:** players get 5 points per skill they can train (plus the class's starting points), so the number
@@ -390,6 +390,27 @@ sight cancels the use unless `"required": false`.
 | `pipican:steal` | `range` | Takes the held item (or an armor piece) of the mob you look at. |
 | `pipican:transmute` | `pairs`: `[ { "from", "to" } ]` | Turns the held stack into another item. |
 | `pipican:transfer_effects` | targets (=look) | Moves your harmful effects onto the target. |
+| `pipican:freeze` | targets (=hostiles), `seconds` | Freezes mobs in time: no AI, no movement (even mid-air), no attacks. |
+| `pipican:choice` | `options`: `[ { "name", "actions" } ]` | Sneak + use picks the next option (free); use runs the picked one. |
+| `pipican:weapon_strike` | targets (=hostiles), `hands` (`main`/`off`/`both`), `multiplier` | Real melee hits with your weapon(s). |
+| `pipican:charge` | `strength`, `up`, `damage`, `push`, `seconds` | Charge where you look; mobs you run into take the hit on impact. |
+| `pipican:temple` | `seconds` | A temporary Temple of Faith where you stand. |
+| `pipican:break_free` | `seconds` | Frees you: Slowness, cobwebs, guardian beams, leads, being carried; Slowness can't return for `seconds`. |
+| `pipican:steer` | `speed`, `damage`, `respawn_seconds`, `stop` | A green fireball you steer with your gaze (run as a pulse; `stop` in end actions). |
+| `pipican:surface` | – | Lifts you out of blocks you're stuck in. |
+| `pipican:animate` | `seconds`, `range`, `max` | The block you look at becomes a friendly construct; it turns back into the block when it ends. |
+| `pipican:store_spell` | `charges` | Pours the off-hand potion into the gear in your main hand (cast on hit / when hit). |
+| `pipican:throw_stolen` | `power`, `keep` | Throws the last effect Steal Spell cancelled as a splash potion. |
+| `pipican:attribute_boost` | targets (=companions), `seconds`, `attributes` | Changes the targets' attributes for a while (Overdrive). |
+
+Also: `push` takes `from_origin` (push away from an anchored state's spot), `dash` takes `toward_look`, `blink` takes
+`max_light` (arrive in shadow) and `start_near` (set off touching these blocks), `locate` takes `any_of` (nearest of
+several structure tags), `empower` takes `bonus_roll` (+1..N per hit) and `requires` (a condition), `summon` takes
+`victims` / `unless_victims` (in a reaction: only for these kinds of mob, spawned where the mob was), `damage` takes
+`scaling` (with the extra source `sigils`), `give` takes `sneak_items` and `seconds: 0` (until you sleep), `cleanse`
+takes `last` (only the newest harmful effect), `cast` reads every page of the grimoire (sneak + use turns the page),
+`recall_item` takes `bound` (your hotbar-slot-1 weapon, back into your hand). The target `nearest_player` is the
+closest other player within `radius`.
 | `pipican:cast` | `spells` (ability ids) | Casts the spell whose name is on the first page of a book in your hand. |
 | `pipican:eidolon` | `item`, `count`, `rebuild_ticks` | Builds your eidolon (or calls it to you). |
 | `pipican:mount` | `range` | Rides (or leaves) your eidolon. |
@@ -501,7 +522,7 @@ Adding a condition type (Java): implement `condition/ClassCondition` and registe
   "scaling": [ { "source": "special_stat", "per": 0.25 }, { "source": "class_level", "per": 0.1 } ] }
 ```
 
-final amount = `amount + Σ(per × source)`. Sources: `class_level`, `special_stat`, `sigil_armor` (worn armor pieces with a trim), `heavy_armor` (worn heavy pieces), `missing_hearts` / `missing_health_percent` (whole hearts / percent of max health missing; bonuses refresh as health changes), or any stat id (`"mypack:strength"`).
+final amount = `amount + Σ(per × source)`; a term with `max` stops there (`{ "source": "special_stat", "per": -0.002, "max": 0.2 }` = "-0.2% per point (max -20%)"). Sources: `class_level`, `special_stat`, `sigil_armor` (worn armor pieces with a trim), `heavy_armor` (worn heavy pieces), `missing_hearts` / `missing_health_percent` (whole hearts / percent of max health missing; bonuses refresh as health changes), or any stat id (`"mypack:strength"`).
 
 ### Adding a new effect type (Java, rare)
 
@@ -532,7 +553,9 @@ still works, just with heavy penalties.
 ```
 
 Rules are checked **top to bottom, first match wins** — put single items before broad tags.
-`items` can be an item id, a list of ids, or a `#tag`.
+`items` can be an item id, a list of ids, or a `#tag`. `hand` (`main` / `off`) limits a rule to one hand ("a book in the
+off-hand"); `counts_as` (a category tag) makes the items count as that kind of weapon for damage bonuses and skills
+("sticks count as a staff (spear)").
 
 | Tier | Damage | Attack speed | Armor value | Move speed per piece | Trinket strength | Mastery gain |
 |---|---|---|---|---|---|---|

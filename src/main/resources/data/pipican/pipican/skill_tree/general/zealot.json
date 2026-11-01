@@ -51,7 +51,8 @@
           "scaling": [
             {
               "source": "missing_hearts",
-              "per": 0.05
+              "per": 0.05,
+              "max": 0.25
             }
           ]
         }

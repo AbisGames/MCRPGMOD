@@ -123,6 +123,7 @@ public final class ClassSystemTests {
         TESTS.put("skill_triggers", ClassSystemTests::skillTriggers);
         TESTS.put("ability_specs", ClassSystemTests::abilitySpecs);
         TESTS.put("firearms", ClassSystemTests::firearms);
+        TESTS.put("kits_gear_caps", ClassSystemTests::kitsGearCaps);
     }
 
     private ClassSystemTests() {}
@@ -1949,6 +1950,83 @@ public final class ClassSystemTests {
         shot.forEach(net.minecraft.world.entity.Entity::discard);
         helper.assertTrue(com.pipican.ability.SpecialItems.isWeapon(new ItemStack(pistol)), "firearms are ranged weapons");
         dismiss(helper, gunslinger);
+        helper.succeed();
+    }
+
+    // ------------------------------------------------------------------ kits, gear rules, caps
+
+    private static ItemStack find(ServerPlayer player, java.util.function.Predicate<ItemStack> what) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (what.test(player.getInventory().getItem(i))) {
+                return player.getInventory().getItem(i);
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
+    /** Random kit items are rolled, "counts as" and hand-limited gear rules work, and capped scaling stops at its cap. */
+    private static void kitsGearCaps(GameTestHelper helper) {
+        ServerPlayer enchanter = classPlayer(helper, "enchanter", new BlockPos(1, 2, 1));
+        ItemStack book = find(enchanter, st -> st.is(Items.ENCHANTED_BOOK));
+        var stored = book.get(net.minecraft.core.component.DataComponents.STORED_ENCHANTMENTS);
+        helper.assertTrue(stored != null && stored.size() == 1 && stored.entrySet().iterator().next().getIntValue() == 1,
+                "the enchanter starts with a random level-1 enchanted book: " + stored);
+        dismiss(helper, enchanter);
+
+        ServerPlayer thaum = classPlayer(helper, "thaumaturge", new BlockPos(1, 2, 1));
+        int potions = 0;
+        for (int i = 0; i < thaum.getInventory().getContainerSize(); i++) {
+            ItemStack st = thaum.getInventory().getItem(i);
+            var contents = st.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+            if (st.is(Items.POTION) && contents != null) {
+                helper.assertTrue(contents.potion().isPresent() && !contents.potion().get().is(net.minecraft.world.item.alchemy.Potions.AWKWARD),
+                        "random potions are real potions: " + contents);
+                potions += st.getCount();
+            }
+        }
+        helper.assertTrue(potions == 3, "the thaumaturge starts with 3 random potions, got " + potions);
+        dismiss(helper, thaum);
+
+        ServerPlayer abjurer = classPlayer(helper, "abjurer", new BlockPos(1, 2, 1));
+        ItemStack splash = find(abjurer, st -> st.is(Items.SPLASH_POTION));
+        var effects = new java.util.ArrayList<net.minecraft.world.effect.MobEffectInstance>();
+        var splashContents = splash.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+        if (splashContents != null) {
+            splashContents.getAllEffects().forEach(effects::add);
+        }
+        helper.assertTrue(effects.stream().anyMatch(e -> e.getEffect().is(net.minecraft.world.effect.MobEffects.RESISTANCE)),
+                "the abjurer's splash potion is a potion of resistance: " + effects);
+        dismiss(helper, abjurer);
+
+        ServerPlayer runesmith = classPlayer(helper, "runesmith", new BlockPos(1, 2, 1));
+        helper.assertTrue(!find(runesmith, st -> net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(st.getItem()).getPath().endsWith("_armor_trim_smithing_template")).isEmpty(),
+                "the runesmith starts with an armor trim template");
+        dismiss(helper, runesmith);
+
+        // Gear: a magician's stick counts as a spear (proficient, in the main hand); a priest's shovel as a mace.
+        var classes = ClassLookup.classes(helper.getLevel().registryAccess());
+        var magician = classes.getValue(Pipican.id("magician"));
+        var spears = helper.getLevel().registryAccess().lookupOrThrow(Registries.ITEM).getOrThrow(
+                net.minecraft.tags.TagKey.create(Registries.ITEM, Pipican.id("weapons/spears")));
+        var maces = helper.getLevel().registryAccess().lookupOrThrow(Registries.ITEM).getOrThrow(
+                net.minecraft.tags.TagKey.create(Registries.ITEM, Pipican.id("weapons/maces")));
+        helper.assertTrue(magician.affinities().resolve(new ItemStack(Items.STICK), com.pipican.rpgclass.AffinityRules.Hand.MAIN)
+                == com.pipican.rpgclass.Affinity.PROFICIENT, "a magician's stick is proficient in the main hand");
+        helper.assertTrue(magician.affinities().countsAs(new ItemStack(Items.STICK), spears), "...and counts as a spear");
+        var priest = classes.getValue(Pipican.id("priest"));
+        helper.assertTrue(priest.affinities().countsAs(new ItemStack(Items.STONE_SHOVEL), maces), "a priest's shovel counts as a mace");
+        var wizard = classes.getValue(Pipican.id("wizard"));
+        helper.assertTrue(wizard.affinities().resolve(new ItemStack(Items.BOOK), com.pipican.rpgclass.AffinityRules.Hand.OFF)
+                == com.pipican.rpgclass.Affinity.PROFICIENT, "a wizard's book is proficient in the off-hand");
+        helper.assertTrue(wizard.affinities().resolve(new ItemStack(Items.BOOK), com.pipican.rpgclass.AffinityRules.Hand.MAIN)
+                != com.pipican.rpgclass.Affinity.PROFICIENT, "...but not in the main hand");
+        var witch = classes.getValue(Pipican.id("witch"));
+        helper.assertTrue(witch.affinities().resolve(new ItemStack(Items.BLAZE_ROD)) == com.pipican.rpgclass.Affinity.PROFICIENT, "a witch's staff is proficient");
+
+        // Caps: "-0.2% per point (max -20%)" stops at -20%.
+        var cap = new com.pipican.effect.Scaling("special_stat", -0.002, Optional.of(0.2));
+        assertNear(helper, -0.1, cap.term(50), "below the cap it scales");
+        assertNear(helper, -0.2, cap.term(500), "past the cap it stops");
         helper.succeed();
     }
 }

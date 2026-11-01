@@ -2711,5 +2711,7 @@
   "item.pipican.six_shooter": "Six-Shooter",
   "item.pipican.rifle": "Rifle",
   "item.pipican.bullet": "Bullet",
-  "entity.pipican.bullet": "Bullet"
+  "entity.pipican.bullet": "Bullet",
+  "item.pipican.splash_potion_of_resistance": "Splash Potion of Resistance",
+  "item.pipican.potion_of_resistance": "Potion of Resistance"
 }

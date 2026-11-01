@@ -44,7 +44,12 @@
     },
     {
       "id": "minecraft:coast_armor_trim_smithing_template",
-      "count": 1
+      "count": 1,
+      "components": {
+        "minecraft:custom_data": {
+          "pipican_random": "trim"
+        }
+      }
     },
     {
       "id": "minecraft:bread",

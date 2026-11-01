@@ -91,19 +91,3 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 ## Other notes per class
 
-- **abjurer**: kit: "splash potion of resistance" doesn't exist in vanilla; gave Turtle Master instead
-- **abjurer**: special passive: cap not enforced (scaling has no maximum): "-0.2% damage taken per Warding point (max -20%)"
-- **conjurer**: icon "zombie_spawner_egg" isn't an item id; used zombie_spawn_egg
-- **enchanter**: kit: "random level-1 enchanted book" isn't possible; gave a plain book
-- **fighter**: special passive: cap not enforced (scaling has no maximum): "Fighter's Resolve: -0.25% damage taken per Discipline point (max -15%)"
-- **jack_of_all_trades**: weakness: cap not enforced (scaling has no maximum): "you can never reach Tier V in any skill (max Tier IV)"
-- **magician**: gear: Stick/blaze rod are proficient (they don't become spears: there is no "counts as" rule).
-- **necromancer**: passive: cap not enforced (scaling has no maximum): "Command Undead: hitting a zombie or skeleton that isn't targeting you has a 20% chance to make it your servant for 60s (max 2)"
-- **priest**: gear: Shovels are neutral (they don't become maces: there is no "counts as" rule).
-- **runesmith**: icon "smithing_template" isn't an item id; used coast_armor_trim_smithing_template
-- **runesmith**: kit: "any trim" template -> coast armor trim
-- **thaumaturge**: kit: "random potion" isn't possible; gave awkward potions
-- **witch**: gear: Stick/blaze rod are proficient (there is no "staff" category).
-- **wizard**: gear: Book/enchanted book counts as proficient in any hand (no off-hand-only rule exists).
-- **wizard**: kit: "random level-1 enchanted book" isn't possible; gave a plain book
-- **zealot**: general tree: Flagellant: cap not enforced (scaling has no maximum): "+5% damage per missing heart (max +25%)"

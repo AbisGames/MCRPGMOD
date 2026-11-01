@@ -7,7 +7,7 @@
 - **Id:** conjurer
 - **Display name:** Conjurer
 - **Description:** A summoner who pulls monsters out of nothing to fight on their behalf.
-- **Icon item:** zombie_spawner_egg
+- **Icon item:** zombie_spawn_egg
 - **Selectable by players:** yes
 - **Base health:** 28
 
