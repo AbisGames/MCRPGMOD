@@ -1,0 +1,18 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 527364918,
+    "spacing": 40,
+    "separation": 16,
+    "exclusion_zone": {
+      "other_set": "pipican:regional/shimmering_reefs/expeditions",
+      "chunk_count": 5
+    }
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/shimmering_reefs/castle",
+      "weight": 1
+    }
+  ]
+}

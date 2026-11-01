@@ -1,0 +1,18 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 364918273,
+    "spacing": 40,
+    "separation": 16,
+    "exclusion_zone": {
+      "other_set": "pipican:regional/umbral_chasm/expeditions",
+      "chunk_count": 5
+    }
+  },
+  "structures": [
+    {
+      "structure": "pipican:regional/umbral_chasm/castle",
+      "weight": 1
+    }
+  ]
+}
