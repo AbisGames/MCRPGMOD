@@ -1,0 +1,18 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 481516234,
+    "spacing": 28,
+    "separation": 10,
+    "exclusion_zone": {
+      "other_set": "pipican:regional/heartlands/expeditions",
+      "chunk_count": 5
+    }
+  },
+  "structures": [
+    {
+      "structure": "pipican:heartlands_keep",
+      "weight": 1
+    }
+  ]
+}

@@ -2005,5 +2005,6 @@
   "item.pipican.bullet": "Mermi",
   "entity.pipican.bullet": "Mermi",
   "item.pipican.splash_potion_of_resistance": "Atılabilir Direnç İksiri",
-  "item.pipican.potion_of_resistance": "Direnç İksiri"
+  "item.pipican.potion_of_resistance": "Direnç İksiri",
+  "generator.minecraft.normal": "Pipican RPG Dünyası"
 }

@@ -77,8 +77,6 @@ public class SkillTreeScreen extends Screen {
     private String query = "";
     private int masteryScroll;
     private LevelUpPanel levelUp;
-    private Button acceptButton;
-    private Button resetButton;
 
     public SkillTreeScreen() {
         super(Component.translatable("pipican.tree.title"));
@@ -143,15 +141,6 @@ public class SkillTreeScreen extends Screen {
         addRenderableWidget(search);
         if (levelUp == null) {
             levelUp = new LevelUpPanel(minecraft);
-        }
-        if (tab == Tab.STAT) {
-            levelUp.layout(width, height, TOP_BAR);
-            int bw = (levelUp.leftWidth - 18) / 2;
-            int by = levelUp.bottomOfLeft;
-            acceptButton = addRenderableWidget(Button.builder(Component.translatable("pipican.levelup.accept"), b -> levelUp.accept())
-                    .bounds(levelUp.left + 6, by, bw, 18).build());
-            resetButton = addRenderableWidget(Button.builder(Component.translatable("pipican.levelup.reset"), b -> levelUp.reset())
-                    .bounds(levelUp.left + 12 + bw, by, bw, 18).build());
         }
         if (!centred) {
             centreOnStart();
@@ -291,10 +280,6 @@ public class SkillTreeScreen extends Screen {
     @Override
     public void extractBackground(GuiGraphicsExtractor g, int mouseX, int mouseY, float a) {
         g.fill(0, 0, width, height, COLOR_BG);
-        // Drawn under the widgets so the Accept / Reset buttons sit on top of the sheet.
-        if (tab == Tab.STAT && rpgClass().isPresent()) {
-            extractLevelUp(g, mouseX, mouseY);
-        }
     }
 
     @Override
@@ -307,7 +292,7 @@ public class SkillTreeScreen extends Screen {
         if (tab == Tab.MASTERY) {
             extractMastery(g, mouseX, mouseY);
         } else if (tab == Tab.STAT) {
-            // Drawn in extractBackground, under the buttons.
+            levelUp.render(g, font, width, height, TOP_BAR, mouseX, mouseY);
         } else if (tree().isEmpty() || treeRef().isEmpty()) {
             g.centeredText(font, Component.translatable("pipican.tree.none"), width / 2, height / 2, 0xFFAAAAAA);
         } else {
@@ -444,22 +429,6 @@ public class SkillTreeScreen extends Screen {
             lines.add(Component.translatable("pipican.tree.no_points").withStyle(ChatFormatting.DARK_GRAY));
         }
         return lines;
-    }
-
-    // ------------------------------------------------------------------ stats tab
-
-    private void extractLevelUp(GuiGraphicsExtractor g, int mouseX, int mouseY) {
-        levelUp.render(g, font, width, height, mouseX, mouseY);
-        // The stat list can grow (new stat bonus, pack reload): keep Accept/Reset under it.
-        int by = levelUp.bottomOfLeft;
-        if (acceptButton != null && acceptButton.getY() != by) {
-            acceptButton.setY(by);
-            resetButton.setY(by);
-        }
-        if (acceptButton != null) {
-            acceptButton.active = levelUp.hasPending();
-            resetButton.active = levelUp.hasPending();
-        }
     }
 
     // ------------------------------------------------------------------ mastery tab
