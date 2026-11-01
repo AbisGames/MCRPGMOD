@@ -36,6 +36,7 @@ public final class MasteryService {
 
     /** Feeds an action to every matching skill. Players without a class don't gain mastery. */
     public static void onAction(ServerPlayer player, SkillAction action) {
+        com.pipican.event.MechanicEvents.used(player, action);
         PlayerClassData data = ClassService.data(player);
         Optional<RpgClass> rpgClass = ClassService.activeClass(player);
         if (rpgClass.isEmpty()) {

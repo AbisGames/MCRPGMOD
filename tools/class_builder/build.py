@@ -393,6 +393,11 @@ def main(spec_dir, res_dir, report_path):
     counts = collections.Counter()
 
     def tr(cid, where, text, ctx, category=None):
+        hand = ab.LINE_EFFECTS.get((cid, (text or '').strip().lower()))
+        if hand is not None:
+            counts['phrases'] += 1
+            counts['full'] += 1
+            return [dict(e) for e in hand], []
         eff, uns = fx.translate(text, ctx)
         if eff and re.search(r'\(max [^)]*\)', text or '') and not apply_cap(eff, text):
             notes[cid].append(f'{where}: cap not enforced (scaling has no maximum): "{text}"')

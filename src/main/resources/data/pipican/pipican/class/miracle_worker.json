@@ -134,17 +134,47 @@
     }
   ],
   "weakness": {
-    "description": {
-      "text": "Every miracle costs the body.",
-      "extra": [
-        {
-          "text": " (not in game yet)",
-          "color": "dark_gray",
-          "italic": true
-        }
-      ]
-    },
-    "effects": []
+    "description": "Every miracle costs the body.",
+    "effects": [
+      {
+        "type": "pipican:ability_mod",
+        "ability": "pipican:miracle_worker/stigmata",
+        "actions": [
+          {
+            "type": "pipican:boost",
+            "seconds": 86400,
+            "until_sleep": true,
+            "max_stacks": 100,
+            "effects": [
+              {
+                "type": "pipican:attribute",
+                "attribute": "minecraft:max_health",
+                "amount": -2
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "pipican:reaction_mod",
+        "name": "worker of miracles",
+        "actions": [
+          {
+            "type": "pipican:boost",
+            "seconds": 86400,
+            "until_sleep": true,
+            "max_stacks": 100,
+            "effects": [
+              {
+                "type": "pipican:attribute",
+                "attribute": "minecraft:max_health",
+                "amount": -2
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "affinities": {
     "default": "neutral",

@@ -220,6 +220,61 @@
       ]
     },
     {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/wolf_form",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ],
+      "strength": 0.0
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/bear_form",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ],
+      "strength": 0.0
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/cat_form",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ],
+      "strength": 0.0
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/fish_form",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ],
+      "strength": 0.0
+    },
+    {
+      "type": "pipican:ability_mod",
+      "ability": "pipican:shapeshifter/bird_form",
+      "scaling": [
+        {
+          "source": "special_stat",
+          "per": 0.01
+        }
+      ],
+      "strength": 0.0
+    },
+    {
       "type": "pipican:resource",
       "target": "regen",
       "amount": 0.0,

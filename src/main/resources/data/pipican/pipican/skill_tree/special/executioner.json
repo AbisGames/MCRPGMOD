@@ -29,23 +29,21 @@
     {
       "id": "steady",
       "name": "Steady",
-      "description": {
-        "text": "exposure after charged hits lasts 1s",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "exposure after charged hits lasts 1s",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "charged_exposure",
+          "amount": 1
+        }
+      ]
     },
     {
       "id": "exacting_strike",

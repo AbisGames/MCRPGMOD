@@ -29,23 +29,21 @@
     {
       "id": "snuff",
       "name": "Snuff",
-      "description": {
-        "text": "torches within 4 blocks flicker - mobs near you can't see you",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "torches within 4 blocks flicker - mobs near you can't see you",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "torch_snuff",
+          "amount": 4
+        }
+      ]
     },
     {
       "id": "shadow_form",

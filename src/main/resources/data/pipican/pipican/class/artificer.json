@@ -214,7 +214,6 @@
     "pipican:belt": 2
   },
   "abilities": [
-    "pipican:artificer/assemble",
-    "pipican:artificer/store_spell"
+    "pipican:artificer/assemble"
   ]
 }

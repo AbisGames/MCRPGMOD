@@ -68,7 +68,9 @@ public final class Reactions {
                 if (r.victim().isPresent() && !(subject instanceof net.minecraft.world.entity.LivingEntity living && r.victim().get().test(player, living))) {
                     continue;
                 }
-                if (r.cost() > 0 && com.pipican.player.ClassService.data(player).resource() < r.cost()) {
+                // Reactions that cost resource get cheaper with ability_cost bonuses too ("miracles cost half").
+                double cost = r.cost() * state.bonus(com.pipican.effect.type.BonusEffect.Kind.ABILITY_COST);
+                if (cost > 0 && com.pipican.player.ClassService.data(player).resource() < cost) {
                     continue;
                 }
                 int uses = r.oncePerRest() ? 1 : r.usesPerRest();
@@ -90,9 +92,9 @@ public final class Reactions {
                 if (uses > 0) {
                     USED.get(player.getUUID()).merge(r, 1, Integer::sum);
                 }
-                if (r.cost() > 0) {
+                if (cost > 0) {
                     var data = com.pipican.player.ClassService.data(player);
-                    data.setResource(data.resource() - r.cost());
+                    data.setResource(data.resource() - cost);
                 }
                 var mod = r.name().map(n -> state.reactionMods().getOrDefault(n.toLowerCase(java.util.Locale.ROOT), ClassState.ReactionMod.NONE))
                         .orElse(ClassState.ReactionMod.NONE);
@@ -118,6 +120,44 @@ public final class Reactions {
             running = false;
         }
         return cancelled;
+    }
+
+    /** Uses left before the next rest of the player's reaction called {@code name} (Integer.MAX_VALUE if it has no limit). */
+    public static int usesLeft(ServerPlayer player, String name) {
+        var state = ClassEffectApplier.state(player);
+        for (ReactionEffect r : state.reactions()) {
+            if (r.name().map(n -> n.equalsIgnoreCase(name)).orElse(false)) {
+                int uses = r.oncePerRest() ? 1 : r.usesPerRest();
+                if (uses <= 0) {
+                    return Integer.MAX_VALUE;
+                }
+                uses += state.reactionUses(r);
+                return Math.max(0, uses - USED.getOrDefault(player.getUUID(), java.util.Map.of()).getOrDefault(r, 0));
+            }
+        }
+        return 0;
+    }
+
+    /** {@code no_backstab} (Omens): while a premonition is left, hits from behind get no "from behind" bonus. */
+    public static boolean backstabProof(net.minecraft.world.entity.LivingEntity victim) {
+        return victim instanceof ServerPlayer p && ClassEffectApplier.state(p).chance(com.pipican.effect.type.BonusEffect.Kind.NO_BACKSTAB) > 0
+                && usesLeft(p, "premonition") > 0;
+    }
+
+    private static final Map<UUID, Long> LAST_REFILL = new ConcurrentHashMap<>();
+
+    /** Every second: {@code uses_refill} refills once-per-rest reactions on a timer (Oracle of Ages). */
+    public static void refillTick(ServerPlayer player) {
+        double seconds = ClassEffectApplier.state(player).chance(com.pipican.effect.type.BonusEffect.Kind.USES_REFILL);
+        if (seconds <= 0) {
+            return;
+        }
+        long now = player.level().getGameTime();
+        long last = LAST_REFILL.computeIfAbsent(player.getUUID(), k -> now);
+        if (now - last >= seconds * 20) {
+            LAST_REFILL.put(player.getUUID(), now);
+            rest(player);
+        }
     }
 
     /** After sleeping: {@code once_per_rest} reactions can trigger again. */

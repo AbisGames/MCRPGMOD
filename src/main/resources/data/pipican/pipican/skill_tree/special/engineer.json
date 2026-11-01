@@ -80,16 +80,7 @@
     {
       "id": "mecha",
       "name": "Mecha",
-      "description": {
-        "text": "while in the cockpit, eidolon damage +25%; you can't use your own weapons outside it for 10s after leaving",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "while in the cockpit, eidolon damage +25%; you can't use your own weapons outside it for 10s after leaving",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -98,7 +89,14 @@
         "overdrive"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "mecha",
+          "amount": 10
+        }
+      ]
     }
   ]
 }

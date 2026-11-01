@@ -29,23 +29,21 @@
     {
       "id": "slippery",
       "name": "Slippery",
-      "description": {
-        "text": "immune to being held (guardians' beam slow too)",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "immune to being held (guardians' beam slow too)",
       "type": "small",
       "x": -35,
       "y": 70,
       "links": [
         "start"
       ],
-      "required_level": 5
+      "required_level": 5,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "unholdable",
+          "amount": 1
+        }
+      ]
     },
     {
       "id": "watery_form",

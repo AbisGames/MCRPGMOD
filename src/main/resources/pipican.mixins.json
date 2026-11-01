@@ -9,6 +9,8 @@
     "MapItemMixin",
     "SmithingMenuMixin",
     "BlockStateCollisionMixin",
+    "PiglinAiMixin",
+    "RedstoneWireEvaluatorMixin",
     "TridentItemMixin",
     "TripWireBlockMixin"
   ],

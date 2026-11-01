@@ -1,0 +1,14 @@
+{
+  "name": "Thousand Faces",
+  "description": "Toggle: disguise yourself as a villager - illagers ignore you.",
+  "icon": "minecraft:emerald",
+  "cooldown_ticks": 100,
+  "toggle": true,
+  "drain_per_second": 0,
+  "effects": [
+    {
+      "type": "pipican:ignored_by",
+      "mobs": "#minecraft:illager"
+    }
+  ]
+}

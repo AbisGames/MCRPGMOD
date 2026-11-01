@@ -124,6 +124,7 @@ public final class ClassSystemTests {
         TESTS.put("ability_specs", ClassSystemTests::abilitySpecs);
         TESTS.put("firearms", ClassSystemTests::firearms);
         TESTS.put("kits_gear_caps", ClassSystemTests::kitsGearCaps);
+        TESTS.put("last_mechanics", ClassSystemTests::lastMechanics);
     }
 
     private ClassSystemTests() {}
@@ -1589,7 +1590,7 @@ public final class ClassSystemTests {
             dismiss(helper, player);
             count++;
         }
-        helper.assertTrue(count == 114, "expected 114 shipped abilities, ran " + count);
+        helper.assertTrue(count == 115, "expected 115 shipped abilities, ran " + count);
         helper.succeed();
     }
 
@@ -2027,6 +2028,104 @@ public final class ClassSystemTests {
         var cap = new com.pipican.effect.Scaling("special_stat", -0.002, Optional.of(0.2));
         assertNear(helper, -0.1, cap.term(50), "below the cap it scales");
         assertNear(helper, -0.2, cap.term(500), "past the cap it stops");
+        helper.succeed();
+    }
+
+    // ------------------------------------------------------------------ the last untranslated lines
+
+    private static void bonus(ServerPlayer player, com.pipican.effect.type.BonusEffect.Kind kind, double amount) {
+        com.pipican.ability.Boosts.add(player, kind, List.of(new com.pipican.effect.type.BonusEffect(kind, amount, List.of())), 2400);
+        com.pipican.player.ClassEffectApplier.refresh(player);
+    }
+
+    /** Miracle penalties, Prodigy's recent stat, charged exposure, premonition refills, Slippery, Snuff, loot rarity, redstone reach. */
+    private static void lastMechanics(GameTestHelper helper) {
+        var level = helper.getLevel();
+
+        // Miracle Worker: each Stigmata use lowers max health by 2 until sleep.
+        ServerPlayer saint = classPlayer(helper, "miracle_worker", new BlockPos(1, 2, 1));
+        double before = saint.getMaxHealth();
+        com.pipican.ability.AbilityService.force(saint, shipped("miracle_worker/stigmata"));
+        com.pipican.player.ClassEffectApplier.refresh(saint);
+        assertNear(helper, before - 2, saint.getMaxHealth(), "a Stigmata use costs 2 max health");
+        dismiss(helper, saint);
+
+        // Prodigy (with Prodigy node): the stat you used last.
+        ServerPlayer jack = classPlayer(helper, "jack_of_all_trades", new BlockPos(1, 2, 1));
+        bonus(jack, com.pipican.effect.type.BonusEffect.Kind.PRODIGY_RECENT, 1);
+        MasteryService.onAction(jack, new SkillAction.RangedHit(new ItemStack(Items.BOW)));
+        helper.assertTrue(com.pipican.event.MechanicEvents.lastStat(jack).orElse("").equals("pipican:dexterity"), "a shot uses dexterity");
+        var dex = ResourceKey.create(PipicanRegistries.STAT, Pipican.id("dexterity"));
+        double dexBefore = com.pipican.player.ClassEffectApplier.state(jack).stat(dex);
+        new com.pipican.ability.action.ProdigyAction(2, 60, List.of(Pipican.id("strength"), Pipican.id("dexterity"), Pipican.id("luck")))
+                .run(new AbilityContext(jack, Optional.empty(), jack.position(), Optional.empty(), 0));
+        com.pipican.player.ClassEffectApplier.refresh(jack);
+        assertNear(helper, dexBefore + 2, com.pipican.player.ClassEffectApplier.state(jack).stat(dex), "Prodigy raises the stat used last");
+        dismiss(helper, jack);
+
+        // Steady: a charged hit leaves the mob exposed, so a weak follow-up still counts as charged.
+        ServerPlayer exe = classPlayer(helper, "executioner", new BlockPos(1, 2, 1));
+        bonus(exe, com.pipican.effect.type.BonusEffect.Kind.CHARGED_EXPOSURE, 1);
+        Zombie block = victim(helper, 2, 2);
+        com.pipican.ability.Charged.expose(exe, block, 20);
+        var charged = new com.pipican.effect.VictimState(Optional.empty(), false, false, false, false, false, true, false, Optional.empty(), Optional.empty(), false, false, false, false, false, false);
+        helper.assertTrue(charged.test(exe, block), "an exposed mob counts as hit by a charged attack");
+        dismiss(helper, exe);
+
+        // Omens: no backstab bonus while a premonition is left; Oracle of Ages refills them.
+        ServerPlayer seer = classPlayer(helper, "diviner", new BlockPos(1, 2, 1));
+        helper.assertTrue(com.pipican.ability.Reactions.usesLeft(seer, "premonition") == 3, "three premonitions after choosing the class");
+        helper.assertTrue(com.pipican.ability.Reactions.backstabProof(seer), "hits from behind get no bonus while a premonition is left");
+        dismiss(helper, seer);
+
+        // Slippery: guardians can't lock on.
+        ServerPlayer hydro = classPlayer(helper, "hydromancer", new BlockPos(1, 2, 1));
+        bonus(hydro, com.pipican.effect.type.BonusEffect.Kind.UNHOLDABLE, 1);
+        var guardian = helper.spawn(EntityType.GUARDIAN, new BlockPos(3, 2, 3));
+        guardian.setTarget(hydro);
+        helper.assertTrue(guardian.getTarget() != hydro, "guardians can't target a slippery player");
+        guardian.discard();
+        dismiss(helper, hydro);
+
+        // Snuff: a torch nearby flickers and mobs lose you.
+        ServerPlayer shade = classPlayer(helper, "tenebrist", new BlockPos(1, 2, 1));
+        bonus(shade, com.pipican.effect.type.BonusEffect.Kind.TORCH_SNUFF, 4);
+        BlockPos torch = helper.absolutePos(new BlockPos(2, 2, 1));
+        level.setBlockAndUpdate(torch, net.minecraft.world.level.block.Blocks.TORCH.defaultBlockState());
+        com.pipican.event.MechanicEvents.tick(shade, level);
+        helper.assertTrue(com.pipican.event.MechanicEvents.snuffed(shade), "a torch within 4 blocks flickers");
+        Zombie hunter = victim(helper, 3, 3);
+        hunter.setTarget(shade);
+        helper.assertTrue(hunter.getTarget() != shade, "mobs can't see you while it flickers");
+        level.setBlockAndUpdate(torch, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        dismiss(helper, shade);
+
+        // Redstone reach: a lossless block of reach dust passes the signal on undimmed.
+        ServerPlayer techno = classPlayer(helper, "technomancer", new BlockPos(1, 2, 1));
+        BlockPos base = helper.absolutePos(new BlockPos(0, 2, 0));
+        BlockPos wire = null;
+        for (int dx = 0; dx < 8 && wire == null; dx++) {
+            BlockPos p = base.offset(dx, 0, 2);
+            if (Math.floorMod(p.getX() + p.getZ(), 8) == 0) {
+                wire = p;
+            }
+        }
+        level.setBlockAndUpdate(wire.below(), net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+        level.setBlockAndUpdate(wire, net.minecraft.world.level.block.Blocks.REDSTONE_WIRE.defaultBlockState());
+        ServerPlayer plain = classPlayer(helper, "warrior", new BlockPos(1, 2, 2));
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(
+                net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(), level, wire), level.getBlockState(wire.below()), plain));
+        helper.assertTrue(!com.pipican.ability.RedstoneReach.carries(level, wire), "ordinary players' dust is ordinary");
+        dismiss(helper, plain);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent(
+                net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(), level, wire), level.getBlockState(wire.below()), techno));
+        helper.assertTrue(com.pipican.ability.RedstoneReach.carries(level, wire), "a technomancer's dust on a lossless block carries the signal");
+        level.setBlockAndUpdate(wire, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        dismiss(helper, techno);
+
+        // Shapeshifter: Thousand Faces hides you from illagers.
+        var faces = ClassLookup.abilities(level.registryAccess()).getValue(Pipican.id("shapeshifter/thousand_faces"));
+        helper.assertTrue(faces != null && faces.toggle(), "Thousand Faces is a toggle ability");
         helper.succeed();
     }
 }

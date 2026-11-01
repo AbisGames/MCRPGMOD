@@ -57,6 +57,17 @@ public final class Auras {
         }
     }
 
+    /** Swift Song: a player with {@code aura_fast_refresh} is within 64 blocks, so auras are checked twice as often. */
+    public static boolean fastNearby(ServerPlayer player) {
+        for (ServerPlayer other : player.level().players()) {
+            if (other != player && other.distanceToSqr(player) <= 64 * 64
+                    && ClassEffectApplier.state(other).chance(com.pipican.effect.type.BonusEffect.Kind.AURA_FAST_REFRESH) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void forget(ServerPlayer player) {
         LAST.remove(player.getUUID());
     }

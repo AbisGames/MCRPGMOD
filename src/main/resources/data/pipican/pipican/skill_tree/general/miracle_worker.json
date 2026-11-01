@@ -110,16 +110,7 @@
     {
       "id": "miracle_worker_saint_among_us",
       "name": "Saint Among Us",
-      "description": {
-        "text": "miracles cost half, but max health penalty is 3 per use",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "miracles cost half, but max health penalty is 3 per use",
       "type": "keystone",
       "x": 1436,
       "y": -262,
@@ -128,7 +119,53 @@
         "miracle_worker_laying_of_hands"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:ability_mod",
+          "ability": "pipican:miracle_worker/stigmata",
+          "drain": -0.5,
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 86400,
+              "until_sleep": true,
+              "max_stacks": 100,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:max_health",
+                  "amount": -1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:bonus",
+          "kind": "ability_cost",
+          "amount": -0.5
+        },
+        {
+          "type": "pipican:reaction_mod",
+          "name": "worker of miracles",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 86400,
+              "until_sleep": true,
+              "max_stacks": 100,
+              "effects": [
+                {
+                  "type": "pipican:attribute",
+                  "attribute": "minecraft:max_health",
+                  "amount": -1
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -90,16 +90,7 @@
     {
       "id": "clockwork_legion",
       "name": "Clockwork Legion",
-      "description": {
-        "text": "Animate Object can keep 3 at once; -15% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Animate Object can keep 3 at once; -15% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -108,7 +99,19 @@
         "tesla_coil"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:summon_mod",
+          "count": 2
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.15,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

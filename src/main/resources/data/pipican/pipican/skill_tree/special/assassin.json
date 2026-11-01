@@ -84,16 +84,7 @@
     {
       "id": "black_hand",
       "name": "The Black Hand",
-      "description": {
-        "text": "Assassinate can trigger again 10s after a kill; -10% max health",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "Assassinate can trigger again 10s after a kill; -10% max health",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -102,7 +93,55 @@
         "killers_eye"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:on",
+          "event": "kill",
+          "name": "black hand",
+          "actions": [
+            {
+              "type": "pipican:boost",
+              "seconds": 10,
+              "effects": [
+                {
+                  "type": "pipican:damage_dealt",
+                  "victim": {
+                    "targeting_you": true
+                  },
+                  "multiplier": 1.6
+                },
+                {
+                  "type": "pipican:damage_dealt",
+                  "victim": {
+                    "targeting_you": true
+                  },
+                  "multiplier": 1.0,
+                  "scaling": [
+                    {
+                      "source": "special_stat",
+                      "per": 0.01
+                    }
+                  ]
+                },
+                {
+                  "type": "pipican:execute",
+                  "threshold": 0.2,
+                  "victim": {
+                    "targeting_you": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:max_health",
+          "amount": -0.1,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

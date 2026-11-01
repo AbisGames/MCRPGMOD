@@ -140,6 +140,10 @@ public final class SensesEvents {
         if (player.isShiftKeyDown()) {
             senses(player, level, state);
         }
+        int rarity = (int) state.chance(Kind.LOOT_RARITY);
+        if (rarity > 0 && player.tickCount % 40 == 0) {
+            lootRarity(player, level, rarity);
+        }
         double structures = state.chance(Kind.STRUCTURE_SENSE);
         if (structures > 0 && player.tickCount % 100 == 0 && (player.getMainHandItem().is(Items.COMPASS) || player.getOffhandItem().is(Items.COMPASS))) {
             hint(player, level, structures);
@@ -178,6 +182,34 @@ public final class SensesEvents {
                 level.sendParticles(player, ParticleTypes.HAPPY_VILLAGER, true, false, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 4, 0.3, 0.3, 0.3, 0);
             }
         }
+    }
+
+    /** Read the Signs: unopened loot containers near you sparkle in their loot's rarity colour (only you see it). */
+    private static void lootRarity(ServerPlayer player, ServerLevel level, int range) {
+        BlockPos center = player.blockPosition();
+        for (BlockPos pos : BlockPos.betweenClosed(center.offset(-range, -range, -range), center.offset(range, range, range))) {
+            if (level.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity chest && chest.getLootTable() != null) {
+                int color = rarityColor(chest.getLootTable().identifier().getPath());
+                level.sendParticles(player, new net.minecraft.core.particles.DustParticleOptions(color, 1.5f), true, false,
+                        pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 6, 0.3, 0.2, 0.3, 0);
+            }
+        }
+    }
+
+    /** The rarity of a loot table by where it is found: epic (purple), rare (aqua), uncommon (yellow), common (white). */
+    static int rarityColor(String path) {
+        if (path.contains("end_city") || path.contains("ancient_city") || path.contains("ominous") || path.contains("boss")) {
+            return 0xAA00FF;
+        }
+        if (path.contains("bastion") || path.contains("stronghold") || path.contains("woodland_mansion") || path.contains("buried_treasure")
+                || path.contains("desert_pyramid") || path.contains("jungle_temple") || path.contains("trial_chambers") || path.contains("nether_bridge")) {
+            return 0x55FFFF;
+        }
+        if (path.contains("dungeon") || path.contains("mineshaft") || path.contains("shipwreck") || path.contains("ruined_portal")
+                || path.contains("pillager") || path.contains("igloo") || path.contains("underwater_ruin") || path.contains("treasure")) {
+            return 0xFFFF55;
+        }
+        return 0xFFFFFF;
     }
 
     private static final Map<UUID, Set<BlockPos>> HINTED = new ConcurrentHashMap<>();

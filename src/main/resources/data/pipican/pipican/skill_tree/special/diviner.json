@@ -77,16 +77,7 @@
     {
       "id": "oracle_of_ages",
       "name": "Oracle of Ages",
-      "description": {
-        "text": "premonitions refill every 10 minutes; Omens regen -30%",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "premonitions refill every 10 minutes; Omens regen -30%",
       "type": "keystone",
       "x": 0,
       "y": 210,
@@ -95,7 +86,20 @@
         "twist_of_fate"
       ],
       "cost": 3,
-      "required_level": 35
+      "required_level": 35,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "uses_refill",
+          "amount": 600
+        },
+        {
+          "type": "pipican:resource",
+          "target": "regen",
+          "amount": -0.3,
+          "operation": "add_multiplied_base"
+        }
+      ]
     }
   ]
 }

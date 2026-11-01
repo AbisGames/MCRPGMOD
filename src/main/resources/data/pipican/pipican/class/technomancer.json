@@ -88,6 +88,11 @@
       ]
     },
     {
+      "type": "pipican:bonus",
+      "kind": "redstone_reach",
+      "amount": 2
+    },
+    {
       "type": "pipican:damage_dealt",
       "weapons": "#pipican:weapons/crossbows",
       "multiplier": 1.1

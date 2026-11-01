@@ -128,16 +128,7 @@
     {
       "id": "runesmith_runelord",
       "name": "Runelord",
-      "description": {
-        "text": "sigil bonuses doubled, but unmarked gear is forbidden-tier",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "sigil bonuses doubled, but unmarked gear is forbidden-tier",
       "type": "keystone",
       "x": -713,
       "y": -1274,
@@ -146,7 +137,102 @@
         "runesmith_ward_rune"
       ],
       "cost": 3,
-      "required_level": 30
+      "required_level": 30,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "unmarked_forbidden",
+          "amount": 1
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "sigil_weapon"
+          },
+          "effects": [
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.090909
+            },
+            {
+              "type": "pipican:damage_dealt",
+              "multiplier": 1.0,
+              "scaling": [
+                {
+                  "source": "special_stat",
+                  "per": 0.005
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:attribute",
+          "attribute": "minecraft:armor",
+          "amount": 0.0,
+          "scaling": [
+            {
+              "source": "sigil_armor",
+              "per": 1.0
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:resource",
+            "min": 0.999
+          },
+          "effects": [
+            {
+              "type": "pipican:conditional",
+              "when": {
+                "type": "pipican:item_rule",
+                "rule": "sigil_weapon"
+              },
+              "effects": [
+                {
+                  "type": "pipican:damage_dealt",
+                  "multiplier": 1.090909
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pipican:conditional",
+          "when": {
+            "type": "pipican:item_rule",
+            "rule": "sigil_armor",
+            "min": 1
+          },
+          "effects": [
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor",
+              "amount": 0.0,
+              "scaling": [
+                {
+                  "source": "special_stat",
+                  "per": 0.05
+                }
+              ]
+            },
+            {
+              "type": "pipican:attribute",
+              "attribute": "minecraft:armor_toughness",
+              "amount": 0.0,
+              "scaling": [
+                {
+                  "source": "special_stat",
+                  "per": 0.05
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

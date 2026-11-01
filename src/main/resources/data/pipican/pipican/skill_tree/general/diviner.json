@@ -54,16 +54,7 @@
     {
       "id": "diviner_read_the_signs",
       "name": "Read the Signs",
-      "description": {
-        "text": "loot chests show their contents' rarity colour",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "loot chests show their contents' rarity colour",
       "type": "notable",
       "x": 1693,
       "y": -403,
@@ -71,7 +62,14 @@
         "diviner_third_eye"
       ],
       "cost": 2,
-      "required_level": 12
+      "required_level": 12,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "loot_rarity",
+          "amount": 12
+        }
+      ]
     },
     {
       "id": "diviner_second_sight",

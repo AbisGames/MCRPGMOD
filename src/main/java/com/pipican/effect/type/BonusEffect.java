@@ -202,6 +202,22 @@ import net.minecraft.util.StringRepresentable;
  *   <li>Trackless (any amount above 0): {@code no_tripwires} / {@code no_plates} - you don't set off tripwires / press pressure
  *       plates; {@code no_sculk_steps} - your steps, landings and swimming make no vibrations</li>
  *   <li>{@code unpushable}: any amount above 0 = you and the creatures around you don't push each other</li>
+ *   <li>{@code charged_exposure}: <i>seconds</i> a mob stays exposed after your charged hit: your hits on it count as
+ *       charged that long ("charged_hit" bonuses)</li>
+ *   <li>{@code uses_refill}: <i>seconds</i> - your once-per-rest reactions (premonitions) refill this often, not only on sleep</li>
+ *   <li>{@code prodigy_recent}: any amount above 0 = Prodigy raises the stat you used most recently instead of a random one</li>
+ *   <li>{@code aura_fast_refresh}: any amount above 0 = your auras reach (and leave) players twice as fast</li>
+ *   <li>{@code no_backstab}: <i>blocks</i> - while you have a premonition left, hits from behind get no "from behind" bonus and
+ *       hostile mobs this close show their outlines (glow)</li>
+ *   <li>{@code unholdable}: any amount above 0 = guardians can't lock their beam on you and their Mining Fatigue can't hold you</li>
+ *   <li>{@code mecha}: <i>seconds</i> - your eidolon deals +25% while you pilot it, and after you climb out your own weapons
+ *       deal no damage for that long</li>
+ *   <li>{@code barter_quality}: a <i>chance</i> that a piglin bartering near you rolls its loot twice</li>
+ *   <li>{@code loot_rarity}: <i>blocks</i> - while sneaking, unopened loot containers this close sparkle in the colour of their
+ *       loot's rarity (common white, uncommon yellow, rare aqua, epic purple)</li>
+ *   <li>{@code torch_snuff}: <i>blocks</i> - torches this close flicker, and while one does, hostile mobs can't see you</li>
+ *   <li>{@code redstone_reach}: <i>blocks</i> - redstone dust you place carries its signal that much farther (one block of no
+ *       loss every 8)</li>
  *   <li>{@code ranged_crit}: any amount above 0 = every arrow, bolt or bullet you shoot is a critical shot (Deadeye)</li>
  *   <li>{@code keep_stolen}: any amount above 0 = Return to Sender keeps the stolen effect after throwing it, so it can be
  *       thrown again (Expert Spell Thief: "stolen effects can be re-applied")</li>
@@ -256,7 +272,9 @@ public record BonusEffect(Kind kind, double amount, List<Scaling> scaling) imple
         HIDE_NAMEPLATE, ICON_SHIELD, PUPPET,
         POISON_UNDEAD, POISON_DAMAGE, SIDE_BLOCK, SINK, COPPER_HEART, MAGIC_ARMOR_PIERCE, QUARRY_DOUBLE, QUARRY_LOCKOUT, MARK_TARGETS, SCRUTINY_TARGETS, EMPOWER_KNOCKBACK,
         TEMPLE_MOBILE, TEMPLE_STRENGTH, TEMPLE_ONLY_PASSIVES, TEMPLE_HEALING, WANDERING_TRADES, DRUNK_POTION_STRENGTH, FRENZY_SPARES_PLAYERS,
-        NO_TRIPWIRES, NO_PLATES, NO_SCULK_STEPS, UNPUSHABLE, DRY_RIPTIDE, MAP_RANGE, LOSE_TRACK, WIND_PULL, BLAST_GRIEF, PHASE_STONE, KEEP_STOLEN, RANGED_CRIT;
+        NO_TRIPWIRES, NO_PLATES, NO_SCULK_STEPS, UNPUSHABLE, DRY_RIPTIDE, MAP_RANGE, LOSE_TRACK, WIND_PULL, BLAST_GRIEF, PHASE_STONE, KEEP_STOLEN, RANGED_CRIT,
+        CHARGED_EXPOSURE, USES_REFILL, PRODIGY_RECENT, AURA_FAST_REFRESH, NO_BACKSTAB, UNHOLDABLE, MECHA,
+        BARTER_QUALITY, LOOT_RARITY, TORCH_SNUFF, REDSTONE_REACH;
 
         public static final Codec<Kind> CODEC = StringRepresentable.fromEnum(Kind::values);
 

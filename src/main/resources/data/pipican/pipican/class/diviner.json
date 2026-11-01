@@ -81,6 +81,11 @@
     },
     {
       "type": "pipican:bonus",
+      "kind": "no_backstab",
+      "amount": 8
+    },
+    {
+      "type": "pipican:bonus",
       "kind": "structure_sense",
       "amount": 64.0
     }

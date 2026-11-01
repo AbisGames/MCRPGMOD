@@ -23,4 +23,28 @@ public final class Charged {
         Swing s = LAST.get(player.getUUID());
         return s != null && s.tick == player.level().getGameTime() && s.strength >= 0.9f;
     }
+
+    /** Mobs left exposed by a player's charged hit ({@code charged_exposure}): mob -> (player, until). Not saved. */
+    private static final Map<UUID, Map<UUID, Long>> EXPOSED = new ConcurrentHashMap<>();
+
+    public static void expose(ServerPlayer player, net.minecraft.world.entity.LivingEntity victim, long ticks) {
+        EXPOSED.computeIfAbsent(victim.getUUID(), k -> new ConcurrentHashMap<>()).put(player.getUUID(), player.level().getGameTime() + ticks);
+    }
+
+    /** {@code victim} is still exposed by one of {@code player}'s charged hits. */
+    public static boolean exposed(ServerPlayer player, net.minecraft.world.entity.LivingEntity victim) {
+        Map<UUID, Long> by = EXPOSED.get(victim.getUUID());
+        Long until = by == null ? null : by.get(player.getUUID());
+        if (until == null) {
+            return false;
+        }
+        if (until < player.level().getGameTime()) {
+            by.remove(player.getUUID());
+            if (by.isEmpty()) {
+                EXPOSED.remove(victim.getUUID());
+            }
+            return false;
+        }
+        return true;
+    }
 }

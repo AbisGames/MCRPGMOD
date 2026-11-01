@@ -123,6 +123,7 @@ public final class AbilityActionTypes {
     public static final Type STORE_SPELL = register("store_spell", com.pipican.ability.action.StoreSpellAction.CODEC);
     public static final Type THROW_STOLEN = register("throw_stolen", com.pipican.ability.action.ThrowStolenAction.CODEC);
     public static final Type ATTRIBUTE_BOOST = register("attribute_boost", com.pipican.ability.action.AttributeBoostAction.CODEC);
+    public static final Type PRODIGY = register("prodigy", com.pipican.ability.action.ProdigyAction.CODEC);
 
     private AbilityActionTypes() {}
 

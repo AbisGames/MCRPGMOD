@@ -317,10 +317,14 @@ public final class ClassEvents {
                 MasteryEvents.did(player, SkillAction.Did.Kind.ACTIVE_SECOND);
             }
             Auras.tick(player);
+            Reactions.refillTick(player);
             if (Combat.inCombat(player)) {
                 Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.IN_COMBAT);
             }
             Reactions.fire(player, null, player.getMainHandItem(), ReactionEffect.Event.SECOND);
+        }
+        if (player.tickCount % 20 == 10 && Auras.fastNearby(player)) {
+            Auras.tick(player);
         }
         if (player.tickCount % 5 == 0) {
             Scrutiny.tick(player);

@@ -49,17 +49,14 @@
       ]
     },
     {
-      "description": {
-        "text": "+5% piglin barter quality",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
-      "effects": []
+      "description": "+5% piglin barter quality",
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "barter_quality",
+          "amount": 0.05
+        }
+      ]
     },
     {
       "description": "-5% trade prices",

@@ -110,6 +110,20 @@ REROLL = [[effect('self', E(e, 10, amp))] for e, amp in [
     ('invisibility', 0), ('absorption', 1), ('luck', 0), ('slowness', 0), ('weakness', 0), ('nausea', 0), ('levitation', 0),
     ('glowing', 0), ('unluck', 0)]]
 
+def bonus(kind, amount):
+    return {'type': 'pipican:bonus', 'kind': kind, 'amount': amount}
+
+
+def max_health(fraction):
+    return {'type': 'pipican:attribute', 'attribute': 'minecraft:max_health', 'amount': fraction, 'operation': 'add_multiplied_base'}
+
+
+def miracle_penalty(hp):
+    """-hp max health until the next sleep; each use adds a stack."""
+    return {'type': 'pipican:boost', 'seconds': 86400, 'until_sleep': True, 'max_stacks': 100, 'effects': [
+        {'type': 'pipican:attribute', 'attribute': 'minecraft:max_health', 'amount': -hp}]}
+
+
 # Abilities used as Grimoire spells (the wizard writes one of these names on a book's first page).
 GRIMOIRE_SPELLS = ['pipican:arcanist/arcane_bolt', 'pipican:pyromancer/firebolt', 'pipican:magus/staff_bolt', 'pipican:astromancer/sunbeam',
                    'pipican:astromancer/corona_burst', 'pipican:aeromancer/gust', 'pipican:hydromancer/wave', 'pipican:abjurer/ward',
@@ -370,6 +384,9 @@ A = {
         attr('jump_strength', -1, 'add_multiplied_total'), {'type': 'pipican:ignored_by', 'mobs': '#pipican:mobs/monsters'}],
         pulse_actions=[heal('self', percent=0.1)],
         description='Become a tree: fully hidden (invisible, mobs ignore you) and rooted, healing 10% of your health every second until whole.'),
+    ('shapeshifter', 'Thousand Faces'): dict(icon='emerald', toggle=True, cooldown=5, effects=[
+        {'type': 'pipican:ignored_by', 'mobs': '#minecraft:illager'}],
+        description='Toggle: disguise yourself as a villager - illagers ignore you.'),
     ('spellbinder', 'Recall Weapon'): dict(icon='trident', cost=10, cooldown=3, actions=[
         {'type': 'pipican:recall_item', 'items': '#pipican:weapons/melee', 'radius': 64, 'bound': True}],
         description='Your bound weapon (hotbar slot 1) flies back into your hand, wherever it is within 64 blocks.'),
@@ -384,7 +401,7 @@ EXTRA = {
     'engineer': ['Build Eidolon'],
     'oracle': ['Divine Ecstasy'],
     'miracle_worker': ['Stigmata'],
-    'shapeshifter': ['Wolf Form', 'Bear Form', 'Cat Form', 'Fish Form', 'Bird Form'],
+    'shapeshifter': ['Wolf Form', 'Bear Form', 'Cat Form', 'Fish Form', 'Bird Form', 'Thousand Faces'],
 }
 
 # Spec abilities that are really passive rules, handled by NODE_EFFECTS or passives instead.
@@ -396,6 +413,64 @@ NODE_EFFECTS = {
                                    {'type': 'pipican:resource', 'target': 'regen', 'amount': -0.1, 'operation': 'add_multiplied_base'}], []),
     ('witch', 'lasting_bond'): ([], ['Lasting Bond']),
     ('shapeshifter', 'bird_form'): ([], ['Bird Form']),
+    # ---- the last untranslated node texts
+    ('executioner', 'steady'): ([bonus('charged_exposure', 1)], []),
+    ('jack_of_all_trades', 'prodigy'): ([bonus('prodigy_recent', 1)], []),
+    ('miracle_worker', 'miracle_worker_saint_among_us'): ([
+        {'type': 'pipican:ability_mod', 'ability': 'pipican:miracle_worker/stigmata', 'drain': -0.5, 'actions': [miracle_penalty(1)]},
+        bonus('ability_cost', -0.5),
+        {'type': 'pipican:reaction_mod', 'name': 'worker of miracles', 'actions': [miracle_penalty(1)]}], []),
+    ('tenebrist', 'snuff'): ([bonus('torch_snuff', 4)], []),
+    ('warlock', 'expert_thief'): ([bonus('keep_stolen', 1)], []),
+    ('assassin', 'black_hand'): ([
+        {'type': 'pipican:on', 'event': 'kill', 'name': 'black hand', 'actions': [{'type': 'pipican:boost', 'seconds': 10, 'effects': [
+            {'type': 'pipican:damage_dealt', 'victim': {'targeting_you': True}, 'multiplier': 1.6},
+            {'type': 'pipican:damage_dealt', 'victim': {'targeting_you': True}, 'multiplier': 1.0, 'scaling': [{'source': 'special_stat', 'per': 0.01}]},
+            {'type': 'pipican:execute', 'threshold': 0.2, 'victim': {'targeting_you': True}}]}]},
+        max_health(-0.1)], []),
+    ('diviner', 'oracle_of_ages'): ([bonus('uses_refill', 600),
+                                    {'type': 'pipican:resource', 'target': 'regen', 'amount': -0.3, 'operation': 'add_multiplied_base'}], []),
+    ('diviner', 'diviner_read_the_signs'): ([bonus('loot_rarity', 12)], []),
+    ('shapeshifter', 'thousand_faces'): ([max_health(-0.1)], ['Thousand Faces']),
+    ('technomancer', 'clockwork_legion'): ([{'type': 'pipican:summon_mod', 'count': 2}, max_health(-0.15)], []),
+    ('bard', 'swift_song'): ([bonus('aura_fast_refresh', 1)], []),
+    ('engineer', 'mecha'): ([bonus('mecha', 10)], []),
+    # "sigil bonuses doubled": the class's sigil bonuses once more (multipliers so the total bonus doubles).
+    ('runesmith', 'runesmith_runelord'): ([bonus('unmarked_forbidden', 1),
+        {'type': 'pipican:conditional', 'when': {'type': 'pipican:item_rule', 'rule': 'sigil_weapon'}, 'effects': [
+            {'type': 'pipican:damage_dealt', 'multiplier': round(1.2 / 1.1, 6)},
+            {'type': 'pipican:damage_dealt', 'multiplier': 1.0, 'scaling': [{'source': 'special_stat', 'per': 0.005}]}]},
+        {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': 0.0, 'scaling': [{'source': 'sigil_armor', 'per': 1.0}]},
+        {'type': 'pipican:conditional', 'when': {'type': 'pipican:resource', 'min': 0.999}, 'effects': [
+            {'type': 'pipican:conditional', 'when': {'type': 'pipican:item_rule', 'rule': 'sigil_weapon'}, 'effects': [
+                {'type': 'pipican:damage_dealt', 'multiplier': round(1.2 / 1.1, 6)}]}]},
+        {'type': 'pipican:conditional', 'when': {'type': 'pipican:item_rule', 'rule': 'sigil_armor', 'min': 1}, 'effects': [
+            {'type': 'pipican:attribute', 'attribute': 'minecraft:armor', 'amount': 0.0, 'scaling': [{'source': 'special_stat', 'per': 0.05}]},
+            {'type': 'pipican:attribute', 'attribute': 'minecraft:armor_toughness', 'amount': 0.0, 'scaling': [{'source': 'special_stat', 'per': 0.05}]}]}], []),
+    ('artificer', 'store_spell'): ([], ['Store Spell']),
+    ('hydromancer', 'slippery'): ([bonus('unholdable', 1)], []),
+}
+
+# Hand-written effects for whole lines anywhere else (passives, special passives, weaknesses, skill tiers):
+# (class, the line in lower case) -> effects.
+LINE_EFFECTS = {
+    # Restates the special stat's own per-point bonus (+0.5% damage against the scrutinised mob), which already counts.
+    ('inquisitor', 'scrutiny bonus +0.5% per point'): [],
+    ('technomancer', 'redstone you place powers 2 blocks farther'): [bonus('redstone_reach', 2)],
+    ('diviner', "omens: +1 luck; while you have a premonition left, mobs can't surprise-hit you (no backstab bonus) and you see their outlines within 8 blocks"):
+        [{'type': 'pipican:stat', 'stat': 'pipican:luck', 'amount': 1}, bonus('no_backstab', 8)],
+    ('diplomat', '+5% piglin barter quality'): [bonus('barter_quality', 0.05)],
+    ('shapeshifter', 'form bonuses +1% per mutability'): [
+        {'type': 'pipican:ability_mod', 'ability': f'pipican:shapeshifter/{f}_form', 'scaling': [{'source': 'special_stat', 'per': 0.01}], 'strength': 0.0}
+        for f in ('wolf', 'bear', 'cat', 'fish', 'bird')],
+    # "-10% max Insight regen": the Insight regen; "your focus schools are the only ones above neutral" is how focus schools
+    # work already (other schools get nothing unless a node such as Generalist says so).
+    ('savant', '-10% max insight regen and your focus schools are the only ones above neutral'):
+        [{'type': 'pipican:resource', 'target': 'regen', 'amount': -0.1, 'operation': 'add_multiplied_base'}],
+    # Each Stigmata or Worker of Miracles use lowers max health by 2 until you sleep (stacks).
+    ('miracle_worker', 'each stigmata or worker of miracles use lowers your max health by 2 until you sleep (stacks)'): [
+        {'type': 'pipican:ability_mod', 'ability': 'pipican:miracle_worker/stigmata', 'actions': [miracle_penalty(2)]},
+        {'type': 'pipican:reaction_mod', 'name': 'worker of miracles', 'actions': [miracle_penalty(2)]}],
 }
 
 # Hand-written effects for passive lines: (class, start of the line) -> effects.

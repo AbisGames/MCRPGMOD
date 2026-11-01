@@ -47,16 +47,7 @@
     {
       "id": "expert_thief",
       "name": "Expert Spell Thief",
-      "description": {
-        "text": "stolen effects can be re-applied (see section 12)",
-        "extra": [
-          {
-            "text": " (not in game yet)",
-            "color": "dark_gray",
-            "italic": true
-          }
-        ]
-      },
+      "description": "stolen effects can be re-applied (see section 12)",
       "type": "notable",
       "x": 35,
       "y": 140,
@@ -64,7 +55,14 @@
         "vanish"
       ],
       "cost": 2,
-      "required_level": 15
+      "required_level": 15,
+      "effects": [
+        {
+          "type": "pipican:bonus",
+          "kind": "keep_stolen",
+          "amount": 1
+        }
+      ]
     },
     {
       "id": "vanishing_escape",

@@ -25,7 +25,7 @@ public record BoostAction(double seconds, List<ClassEffect> effects, int maxStac
 
     // Lazy: class effects can contain actions (pipican:on), so this codec is built while they initialise.
     public static final MapCodec<BoostAction> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-            Codec.doubleRange(0.05, 3600).fieldOf("seconds").forGetter(BoostAction::seconds),
+            Codec.doubleRange(0.05, 86_400).fieldOf("seconds").forGetter(BoostAction::seconds),
             Codec.lazyInitialized(() -> ClassEffect.CODEC).listOf().fieldOf("effects").forGetter(BoostAction::effects),
             Codec.intRange(1, 100).optionalFieldOf("max_stacks", 1).forGetter(BoostAction::maxStacks),
             Codec.BOOL.optionalFieldOf("until_sleep", false).forGetter(BoostAction::untilSleep),

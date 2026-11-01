@@ -98,7 +98,7 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
         if (marked && !(attacker instanceof Player p && Marks.isMarkedBy(victim, p))) {
             return false;
         }
-        if (chargedHit && !(attacker instanceof net.minecraft.server.level.ServerPlayer p && Charged.wasCharged(p))) {
+        if (chargedHit && !(attacker instanceof net.minecraft.server.level.ServerPlayer p && (Charged.wasCharged(p) || Charged.exposed(p, victim)))) {
             return false;
         }
         if (effects.isPresent() && effects.get().stream().noneMatch(victim::hasEffect)) {
@@ -113,7 +113,7 @@ public record VictimState(Optional<Bounds> health, boolean harmfulEffect, boolea
         if (targetingYou && !(victim instanceof Mob mob && mob.getTarget() == attacker)) {
             return false;
         }
-        if (fromBehind && !behind(attacker, victim)) {
+        if (fromBehind && (!behind(attacker, victim) || com.pipican.ability.Reactions.backstabProof(victim))) {
             return false;
         }
         if (armored && !isArmored(victim)) {
