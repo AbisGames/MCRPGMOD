@@ -1986,5 +1986,6 @@
   "pipican.soul.tooltip_stage": "%s. aşama - %s",
   "pipican.soul.tooltip_souls": "%s ruh",
   "pipican.soul.tooltip_path": "Yol: %s",
-  "pipican.soul.tooltip_bound": "%s kişisine bağlı"
+  "pipican.soul.tooltip_bound": "%s kişisine bağlı",
+  "generator.minecraft.normal": "Pipican RPG Dünyası"
 }
