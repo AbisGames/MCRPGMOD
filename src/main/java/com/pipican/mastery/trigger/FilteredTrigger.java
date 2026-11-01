@@ -21,10 +21,11 @@ import net.minecraft.world.entity.EntityType;
  * <pre>{@code { "type": "pipican:filtered", "trigger": { "type": "pipican:kill" },
  *   "victims": "#pipican:mobs/undead", "when": { "type": "pipican:state", "state": "wet" } } }</pre>
  * {@code when}: a condition on the player; {@code victims}: the kind of mob hit or killed; {@code victim}: its state
- * (low health, harmful effect, marked, bleeding...); {@code min_amount}: at least that much damage / spending / healing.
+ * (low health, harmful effect, marked, bleeding...); {@code min_amount} / {@code max_amount}: at least / at most that much
+ * damage / spending / healing (or distance, count... - see the action).
  */
 public record FilteredTrigger(SkillTrigger trigger, Optional<ClassCondition> when, Optional<HolderSet<EntityType<?>>> victims,
-                              Optional<VictimState> victim, double minAmount) implements SkillTrigger {
+                              Optional<VictimState> victim, double minAmount, double maxAmount) implements SkillTrigger {
 
     // Lazy: this codec is part of SkillTrigger.CODEC itself.
     public static final MapCodec<FilteredTrigger> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
@@ -32,7 +33,8 @@ public record FilteredTrigger(SkillTrigger trigger, Optional<ClassCondition> whe
             ClassCondition.CODEC.optionalFieldOf("when").forGetter(FilteredTrigger::when),
             RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("victims").forGetter(FilteredTrigger::victims),
             VictimState.CODEC.optionalFieldOf("victim").forGetter(FilteredTrigger::victim),
-            Codec.DOUBLE.optionalFieldOf("min_amount", 0.0).forGetter(FilteredTrigger::minAmount)
+            Codec.DOUBLE.optionalFieldOf("min_amount", 0.0).forGetter(FilteredTrigger::minAmount),
+            Codec.DOUBLE.optionalFieldOf("max_amount", Double.MAX_VALUE).forGetter(FilteredTrigger::maxAmount)
     ).apply(i, FilteredTrigger::new));
 
     @Override
@@ -48,7 +50,7 @@ public record FilteredTrigger(SkillTrigger trigger, Optional<ClassCondition> whe
     @Override
     public double uses(ServerPlayer player, SkillAction action) {
         double uses = trigger.uses(player, action);
-        if (uses <= 0 || action.amount() < minAmount) {
+        if (uses <= 0 || action.amount() < minAmount || action.amount() > maxAmount) {
             return 0;
         }
         if (victims.isPresent() && action.target().map(t -> !victims.get().contains(t.getType().builtInRegistryHolder())).orElse(true)) {

@@ -3,7 +3,12 @@
   "description": "Trained by other players within 8 blocks killing mobs while your Prayer aura is active.",
   "icon": "minecraft:golden_apple",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "aura_ally_kill"
+    },
+    "max_amount": 8.0
   },
   "thresholds": [
     200,

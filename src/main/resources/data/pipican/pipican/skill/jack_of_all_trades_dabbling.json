@@ -3,7 +3,12 @@
   "description": "Trained by using 4+ different item types in combat in one day.",
   "icon": "minecraft:bundle",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "varied_use"
+    },
+    "min_amount": 4.0
   },
   "points_to": "special",
   "classes": [

@@ -62,12 +62,8 @@ def _atoms(ctx):
     rn = '(?:' + re.escape(full) + ('|' + re.escape(full.split()[-1]) if ' ' in full else '') + ')'
     num = r'(\d+(?:\.\d+)?%|half|a quarter)'
     import named
-    return named.atoms(ctx) + [
-        # health
-        (rf'(?:you\'?re |you are |while )?(?:below|under|at or below) {num}(?: of your)?(?: max)? (?:health|hp)', lambda m: {'type': 'pipican:health', 'max': _frac(m.group(1))}, OTHER),
-        (rf'(?:above|over) {num}(?: of your)?(?: max)? (?:health|hp)', lambda m: {'type': 'pipican:health', 'min': _frac(m.group(1))}, OTHER),
-        (r'(?:at )?full health', lambda m: {'type': 'pipican:health', 'min': 1.0}, OTHER),
-        # resource bar
+    return [
+        # resource bar (before named states: "while Ward is above half" is the Ward bar, not the Ward ability)
         (rf'{rn} is (?:above|over) {num}', lambda m: {'type': 'pipican:resource', 'min': _frac(m.group(1))}, OTHER),
         (rf'{rn} is full', lambda m: {'type': 'pipican:resource', 'min': 0.999}, OTHER),
         (rf'{rn} is (?:below|under) {num}', lambda m: {'type': 'pipican:resource', 'max': _frac(m.group(1))}, OTHER),
@@ -75,6 +71,11 @@ def _atoms(ctx):
         (rf'you have (?:over|more than) {num} {rn}', lambda m: {'type': 'pipican:resource', 'min': _frac(m.group(1))}, OTHER),
         (rf'{rn} is full|(?:at )?full {rn}', lambda m: {'type': 'pipican:resource', 'min': 1.0}, OTHER),
         (rf'{rn} is empty', lambda m: {'type': 'pipican:resource', 'max': 0.0001}, OTHER),
+    ] + named.atoms(ctx) + [
+        # health
+        (rf'(?:you\'?re |you are |while )?(?:below|under|at or below) {num}(?: of your)?(?: max)? (?:health|hp)', lambda m: {'type': 'pipican:health', 'max': _frac(m.group(1))}, OTHER),
+        (rf'(?:above|over) {num}(?: of your)?(?: max)? (?:health|hp)', lambda m: {'type': 'pipican:health', 'min': _frac(m.group(1))}, OTHER),
+        (r'(?:at )?full health', lambda m: {'type': 'pipican:health', 'min': 1.0}, OTHER),
         # water & weather
         (r'in water and (?:in the )?air', lambda m: {'type': 'pipican:any_of', 'conditions': [state('in_water'), not_(state('on_ground'))]}, OTHER),
         (r'(?:in )?rain or water|wet', lambda m: state('wet'), OTHER),
@@ -123,8 +124,9 @@ def _atoms(ctx):
         (r'dual-wielding|holding a weapon in (?:each|both) hands?|with a weapon in each hand', lambda m: {'type': 'pipican:all_of', 'conditions': [
             {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'main'},
             {'type': 'pipican:holding', 'items': '#pipican:weapons/melee', 'hand': 'off'}]}, OTHER),
-        (r'(slowed|poisoned|withered|weakened|blinded)', lambda m: {'type': 'pipican:effect', 'effects': 'minecraft:' + {
-            'slowed': 'slowness', 'poisoned': 'poison', 'withered': 'wither', 'weakened': 'weakness', 'blinded': 'blindness'}[m.group(1)]}, OTHER),
+        (r'(slowed|poisoned|withered|weakened|blinded|glowing)', lambda m: {'type': 'pipican:effect', 'effects': 'minecraft:' + {
+            'slowed': 'slowness', 'poisoned': 'poison', 'withered': 'wither', 'weakened': 'weakness', 'blinded': 'blindness',
+            'glowing': 'glowing'}[m.group(1)]}, OTHER),
         (r'(?:with|holding|using) your favored weapon(?: type)?', lambda m: {'type': 'pipican:holding_favored'}, OTHER),
         (r'(?:with|holding|using) (?:any|a) weapon that isn\'t your bound weapon|(?:with|holding) a weapon other than your bound weapon',
          lambda m: {'type': 'pipican:all_of', 'conditions': [

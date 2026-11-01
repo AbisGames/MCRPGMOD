@@ -25,6 +25,13 @@ public final class PipicanAttachments {
                     .copyOnDeath()
                     .build());
 
+    /** Chunks the player has been in ("discovering new chunks" skills). Saved, kept through death, never synced. */
+    public static final Supplier<AttachmentType<com.pipican.event.TriggerEvents.VisitedChunks>> VISITED_CHUNKS = REGISTER.register("visited_chunks", () ->
+            AttachmentType.builder(com.pipican.event.TriggerEvents.VisitedChunks::new)
+                    .serialize(com.pipican.event.TriggerEvents.VisitedChunks.CODEC.fieldOf("chunks"))
+                    .copyOnDeath()
+                    .build());
+
     /** Movement and look flags the client applies itself (double jump, glide, hidden name...), from the class state. Not saved; sent to everyone. */
     public static final Supplier<AttachmentType<MoveFlags>> MOVE_FLAGS = REGISTER.register("move_flags", () ->
             AttachmentType.builder(() -> MoveFlags.NONE)

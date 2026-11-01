@@ -23,7 +23,20 @@ import net.minecraft.world.level.block.Block;
  * (you charmed or turned a mob), {@code explosion_hit} (your explosion hurt a mob), {@code active_second} (every
  * second while one of your abilities is running; pair with an {@code ability_active} filter), {@code poison} (you
  * poisoned a mob), {@code use_item} (you right-clicked an item; {@code items} narrows it), {@code absorb} (your
- * resource bar took damage for you).
+ * resource bar took damage for you), {@code safe_fall} (landed from 6+ blocks without fall damage; {@code amount} is the
+ * height), {@code second} (every second, for situation filters such as "time spent outdoors at night"),
+ * {@code aura_ally_kill} (another player killed a mob inside one of your auras), {@code assist} (another player killed a
+ * mob you hit; {@code amount} is the seconds since your last hit), {@code kill_streak} ({@code amount} is your kills in the
+ * last 10s, this one included), {@code offhand_combo} (your off-hand swing followed a main-hand hit), {@code eidolon_hit}
+ * / {@code eidolon_repair} (your eidolon hurt a mob / you repaired it), {@code new_chunk} (you entered a chunk for the
+ * first time), {@code varied_kill} / {@code varied_use} (a kill / combat hit; {@code amount} is how many different weapon
+ * types / item types you killed with / fought with today), {@code sneak_unseen} (every second while sneaking near a hostile
+ * mob that isn't targeting you; {@code amount} is its distance), {@code ignite} (you set a mob on fire), {@code trim}
+ * (applied an armor trim), {@code rename} (renamed an item at an anvil; {@code items} narrows it), {@code focus_combo}
+ * (hit with a focus school after using a different one in the last 15s), {@code magic_hit} (your magic damaged a mob),
+ * {@code loot_chest} (opened a naturally generated loot container for the first time), {@code optimize} (used
+ * Optimization), {@code potion_hit} (a potion you threw splashed a mob), {@code perform} (played a goat horn, note block or
+ * jukebox), {@code empowered_hit} (a hit used up a "your next hits" empower, e.g. Escalating Violence).
  *
  * <pre>{@code { "type": "pipican:did", "action": "mine", "blocks": "#c:ores" } }</pre>
  * {@code items} / {@code blocks} narrow it to some items (crafted, enchanted, drunk...) or blocks (mined, planted...).

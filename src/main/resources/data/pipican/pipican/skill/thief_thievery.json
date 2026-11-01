@@ -3,7 +3,17 @@
   "description": "Trained by opening naturally generated loot chests for the first time and killing mobs with Looting.",
   "icon": "minecraft:chest",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "loot_chest"
+      },
+      {
+        "type": "pipican:kill",
+        "enchantments": "minecraft:looting"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

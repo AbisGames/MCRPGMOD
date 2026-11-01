@@ -53,6 +53,7 @@ public final class Empowers {
             return amount;
         }
         long now = attacker.level().getGameTime();
+        boolean used = false;
         synchronized (list) {
             for (Iterator<Empower> it = list.iterator(); it.hasNext(); ) {
                 Empower e = it.next();
@@ -64,6 +65,7 @@ public final class Empowers {
                     continue;
                 }
                 amount = (float) (amount * e.multiplier() + e.bonus());
+                used = true;
                 // empower_knockback (Charged Blade): the first empowered hit also knocks the mob back.
                 double push = attacker instanceof net.minecraft.server.level.ServerPlayer sp
                         ? com.pipican.player.ClassEffectApplier.state(sp).chance(com.pipican.effect.type.BonusEffect.Kind.EMPOWER_KNOCKBACK) : 0;
@@ -81,6 +83,10 @@ public final class Empowers {
             if (list.isEmpty()) {
                 EMPOWERS.remove(attacker.getUUID());
             }
+        }
+        if (used && attacker instanceof net.minecraft.server.level.ServerPlayer sp) {
+            com.pipican.event.MasteryEvents.did(sp, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.EMPOWERED_HIT,
+                    sp.getMainHandItem(), Optional.empty(), Optional.of(target), amount));
         }
         return amount;
     }

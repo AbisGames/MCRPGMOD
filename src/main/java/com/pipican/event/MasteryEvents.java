@@ -94,6 +94,7 @@ public final class MasteryEvents {
             did(victim, new SkillAction.Did(SkillAction.Did.Kind.HURT, ItemStack.EMPTY, Optional.empty(),
                     source.getEntity() instanceof LivingEntity l ? Optional.of(l) : Optional.empty(), event.getInflictedDamage()));
             if (source.is(DamageTypeTags.IS_FALL)) {
+                TriggerEvents.fellHard(victim);
                 did(victim, new SkillAction.Did(SkillAction.Did.Kind.TAKE_FALL, ItemStack.EMPTY, Optional.empty(), Optional.empty(), event.getInflictedDamage()));
             }
         }

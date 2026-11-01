@@ -3,7 +3,39 @@
   "description": "Trained by spending time outdoors at night and killing mobs while glowing.",
   "icon": "minecraft:glowstone_dust",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:did",
+          "action": "second"
+        },
+        "when": {
+          "type": "pipican:all_of",
+          "conditions": [
+            {
+              "type": "pipican:state",
+              "state": "sees_sky"
+            },
+            {
+              "type": "pipican:state",
+              "state": "night"
+            }
+          ]
+        }
+      },
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:kill"
+        },
+        "when": {
+          "type": "pipican:effect",
+          "effects": "minecraft:glowing"
+        }
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

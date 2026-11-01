@@ -3,9 +3,32 @@
   "description": "Trained by blocking hits aimed at mobs targeting other players / taking damage near allies.",
   "icon": "minecraft:shield",
   "trigger": {
-    "type": "pipican:hurt_wearing",
-    "items": "#pipican:armor/any",
-    "min_pieces": 1
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:block"
+        },
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 8.0
+        }
+      },
+      {
+        "type": "pipican:filtered",
+        "trigger": {
+          "type": "pipican:did",
+          "action": "hurt"
+        },
+        "when": {
+          "type": "pipican:nearby",
+          "entities": "players",
+          "radius": 8.0
+        }
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

@@ -3,7 +3,8 @@
   "description": "Trained by hitting mobs while Escalating Violence is active.",
   "icon": "minecraft:blaze_rod",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:did",
+    "action": "empowered_hit"
   },
   "points_to": "special",
   "classes": [

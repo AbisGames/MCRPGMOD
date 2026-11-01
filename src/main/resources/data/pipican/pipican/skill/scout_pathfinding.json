@@ -1,11 +1,20 @@
 {
   "name": "Pathfinding",
   "description": "Trained by discovering new chunks / travelling long distances.",
-  "icon": "minecraft:feather",
+  "icon": "minecraft:spyglass",
   "trigger": {
-    "type": "pipican:move",
-    "mode": "walk",
-    "per_blocks": 50
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "new_chunk"
+      },
+      {
+        "type": "pipican:move",
+        "mode": "walk",
+        "per_blocks": 50
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

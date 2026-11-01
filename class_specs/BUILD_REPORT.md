@@ -12,7 +12,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 
 | Feature | Lines |
 |---|---|
-| [Skill trigger approximated](#skill-trigger-approximated) | 28 |
 | [Other mechanics](#other-mechanics) | 9 |
 | [Resource bar: filling, refills, spending](#resource-bar-filling-refills-spending) | 5 |
 | [Active abilities (named abilities, cooldowns, auras, summons)](#active-abilities-named-abilities-cooldowns-auras-summons) | 5 |
@@ -20,63 +19,6 @@ Passives and weaknesses have no tooltip of their own, so their missing parts are
 | [Conditional bonus (while / when / where)](#conditional-bonus-while-when-where) | 1 |
 | [Immunities](#immunities) | 1 |
 | [Bonus against a kind of mob / marked target](#bonus-against-a-kind-of-mob-marked-target) | 1 |
-
-## Skill trigger approximated
-
-- **abjurer**
-  - Abjuration: "taking damage while Ward is above half" -> pipican:hurt_wearing #pipican:armor/any
-- **aeromancer**
-  - Windcalling: "throwing wind charges and falling long distances safely" -> pipican:jump
-- **astromancer**
-  - Stargazing: "spending time outdoors at night and killing mobs while glowing" -> pipican:kill
-- **bard**
-  - Repertoire: "allies killing mobs inside your Song" -> pipican:kill
-  - Performance: "using goat horns, note blocks and jukeboxes near other players" -> pipican:kill
-- **chaplain**
-  - Liturgy: "allies killing mobs inside your Battle Chant" -> pipican:kill
-- **conqueror**
-  - Generalship: "allies killing mobs you've hit in the last 4s" -> pipican:kill
-- **death_dealer**
-  - Reaping: "killing 3+ mobs within 10s" -> pipican:kill
-- **defender**
-  - Protector: "blocking hits aimed at mobs targeting other players / taking damage near allies" -> pipican:hurt_wearing #pipican:armor/any
-- **dervish**
-  - Whirling: "landing both-hand combos" -> pipican:melee_hit
-- **engineer**
-  - Mechanics: "your eidolon dealing damage and repairing it" -> pipican:kill
-- **explorer**
-  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **fighter**
-  - Drill: "killing mobs with 3 or more different weapon types in the same day" -> pipican:kill
-- **gunslinger**
-  - Gunplay: "hitting mobs with firearms" -> pipican:ranged_hit #pipican:weapons/crossbows
-  - Gunsmithing: "modifying and repairing firearms" -> pipican:kill
-- **infiltrator**
-  - Espionage: "sneaking past hostile mobs within 4 blocks unnoticed" -> pipican:kill
-- **jack_of_all_trades**
-  - Dabbling: "using 4+ different item types in combat in one day" -> pipican:kill
-- **mage_knight**
-  - War Magic: "hitting mobs while Escalating Violence is active" -> pipican:melee_hit
-- **priest**
-  - Devout: "other players within 8 blocks killing mobs while your Prayer aura is active" -> pipican:kill
-- **pyromancer**
-  - Firestarting: "setting mobs on fire and killing burning mobs" -> pipican:filtered
-- **rogue**
-  - Stealth: "sneaking within 8 blocks of a hostile mob without being targeted" -> pipican:kill
-- **runesmith**
-  - Runecarving: "applying armor trims and renaming weapons at anvils" -> pipican:kill
-- **savant**
-  - Broad Study: "using magic of both focus schools in one fight" -> pipican:kill
-- **scout**
-  - Pathfinding: "discovering new chunks / travelling long distances" -> pipican:move
-- **sorcerer**
-  - Overchannel: "triggering Sorcerous Outbursts and landing magic hits while Strain is above half" -> pipican:reaction
-- **thief**
-  - Thievery: "opening naturally generated loot chests for the first time and killing mobs with Looting" -> pipican:kill
-- **transmuter**
-  - Alterations: "drinking potions and using Optimization" -> pipican:did
-- **witch**
-  - Coven Lore: "brewing potions and throwing them at mobs" -> pipican:did
 
 ## Other mechanics
 

@@ -9,6 +9,9 @@ import json
 import math
 import os
 import re
+
+# The translators use thousands of distinct patterns; the default cache (512) recompiles them over and over.
+re._MAXCACHE = 1_000_000
 import shutil
 import sys
 

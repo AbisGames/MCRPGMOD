@@ -308,6 +308,10 @@ public class Eidolon extends IronGolem implements OwnableEntity {
                     ? com.pipican.player.ClassEffectApplier.state(sp).reactionMods().getOrDefault("spare parts", com.pipican.player.ClassState.ReactionMod.NONE).heal() : 0;
             heal((float) (10 + extra));
             stack.consume(1, player);
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                com.pipican.event.MasteryEvents.did(sp, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.EIDOLON_REPAIR,
+                        stack, java.util.Optional.empty(), java.util.Optional.of(this), 10 + extra));
+            }
             return InteractionResult.SUCCESS;
         }
         if (player.isShiftKeyDown() && stack.isEmpty()) {

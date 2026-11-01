@@ -3,7 +3,9 @@
   "description": "Trained by modifying and repairing firearms.",
   "icon": "minecraft:crossbow",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "anvil",
+    "items": "#pipican:weapons/firearms"
   },
   "points_to": "special",
   "classes": [

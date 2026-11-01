@@ -3,8 +3,17 @@
   "description": "Trained by brewing potions and throwing them at mobs.",
   "icon": "minecraft:cauldron",
   "trigger": {
-    "type": "pipican:did",
-    "action": "brew"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "brew"
+      },
+      {
+        "type": "pipican:did",
+        "action": "potion_hit"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

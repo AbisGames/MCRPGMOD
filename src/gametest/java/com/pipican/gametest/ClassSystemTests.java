@@ -7,6 +7,7 @@ import com.pipican.ability.Auras;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.LivingEntity;
 import com.pipican.effect.VictimState;
 import com.pipican.ability.Bleeds;
 import java.util.Optional;
@@ -119,6 +120,7 @@ public final class ClassSystemTests {
         TESTS.put("allomancy", ClassSystemTests::allomancy);
         TESTS.put("tamashigane", ClassSystemTests::tamashigane);
         TESTS.put("soul_paths_play", ClassSystemTests::soulPathsPlay);
+        TESTS.put("skill_triggers", ClassSystemTests::skillTriggers);
     }
 
     private ClassSystemTests() {}
@@ -1626,5 +1628,124 @@ public final class ClassSystemTests {
         helper.assertTrue(data.trinkets(RING).isEmpty(), "no slots without a class");
         helper.assertTrue(player.getInventory().contains(new ItemStack(Items.GOLD_NUGGET)), "trinket returned to inventory");
         helper.succeed();
+    }
+
+    // ------------------------------------------------------------------ skill triggers driven by real game events
+
+    private static ServerPlayer classPlayer(GameTestHelper helper, String classId, BlockPos pos) {
+        @SuppressWarnings("removal")
+        ServerPlayer player = helper.makeMockServerPlayerInLevel();
+        ClassService.Result result = ClassService.chooseClass(player, ResourceKey.create(PipicanRegistries.CLASS, Pipican.id(classId)), true, true);
+        helper.assertTrue(result.success(), "chooseClass " + classId + " failed: " + result.message().getString());
+        BlockPos at = helper.absolutePos(pos);
+        player.snapTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        return player;
+    }
+
+    private static double mastery(ServerPlayer player, String skill) {
+        return ClassService.data(player).mastery(ResourceKey.create(PipicanRegistries.SKILL, Pipican.id(skill)));
+    }
+
+    private static Zombie victim(GameTestHelper helper, int x, int z) {
+        Zombie zombie = helper.spawn(EntityType.ZOMBIE, new BlockPos(x, 2, z));
+        zombie.setNoAi(true);
+        return zombie;
+    }
+
+    private static void killWith(GameTestHelper helper, ServerPlayer player, LivingEntity mob, ItemStack weapon) {
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, weapon);
+        mob.invulnerableTime = 0;
+        mob.hurtServer(helper.getLevel(), helper.getLevel().damageSources().playerAttack(player), 1000);
+    }
+
+    /**
+     * The less common skill triggers, through the real events: kill streaks, assists, kills inside an aura, weapon
+     * variety, Looting kills, empowered hits, setting mobs on fire, renaming at an anvil, safe falls and new chunks.
+     */
+    private static void skillTriggers(GameTestHelper helper) {
+        // Death Dealer: only the 3rd kill within 10s counts.
+        ServerPlayer reaper = classPlayer(helper, "death_dealer", new BlockPos(1, 2, 1));
+        killWith(helper, reaper, victim(helper, 2, 2), new ItemStack(Items.IRON_AXE));
+        killWith(helper, reaper, victim(helper, 2, 3), new ItemStack(Items.IRON_AXE));
+        helper.assertTrue(mastery(reaper, "death_dealer_reaping") == 0, "two kills aren't a streak");
+        killWith(helper, reaper, victim(helper, 2, 4), new ItemStack(Items.IRON_AXE));
+        helper.assertTrue(mastery(reaper, "death_dealer_reaping") > 0, "the third kill within 10s trains Reaping");
+        dismiss(helper, reaper);
+
+        // Conqueror: an ally killing a mob the conqueror hit; Bard: an ally killing inside the Song.
+        ServerPlayer general = classPlayer(helper, "conqueror", new BlockPos(1, 2, 1));
+        ServerPlayer bard = classPlayer(helper, "bard", new BlockPos(1, 2, 2));
+        ServerPlayer ally = classPlayer(helper, "warrior", new BlockPos(2, 2, 2));
+        // The Song is off while no other player is near (the bard's weakness): rebuild now that the ally is here.
+        com.pipican.player.ClassEffectApplier.refresh(bard);
+        Zombie marked = victim(helper, 3, 3);
+        marked.hurtServer(helper.getLevel(), helper.getLevel().damageSources().playerAttack(general), 1);
+        killWith(helper, ally, marked, ItemStack.EMPTY);
+        helper.assertTrue(mastery(general, "conqueror_generalship") > 0, "an ally finishing the conqueror's mob trains Generalship");
+        helper.assertTrue(mastery(bard, "bard_repertoire") > 0, "an ally's kill inside the Song trains Repertoire");
+        double before = mastery(general, "conqueror_generalship");
+        killWith(helper, ally, victim(helper, 3, 4), ItemStack.EMPTY);
+        helper.assertTrue(mastery(general, "conqueror_generalship") == before, "mobs the conqueror never hit don't count");
+        dismiss(helper, general);
+        dismiss(helper, bard);
+        dismiss(helper, ally);
+
+        // Fighter: kills with 3 different weapon types in one day.
+        ServerPlayer fighter = classPlayer(helper, "fighter", new BlockPos(1, 2, 1));
+        killWith(helper, fighter, victim(helper, 2, 2), new ItemStack(Items.IRON_SWORD));
+        killWith(helper, fighter, victim(helper, 2, 3), new ItemStack(Items.IRON_SWORD));
+        killWith(helper, fighter, victim(helper, 2, 4), new ItemStack(Items.IRON_AXE));
+        helper.assertTrue(mastery(fighter, "fighter_drill") == 0, "two weapon types aren't enough");
+        killWith(helper, fighter, victim(helper, 3, 2), new ItemStack(Items.MACE));
+        helper.assertTrue(mastery(fighter, "fighter_drill") > 0, "a third weapon type trains Drill");
+        dismiss(helper, fighter);
+
+        // Thief: kills with a Looting weapon count, plain ones don't.
+        ServerPlayer thief = classPlayer(helper, "thief", new BlockPos(1, 2, 1));
+        killWith(helper, thief, victim(helper, 2, 2), new ItemStack(Items.IRON_SWORD));
+        helper.assertTrue(mastery(thief, "thief_thievery") == 0, "no Looting, no Thievery");
+        ItemStack looting = new ItemStack(Items.IRON_SWORD);
+        looting.enchant(helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+                .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.LOOTING), 1);
+        killWith(helper, thief, victim(helper, 2, 3), looting);
+        helper.assertTrue(mastery(thief, "thief_thievery") > 0, "a Looting kill trains Thievery");
+        dismiss(helper, thief);
+
+        // Mage Knight: hits that use up an empowered hit.
+        ServerPlayer knight = classPlayer(helper, "mage_knight", new BlockPos(1, 2, 1));
+        Zombie dummy = victim(helper, 2, 2);
+        dummy.hurtServer(helper.getLevel(), helper.getLevel().damageSources().playerAttack(knight), 1);
+        helper.assertTrue(mastery(knight, "mage_knight_war_magic") == 0, "plain hits don't train War Magic");
+        com.pipican.ability.Empowers.add(knight, 200, 1.2, 0, List.of(), Optional.empty(), 3);
+        dummy.invulnerableTime = 0;
+        dummy.hurtServer(helper.getLevel(), helper.getLevel().damageSources().playerAttack(knight), 1);
+        helper.assertTrue(mastery(knight, "mage_knight_war_magic") > 0, "an Escalating Violence hit trains War Magic");
+        dismiss(helper, knight);
+
+        // Runesmith: renaming a weapon at an anvil.
+        ServerPlayer runesmith = classPlayer(helper, "runesmith", new BlockPos(1, 2, 1));
+        ItemStack sword = new ItemStack(Items.IRON_SWORD);
+        ItemStack named = sword.copy();
+        named.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Oathkeeper"));
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(new net.neoforged.neoforge.event.entity.player.AnvilCraftEvent.Post(
+                null, runesmith, sword, ItemStack.EMPTY, named));
+        helper.assertTrue(mastery(runesmith, "runesmith_runecarving") > 0, "renaming a weapon trains Runecarving");
+        dismiss(helper, runesmith);
+
+        // Pyromancer: setting a mob on fire (checked at the end of the tick).
+        ServerPlayer pyro = classPlayer(helper, "pyromancer", new BlockPos(1, 2, 1));
+        Zombie kindling = victim(helper, 2, 2);
+        kindling.hurtServer(helper.getLevel(), helper.getLevel().damageSources().playerAttack(pyro), 1);
+        kindling.igniteForSeconds(4);
+        // Aeromancer: a long fall that doesn't hurt.
+        ServerPlayer aero = classPlayer(helper, "aeromancer", new BlockPos(1, 2, 3));
+        net.neoforged.neoforge.common.CommonHooks.onLivingFall(aero, 10, 0);
+        helper.runAfterDelay(3, () -> {
+            helper.assertTrue(mastery(pyro, "pyromancer_firestarting") > 0, "setting a mob on fire trains Firestarting");
+            helper.assertTrue(mastery(aero, "aeromancer_windcalling") > 0, "a safe long fall trains Windcalling");
+            dismiss(helper, pyro);
+            dismiss(helper, aero);
+            helper.succeed();
+        });
     }
 }

@@ -70,6 +70,7 @@ public final class Optimize {
         }
         data.extras().optimization = Optional.of(new PlayerClassData.Optimization(Optional.of(raise), Optional.of(lower), false));
         ClassService.changed(player);
+        com.pipican.event.MasteryEvents.did(player, com.pipican.mastery.SkillAction.Did.Kind.OPTIMIZE);
         return ClassService.Result.ok(Component.translatable("pipican.optimize.done"));
     }
 

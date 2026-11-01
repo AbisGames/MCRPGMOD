@@ -1,9 +1,22 @@
 {
   "name": "Windcalling",
   "description": "Trained by throwing wind charges and falling long distances safely.",
-  "icon": "minecraft:rabbit_foot",
+  "icon": "minecraft:wind_charge",
   "trigger": {
-    "type": "pipican:jump"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "use_item",
+        "items": [
+          "minecraft:wind_charge"
+        ]
+      },
+      {
+        "type": "pipican:did",
+        "action": "safe_fall"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

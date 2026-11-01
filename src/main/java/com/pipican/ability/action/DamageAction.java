@@ -68,6 +68,9 @@ public record DamageAction(Targets targets, double amount, Kind kind, double exe
                 continue;
             }
             if (fireSeconds > 0) {
+                if (!target.isOnFire()) {
+                    com.pipican.event.TriggerEvents.ignited(player, target);
+                }
                 target.igniteForSeconds((float) fireSeconds);
             }
             if (amount > 0) {

@@ -3,8 +3,17 @@
   "description": "Trained by drinking potions and using Optimization.",
   "icon": "minecraft:brewing_stand",
   "trigger": {
-    "type": "pipican:did",
-    "action": "drink"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "drink"
+      },
+      {
+        "type": "pipican:did",
+        "action": "optimize"
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

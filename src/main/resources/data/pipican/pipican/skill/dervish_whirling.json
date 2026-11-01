@@ -3,7 +3,8 @@
   "description": "Trained by landing both-hand combos.",
   "icon": "minecraft:golden_sword",
   "trigger": {
-    "type": "pipican:melee_hit"
+    "type": "pipican:did",
+    "action": "offhand_combo"
   },
   "points_to": "special",
   "classes": [

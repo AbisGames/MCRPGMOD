@@ -3,7 +3,16 @@
   "description": "Trained by using goat horns, note blocks and jukeboxes near other players.",
   "icon": "minecraft:note_block",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "perform"
+    },
+    "when": {
+      "type": "pipican:nearby",
+      "entities": "players",
+      "radius": 8.0
+    }
   },
   "thresholds": [
     50,

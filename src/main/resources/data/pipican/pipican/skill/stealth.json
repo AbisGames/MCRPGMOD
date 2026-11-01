@@ -3,7 +3,12 @@
   "description": "Trained by sneaking within 8 blocks of a hostile mob without being targeted.",
   "icon": "minecraft:leather_boots",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "sneak_unseen"
+    },
+    "max_amount": 8.0
   },
   "points_to": "general",
   "classes": [

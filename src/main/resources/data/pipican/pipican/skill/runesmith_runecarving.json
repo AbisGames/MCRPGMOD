@@ -3,7 +3,28 @@
   "description": "Trained by applying armor trims and renaming weapons at anvils.",
   "icon": "minecraft:coast_armor_trim_smithing_template",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:any",
+    "triggers": [
+      {
+        "type": "pipican:did",
+        "action": "trim"
+      },
+      {
+        "type": "pipican:any",
+        "triggers": [
+          {
+            "type": "pipican:did",
+            "action": "rename",
+            "items": "#pipican:weapons/melee"
+          },
+          {
+            "type": "pipican:did",
+            "action": "rename",
+            "items": "#pipican:weapons/ranged"
+          }
+        ]
+      }
+    ]
   },
   "points_to": "special",
   "classes": [

@@ -14,18 +14,21 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * {@code pipican:melee_hit}, {@code pipican:ranged_hit}, {@code pipican:kill}, {@code pipican:block}:
- * the action happened with an item from {@code items} (any item if omitted).
+ * the action happened with an item from {@code items} (any item if omitted), enchanted with one of
+ * {@code enchantments} if given ("killing mobs with Looting").
  *
  * <pre>{@code { "type": "pipican:melee_hit", "items": "#pipican:weapons/swords" } }</pre>
  */
-public record ItemActionTrigger(Kind kind, Optional<HolderSet<Item>> items) implements SkillTrigger {
+public record ItemActionTrigger(Kind kind, Optional<HolderSet<Item>> items,
+                                Optional<HolderSet<net.minecraft.world.item.enchantment.Enchantment>> enchantments) implements SkillTrigger {
 
     public enum Kind { MELEE_HIT, RANGED_HIT, KILL, BLOCK }
 
     public static MapCodec<ItemActionTrigger> codec(Kind kind) {
         return RecordCodecBuilder.mapCodec(i -> i.group(
-                RegistryCodecs.homogeneousList(Registries.ITEM).optionalFieldOf("items").forGetter(ItemActionTrigger::items)
-        ).apply(i, items -> new ItemActionTrigger(kind, items)));
+                RegistryCodecs.homogeneousList(Registries.ITEM).optionalFieldOf("items").forGetter(ItemActionTrigger::items),
+                RegistryCodecs.homogeneousList(Registries.ENCHANTMENT).optionalFieldOf("enchantments").forGetter(ItemActionTrigger::enchantments)
+        ).apply(i, (items, enchantments) -> new ItemActionTrigger(kind, items, enchantments)));
     }
 
     @Override
@@ -50,6 +53,13 @@ public record ItemActionTrigger(Kind kind, Optional<HolderSet<Item>> items) impl
     }
 
     private boolean itemMatches(ItemStack stack) {
-        return items.isEmpty() || (!stack.isEmpty() && stack.is(items.get()));
+        if (items.isPresent() && (stack.isEmpty() || !stack.is(items.get()))) {
+            return false;
+        }
+        if (enchantments.isPresent()) {
+            var enchants = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(stack);
+            return enchantments.get().stream().anyMatch(e -> enchants.getLevel(e) > 0);
+        }
+        return true;
     }
 }

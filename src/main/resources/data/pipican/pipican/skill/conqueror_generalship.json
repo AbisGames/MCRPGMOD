@@ -3,7 +3,12 @@
   "description": "Trained by allies killing mobs you've hit in the last 4s.",
   "icon": "minecraft:goat_horn",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "assist"
+    },
+    "max_amount": 4.0
   },
   "points_to": "special",
   "classes": [

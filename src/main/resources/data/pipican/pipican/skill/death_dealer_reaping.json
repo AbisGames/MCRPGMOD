@@ -3,7 +3,12 @@
   "description": "Trained by killing 3+ mobs within 10s.",
   "icon": "minecraft:netherite_axe",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "kill_streak"
+    },
+    "min_amount": 3.0
   },
   "points_to": "special",
   "classes": [

@@ -3,7 +3,12 @@
   "description": "Trained by sneaking past hostile mobs within 4 blocks unnoticed.",
   "icon": "minecraft:leather_helmet",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "sneak_unseen"
+    },
+    "max_amount": 4.0
   },
   "points_to": "special",
   "classes": [

@@ -128,5 +128,7 @@ public final class Strikes {
         // Two Weapon Mastery: the off-hand follow-up on the same mob hits harder.
         target.hurtServer(level, level.damageSources().playerAttack(player), (float) (attack[0] * state.bonus(BonusEffect.Kind.OFFHAND_COMBO)));
         player.swing(net.minecraft.world.InteractionHand.OFF_HAND, true);
+        com.pipican.event.MasteryEvents.did(player, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.OFFHAND_COMBO,
+                off, java.util.Optional.empty(), java.util.Optional.of(target), attack[0]));
     }
 }

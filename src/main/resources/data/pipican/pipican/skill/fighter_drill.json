@@ -3,7 +3,12 @@
   "description": "Trained by killing mobs with 3 or more different weapon types in the same day.",
   "icon": "minecraft:diamond_sword",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:filtered",
+    "trigger": {
+      "type": "pipican:did",
+      "action": "varied_kill"
+    },
+    "min_amount": 3.0
   },
   "thresholds": [
     200,

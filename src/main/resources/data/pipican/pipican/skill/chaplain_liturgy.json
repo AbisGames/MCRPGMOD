@@ -3,7 +3,8 @@
   "description": "Trained by allies killing mobs inside your Battle Chant.",
   "icon": "minecraft:book",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "aura_ally_kill"
   },
   "points_to": "special",
   "classes": [

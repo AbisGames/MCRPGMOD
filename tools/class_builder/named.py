@@ -17,6 +17,8 @@ AURAS = {}
 STATIC = {}
 # class id -> every pipican:on reaction name its lines produced
 REACTION_NAMES = {}
+# class id -> names of its reactions that give empowered hits ("while Escalating Violence is active")
+EMPOWER_REACTIONS = {}
 # class id -> {label: the pipican:on reaction its line defines} ("Guarded Casting: whenever you spend Ward, ...")
 REACTIONS = {}
 # class id -> functions that adjust the finished class JSON (a weakness that changes how a passive's state works)

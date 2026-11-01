@@ -544,6 +544,8 @@ def translate(text, ctx):
             if isinstance(o, dict):
                 if o.get('type') == 'pipican:on' and o.get('name'):
                     named.REACTION_NAMES.setdefault(ctx['class_id'], set()).add(o['name'])
+                    if any(a.get('type') == 'pipican:empower' for a in o.get('actions', [])):
+                        named.EMPOWER_REACTIONS.setdefault(ctx['class_id'], set()).add(o['name'])
                 for v in o.values():
                     walk(v)
             elif isinstance(o, list):

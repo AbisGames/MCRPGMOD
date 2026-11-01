@@ -3,7 +3,8 @@
   "description": "Trained by using magic of both focus schools in one fight.",
   "icon": "minecraft:bookshelf",
   "trigger": {
-    "type": "pipican:kill"
+    "type": "pipican:did",
+    "action": "focus_combo"
   },
   "points_to": "special",
   "classes": [

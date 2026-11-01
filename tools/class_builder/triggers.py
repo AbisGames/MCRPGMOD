@@ -52,11 +52,54 @@ SIMPLE = [
     (r'absorbing damage with [a-z ]+', lambda m: did('absorb')),
     (r'throwing wind charges', lambda m: did('use_item', items=['minecraft:wind_charge'])),
     (r'taking big hits \((\d+)\+ damage\) and surviving', lambda m: filtered(did('hurt'), min_amount=float(m.group(1)))),
+    # Rarer actions (see DidTrigger for what each one counts).
+    (r'falling long distances safely|surviving long falls', lambda m: did('safe_fall')),
+    (r'spending time (.+)', lambda m: _time_in(m.group(1))),
+    (r'(?:using|playing) goat horns, note blocks and jukeboxes(?: (near other players|near allies))?',
+     lambda m: filtered(did('perform'), when=NEAR_ALLY if m.group(1) else None)),
+    (r'(?:allies|other players) killing mobs inside your [a-z ]+', lambda m: did('aura_ally_kill')),
+    (r'other players within (\d+) blocks killing mobs while your [a-z ]+ aura is active',
+     lambda m: filtered(did('aura_ally_kill'), max_amount=float(m.group(1)))),
+    (r"allies killing mobs you've hit in the last (\d+)s", lambda m: filtered(did('assist'), max_amount=float(m.group(1)))),
+    (r'killing (\d+)\+ mobs within 10s', lambda m: filtered(did('kill_streak'), min_amount=float(m.group(1)))),
+    (r'blocking hits aimed at mobs targeting other players', lambda m: filtered({'type': 'pipican:block'}, when=NEAR_ALLY)),
+    (r'taking damage near allies', lambda m: filtered(did('hurt'), when=NEAR_ALLY)),
+    (r'landing both-hand combos|landing off-hand combos', lambda m: did('offhand_combo')),
+    (r'your eidolon dealing damage', lambda m: did('eidolon_hit')),
+    (r'repairing (?:it|your eidolon)', lambda m: did('eidolon_repair')),
+    (r'discovering new chunks', lambda m: did('new_chunk')),
+    (r'travelling long distances', lambda m: {'type': 'pipican:move', 'mode': 'walk', 'per_blocks': 50}),
+    (r'killing mobs with (\d+) or more different weapon types in the same day', lambda m: filtered(did('varied_kill'), min_amount=float(m.group(1)))),
+    (r'using (\d+)\+ different item types in combat in one day', lambda m: filtered(did('varied_use'), min_amount=float(m.group(1)))),
+    (r'hitting mobs with firearms', lambda m: {'type': 'pipican:ranged_hit', 'items': FIREARMS}),
+    (r'modifying and repairing firearms', lambda m: did('anvil', items=FIREARMS)),
+    (r'sneaking past hostile mobs within (\d+) blocks unnoticed|sneaking within (\d+) blocks of a hostile mob without being targeted',
+     lambda m: filtered(did('sneak_unseen'), max_amount=float(m.group(1) or m.group(2)))),
+    (r'setting mobs on fire', lambda m: did('ignite')),
+    (r'applying armor trims', lambda m: did('trim')),
+    (r'renaming weapons(?: at anvils)?', lambda m: {'type': 'pipican:any', 'triggers': [did('rename', items='#pipican:weapons/melee'),
+                                                                                       did('rename', items='#pipican:weapons/ranged')]}),
+    (r'using magic of both focus schools in one fight', lambda m: did('focus_combo')),
+    (r'landing magic hits(?: (while .+))?', lambda m: filtered(did('magic_hit'), when=cond.parse(m.group(1), CTX[0]) if m.group(1) else None)),
+    (r'opening naturally generated loot chests(?: for the first time)?', lambda m: did('loot_chest')),
+    (r'killing mobs with looting', lambda m: {'type': 'pipican:kill', 'enchantments': 'minecraft:looting'}),
+    (r'using optimization', lambda m: did('optimize')),
+    (r'throwing (?:them|potions|splash potions) at mobs', lambda m: did('potion_hit')),
 ]
 
+FIREARMS = '#pipican:weapons/firearms'
+NEAR_ALLY = {'type': 'pipican:nearby', 'entities': 'players', 'radius': 8.0}
+CTX = [{}]   # the class being read, for the few patterns that parse a condition
 
-def filtered(trigger, when=None, victims=None, victim=None, min_amount=None):
-    if not (when or victims or victim or min_amount):
+
+def _time_in(where):
+    """"spending time outdoors at night": every second spent there."""
+    when = cond.parse(where, CTX[0])
+    return filtered(did('second'), when=when) if when else None
+
+
+def filtered(trigger, when=None, victims=None, victim=None, min_amount=None, max_amount=None):
+    if not (when or victims or victim or min_amount or max_amount):
         return trigger
     f = {'type': 'pipican:filtered', 'trigger': trigger}
     if when:
@@ -67,6 +110,8 @@ def filtered(trigger, when=None, victims=None, victim=None, min_amount=None):
         f['victim'] = victim
     if min_amount:
         f['min_amount'] = min_amount
+    if max_amount:
+        f['max_amount'] = max_amount
     return f
 
 
@@ -126,13 +171,23 @@ def _reaction_name(name, ctx):
     return None
 
 
+def _reaction_empowers(name, ctx):
+    import named
+    return _reaction_name(name, ctx) in named.EMPOWER_REACTIONS.get(ctx.get('class_id'), set())
+
+
 def _part(t, ctx):
     t = t.strip()
+    CTX[0] = ctx
     # "landing Trickery hits", "triggering Seize Chaos", "using up premonitions", "surviving hits with Zeal"
     m = re.fullmatch(r'(?:landing|triggering|using up|cancelling attacks with|surviving hits with|cursing mobs with|stealing effects with|'
                      r'healing with|hitting mobs with) (.+?)(?: hits| shots)?', t)
     if m and _reaction_name(m.group(1), ctx):
         return {'type': 'pipican:reaction', 'name': _reaction_name(m.group(1), ctx)}
+    # "hitting mobs while Escalating Violence is active": hits that use up the reaction's empowered hits
+    m = re.fullmatch(r'hitting mobs while (.+?) is active', t)
+    if m and _reaction_name(m.group(1), ctx) and _reaction_empowers(m.group(1), ctx):
+        return did('empowered_hit')
     # "seconds spent in Divine Ecstasy", "time spent in animal forms"
     m = re.fullmatch(r'(?:seconds|time) spent in (.+)', t)
     if m:
@@ -155,7 +210,9 @@ def _part(t, ctx):
     for pat, build in SIMPLE:
         m = re.fullmatch(pat, t)
         if m:
-            return build(m)
+            out = build(m)
+            if out is not None:
+                return out
     rn = (ctx.get('resource_name') or '').lower()
     if rn and re.fullmatch(rf'spending (?:{re.escape(rn)}|{re.escape(rn.split()[-1])})', t):
         return did('spend')
@@ -186,7 +243,8 @@ def map_text(text, ctx):
     whole = _part(t, ctx)
     if whole is not None:
         return whole, True
-    parts = [p for p in re.split(r',\s*(?:and\s+)?|\s+and\s+(?=(?:killing|hitting|brewing|taming|breeding|crafting|planting|growing|'
+    parts = [p for p in re.split(r'\s+/\s+|,\s*(?:and\s+)?|\s+and\s+(?=(?:falling|setting|opening|renaming|repairing|allies|other|'
+                                 r'killing|hitting|brewing|taming|breeding|crafting|planting|growing|'
                                  r'using|healing|teleporting|mining|harvesting|enchanting|combining|drinking|dodging|spending|taking|'
                                  r'sprint-jumping|jumping|fighting|swimming|throwing|landing|making|trading|gaining|fishing)\b)', t) if p.strip()]
     if len(parts) < 2:

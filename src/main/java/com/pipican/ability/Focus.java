@@ -87,6 +87,7 @@ public final class Focus {
         for (String school : SCHOOLS) {
             if (matches(school, attacker, source, victim)) {
                 mult *= 1 + bonus(attacker, state, school);
+                used(attacker, school, java.util.Optional.of(victim));
             }
         }
         return mult;
@@ -95,6 +96,29 @@ public final class Focus {
     /** Healing multiplier (the Life school). */
     public static double healing(ServerPlayer healer) {
         ClassState state = ClassEffectApplier.state(healer);
-        return state.chance(Kind.FOCUS_SLOTS) <= 0 ? 1 : 1 + bonus(healer, state, "life");
+        if (state.chance(Kind.FOCUS_SLOTS) <= 0) {
+            return 1;
+        }
+        used(healer, "life", java.util.Optional.empty());
+        return 1 + bonus(healer, state, "life");
+    }
+
+    /** One fight: chosen schools used this close together count as used together ("magic of both focus schools in one fight"). */
+    private static final long FIGHT_TICKS = 15 * 20;
+    private static final java.util.Map<java.util.UUID, java.util.Map<String, Long>> LAST_USED = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** A chosen school was used: trains {@code focus_combo} when a different chosen school was used in the same fight. */
+    private static void used(ServerPlayer player, String school, java.util.Optional<LivingEntity> target) {
+        if (!chosen(player).contains(school)) {
+            return;
+        }
+        long now = player.level().getGameTime();
+        var last = LAST_USED.computeIfAbsent(player.getUUID(), k -> new java.util.concurrent.ConcurrentHashMap<>());
+        boolean other = last.entrySet().stream().anyMatch(e -> !e.getKey().equals(school) && now - e.getValue() <= FIGHT_TICKS);
+        last.put(school, now);
+        if (other) {
+            com.pipican.event.MasteryEvents.did(player, new com.pipican.mastery.SkillAction.Did(com.pipican.mastery.SkillAction.Did.Kind.FOCUS_COMBO,
+                    net.minecraft.world.item.ItemStack.EMPTY, java.util.Optional.empty(), target, 0));
+        }
     }
 }
